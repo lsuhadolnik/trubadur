@@ -1,0 +1,12 @@
+@import './colors';
+@import './fonts';
+
+$debug: false;
+
+* { box-sizing: border-box; }
+
+body {
+    margin           : 0;
+    padding          : 0;
+    font-family      : $font-regular;
+}
