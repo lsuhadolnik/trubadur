@@ -11,6 +11,7 @@ mix
     // .less('resources/assets/less/app.less', 'public/css')
     .copyDirectory('resources/assets/images', 'public/images')
     .copyDirectory('resources/assets/fonts', 'public/fonts')
+    // .scripts('resources/assets/js/lib/vexui', 'public/js/vexui.js');
 
 // suffixes compiled assets with a unique token to force browsers to load the fresh assets instead of serving stale copies of the code
 // versioned files are usually unnecessary in development, so use versioning only in production

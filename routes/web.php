@@ -11,6 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('base');
+// Route::get('/', function () {
+//     return view('base');
+// });
+
+Auth::routes();
+
+Route::middleware('guest')->get('/', function () {
+   return view('auth.login');
 });
+
+Route::get('/home', 'HomeController@index')->name('home');

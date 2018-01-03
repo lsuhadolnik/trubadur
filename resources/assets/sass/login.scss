@@ -1,0 +1,146 @@
+@import './colors';
+@import './fonts';
+@import './settings';
+
+$time-fade-in       : 1.5s * $time-factor;
+$time-fade-in-delay : $time-fade-in / 3;
+$time-button-hover  : 0.1s * $time-factor;
+
+.login {
+    width   : 100%;
+    height  : 100%;
+    display : flex;
+}
+
+.login__logo {
+    width             : calc(100% - 400px);
+    height            : 100%;
+    background-image  : url('/images/troubadours.jpg');
+    background-origin : content-box;
+    background-repeat : no-repeat;
+    background-size   : cover;
+}
+
+.login__form {
+    width          : 400px;
+    padding        : 75px 25px;
+    display        : flex;
+    align-items    : center;
+    flex-direction : column;
+}
+
+.login__form-title {
+    width           : 100%;
+    margin-bottom   : 60px;
+    display         : flex;
+    justify-content : center;
+    font-size       : 75px;
+    font-family     : $font-title, Verdana;
+    opacity         : 0;
+    user-select     : none;
+    animation       : fade-in $time-fade-in ease-out 0s both;
+}
+
+.login__form-controls {
+    width          : 230px;
+    display        : flex;
+    flex-direction : column;
+}
+
+.login__form-group {
+    margin-bottom   : 15px;
+    display         : flex;
+    align-items     : center;
+    opacity         : 0;
+    animation       : fade-in $time-fade-in ease-out $time-fade-in-delay both;
+}
+
+.login__form-input {
+    width            : 100%;
+    height           : 35px;
+    padding          : 5px;
+    background-color : $white;
+    color            : $black;
+    font-size        : 15px;
+    font-family      : $font-regular;
+    border           : 1px solid $dolphin-transparent;
+    outline          : none;
+}
+
+.login__form-input::placeholder {
+    color       : $dolphin;
+    font-family : $font-light;
+    user-select : none;
+}
+
+.login__form-checkbox-wrapper { margin-top: 20px; }
+
+.login__form-checkbox-label {
+    font-size   : 15px;
+    font-family : $font-light;
+    user-select : none;
+    cursor      : pointer;
+}
+
+.login__form-checkbox {
+    cursor: pointer;
+
+    &:focus { outline: 0; }
+}
+
+.login__form-link {
+    font-size   : 15px;
+    font-family : $font-light;
+    user-select : none;
+}
+
+.login__button-group {
+    margin-top : 30px;
+    opacity    : 0;
+    animation  : fade-in $time-fade-in ease-out ($time-fade-in-delay * 2) both;
+}
+
+.login__button {
+    width       : 115px;
+    height      : 50px;
+    padding-top : 5px;
+    font-size   : 25px;
+    font-family : $font-title;
+    border      : 0;
+    opacity     : 0.7;
+    cursor      : pointer;
+    user-select : none;
+    transition  : all $time-button-hover linear;
+
+    &:hover { opacity: 1; }
+
+    &:disabled {
+        opacity : 1;
+        cursor  : auto;
+    }
+}
+
+.login__button_submit {
+    background-color : $pale-green;
+    color            : $black;
+
+    &:disabled { background-color : $very-light-gray; }
+}
+
+.login__error-group { margin-top: 30px; }
+
+.login__error-list {
+    padding         : 0;
+    list-style-type : none;
+}
+
+.login__error {
+    margin-bottom : 3px;
+    color         : $neon-red;
+    font-size     : 13px;
+    font-family   : $font-light;
+}
+
+@keyframes fade-in {
+    to { opacity: 1; }
+}

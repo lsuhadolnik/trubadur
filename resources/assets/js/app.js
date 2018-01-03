@@ -15,7 +15,7 @@ Vue.use(VueRouter)
 const router = new VueRouter({
     mode: 'history',
     routes: [
-        { name: 'dashboard', path: '/', component: Dashboard }
+        { name: 'dashboard', path: '/home', component: Dashboard }
     ]
 })
 
@@ -26,7 +26,7 @@ const store = new Vuex.Store({
 })
 
 new Vue({ // eslint-disable-line no-new
+    router,
     el: '#app',
-    router: router,
-    store: store
+    store
 })

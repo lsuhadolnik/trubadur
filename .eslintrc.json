@@ -9,6 +9,7 @@
         "$": true,
         "jQuery": true,
         "Vue": true,
-        "axios": true
+        "axios": true,
+        "VF": true
     }
 }
