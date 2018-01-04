@@ -1,66 +1,62 @@
 @extends('layouts.app')
 
 @section('content')
-REGISTER
-<form class="form-horizontal" method="POST" action="{{ route('register') }}">
-    {{ csrf_field() }}
+<div class="login">
+    <div class="login__logo"></div>
 
-    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-        <label for="name" class="col-md-4 control-label">Name</label>
+    <form class="register__form" method="POST" action="{{ route('register') }}">
+        {{ csrf_field() }}
 
-        <div class="col-md-6">
-            <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+        <div class="register__form-title">TRUBADUR</div>
 
-            @if ($errors->has('name'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('name') }}</strong>
-                </span>
-            @endif
+        <div class="register__form-content">
+            <div class="register__form-group">
+                <div class="register__form-subtitle">Registracija</div>
+            </div>
+
+            <div class="register__form-group">
+                <input class="register__form-input {{ $errors->has('name') ? 'register__form-input--error' : '' }}" type="name" name="name" placeholder="Ime" title="Vnesite ime" value="{{ old('name') }}" required autofocus/>
+            </div>
+
+            <div class="register__form-group">
+                <input class="register__form-input {{ $errors->has('email') ? 'register__form-input--error' : '' }}" type="email" name="email" placeholder="E-mail" title="Vnesite e-mail" value="{{ old('email') }}" required/>
+            </div>
+
+            <div class="register__form-group">
+                <input class="register__form-input {{ $errors->has('password') ? 'register__form-input--error' : '' }}" type="password" name="password" placeholder="Geslo" title="Vnesite geslo" required/>
+            </div>
+
+            <div class="register__form-group">
+                <input class="register__form-input" type="password" name="password_confirmation" placeholder="Potrditev gesla" title="Potrdite geslo" required/>
+            </div>
+
+            <div class="register__form-group register__form-group--link">
+                <span class="register__form-text">Ste že registrirani?&nbsp;</span>
+                <a class="register__form-link" href="{{ route('login') }}">Prijava</a>
+                <span class="register__form-text">.</span>
+            </div>
+
+            <div class="register__form-group register__button-group">
+                <button class="register__button register__button_submit" type="submit">Registracija</button>
+            </div>
+
+            <div class="register__error-group">
+                <ul class="register__error-list">
+                    @if ($errors->has('name'))
+                        <li class="register__error">{{ $errors->first('name') }}</li>
+                    @endif
+                    @if ($errors->has('email'))
+                        <li class="register__error">{{ $errors->first('email') }}</li>
+                    @endif
+                    @if ($errors->has('password'))
+                        <li class="register__error">{{ $errors->first('password') }}</li>
+                    @endif
+                    @if ($errors->has('password_confirmation'))
+                        <li class="register__error">{{ $errors->first('password_confirmation') }}</li>
+                    @endif
+                </ul>
+            </div>
         </div>
-    </div>
-
-    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-        <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-        <div class="col-md-6">
-            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-            @if ($errors->has('email'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('email') }}</strong>
-                </span>
-            @endif
-        </div>
-    </div>
-
-    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-        <label for="password" class="col-md-4 control-label">Password</label>
-
-        <div class="col-md-6">
-            <input id="password" type="password" class="form-control" name="password" required>
-
-            @if ($errors->has('password'))
-                <span class="help-block">
-                    <strong>{{ $errors->first('password') }}</strong>
-                </span>
-            @endif
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-        <div class="col-md-6">
-            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-6 col-md-offset-4">
-            <button type="submit" class="btn btn-primary">
-                Register
-            </button>
-        </div>
-    </div>
-</form>
+    </form>
+</div>
 @endsection

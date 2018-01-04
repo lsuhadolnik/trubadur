@@ -1,70 +1,52 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
+<div class="reset">
+    <div class="reset__logo"></div>
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('password.request') }}">
-                        {{ csrf_field() }}
+    <form class="reset__form" method="POST" action="{{ route('password.request') }}">
+        {{ csrf_field() }}
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+        <input type="hidden" name="token" value="{{ $token }}">
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+        <div class="reset__form-title">TRUBADUR</div>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
+        <div class="reset__form-content">
+            <div class="reset__form-group">
+                <div class="reset__form-subtitle">Ponastavitev gesla</div>
+            </div>
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+            <div class="reset__form-group">
+                <input class="reset__form-input {{ $errors->has('email') ? 'reset__form-input--error' : '' }}" type="email" name="email" placeholder="E-mail" title="Vnesite e-mail" value="{{ old('email') }}" required/>
+            </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+            <div class="reset__form-group">
+                <input class="reset__form-input {{ $errors->has('password') ? 'reset__form-input--error' : '' }}" type="password" name="password" placeholder="Geslo" title="Vnesite geslo" required/>
+            </div>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+            <div class="reset__form-group">
+                <input class="reset__form-input" type="password" name="password_confirmation" placeholder="Potrditev gesla" title="Potrdite geslo" required/>
+            </div>
 
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+            <div class="reset__form-group reset__button-group">
+                <a class="email__button email__button_cancel" href="{{ route('login') }}">Prekliči</a>
+                <button class="reset__button reset__button_submit" type="submit">Ponastavi</button>
+            </div>
 
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Reset Password
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            <div class="reset__error-group">
+                <ul class="reset__error-list">
+                    @if ($errors->has('email'))
+                        <li class="reset__error">{{ $errors->first('email') }}</li>
+                    @endif
+                    @if ($errors->has('password'))
+                        <li class="reset__error">{{ $errors->first('password') }}</li>
+                    @endif
+                    @if ($errors->has('password_confirmation'))
+                        <li class="reset__error">{{ $errors->first('password_confirmation') }}</li>
+                    @endif
+                </ul>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 @endsection

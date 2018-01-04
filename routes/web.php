@@ -11,10 +11,6 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('base');
-// });
-
 Auth::routes();
 
 Route::middleware('guest')->get('/', function () {

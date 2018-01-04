@@ -4,13 +4,13 @@
 
 $time-button-hover: 0.1s * $time-factor;
 
-.login {
+.reset {
     width   : 100%;
     height  : 100%;
     display : flex;
 }
 
-.login__logo {
+.reset__logo {
     width             : calc(100% - 400px);
     height            : 100%;
     background-image  : url('/images/troubadours.jpg');
@@ -19,7 +19,7 @@ $time-button-hover: 0.1s * $time-factor;
     background-size   : cover;
 }
 
-.login__form {
+.reset__form {
     width          : 400px;
     padding        : 75px 25px;
     display        : flex;
@@ -27,7 +27,7 @@ $time-button-hover: 0.1s * $time-factor;
     flex-direction : column;
 }
 
-.login__form-title {
+.reset__form-title {
     width           : 100%;
     margin-bottom   : 30px;
     display         : flex;
@@ -37,19 +37,21 @@ $time-button-hover: 0.1s * $time-factor;
     user-select     : none;
 }
 
-.login__form-content {
+.reset__form-content {
     width          : 275px;
     display        : flex;
     flex-direction : column;
 }
 
-.login__form-group {
+.reset__form-group {
     margin-bottom   : 15px;
     display         : flex;
     align-items     : center;
 }
 
-.login__form-subtitle {
+.reset__form-group--link { margin-top: 20px; }
+
+.reset__form-subtitle {
     width           : 100%;
     margin-bottom   : 10px;
     font-size       : 26px;
@@ -57,9 +59,7 @@ $time-button-hover: 0.1s * $time-factor;
     user-select     : none;
 }
 
-.login__form-group--link { margin-top: 20px; }
-
-.login__form-input {
+.reset__form-input {
     width            : 100%;
     height           : 35px;
     padding          : 5px;
@@ -71,44 +71,21 @@ $time-button-hover: 0.1s * $time-factor;
     outline          : none;
 }
 
-.login__form-input--error { border-color: $neon-red; }
+.reset__form-input--error { border-color: $neon-red; }
 
-.login__form-input::placeholder {
+.reset__form-input::placeholder {
     color       : $dolphin;
     font-family : $font-light;
     user-select : none;
 }
 
-.login__form-checkbox-label {
-    display     : flex;
-    align-items : center;
-    font-size   : 15px;
-    font-family : $font-light;
-    user-select : none;
-    cursor      : pointer;
+.reset__button-group {
+    display         : flex;
+    justify-content : space-between;
+    margin-top      : 30px;
 }
 
-.login__form-checkbox {
-    cursor: pointer;
-
-    &:focus { outline: 0; }
-}
-
-.login__form-text {
-    font-size   : 15px;
-    font-family : $font-light;
-    user-select : none;
-}
-
-.login__form-link {
-    font-size   : 15px;
-    font-family : $font-light;
-    user-select : none;
-}
-
-.login__button-group { margin-top : 30px; }
-
-.login__button {
+.reset__button {
     width       : 125px;
     height      : 50px;
     padding-top : 5px;
@@ -123,20 +100,29 @@ $time-button-hover: 0.1s * $time-factor;
     &:hover { opacity: 1; }
 }
 
-.login__button_submit {
+.reset__button_cancel {
+    display          : flex;
+    align-items      : center;
+    justify-content  : center;
+    background-color : $neon-red;
+    color            : $black;
+    text-decoration  : none;
+}
+
+.reset__button_submit {
     background-color : $pale-green;
     color            : $black;
 }
 
-.login__error-group { margin-top: 20px; }
+.reset__error-group { margin-top: 10px; }
 
-.login__error-list {
+.reset__error-list {
     margin          : 0;
     padding         : 0;
     list-style-type : none;
 }
 
-.login__error {
+.reset__error {
     margin-bottom : 3px;
     color         : $neon-red;
     font-size     : 13px;
