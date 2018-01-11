@@ -3,103 +3,138 @@
 
 .dashboard {
     width            : 100%;
-    min-height       : calc(100vh - 100px);
-    display          : flex;
-    align-items      : center;
-    flex-direction   : column;
-    background-color : $white;
+    height           : calc(100% - 50px);
+    background-color : $aero-blue;
 }
 
-.svg {
-    width            : 80vw;
-    height           : 40vw;
-    background-color : $very-light-gray;
+.dashboard__stave-keyboard-wrapper {
+    padding         : 10vh 2.5vw;
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    flex-direction  : row;
+
+    @include breakpoint-portrait { flex-direction: column; }
 }
 
-.line {
-    stroke       : $black;
-    stroke-width : 0.2%;
+.dashboard__stave {
+    margin-right: 2.5vw;
+
+    @include-breakpoint-portrait { margin-right: 0; }
 }
 
-.rect {
-    stroke       : black;
-    stroke-width : 0.2%;
-    fill         : none;
+.dashboard__keyboard {
+    margin-left: 2.5vw;
+
+    @include breakpoint-portrait {
+        margin-top  : 5vh;
+        margin-left : 0;
+    }
 }
 
-.clef {
+.dashboard__command-wrapper { display: flex; }
 
+.dashboard__command {
+    width           : calc(100vw / 3);
+    height          : 50px;
+    padding-top     : 5px;
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    font-size       : 20px;
+    font-family     : $font-title;
+    color           : $black;
+    opacity         : 0.8;
+    user-select     : none;
+    cursor          : pointer;
+    transition      : opacity 0.1s linear;
+
+    &:hover { opacity: 1; }
 }
 
-.clef--treble {
-    x      : 3%;
-    y      : 31%;
-    height : 40%;
-}
-
-.time {
-
-}
-
-// .note {
-//     height: 18%;
-// }
+.dashboard__command--delete { background-color : $neon-red; }
+.dashboard__command--replay { background-color : $blue;     }
+.dashboard__command--next   { background-color : $green;    }
 </style>
 
 <template>
     <div class="dashboard">
-        <div id="notes"></div>
-        <svg class="svg" viewBox="0 0 100 50" preserveAspectRatio="xMidYMid meet">
-            <rect class="rect" x="5%" y="40%" width="90%" height="20%"></rect>
-            <line class="line" x1="89.5%" y1="30%" x2="94%" y2="30%"></line>
-            <line class="line" x1="79.5%" y1="35%" x2="84%" y2="35%"></line>
-            <line class="line" x1="5%" :y1="(40 + n * 5) + '%'" x2="95%" :y2="(40 + n * 5) + '%'" :key="n" v-for="n in 3"></line>
-            <line class="line" x1="19.5%" y1="65%" x2="24%" y2="65%"></line>
-            <image class="clef clef--treble" xlink:href="/images/clef-treble.svg"/>
-            <note :delay="note.delay" :pitch="note.pitch" :type="note.type" :up="note.up" :key="index" v-for="(note, index) in notes"></note>
-        </svg>
+        <div class="dashboard__stave-keyboard-wrapper">
+            <div class="dashboard__stave">
+                <stave :min-notes="minNotes" :max-notes="maxNotes" :note-type="noteType" @notes-changed="notesChanged"></stave>
+            </div>
+            <div class="dashboard__keyboard">
+                <keyboard @midi-plugin-loaded="MIDIPluginLoaded" @note-played="addNote"></keyboard>
+            </div>
+        </div>
+        <div class="dashboard__command-wrapper">
+            <div class="dashboard__command dashboard__command--delete" @click="removeNote">DELETE NOTE</div>
+            <div class="dashboard__command dashboard__command--replay" @click="playNotes">REPLAY</div>
+            <div class="dashboard__command dashboard__command--next" @click="checkCorrectness">NEXT</div>
+        </div>
     </div>
 </template>
 
 <script>
-import Note from './Note.vue'
+import Stave from './Stave'
+import Keyboard from './Keyboard.vue'
 
 export default {
     data () {
         return {
-            notes: [
-                { delay: 0, pitch: 'c', type: 'whole', up: true },
-                { delay: 1, pitch: 'd', type: 'half', up: true },
-                { delay: 2, pitch: 'e', type: 'quarter', up: true },
-                { delay: 3, pitch: 'f', type: 'eighth', up: true },
-                { delay: 4, pitch: 'g', type: 'sixteenth', up: true },
-                { delay: 5, pitch: 'a', type: 'thirty-second', up: true },
-                { delay: 6, pitch: 'h', type: 'sixty-fourth', up: true }
-            ]
+            loading: true,
+            minNotes: 1,
+            maxNotes: 4,
+            noteType: 'half',
+            sample: null,
+            answer: null
         }
     },
-    created () { },
-    mounted () {
-        this.$nextTick(() => {
-            var vf = new VF.Factory({ renderer: { elementId: 'notes', width: 500, height: 200 } })
-
-            var score = vf.EasyScore()
-            var system = vf.System()
-
-            system.addStave({
-                voices: [
-                    score.voice(score.notes('C#5/q, B4, A4, G#4', {stem: 'up'})),
-                    score.voice(score.notes('C#4/h, C#4', {stem: 'down'}))
-                ]
-            }).addClef('treble').addTimeSignature('4/4')
-
-            vf.draw()
-        })
+    methods: {
+        generateSample () {
+            const pitches = ['Bb3', 'B3', 'C4', 'Db4', 'D4', 'Eb4', 'E4', 'F4', 'Gb4', 'G4', 'Ab4', 'A4', 'Bb4', 'B4', 'C5', 'Db5']
+            this.sample = _.take(_.shuffle(pitches), this.maxNotes)
+            this.$emit('clear-notes')
+            this.addNote(this.sample[0])
+            this.playNotes()
+            console.log('New sample generated: ', this.sample)
+        },
+        MIDIPluginLoaded () {
+            this.loading = false
+            this.generateSample()
+        },
+        playNote (pitch) {
+            this.$emit('play-note', pitch)
+        },
+        addNote (pitch) {
+            this.$emit('add-note', pitch)
+        },
+        removeNote () {
+            this.$emit('remove-note')
+        },
+        notesChanged (notes) {
+            this.answer = notes
+        },
+        playNotes () {
+            for (let i = 0; i < this.sample.length; i++) {
+                setTimeout(() => this.playNote(this.sample[i]), i * 500)
+            }
+        },
+        checkCorrectness () {
+            if (this.answer.length < this.maxNotes) {
+                return
+            }
+            for (let i = 0; i < this.maxNotes; i++) {
+                if (this.answer[i].pitch !== this.sample[i]) {
+                    return
+                }
+            }
+            this.generateSample()
+        }
     },
-    computed: { },
-    methods: { },
     components: {
-        note: Note
+        stave: Stave,
+        keyboard: Keyboard
     }
 }
 </script>

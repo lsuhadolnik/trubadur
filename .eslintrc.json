@@ -10,6 +10,6 @@
         "jQuery": true,
         "Vue": true,
         "axios": true,
-        "VF": true
+        "MIDI": true
     }
 }

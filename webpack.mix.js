@@ -7,10 +7,12 @@ mix
     .js('resources/assets/js/app.js', 'public/js')
     // compilation of .scss (sass) files into .css files
     .sass('resources/assets/sass/app.scss', 'public/css')
-    // compilation of .less files into .css files
-    // .less('resources/assets/less/app.less', 'public/css')
+    // copying of static assets
     .copyDirectory('resources/assets/images', 'public/images')
     .copyDirectory('resources/assets/fonts', 'public/fonts')
+    .copyDirectory('resources/assets/soundfonts', 'public/soundfonts')
+    // copying of libraries
+    .copyDirectory('resources/assets/js/lib', 'public/lib')
 
 // suffixes compiled assets with a unique token to force browsers to load the fresh assets instead of serving stale copies of the code
 // versioned files are usually unnecessary in development, so use versioning only in production

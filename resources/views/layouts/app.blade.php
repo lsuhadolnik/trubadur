@@ -17,17 +17,17 @@
         <script>
             window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
         </script>
+
+        <!-- MIDI.js -->
+        <script src="{{ asset('lib/midi/shim/Base64.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('lib/midi/shim/Base64binary.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('lib/midi/shim/WebAudioAPI.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('lib/midi/midi.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('lib/midi/util/dom_request_xhr.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('lib/midi/util/dom_request_script.js') }}" type="text/javascript"></script>
     </head>
     <body>
         <div id="app">
-            @auth
-                {{ Auth::user()->name }}
-                <a href="logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                <form id="logout-form" action="logout" method="POST" style="display: none;">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                </form>
-            @endauth
-
             @yield('content')
         </div>
 

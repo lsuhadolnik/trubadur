@@ -1,3 +1,4 @@
 node_modules/
 vendor/
 resources/assets/js/lib/*
+resources/assets/soundfonts/*

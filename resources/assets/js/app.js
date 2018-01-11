@@ -4,9 +4,11 @@ import Vuex from 'vuex'
 import './bootstrap'
 import './utils/vueHelpers'
 
+import Icon from 'vue-awesome/components/Icon'
 import App from './components/App.vue'
 import Dashboard from './components/Dashboard.vue'
 
+Vue.component('icon', Icon)
 Vue.component('app', App)
 Vue.component('dashboard', Dashboard)
 

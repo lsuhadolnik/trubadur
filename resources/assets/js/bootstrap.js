@@ -1,7 +1,6 @@
 window._ = require('lodash')
 window.$ = window.jQuery = require('jquery')
 window.Vue = require('vue')
-window.VF = require('vexflow').Flow
 window.axios = require('axios')
 
 window.axios.defaults.headers.common = {
