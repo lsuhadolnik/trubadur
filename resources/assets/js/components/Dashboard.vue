@@ -54,6 +54,9 @@
     cursor                : pointer;
     transition            : opacity 0.1s linear;
 
+    @include breakpoint-tablet { opacity : 1; }
+    @include breakpoint-phone  { opacity : 1; }
+
     &:hover { opacity: 1; }
 }
 
