@@ -35,19 +35,24 @@
 .dashboard__command-wrapper { display: flex; }
 
 .dashboard__command {
-    width           : calc(100vw / 3);
-    height          : 50px;
-    padding-top     : 5px;
-    display         : flex;
-    justify-content : center;
-    align-items     : center;
-    font-size       : 20px;
-    font-family     : $font-title;
-    color           : $black;
-    opacity         : 0.8;
-    user-select     : none;
-    cursor          : pointer;
-    transition      : opacity 0.1s linear;
+    width                 : calc(100vw / 3);
+    height                : 50px;
+    padding-top           : 5px;
+    display               : flex;
+    justify-content       : center;
+    align-items           : center;
+    font-size             : 20px;
+    font-family           : $font-title;
+    color                 : $black;
+    opacity               : 0.8;
+    -webkit-touch-callout : none;
+    -webkit-user-select   : none;
+     -khtml-user-select   : none;
+       -moz-user-select   : none;
+        -ms-user-select   : none;
+            user-select   : none;
+    cursor                : pointer;
+    transition            : opacity 0.1s linear;
 
     &:hover { opacity: 1; }
 }

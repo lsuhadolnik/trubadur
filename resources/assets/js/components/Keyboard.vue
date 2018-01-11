@@ -24,10 +24,15 @@
 .keyboard__key--pressed { fill: $pale-green; }
 
 .keyboard__key-text {
-  font-family    : $font-regular;
-  pointer-events : none;
-  user-select    : none;
-  text-anchor    : middle;
+  font-family           : $font-regular;
+  pointer-events        : none;
+  -webkit-touch-callout : none;
+    -webkit-user-select : none;
+     -khtml-user-select : none;
+       -moz-user-select : none;
+        -ms-user-select : none;
+            user-select : none;
+  text-anchor           : middle;
 }
 
 .keyboard__key-text--white {
@@ -50,9 +55,9 @@
 </style>
 
 <template>
-    <svg class="keyboard" viewBox="0 0 100 30" preserveAspectRatio="xMidYMid meet">
-        <rect class="keyboard__key keyboard__key--white" :class="{ 'keyboard__key--pressed': key.pressed }" :x="(100 / nKeys * index) + '%'" y="0%" :width="(100 / nKeys) + '%'" height="100%" v-for="(key, index) in keys.white" @mousedown="mousedown(key)" @mouseup="mouseup(key)" @touchstart="mousedown(key)" @touchend="mouseup(key)"></rect>
-        <rect class="keyboard__key keyboard__key--black" :class="{ 'keyboard__key--pressed': key.pressed }" :x="(100 / nKeys * (0.666 + index - 1)) + '%'" y="0%" :width="(100 / nKeys * 0.666) + '%'" height="66.6%" v-for="(key, index) in keys.black" v-if="key.midiPitch !== -1" @mousedown="mousedown(key)" @mouseup="mouseup(key)" @touchstart="mousedown(key)" @touchend="mouseup(key)"></rect>
+    <svg class="keyboard" viewBox="0 0 100 30" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <rect class="keyboard__key keyboard__key--white" :class="{ 'keyboard__key--pressed': key.pressed }" :x="(100 / nKeys * index) + '%'" y="0%" :width="(100 / nKeys) + '%'" height="100%" v-for="(key, index) in keys.white" @mousedown="mousedown($event, key)" @mouseup="mouseup($event, key)" @touchstart="mousedown($event, key)" @touchend="mouseup($event, key)"></rect>
+        <rect class="keyboard__key keyboard__key--black" :class="{ 'keyboard__key--pressed': key.pressed }" :x="(100 / nKeys * (0.666 + index - 1)) + '%'" y="0%" :width="(100 / nKeys * 0.666) + '%'" height="66.6%" v-for="(key, index) in keys.black" v-if="key.midiPitch !== -1" @mousedown="mousedown($event, key)" @mouseup="mouseup($event, key)" @touchstart="mousedown($event, key)" @touchend="mouseup($event, key)"></rect>
         <g v-show="helperTextVisible">
             <text class="keyboard__key-text keyboard__key-text--white" :x="(100 / nKeys * (0.5 + index)) + '%'" y="90%" v-for="(key, index) in keys.white">{{ key.name }}</text>
             <text class="keyboard__key-text keyboard__key-text--black" :x="(100 / nKeys * (index === 0 ? 0.166 : index === keys.black.length - 1 ? index - 0.166 : index)) + '%'" y="20%" v-for="(key, index) in keys.black" v-if="keys.midiPitch !== -1">{{ key.name }}</text>
@@ -138,11 +143,13 @@ export default {
             ]
             return keys.length > 0 ? keys[0] : null
         },
-        mousedown (key) {
+        mousedown (event, key) {
+            event.preventDefault()
             key.pressed = true
             this.noteOn(key.midiPitch)
         },
-        mouseup (key) {
+        mouseup (event, key) {
+            event.preventDefault()
             key.pressed = false
             this.noteOff(key.midiPitch)
             this.$emit('note-played', key.pitch)

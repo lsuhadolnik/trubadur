@@ -63,68 +63,14 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(47)
-}
-var normalizeComponent = __webpack_require__(4)
-/* script */
-var __vue_script__ = __webpack_require__(50)
-/* template */
-var __vue_template__ = __webpack_require__(51)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "node_modules/vue-awesome/components/Icon.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-afaabd70", Component.options)
-  } else {
-    hotAPI.reload("data-v-afaabd70", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 1:
+/******/ ([
+/* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var bind = __webpack_require__(8);
+var bind = __webpack_require__(7);
 var isBuffer = __webpack_require__(27);
 
 /*global toString:true*/
@@ -428,8 +374,941 @@ module.exports = {
 
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports) {
 
-/***/ 10:
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(47)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction) {
+  isProduction = _isProduction
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(29);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(8);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(8);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+var settle = __webpack_require__(30);
+var buildURL = __webpack_require__(32);
+var parseHeaders = __webpack_require__(33);
+var isURLSameOrigin = __webpack_require__(34);
+var createError = __webpack_require__(9);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(35);
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if ("development" !== 'test' &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(36);
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -454,8 +1333,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-
-/***/ 11:
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -467,8 +1345,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-
-/***/ 12:
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -494,8 +1371,59 @@ module.exports = Cancel;
 
 
 /***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ 13:
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(45)
+}
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(48)
+/* template */
+var __vue_template__ = __webpack_require__(49)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/vue-awesome/components/Icon.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-afaabd70", Component.options)
+  } else {
+    hotAPI.reload("data-v-afaabd70", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -560,17 +1488,15 @@ function functionProp() {
 }
 
 /***/ }),
-
-/***/ 14:
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(872);
+module.exports = __webpack_require__(86);
 
 
 /***/ }),
-
-/***/ 15:
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -581,11 +1507,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__bootstrap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_vueHelpers__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_vueHelpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__utils_vueHelpers__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_awesome_components_Icon__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_awesome_components_Icon__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_awesome_components_Icon___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_awesome_components_Icon__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_App_vue__ = __webpack_require__(837);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_App_vue__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_App_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Dashboard_vue__ = __webpack_require__(852);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Dashboard_vue__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Dashboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_Dashboard_vue__);
 
 
@@ -621,8 +1547,7 @@ new Vue({ // eslint-disable-line no-new
 });
 
 /***/ }),
-
-/***/ 16:
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3252,8 +4177,7 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-
-/***/ 17:
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4198,8 +5122,7 @@ var index_esm = {
 
 
 /***/ }),
-
-/***/ 18:
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 window._ = __webpack_require__(19);
@@ -4230,8 +5153,7 @@ window.axios.defaults.headers.common = {
 };
 
 /***/ }),
-
-/***/ 19:
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -21320,94 +22242,10 @@ window.axios.defaults.headers.common = {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(20)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(20)(module)))
 
 /***/ }),
-
-/***/ 2:
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-
-/***/ 20:
+/* 20 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -21435,8 +22273,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-
-/***/ 21:
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -31696,8 +32533,7 @@ return jQuery;
 
 
 /***/ }),
-
-/***/ 22:
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42317,11 +43153,10 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(23).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(23).setImmediate))
 
 /***/ }),
-
-/***/ 23:
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -42380,8 +43215,7 @@ exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-
-/***/ 24:
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -42571,27 +43405,25 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(7)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(6)))
 
 /***/ }),
-
-/***/ 25:
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(26);
 
 /***/ }),
-
-/***/ 26:
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
-var bind = __webpack_require__(8);
+var utils = __webpack_require__(0);
+var bind = __webpack_require__(7);
 var Axios = __webpack_require__(28);
-var defaults = __webpack_require__(6);
+var defaults = __webpack_require__(5);
 
 /**
  * Create an instance of Axios
@@ -42624,9 +43456,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(12);
+axios.Cancel = __webpack_require__(11);
 axios.CancelToken = __webpack_require__(42);
-axios.isCancel = __webpack_require__(11);
+axios.isCancel = __webpack_require__(10);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -42641,8 +43473,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-
-/***/ 27:
+/* 27 */
 /***/ (function(module, exports) {
 
 /*!
@@ -42669,15 +43500,14 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-
-/***/ 28:
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(6);
-var utils = __webpack_require__(1);
+var defaults = __webpack_require__(5);
+var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(37);
 var dispatchRequest = __webpack_require__(38);
 var isAbsoluteURL = __webpack_require__(40);
@@ -42763,14 +43593,13 @@ module.exports = Axios;
 
 
 /***/ }),
-
-/***/ 29:
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -42783,236 +43612,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-  Modified by Evan You @yyx990803
-*/
-
-var hasDocument = typeof document !== 'undefined'
-
-if (typeof DEBUG !== 'undefined' && DEBUG) {
-  if (!hasDocument) {
-    throw new Error(
-    'vue-style-loader cannot be used in a non-browser environment. ' +
-    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
-  ) }
-}
-
-var listToStyles = __webpack_require__(49)
-
-/*
-type StyleObject = {
-  id: number;
-  parts: Array<StyleObjectPart>
-}
-
-type StyleObjectPart = {
-  css: string;
-  media: string;
-  sourceMap: ?string
-}
-*/
-
-var stylesInDom = {/*
-  [id: number]: {
-    id: number,
-    refs: number,
-    parts: Array<(obj?: StyleObjectPart) => void>
-  }
-*/}
-
-var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
-var singletonElement = null
-var singletonCounter = 0
-var isProduction = false
-var noop = function () {}
-
-// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-// tags it will allow on a page
-var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
-
-module.exports = function (parentId, list, _isProduction) {
-  isProduction = _isProduction
-
-  var styles = listToStyles(parentId, list)
-  addStylesToDom(styles)
-
-  return function update (newList) {
-    var mayRemove = []
-    for (var i = 0; i < styles.length; i++) {
-      var item = styles[i]
-      var domStyle = stylesInDom[item.id]
-      domStyle.refs--
-      mayRemove.push(domStyle)
-    }
-    if (newList) {
-      styles = listToStyles(parentId, newList)
-      addStylesToDom(styles)
-    } else {
-      styles = []
-    }
-    for (var i = 0; i < mayRemove.length; i++) {
-      var domStyle = mayRemove[i]
-      if (domStyle.refs === 0) {
-        for (var j = 0; j < domStyle.parts.length; j++) {
-          domStyle.parts[j]()
-        }
-        delete stylesInDom[domStyle.id]
-      }
-    }
-  }
-}
-
-function addStylesToDom (styles /* Array<StyleObject> */) {
-  for (var i = 0; i < styles.length; i++) {
-    var item = styles[i]
-    var domStyle = stylesInDom[item.id]
-    if (domStyle) {
-      domStyle.refs++
-      for (var j = 0; j < domStyle.parts.length; j++) {
-        domStyle.parts[j](item.parts[j])
-      }
-      for (; j < item.parts.length; j++) {
-        domStyle.parts.push(addStyle(item.parts[j]))
-      }
-      if (domStyle.parts.length > item.parts.length) {
-        domStyle.parts.length = item.parts.length
-      }
-    } else {
-      var parts = []
-      for (var j = 0; j < item.parts.length; j++) {
-        parts.push(addStyle(item.parts[j]))
-      }
-      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
-    }
-  }
-}
-
-function createStyleElement () {
-  var styleElement = document.createElement('style')
-  styleElement.type = 'text/css'
-  head.appendChild(styleElement)
-  return styleElement
-}
-
-function addStyle (obj /* StyleObjectPart */) {
-  var update, remove
-  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
-
-  if (styleElement) {
-    if (isProduction) {
-      // has SSR styles and in production mode.
-      // simply do nothing.
-      return noop
-    } else {
-      // has SSR styles but in dev mode.
-      // for some reason Chrome can't handle source map in server-rendered
-      // style tags - source maps in <style> only works if the style tag is
-      // created and inserted dynamically. So we remove the server rendered
-      // styles and inject new ones.
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  if (isOldIE) {
-    // use singleton mode for IE9.
-    var styleIndex = singletonCounter++
-    styleElement = singletonElement || (singletonElement = createStyleElement())
-    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
-    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
-  } else {
-    // use multi-style-tag mode in all other cases
-    styleElement = createStyleElement()
-    update = applyToTag.bind(null, styleElement)
-    remove = function () {
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  update(obj)
-
-  return function updateStyle (newObj /* StyleObjectPart */) {
-    if (newObj) {
-      if (newObj.css === obj.css &&
-          newObj.media === obj.media &&
-          newObj.sourceMap === obj.sourceMap) {
-        return
-      }
-      update(obj = newObj)
-    } else {
-      remove()
-    }
-  }
-}
-
-var replaceText = (function () {
-  var textStore = []
-
-  return function (index, replacement) {
-    textStore[index] = replacement
-    return textStore.filter(Boolean).join('\n')
-  }
-})()
-
-function applyToSingletonTag (styleElement, index, remove, obj) {
-  var css = remove ? '' : obj.css
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = replaceText(index, css)
-  } else {
-    var cssNode = document.createTextNode(css)
-    var childNodes = styleElement.childNodes
-    if (childNodes[index]) styleElement.removeChild(childNodes[index])
-    if (childNodes.length) {
-      styleElement.insertBefore(cssNode, childNodes[index])
-    } else {
-      styleElement.appendChild(cssNode)
-    }
-  }
-}
-
-function applyToTag (styleElement, obj) {
-  var css = obj.css
-  var media = obj.media
-  var sourceMap = obj.sourceMap
-
-  if (media) {
-    styleElement.setAttribute('media', media)
-  }
-
-  if (sourceMap) {
-    // https://developer.chrome.com/devtools/docs/javascript-debugging
-    // this makes source maps inside style tags work properly in Chrome
-    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
-    // http://stackoverflow.com/a/26603875
-    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
-  }
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild)
-    }
-    styleElement.appendChild(document.createTextNode(css))
-  }
-}
-
-
-/***/ }),
-
-/***/ 30:
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(10);
+var createError = __webpack_require__(9);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -43039,8 +43645,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-
-/***/ 31:
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43068,14 +43673,13 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-
-/***/ 32:
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -43144,14 +43748,13 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-
-/***/ 33:
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 /**
  * Parse headers into an object
@@ -43189,14 +43792,13 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-
-/***/ 34:
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -43265,8 +43867,7 @@ module.exports = (
 
 
 /***/ }),
-
-/***/ 35:
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43309,14 +43910,13 @@ module.exports = btoa;
 
 
 /***/ }),
-
-/***/ 36:
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -43370,14 +43970,13 @@ module.exports = (
 
 
 /***/ }),
-
-/***/ 37:
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -43430,17 +44029,16 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-
-/***/ 38:
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 var transformData = __webpack_require__(39);
-var isCancel = __webpack_require__(11);
-var defaults = __webpack_require__(6);
+var isCancel = __webpack_require__(10);
+var defaults = __webpack_require__(5);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -43517,14 +44115,13 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-
-/***/ 39:
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(1);
+var utils = __webpack_require__(0);
 
 /**
  * Transform the data for a request or a response
@@ -43545,118 +44142,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-
-/***/ 4:
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-
-/***/ 40:
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43677,8 +44163,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-
-/***/ 41:
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43699,14 +44184,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-
-/***/ 42:
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(12);
+var Cancel = __webpack_require__(11);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -43764,8 +44248,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-
-/***/ 43:
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43799,8 +44282,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-
-/***/ 44:
+/* 44 */
 /***/ (function(module, exports) {
 
 Vue.filter('capitalize', function (value) {
@@ -43814,18 +44296,17 @@ Vue.directive('focus', { inserted: function inserted(el) {
   } });
 
 /***/ }),
-
-/***/ 47:
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(48);
+var content = __webpack_require__(46);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("0d22f40c", content, false);
+var update = __webpack_require__(2)("0d22f40c", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -43841,11 +44322,10 @@ if(false) {
 }
 
 /***/ }),
-
-/***/ 48:
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
@@ -43856,8 +44336,7 @@ exports.push([module.i, "\n.fa-icon {\n  display: inline-block;\n  fill: current
 
 
 /***/ }),
-
-/***/ 49:
+/* 47 */
 /***/ (function(module, exports) {
 
 /**
@@ -43890,36 +44369,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-
-/***/ 5:
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 50:
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -44157,8 +44607,7 @@ function getId() {
 }
 
 /***/ }),
-
-/***/ 51:
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -44220,344 +44669,19 @@ if (false) {
 }
 
 /***/ }),
-
-/***/ 6:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(1);
-var normalizeHeaderName = __webpack_require__(29);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(9);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(9);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
-
-/***/ }),
-
-/***/ 636:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__);
-
-
-__WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"sign-out":{"width":1664,"height":1792,"paths":[{"d":"M640 1440q0 4 1 20t0.5 26.5-3 23.5-10 19.5-20.5 6.5h-320q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h320q13 0 22.5 9.5t9.5 22.5q0 4 1 20t0.5 26.5-3 23.5-10 19.5-20.5 6.5h-320q-66 0-113 47t-47 113v704q0 66 47 113t113 47h288 11 13t11.5 1 11.5 3 8 5.5 7 9 2 13.5zM1568 896q0 26-19 45l-544 544q-19 19-45 19t-45-19-19-45v-288h-448q-26 0-45-19t-19-45v-384q0-26 19-45t45-19h448v-288q0-26 19-45t45-19 45 19l544 544q19 19 19 45z"}]}})
-
-
-/***/ }),
-
-/***/ 7:
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-
-/***/ 8:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function bind(fn, thisArg) {
-  return function wrap() {
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-    return fn.apply(thisArg, args);
-  };
-};
-
-
-/***/ }),
-
-/***/ 837:
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(838)
+  __webpack_require__(51)
 }
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(840)
+var __vue_script__ = __webpack_require__(53)
 /* template */
-var __vue_template__ = __webpack_require__(851)
+var __vue_template__ = __webpack_require__(65)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -44597,18 +44721,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-
-/***/ 838:
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(839);
+var content = __webpack_require__(52);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("7ec91a64", content, false);
+var update = __webpack_require__(2)("7ec91a64", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -44624,30 +44747,28 @@ if(false) {
 }
 
 /***/ }),
-
-/***/ 839:
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-8142f38c] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-8142f38c] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-content[data-v-8142f38c] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-8142f38c] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-group--link[data-v-8142f38c] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-8142f38c] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-8142f38c] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-8142f38c]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.login__form-input[data-v-8142f38c]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-8142f38c]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-8142f38c]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-checkbox-label[data-v-8142f38c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-8142f38c] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-8142f38c]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-8142f38c] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-link[data-v-8142f38c] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__button-group[data-v-8142f38c] {\n  margin-top: 30px;\n}\n.login__button[data-v-8142f38c] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-8142f38c]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-8142f38c] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-8142f38c] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-8142f38c] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-8142f38c] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-8142f38c] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-8142f38c] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-content[data-v-8142f38c] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-8142f38c] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-8142f38c] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-8142f38c] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-8142f38c] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-8142f38c]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-8142f38c]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-8142f38c]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-8142f38c]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-text[data-v-8142f38c] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-link[data-v-8142f38c] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__button-group[data-v-8142f38c] {\n  margin-top: 30px;\n}\n.register__button[data-v-8142f38c] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-8142f38c]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-8142f38c] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-8142f38c] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-8142f38c] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-8142f38c] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-8142f38c] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-8142f38c] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-content[data-v-8142f38c] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-8142f38c] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-8142f38c] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-8142f38c] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-8142f38c]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-8142f38c]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-8142f38c]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-8142f38c]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__button-group[data-v-8142f38c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-8142f38c] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-8142f38c]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-8142f38c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-8142f38c] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-8142f38c], .email__status-group[data-v-8142f38c] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-8142f38c], .email__status-list[data-v-8142f38c] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-8142f38c] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-8142f38c] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-8142f38c] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-8142f38c] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-content[data-v-8142f38c] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-8142f38c] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-8142f38c] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-8142f38c] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-8142f38c] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-8142f38c]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-8142f38c]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-8142f38c]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-8142f38c]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__button-group[data-v-8142f38c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-8142f38c] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-8142f38c]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-8142f38c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-8142f38c] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-8142f38c] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-8142f38c] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-8142f38c] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-8142f38c] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\nhtml[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-8142f38c]:focus {\n  outline: 0;\n}\nimg[data-v-8142f38c] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n}\n.app[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-8142f38c] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-8142f38c] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-content[data-v-8142f38c] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-8142f38c] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-group--link[data-v-8142f38c] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-8142f38c] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-8142f38c] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-8142f38c]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-8142f38c]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-8142f38c]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-8142f38c]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-checkbox-label[data-v-8142f38c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-8142f38c] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-8142f38c]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-8142f38c] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-link[data-v-8142f38c] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__button-group[data-v-8142f38c] {\n  margin-top: 30px;\n}\n.login__button[data-v-8142f38c] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-8142f38c]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-8142f38c] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-8142f38c] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-8142f38c] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-8142f38c] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-8142f38c] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-8142f38c] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-content[data-v-8142f38c] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-8142f38c] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-8142f38c] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-8142f38c] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-8142f38c] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-8142f38c]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-8142f38c]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-8142f38c]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-8142f38c]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-text[data-v-8142f38c] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-link[data-v-8142f38c] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__button-group[data-v-8142f38c] {\n  margin-top: 30px;\n}\n.register__button[data-v-8142f38c] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-8142f38c]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-8142f38c] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-8142f38c] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-8142f38c] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-8142f38c] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-8142f38c] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-8142f38c] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-content[data-v-8142f38c] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-8142f38c] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-8142f38c] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-8142f38c] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-8142f38c]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-8142f38c]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-8142f38c]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-8142f38c]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__button-group[data-v-8142f38c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-8142f38c] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-8142f38c]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-8142f38c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-8142f38c] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-8142f38c], .email__status-group[data-v-8142f38c] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-8142f38c], .email__status-list[data-v-8142f38c] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-8142f38c] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-8142f38c] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-8142f38c] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-8142f38c] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-content[data-v-8142f38c] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-8142f38c] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-8142f38c] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-8142f38c] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-8142f38c] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-8142f38c] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-8142f38c]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-8142f38c]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-8142f38c]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-8142f38c]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__button-group[data-v-8142f38c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-8142f38c] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-8142f38c]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-8142f38c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-8142f38c] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-8142f38c] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-8142f38c] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-8142f38c] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-8142f38c] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n}\nhtml[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-8142f38c]:focus {\n  outline: 0;\n}\nimg[data-v-8142f38c] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n}\n.app[data-v-8142f38c] {\n  width: 100%;\n  height: 100%;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-
-/***/ 840:
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NavHeader_vue__ = __webpack_require__(841);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NavHeader_vue__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NavHeader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__NavHeader_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__NavFooter_vue__ = __webpack_require__(846);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__NavFooter_vue__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__NavFooter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__NavFooter_vue__);
 //
 //
@@ -44678,20 +44799,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-
-/***/ 841:
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(842)
+  __webpack_require__(55)
 }
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(844)
+var __vue_script__ = __webpack_require__(57)
 /* template */
-var __vue_template__ = __webpack_require__(845)
+var __vue_template__ = __webpack_require__(59)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -44731,18 +44851,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-
-/***/ 842:
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(843);
+var content = __webpack_require__(56);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("69278842", content, false);
+var update = __webpack_require__(2)("69278842", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -44758,28 +44877,26 @@ if(false) {
 }
 
 /***/ }),
-
-/***/ 843:
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-3dc94969] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-3dc94969] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-content[data-v-3dc94969] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-3dc94969] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-group--link[data-v-3dc94969] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-3dc94969] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-3dc94969] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-3dc94969]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.login__form-input[data-v-3dc94969]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-3dc94969]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-3dc94969]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-checkbox-label[data-v-3dc94969] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-3dc94969] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-3dc94969]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-3dc94969] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-link[data-v-3dc94969] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__button-group[data-v-3dc94969] {\n  margin-top: 30px;\n}\n.login__button[data-v-3dc94969] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-3dc94969]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-3dc94969] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-3dc94969] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-3dc94969] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-3dc94969] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-3dc94969] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-3dc94969] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-content[data-v-3dc94969] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-3dc94969] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-3dc94969] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-3dc94969] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-3dc94969] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-3dc94969]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-3dc94969]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-3dc94969]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-3dc94969]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-text[data-v-3dc94969] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-link[data-v-3dc94969] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__button-group[data-v-3dc94969] {\n  margin-top: 30px;\n}\n.register__button[data-v-3dc94969] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-3dc94969]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-3dc94969] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-3dc94969] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-3dc94969] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-3dc94969] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-3dc94969] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-3dc94969] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-content[data-v-3dc94969] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-3dc94969] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-3dc94969] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-3dc94969] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-3dc94969]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-3dc94969]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-3dc94969]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-3dc94969]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__button-group[data-v-3dc94969] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-3dc94969] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-3dc94969]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-3dc94969] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-3dc94969] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-3dc94969], .email__status-group[data-v-3dc94969] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-3dc94969], .email__status-list[data-v-3dc94969] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-3dc94969] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-3dc94969] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-3dc94969] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-3dc94969] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-content[data-v-3dc94969] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-3dc94969] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-3dc94969] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-3dc94969] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-3dc94969] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-3dc94969]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-3dc94969]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-3dc94969]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-3dc94969]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__button-group[data-v-3dc94969] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-3dc94969] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-3dc94969]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-3dc94969] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-3dc94969] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-3dc94969] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-3dc94969] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-3dc94969] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-3dc94969] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\nhtml[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-3dc94969]:focus {\n  outline: 0;\n}\nimg[data-v-3dc94969] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n}\n.header[data-v-3dc94969] {\n  width: 100%;\n  height: 50px;\n  padding: 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  background-color: #A9CF54;\n}\n.header__title[data-v-3dc94969] {\n  color: #000000;\n  font-size: 30px;\n  font-family: \"Bebas Neue\";\n}\n.header__user[data-v-3dc94969] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.header__username[data-v-3dc94969] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.header__logout[data-v-3dc94969] {\n  margin-left: 15px;\n}\n.header__logout-icon[data-v-3dc94969] {\n  width: 20px;\n  height: 20px;\n  color: #000000;\n  opacity: 0.6;\n  cursor: pointer;\n  -webkit-transition: opacity 0.1s linear;\n  transition: opacity 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.header__logout-icon[data-v-3dc94969] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.header__logout-icon[data-v-3dc94969] {\n      opacity: 1;\n}\n}\n.header__logout-icon[data-v-3dc94969]:hover {\n    opacity: 1;\n}\n.header__logout-form[data-v-3dc94969] {\n  display: none;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-3dc94969] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-3dc94969] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-content[data-v-3dc94969] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-3dc94969] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-group--link[data-v-3dc94969] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-3dc94969] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-3dc94969] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-3dc94969]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-3dc94969]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-3dc94969]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-3dc94969]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-checkbox-label[data-v-3dc94969] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-3dc94969] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-3dc94969]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-3dc94969] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-link[data-v-3dc94969] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__button-group[data-v-3dc94969] {\n  margin-top: 30px;\n}\n.login__button[data-v-3dc94969] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-3dc94969]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-3dc94969] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-3dc94969] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-3dc94969] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-3dc94969] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-3dc94969] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-3dc94969] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-content[data-v-3dc94969] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-3dc94969] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-3dc94969] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-3dc94969] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-3dc94969] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-3dc94969]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-3dc94969]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-3dc94969]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-3dc94969]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-text[data-v-3dc94969] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-link[data-v-3dc94969] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__button-group[data-v-3dc94969] {\n  margin-top: 30px;\n}\n.register__button[data-v-3dc94969] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-3dc94969]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-3dc94969] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-3dc94969] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-3dc94969] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-3dc94969] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-3dc94969] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-3dc94969] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-content[data-v-3dc94969] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-3dc94969] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-3dc94969] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-3dc94969] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-3dc94969]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-3dc94969]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-3dc94969]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-3dc94969]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__button-group[data-v-3dc94969] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-3dc94969] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-3dc94969]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-3dc94969] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-3dc94969] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-3dc94969], .email__status-group[data-v-3dc94969] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-3dc94969], .email__status-list[data-v-3dc94969] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-3dc94969] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-3dc94969] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-3dc94969] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-3dc94969] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-content[data-v-3dc94969] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-3dc94969] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-3dc94969] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-3dc94969] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-3dc94969] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-3dc94969] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-3dc94969]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-3dc94969]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-3dc94969]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-3dc94969]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__button-group[data-v-3dc94969] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-3dc94969] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-3dc94969]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-3dc94969] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-3dc94969] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-3dc94969] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-3dc94969] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-3dc94969] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-3dc94969] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n}\nhtml[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-3dc94969]:focus {\n  outline: 0;\n}\nimg[data-v-3dc94969] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-3dc94969] {\n  width: 100%;\n  height: 100%;\n}\n.header[data-v-3dc94969] {\n  width: 100%;\n  height: 50px;\n  padding: 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  background-color: #A9CF54;\n}\n.header__title[data-v-3dc94969] {\n  color: #000000;\n  font-size: 30px;\n  font-family: \"Bebas Neue\";\n}\n.header__user[data-v-3dc94969] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.header__username[data-v-3dc94969] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.header__logout[data-v-3dc94969] {\n  margin-left: 15px;\n}\n.header__logout-icon[data-v-3dc94969] {\n  width: 20px;\n  height: 20px;\n  color: #000000;\n  opacity: 0.6;\n  cursor: pointer;\n  -webkit-transition: opacity 0.1s linear;\n  transition: opacity 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.header__logout-icon[data-v-3dc94969] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.header__logout-icon[data-v-3dc94969] {\n      opacity: 1;\n}\n}\n.header__logout-icon[data-v-3dc94969]:hover {\n    opacity: 1;\n}\n.header__logout-form[data-v-3dc94969] {\n  display: none;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-
-/***/ 844:
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_icons_sign_out__ = __webpack_require__(636);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_icons_sign_out__ = __webpack_require__(58);
 //
 //
 //
@@ -44870,8 +44987,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
+/* 58 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-/***/ 845:
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__);
+
+
+__WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"sign-out":{"width":1664,"height":1792,"paths":[{"d":"M640 1440q0 4 1 20t0.5 26.5-3 23.5-10 19.5-20.5 6.5h-320q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h320q13 0 22.5 9.5t9.5 22.5q0 4 1 20t0.5 26.5-3 23.5-10 19.5-20.5 6.5h-320q-66 0-113 47t-47 113v704q0 66 47 113t113 47h288 11 13t11.5 1 11.5 3 8 5.5 7 9 2 13.5zM1568 896q0 26-19 45l-544 544q-19 19-45 19t-45-19-19-45v-288h-448q-26 0-45-19t-19-45v-384q0-26 19-45t45-19h448v-288q0-26 19-45t45-19 45 19l544 544q19 19 19 45z"}]}})
+
+
+/***/ }),
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -44933,20 +45061,19 @@ if (false) {
 }
 
 /***/ }),
-
-/***/ 846:
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(847)
+  __webpack_require__(61)
 }
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(849)
+var __vue_script__ = __webpack_require__(63)
 /* template */
-var __vue_template__ = __webpack_require__(850)
+var __vue_template__ = __webpack_require__(64)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -44986,18 +45113,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-
-/***/ 847:
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(848);
+var content = __webpack_require__(62);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("272bc741", content, false);
+var update = __webpack_require__(2)("272bc741", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -45013,23 +45139,21 @@ if(false) {
 }
 
 /***/ }),
-
-/***/ 848:
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-1c96e577] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-1c96e577] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-content[data-v-1c96e577] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-1c96e577] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-group--link[data-v-1c96e577] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-1c96e577] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-1c96e577] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-1c96e577]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.login__form-input[data-v-1c96e577]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-1c96e577]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-1c96e577]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-checkbox-label[data-v-1c96e577] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-1c96e577] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-1c96e577]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-1c96e577] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-link[data-v-1c96e577] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__button-group[data-v-1c96e577] {\n  margin-top: 30px;\n}\n.login__button[data-v-1c96e577] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-1c96e577]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-1c96e577] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-1c96e577] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-1c96e577] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-1c96e577] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-1c96e577] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-1c96e577] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-content[data-v-1c96e577] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-1c96e577] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-1c96e577] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-1c96e577] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-1c96e577] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-1c96e577]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-1c96e577]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-1c96e577]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-1c96e577]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-text[data-v-1c96e577] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-link[data-v-1c96e577] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__button-group[data-v-1c96e577] {\n  margin-top: 30px;\n}\n.register__button[data-v-1c96e577] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-1c96e577]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-1c96e577] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-1c96e577] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-1c96e577] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-1c96e577] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-1c96e577] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-1c96e577] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-content[data-v-1c96e577] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-1c96e577] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-1c96e577] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-1c96e577] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-1c96e577]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-1c96e577]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-1c96e577]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-1c96e577]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__button-group[data-v-1c96e577] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-1c96e577] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-1c96e577]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-1c96e577] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-1c96e577] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-1c96e577], .email__status-group[data-v-1c96e577] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-1c96e577], .email__status-list[data-v-1c96e577] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-1c96e577] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-1c96e577] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-1c96e577] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-1c96e577] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-content[data-v-1c96e577] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-1c96e577] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-1c96e577] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-1c96e577] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-1c96e577] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-1c96e577]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-1c96e577]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-1c96e577]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-1c96e577]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__button-group[data-v-1c96e577] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-1c96e577] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-1c96e577]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-1c96e577] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-1c96e577] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-1c96e577] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-1c96e577] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-1c96e577] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-1c96e577] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\nhtml[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-1c96e577]:focus {\n  outline: 0;\n}\nimg[data-v-1c96e577] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n}\n.footer[data-v-1c96e577] {\n  width: 100%;\n  height: 100px;\n  background-color: #515251;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-1c96e577] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-1c96e577] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-content[data-v-1c96e577] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-1c96e577] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-group--link[data-v-1c96e577] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-1c96e577] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-1c96e577] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-1c96e577]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-1c96e577]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-1c96e577]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-1c96e577]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-checkbox-label[data-v-1c96e577] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-1c96e577] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-1c96e577]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-1c96e577] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-link[data-v-1c96e577] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__button-group[data-v-1c96e577] {\n  margin-top: 30px;\n}\n.login__button[data-v-1c96e577] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-1c96e577]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-1c96e577] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-1c96e577] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-1c96e577] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-1c96e577] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-1c96e577] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-1c96e577] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-content[data-v-1c96e577] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-1c96e577] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-1c96e577] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-1c96e577] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-1c96e577] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-1c96e577]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-1c96e577]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-1c96e577]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-1c96e577]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-text[data-v-1c96e577] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-link[data-v-1c96e577] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__button-group[data-v-1c96e577] {\n  margin-top: 30px;\n}\n.register__button[data-v-1c96e577] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-1c96e577]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-1c96e577] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-1c96e577] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-1c96e577] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-1c96e577] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-1c96e577] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-1c96e577] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-content[data-v-1c96e577] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-1c96e577] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-1c96e577] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-1c96e577] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-1c96e577]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-1c96e577]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-1c96e577]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-1c96e577]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__button-group[data-v-1c96e577] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-1c96e577] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-1c96e577]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-1c96e577] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-1c96e577] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-1c96e577], .email__status-group[data-v-1c96e577] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-1c96e577], .email__status-list[data-v-1c96e577] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-1c96e577] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-1c96e577] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-1c96e577] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-1c96e577] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-content[data-v-1c96e577] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-1c96e577] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-1c96e577] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-1c96e577] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-1c96e577] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-1c96e577] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-1c96e577]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-1c96e577]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-1c96e577]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-1c96e577]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__button-group[data-v-1c96e577] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-1c96e577] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-1c96e577]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-1c96e577] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-1c96e577] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-1c96e577] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-1c96e577] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-1c96e577] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-1c96e577] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n}\nhtml[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-1c96e577]:focus {\n  outline: 0;\n}\nimg[data-v-1c96e577] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-1c96e577] {\n  width: 100%;\n  height: 100%;\n}\n.footer[data-v-1c96e577] {\n  width: 100%;\n  height: 100px;\n  background-color: #515251;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-
-/***/ 849:
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45056,8 +45180,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-
-/***/ 850:
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45077,8 +45200,7 @@ if (false) {
 }
 
 /***/ }),
-
-/***/ 851:
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45103,20 +45225,19 @@ if (false) {
 }
 
 /***/ }),
-
-/***/ 852:
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(853)
+  __webpack_require__(67)
 }
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(855)
+var __vue_script__ = __webpack_require__(69)
 /* template */
-var __vue_template__ = __webpack_require__(871)
+var __vue_template__ = __webpack_require__(85)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -45156,18 +45277,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-
-/***/ 853:
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(854);
+var content = __webpack_require__(68);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("7f1036ca", content, false);
+var update = __webpack_require__(2)("7f1036ca", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -45183,31 +45303,34 @@ if(false) {
 }
 
 /***/ }),
-
-/***/ 854:
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-1f65406d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-1f65406d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-content[data-v-1f65406d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-1f65406d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-group--link[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-1f65406d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-1f65406d] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-1f65406d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.login__form-input[data-v-1f65406d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-1f65406d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-1f65406d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-checkbox-label[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-1f65406d] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-1f65406d]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-1f65406d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-link[data-v-1f65406d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__button-group[data-v-1f65406d] {\n  margin-top: 30px;\n}\n.login__button[data-v-1f65406d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-1f65406d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-1f65406d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-1f65406d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-1f65406d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-content[data-v-1f65406d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-1f65406d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-1f65406d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-1f65406d] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-1f65406d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-1f65406d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-1f65406d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-1f65406d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-text[data-v-1f65406d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-link[data-v-1f65406d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__button-group[data-v-1f65406d] {\n  margin-top: 30px;\n}\n.register__button[data-v-1f65406d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-1f65406d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-1f65406d] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-1f65406d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-1f65406d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-1f65406d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-content[data-v-1f65406d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-1f65406d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-1f65406d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-1f65406d] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-1f65406d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-1f65406d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-1f65406d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-1f65406d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__button-group[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-1f65406d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-1f65406d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-1f65406d], .email__status-group[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-1f65406d], .email__status-list[data-v-1f65406d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-1f65406d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-1f65406d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-content[data-v-1f65406d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-1f65406d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-1f65406d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-1f65406d] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-1f65406d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-1f65406d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-1f65406d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-1f65406d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__button-group[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-1f65406d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-1f65406d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-1f65406d] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-1f65406d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-1f65406d] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\nhtml[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-1f65406d]:focus {\n  outline: 0;\n}\nimg[data-v-1f65406d] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n}\n.dashboard[data-v-1f65406d] {\n  width: 100%;\n  height: calc(100% - 50px);\n  background-color: #CAFCD8;\n}\n.dashboard__stave-keyboard-wrapper[data-v-1f65406d] {\n  padding: 10vh 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n@media only screen and (orientation: portrait) {\n.dashboard__stave-keyboard-wrapper[data-v-1f65406d] {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.dashboard__stave[data-v-1f65406d] {\n  margin-right: 2.5vw;\n}\n@include-breakpoint-portrait {\n.dashboard__stave {\n    margin-right: 0;\n}\n}\n.dashboard__keyboard[data-v-1f65406d] {\n  margin-left: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.dashboard__keyboard[data-v-1f65406d] {\n      margin-top: 5vh;\n      margin-left: 0;\n}\n}\n.dashboard__command-wrapper[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.dashboard__command[data-v-1f65406d] {\n  width: calc(100vw / 3);\n  height: 50px;\n  padding-top: 5px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 20px;\n  font-family: \"Bebas Neue\";\n  color: #000000;\n  opacity: 0.8;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  cursor: pointer;\n  -webkit-transition: opacity 0.1s linear;\n  transition: opacity 0.1s linear;\n}\n.dashboard__command[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.dashboard__command--delete[data-v-1f65406d] {\n  background-color: #fe664e;\n}\n.dashboard__command--replay[data-v-1f65406d] {\n  background-color: #27a9e0;\n}\n.dashboard__command--next[data-v-1f65406d] {\n  background-color: #7cbc42;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-1f65406d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-1f65406d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-content[data-v-1f65406d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-1f65406d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-group--link[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-1f65406d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-1f65406d] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-1f65406d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-1f65406d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-1f65406d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-1f65406d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-checkbox-label[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-1f65406d] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-1f65406d]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-1f65406d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-link[data-v-1f65406d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__button-group[data-v-1f65406d] {\n  margin-top: 30px;\n}\n.login__button[data-v-1f65406d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-1f65406d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-1f65406d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-1f65406d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-1f65406d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-content[data-v-1f65406d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-1f65406d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-1f65406d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-1f65406d] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-1f65406d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-1f65406d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-1f65406d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-1f65406d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-text[data-v-1f65406d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-link[data-v-1f65406d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__button-group[data-v-1f65406d] {\n  margin-top: 30px;\n}\n.register__button[data-v-1f65406d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-1f65406d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-1f65406d] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-1f65406d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-1f65406d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-1f65406d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-content[data-v-1f65406d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-1f65406d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-1f65406d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-1f65406d] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-1f65406d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-1f65406d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-1f65406d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-1f65406d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__button-group[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-1f65406d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-1f65406d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-1f65406d], .email__status-group[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-1f65406d], .email__status-list[data-v-1f65406d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-1f65406d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-1f65406d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-content[data-v-1f65406d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-1f65406d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-1f65406d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-1f65406d] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-1f65406d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-1f65406d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-1f65406d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-1f65406d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__button-group[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-1f65406d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-1f65406d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-1f65406d] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-1f65406d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-1f65406d] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n}\nhtml[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-1f65406d]:focus {\n  outline: 0;\n}\nimg[data-v-1f65406d] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n}\n.dashboard[data-v-1f65406d] {\n  width: 100%;\n  height: calc(100% - 50px);\n  background-color: #CAFCD8;\n}\n.dashboard__stave-keyboard-wrapper[data-v-1f65406d] {\n  padding: 10vh 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n@media only screen and (orientation: portrait) {\n.dashboard__stave-keyboard-wrapper[data-v-1f65406d] {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.dashboard__stave[data-v-1f65406d] {\n  margin-right: 2.5vw;\n}\n@include-breakpoint-portrait {\n.dashboard__stave {\n    margin-right: 0;\n}\n}\n.dashboard__keyboard[data-v-1f65406d] {\n  margin-left: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.dashboard__keyboard[data-v-1f65406d] {\n      margin-top: 5vh;\n      margin-left: 0;\n}\n}\n.dashboard__command-wrapper[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.dashboard__command[data-v-1f65406d] {\n  width: calc(100vw / 3);\n  height: 50px;\n  padding-top: 5px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 20px;\n  font-family: \"Bebas Neue\";\n  color: #000000;\n  opacity: 0.8;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n  -webkit-transition: opacity 0.1s linear;\n  transition: opacity 0.1s linear;\n}\n.dashboard__command[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.dashboard__command--delete[data-v-1f65406d] {\n  background-color: #fe664e;\n}\n.dashboard__command--replay[data-v-1f65406d] {\n  background-color: #27a9e0;\n}\n.dashboard__command--next[data-v-1f65406d] {\n  background-color: #7cbc42;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-
-/***/ 855:
+/* 69 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Stave__ = __webpack_require__(856);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Stave__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Stave___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Stave__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Keyboard_vue__ = __webpack_require__(866);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Keyboard_vue__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Keyboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Keyboard_vue__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -45358,20 +45481,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-
-/***/ 856:
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(857)
+  __webpack_require__(71)
 }
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(859)
+var __vue_script__ = __webpack_require__(73)
 /* template */
-var __vue_template__ = __webpack_require__(865)
+var __vue_template__ = __webpack_require__(79)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -45411,18 +45533,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-
-/***/ 857:
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(858);
+var content = __webpack_require__(72);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("10fce3ec", content, false);
+var update = __webpack_require__(2)("10fce3ec", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -45438,28 +45559,26 @@ if(false) {
 }
 
 /***/ }),
-
-/***/ 858:
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-630b64b0] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-630b64b0] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-content[data-v-630b64b0] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-630b64b0] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-group--link[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-630b64b0] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-630b64b0] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-630b64b0]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.login__form-input[data-v-630b64b0]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-630b64b0]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-630b64b0]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-checkbox-label[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-630b64b0] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-630b64b0]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-630b64b0] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-link[data-v-630b64b0] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__button-group[data-v-630b64b0] {\n  margin-top: 30px;\n}\n.login__button[data-v-630b64b0] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-630b64b0]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-630b64b0] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-630b64b0] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-630b64b0] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-630b64b0] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-content[data-v-630b64b0] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-630b64b0] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-630b64b0] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-630b64b0] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-630b64b0]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-630b64b0]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-630b64b0]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-630b64b0]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-text[data-v-630b64b0] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-link[data-v-630b64b0] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__button-group[data-v-630b64b0] {\n  margin-top: 30px;\n}\n.register__button[data-v-630b64b0] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-630b64b0]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-630b64b0] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-630b64b0] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-630b64b0] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-630b64b0] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-630b64b0] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-content[data-v-630b64b0] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-630b64b0] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-630b64b0] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-630b64b0] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-630b64b0]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-630b64b0]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-630b64b0]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-630b64b0]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__button-group[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-630b64b0] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-630b64b0]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-630b64b0] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-630b64b0], .email__status-group[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-630b64b0], .email__status-list[data-v-630b64b0] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-630b64b0] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-630b64b0] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-content[data-v-630b64b0] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-630b64b0] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-630b64b0] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-630b64b0] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-630b64b0]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-630b64b0]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-630b64b0]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-630b64b0]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__button-group[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-630b64b0] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-630b64b0]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-630b64b0] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-630b64b0] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-630b64b0] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-630b64b0] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\nhtml[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-630b64b0]:focus {\n  outline: 0;\n}\nimg[data-v-630b64b0] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n}\n.stave__svg[data-v-630b64b0] {\n  width: 45vw;\n  height: 13.5vw;\n}\n@media only screen and (orientation: portrait) {\n.stave__svg[data-v-630b64b0] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n.stave__line[data-v-630b64b0] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n}\n.stave__rect[data-v-630b64b0] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n  fill: none;\n}\n.stave__clef--treble[data-v-630b64b0] {\n  x: -1%;\n  y: 12%;\n  height: 79%;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-630b64b0] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-630b64b0] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-content[data-v-630b64b0] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-630b64b0] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-group--link[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-630b64b0] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-630b64b0] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-630b64b0]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-630b64b0]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-630b64b0]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-630b64b0]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-checkbox-label[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-630b64b0] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-630b64b0]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-630b64b0] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-link[data-v-630b64b0] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__button-group[data-v-630b64b0] {\n  margin-top: 30px;\n}\n.login__button[data-v-630b64b0] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-630b64b0]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-630b64b0] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-630b64b0] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-630b64b0] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-630b64b0] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-content[data-v-630b64b0] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-630b64b0] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-630b64b0] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-630b64b0] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-630b64b0]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-630b64b0]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-630b64b0]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-630b64b0]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-text[data-v-630b64b0] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-link[data-v-630b64b0] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__button-group[data-v-630b64b0] {\n  margin-top: 30px;\n}\n.register__button[data-v-630b64b0] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-630b64b0]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-630b64b0] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-630b64b0] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-630b64b0] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-630b64b0] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-630b64b0] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-content[data-v-630b64b0] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-630b64b0] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-630b64b0] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-630b64b0] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-630b64b0]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-630b64b0]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-630b64b0]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-630b64b0]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__button-group[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-630b64b0] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-630b64b0]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-630b64b0] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-630b64b0], .email__status-group[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-630b64b0], .email__status-list[data-v-630b64b0] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-630b64b0] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-630b64b0] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-content[data-v-630b64b0] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-630b64b0] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-630b64b0] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-630b64b0] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-630b64b0]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-630b64b0]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-630b64b0]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-630b64b0]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__button-group[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-630b64b0] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-630b64b0]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-630b64b0] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-630b64b0] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-630b64b0] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-630b64b0] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n}\nhtml[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-630b64b0]:focus {\n  outline: 0;\n}\nimg[data-v-630b64b0] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n}\n.stave__svg[data-v-630b64b0] {\n  width: 45vw;\n  height: 13.5vw;\n}\n@media only screen and (orientation: portrait) {\n.stave__svg[data-v-630b64b0] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n.stave__line[data-v-630b64b0] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n}\n.stave__rect[data-v-630b64b0] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n  fill: none;\n}\n.stave__clef--treble[data-v-630b64b0] {\n  x: -1%;\n  y: 12%;\n  height: 79%;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-
-/***/ 859:
+/* 73 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Note_vue__ = __webpack_require__(860);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Note_vue__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Note_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Note_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_propValidators__ = __webpack_require__(13);
 //
@@ -45563,9 +45682,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         keydown: function keydown(event) {
             switch (event.keyCode) {
-                case 8: // backspace
+                // backspace & delete
+                case 8:
                 case 46:
-                    // delete
                     this.eraseNote();
                     break;
             }
@@ -45577,20 +45696,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-
-/***/ 860:
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(861)
+  __webpack_require__(75)
 }
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(863)
+var __vue_script__ = __webpack_require__(77)
 /* template */
-var __vue_template__ = __webpack_require__(864)
+var __vue_template__ = __webpack_require__(78)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -45630,18 +45748,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-
-/***/ 861:
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(862);
+var content = __webpack_require__(76);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("37bf20e6", content, false);
+var update = __webpack_require__(2)("37bf20e6", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -45657,23 +45774,21 @@ if(false) {
 }
 
 /***/ }),
-
-/***/ 862:
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-47b507a9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-47b507a9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-content[data-v-47b507a9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-47b507a9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-group--link[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-47b507a9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-47b507a9] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-47b507a9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.login__form-input[data-v-47b507a9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-47b507a9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-47b507a9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-checkbox-label[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-47b507a9] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-47b507a9]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-47b507a9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-link[data-v-47b507a9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__button-group[data-v-47b507a9] {\n  margin-top: 30px;\n}\n.login__button[data-v-47b507a9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-47b507a9]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-47b507a9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-47b507a9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-47b507a9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-47b507a9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-content[data-v-47b507a9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-47b507a9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-47b507a9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-47b507a9] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-47b507a9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-47b507a9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-47b507a9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-47b507a9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-text[data-v-47b507a9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-link[data-v-47b507a9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__button-group[data-v-47b507a9] {\n  margin-top: 30px;\n}\n.register__button[data-v-47b507a9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-47b507a9]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-47b507a9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-47b507a9] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-47b507a9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-47b507a9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-47b507a9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-content[data-v-47b507a9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-47b507a9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-47b507a9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-47b507a9] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-47b507a9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-47b507a9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-47b507a9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-47b507a9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__button-group[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-47b507a9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-47b507a9]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-47b507a9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-47b507a9], .email__status-group[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-47b507a9], .email__status-list[data-v-47b507a9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-47b507a9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-47b507a9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-content[data-v-47b507a9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-47b507a9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-47b507a9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-47b507a9] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-47b507a9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-47b507a9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-47b507a9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-47b507a9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__button-group[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-47b507a9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-47b507a9]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-47b507a9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-47b507a9] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-47b507a9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-47b507a9] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\nhtml[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-47b507a9]:focus {\n  outline: 0;\n}\nimg[data-v-47b507a9] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n}\n.note__hidden[data-v-47b507a9] {\n  display: none;\n}\n.note__helper-line[data-v-47b507a9] {\n  stroke: #000000;\n  stroke-width: 0.9%;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-47b507a9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-47b507a9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-content[data-v-47b507a9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-47b507a9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-group--link[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-47b507a9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-47b507a9] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-47b507a9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-47b507a9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-47b507a9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-47b507a9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-checkbox-label[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-47b507a9] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-47b507a9]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-47b507a9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-link[data-v-47b507a9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__button-group[data-v-47b507a9] {\n  margin-top: 30px;\n}\n.login__button[data-v-47b507a9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-47b507a9]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-47b507a9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-47b507a9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-47b507a9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-47b507a9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-content[data-v-47b507a9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-47b507a9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-47b507a9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-47b507a9] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-47b507a9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-47b507a9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-47b507a9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-47b507a9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-text[data-v-47b507a9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-link[data-v-47b507a9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__button-group[data-v-47b507a9] {\n  margin-top: 30px;\n}\n.register__button[data-v-47b507a9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-47b507a9]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-47b507a9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-47b507a9] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-47b507a9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-47b507a9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-47b507a9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-content[data-v-47b507a9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-47b507a9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-47b507a9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-47b507a9] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-47b507a9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-47b507a9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-47b507a9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-47b507a9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__button-group[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-47b507a9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-47b507a9]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-47b507a9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-47b507a9], .email__status-group[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-47b507a9], .email__status-list[data-v-47b507a9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-47b507a9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-47b507a9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-content[data-v-47b507a9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-47b507a9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-47b507a9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-47b507a9] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-47b507a9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-47b507a9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-47b507a9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-47b507a9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__button-group[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-47b507a9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-47b507a9]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-47b507a9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-47b507a9] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-47b507a9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-47b507a9] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n}\nhtml[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-47b507a9]:focus {\n  outline: 0;\n}\nimg[data-v-47b507a9] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n}\n.note__hidden[data-v-47b507a9] {\n  display: none;\n}\n.note__helper-line[data-v-47b507a9] {\n  stroke: #000000;\n  stroke-width: 0.9%;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-
-/***/ 863:
+/* 77 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45861,8 +45976,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-
-/***/ 864:
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -46355,8 +46469,7 @@ if (false) {
 }
 
 /***/ }),
-
-/***/ 865:
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -46367,7 +46480,12 @@ var render = function() {
     "svg",
     {
       staticClass: "stave__svg",
-      attrs: { viewBox: "0 0 100 30", preserveAspectRatio: "xMidYMid meet" }
+      attrs: {
+        viewBox: "0 0 100 30",
+        preserveAspectRatio: "xMidYMid meet",
+        xmlns: "http://www.w3.org/2000/svg",
+        version: "1.1"
+      }
     },
     [
       _c("rect", {
@@ -46444,20 +46562,19 @@ if (false) {
 }
 
 /***/ }),
-
-/***/ 866:
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(867)
+  __webpack_require__(81)
 }
-var normalizeComponent = __webpack_require__(4)
+var normalizeComponent = __webpack_require__(3)
 /* script */
-var __vue_script__ = __webpack_require__(869)
+var __vue_script__ = __webpack_require__(83)
 /* template */
-var __vue_template__ = __webpack_require__(870)
+var __vue_template__ = __webpack_require__(84)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -46497,18 +46614,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-
-/***/ 867:
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(868);
+var content = __webpack_require__(82);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(3)("57fc4823", content, false);
+var update = __webpack_require__(2)("57fc4823", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -46524,29 +46640,32 @@ if(false) {
 }
 
 /***/ }),
-
-/***/ 868:
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-140ebcc4] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-140ebcc4] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-content[data-v-140ebcc4] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-140ebcc4] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-group--link[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-140ebcc4] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-140ebcc4] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-140ebcc4]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.login__form-input[data-v-140ebcc4]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-140ebcc4]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.login__form-input[data-v-140ebcc4]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-checkbox-label[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-140ebcc4] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-140ebcc4]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-140ebcc4] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__form-link[data-v-140ebcc4] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.login__button-group[data-v-140ebcc4] {\n  margin-top: 30px;\n}\n.login__button[data-v-140ebcc4] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-140ebcc4]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-140ebcc4] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-140ebcc4] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-140ebcc4] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-140ebcc4] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-content[data-v-140ebcc4] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-140ebcc4] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-140ebcc4] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-140ebcc4] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-140ebcc4]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.register__form-input[data-v-140ebcc4]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-140ebcc4]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.register__form-input[data-v-140ebcc4]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-text[data-v-140ebcc4] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__form-link[data-v-140ebcc4] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.register__button-group[data-v-140ebcc4] {\n  margin-top: 30px;\n}\n.register__button[data-v-140ebcc4] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-140ebcc4]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-140ebcc4] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-140ebcc4] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-140ebcc4] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-140ebcc4] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-140ebcc4] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-content[data-v-140ebcc4] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-140ebcc4] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-140ebcc4] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-140ebcc4] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-140ebcc4]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.email__form-input[data-v-140ebcc4]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-140ebcc4]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.email__form-input[data-v-140ebcc4]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.email__button-group[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-140ebcc4] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-140ebcc4]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-140ebcc4] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-140ebcc4], .email__status-group[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-140ebcc4], .email__status-list[data-v-140ebcc4] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-140ebcc4] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-140ebcc4] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-content[data-v-140ebcc4] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-140ebcc4] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-140ebcc4] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-140ebcc4] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-140ebcc4]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-140ebcc4]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-140ebcc4]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -ms-user-select: none;\n      user-select: none;\n}\n.reset__form-input[data-v-140ebcc4]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__button-group[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-140ebcc4] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-140ebcc4]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-140ebcc4] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-140ebcc4] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-140ebcc4] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-140ebcc4] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n}\nhtml[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-140ebcc4]:focus {\n  outline: 0;\n}\nimg[data-v-140ebcc4] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n}\n.keyboard[data-v-140ebcc4] {\n  width: 45vw;\n  height: 13.5vw;\n}\n@media only screen and (orientation: portrait) {\n.keyboard[data-v-140ebcc4] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n.keyboard__key[data-v-140ebcc4] {\n  cursor: pointer;\n}\n.keyboard__key--white[data-v-140ebcc4] {\n  fill: #ffffff;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n.keyboard__key--black[data-v-140ebcc4] {\n  fill: #000000;\n}\n.keyboard__key--pressed[data-v-140ebcc4] {\n  fill: #64ee8a;\n}\n.keyboard__key-text[data-v-140ebcc4] {\n  font-family: \"Montserrat Regular\";\n  pointer-events: none;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  text-anchor: middle;\n}\n.keyboard__key-text--white[data-v-140ebcc4] {\n  fill: #000000;\n  font-size: 4px;\n}\n.keyboard__key-text--black[data-v-140ebcc4] {\n  fill: #ffffff;\n  font-size: 3px;\n}\n.keyboard__frame[data-v-140ebcc4] {\n  width: 100px;\n  height: 100px;\n  fill: none;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-140ebcc4] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-140ebcc4] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-content[data-v-140ebcc4] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-140ebcc4] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-group--link[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-140ebcc4] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-140ebcc4] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-140ebcc4]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-140ebcc4]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-140ebcc4]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-input[data-v-140ebcc4]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-checkbox-label[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-140ebcc4] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-140ebcc4]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-140ebcc4] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__form-link[data-v-140ebcc4] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.login__button-group[data-v-140ebcc4] {\n  margin-top: 30px;\n}\n.login__button[data-v-140ebcc4] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.login__button[data-v-140ebcc4]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-140ebcc4] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-140ebcc4] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-140ebcc4] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-140ebcc4] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-content[data-v-140ebcc4] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-140ebcc4] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-140ebcc4] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-140ebcc4] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-140ebcc4]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-140ebcc4]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-140ebcc4]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-input[data-v-140ebcc4]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-text[data-v-140ebcc4] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__form-link[data-v-140ebcc4] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.register__button-group[data-v-140ebcc4] {\n  margin-top: 30px;\n}\n.register__button[data-v-140ebcc4] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.register__button[data-v-140ebcc4]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-140ebcc4] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-140ebcc4] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-140ebcc4] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-140ebcc4] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-140ebcc4] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-content[data-v-140ebcc4] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-140ebcc4] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-140ebcc4] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-140ebcc4] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-140ebcc4]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-140ebcc4]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-140ebcc4]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__form-input[data-v-140ebcc4]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.email__button-group[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-140ebcc4] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.email__button[data-v-140ebcc4]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-140ebcc4] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-140ebcc4], .email__status-group[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-140ebcc4], .email__status-list[data-v-140ebcc4] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-140ebcc4] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-140ebcc4] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-content[data-v-140ebcc4] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-140ebcc4] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.reset__form-input[data-v-140ebcc4] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-140ebcc4] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-140ebcc4]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-140ebcc4]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-140ebcc4]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__form-input[data-v-140ebcc4]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.reset__button-group[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-140ebcc4] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n.reset__button[data-v-140ebcc4]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-140ebcc4] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-140ebcc4] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-140ebcc4] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-140ebcc4] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n}\nhtml[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-140ebcc4]:focus {\n  outline: 0;\n}\nimg[data-v-140ebcc4] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n#app[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n}\n.keyboard[data-v-140ebcc4] {\n  width: 45vw;\n  height: 13.5vw;\n}\n@media only screen and (orientation: portrait) {\n.keyboard[data-v-140ebcc4] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n.keyboard__key[data-v-140ebcc4] {\n  cursor: pointer;\n}\n.keyboard__key--white[data-v-140ebcc4] {\n  fill: #ffffff;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n.keyboard__key--black[data-v-140ebcc4] {\n  fill: #000000;\n}\n.keyboard__key--pressed[data-v-140ebcc4] {\n  fill: #64ee8a;\n}\n.keyboard__key-text[data-v-140ebcc4] {\n  font-family: \"Montserrat Regular\";\n  pointer-events: none;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  text-anchor: middle;\n}\n.keyboard__key-text--white[data-v-140ebcc4] {\n  fill: #000000;\n  font-size: 4px;\n}\n.keyboard__key-text--black[data-v-140ebcc4] {\n  fill: #ffffff;\n  font-size: 3px;\n}\n.keyboard__frame[data-v-140ebcc4] {\n  width: 100px;\n  height: 100px;\n  fill: none;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-
-/***/ 869:
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -46683,11 +46802,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             })));
             return keys.length > 0 ? keys[0] : null;
         },
-        mousedown: function mousedown(key) {
+        mousedown: function mousedown(event, key) {
+            event.preventDefault();
             key.pressed = true;
             this.noteOn(key.midiPitch);
         },
-        mouseup: function mouseup(key) {
+        mouseup: function mouseup(event, key) {
+            event.preventDefault();
             key.pressed = false;
             this.noteOff(key.midiPitch);
             this.$emit('note-played', key.pitch);
@@ -46728,8 +46849,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 });
 
 /***/ }),
-
-/***/ 870:
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -46740,7 +46860,12 @@ var render = function() {
     "svg",
     {
       staticClass: "keyboard",
-      attrs: { viewBox: "0 0 100 30", preserveAspectRatio: "xMidYMid meet" }
+      attrs: {
+        viewBox: "0 0 100 30",
+        preserveAspectRatio: "xMidYMid meet",
+        xmlns: "http://www.w3.org/2000/svg",
+        version: "1.1"
+      }
     },
     [
       _vm._l(_vm.keys.white, function(key, index) {
@@ -46755,16 +46880,16 @@ var render = function() {
           },
           on: {
             mousedown: function($event) {
-              _vm.mousedown(key)
+              _vm.mousedown($event, key)
             },
             mouseup: function($event) {
-              _vm.mouseup(key)
+              _vm.mouseup($event, key)
             },
             touchstart: function($event) {
-              _vm.mousedown(key)
+              _vm.mousedown($event, key)
             },
             touchend: function($event) {
-              _vm.mouseup(key)
+              _vm.mouseup($event, key)
             }
           }
         })
@@ -46783,16 +46908,16 @@ var render = function() {
               },
               on: {
                 mousedown: function($event) {
-                  _vm.mousedown(key)
+                  _vm.mousedown($event, key)
                 },
                 mouseup: function($event) {
-                  _vm.mouseup(key)
+                  _vm.mouseup($event, key)
                 },
                 touchstart: function($event) {
-                  _vm.mousedown(key)
+                  _vm.mousedown($event, key)
                 },
                 touchend: function($event) {
-                  _vm.mouseup(key)
+                  _vm.mouseup($event, key)
                 }
               }
             })
@@ -46866,8 +46991,7 @@ if (false) {
 }
 
 /***/ }),
-
-/***/ 871:
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -46948,200 +47072,10 @@ if (false) {
 }
 
 /***/ }),
-
-/***/ 872:
+/* 86 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
-/***/ }),
-
-/***/ 9:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(1);
-var settle = __webpack_require__(30);
-var buildURL = __webpack_require__(32);
-var parseHeaders = __webpack_require__(33);
-var isURLSameOrigin = __webpack_require__(34);
-var createError = __webpack_require__(10);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(35);
-
-module.exports = function xhrAdapter(config) {
-  return new Promise(function dispatchXhrRequest(resolve, reject) {
-    var requestData = config.data;
-    var requestHeaders = config.headers;
-
-    if (utils.isFormData(requestData)) {
-      delete requestHeaders['Content-Type']; // Let the browser set it
-    }
-
-    var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if ("development" !== 'test' &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
-
-    // HTTP basic authentication
-    if (config.auth) {
-      var username = config.auth.username || '';
-      var password = config.auth.password || '';
-      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
-    }
-
-    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
-
-    // Set the request timeout in MS
-    request.timeout = config.timeout;
-
-    // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
-        return;
-      }
-
-      // The request errored out and we didn't get a response, this will be
-      // handled by onerror instead
-      // With one exception: request that using file: protocol, most browsers
-      // will return status as 0 even though it's a successful request
-      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
-        return;
-      }
-
-      // Prepare the response
-      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
-      var response = {
-        data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
-        headers: responseHeaders,
-        config: config,
-        request: request
-      };
-
-      settle(resolve, reject, response);
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle low level network errors
-    request.onerror = function handleError() {
-      // Real errors are hidden from us by the browser
-      // onerror should only fire if it's a network error
-      reject(createError('Network Error', config, null, request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle timeout
-    request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
-        request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Add xsrf header
-    // This is only done if running in a standard browser environment.
-    // Specifically not if we're in a web worker, or react-native.
-    if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(36);
-
-      // Add xsrf header
-      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
-          cookies.read(config.xsrfCookieName) :
-          undefined;
-
-      if (xsrfValue) {
-        requestHeaders[config.xsrfHeaderName] = xsrfValue;
-      }
-    }
-
-    // Add headers to the request
-    if ('setRequestHeader' in request) {
-      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
-        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
-          // Remove Content-Type if data is undefined
-          delete requestHeaders[key];
-        } else {
-          // Otherwise add header to the request
-          request.setRequestHeader(key, val);
-        }
-      });
-    }
-
-    // Add withCredentials to request if needed
-    if (config.withCredentials) {
-      request.withCredentials = true;
-    }
-
-    // Add responseType to request if needed
-    if (config.responseType) {
-      try {
-        request.responseType = config.responseType;
-      } catch (e) {
-        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
-        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
-        if (config.responseType !== 'json') {
-          throw e;
-        }
-      }
-    }
-
-    // Handle progress if needed
-    if (typeof config.onDownloadProgress === 'function') {
-      request.addEventListener('progress', config.onDownloadProgress);
-    }
-
-    // Not all browsers support upload events
-    if (typeof config.onUploadProgress === 'function' && request.upload) {
-      request.upload.addEventListener('progress', config.onUploadProgress);
-    }
-
-    if (config.cancelToken) {
-      // Handle cancellation
-      config.cancelToken.promise.then(function onCanceled(cancel) {
-        if (!request) {
-          return;
-        }
-
-        request.abort();
-        reject(cancel);
-        // Clean up request
-        request = null;
-      });
-    }
-
-    if (requestData === undefined) {
-      requestData = null;
-    }
-
-    // Send the request
-    request.send(requestData);
-  });
-};
-
-
 /***/ })
-
-/******/ });
+/******/ ]);

@@ -71,10 +71,11 @@
           justify-content: center;
   font-size: 75px;
   font-family: "Bebas Neue", Verdana;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .login__form-content {
@@ -103,10 +104,11 @@
   margin-bottom: 10px;
   font-size: 26px;
   font-family: "Bebas Neue", Verdana;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .login__form-group--link {
@@ -132,31 +134,41 @@
 .login__form-input::-webkit-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .login__form-input:-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   -ms-user-select: none;
-      user-select: none;
+  user-select: none;
 }
 
 .login__form-input::-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   -ms-user-select: none;
-      user-select: none;
+  user-select: none;
 }
 
 .login__form-input::placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .login__form-checkbox-label {
@@ -168,10 +180,11 @@
           align-items: center;
   font-size: 15px;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   cursor: pointer;
 }
 
@@ -186,19 +199,21 @@
 .login__form-text {
   font-size: 15px;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .login__form-link {
   font-size: 15px;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .login__button-group {
@@ -214,10 +229,11 @@
   border: 0;
   opacity: 0.7;
   cursor: pointer;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
@@ -306,10 +322,11 @@
           justify-content: center;
   font-size: 75px;
   font-family: "Bebas Neue", Verdana;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .register__form-content {
@@ -342,10 +359,11 @@
   margin-bottom: 10px;
   font-size: 26px;
   font-family: "Bebas Neue", Verdana;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .register__form-input {
@@ -367,49 +385,61 @@
 .register__form-input::-webkit-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .register__form-input:-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   -ms-user-select: none;
-      user-select: none;
+  user-select: none;
 }
 
 .register__form-input::-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   -ms-user-select: none;
-      user-select: none;
+  user-select: none;
 }
 
 .register__form-input::placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .register__form-text {
   font-size: 15px;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .register__form-link {
   font-size: 15px;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .register__button-group {
@@ -425,10 +455,11 @@
   border: 0;
   opacity: 0.7;
   cursor: pointer;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
@@ -517,10 +548,11 @@
           justify-content: center;
   font-size: 75px;
   font-family: "Bebas Neue", Verdana;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .email__form-content {
@@ -549,10 +581,11 @@
   margin-bottom: 10px;
   font-size: 26px;
   font-family: "Bebas Neue", Verdana;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .email__form-input {
@@ -574,31 +607,41 @@
 .email__form-input::-webkit-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .email__form-input:-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   -ms-user-select: none;
-      user-select: none;
+  user-select: none;
 }
 
 .email__form-input::-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   -ms-user-select: none;
-      user-select: none;
+  user-select: none;
 }
 
 .email__form-input::placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .email__button-group {
@@ -620,10 +663,11 @@
   border: 0;
   opacity: 0.7;
   cursor: pointer;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
@@ -736,10 +780,11 @@
           justify-content: center;
   font-size: 75px;
   font-family: "Bebas Neue", Verdana;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .reset__form-content {
@@ -797,31 +842,41 @@
 .reset__form-input::-webkit-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .reset__form-input:-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   -ms-user-select: none;
-      user-select: none;
+  user-select: none;
 }
 
 .reset__form-input::-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   -ms-user-select: none;
-      user-select: none;
+  user-select: none;
 }
 
 .reset__form-input::placeholder {
   color: #777780;
   font-family: "Montserrat Light";
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .reset__button-group {
@@ -843,10 +898,11 @@
   border: 0;
   opacity: 0.7;
   cursor: pointer;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
@@ -895,6 +951,9 @@
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {

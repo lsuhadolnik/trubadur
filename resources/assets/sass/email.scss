@@ -28,13 +28,18 @@ $time-button-hover: 0.1s * $time-factor;
 }
 
 .email__form-title {
-    width           : 100%;
-    margin-bottom   : 30px;
-    display         : flex;
-    justify-content : center;
-    font-size       : 75px;
-    font-family     : $font-title, Verdana;
-    user-select     : none;
+    width                 : 100%;
+    margin-bottom         : 30px;
+    display               : flex;
+    justify-content       : center;
+    font-size             : 75px;
+    font-family           : $font-title, Verdana;
+    -webkit-touch-callout : none;
+    -webkit-user-select   : none;
+     -khtml-user-select   : none;
+       -moz-user-select   : none;
+        -ms-user-select   : none;
+            user-select   : none;
 }
 
 .email__form-content {
@@ -50,11 +55,16 @@ $time-button-hover: 0.1s * $time-factor;
 }
 
 .email__form-subtitle {
-    width           : 100%;
-    margin-bottom   : 10px;
-    font-size       : 26px;
-    font-family     : $font-title, Verdana;
-    user-select     : none;
+    width                 : 100%;
+    margin-bottom         : 10px;
+    font-size             : 26px;
+    font-family           : $font-title, Verdana;
+    -webkit-touch-callout : none;
+    -webkit-user-select   : none;
+     -khtml-user-select   : none;
+       -moz-user-select   : none;
+        -ms-user-select   : none;
+            user-select   : none;
 }
 
 .email__form-input {
@@ -72,9 +82,14 @@ $time-button-hover: 0.1s * $time-factor;
 .email__form-input--error { border-color: $neon-red; }
 
 .email__form-input::placeholder {
-    color       : $dolphin;
-    font-family : $font-light;
-    user-select : none;
+    color                 : $dolphin;
+    font-family           : $font-light;
+    -webkit-touch-callout : none;
+    -webkit-user-select   : none;
+     -khtml-user-select   : none;
+       -moz-user-select   : none;
+        -ms-user-select   : none;
+            user-select   : none;
 }
 
 .email__button-group {
@@ -84,16 +99,21 @@ $time-button-hover: 0.1s * $time-factor;
 }
 
 .email__button {
-    width       : 125px;
-    height      : 50px;
-    padding-top : 5px;
-    font-size   : 25px;
-    font-family : $font-title;
-    border      : 0;
-    opacity     : 0.7;
-    cursor      : pointer;
-    user-select : none;
-    transition  : all $time-button-hover linear;
+    width                 : 125px;
+    height                : 50px;
+    padding-top           : 5px;
+    font-size             : 25px;
+    font-family           : $font-title;
+    border                : 0;
+    opacity               : 0.7;
+    cursor                : pointer;
+    -webkit-touch-callout : none;
+    -webkit-user-select   : none;
+     -khtml-user-select   : none;
+       -moz-user-select   : none;
+        -ms-user-select   : none;
+            user-select   : none;
+    transition            : all $time-button-hover linear;
 
     &:hover { opacity: 1; }
 }

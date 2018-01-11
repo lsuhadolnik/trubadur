@@ -30,7 +30,7 @@
 </style>
 
 <template>
-    <svg class="stave__svg" viewBox="0 0 100 30" preserveAspectRatio="xMidYMid meet">
+    <svg class="stave__svg" viewBox="0 0 100 30" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.1">
         <rect class="stave__rect" x="0" y="30%" width="100%" height="40%"></rect>
         <line class="stave__line" x1="0" :y1="(30 + n * 10) + '%'" x2="100%" :y2="(30 + n * 10) + '%'" :key="n" v-for="n in 3"></line>
         <image class="stave__clef--treble" xlink:href="/images/clef-treble.svg"/>
