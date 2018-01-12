@@ -168,7 +168,7 @@ export default {
             let y = 11.5 - 1.5 * this.pitches[this.pitch]
 
             if (!this.up) {
-                y += 7
+                y += 8.6
             }
 
             this.transform = `translate(${x} ${y}) scale(0.28)`
