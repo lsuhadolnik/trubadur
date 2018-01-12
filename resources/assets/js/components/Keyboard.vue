@@ -24,15 +24,9 @@
 .keyboard__key--pressed { fill: $pale-green; }
 
 .keyboard__key-text {
-  font-family           : $font-regular;
-  pointer-events        : none;
-  -webkit-touch-callout : none;
-    -webkit-user-select : none;
-     -khtml-user-select : none;
-       -moz-user-select : none;
-        -ms-user-select : none;
-            user-select : none;
-  text-anchor           : middle;
+  font-family    : $font-regular;
+  pointer-events : none;
+  text-anchor    : middle;
 }
 
 .keyboard__key-text--white {

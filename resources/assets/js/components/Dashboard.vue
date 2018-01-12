@@ -7,6 +7,20 @@
     background-color : $aero-blue;
 }
 
+.dashboard__loader {
+  position  : absolute;
+  top       : 50%;
+  left      : 50%;
+  transform : translate(-50%, -50%);
+  width     : 100px;
+  height    : 100px;
+
+  @include breakpoint-phone {
+      width  : 75px;
+      height : 75px;
+  }
+}
+
 .dashboard__stave-keyboard-wrapper {
     padding         : 10vh 2.5vw;
     display         : flex;
@@ -67,18 +81,21 @@
 
 <template>
     <div class="dashboard">
-        <div class="dashboard__stave-keyboard-wrapper">
-            <div class="dashboard__stave">
-                <stave :min-notes="minNotes" :max-notes="maxNotes" :note-type="noteType" @notes-changed="notesChanged"></stave>
+        <img class="dashboard__loader" src="/images/loader.svg" v-show="loading"/>
+        <div v-show="!loading">
+            <div class="dashboard__stave-keyboard-wrapper">
+                <div class="dashboard__stave">
+                    <stave :min-notes="minNotes" :max-notes="maxNotes" :note-type="noteType" @notes-changed="notesChanged"></stave>
+                </div>
+                <div class="dashboard__keyboard">
+                    <keyboard @midi-plugin-loaded="MIDIPluginLoaded" @note-played="addNote"></keyboard>
+                </div>
             </div>
-            <div class="dashboard__keyboard">
-                <keyboard @midi-plugin-loaded="MIDIPluginLoaded" @note-played="addNote"></keyboard>
+            <div class="dashboard__command-wrapper">
+                <div class="dashboard__command dashboard__command--delete" @click="removeNote">DELETE NOTE</div>
+                <div class="dashboard__command dashboard__command--replay" @click="playNotes">REPLAY</div>
+                <div class="dashboard__command dashboard__command--next" @click="checkCorrectness">NEXT</div>
             </div>
-        </div>
-        <div class="dashboard__command-wrapper">
-            <div class="dashboard__command dashboard__command--delete" @click="removeNote">DELETE NOTE</div>
-            <div class="dashboard__command dashboard__command--replay" @click="playNotes">REPLAY</div>
-            <div class="dashboard__command dashboard__command--next" @click="checkCorrectness">NEXT</div>
         </div>
     </div>
 </template>
@@ -99,17 +116,16 @@ export default {
         }
     },
     methods: {
+        MIDIPluginLoaded () {
+            this.loading = false
+            this.generateSample()
+        },
         generateSample () {
             const pitches = ['Bb3', 'B3', 'C4', 'Db4', 'D4', 'Eb4', 'E4', 'F4', 'Gb4', 'G4', 'Ab4', 'A4', 'Bb4', 'B4', 'C5', 'Db5']
             this.sample = _.take(_.shuffle(pitches), this.maxNotes)
             this.$emit('clear-notes')
             this.addNote(this.sample[0])
             this.playNotes()
-            console.log('New sample generated: ', this.sample)
-        },
-        MIDIPluginLoaded () {
-            this.loading = false
-            this.generateSample()
         },
         playNote (pitch) {
             this.$emit('play-note', pitch)

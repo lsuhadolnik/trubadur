@@ -71,11 +71,6 @@
           justify-content: center;
   font-size: 75px;
   font-family: "Bebas Neue", Verdana;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .login__form-content {
@@ -104,11 +99,6 @@
   margin-bottom: 10px;
   font-size: 26px;
   font-family: "Bebas Neue", Verdana;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .login__form-group--link {
@@ -134,41 +124,21 @@
 .login__form-input::-webkit-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .login__form-input:-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .login__form-input::-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .login__form-input::placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .login__form-checkbox-label {
@@ -180,11 +150,6 @@
           align-items: center;
   font-size: 15px;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   cursor: pointer;
 }
 
@@ -199,21 +164,11 @@
 .login__form-text {
   font-size: 15px;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .login__form-link {
   font-size: 15px;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .login__button-group {
@@ -229,13 +184,20 @@
   border: 0;
   opacity: 0.7;
   cursor: pointer;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .login__button {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .login__button {
+    opacity: 1;
+  }
 }
 
 .login__button:hover {
@@ -322,11 +284,6 @@
           justify-content: center;
   font-size: 75px;
   font-family: "Bebas Neue", Verdana;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .register__form-content {
@@ -359,11 +316,6 @@
   margin-bottom: 10px;
   font-size: 26px;
   font-family: "Bebas Neue", Verdana;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .register__form-input {
@@ -385,61 +337,31 @@
 .register__form-input::-webkit-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .register__form-input:-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .register__form-input::-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .register__form-input::placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .register__form-text {
   font-size: 15px;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .register__form-link {
   font-size: 15px;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .register__button-group {
@@ -455,13 +377,20 @@
   border: 0;
   opacity: 0.7;
   cursor: pointer;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .register__button {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .register__button {
+    opacity: 1;
+  }
 }
 
 .register__button:hover {
@@ -548,11 +477,6 @@
           justify-content: center;
   font-size: 75px;
   font-family: "Bebas Neue", Verdana;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .email__form-content {
@@ -581,11 +505,6 @@
   margin-bottom: 10px;
   font-size: 26px;
   font-family: "Bebas Neue", Verdana;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .email__form-input {
@@ -607,41 +526,21 @@
 .email__form-input::-webkit-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .email__form-input:-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .email__form-input::-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .email__form-input::placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .email__button-group {
@@ -663,13 +562,20 @@
   border: 0;
   opacity: 0.7;
   cursor: pointer;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .email__button {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .email__button {
+    opacity: 1;
+  }
 }
 
 .email__button:hover {
@@ -780,11 +686,6 @@
           justify-content: center;
   font-size: 75px;
   font-family: "Bebas Neue", Verdana;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .reset__form-content {
@@ -817,10 +718,6 @@
   margin-bottom: 10px;
   font-size: 26px;
   font-family: "Bebas Neue", Verdana;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
 }
 
 .reset__form-input {
@@ -842,41 +739,21 @@
 .reset__form-input::-webkit-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .reset__form-input:-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .reset__form-input::-ms-input-placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .reset__form-input::placeholder {
   color: #777780;
   font-family: "Montserrat Light";
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .reset__button-group {
@@ -898,13 +775,20 @@
   border: 0;
   opacity: 0.7;
   cursor: pointer;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .reset__button {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .reset__button {
+    opacity: 1;
+  }
 }
 
 .reset__button:hover {
@@ -954,6 +838,11 @@
   -webkit-touch-callout: none;
   -webkit-text-size-adjust: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 html {
@@ -973,11 +862,11 @@ button:focus {
   outline: 0;
 }
 
-img {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+input {
+  -webkit-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+  user-select: auto;
 }
 
 #app {
