@@ -24,7 +24,6 @@
         "url": "http://www.gep.si"
     },
     "scripts": {
-        "app": "npm run watch & php artisan serve",
         "serve": "php artisan serve",
         "dev": "npm run development",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",

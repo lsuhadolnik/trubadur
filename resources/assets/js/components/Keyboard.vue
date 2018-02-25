@@ -24,19 +24,21 @@
 .keyboard__key--pressed { fill: $pale-green; }
 
 .keyboard__key-text {
-  font-family    : $font-regular;
-  pointer-events : none;
-  text-anchor    : middle;
+    font-family    : $font-regular;
+    pointer-events : none;
+    text-anchor    : middle;
+
+    @include breakpoint-phone { display: none; }
 }
 
 .keyboard__key-text--white {
-  fill      : $black;
-  font-size : 4px;
+    fill      : $black;
+    font-size : 4px;
 }
 
 .keyboard__key-text--black {
-  fill      : $white;
-  font-size : 3px;
+    fill      : $white;
+    font-size : 3px;
 }
 
 .keyboard__frame {
@@ -93,7 +95,6 @@ export default {
         }
     },
     created () {
-        this.setupMIDIPlugin()
         this.$parent.$on('play-note', this.playNote)
     },
     mounted () {
@@ -109,20 +110,12 @@ export default {
     computed: {
         nKeys () {
             return this.keys.white.length
+        },
+        midi () {
+            return this.$store.getters.midi
         }
     },
     methods: {
-        setupMIDIPlugin () {
-            MIDI.loadPlugin({
-                soundfontUrl: '/soundfonts/',
-                instruments: ['acoustic_grand_piano'],
-                onsuccess: () => {
-                    MIDI.setVolume(0, 127)
-                    MIDI.programChange(0, MIDI.GM.byName['acoustic_grand_piano'].number)
-                    this.$emit('midi-plugin-loaded')
-                }
-            })
-        },
         getKeyByCode (keyCode) {
             const keys = [
                 ...this.keys.white.filter(key => key.code === keyCode),
@@ -165,16 +158,16 @@ export default {
         },
         noteOn (midiPitch) {
             // channel id, note number, velocity, delay
-            MIDI.noteOn(0, midiPitch, 32, 0)
+            this.midi.noteOn(0, midiPitch, 32, 0)
         },
         noteOff (midiPitch) {
             // channel id, note number, delay
-            MIDI.noteOff(0, midiPitch, 0.5)
+            this.midi.noteOff(0, midiPitch, 0.5)
         },
-        playNote (pitch) {
+        playNote (pitch, delay) {
             const key = this.getKeyByPitch(pitch)
             this.noteOn(key.midiPitch)
-            setTimeout(() => this.noteOff(key.midiPitch), 500)
+            setTimeout(() => this.noteOff(key.midiPitch), delay)
         }
     }
 }
