@@ -109,7 +109,7 @@ export default {
             this.sample = _.take(_.shuffle(pitches), this.notes.max)
             this.clearNotes()
             this.addNote(this.sample[0])
-            $(this.$el.querySelector('.intervals__command--replay')).click()
+            this.playNotes()
         },
         playNote (pitch, delay) {
             this.$emit('play-note', pitch, delay)

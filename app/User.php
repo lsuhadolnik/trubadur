@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'school_id', 'grade_id',
     ];
 
     /**
@@ -35,5 +35,25 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new MailResetPasswordToken($token));
+    }
+
+    public function school()
+    {
+        return $this->belongsTo('App\School');
+    }
+
+    public function grade()
+    {
+        return $this->belongsTo('App\Grade');
+    }
+
+    public function badges()
+    {
+        return $this->belongsToMany('App\Badge')->withPivot('completed')->withTimestamps();
+    }
+
+    public function games()
+    {
+        return $this->belongsToMany('App\Game')->withPivot('points')->withTimestamps();
     }
 }
