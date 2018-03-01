@@ -17,7 +17,7 @@ class CreateBadgeUserPivotTable extends Migration
             $table->integer('badge_id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index();
             $table->primary(['badge_id', 'user_id']);
-            $table->boolean('completed');
+            $table->timestamps();
         });
 
         Schema::table('badge_user', function (Blueprint $table) {

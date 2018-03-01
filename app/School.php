@@ -22,12 +22,17 @@ class School extends Model
      */
     protected $hidden = [];
 
+    public function country()
+    {
+        return $this->belongsTo('App\Country');
+    }
+
     public function grades()
     {
         return $this->belongsToMany('App\Grade')->withPivot('level_id')->withTimestamps();
     }
 
     public function level($gradeId) {
-        return grades()->find($gradeId)->join('level', 'level_id', 'level.id');
+        return $this->grades()->find($gradeId)->join('level', 'level_id', 'level.id');
     }
 }

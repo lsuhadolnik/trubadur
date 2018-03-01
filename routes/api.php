@@ -13,6 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->resource('badges', 'BadgeController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->resource('countries', 'CountryController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->resource('games', 'GameController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->resource('grades', 'GradeController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->resource('levels', 'LevelController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->resource('schools', 'SchoolController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->resource('users', 'UserController', ['except' => ['create', 'edit']]);
+
+Route::middleware('auth:api')->get('/me', function (Request $request) {
     return $request->user();
 });

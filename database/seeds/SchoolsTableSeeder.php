@@ -29,10 +29,7 @@ class SchoolsTableSeeder extends DatabaseSeeder
 
             $school->saveOrFail();
 
-            for (self::GRADES as $grade) {
-                $grade = Grade::whereGrade($grade)->first();
-                $school->grades()->attach($grade->id);
-
+            foreach (self::GRADES as $grade) {
                 switch ($school->type) {
                     case 'primary':
                         $level = 'easy';
@@ -57,8 +54,9 @@ class SchoolsTableSeeder extends DatabaseSeeder
                     default:
                         $level = 'normal';
                 }
+                $grade = Grade::whereGrade($grade)->first();
                 $level = Level::whereLevel($level)->first();
-                // $school->grades()->find($grade->id)->pivot->level =
+                $school->grades()->attach($grade->id, ['level_id' => $level->id]);
             }
         }
     }

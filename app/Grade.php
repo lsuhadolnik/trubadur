@@ -28,6 +28,6 @@ class Grade extends Model
     }
 
     public function level($schoolId) {
-        return schools()->find($schoolId)->join('level', 'level_id', 'level.id');
+        return $this->schools()->find($schoolId)->join('level', 'level_id', 'level.id');
     }
 }

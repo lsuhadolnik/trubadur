@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->integer('school_id')->unsigned();
             $table->integer('grade_id')->unsigned();
+            $table->integer('rating')->default(1000);
             $table->timestamps();
         });
 

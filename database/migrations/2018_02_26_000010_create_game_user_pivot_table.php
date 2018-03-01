@@ -17,7 +17,8 @@ class CreateGameUserPivotTable extends Migration
             $table->integer('game_id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index();
             $table->primary(['game_id', 'user_id']);
-            $table->integer('points');
+            $table->integer('points')->default(0);
+            $table->timestamps();
         });
 
         Schema::table('game_user', function (Blueprint $table) {
