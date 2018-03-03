@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(8);
+var bind = __webpack_require__(7);
 var isBuffer = __webpack_require__(28);
 
 /*global toString:true*/
@@ -836,10 +836,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(9);
+    adapter = __webpack_require__(8);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(9);
+    adapter = __webpack_require__(8);
   }
   return adapter;
 }
@@ -910,75 +910,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
 /* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = numberProp;
-/* unused harmony export booleanProp */
-/* harmony export (immutable) */ __webpack_exports__["b"] = objectProp;
-/* harmony export (immutable) */ __webpack_exports__["c"] = stringProp;
-/* unused harmony export arrayProp */
-/* unused harmony export functionProp */
-function numberProp() {
-    var required = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-    return {
-        type: Number,
-        required: required
-    };
-}
-
-function booleanProp() {
-    var required = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-    return {
-        type: Boolean,
-        required: required
-    };
-}
-
-function objectProp() {
-    var required = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-    return {
-        type: Object,
-        required: required
-    };
-}
-
-function stringProp() {
-    var required = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-    return {
-        type: String,
-        required: required
-    };
-}
-
-function arrayProp() {
-    var required = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-    return {
-        type: Array,
-        required: required
-    };
-}
-
-function functionProp() {
-    var required = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-    return {
-        type: Function,
-        required: required
-    };
-}
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1168,7 +1103,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1186,7 +1121,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1197,7 +1132,7 @@ var settle = __webpack_require__(31);
 var buildURL = __webpack_require__(33);
 var parseHeaders = __webpack_require__(34);
 var isURLSameOrigin = __webpack_require__(35);
-var createError = __webpack_require__(10);
+var createError = __webpack_require__(9);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(36);
 
 module.exports = function xhrAdapter(config) {
@@ -1373,7 +1308,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1398,7 +1333,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1410,7 +1345,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1436,7 +1371,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -1465,7 +1400,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "node_modules\\vue-awesome\\components\\Icon.vue"
+Component.options.__file = "node_modules/vue-awesome/components/Icon.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -1475,9 +1410,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-60200d5b", Component.options)
+    hotAPI.createRecord("data-v-afaabd70", Component.options)
   } else {
-    hotAPI.reload("data-v-60200d5b", Component.options)
+    hotAPI.reload("data-v-afaabd70", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -1488,7 +1423,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -1506,7 +1441,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-4f5997e7"
+var __vue_scopeId__ = "data-v-13f0c5b2"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -1517,7 +1452,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\Intervals.vue"
+Component.options.__file = "resources/assets/js/components/Intervals.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -1527,9 +1462,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4f5997e7", Component.options)
+    hotAPI.createRecord("data-v-13f0c5b2", Component.options)
   } else {
-    hotAPI.reload("data-v-4f5997e7", Component.options)
+    hotAPI.reload("data-v-13f0c5b2", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -1538,6 +1473,71 @@ if (false) {(function () {
 
 module.exports = Component.exports
 
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = numberProp;
+/* unused harmony export booleanProp */
+/* harmony export (immutable) */ __webpack_exports__["b"] = objectProp;
+/* harmony export (immutable) */ __webpack_exports__["c"] = stringProp;
+/* unused harmony export arrayProp */
+/* unused harmony export functionProp */
+function numberProp() {
+    var required = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+    return {
+        type: Number,
+        required: required
+    };
+}
+
+function booleanProp() {
+    var required = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+    return {
+        type: Boolean,
+        required: required
+    };
+}
+
+function objectProp() {
+    var required = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+    return {
+        type: Object,
+        required: required
+    };
+}
+
+function stringProp() {
+    var required = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+    return {
+        type: String,
+        required: required
+    };
+}
+
+function arrayProp() {
+    var required = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+    return {
+        type: Array,
+        required: required
+    };
+}
+
+function functionProp() {
+    var required = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+    return {
+        type: Function,
+        required: required
+    };
+}
 
 /***/ }),
 /* 15 */
@@ -1553,63 +1553,22 @@ module.exports = __webpack_require__(91);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bootstrap__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__bootstrap__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_vueHelpers__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_vueHelpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__utils_vueHelpers__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_awesome_components_Icon__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_awesome_components_Icon___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_awesome_components_Icon__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_App_vue__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_App_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Dashboard_vue__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Dashboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_Dashboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Intervals_vue__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_Intervals_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_Intervals_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(96);
 
 
 
 
 
-
-
-
-
-
-
-Vue.component('icon', __WEBPACK_IMPORTED_MODULE_4_vue_awesome_components_Icon___default.a);
-Vue.component('app', __WEBPACK_IMPORTED_MODULE_5__components_App_vue___default.a);
-Vue.component('dashboard', __WEBPACK_IMPORTED_MODULE_6__components_Dashboard_vue___default.a);
-Vue.component('intervals', __WEBPACK_IMPORTED_MODULE_7__components_Intervals_vue___default.a);
-
-Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
-
-var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
-    mode: 'history',
-    routes: [{ name: 'dashboard', path: '/home', component: __WEBPACK_IMPORTED_MODULE_6__components_Dashboard_vue___default.a }, { name: 'intervals', path: '/intervals', component: __WEBPACK_IMPORTED_MODULE_7__components_Intervals_vue___default.a, props: true }]
-});
-
-var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
-    state: {
-        midi: null
-    },
-    getters: {
-        midi: function midi(state) {
-            return state.midi;
-        }
-    },
-    mutations: {
-        setMidi: function setMidi(state, midi) {
-            state.midi = midi;
-        }
-    }
-});
 
 new Vue({ // eslint-disable-line no-new
-    router: router,
+    router: __WEBPACK_IMPORTED_MODULE_2__router__["a" /* default */],
     el: '#app',
-    store: store
+    store: __WEBPACK_IMPORTED_MODULE_3__store__["a" /* default */]
 });
 
 /***/ }),
@@ -4251,8 +4210,8 @@ if (inBrowser && window.Vue) {
 /* unused harmony export install */
 /* unused harmony export mapState */
 /* unused harmony export mapMutations */
-/* unused harmony export mapGetters */
-/* unused harmony export mapActions */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapGetters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapActions; });
 /* unused harmony export createNamespacedHelpers */
 /**
  * vuex v3.0.1
@@ -43471,7 +43430,7 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(7)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(6)))
 
 /***/ }),
 /* 26 */
@@ -43487,7 +43446,7 @@ module.exports = __webpack_require__(27);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(8);
+var bind = __webpack_require__(7);
 var Axios = __webpack_require__(29);
 var defaults = __webpack_require__(5);
 
@@ -43522,9 +43481,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(12);
+axios.Cancel = __webpack_require__(11);
 axios.CancelToken = __webpack_require__(43);
-axios.isCancel = __webpack_require__(11);
+axios.isCancel = __webpack_require__(10);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -43684,7 +43643,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(10);
+var createError = __webpack_require__(9);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -44103,7 +44062,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(40);
-var isCancel = __webpack_require__(11);
+var isCancel = __webpack_require__(10);
 var defaults = __webpack_require__(5);
 
 /**
@@ -44256,7 +44215,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(12);
+var Cancel = __webpack_require__(11);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -44372,13 +44331,13 @@ var content = __webpack_require__(47);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("65b9c465", content, false);
+var update = __webpack_require__(2)("0d22f40c", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-60200d5b\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Icon.vue", function() {
-     var newContent = require("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-60200d5b\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Icon.vue");
+   module.hot.accept("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-afaabd70\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Icon.vue", function() {
+     var newContent = require("!!../../css-loader/index.js!../../vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-afaabd70\",\"scoped\":false,\"hasInlineConfig\":true}!../../vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Icon.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -44730,567 +44689,27 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-60200d5b", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-afaabd70", module.exports)
   }
 }
 
 /***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(52)
-}
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(54)
-/* template */
-var __vue_template__ = __webpack_require__(66)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-117390fa"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\App.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-117390fa", Component.options)
-  } else {
-    hotAPI.reload("data-v-117390fa", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(53);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("1e933f2d", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-117390fa\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./App.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-117390fa\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./App.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-117390fa] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-117390fa] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-117390fa] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-117390fa] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-117390fa] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-117390fa] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-117390fa] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-117390fa] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-117390fa] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-117390fa] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-117390fa]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-117390fa]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-117390fa]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-117390fa]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-117390fa] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-117390fa] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-117390fa]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-117390fa] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-117390fa] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-117390fa] {\n  margin-top: 30px;\n}\n.login__button[data-v-117390fa] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-117390fa] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-117390fa] {\n      opacity: 1;\n}\n}\n.login__button[data-v-117390fa]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-117390fa] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-117390fa] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-117390fa] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-117390fa] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-117390fa] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-117390fa] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-117390fa] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-117390fa] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-117390fa] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-117390fa] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-117390fa] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-117390fa] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-117390fa] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-117390fa] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-117390fa]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-117390fa]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-117390fa]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-117390fa]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-117390fa] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-117390fa] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-117390fa] {\n  margin-top: 30px;\n}\n.register__button[data-v-117390fa] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-117390fa] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-117390fa] {\n      opacity: 1;\n}\n}\n.register__button[data-v-117390fa]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-117390fa] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-117390fa] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-117390fa] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-117390fa] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-117390fa] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-117390fa] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-117390fa] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-117390fa] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-117390fa] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-117390fa] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-117390fa] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-117390fa] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-117390fa] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-117390fa]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-117390fa]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-117390fa]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-117390fa]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-117390fa] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-117390fa] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-117390fa] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-117390fa] {\n      opacity: 1;\n}\n}\n.email__button[data-v-117390fa]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-117390fa] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-117390fa] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-117390fa], .email__status-group[data-v-117390fa] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-117390fa], .email__status-list[data-v-117390fa] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-117390fa] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-117390fa] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-117390fa] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-117390fa] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-117390fa] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-117390fa] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-117390fa] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-117390fa] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-117390fa] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-117390fa] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-117390fa] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-117390fa] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-117390fa]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-117390fa]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-117390fa]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-117390fa]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-117390fa] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-117390fa] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-117390fa] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-117390fa] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-117390fa]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-117390fa] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-117390fa] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-117390fa] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-117390fa] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-117390fa] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-117390fa] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-117390fa] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-117390fa] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-117390fa]:focus {\n  outline: 0;\n}\ninput[data-v-117390fa] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-117390fa] {\n  width: 100%;\n  height: 100%;\n}\n.app[data-v-117390fa] {\n  width: 100%;\n  height: 100%;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 54 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NavHeader_vue__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__NavHeader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__NavHeader_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__NavFooter_vue__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__NavFooter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__NavFooter_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    components: {
-        navHeader: __WEBPACK_IMPORTED_MODULE_0__NavHeader_vue___default.a,
-        navFooter: __WEBPACK_IMPORTED_MODULE_1__NavFooter_vue___default.a
-    }
-});
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(56)
-}
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(58)
-/* template */
-var __vue_template__ = __webpack_require__(60)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-d1c977ae"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\NavHeader.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-d1c977ae", Component.options)
-  } else {
-    hotAPI.reload("data-v-d1c977ae", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 56 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(57);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("e35bdcd2", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d1c977ae\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./NavHeader.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d1c977ae\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./NavHeader.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-d1c977ae] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-d1c977ae] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-d1c977ae] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-d1c977ae] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-d1c977ae] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-d1c977ae] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-d1c977ae] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-d1c977ae] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-d1c977ae] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-d1c977ae] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-d1c977ae]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-d1c977ae]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-d1c977ae]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-d1c977ae]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-d1c977ae] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-d1c977ae] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-d1c977ae]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-d1c977ae] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-d1c977ae] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-d1c977ae] {\n  margin-top: 30px;\n}\n.login__button[data-v-d1c977ae] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-d1c977ae] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-d1c977ae] {\n      opacity: 1;\n}\n}\n.login__button[data-v-d1c977ae]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-d1c977ae] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-d1c977ae] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-d1c977ae] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-d1c977ae] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-d1c977ae] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-d1c977ae] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-d1c977ae] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-d1c977ae] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-d1c977ae] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-d1c977ae] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-d1c977ae] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-d1c977ae] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-d1c977ae] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-d1c977ae] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-d1c977ae]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-d1c977ae]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-d1c977ae]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-d1c977ae]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-d1c977ae] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-d1c977ae] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-d1c977ae] {\n  margin-top: 30px;\n}\n.register__button[data-v-d1c977ae] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-d1c977ae] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-d1c977ae] {\n      opacity: 1;\n}\n}\n.register__button[data-v-d1c977ae]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-d1c977ae] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-d1c977ae] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-d1c977ae] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-d1c977ae] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-d1c977ae] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-d1c977ae] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-d1c977ae] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-d1c977ae] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-d1c977ae] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-d1c977ae] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-d1c977ae] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-d1c977ae] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-d1c977ae] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-d1c977ae]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-d1c977ae]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-d1c977ae]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-d1c977ae]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-d1c977ae] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-d1c977ae] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-d1c977ae] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-d1c977ae] {\n      opacity: 1;\n}\n}\n.email__button[data-v-d1c977ae]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-d1c977ae] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-d1c977ae] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-d1c977ae], .email__status-group[data-v-d1c977ae] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-d1c977ae], .email__status-list[data-v-d1c977ae] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-d1c977ae] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-d1c977ae] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-d1c977ae] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-d1c977ae] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-d1c977ae] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-d1c977ae] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-d1c977ae] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-d1c977ae] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-d1c977ae] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-d1c977ae] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-d1c977ae] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-d1c977ae] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-d1c977ae]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-d1c977ae]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-d1c977ae]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-d1c977ae]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-d1c977ae] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-d1c977ae] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-d1c977ae] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-d1c977ae] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-d1c977ae]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-d1c977ae] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-d1c977ae] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-d1c977ae] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-d1c977ae] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-d1c977ae] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-d1c977ae] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-d1c977ae] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-d1c977ae] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-d1c977ae]:focus {\n  outline: 0;\n}\ninput[data-v-d1c977ae] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-d1c977ae] {\n  width: 100%;\n  height: 100%;\n}\n.header[data-v-d1c977ae] {\n  width: 100%;\n  height: 50px;\n  padding: 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  background-color: #A9CF54;\n}\n.header__title[data-v-d1c977ae] {\n  color: #000000;\n  font-size: 30px;\n  font-family: \"Bebas Neue\";\n}\n.header__user[data-v-d1c977ae] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.header__username[data-v-d1c977ae] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.header__logout[data-v-d1c977ae] {\n  margin-left: 15px;\n}\n.header__logout-icon[data-v-d1c977ae] {\n  width: 20px;\n  height: 20px;\n  color: #000000;\n  opacity: 0.6;\n  cursor: pointer;\n  -webkit-transition: opacity 0.1s linear;\n  transition: opacity 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.header__logout-icon[data-v-d1c977ae] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.header__logout-icon[data-v-d1c977ae] {\n      opacity: 1;\n}\n}\n.header__logout-icon[data-v-d1c977ae]:hover {\n    opacity: 1;\n}\n.header__logout-form[data-v-d1c977ae] {\n  display: none;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 58 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_icons_sign_out__ = __webpack_require__(59);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            username: '',
-            csrfToken: window.Laravel.csrfToken
-        };
-    },
-    created: function created() {
-        var _this = this;
-
-        axios.get('/api/user').then(function (response) {
-            var user = response.data;
-            _this.username = user.name;
-        }).catch(function (error) {
-            return console.log(error);
-        });
-    },
-
-    methods: {
-        logout: function logout(event) {
-            event.preventDefault();
-            this.$el.querySelector('#header__logout-form').submit();
-        }
-    }
-});
-
-/***/ }),
-/* 59 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__);
-
-
-__WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"sign-out":{"width":1664,"height":1792,"paths":[{"d":"M640 1440q0 4 1 20t0.5 26.5-3 23.5-10 19.5-20.5 6.5h-320q-119 0-203.5-84.5t-84.5-203.5v-704q0-119 84.5-203.5t203.5-84.5h320q13 0 22.5 9.5t9.5 22.5q0 4 1 20t0.5 26.5-3 23.5-10 19.5-20.5 6.5h-320q-66 0-113 47t-47 113v704q0 66 47 113t113 47h288 11 13t11.5 1 11.5 3 8 5.5 7 9 2 13.5zM1568 896q0 26-19 45l-544 544q-19 19-45 19t-45-19-19-45v-288h-448q-26 0-45-19t-19-45v-384q0-26 19-45t45-19h448v-288q0-26 19-45t45-19 45 19l544 544q19 19 19 45z"}]}})
-
-
-/***/ }),
-/* 60 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "header" }, [
-    _c("div", { staticClass: "header__title" }, [_vm._v("TRUBADUR")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "header__user" }, [
-      _c("div", { staticClass: "header__username" }, [
-        _vm._v(_vm._s(_vm.username))
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "header__logout" },
-        [
-          _c("icon", {
-            staticClass: "header__logout-icon",
-            attrs: { name: "sign-out" },
-            nativeOn: {
-              click: function($event) {
-                _vm.logout($event)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "form",
-            {
-              attrs: {
-                id: "header__logout-form",
-                action: "logout",
-                method: "POST"
-              }
-            },
-            [
-              _c("input", {
-                attrs: { type: "hidden", name: "_token" },
-                domProps: { value: _vm.csrfToken }
-              })
-            ]
-          )
-        ],
-        1
-      )
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-d1c977ae", module.exports)
-  }
-}
-
-/***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(62)
-}
-var normalizeComponent = __webpack_require__(3)
-/* script */
-var __vue_script__ = __webpack_require__(64)
-/* template */
-var __vue_template__ = __webpack_require__(65)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-75e8e037"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\NavFooter.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-75e8e037", Component.options)
-  } else {
-    hotAPI.reload("data-v-75e8e037", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(63);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("a6746cbc", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-75e8e037\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./NavFooter.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-75e8e037\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./NavFooter.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-75e8e037] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-75e8e037] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-75e8e037] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-75e8e037] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-75e8e037] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-75e8e037] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-75e8e037] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-75e8e037] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-75e8e037] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-75e8e037] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-75e8e037]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-75e8e037]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-75e8e037]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-75e8e037]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-75e8e037] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-75e8e037] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-75e8e037]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-75e8e037] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-75e8e037] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-75e8e037] {\n  margin-top: 30px;\n}\n.login__button[data-v-75e8e037] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-75e8e037] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-75e8e037] {\n      opacity: 1;\n}\n}\n.login__button[data-v-75e8e037]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-75e8e037] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-75e8e037] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-75e8e037] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-75e8e037] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-75e8e037] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-75e8e037] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-75e8e037] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-75e8e037] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-75e8e037] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-75e8e037] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-75e8e037] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-75e8e037] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-75e8e037] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-75e8e037] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-75e8e037]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-75e8e037]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-75e8e037]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-75e8e037]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-75e8e037] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-75e8e037] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-75e8e037] {\n  margin-top: 30px;\n}\n.register__button[data-v-75e8e037] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-75e8e037] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-75e8e037] {\n      opacity: 1;\n}\n}\n.register__button[data-v-75e8e037]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-75e8e037] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-75e8e037] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-75e8e037] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-75e8e037] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-75e8e037] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-75e8e037] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-75e8e037] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-75e8e037] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-75e8e037] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-75e8e037] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-75e8e037] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-75e8e037] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-75e8e037] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-75e8e037]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-75e8e037]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-75e8e037]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-75e8e037]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-75e8e037] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-75e8e037] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-75e8e037] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-75e8e037] {\n      opacity: 1;\n}\n}\n.email__button[data-v-75e8e037]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-75e8e037] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-75e8e037] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-75e8e037], .email__status-group[data-v-75e8e037] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-75e8e037], .email__status-list[data-v-75e8e037] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-75e8e037] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-75e8e037] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-75e8e037] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-75e8e037] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-75e8e037] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-75e8e037] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-75e8e037] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-75e8e037] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-75e8e037] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-75e8e037] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-75e8e037] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-75e8e037] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-75e8e037]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-75e8e037]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-75e8e037]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-75e8e037]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-75e8e037] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-75e8e037] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-75e8e037] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-75e8e037] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-75e8e037]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-75e8e037] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-75e8e037] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-75e8e037] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-75e8e037] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-75e8e037] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-75e8e037] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-75e8e037] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-75e8e037] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-75e8e037]:focus {\n  outline: 0;\n}\ninput[data-v-75e8e037] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-75e8e037] {\n  width: 100%;\n  height: 100%;\n}\n.footer[data-v-75e8e037] {\n  width: 100%;\n  height: 100px;\n  background-color: #515251;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 64 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {};
-    }
-});
-
-/***/ }),
-/* 65 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "footer" })
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-75e8e037", module.exports)
-  }
-}
-
-/***/ }),
-/* 66 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "app" },
-    [_c("nav-header"), _vm._v(" "), _c("router-view")],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-117390fa", module.exports)
-  }
-}
-
-/***/ }),
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
 /* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -45309,7 +44728,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-78b73b2d"
+var __vue_scopeId__ = "data-v-1f65406d"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -45320,7 +44739,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\Dashboard.vue"
+Component.options.__file = "resources/assets/js/components/Dashboard.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -45330,9 +44749,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-78b73b2d", Component.options)
+    hotAPI.createRecord("data-v-1f65406d", Component.options)
   } else {
-    hotAPI.reload("data-v-78b73b2d", Component.options)
+    hotAPI.reload("data-v-1f65406d", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -45353,13 +44772,13 @@ var content = __webpack_require__(69);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("32f62d43", content, false);
+var update = __webpack_require__(2)("7f1036ca", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-78b73b2d\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Dashboard.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-78b73b2d\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Dashboard.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1f65406d\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Dashboard.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1f65406d\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Dashboard.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -45377,7 +44796,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-78b73b2d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-78b73b2d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-78b73b2d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-78b73b2d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-78b73b2d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-78b73b2d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-78b73b2d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-78b73b2d] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-78b73b2d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-78b73b2d] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-78b73b2d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-78b73b2d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-78b73b2d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-78b73b2d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-78b73b2d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-78b73b2d] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-78b73b2d]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-78b73b2d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-78b73b2d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-78b73b2d] {\n  margin-top: 30px;\n}\n.login__button[data-v-78b73b2d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-78b73b2d] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-78b73b2d] {\n      opacity: 1;\n}\n}\n.login__button[data-v-78b73b2d]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-78b73b2d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-78b73b2d] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-78b73b2d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-78b73b2d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-78b73b2d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-78b73b2d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-78b73b2d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-78b73b2d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-78b73b2d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-78b73b2d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-78b73b2d] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-78b73b2d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-78b73b2d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-78b73b2d] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-78b73b2d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-78b73b2d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-78b73b2d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-78b73b2d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-78b73b2d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-78b73b2d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-78b73b2d] {\n  margin-top: 30px;\n}\n.register__button[data-v-78b73b2d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-78b73b2d] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-78b73b2d] {\n      opacity: 1;\n}\n}\n.register__button[data-v-78b73b2d]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-78b73b2d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-78b73b2d] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-78b73b2d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-78b73b2d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-78b73b2d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-78b73b2d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-78b73b2d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-78b73b2d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-78b73b2d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-78b73b2d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-78b73b2d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-78b73b2d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-78b73b2d] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-78b73b2d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-78b73b2d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-78b73b2d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-78b73b2d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-78b73b2d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-78b73b2d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-78b73b2d] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-78b73b2d] {\n      opacity: 1;\n}\n}\n.email__button[data-v-78b73b2d]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-78b73b2d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-78b73b2d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-78b73b2d], .email__status-group[data-v-78b73b2d] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-78b73b2d], .email__status-list[data-v-78b73b2d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-78b73b2d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-78b73b2d] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-78b73b2d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-78b73b2d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-78b73b2d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-78b73b2d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-78b73b2d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-78b73b2d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-78b73b2d] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-78b73b2d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-78b73b2d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-78b73b2d] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-78b73b2d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-78b73b2d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-78b73b2d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-78b73b2d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-78b73b2d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-78b73b2d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-78b73b2d] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-78b73b2d] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-78b73b2d]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-78b73b2d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-78b73b2d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-78b73b2d] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-78b73b2d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-78b73b2d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-78b73b2d] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-78b73b2d] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-78b73b2d] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-78b73b2d]:focus {\n  outline: 0;\n}\ninput[data-v-78b73b2d] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-78b73b2d] {\n  width: 100%;\n  height: 100%;\n}\n.dashboard[data-v-78b73b2d] {\n  width: 100%;\n  height: calc(100% - 50px);\n  background-color: #CAFCD8;\n}\n.dashboard__loader[data-v-78b73b2d] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  width: 100px;\n  height: 100px;\n}\n@media only screen and (max-width: 767px) {\n.dashboard__loader[data-v-78b73b2d] {\n      width: 75px;\n      height: 75px;\n}\n}\n.dashboard__command-wrapper[data-v-78b73b2d] {\n  padding: 10vh 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.dashboard__command[data-v-78b73b2d] {\n  width: calc(100vw / 3);\n  height: 50px;\n  padding-top: 5px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 20px;\n  font-family: \"Bebas Neue\";\n  background-color: #27a9e0;\n  color: #000000;\n  opacity: 0.8;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n  -webkit-transition: opacity 0.1s linear;\n  transition: opacity 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.dashboard__command[data-v-78b73b2d] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.dashboard__command[data-v-78b73b2d] {\n      opacity: 1;\n}\n}\n.dashboard__command[data-v-78b73b2d]:hover {\n    opacity: 1;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-1f65406d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-1f65406d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-1f65406d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-1f65406d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-1f65406d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-1f65406d] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-1f65406d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-1f65406d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-1f65406d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-1f65406d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-1f65406d] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-1f65406d]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-1f65406d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-1f65406d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-1f65406d] {\n  margin-top: 30px;\n}\n.login__button[data-v-1f65406d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-1f65406d] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-1f65406d] {\n      opacity: 1;\n}\n}\n.login__button[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-1f65406d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-1f65406d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-1f65406d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-1f65406d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-1f65406d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-1f65406d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-1f65406d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-1f65406d] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-1f65406d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-1f65406d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-1f65406d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-1f65406d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-1f65406d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-1f65406d] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-1f65406d] {\n  margin-top: 30px;\n}\n.register__button[data-v-1f65406d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-1f65406d] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-1f65406d] {\n      opacity: 1;\n}\n}\n.register__button[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-1f65406d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-1f65406d] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-1f65406d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-1f65406d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-1f65406d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-1f65406d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-1f65406d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-1f65406d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-1f65406d] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-1f65406d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-1f65406d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-1f65406d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-1f65406d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-1f65406d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-1f65406d] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-1f65406d] {\n      opacity: 1;\n}\n}\n.email__button[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-1f65406d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-1f65406d], .email__status-group[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-1f65406d], .email__status-list[data-v-1f65406d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-1f65406d] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-1f65406d] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-1f65406d] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-1f65406d] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-1f65406d] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-1f65406d] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-1f65406d] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-1f65406d] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-1f65406d]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-1f65406d]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-1f65406d]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-1f65406d]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-1f65406d] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-1f65406d] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-1f65406d] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-1f65406d] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-1f65406d] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-1f65406d] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-1f65406d] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-1f65406d] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-1f65406d] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-1f65406d]:focus {\n  outline: 0;\n}\ninput[data-v-1f65406d] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-1f65406d] {\n  width: 100%;\n  height: 100%;\n}\n.dashboard[data-v-1f65406d] {\n  width: 100%;\n  height: calc(100% - 50px);\n  background-color: #CAFCD8;\n}\n.dashboard__command-wrapper[data-v-1f65406d] {\n  padding: 10vh 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.dashboard__command[data-v-1f65406d] {\n  width: calc(100vw / 3);\n  height: 50px;\n  padding-top: 5px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 20px;\n  font-family: \"Bebas Neue\";\n  background-color: #27a9e0;\n  color: #000000;\n  opacity: 0.8;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n  -webkit-transition: opacity 0.1s linear;\n  transition: opacity 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.dashboard__command[data-v-1f65406d] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.dashboard__command[data-v-1f65406d] {\n      opacity: 1;\n}\n}\n.dashboard__command[data-v-1f65406d]:hover {\n    opacity: 1;\n}\n", ""]);
 
 // exports
 
@@ -45388,7 +44807,7 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: ur
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Intervals__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Intervals__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Intervals___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Intervals__);
 //
 //
@@ -45440,61 +44859,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            loading: true,
-            intervals: {
-                notes: {
-                    min: 1,
-                    max: 4,
-                    type: 'whole',
-                    delay: 2000
-                }
-            }
-        };
-    },
-    created: function created() {
-        this.setupMIDIPlugin();
-    },
-
     methods: {
-        setupMIDIPlugin: function setupMIDIPlugin() {
-            var _this = this;
-
-            MIDI.loadPlugin({
-                soundfontUrl: '/soundfonts/',
-                instruments: ['acoustic_grand_piano'],
-                onsuccess: function onsuccess() {
-                    MIDI.setVolume(0, 127);
-                    MIDI.programChange(0, MIDI.GM.byName['acoustic_grand_piano'].number);
-                    _this.$store.commit('setMidi', MIDI);
-                    _this.loading = false;
-                }
-            });
-        },
         startIntervalsPractice: function startIntervalsPractice() {
-            this.$router.push({ name: 'intervals', params: { notes: this.intervals.notes } });
+            this.$router.push({ name: 'intervals' });
         }
     },
     components: {
@@ -45513,13 +44884,13 @@ var content = __webpack_require__(72);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("69cd4e10", content, false);
+var update = __webpack_require__(2)("9f04d600", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4f5997e7\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Intervals.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4f5997e7\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Intervals.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-13f0c5b2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Intervals.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-13f0c5b2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Intervals.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -45537,7 +44908,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-4f5997e7] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-4f5997e7] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-4f5997e7] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-4f5997e7] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-4f5997e7] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-4f5997e7] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-4f5997e7]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-4f5997e7]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-4f5997e7]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-4f5997e7]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-4f5997e7] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-4f5997e7]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-4f5997e7] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-4f5997e7] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-4f5997e7] {\n  margin-top: 30px;\n}\n.login__button[data-v-4f5997e7] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.login__button[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-4f5997e7] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-4f5997e7] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-4f5997e7] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-4f5997e7] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-4f5997e7] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-4f5997e7] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-4f5997e7] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-4f5997e7] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-4f5997e7]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-4f5997e7]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-4f5997e7]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-4f5997e7]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-4f5997e7] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-4f5997e7] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-4f5997e7] {\n  margin-top: 30px;\n}\n.register__button[data-v-4f5997e7] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.register__button[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-4f5997e7] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-4f5997e7] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-4f5997e7] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-4f5997e7] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-4f5997e7] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-4f5997e7] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-4f5997e7] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-4f5997e7] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-4f5997e7] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-4f5997e7]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-4f5997e7]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-4f5997e7]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-4f5997e7]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-4f5997e7] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.email__button[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-4f5997e7] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-4f5997e7], .email__status-group[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-4f5997e7], .email__status-list[data-v-4f5997e7] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-4f5997e7] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-4f5997e7] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-4f5997e7] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-4f5997e7] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-4f5997e7] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-4f5997e7] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-4f5997e7]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-4f5997e7]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-4f5997e7]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-4f5997e7]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-4f5997e7] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-4f5997e7] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-4f5997e7] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-4f5997e7] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-4f5997e7] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-4f5997e7]:focus {\n  outline: 0;\n}\ninput[data-v-4f5997e7] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n}\n.intervals[data-v-4f5997e7] {\n  width: 100%;\n  height: calc(100% - 50px);\n  background-color: #CAFCD8;\n}\n.intervals__stave-keyboard-wrapper[data-v-4f5997e7] {\n  padding: 10vh 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n@media only screen and (orientation: portrait) {\n.intervals__stave-keyboard-wrapper[data-v-4f5997e7] {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.intervals__stave[data-v-4f5997e7] {\n  margin-right: 2.5vw;\n}\n@include-breakpoint-portrait {\n.intervals__stave {\n    margin-right: 0;\n}\n}\n.intervals__keyboard[data-v-4f5997e7] {\n  margin-left: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.intervals__keyboard[data-v-4f5997e7] {\n      margin-top: 5vh;\n      margin-left: 0;\n}\n}\n.intervals__command-wrapper[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.intervals__command[data-v-4f5997e7] {\n  width: calc(100vw / 3);\n  height: 50px;\n  padding-top: 5px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 20px;\n  font-family: \"Bebas Neue\";\n  color: #000000;\n  opacity: 0.8;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n  -webkit-transition: opacity 0.1s linear;\n  transition: opacity 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.intervals__command[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.intervals__command[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.intervals__command[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.intervals__command--delete[data-v-4f5997e7] {\n  background-color: #fe664e;\n}\n.intervals__command--replay[data-v-4f5997e7] {\n  background-color: #27a9e0;\n}\n.intervals__command--next[data-v-4f5997e7] {\n  background-color: #7cbc42;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-13f0c5b2] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-13f0c5b2] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-13f0c5b2] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-13f0c5b2] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-13f0c5b2] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-13f0c5b2] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-13f0c5b2] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-13f0c5b2] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-13f0c5b2] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-13f0c5b2] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-13f0c5b2]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-13f0c5b2]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-13f0c5b2]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-13f0c5b2]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-13f0c5b2] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-13f0c5b2] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-13f0c5b2]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-13f0c5b2] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-13f0c5b2] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-13f0c5b2] {\n  margin-top: 30px;\n}\n.login__button[data-v-13f0c5b2] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-13f0c5b2] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-13f0c5b2] {\n      opacity: 1;\n}\n}\n.login__button[data-v-13f0c5b2]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-13f0c5b2] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-13f0c5b2] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-13f0c5b2] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-13f0c5b2] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-13f0c5b2] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-13f0c5b2] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-13f0c5b2] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-13f0c5b2] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-13f0c5b2] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-13f0c5b2] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-13f0c5b2] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-13f0c5b2] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-13f0c5b2] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-13f0c5b2] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-13f0c5b2]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-13f0c5b2]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-13f0c5b2]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-13f0c5b2]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-13f0c5b2] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-13f0c5b2] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-13f0c5b2] {\n  margin-top: 30px;\n}\n.register__button[data-v-13f0c5b2] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-13f0c5b2] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-13f0c5b2] {\n      opacity: 1;\n}\n}\n.register__button[data-v-13f0c5b2]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-13f0c5b2] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-13f0c5b2] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-13f0c5b2] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-13f0c5b2] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-13f0c5b2] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-13f0c5b2] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-13f0c5b2] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-13f0c5b2] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-13f0c5b2] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-13f0c5b2] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-13f0c5b2] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-13f0c5b2] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-13f0c5b2] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-13f0c5b2]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-13f0c5b2]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-13f0c5b2]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-13f0c5b2]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-13f0c5b2] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-13f0c5b2] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-13f0c5b2] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-13f0c5b2] {\n      opacity: 1;\n}\n}\n.email__button[data-v-13f0c5b2]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-13f0c5b2] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-13f0c5b2] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-13f0c5b2], .email__status-group[data-v-13f0c5b2] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-13f0c5b2], .email__status-list[data-v-13f0c5b2] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-13f0c5b2] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-13f0c5b2] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-13f0c5b2] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-13f0c5b2] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-13f0c5b2] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-13f0c5b2] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-13f0c5b2] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-13f0c5b2] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-13f0c5b2] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-13f0c5b2] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-13f0c5b2] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-13f0c5b2] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-13f0c5b2]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-13f0c5b2]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-13f0c5b2]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-13f0c5b2]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-13f0c5b2] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-13f0c5b2] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-13f0c5b2] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-13f0c5b2] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-13f0c5b2]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-13f0c5b2] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-13f0c5b2] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-13f0c5b2] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-13f0c5b2] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-13f0c5b2] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-13f0c5b2] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-13f0c5b2] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-13f0c5b2] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-13f0c5b2]:focus {\n  outline: 0;\n}\ninput[data-v-13f0c5b2] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-13f0c5b2] {\n  width: 100%;\n  height: 100%;\n}\n.intervals[data-v-13f0c5b2] {\n  width: 100%;\n  height: calc(100% - 50px);\n  background-color: #CAFCD8;\n}\n.intervals__loader[data-v-13f0c5b2] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  width: 100px;\n  height: 100px;\n}\n@media only screen and (max-width: 767px) {\n.intervals__loader[data-v-13f0c5b2] {\n      width: 75px;\n      height: 75px;\n}\n}\n.intervals__stave-keyboard-wrapper[data-v-13f0c5b2] {\n  padding: 10vh 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n@media only screen and (orientation: portrait) {\n.intervals__stave-keyboard-wrapper[data-v-13f0c5b2] {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.intervals__stave[data-v-13f0c5b2] {\n  margin-right: 2.5vw;\n}\n@include-breakpoint-portrait {\n.intervals__stave {\n    margin-right: 0;\n}\n}\n.intervals__keyboard[data-v-13f0c5b2] {\n  margin-left: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.intervals__keyboard[data-v-13f0c5b2] {\n      margin-top: 5vh;\n      margin-left: 0;\n}\n}\n.intervals__command-wrapper[data-v-13f0c5b2] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.intervals__command[data-v-13f0c5b2] {\n  width: calc(100vw / 3);\n  height: 50px;\n  padding-top: 5px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 20px;\n  font-family: \"Bebas Neue\";\n  color: #000000;\n  opacity: 0.8;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n  -webkit-transition: opacity 0.1s linear;\n  transition: opacity 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.intervals__command[data-v-13f0c5b2] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.intervals__command[data-v-13f0c5b2] {\n      opacity: 1;\n}\n}\n.intervals__command[data-v-13f0c5b2]:hover {\n    opacity: 1;\n}\n.intervals__command--delete[data-v-13f0c5b2] {\n  background-color: #fe664e;\n}\n.intervals__command--replay[data-v-13f0c5b2] {\n  background-color: #27a9e0;\n}\n.intervals__command--next[data-v-13f0c5b2] {\n  background-color: #7cbc42;\n}\n", ""]);
 
 // exports
 
@@ -45548,11 +44919,30 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: ur
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Stave__ = __webpack_require__(74);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Stave___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Stave__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Keyboard_vue__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Keyboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Keyboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_propValidators__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stave__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stave___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Stave__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Keyboard_vue__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Keyboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Keyboard_vue__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -45644,27 +45034,93 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        notes: Object(__WEBPACK_IMPORTED_MODULE_2__utils_propValidators__["b" /* objectProp */])()
-    },
     data: function data() {
         return {
+            loading: true,
+            notes: {
+                min: 1,
+                max: 4,
+                type: 'whole',
+                delay: 2000
+            },
+            pitches: ['A#3', 'B3', 'C4', 'C#4', 'D4', 'D#4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'A4', 'A#4', 'B4', 'C5', 'C#5'],
+            sharpFlatMap: {
+                'A#3': 'Bb3',
+                'Bb3': 'A#3',
+                'C#4': 'Db4',
+                'Db4': 'C#4',
+                'D#4': 'Eb4',
+                'Eb4': 'D#4',
+                'F#4': 'Gb4',
+                'Gb4': 'F#4',
+                'G#4': 'Ab4',
+                'Ab4': 'G#4',
+                'A#4': 'Bb4',
+                'Bb4': 'A#4',
+                'C#5': 'Db5',
+                'Db5': 'C#5'
+            },
+            intervals: {
+                0: ['P1'],
+                1: ['A1', 'm2'],
+                2: ['M2'],
+                3: ['m3'],
+                4: ['M3'],
+                5: ['P4'],
+                6: ['A4', 'd5'],
+                7: ['P5'],
+                8: ['m6'],
+                9: ['M6'],
+                10: ['m7'],
+                11: ['M7'],
+                12: ['P8']
+            },
             sample: null,
             answer: null
         };
     },
-    mounted: function mounted() {
+    created: function created() {
         var _this = this;
 
-        this.$nextTick(function () {
+        this.setupMidi().then(function () {
+            _this.loading = false;
             _this.generateSample();
         });
     },
 
-    methods: {
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['setupMidi']), {
         generateSample: function generateSample() {
-            var pitches = ['Bb3', 'B3', 'C4', 'Db4', 'D4', 'Eb4', 'E4', 'F4', 'Gb4', 'G4', 'Ab4', 'A4', 'Bb4', 'B4', 'C5', 'Db5'];
-            this.sample = _.take(_.shuffle(pitches), this.notes.max);
+            var levelRange = 5;
+
+            this.sample = [];
+
+            var nPitches = this.pitches.length;
+            var pitch = this.pitches[Math.floor(Math.random() * nPitches)];
+            this.sample.push(pitch);
+
+            var pitchIndex = 0;
+            var topRange = 0;
+            var bottomRange = 0;
+            var direction = '';
+            var range = 0;
+            var nSemitones = 0;
+            var intervalIndex = 0;
+
+            for (var i = 1; i < this.notes.max; i++) {
+                pitchIndex = this.pitches.indexOf(pitch);
+                topRange = nPitches - pitchIndex - 1;
+                bottomRange = pitchIndex;
+                direction = Math.random() < 0.5 ? 'down' : 'up';
+                range = direction === 'down' ? Math.min(levelRange, bottomRange) : Math.min(levelRange, topRange);
+                nSemitones = Math.floor(Math.random() * (range + 1));
+                console.log(this.intervals[nSemitones]);
+                intervalIndex = direction === 'down' ? pitchIndex - nSemitones : pitchIndex + nSemitones;
+                pitch = this.pitches[intervalIndex];
+                this.sample.push(pitch);
+            }
+
+            console.log(this.sample);
+
             this.clearNotes();
             this.addNote(this.sample[0]);
             this.playNotes();
@@ -45703,17 +45159,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return;
             }
             for (var i = 0; i < this.notes.max; i++) {
-                if (this.answer[i].pitch !== this.sample[i]) {
-                    console.log('Wrong answer...');
-                    return;
+                var answerPitch = this.answer[i].pitch;
+                var correctPitch = this.sample[i];
+                if (answerPitch === correctPitch || answerPitch in this.sharpFlatMap && this.sharpFlatMap[answerPitch] === correctPitch) {
+                    continue;
                 }
+                console.log('Wrong answer... ' + this.answer.map(function (answer) {
+                    return answer.pitch;
+                }));
+                return;
             }
             this.generateSample();
         }
-    },
+    }),
     components: {
-        stave: __WEBPACK_IMPORTED_MODULE_0__Stave___default.a,
-        keyboard: __WEBPACK_IMPORTED_MODULE_1__Keyboard_vue___default.a
+        stave: __WEBPACK_IMPORTED_MODULE_1__Stave___default.a,
+        keyboard: __WEBPACK_IMPORTED_MODULE_2__Keyboard_vue___default.a
     }
 });
 
@@ -45736,7 +45197,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-2110af30"
+var __vue_scopeId__ = "data-v-630b64b0"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -45747,7 +45208,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\Stave.vue"
+Component.options.__file = "resources/assets/js/components/Stave.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -45757,9 +45218,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2110af30", Component.options)
+    hotAPI.createRecord("data-v-630b64b0", Component.options)
   } else {
-    hotAPI.reload("data-v-2110af30", Component.options)
+    hotAPI.reload("data-v-630b64b0", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -45780,13 +45241,13 @@ var content = __webpack_require__(76);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("44be5a91", content, false);
+var update = __webpack_require__(2)("10fce3ec", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2110af30\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Stave.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2110af30\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Stave.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-630b64b0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Stave.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-630b64b0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Stave.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -45804,7 +45265,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-2110af30] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-2110af30] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-2110af30] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-2110af30] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-2110af30] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-2110af30] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-2110af30] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-2110af30] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-2110af30] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-2110af30] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-2110af30]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-2110af30]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-2110af30]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-2110af30]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-2110af30] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-2110af30] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-2110af30]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-2110af30] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-2110af30] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-2110af30] {\n  margin-top: 30px;\n}\n.login__button[data-v-2110af30] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-2110af30] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-2110af30] {\n      opacity: 1;\n}\n}\n.login__button[data-v-2110af30]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-2110af30] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-2110af30] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-2110af30] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-2110af30] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-2110af30] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-2110af30] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-2110af30] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-2110af30] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-2110af30] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-2110af30] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-2110af30] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-2110af30] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-2110af30] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-2110af30] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-2110af30]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-2110af30]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-2110af30]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-2110af30]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-2110af30] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-2110af30] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-2110af30] {\n  margin-top: 30px;\n}\n.register__button[data-v-2110af30] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-2110af30] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-2110af30] {\n      opacity: 1;\n}\n}\n.register__button[data-v-2110af30]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-2110af30] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-2110af30] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-2110af30] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-2110af30] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-2110af30] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-2110af30] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-2110af30] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-2110af30] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-2110af30] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-2110af30] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-2110af30] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-2110af30] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-2110af30] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-2110af30]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-2110af30]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-2110af30]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-2110af30]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-2110af30] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-2110af30] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-2110af30] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-2110af30] {\n      opacity: 1;\n}\n}\n.email__button[data-v-2110af30]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-2110af30] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-2110af30] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-2110af30], .email__status-group[data-v-2110af30] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-2110af30], .email__status-list[data-v-2110af30] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-2110af30] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-2110af30] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-2110af30] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-2110af30] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-2110af30] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-2110af30] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-2110af30] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-2110af30] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-2110af30] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-2110af30] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-2110af30] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-2110af30] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-2110af30]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-2110af30]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-2110af30]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-2110af30]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-2110af30] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-2110af30] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-2110af30] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-2110af30] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-2110af30]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-2110af30] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-2110af30] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-2110af30] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-2110af30] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-2110af30] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-2110af30] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-2110af30] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-2110af30] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-2110af30]:focus {\n  outline: 0;\n}\ninput[data-v-2110af30] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-2110af30] {\n  width: 100%;\n  height: 100%;\n}\n.stave__svg[data-v-2110af30] {\n  width: 45vw;\n  height: 13.5vw;\n}\n@media only screen and (orientation: portrait) {\n.stave__svg[data-v-2110af30] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n.stave__line[data-v-2110af30] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n}\n.stave__rect[data-v-2110af30] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n  fill: none;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-630b64b0] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-630b64b0] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-630b64b0] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-630b64b0] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-630b64b0] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-630b64b0] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-630b64b0]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-630b64b0]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-630b64b0]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-630b64b0]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-630b64b0] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-630b64b0]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-630b64b0] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-630b64b0] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-630b64b0] {\n  margin-top: 30px;\n}\n.login__button[data-v-630b64b0] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-630b64b0] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-630b64b0] {\n      opacity: 1;\n}\n}\n.login__button[data-v-630b64b0]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-630b64b0] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-630b64b0] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-630b64b0] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-630b64b0] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-630b64b0] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-630b64b0] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-630b64b0] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-630b64b0] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-630b64b0]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-630b64b0]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-630b64b0]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-630b64b0]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-630b64b0] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-630b64b0] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-630b64b0] {\n  margin-top: 30px;\n}\n.register__button[data-v-630b64b0] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-630b64b0] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-630b64b0] {\n      opacity: 1;\n}\n}\n.register__button[data-v-630b64b0]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-630b64b0] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-630b64b0] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-630b64b0] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-630b64b0] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-630b64b0] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-630b64b0] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-630b64b0] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-630b64b0] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-630b64b0] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-630b64b0]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-630b64b0]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-630b64b0]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-630b64b0]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-630b64b0] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-630b64b0] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-630b64b0] {\n      opacity: 1;\n}\n}\n.email__button[data-v-630b64b0]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-630b64b0] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-630b64b0], .email__status-group[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-630b64b0], .email__status-list[data-v-630b64b0] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-630b64b0] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-630b64b0] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-630b64b0] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-630b64b0] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-630b64b0] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-630b64b0] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-630b64b0] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-630b64b0] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-630b64b0]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-630b64b0]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-630b64b0]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-630b64b0]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-630b64b0] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-630b64b0] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-630b64b0] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-630b64b0]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-630b64b0] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-630b64b0] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-630b64b0] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-630b64b0] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-630b64b0] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-630b64b0] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-630b64b0]:focus {\n  outline: 0;\n}\ninput[data-v-630b64b0] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-630b64b0] {\n  width: 100%;\n  height: 100%;\n}\n.stave__svg[data-v-630b64b0] {\n  width: 45vw;\n  height: 13.5vw;\n  overflow: visible;\n}\n@media only screen and (orientation: portrait) {\n.stave__svg[data-v-630b64b0] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n.stave__line[data-v-630b64b0] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n}\n.stave__rect[data-v-630b64b0] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n  fill: none;\n}\n", ""]);
 
 // exports
 
@@ -45817,7 +45278,8 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: ur
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Note_vue__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Note_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Note_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_propValidators__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_propValidators__ = __webpack_require__(14);
+//
 //
 //
 //
@@ -45869,12 +45331,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: {
         minNotes: Object(__WEBPACK_IMPORTED_MODULE_1__utils_propValidators__["a" /* numberProp */])(),
         maxNotes: Object(__WEBPACK_IMPORTED_MODULE_1__utils_propValidators__["a" /* numberProp */])(),
-        noteType: Object(__WEBPACK_IMPORTED_MODULE_1__utils_propValidators__["c" /* stringProp */])()
+        noteType: Object(__WEBPACK_IMPORTED_MODULE_1__utils_propValidators__["c" /* stringProp */])(),
+        sharpFlatMap: Object(__WEBPACK_IMPORTED_MODULE_1__utils_propValidators__["b" /* objectProp */])()
     },
     data: function data() {
         return {
             notes: [],
-            helperLines: false
+            helperLinesVisible: false
         };
     },
     created: function created() {
@@ -45902,6 +45365,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         drawNote: function drawNote(pitch) {
             if (this.notes.length < this.maxNotes) {
+                if (this.notes.length > 0) {
+                    var index = this.notes.length;
+                    var previousPitch = this.notes[index - 1].pitch;
+                    if (this.isSharp(previousPitch) && this.isFlat(pitch) || this.isFlat(previousPitch) && this.isSharp(pitch)) {
+                        pitch = this.sharpFlatMap[pitch];
+                    } else if (this.isNatural(previousPitch) && (this.isSharp(pitch) || this.isFlat(pitch))) {
+                        var pitches = [pitch, this.sharpFlatMap[pitch]];
+                        pitch = pitches[Math.round(Math.random())];
+                    }
+                }
                 this.notes.push({ delay: this.notes.length, pitch: pitch, type: this.noteType });
                 this.$emit('notes-changed', this.notes);
             }
@@ -45927,6 +45400,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         getPreviousNotePitch: function getPreviousNotePitch(index) {
             return index > 0 ? this.notes[index - 1].pitch : '';
+        },
+        isSharp: function isSharp(pitch) {
+            return pitch.indexOf('#') >= 0;
+        },
+        isFlat: function isFlat(pitch) {
+            return pitch.indexOf('b') >= 0;
+        },
+        isNatural: function isNatural(pitch) {
+            return !this.isSharp(pitch) && !this.isFlat(pitch);
         }
     },
     components: {
@@ -45953,7 +45435,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-384154e9"
+var __vue_scopeId__ = "data-v-47b507a9"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -45964,7 +45446,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\Note.vue"
+Component.options.__file = "resources/assets/js/components/Note.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -45974,9 +45456,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-384154e9", Component.options)
+    hotAPI.createRecord("data-v-47b507a9", Component.options)
   } else {
-    hotAPI.reload("data-v-384154e9", Component.options)
+    hotAPI.reload("data-v-47b507a9", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -45997,13 +45479,13 @@ var content = __webpack_require__(80);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("34be46a6", content, false);
+var update = __webpack_require__(2)("37bf20e6", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-384154e9\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Note.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-384154e9\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Note.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-47b507a9\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Note.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-47b507a9\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Note.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -46021,7 +45503,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-384154e9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-384154e9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-384154e9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-384154e9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-384154e9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-384154e9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-384154e9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-384154e9] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-384154e9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-384154e9] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-384154e9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-384154e9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-384154e9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-384154e9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-384154e9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-384154e9] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-384154e9]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-384154e9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-384154e9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-384154e9] {\n  margin-top: 30px;\n}\n.login__button[data-v-384154e9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-384154e9] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-384154e9] {\n      opacity: 1;\n}\n}\n.login__button[data-v-384154e9]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-384154e9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-384154e9] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-384154e9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-384154e9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-384154e9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-384154e9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-384154e9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-384154e9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-384154e9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-384154e9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-384154e9] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-384154e9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-384154e9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-384154e9] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-384154e9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-384154e9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-384154e9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-384154e9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-384154e9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-384154e9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-384154e9] {\n  margin-top: 30px;\n}\n.register__button[data-v-384154e9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-384154e9] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-384154e9] {\n      opacity: 1;\n}\n}\n.register__button[data-v-384154e9]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-384154e9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-384154e9] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-384154e9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-384154e9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-384154e9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-384154e9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-384154e9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-384154e9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-384154e9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-384154e9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-384154e9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-384154e9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-384154e9] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-384154e9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-384154e9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-384154e9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-384154e9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-384154e9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-384154e9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-384154e9] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-384154e9] {\n      opacity: 1;\n}\n}\n.email__button[data-v-384154e9]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-384154e9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-384154e9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-384154e9], .email__status-group[data-v-384154e9] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-384154e9], .email__status-list[data-v-384154e9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-384154e9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-384154e9] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-384154e9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-384154e9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-384154e9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-384154e9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-384154e9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-384154e9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-384154e9] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-384154e9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-384154e9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-384154e9] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-384154e9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-384154e9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-384154e9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-384154e9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-384154e9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-384154e9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-384154e9] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-384154e9] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-384154e9]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-384154e9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-384154e9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-384154e9] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-384154e9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-384154e9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-384154e9] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-384154e9] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-384154e9] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-384154e9]:focus {\n  outline: 0;\n}\ninput[data-v-384154e9] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-384154e9] {\n  width: 100%;\n  height: 100%;\n}\n.note__hidden[data-v-384154e9] {\n  display: none;\n}\n.note__helper-line[data-v-384154e9] {\n  stroke: #000000;\n  stroke-width: 0.9%;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-47b507a9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-47b507a9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-47b507a9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-47b507a9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-47b507a9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-47b507a9] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-47b507a9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-47b507a9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-47b507a9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-47b507a9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-47b507a9] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-47b507a9]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-47b507a9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-47b507a9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-47b507a9] {\n  margin-top: 30px;\n}\n.login__button[data-v-47b507a9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-47b507a9] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-47b507a9] {\n      opacity: 1;\n}\n}\n.login__button[data-v-47b507a9]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-47b507a9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-47b507a9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-47b507a9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-47b507a9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-47b507a9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-47b507a9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-47b507a9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-47b507a9] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-47b507a9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-47b507a9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-47b507a9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-47b507a9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-47b507a9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-47b507a9] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-47b507a9] {\n  margin-top: 30px;\n}\n.register__button[data-v-47b507a9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-47b507a9] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-47b507a9] {\n      opacity: 1;\n}\n}\n.register__button[data-v-47b507a9]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-47b507a9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-47b507a9] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-47b507a9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-47b507a9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-47b507a9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-47b507a9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-47b507a9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-47b507a9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-47b507a9] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-47b507a9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-47b507a9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-47b507a9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-47b507a9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-47b507a9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-47b507a9] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-47b507a9] {\n      opacity: 1;\n}\n}\n.email__button[data-v-47b507a9]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-47b507a9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-47b507a9], .email__status-group[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-47b507a9], .email__status-list[data-v-47b507a9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-47b507a9] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-47b507a9] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-47b507a9] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-47b507a9] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-47b507a9] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-47b507a9] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-47b507a9] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-47b507a9] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-47b507a9]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-47b507a9]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-47b507a9]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-47b507a9]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-47b507a9] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-47b507a9] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-47b507a9] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-47b507a9]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-47b507a9] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-47b507a9] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-47b507a9] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-47b507a9] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-47b507a9] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-47b507a9] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-47b507a9]:focus {\n  outline: 0;\n}\ninput[data-v-47b507a9] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-47b507a9] {\n  width: 100%;\n  height: 100%;\n}\n.note__hidden[data-v-47b507a9] {\n  display: none;\n}\n.note__ledger-line[data-v-47b507a9] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n}\n", ""]);
 
 // exports
 
@@ -46032,7 +45514,9 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: ur
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(14);
+//
+//
 //
 //
 //
@@ -46127,28 +45611,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            pitches: {
-                'Bb3': 0,
-                'B3': 0,
-                'C4': 1,
-                'Db4': 2,
-                'D4': 2,
-                'Eb4': 3,
-                'E4': 3,
-                'F4': 4,
-                'Gb4': 5,
-                'G4': 5,
-                'Ab4': 6,
-                'A4': 6,
-                'Bb4': 7,
-                'B4': 7,
-                'C5': 8,
-                'Db5': 9
-            },
-            flatNotes: ['Bb3', 'Db4', 'Eb4', 'Gb4', 'Ab4', 'Bb4', 'Db5'],
-            downNotes: ['Bb4', 'B4', 'C5', 'Db5'],
-            helperLineNotes: ['Bb3', 'B3', 'C4'],
-            transform: ''
+            heights: {
+                'A3': 0,
+                'A#3': 0,
+                'Bb3': 1,
+                'B3': 1,
+                'B#3': 1,
+                'Cb4': 2,
+                'C4': 2,
+                'C#4': 2,
+                'Db4': 3,
+                'D4': 3,
+                'D#4': 3,
+                'Eb4': 4,
+                'E4': 4,
+                'E#4': 4,
+                'Fb4': 5,
+                'F4': 5,
+                'F#4': 5,
+                'Gb4': 6,
+                'G4': 6,
+                'G#4': 6,
+                'Ab4': 7,
+                'A4': 7,
+                'A#4': 7,
+                'Bb4': 8,
+                'B4': 8,
+                'B#4': 8,
+                'Cb5': 9,
+                'C5': 9,
+                'C#5': 9,
+                'Db5': 10,
+                'D5': 10
+            }
         };
     },
     mounted: function mounted() {
@@ -46156,7 +45651,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.$nextTick(function () {
             _this.shapeNote();
-            _this.positionNote();
         });
     },
 
@@ -46164,20 +45658,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         hasPrevious: function hasPrevious() {
             return this.previousPitch !== '';
         },
-        flat: function flat() {
-            return this.flatNotes.indexOf(this.pitch) >= 0;
+        sharpPrevious: function sharpPrevious() {
+            return this.hasPrevious && this.previousPitch.indexOf('#') >= 0;
         },
         flatPrevious: function flatPrevious() {
-            return this.hasPrevious && this.flatNotes.indexOf(this.previousPitch) >= 0;
+            return this.hasPrevious && this.previousPitch.indexOf('b') >= 0;
+        },
+        sharp: function sharp() {
+            return this.pitch.indexOf('#') >= 0;
+        },
+        flat: function flat() {
+            return this.pitch.indexOf('b') >= 0;
         },
         natural: function natural() {
-            return !this.flat && this.flatPrevious && this.pitches[this.previousPitch] === this.pitches[this.pitch];
+            return (!this.sharp && this.sharpPrevious || !this.flat && this.flatPrevious) && this.heights[this.previousPitch] === this.heights[this.pitch];
+        },
+        pitches: function pitches() {
+            return Object.keys(this.heights);
+        },
+        pitchIndex: function pitchIndex() {
+            return this.pitches.indexOf(this.pitch);
         },
         up: function up() {
-            return this.downNotes.indexOf(this.pitch) === -1;
+            return this.pitchIndex < this.pitches.indexOf('Bb4');
         },
-        needsHelperLine: function needsHelperLine() {
-            return this.helperLineNotes.indexOf(this.pitch) >= 0;
+        needsLedgerLines: function needsLedgerLines() {
+            return this.pitchIndex <= this.pitches.indexOf('C#4');
+        },
+        ledgerLineCount: function ledgerLineCount() {
+            return this.needsLedgerLines ? Math.floor((2 - this.heights[this.pitch]) / 2) + 1 : 0;
+        },
+        position: function position() {
+            var pos = {
+                x: 15 + this.delay * (85 / this.count),
+                y: 13 - 1.5 * this.heights[this.pitch]
+            };
+            if (!this.up) {
+                pos.y += 8.6;
+            }
+            return pos;
         }
     },
     methods: {
@@ -46206,29 +45725,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     break;
             }
 
-            console.log(this.previousPitch, this.pitch);
-
-            if (this.natural) {
-                var selector = this.type === 'whole' ? '#natural-whole' : '#natural';
+            if (this.sharp) {
+                var selector = this.type === 'whole' ? '#sharp-whole' : '#sharp';
                 $(this.$el.querySelector(selector)).show();
             } else if (this.flat) {
                 var _selector = this.type === 'whole' ? '#flat-whole' : '#flat';
                 $(this.$el.querySelector(_selector)).show();
+            } else if (this.natural) {
+                var _selector2 = this.type === 'whole' ? '#natural-whole' : '#natural';
+                $(this.$el.querySelector(_selector2)).show();
             }
-
-            if (this.needsHelperLine) {
-                $(this.$el.querySelector('#helper-line')).show();
-            }
-        },
-        positionNote: function positionNote() {
-            var x = 15 + this.delay * (85 / this.count);
-            var y = 11.5 - 1.5 * this.pitches[this.pitch];
-
-            if (!this.up) {
-                y += 8.6;
-            }
-
-            this.transform = 'translate(' + x + ' ' + y + ') scale(0.28)';
         }
     }
 });
@@ -46243,167 +45749,32 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "g",
-    {
-      attrs: {
-        transform: _vm.transform,
-        stroke: "none",
-        "stroke-width": "1",
-        fill: "none",
-        "fill-rule": "evenodd"
-      }
-    },
     [
-      _vm.up
-        ? _c(
-            "g",
-            {
-              attrs: { id: "note-up", "fill-rule": "nonzero", fill: "#000000" }
-            },
-            [
-              _c(
+      _c(
+        "g",
+        {
+          attrs: {
+            transform:
+              "translate(" +
+              _vm.position.x +
+              ", " +
+              _vm.position.y +
+              ") scale(0.28)",
+            stroke: "none",
+            "stroke-width": "1",
+            fill: "none",
+            "fill-rule": "evenodd"
+          }
+        },
+        [
+          _vm.up
+            ? _c(
                 "g",
                 {
                   attrs: {
-                    id: "dots-whole",
-                    transform: "translate(33.750000, 47.500000)"
-                  }
-                },
-                [
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
-                      id: "dot2-whole"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
-                      id: "dot1-whole"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "g",
-                {
-                  attrs: {
-                    id: "dots",
-                    transform: "translate(27.000000, 47.500000)"
-                  }
-                },
-                [
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
-                      id: "dot2"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
-                      id: "dot1"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "g",
-                {
-                  attrs: {
-                    id: "signature-whole",
-                    transform: "translate(0.000000, 31.000000)"
-                  }
-                },
-                [
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M7.76948144,11.2849869 L7.76948144,33.7700005 L6.54519952,33.7700005 L6.54519952,25.3430427 L0,26.7606617 L0,4 L1.17719416,4 L1.17719416,12.7813626 L7.76948144,11.2849869 Z M1.17719416,16.5616801 L1.17719416,22.7440744 L6.54519952,21.5627251 L6.54519952,15.3803309 L1.17719416,16.5616801 Z",
-                      id: "natural-whole"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
-                      id: "flat-whole",
-                      transform:
-                        "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
-                      id: "sharp-whole"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "g",
-                {
-                  attrs: {
-                    id: "signature",
-                    transform: "translate(0.000000, 31.000000)"
-                  }
-                },
-                [
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M7.76948144,11.2849869 L7.76948144,33.7700005 L6.54519952,33.7700005 L6.54519952,25.3430427 L0,26.7606617 L0,4 L1.17719416,4 L1.17719416,12.7813626 L7.76948144,11.2849869 Z M1.17719416,16.5616801 L1.17719416,22.7440744 L6.54519952,21.5627251 L6.54519952,15.3803309 L1.17719416,16.5616801 Z",
-                      id: "natural"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
-                      id: "flat",
-                      transform:
-                        "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
-                      id: "sharp"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "g",
-                {
-                  attrs: {
-                    id: "note",
-                    transform: "translate(11.000000, 0.000000)"
+                    id: "note-up",
+                    "fill-rule": "nonzero",
+                    fill: "#000000"
                   }
                 },
                 [
@@ -46411,8 +45782,8 @@ var render = function() {
                     "g",
                     {
                       attrs: {
-                        id: "flags",
-                        transform: "translate(12.000000, 0.000000)"
+                        id: "dots-whole",
+                        transform: "translate(33.750000, 47.500000)"
                       }
                     },
                     [
@@ -46420,10 +45791,8 @@ var render = function() {
                         staticClass: "note__hidden",
                         attrs: {
                           d:
-                            "M1.162,35.4800031 C1.162,28.3600031 9.282,23.8000031 9.282,16.6800031 C9.282,15.3600031 8.922,14.0800031 8.362,12.8800031 C9.082,11.4000031 9.522,9.8800031 9.522,8.2000031 C9.522,5.6800031 8.882,3.2000031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.5600031 7.842,5.8800031 7.842,8.2000031 C7.842,12.0800031 4.042,15.8400031 1.162,18.4800031 L1.162,15.4800031 L0.522,15.4800031 L0.522,35.4800031 L1.162,35.4800031 Z M7.282,14.8000031 C7.482,15.4000031 7.562,16.0400031 7.562,16.6800031 C7.562,20.5200031 3.922,24.2800031 1.162,26.9600031 C1.162,22.2400031 4.802,18.7200031 7.282,14.8000031 Z",
-                          id: "flag-sixteenth",
-                          transform:
-                            "translate(5.522000, 17.940003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -17.940003) "
+                            "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
+                          id: "dot2-whole"
                         }
                       }),
                       _vm._v(" "),
@@ -46431,32 +45800,19 @@ var render = function() {
                         staticClass: "note__hidden",
                         attrs: {
                           d:
-                            "M1.162,30.4800031 C1.162,22.5600031 9.522,17.0800031 9.522,9.1600031 C9.522,6.3200031 8.882,3.5200031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.9200031 7.842,6.5200031 7.842,9.1600031 C7.842,13.3200031 4.042,17.4800031 1.162,20.4800031 L0.522,20.4800031 L0.522,30.4800031 L1.162,30.4800031 Z",
-                          id: "flag-eighth",
-                          transform:
-                            "translate(5.522000, 15.440003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -15.440003) "
+                            "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
+                          id: "dot1-whole"
                         }
                       })
                     ]
                   ),
                   _vm._v(" "),
-                  _c("rect", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      id: "stem",
-                      x: "11.862",
-                      y: "0",
-                      width: "1.29999995",
-                      height: "48.122001"
-                    }
-                  }),
-                  _vm._v(" "),
                   _c(
                     "g",
                     {
                       attrs: {
-                        id: "heads",
-                        transform: "translate(0.000000, 44.000000)"
+                        id: "dots",
+                        transform: "translate(27.000000, 47.500000)"
                       }
                     },
                     [
@@ -46464,10 +45820,8 @@ var render = function() {
                         staticClass: "note__hidden",
                         attrs: {
                           d:
-                            "M8.56884077,10.46377 C6.5760871,10.46377 5.81884071,8.7500019 5.81884071,6.9565236 C5.81884071,3.8876829 8.09057989,1.5362336 11.1594205,1.5362336 C13.1521742,1.5362336 13.9094206,3.2500018 13.9094206,5.0434801 C13.9094206,8.1123207 11.6376814,10.46377 8.56884077,10.46377 Z M19.7282613,6.0000018 C19.7282613,4.2862337 18.3333337,2.9710162 16.8188409,2.1340597 C14.7065221,0.9384075 12.3152177,0.5000017 9.88405819,0.5000017 C7.45289871,0.5000017 5.02173924,0.9384075 2.90942035,2.1340597 C1.39492757,2.9710162 0,4.2862337 0,6.0000018 C0,7.71377 1.39492757,9.0289874 2.90942035,9.8659439 C5.02173924,11.0615961 7.45289871,11.5000019 9.88405819,11.5000019 C12.3152177,11.5000019 14.7065221,11.0615961 16.8188409,9.8659439 C18.3333337,9.0289874 19.7282613,7.71377 19.7282613,6.0000018 Z",
-                          id: "head-whole",
-                          transform:
-                            "translate(9.864131, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-9.864131, -6.000002) "
+                            "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
+                          id: "dot2"
                         }
                       }),
                       _vm._v(" "),
@@ -46475,228 +45829,19 @@ var render = function() {
                         staticClass: "note__hidden",
                         attrs: {
                           d:
-                            "M11.9827094,8.6200019 C11.9827094,9.5800019 11.1838621,10.2600019 10.3850148,10.2600019 C10.2328534,10.2600019 10.080692,10.2600019 9.92853065,10.2200019 C8.74927989,9.8600019 6.99942391,8.6200019 5.59193106,7.6600018 C4.18443821,6.7000018 2.39654188,5.5400018 1.63573494,4.5400018 C1.3694525,4.2200018 1.21729111,3.8200018 1.21729111,3.4200018 C1.21729111,2.4600017 2.01613841,1.7800017 2.8149857,1.7800017 C2.96714709,1.7800017 3.11930848,1.7800017 3.27146987,1.8200017 C4.45072064,2.1800017 6.23861696,3.4200018 7.64610981,4.3800018 C9.05360267,5.3400018 10.841499,6.5000018 11.6023059,7.5000018 C11.8685884,7.8200019 11.9827094,8.2200019 11.9827094,8.6200019 Z M10.0426517,11.5000019 C11.830548,11.5000019 13.2000005,10.6600019 13.2000005,8.6200019 C13.2000005,7.8600019 13.0478391,7.1400018 12.8195971,6.3800018 C12.3631129,4.8600018 11.6023059,3.4200018 10.3469745,2.5400017 C8.29279572,1.1000017 6.04841523,0.5000017 3.19538918,0.5000017 C1.40749285,0.5000017 0,1.3800017 0,3.4200018 C0,4.1800018 0.190201737,4.9000018 0.418443821,5.6600018 C0.874927989,7.1800018 1.59769459,8.6200019 2.85302605,9.5000019 C4.90720481,10.9400019 7.18962565,11.5000019 10.0426517,11.5000019 Z",
-                          id: "head-half",
-                          transform:
-                            "translate(6.600000, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-6.600000, -6.000002) "
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M8.8,11.520003 C11.04,11.520003 13.16,10.360003 13.16,7.880003 C13.16,5.000003 10.92,3.040003 9.04,1.920003 C7.6,1.080003 6,0.480003 4.36,0.480003 C2.12,0.480003 0,1.640003 0,4.120003 C0,7.000003 2.24,8.960003 4.12,10.080003 C5.56,10.920003 7.16,11.520003 8.8,11.520003 Z",
-                          id: "head",
-                          transform:
-                            "translate(6.580000, 6.000003) scale(-1, 1) rotate(-180.000000) translate(-6.580000, -6.000003) "
-                        }
-                      })
-                    ]
-                  )
-                ]
-              )
-            ]
-          )
-        : _c(
-            "g",
-            {
-              attrs: {
-                id: "note-down",
-                "fill-rule": "nonzero",
-                fill: "#000000"
-              }
-            },
-            [
-              _c(
-                "g",
-                {
-                  attrs: {
-                    id: "dots-whole",
-                    transform: "translate(34.000000, 16.500000)"
-                  }
-                },
-                [
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
-                      id: "dot2-whole"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
-                      id: "dot1-whole"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "g",
-                {
-                  attrs: {
-                    id: "dots",
-                    transform: "translate(34.000000, 16.500000)"
-                  }
-                },
-                [
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
-                      id: "dot2"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
-                      id: "dot1"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c("g", { attrs: { id: "signature-whole" } }, [
-                _c("path", {
-                  staticClass: "note__hidden",
-                  attrs: {
-                    d:
-                      "M8.76948144,11.2849869 L8.76948144,33.7700005 L7.54519952,33.7700005 L7.54519952,25.3430427 L1,26.7606617 L1,4 L2.17719416,4 L2.17719416,12.7813626 L8.76948144,11.2849869 Z M2.17719416,16.5616801 L2.17719416,22.7440744 L7.54519952,21.5627251 L7.54519952,15.3803309 L2.17719416,16.5616801 Z",
-                    id: "natural-whole"
-                  }
-                }),
-                _vm._v(" "),
-                _c("path", {
-                  staticClass: "note__hidden",
-                  attrs: {
-                    d:
-                      "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
-                    id: "flat-whole",
-                    transform:
-                      "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
-                  }
-                }),
-                _vm._v(" "),
-                _c("path", {
-                  staticClass: "note__hidden",
-                  attrs: {
-                    d:
-                      "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
-                    id: "sharp-whole"
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "g",
-                {
-                  attrs: {
-                    id: "signature",
-                    transform: "translate(7.000000, 0.000000)"
-                  }
-                },
-                [
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M8.76948144,11.2849869 L8.76948144,33.7700005 L7.54519952,33.7700005 L7.54519952,25.3430427 L1,26.7606617 L1,4 L2.17719416,4 L2.17719416,12.7813626 L8.76948144,11.2849869 Z M2.17719416,16.5616801 L2.17719416,22.7440744 L7.54519952,21.5627251 L7.54519952,15.3803309 L2.17719416,16.5616801 Z",
-                      id: "natural"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
-                      id: "flat",
-                      transform:
-                        "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("path", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      d:
-                        "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
-                      id: "sharp"
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "g",
-                {
-                  attrs: {
-                    id: "note",
-                    transform:
-                      "translate(19.500000, 41.000000) scale(-1, -1) translate(-19.500000, -41.000000) translate(8.000000, 13.000000)"
-                  }
-                },
-                [
-                  _c(
-                    "g",
-                    {
-                      attrs: {
-                        id: "flags",
-                        transform: "translate(12.000000, 0.000000)"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M1.162,35.4800031 C1.162,28.3600031 9.282,23.8000031 9.282,16.6800031 C9.282,15.3600031 8.922,14.0800031 8.362,12.8800031 C9.082,11.4000031 9.522,9.8800031 9.522,8.2000031 C9.522,5.6800031 8.882,3.2000031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.5600031 7.842,5.8800031 7.842,8.2000031 C7.842,12.0800031 4.042,15.8400031 1.162,18.4800031 L1.162,15.4800031 L0.522,15.4800031 L0.522,35.4800031 L1.162,35.4800031 Z M7.282,14.8000031 C7.482,15.4000031 7.562,16.0400031 7.562,16.6800031 C7.562,20.5200031 3.922,24.2800031 1.162,26.9600031 C1.162,22.2400031 4.802,18.7200031 7.282,14.8000031 Z",
-                          id: "flag-sixteenth",
-                          transform:
-                            "translate(5.522000, 17.940003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -17.940003) "
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M1.162,30.4800031 C1.162,22.5600031 9.522,17.0800031 9.522,9.1600031 C9.522,6.3200031 8.882,3.5200031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.9200031 7.842,6.5200031 7.842,9.1600031 C7.842,13.3200031 4.042,17.4800031 1.162,20.4800031 L0.522,20.4800031 L0.522,30.4800031 L1.162,30.4800031 Z",
-                          id: "flag-eighth",
-                          transform:
-                            "translate(5.522000, 15.440003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -15.440003) "
+                            "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
+                          id: "dot1"
                         }
                       })
                     ]
                   ),
                   _vm._v(" "),
-                  _c("rect", {
-                    staticClass: "note__hidden",
-                    attrs: {
-                      id: "stem",
-                      x: "11.862",
-                      y: "0",
-                      width: "1.29999995",
-                      height: "48.122001"
-                    }
-                  }),
-                  _vm._v(" "),
                   _c(
                     "g",
                     {
                       attrs: {
-                        id: "heads",
-                        transform: "translate(0.000000, 44.000000)"
+                        id: "signature-whole",
+                        transform: "translate(0.000000, 31.000000)"
                       }
                     },
                     [
@@ -46704,10 +45849,8 @@ var render = function() {
                         staticClass: "note__hidden",
                         attrs: {
                           d:
-                            "M8.56884077,10.46377 C6.5760871,10.46377 5.81884071,8.7500019 5.81884071,6.9565236 C5.81884071,3.8876829 8.09057989,1.5362336 11.1594205,1.5362336 C13.1521742,1.5362336 13.9094206,3.2500018 13.9094206,5.0434801 C13.9094206,8.1123207 11.6376814,10.46377 8.56884077,10.46377 Z M19.7282613,6.0000018 C19.7282613,4.2862337 18.3333337,2.9710162 16.8188409,2.1340597 C14.7065221,0.9384075 12.3152177,0.5000017 9.88405819,0.5000017 C7.45289871,0.5000017 5.02173924,0.9384075 2.90942035,2.1340597 C1.39492757,2.9710162 0,4.2862337 0,6.0000018 C0,7.71377 1.39492757,9.0289874 2.90942035,9.8659439 C5.02173924,11.0615961 7.45289871,11.5000019 9.88405819,11.5000019 C12.3152177,11.5000019 14.7065221,11.0615961 16.8188409,9.8659439 C18.3333337,9.0289874 19.7282613,7.71377 19.7282613,6.0000018 Z",
-                          id: "head-whole",
-                          transform:
-                            "translate(9.864131, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-9.864131, -6.000002) "
+                            "M7.76948144,11.2849869 L7.76948144,33.7700005 L6.54519952,33.7700005 L6.54519952,25.3430427 L0,26.7606617 L0,4 L1.17719416,4 L1.17719416,12.7813626 L7.76948144,11.2849869 Z M1.17719416,16.5616801 L1.17719416,22.7440744 L6.54519952,21.5627251 L6.54519952,15.3803309 L1.17719416,16.5616801 Z",
+                          id: "natural-whole"
                         }
                       }),
                       _vm._v(" "),
@@ -46715,10 +45858,10 @@ var render = function() {
                         staticClass: "note__hidden",
                         attrs: {
                           d:
-                            "M11.9827094,8.6200019 C11.9827094,9.5800019 11.1838621,10.2600019 10.3850148,10.2600019 C10.2328534,10.2600019 10.080692,10.2600019 9.92853065,10.2200019 C8.74927989,9.8600019 6.99942391,8.6200019 5.59193106,7.6600018 C4.18443821,6.7000018 2.39654188,5.5400018 1.63573494,4.5400018 C1.3694525,4.2200018 1.21729111,3.8200018 1.21729111,3.4200018 C1.21729111,2.4600017 2.01613841,1.7800017 2.8149857,1.7800017 C2.96714709,1.7800017 3.11930848,1.7800017 3.27146987,1.8200017 C4.45072064,2.1800017 6.23861696,3.4200018 7.64610981,4.3800018 C9.05360267,5.3400018 10.841499,6.5000018 11.6023059,7.5000018 C11.8685884,7.8200019 11.9827094,8.2200019 11.9827094,8.6200019 Z M10.0426517,11.5000019 C11.830548,11.5000019 13.2000005,10.6600019 13.2000005,8.6200019 C13.2000005,7.8600019 13.0478391,7.1400018 12.8195971,6.3800018 C12.3631129,4.8600018 11.6023059,3.4200018 10.3469745,2.5400017 C8.29279572,1.1000017 6.04841523,0.5000017 3.19538918,0.5000017 C1.40749285,0.5000017 0,1.3800017 0,3.4200018 C0,4.1800018 0.190201737,4.9000018 0.418443821,5.6600018 C0.874927989,7.1800018 1.59769459,8.6200019 2.85302605,9.5000019 C4.90720481,10.9400019 7.18962565,11.5000019 10.0426517,11.5000019 Z",
-                          id: "head-half",
+                            "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
+                          id: "flat-whole",
                           transform:
-                            "translate(6.600000, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-6.600000, -6.000002) "
+                            "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
                         }
                       }),
                       _vm._v(" "),
@@ -46726,30 +45869,411 @@ var render = function() {
                         staticClass: "note__hidden",
                         attrs: {
                           d:
-                            "M8.8,11.520003 C11.04,11.520003 13.16,10.360003 13.16,7.880003 C13.16,5.000003 10.92,3.040003 9.04,1.920003 C7.6,1.080003 6,0.480003 4.36,0.480003 C2.12,0.480003 0,1.640003 0,4.120003 C0,7.000003 2.24,8.960003 4.12,10.080003 C5.56,10.920003 7.16,11.520003 8.8,11.520003 Z",
-                          id: "head",
-                          transform:
-                            "translate(6.580000, 6.000003) scale(-1, 1) rotate(-180.000000) translate(-6.580000, -6.000003) "
+                            "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
+                          id: "sharp-whole"
                         }
                       })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "signature",
+                        transform: "translate(0.000000, 31.000000)"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M7.76948144,11.2849869 L7.76948144,33.7700005 L6.54519952,33.7700005 L6.54519952,25.3430427 L0,26.7606617 L0,4 L1.17719416,4 L1.17719416,12.7813626 L7.76948144,11.2849869 Z M1.17719416,16.5616801 L1.17719416,22.7440744 L6.54519952,21.5627251 L6.54519952,15.3803309 L1.17719416,16.5616801 Z",
+                          id: "natural"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
+                          id: "flat",
+                          transform:
+                            "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
+                          id: "sharp"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "note",
+                        transform: "translate(11.000000, 0.000000)"
+                      }
+                    },
+                    [
+                      _c(
+                        "g",
+                        {
+                          attrs: {
+                            id: "flags",
+                            transform: "translate(12.000000, 0.000000)"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M1.162,35.4800031 C1.162,28.3600031 9.282,23.8000031 9.282,16.6800031 C9.282,15.3600031 8.922,14.0800031 8.362,12.8800031 C9.082,11.4000031 9.522,9.8800031 9.522,8.2000031 C9.522,5.6800031 8.882,3.2000031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.5600031 7.842,5.8800031 7.842,8.2000031 C7.842,12.0800031 4.042,15.8400031 1.162,18.4800031 L1.162,15.4800031 L0.522,15.4800031 L0.522,35.4800031 L1.162,35.4800031 Z M7.282,14.8000031 C7.482,15.4000031 7.562,16.0400031 7.562,16.6800031 C7.562,20.5200031 3.922,24.2800031 1.162,26.9600031 C1.162,22.2400031 4.802,18.7200031 7.282,14.8000031 Z",
+                              id: "flag-sixteenth",
+                              transform:
+                                "translate(5.522000, 17.940003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -17.940003) "
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M1.162,30.4800031 C1.162,22.5600031 9.522,17.0800031 9.522,9.1600031 C9.522,6.3200031 8.882,3.5200031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.9200031 7.842,6.5200031 7.842,9.1600031 C7.842,13.3200031 4.042,17.4800031 1.162,20.4800031 L0.522,20.4800031 L0.522,30.4800031 L1.162,30.4800031 Z",
+                              id: "flag-eighth",
+                              transform:
+                                "translate(5.522000, 15.440003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -15.440003) "
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("rect", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          id: "stem",
+                          x: "11.862",
+                          y: "0",
+                          width: "1.29999995",
+                          height: "48.122001"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "g",
+                        {
+                          attrs: {
+                            id: "heads",
+                            transform: "translate(0.000000, 44.000000)"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M8.56884077,10.46377 C6.5760871,10.46377 5.81884071,8.7500019 5.81884071,6.9565236 C5.81884071,3.8876829 8.09057989,1.5362336 11.1594205,1.5362336 C13.1521742,1.5362336 13.9094206,3.2500018 13.9094206,5.0434801 C13.9094206,8.1123207 11.6376814,10.46377 8.56884077,10.46377 Z M19.7282613,6.0000018 C19.7282613,4.2862337 18.3333337,2.9710162 16.8188409,2.1340597 C14.7065221,0.9384075 12.3152177,0.5000017 9.88405819,0.5000017 C7.45289871,0.5000017 5.02173924,0.9384075 2.90942035,2.1340597 C1.39492757,2.9710162 0,4.2862337 0,6.0000018 C0,7.71377 1.39492757,9.0289874 2.90942035,9.8659439 C5.02173924,11.0615961 7.45289871,11.5000019 9.88405819,11.5000019 C12.3152177,11.5000019 14.7065221,11.0615961 16.8188409,9.8659439 C18.3333337,9.0289874 19.7282613,7.71377 19.7282613,6.0000018 Z",
+                              id: "head-whole",
+                              transform:
+                                "translate(9.864131, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-9.864131, -6.000002) "
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M11.9827094,8.6200019 C11.9827094,9.5800019 11.1838621,10.2600019 10.3850148,10.2600019 C10.2328534,10.2600019 10.080692,10.2600019 9.92853065,10.2200019 C8.74927989,9.8600019 6.99942391,8.6200019 5.59193106,7.6600018 C4.18443821,6.7000018 2.39654188,5.5400018 1.63573494,4.5400018 C1.3694525,4.2200018 1.21729111,3.8200018 1.21729111,3.4200018 C1.21729111,2.4600017 2.01613841,1.7800017 2.8149857,1.7800017 C2.96714709,1.7800017 3.11930848,1.7800017 3.27146987,1.8200017 C4.45072064,2.1800017 6.23861696,3.4200018 7.64610981,4.3800018 C9.05360267,5.3400018 10.841499,6.5000018 11.6023059,7.5000018 C11.8685884,7.8200019 11.9827094,8.2200019 11.9827094,8.6200019 Z M10.0426517,11.5000019 C11.830548,11.5000019 13.2000005,10.6600019 13.2000005,8.6200019 C13.2000005,7.8600019 13.0478391,7.1400018 12.8195971,6.3800018 C12.3631129,4.8600018 11.6023059,3.4200018 10.3469745,2.5400017 C8.29279572,1.1000017 6.04841523,0.5000017 3.19538918,0.5000017 C1.40749285,0.5000017 0,1.3800017 0,3.4200018 C0,4.1800018 0.190201737,4.9000018 0.418443821,5.6600018 C0.874927989,7.1800018 1.59769459,8.6200019 2.85302605,9.5000019 C4.90720481,10.9400019 7.18962565,11.5000019 10.0426517,11.5000019 Z",
+                              id: "head-half",
+                              transform:
+                                "translate(6.600000, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-6.600000, -6.000002) "
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M8.8,11.520003 C11.04,11.520003 13.16,10.360003 13.16,7.880003 C13.16,5.000003 10.92,3.040003 9.04,1.920003 C7.6,1.080003 6,0.480003 4.36,0.480003 C2.12,0.480003 0,1.640003 0,4.120003 C0,7.000003 2.24,8.960003 4.12,10.080003 C5.56,10.920003 7.16,11.520003 8.8,11.520003 Z",
+                              id: "head",
+                              transform:
+                                "translate(6.580000, 6.000003) scale(-1, 1) rotate(-180.000000) translate(-6.580000, -6.000003) "
+                            }
+                          })
+                        ]
+                      )
                     ]
                   )
                 ]
               )
-            ]
-          ),
+            : _c(
+                "g",
+                {
+                  attrs: {
+                    id: "note-down",
+                    "fill-rule": "nonzero",
+                    fill: "#000000"
+                  }
+                },
+                [
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "dots-whole",
+                        transform: "translate(34.000000, 16.500000)"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
+                          id: "dot2-whole"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
+                          id: "dot1-whole"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "dots",
+                        transform: "translate(34.000000, 16.500000)"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
+                          id: "dot2"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
+                          id: "dot1"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("g", { attrs: { id: "signature-whole" } }, [
+                    _c("path", {
+                      staticClass: "note__hidden",
+                      attrs: {
+                        d:
+                          "M8.76948144,11.2849869 L8.76948144,33.7700005 L7.54519952,33.7700005 L7.54519952,25.3430427 L1,26.7606617 L1,4 L2.17719416,4 L2.17719416,12.7813626 L8.76948144,11.2849869 Z M2.17719416,16.5616801 L2.17719416,22.7440744 L7.54519952,21.5627251 L7.54519952,15.3803309 L2.17719416,16.5616801 Z",
+                        id: "natural-whole"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      staticClass: "note__hidden",
+                      attrs: {
+                        d:
+                          "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
+                        id: "flat-whole",
+                        transform:
+                          "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      staticClass: "note__hidden",
+                      attrs: {
+                        d:
+                          "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
+                        id: "sharp-whole"
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "signature",
+                        transform: "translate(7.000000, 0.000000)"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M8.76948144,11.2849869 L8.76948144,33.7700005 L7.54519952,33.7700005 L7.54519952,25.3430427 L1,26.7606617 L1,4 L2.17719416,4 L2.17719416,12.7813626 L8.76948144,11.2849869 Z M2.17719416,16.5616801 L2.17719416,22.7440744 L7.54519952,21.5627251 L7.54519952,15.3803309 L2.17719416,16.5616801 Z",
+                          id: "natural"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
+                          id: "flat",
+                          transform:
+                            "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
+                          id: "sharp"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "note",
+                        transform:
+                          "translate(19.500000, 41.000000) scale(-1, -1) translate(-19.500000, -41.000000) translate(8.000000, 13.000000)"
+                      }
+                    },
+                    [
+                      _c(
+                        "g",
+                        {
+                          attrs: {
+                            id: "flags",
+                            transform: "translate(12.000000, 0.000000)"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M1.162,35.4800031 C1.162,28.3600031 9.282,23.8000031 9.282,16.6800031 C9.282,15.3600031 8.922,14.0800031 8.362,12.8800031 C9.082,11.4000031 9.522,9.8800031 9.522,8.2000031 C9.522,5.6800031 8.882,3.2000031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.5600031 7.842,5.8800031 7.842,8.2000031 C7.842,12.0800031 4.042,15.8400031 1.162,18.4800031 L1.162,15.4800031 L0.522,15.4800031 L0.522,35.4800031 L1.162,35.4800031 Z M7.282,14.8000031 C7.482,15.4000031 7.562,16.0400031 7.562,16.6800031 C7.562,20.5200031 3.922,24.2800031 1.162,26.9600031 C1.162,22.2400031 4.802,18.7200031 7.282,14.8000031 Z",
+                              id: "flag-sixteenth",
+                              transform:
+                                "translate(5.522000, 17.940003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -17.940003) "
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M1.162,30.4800031 C1.162,22.5600031 9.522,17.0800031 9.522,9.1600031 C9.522,6.3200031 8.882,3.5200031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.9200031 7.842,6.5200031 7.842,9.1600031 C7.842,13.3200031 4.042,17.4800031 1.162,20.4800031 L0.522,20.4800031 L0.522,30.4800031 L1.162,30.4800031 Z",
+                              id: "flag-eighth",
+                              transform:
+                                "translate(5.522000, 15.440003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -15.440003) "
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("rect", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          id: "stem",
+                          x: "11.862",
+                          y: "0",
+                          width: "1.29999995",
+                          height: "48.122001"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "g",
+                        {
+                          attrs: {
+                            id: "heads",
+                            transform: "translate(0.000000, 44.000000)"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M8.56884077,10.46377 C6.5760871,10.46377 5.81884071,8.7500019 5.81884071,6.9565236 C5.81884071,3.8876829 8.09057989,1.5362336 11.1594205,1.5362336 C13.1521742,1.5362336 13.9094206,3.2500018 13.9094206,5.0434801 C13.9094206,8.1123207 11.6376814,10.46377 8.56884077,10.46377 Z M19.7282613,6.0000018 C19.7282613,4.2862337 18.3333337,2.9710162 16.8188409,2.1340597 C14.7065221,0.9384075 12.3152177,0.5000017 9.88405819,0.5000017 C7.45289871,0.5000017 5.02173924,0.9384075 2.90942035,2.1340597 C1.39492757,2.9710162 0,4.2862337 0,6.0000018 C0,7.71377 1.39492757,9.0289874 2.90942035,9.8659439 C5.02173924,11.0615961 7.45289871,11.5000019 9.88405819,11.5000019 C12.3152177,11.5000019 14.7065221,11.0615961 16.8188409,9.8659439 C18.3333337,9.0289874 19.7282613,7.71377 19.7282613,6.0000018 Z",
+                              id: "head-whole",
+                              transform:
+                                "translate(9.864131, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-9.864131, -6.000002) "
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M11.9827094,8.6200019 C11.9827094,9.5800019 11.1838621,10.2600019 10.3850148,10.2600019 C10.2328534,10.2600019 10.080692,10.2600019 9.92853065,10.2200019 C8.74927989,9.8600019 6.99942391,8.6200019 5.59193106,7.6600018 C4.18443821,6.7000018 2.39654188,5.5400018 1.63573494,4.5400018 C1.3694525,4.2200018 1.21729111,3.8200018 1.21729111,3.4200018 C1.21729111,2.4600017 2.01613841,1.7800017 2.8149857,1.7800017 C2.96714709,1.7800017 3.11930848,1.7800017 3.27146987,1.8200017 C4.45072064,2.1800017 6.23861696,3.4200018 7.64610981,4.3800018 C9.05360267,5.3400018 10.841499,6.5000018 11.6023059,7.5000018 C11.8685884,7.8200019 11.9827094,8.2200019 11.9827094,8.6200019 Z M10.0426517,11.5000019 C11.830548,11.5000019 13.2000005,10.6600019 13.2000005,8.6200019 C13.2000005,7.8600019 13.0478391,7.1400018 12.8195971,6.3800018 C12.3631129,4.8600018 11.6023059,3.4200018 10.3469745,2.5400017 C8.29279572,1.1000017 6.04841523,0.5000017 3.19538918,0.5000017 C1.40749285,0.5000017 0,1.3800017 0,3.4200018 C0,4.1800018 0.190201737,4.9000018 0.418443821,5.6600018 C0.874927989,7.1800018 1.59769459,8.6200019 2.85302605,9.5000019 C4.90720481,10.9400019 7.18962565,11.5000019 10.0426517,11.5000019 Z",
+                              id: "head-half",
+                              transform:
+                                "translate(6.600000, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-6.600000, -6.000002) "
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M8.8,11.520003 C11.04,11.520003 13.16,10.360003 13.16,7.880003 C13.16,5.000003 10.92,3.040003 9.04,1.920003 C7.6,1.080003 6,0.480003 4.36,0.480003 C2.12,0.480003 0,1.640003 0,4.120003 C0,7.000003 2.24,8.960003 4.12,10.080003 C5.56,10.920003 7.16,11.520003 8.8,11.520003 Z",
+                              id: "head",
+                              transform:
+                                "translate(6.580000, 6.000003) scale(-1, 1) rotate(-180.000000) translate(-6.580000, -6.000003) "
+                            }
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                ]
+              )
+        ]
+      ),
       _vm._v(" "),
-      _c("line", {
-        staticClass: "note__hidden note__helper-line",
-        attrs: {
-          id: "helper-line",
-          x1: "9%",
-          y1: "167%",
-          x2: _vm.type === "whole" ? 32.5 : 26.5 + "%",
-          y2: "167%"
-        }
+      _vm._l(_vm.ledgerLineCount, function(n) {
+        return _c("line", {
+          key: n,
+          staticClass: "note__ledger-line",
+          attrs: {
+            id: "ledger-line",
+            x1: _vm.position.x + (_vm.type === "whole" ? 2.5 : 2.375) + "%",
+            y1: 70 + n * 10 + "%",
+            x2: _vm.position.x + (_vm.type === "whole" ? 9.5 : 7.625) + "%",
+            y2: 70 + n * 10 + "%"
+          }
+        })
       })
-    ]
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -46758,7 +46282,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-384154e9", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-47b507a9", module.exports)
   }
 }
 
@@ -46858,7 +46382,7 @@ var render = function() {
         })
       }),
       _vm._v(" "),
-      _vm.helperLines
+      _vm.helperLinesVisible
         ? _c(
             "g",
             [
@@ -46892,7 +46416,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-2110af30", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-630b64b0", module.exports)
   }
 }
 
@@ -46915,7 +46439,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-011c4ede"
+var __vue_scopeId__ = "data-v-140ebcc4"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -46926,7 +46450,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\Keyboard.vue"
+Component.options.__file = "resources/assets/js/components/Keyboard.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -46936,9 +46460,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-011c4ede", Component.options)
+    hotAPI.createRecord("data-v-140ebcc4", Component.options)
   } else {
-    hotAPI.reload("data-v-011c4ede", Component.options)
+    hotAPI.reload("data-v-140ebcc4", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -46959,13 +46483,13 @@ var content = __webpack_require__(86);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("dd6ac470", content, false);
+var update = __webpack_require__(2)("57fc4823", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-011c4ede\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Keyboard.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-011c4ede\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Keyboard.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-140ebcc4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Keyboard.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-140ebcc4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Keyboard.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -46983,7 +46507,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-011c4ede] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-011c4ede] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-011c4ede] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-011c4ede] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-011c4ede] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-011c4ede] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-011c4ede] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-011c4ede] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-011c4ede] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-011c4ede] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-011c4ede]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-011c4ede]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-011c4ede]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-011c4ede]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-011c4ede] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-011c4ede] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-011c4ede]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-011c4ede] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-011c4ede] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-011c4ede] {\n  margin-top: 30px;\n}\n.login__button[data-v-011c4ede] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-011c4ede] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-011c4ede] {\n      opacity: 1;\n}\n}\n.login__button[data-v-011c4ede]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-011c4ede] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-011c4ede] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-011c4ede] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-011c4ede] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-011c4ede] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-011c4ede] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-011c4ede] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-011c4ede] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-011c4ede] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-011c4ede] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-011c4ede] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-011c4ede] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-011c4ede] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-011c4ede] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-011c4ede]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-011c4ede]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-011c4ede]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-011c4ede]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-011c4ede] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-011c4ede] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-011c4ede] {\n  margin-top: 30px;\n}\n.register__button[data-v-011c4ede] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-011c4ede] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-011c4ede] {\n      opacity: 1;\n}\n}\n.register__button[data-v-011c4ede]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-011c4ede] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-011c4ede] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-011c4ede] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-011c4ede] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-011c4ede] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-011c4ede] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-011c4ede] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-011c4ede] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-011c4ede] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-011c4ede] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-011c4ede] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-011c4ede] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-011c4ede] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-011c4ede]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-011c4ede]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-011c4ede]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-011c4ede]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-011c4ede] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-011c4ede] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-011c4ede] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-011c4ede] {\n      opacity: 1;\n}\n}\n.email__button[data-v-011c4ede]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-011c4ede] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-011c4ede] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-011c4ede], .email__status-group[data-v-011c4ede] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-011c4ede], .email__status-list[data-v-011c4ede] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-011c4ede] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-011c4ede] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-011c4ede] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-011c4ede] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-011c4ede] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-011c4ede] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-011c4ede] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-011c4ede] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-011c4ede] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-011c4ede] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-011c4ede] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-011c4ede] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-011c4ede]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-011c4ede]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-011c4ede]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-011c4ede]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-011c4ede] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-011c4ede] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-011c4ede] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-011c4ede] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-011c4ede]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-011c4ede] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-011c4ede] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-011c4ede] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-011c4ede] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-011c4ede] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-011c4ede] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-011c4ede] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-011c4ede] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-011c4ede]:focus {\n  outline: 0;\n}\ninput[data-v-011c4ede] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-011c4ede] {\n  width: 100%;\n  height: 100%;\n}\n.keyboard[data-v-011c4ede] {\n  width: 45vw;\n  height: 13.5vw;\n}\n@media only screen and (orientation: portrait) {\n.keyboard[data-v-011c4ede] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n.keyboard__key[data-v-011c4ede] {\n  cursor: pointer;\n}\n.keyboard__key--white[data-v-011c4ede] {\n  fill: #ffffff;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n.keyboard__key--black[data-v-011c4ede] {\n  fill: #000000;\n}\n.keyboard__key--pressed[data-v-011c4ede] {\n  fill: #64ee8a;\n}\n.keyboard__key-text[data-v-011c4ede] {\n  font-family: \"Montserrat Regular\";\n  pointer-events: none;\n  text-anchor: middle;\n}\n@media only screen and (max-width: 767px) {\n.keyboard__key-text[data-v-011c4ede] {\n      display: none;\n}\n}\n.keyboard__key-text--white[data-v-011c4ede] {\n  fill: #000000;\n  font-size: 4px;\n}\n.keyboard__key-text--black[data-v-011c4ede] {\n  fill: #ffffff;\n  font-size: 3px;\n}\n.keyboard__frame[data-v-011c4ede] {\n  width: 100px;\n  height: 100px;\n  fill: none;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-140ebcc4] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-140ebcc4] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-140ebcc4] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-140ebcc4] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-140ebcc4] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-140ebcc4] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-140ebcc4]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-140ebcc4]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-140ebcc4]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-140ebcc4]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-140ebcc4] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-140ebcc4]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-140ebcc4] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-140ebcc4] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-140ebcc4] {\n  margin-top: 30px;\n}\n.login__button[data-v-140ebcc4] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-140ebcc4] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-140ebcc4] {\n      opacity: 1;\n}\n}\n.login__button[data-v-140ebcc4]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-140ebcc4] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-140ebcc4] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-140ebcc4] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-140ebcc4] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-140ebcc4] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-140ebcc4] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-140ebcc4] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-140ebcc4] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-140ebcc4]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-140ebcc4]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-140ebcc4]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-140ebcc4]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-140ebcc4] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-140ebcc4] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-140ebcc4] {\n  margin-top: 30px;\n}\n.register__button[data-v-140ebcc4] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-140ebcc4] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-140ebcc4] {\n      opacity: 1;\n}\n}\n.register__button[data-v-140ebcc4]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-140ebcc4] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-140ebcc4] {\n  margin-top: 10px;\n}\n.register__error-list[data-v-140ebcc4] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-140ebcc4] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-140ebcc4] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-140ebcc4] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-140ebcc4] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-140ebcc4] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-140ebcc4] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-140ebcc4]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-140ebcc4]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-140ebcc4]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-140ebcc4]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-140ebcc4] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-140ebcc4] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-140ebcc4] {\n      opacity: 1;\n}\n}\n.email__button[data-v-140ebcc4]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-140ebcc4] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-140ebcc4], .email__status-group[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-140ebcc4], .email__status-list[data-v-140ebcc4] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-140ebcc4] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-140ebcc4] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-140ebcc4] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-140ebcc4] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-140ebcc4] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-140ebcc4] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-140ebcc4] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-140ebcc4] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-140ebcc4]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-140ebcc4]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-140ebcc4]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-140ebcc4]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-140ebcc4] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-140ebcc4] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-140ebcc4] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-140ebcc4]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-140ebcc4] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-140ebcc4] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-140ebcc4] {\n  margin-top: 10px;\n}\n.reset__error-list[data-v-140ebcc4] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-140ebcc4] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-140ebcc4] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-140ebcc4]:focus {\n  outline: 0;\n}\ninput[data-v-140ebcc4] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-140ebcc4] {\n  width: 100%;\n  height: 100%;\n}\n.keyboard[data-v-140ebcc4] {\n  width: 45vw;\n  height: 13.5vw;\n}\n@media only screen and (orientation: portrait) {\n.keyboard[data-v-140ebcc4] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n.keyboard__key[data-v-140ebcc4] {\n  cursor: pointer;\n}\n.keyboard__key--white[data-v-140ebcc4] {\n  fill: #ffffff;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n.keyboard__key--black[data-v-140ebcc4] {\n  fill: #000000;\n}\n.keyboard__key--pressed[data-v-140ebcc4] {\n  fill: #64ee8a;\n}\n.keyboard__key-text[data-v-140ebcc4] {\n  font-family: \"Montserrat Regular\";\n  pointer-events: none;\n  text-anchor: middle;\n}\n@media only screen and (max-width: 767px) {\n.keyboard__key-text[data-v-140ebcc4] {\n      display: none;\n}\n}\n.keyboard__key-text--white[data-v-140ebcc4] {\n  fill: #000000;\n  font-size: 4px;\n}\n.keyboard__key-text--black[data-v-140ebcc4] {\n  fill: #ffffff;\n  font-size: 3px;\n}\n.keyboard__frame[data-v-140ebcc4] {\n  width: 100px;\n  height: 100px;\n  fill: none;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n", ""]);
 
 // exports
 
@@ -46994,6 +46518,9 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: ur
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(18);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 //
@@ -47061,12 +46588,29 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             keys: {
-                white: [{ pitch: 'B3', midiPitch: 59, code: 81, name: 'Q', pressed: false }, { pitch: 'C4', midiPitch: 60, code: 87, name: 'W', pressed: false }, { pitch: 'D4', midiPitch: 62, code: 69, name: 'E', pressed: false }, { pitch: 'E4', midiPitch: 64, code: 82, name: 'R', pressed: false }, { pitch: 'F4', midiPitch: 65, code: 84, name: 'T', pressed: false }, { pitch: 'G4', midiPitch: 67, code: 89, name: 'Y', pressed: false }, { pitch: 'A4', midiPitch: 69, code: 85, name: 'U', pressed: false }, { pitch: 'B4', midiPitch: 71, code: 73, name: 'I', pressed: false }, { pitch: 'C5', midiPitch: 72, code: 79, name: 'O', pressed: false }],
-                black: [{ pitch: 'Bb3', midiPitch: 58, code: 49, name: '1', pressed: false }, { midiPitch: -1, code: -1 }, { pitch: 'Db4', midiPitch: 61, code: 51, name: '3', pressed: false }, { pitch: 'Eb4', midiPitch: 63, code: 52, name: '4', pressed: false }, { midiPitch: -1, code: -1 }, { pitch: 'Gb4', midiPitch: 66, code: 54, name: '6', pressed: false }, { pitch: 'Ab4', midiPitch: 68, code: 55, name: '7', pressed: false }, { pitch: 'Bb4', midiPitch: 70, code: 56, name: '8', pressed: false }, { midiPitch: -1, code: -1 }, { pitch: 'Db5', midiPitch: 73, code: 48, name: '0', pressed: false }]
+                white: [{ pitch: 'A3', midiPitch: 57, code: 81, name: 'Q', pressed: false }, { pitch: 'B3', midiPitch: 59, code: 81, name: 'W', pressed: false }, { pitch: 'C4', midiPitch: 60, code: 87, name: 'E', pressed: false }, { pitch: 'D4', midiPitch: 62, code: 69, name: 'R', pressed: false }, { pitch: 'E4', midiPitch: 64, code: 82, name: 'T', pressed: false }, { pitch: 'F4', midiPitch: 65, code: 84, name: 'Z', pressed: false }, { pitch: 'G4', midiPitch: 67, code: 89, name: 'U', pressed: false }, { pitch: 'A4', midiPitch: 69, code: 85, name: 'I', pressed: false }, { pitch: 'B4', midiPitch: 71, code: 73, name: 'O', pressed: false }, { pitch: 'C5', midiPitch: 72, code: 79, name: 'P', pressed: false }, { pitch: 'D5', midiPitch: 74, code: 79, name: 'Š', pressed: false }],
+                black: [{ midiPitch: -1, code: -1 }, { pitch: 'Bb3', midiPitch: 58, code: 49, name: '2', pressed: false }, { midiPitch: -1, code: -1 }, { pitch: 'Db4', midiPitch: 61, code: 51, name: '4', pressed: false }, { pitch: 'Eb4', midiPitch: 63, code: 52, name: '5', pressed: false }, { midiPitch: -1, code: -1 }, { pitch: 'Gb4', midiPitch: 66, code: 54, name: '7', pressed: false }, { pitch: 'Ab4', midiPitch: 68, code: 55, name: '8', pressed: false }, { pitch: 'Bb4', midiPitch: 70, code: 56, name: '9', pressed: false }, { midiPitch: -1, code: -1 }, { pitch: 'Db5', midiPitch: 73, code: 48, name: '?', pressed: false }, { midiPitch: -1, code: -1 }]
+            },
+            pitchMap: {
+                'A#3': 'Bb3',
+                'B#3': 'C4',
+                'Cb4': 'B3',
+                'C#4': 'Db4',
+                'D#4': 'Eb4',
+                'E#4': 'F4',
+                'Fb4': 'E4',
+                'F#4': 'Gb4',
+                'G#4': 'Ab4',
+                'A#4': 'Bb4',
+                'B#4': 'C5',
+                'Cb5': 'B4',
+                'C#5': 'Db5'
             },
             helperTextVisible: true
         };
@@ -47097,14 +46641,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         });
     },
 
-    computed: {
+    computed: _extends({
         nKeys: function nKeys() {
             return this.keys.white.length;
-        },
-        midi: function midi() {
-            return this.$store.getters.midi;
         }
-    },
+    }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['midi'])),
     methods: {
         getKeyByCode: function getKeyByCode(keyCode) {
             var keys = [].concat(_toConsumableArray(this.keys.white.filter(function (key) {
@@ -47115,6 +46656,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             return keys.length > 0 ? keys[0] : null;
         },
         getKeyByPitch: function getKeyByPitch(pitch) {
+            pitch = pitch in this.pitchMap ? this.pitchMap[pitch] : pitch;
             var keys = [].concat(_toConsumableArray(this.keys.white.filter(function (key) {
                 return key.pitch === pitch;
             })), _toConsumableArray(this.keys.black.filter(function (key) {
@@ -47274,18 +46816,7 @@ var render = function() {
                   "text",
                   {
                     staticClass: "keyboard__key-text keyboard__key-text--black",
-                    attrs: {
-                      x:
-                        100 /
-                          _vm.nKeys *
-                          (index === 0
-                            ? 0.166
-                            : index === _vm.keys.black.length - 1
-                              ? index - 0.166
-                              : index) +
-                        "%",
-                      y: "20%"
-                    }
+                    attrs: { x: 100 / _vm.nKeys * index + "%", y: "20%" }
                   },
                   [_vm._v(_vm._s(key.name))]
                 )
@@ -47306,7 +46837,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-011c4ede", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-140ebcc4", module.exports)
   }
 }
 
@@ -47319,80 +46850,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "intervals" }, [
-    _c("div", { staticClass: "intervals__stave-keyboard-wrapper" }, [
-      _c(
-        "div",
-        { staticClass: "intervals__stave" },
-        [
-          _c("stave", {
-            attrs: {
-              "min-notes": _vm.notes.min,
-              "max-notes": _vm.notes.max,
-              "note-type": _vm.notes.type
-            },
-            on: { "notes-changed": _vm.notesChanged }
-          })
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "intervals__keyboard" },
-        [_c("keyboard", { on: { "note-played": _vm.addNote } })],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "intervals__command-wrapper" }, [
-      _c(
-        "div",
-        {
-          staticClass: "intervals__command intervals__command--delete",
-          on: { click: _vm.removeNote }
-        },
-        [_vm._v("DELETE NOTE")]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "intervals__command intervals__command--replay",
-          on: { click: _vm.playNotes }
-        },
-        [_vm._v("REPLAY")]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "intervals__command intervals__command--next",
-          on: { click: _vm.checkCorrectness }
-        },
-        [_vm._v("NEXT")]
-      )
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-4f5997e7", module.exports)
-  }
-}
-
-/***/ }),
-/* 90 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "dashboard" }, [
     _c("img", {
       directives: [
         {
@@ -47402,7 +46859,7 @@ var render = function() {
           expression: "loading"
         }
       ],
-      staticClass: "dashboard__loader",
+      staticClass: "intervals__loader",
       attrs: { src: "/images/loader.svg" }
     }),
     _vm._v(" "),
@@ -47419,14 +46876,58 @@ var render = function() {
         ]
       },
       [
-        _c("div", { staticClass: "dashboard__command-wrapper" }, [
+        _c("div", { staticClass: "intervals__stave-keyboard-wrapper" }, [
+          _c(
+            "div",
+            { staticClass: "intervals__stave" },
+            [
+              _c("stave", {
+                attrs: {
+                  "min-notes": _vm.notes.min,
+                  "max-notes": _vm.notes.max,
+                  "note-type": _vm.notes.type,
+                  "sharp-flat-map": _vm.sharpFlatMap
+                },
+                on: { "notes-changed": _vm.notesChanged }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "intervals__keyboard" },
+            [_c("keyboard", { on: { "note-played": _vm.addNote } })],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "intervals__command-wrapper" }, [
           _c(
             "div",
             {
-              staticClass: "dashboard__command",
-              on: { click: _vm.startIntervalsPractice }
+              staticClass: "intervals__command intervals__command--delete",
+              on: { click: _vm.removeNote }
             },
-            [_vm._v("Vaja intervalov")]
+            [_vm._v("DELETE NOTE")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "intervals__command intervals__command--replay",
+              on: { click: _vm.playNotes }
+            },
+            [_vm._v("REPLAY")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "intervals__command intervals__command--next",
+              on: { click: _vm.checkCorrectness }
+            },
+            [_vm._v("NEXT")]
           )
         ])
       ]
@@ -47439,7 +46940,38 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-78b73b2d", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-13f0c5b2", module.exports)
+  }
+}
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "dashboard" }, [
+    _c("div", { staticClass: "dashboard__command-wrapper" }, [
+      _c(
+        "div",
+        {
+          staticClass: "dashboard__command",
+          on: { click: _vm.startIntervalsPractice }
+        },
+        [_vm._v("Vaja intervalov")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1f65406d", module.exports)
   }
 }
 
@@ -47448,6 +46980,124 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_awesome_components_Icon__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_awesome_components_Icon___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_awesome_components_Icon__);
+throw new Error("Cannot find module \"./components/App.vue\"");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Dashboard_vue__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Dashboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Dashboard_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Intervals_vue__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Intervals_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_Intervals_vue__);
+
+
+
+
+
+
+
+// import Settings from '../components/Settings.vue'
+
+
+Vue.component('icon', __WEBPACK_IMPORTED_MODULE_2_vue_awesome_components_Icon___default.a);
+Vue.component('app', __WEBPACK_IMPORTED_MODULE_3__components_App_vue___default.a);
+Vue.component('dashboard', __WEBPACK_IMPORTED_MODULE_4__components_Dashboard_vue___default.a);
+// Vue.component('settings', Settings)
+Vue.component('intervals', __WEBPACK_IMPORTED_MODULE_5__components_Intervals_vue___default.a);
+
+Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
+    mode: 'history',
+    routes: [{ name: 'dashboard', path: '/home', component: __WEBPACK_IMPORTED_MODULE_4__components_Dashboard_vue___default.a },
+    // { name: 'settings', path: '/settings', component: Settings },
+    { name: 'intervals', path: '/intervals', component: __WEBPACK_IMPORTED_MODULE_5__components_Intervals_vue___default.a }]
+}));
+
+/***/ }),
+/* 96 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(18);
+
+
+
+
+Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
+    state: {
+        user: null,
+        settings: null,
+        midi: null
+    },
+    getters: {
+        user: function user(state) {
+            return state.user;
+        },
+        settings: function settings(state) {
+            return state.settings;
+        },
+        midi: function midi(state) {
+            return state.midi;
+        }
+    },
+    mutations: {
+        setUser: function setUser(state, user) {
+            state.user = user;
+        },
+        setMidi: function setMidi(state, midi) {
+            state.midi = midi;
+        }
+    },
+    actions: {
+        fetchUser: function fetchUser(_ref) {
+            var commit = _ref.commit,
+                state = _ref.state;
+
+            if (!state.user) {
+                axios.get('/api/me').then(function (response) {
+                    commit('setUser', response.data);
+                }).catch(function (error) {
+                    return console.log(error);
+                });
+            }
+        },
+        setupMidi: function setupMidi(_ref2) {
+            var commit = _ref2.commit,
+                state = _ref2.state;
+
+            return new Promise(function (resolve, reject) {
+                if (state.midi) {
+                    resolve();
+                }
+                MIDI.loadPlugin({
+                    soundfontUrl: '/soundfonts/',
+                    instruments: ['acoustic_grand_piano'],
+                    onsuccess: function onsuccess() {
+                        MIDI.setVolume(0, 127);
+                        MIDI.programChange(0, MIDI.GM.byName['acoustic_grand_piano'].number);
+                        commit('setMidi', MIDI);
+                        resolve();
+                    }
+                });
+            });
+        }
+    }
+}));
 
 /***/ })
 /******/ ]);

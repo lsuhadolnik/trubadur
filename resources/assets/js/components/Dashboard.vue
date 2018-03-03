@@ -7,20 +7,6 @@
     background-color : $aero-blue;
 }
 
-.dashboard__loader {
-  position  : absolute;
-  top       : 50%;
-  left      : 50%;
-  transform : translate(-50%, -50%);
-  width     : 100px;
-  height    : 100px;
-
-  @include breakpoint-phone {
-      width  : 75px;
-      height : 75px;
-  }
-}
-
 .dashboard__command-wrapper {
     padding : 10vh 2.5vw;
     display : flex;
@@ -56,11 +42,8 @@
 
 <template>
     <div class="dashboard">
-        <img class="dashboard__loader" src="/images/loader.svg" v-show="loading"/>
-        <div v-show="!loading">
-            <div class="dashboard__command-wrapper">
-                <div class="dashboard__command" @click="startIntervalsPractice">Vaja intervalov</div>
-            </div>
+        <div class="dashboard__command-wrapper">
+            <div class="dashboard__command" @click="startIntervalsPractice">Vaja intervalov</div>
         </div>
     </div>
 </template>
@@ -69,37 +52,9 @@
 import Intervals from './Intervals'
 
 export default {
-    data () {
-        return {
-            loading: true,
-            intervals: {
-                notes: {
-                    min: 1,
-                    max: 4,
-                    type: 'whole',
-                    delay: 2000
-                }
-            }
-        }
-    },
-    created () {
-        this.setupMIDIPlugin()
-    },
     methods: {
-        setupMIDIPlugin () {
-            MIDI.loadPlugin({
-                soundfontUrl: '/soundfonts/',
-                instruments: ['acoustic_grand_piano'],
-                onsuccess: () => {
-                    MIDI.setVolume(0, 127)
-                    MIDI.programChange(0, MIDI.GM.byName['acoustic_grand_piano'].number)
-                    this.$store.commit('setMidi', MIDI)
-                    this.loading = false
-                }
-            })
-        },
         startIntervalsPractice () {
-            this.$router.push({ name: 'intervals', params: { notes: this.intervals.notes } })
+            this.$router.push({ name: 'intervals' })
         }
     },
     components: {

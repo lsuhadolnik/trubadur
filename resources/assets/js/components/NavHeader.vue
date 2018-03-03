@@ -15,6 +15,7 @@
     color       : $black;
     font-size   : 30px;
     font-family : $font-title;
+    cursor      : pointer;
 }
 
 .header__user { display: flex; }
@@ -45,7 +46,7 @@
 
 <template>
     <div class="header">
-        <div class="header__title">TRUBADUR</div>
+        <div class="header__title" @click="dashboard">TRUBADUR</div>
         <div class="header__user">
             <div class="header__username">{{ username }}</div>
             <div class="header__logout">
@@ -60,23 +61,28 @@
 
 <script>
 import 'vue-awesome/icons/sign-out'
+import { mapState, mapActions } from 'vuex'
 
 export default {
     data () {
         return {
-            username: '',
             csrfToken: window.Laravel.csrfToken
         }
     },
     created () {
-        axios.get('/api/user')
-            .then(response => {
-                const user = response.data
-                this.username = user.name
-            })
-            .catch(error => console.log(error))
+        this.fetchUser()
+    },
+    computed: {
+        ...mapState(['user']),
+        username () {
+            return this.user ? this.user.name : ''
+        }
     },
     methods: {
+        ...mapActions(['fetchUser']),
+        dashboard () {
+            this.$router.push({ name: 'dashboard' })
+        },
         logout (event) {
             event.preventDefault()
             this.$el.querySelector('#header__logout-form').submit()

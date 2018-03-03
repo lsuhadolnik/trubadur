@@ -2,8 +2,9 @@
 @import '../../sass/app';
 
 .stave__svg {
-    width  : 45vw;
-    height : 13.5vw;
+    width    : 45vw;
+    height   : 13.5vw;
+    overflow : visible;
 
     @include breakpoint-portrait {
         width  : 95vw;
@@ -34,7 +35,7 @@
             <path transform="matrix(-1.08512,-2.036848e-2,2.036848e-2,-1.08512,90.68868,135.0572)" d="M 48.24903 64.584198 A 3.439605 3.4987047 0 1 1  41.36982,64.584198 A 3.439605 3.4987047 0 1 1  48.24903 64.584198 z" sodipodi:ry="3.4987047" sodipodi:rx="3.439605" sodipodi:cy="64.584198" sodipodi:cx="44.809425" style="fill:black;fill-opacity:1;stroke:black;stroke-width:0.09213948;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" sodipodi:type="arc"/>
         </g>
         <note :delay="note.delay" :pitch="note.pitch" :previous-pitch="getPreviousNotePitch(index)" :type="note.type" :count="maxNotes" :key="index" v-for="(note, index) in notes"></note>
-        <g v-if="helperLines">
+        <g v-if="helperLinesVisible">
             <line class="stave__line" x1="15%" y1="0" x2="15%" y2="100%"></line>
             <line class="stave__line" :x1="(15 + n * (85 / maxNotes)) + '%'" y1="0" :x2="(15 + n * (85 / maxNotes)) + '%'" y2="100%" v-for="n in maxNotes"></line>
         </g>
@@ -43,18 +44,19 @@
 
 <script>
 import Note from './Note.vue'
-import { numberProp, stringProp } from '../utils/propValidators'
+import { numberProp, stringProp, objectProp } from '../utils/propValidators'
 
 export default {
     props: {
         minNotes: numberProp(),
         maxNotes: numberProp(),
-        noteType: stringProp()
+        noteType: stringProp(),
+        sharpFlatMap: objectProp()
     },
     data () {
         return {
             notes: [],
-            helperLines: false
+            helperLinesVisible: false
         }
     },
     created () {
@@ -73,6 +75,16 @@ export default {
     methods: {
         drawNote (pitch) {
             if (this.notes.length < this.maxNotes) {
+                if (this.notes.length > 0) {
+                    const index = this.notes.length
+                    const previousPitch = this.notes[index - 1].pitch
+                    if ((this.isSharp(previousPitch) && this.isFlat(pitch)) || (this.isFlat(previousPitch) && this.isSharp(pitch))) {
+                        pitch = this.sharpFlatMap[pitch]
+                    } else if (this.isNatural(previousPitch) && (this.isSharp(pitch) || this.isFlat(pitch))) {
+                        const pitches = [pitch, this.sharpFlatMap[pitch]]
+                        pitch = pitches[Math.round(Math.random())]
+                    }
+                }
                 this.notes.push({ delay: this.notes.length, pitch: pitch, type: this.noteType })
                 this.$emit('notes-changed', this.notes)
             }
@@ -98,6 +110,15 @@ export default {
         },
         getPreviousNotePitch (index) {
             return index > 0 ? this.notes[index - 1].pitch : ''
+        },
+        isSharp (pitch) {
+            return pitch.indexOf('#') >= 0
+        },
+        isFlat (pitch) {
+            return pitch.indexOf('b') >= 0
+        },
+        isNatural (pitch) {
+            return !this.isSharp(pitch) && !this.isFlat(pitch)
         }
     },
     components: {

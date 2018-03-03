@@ -23,7 +23,7 @@ if (mix.config.inProduction) {
 // BrowserSync automatically monitors files for changes, and injects the changes into the browser without requiring a manual refresh
 mix.browserSync({
     proxy: 'localhost:8000',
-    browser: 'chrome',
+    browser: ['google chrome', 'chrome'],
     open: 'local',
     reloadDelay: 1000,
     reloadThrottle: 1500,
