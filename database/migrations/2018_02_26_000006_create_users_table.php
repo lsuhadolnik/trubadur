@@ -19,9 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
+            $table->integer('rating')->default(1000);
             $table->integer('school_id')->unsigned();
             $table->integer('grade_id')->unsigned();
-            $table->integer('rating')->default(1000);
             $table->timestamps();
         });
 

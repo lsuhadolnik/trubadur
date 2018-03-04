@@ -26,8 +26,4 @@ class Grade extends Model
     {
         return $this->belongsToMany('App\School')->withPivot('level_id')->withTimestamps();
     }
-
-    public function level($schoolId) {
-        return $this->schools()->find($schoolId)->join('level', 'level_id', 'level.id');
-    }
 }
