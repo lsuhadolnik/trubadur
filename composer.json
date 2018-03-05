@@ -47,10 +47,8 @@
         ],
         "post-install-cmd": [
             "php artisan clear-compiled",
-            "chmod -R 777 storage",
-            "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "php artisan key:generate",
-            "php artisan passport:keys"
+            "php artisan passport:keys",
+            "chmod -R 777 storage"
         ]
     },
     "config": {
