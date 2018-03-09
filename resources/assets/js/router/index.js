@@ -3,7 +3,7 @@ import '../bootstrap'
 import VueRouter from 'vue-router'
 
 import Icon from 'vue-awesome/components/Icon'
-import App from './components/App.vue'
+import App from '../components/App.vue'
 import Dashboard from '../components/Dashboard.vue'
 // import Settings from '../components/Settings.vue'
 import Intervals from '../components/Intervals.vue'
