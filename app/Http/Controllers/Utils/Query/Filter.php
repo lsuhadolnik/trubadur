@@ -1,6 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Utils;
+namespace App\Http\Controllers\Utils\Query;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Utils\Helpers;
 
 trait Filter
 {
@@ -18,10 +22,10 @@ trait Filter
      * @param  \Illuminate\Database\Eloquent\Builder  $qb
      * @return \Illuminate\Database\Eloquent\Builder
      **/
-    public function addFiltersToQuery($qb)
+    public function addFiltersToQuery(Builder $qb)
     {
         foreach ($this->filters as $key => $value) {
-            if ($this->endsWith($key, $this->FILTER_ID_INDICATOR)) {
+            if (Helpers::endsWith($key, $this->FILTER_ID_INDICATOR)) {
                 $qb = $qb->whereIn($key, $value);
             } else {
                 $qb = $qb->where($key, 'like', '%' . $value . '%');
@@ -35,22 +39,22 @@ trait Filter
      * Set the filters array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  string  $model
      * @return string|void
      **/
-    public function setFilters($request, $model)
+    public function setFilters(Request $request, $model)
     {
-        $validFilters = array_merge($model->getFillable(), ['id', 'created_at', 'updated_at']);
+        $validFilters = array_merge((new $model)->getFillable(), ['id', 'created_at', 'updated_at']);
 
         foreach ($request->query() as $key => $value) {
-            if ($this->startsWith($key, $this->FILTER_INDICATOR)) {
+            if (Helpers::startsWith($key, $this->FILTER_INDICATOR)) {
                 $filter = $this->extractFilterName($key);
 
                 if (!in_array($filter, $validFilters)) {
                     return $key;
                 }
 
-                if ($this->endsWith($filter, $this->FILTER_ID_INDICATOR)) {
+                if (Helpers::endsWith($filter, $this->FILTER_ID_INDICATOR)) {
                     $this->filters[$filter] = explode(',', $value);
                 } else {
                     $this->filters[$filter] = urldecode($value);
@@ -77,7 +81,7 @@ trait Filter
      **/
     public function isFilter($input)
     {
-        return $this->startsWith($input, $this->FILTER_INDICATOR);
+        return Helpers::startsWith($input, $this->FILTER_INDICATOR);
     }
 
     /**
@@ -89,29 +93,5 @@ trait Filter
     private function extractFilterName($input)
     {
         return substr($input, strlen($this->FILTER_INDICATOR));
-    }
-
-    /**
-     * Check if the given string starts with the specified prefix.
-     *
-     * @param  string  $input
-     * @param  string  $prefix
-     * @return boolean
-     **/
-    private function startsWith($input, $prefix)
-    {
-        return substr($input, 0, strlen($prefix)) === $prefix;
-    }
-
-    /**
-     * Check if the given string ends with the specified suffix.
-     *
-     * @param  string  $input
-     * @param  string  $suffix
-     * @return boolean
-     **/
-    private function endsWith($input, $suffix)
-    {
-        return strlen($suffix) === 0 || substr($input, -strlen($suffix)) === $suffix;
     }
 }

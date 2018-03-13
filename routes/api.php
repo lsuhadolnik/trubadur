@@ -21,9 +21,13 @@ Route::middleware('auth:api')->resource('levels', 'API\LevelController', ['excep
 Route::middleware('auth:api')->resource('schools', 'API\SchoolController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('users', 'API\UserController', ['except' => ['create', 'edit']]);
 
-Route::middleware('auth:api')->get('schools/{schoolId}/grades/{gradeId}/level', 'API\SchoolController@level')
+Route::middleware('auth:api')->put('schools/{schoolId}/grades/{gradeId}/level', 'API\SchoolController@setLevel')
     ->where(['schoolId' => '[0-9]+', 'gradeId' => '[0-9]+']);
-Route::middleware('auth:api')->get('grades/{gradeId}/schools/{schoolId}/level', 'API\GradeController@level')
+Route::middleware('auth:api')->get('schools/{schoolId}/grades/{gradeId}/level', 'API\SchoolController@getLevel')
+    ->where(['schoolId' => '[0-9]+', 'gradeId' => '[0-9]+']);
+Route::middleware('auth:api')->put('grades/{gradeId}/schools/{schoolId}/level', 'API\GradeController@setLevel')
+    ->where(['gradeId' => '[0-9]+', 'schoolId' => '[0-9]+']);
+    Route::middleware('auth:api')->get('grades/{gradeId}/schools/{schoolId}/level', 'API\GradeController@getLevel')
     ->where(['gradeId' => '[0-9]+', 'schoolId' => '[0-9]+']);
 
 Route::middleware('auth:api')->get('/me', function (Request $request) {

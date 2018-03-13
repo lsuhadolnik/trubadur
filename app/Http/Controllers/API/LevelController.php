@@ -5,12 +5,14 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Grade;
-use App\Level;
-use App\School;
 
 class LevelController extends Controller
 {
+    /**
+     * Defines the model class.
+     **/
+    const MODEL = 'App\Level';
+
     /**
      * Display a listing of the resource.
      *
@@ -19,14 +21,12 @@ class LevelController extends Controller
      */
     public function index(Request $request)
     {
-        $model = new Level;
-        $error = $this->setParameters($request, $model);
+        $error = $this->setQueryParameters($request, self::MODEL);
         if ($error) {
             return response()->json($error, 400);
         }
 
-        $qb = Level::query();
-        $collection = $this->prepareAndExecuteIndexQuery($qb);
+        $collection = $this->prepareAndExecuteIndexQuery(self::MODEL);
 
         return response()->json($collection, 200);
     }
@@ -39,7 +39,20 @@ class LevelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'level'     => 'required|string|in:easy,normal,hard',
+            'range'     => 'required|numeric|min:2|max:12',
+            'min_notes' => 'required|numeric|min:2|max:10',
+            'max_notes' => 'required|numeric|min:4|max:10'
+        ];
+        $error = $this->setDataParameters($request, $data);
+        if ($error) {
+            return response()->json($error, 422);
+        }
+
+        $response = $this->prepareAndExecuteStoreQuery($request, self::MODEL);
+
+        return $response;
     }
 
     /**
@@ -51,14 +64,12 @@ class LevelController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $model = new Level;
-        $error = $this->setParameters($request, $model);
+        $error = $this->setQueryParameters($request, self::MODEL);
         if ($error) {
             return response()->json($error, 400);
         }
 
-        $qb = Level::query();
-        $record = $this->prepareAndExecuteShowQuery($id, $qb);
+        $record = $this->prepareAndExecuteShowQuery($id, self::MODEL);
         if (!$record) {
             return response()->json("Level with id {$id} not found.", 404);
         }
@@ -75,7 +86,20 @@ class LevelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'level'     => 'string|in:easy,normal,hard',
+            'range'     => 'numeric|min:2|max:12',
+            'min_notes' => 'numeric|min:2|max:10',
+            'max_notes' => 'numeric|min:4|max:10'
+        ];
+        $error = $this->setDataParameters($request, $data);
+        if ($error) {
+            return response()->json($error, 422);
+        }
+
+        $response = $this->prepareAndExecuteUpdateQuery($request, $id, self::MODEL);
+
+        return $response;
     }
 
     /**
@@ -86,10 +110,6 @@ class LevelController extends Controller
      */
     public function destroy($id)
     {
-        if (!Level::destroy($id)) {
-            return response()->json("Level with id {$id} not found.", 404);
-        }
-
-        return response()->json([], 204);
+        return $this->prepareAndExecuteDestroyQuery($id, self::MODEL);
     }
 }

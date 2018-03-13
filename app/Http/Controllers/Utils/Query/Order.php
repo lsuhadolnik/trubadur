@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Utils;
+namespace App\Http\Controllers\Utils\Query;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 trait Order
 {
@@ -24,7 +27,7 @@ trait Order
      * @param  \Illuminate\Database\Eloquent\Builder  $qb
      * @return \Illuminate\Database\Eloquent\Builder
      **/
-    public function addOrderToQuery($qb)
+    public function addOrderToQuery(Builder $qb)
     {
         if (!is_null($this->orderBy)) {
             $qb = $qb->orderBy($this->orderBy, $this->orderDirection);
@@ -37,15 +40,15 @@ trait Order
      * Set the sorting attribute.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  string  $model
      * @return string|void
      **/
-    public function setOrderBy($request, $model)
+    public function setOrderBy(Request $request, $model)
     {
         $value = $request->query($this->ORDER_BY_INDICATOR);
 
         if (!is_null($value)) {
-            $validAttributes = array_merge($model->getFillable(), ['id', 'created_at', 'updated_at']);
+            $validAttributes = array_merge((new $model)->getFillable(), ['id', 'created_at', 'updated_at']);
 
             if (!in_array($value, $validAttributes)) {
                 return $value;
@@ -71,7 +74,7 @@ trait Order
      * @param  \Illuminate\Http\Request  $request
      * @return string|void
      **/
-    public function setOrderDirection($request)
+    public function setOrderDirection(Request $request)
     {
         $value = $request->query($this->ORDER_DIRECTION_INDICATOR);
 

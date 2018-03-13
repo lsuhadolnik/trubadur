@@ -8,8 +8,10 @@
 }
 
 .dashboard__command-wrapper {
-    padding : 10vh 2.5vw;
-    display : flex;
+    padding        : 20px 0;
+    display        : flex;
+    align-items    : center;
+    flex-direction : column;
 }
 
 .dashboard__command {

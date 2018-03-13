@@ -27,16 +27,22 @@ class DatabaseSeeder extends Seeder
 
     const LEVELS = [
         [
-            'level'          => 'easy',
-            'max_note_count' => 5
+            'level'     => 'easy',
+            'range'     => 5,
+            'min_notes' => 4,
+            'max_notes' => 6
         ],
         [
-            'level'          => 'normal',
-            'max_note_count' => 8
+            'level'     => 'normal',
+            'range'     => 12,
+            'min_notes' => 4,
+            'max_notes' => 8
         ],
         [
-            'level'          => 'hard',
-            'max_note_count' => 12
+            'level'     => 'hard',
+            'range'     => 12,
+            'min_notes' => 4,
+            'max_notes' => 10
         ]
     ];
 
@@ -70,44 +76,59 @@ class DatabaseSeeder extends Seeder
 
     const USERS = [
         [
-            'name'     => 'Wolfgang Amadeus Mozart',
-            'email'    => 'mozart@trubadur.si',
-            'password' => 'mozart123',
-            'school'   => 'Akademija za Glasbo',
-            'grade'    => '2',
-            'badges'   => ['All answers correct', '20 questions without mistake']
+            'name'                => 'Wolfgang Amadeus Mozart',
+            'email'               => 'mozart@trubadur.si',
+            'password'            => 'mozart123',
+            'instrument'          => 'acoustic_grand_piano',
+            'note_playback_delay' => 2000,
+            'clef'                => 'violin',
+            'school'              => 'Akademija za Glasbo',
+            'grade'               => '2',
+            'badges'              => ['All answers correct', '20 questions without mistake']
         ],
         [
-            'name'     => 'Ludwig van Beethoven',
-            'email'    => 'beethoven@trubadur.si',
-            'password' => 'beethoven123',
-            'school'   => 'Konservatorij za glasbo in balet Ljubljana',
-            'grade'    => '1',
-            'badges'   => ['All answers correct']
+            'name'                => 'Ludwig van Beethoven',
+            'email'               => 'beethoven@trubadur.si',
+            'password'            => 'beethoven123',
+            'instrument'          => 'violin',
+            'note_playback_delay' => 1500,
+            'clef'                => 'violin',
+            'school'              => 'Konservatorij za glasbo in balet Ljubljana',
+            'grade'               => '1',
+            'badges'              => ['All answers correct']
         ],
         [
-            'name'     => 'Johannes Brahms',
-            'email'    => 'brahms@trubadur.si',
-            'password' => 'brahms123',
-            'school'   => 'Glasbena šola Mengeš',
-            'grade'    => '3',
-            'badges'   => []
+            'name'                => 'Johannes Brahms',
+            'email'               => 'brahms@trubadur.si',
+            'password'            => 'brahms123',
+            'instrument'          => 'vibraphone',
+            'note_playback_delay' => 2500,
+            'clef'                => 'bass',
+            'school'              => 'Glasbena šola Mengeš',
+            'grade'               => '3',
+            'badges'              => []
         ],
         [
-            'name'     => 'Antonio Vivaldi',
-            'email'    => 'vivaldi@trubadur.si',
-            'password' => 'vivaldi123',
-            'school'   => 'Port Regis',
-            'grade'    => '4',
-            'badges'   => []
+            'name'                => 'Antonio Vivaldi',
+            'email'               => 'vivaldi@trubadur.si',
+            'password'            => 'vivaldi123',
+            'instrument'          => 'trumpet',
+            'note_playback_delay' => 1000,
+            'clef'                => 'violin',
+            'school'              => 'Port Regis',
+            'grade'               => '4',
+            'badges'              => []
         ],
-        [
-            'name'     => 'Joseph Haydn',
-            'email'    => 'haydn@trubadur.si',
-            'password' => 'haydn123',
-            'school'   => 'Professional Performing Arts High School',
-            'grade'    => '2',
-            'badges'   => ['20 questions without mistake']
+            [
+            'name'                => 'Joseph Haydn',
+            'email'               => 'haydn@trubadur.si',
+            'password'            => 'haydn123',
+            'instrument'          => 'cello',
+            'note_playback_delay' => 500,
+            'clef'                => 'bass',
+            'school'              => 'Professional Performing Arts High School',
+            'grade'               => '2',
+            'badges'              => ['20 questions without mistake']
         ]
     ];
 

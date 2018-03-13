@@ -3,21 +3,25 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-
-use App\User;
 
 class UserController extends Controller
 {
     /**
+     * Defines the model class.
+     **/
+    const MODEL = 'App\User';
+
+    /**
      * Defines dependencies.
      **/
-    const DEPENDENCIES = ['school', 'grade'];
+    const DEPENDENCIES = ['school' => 'App\School', 'grade' => 'App\Grade'];
 
     /**
      * Defines pivot dependencies.
      **/
-    const PIVOT_DEPENDENCIES = ['badges'];
+    const PIVOT_DEPENDENCIES = ['badges' => 'App\Badge'];
 
     /**
      * Display a listing of the resource.
@@ -27,14 +31,12 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $model = new User;
-        $error = $this->setParameters($request, $model);
+        $error = $this->setQueryParameters($request, self::MODEL);
         if ($error) {
             return response()->json($error, 400);
         }
 
-        $qb = User::query();
-        $collection = $this->prepareAndExecuteIndexQuery($qb, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        $collection = $this->prepareAndExecuteIndexQuery(self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
 
         return response()->json($collection, 200);
     }
@@ -47,7 +49,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'name'      => 'required|string|max:255|unique:users',
+            'email'     => 'required|string|email|max:255|unique:users',
+            'password'  => 'required|string|min:6|confirmed',
+            'rating'    => 'integer',
+            'school_id' => 'required|integer',
+            'grade_id'  => 'required|integer',
+            'badges'    => 'array'
+        ];
+        $error = $this->setDataParameters($request, $data, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        if ($error) {
+            return response()->json($error, 422);
+        }
+
+        $response = $this->prepareAndExecuteStoreQuery($request, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+
+        return $response;
     }
 
     /**
@@ -59,14 +77,12 @@ class UserController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $model = new User;
-        $error = $this->setParameters($request, $model);
+        $error = $this->setQueryParameters($request, self::MODEL);
         if ($error) {
             return response()->json($error, 400);
         }
 
-        $qb = User::query();
-        $record = $this->prepareAndExecuteShowQuery($id, $qb, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        $record = $this->prepareAndExecuteShowQuery($id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
         if (!$record) {
             return response()->json("User with id {$id} not found.", 404);
         }
@@ -83,7 +99,23 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'name'      => ['string', 'max:255', Rule::unique('users')->ignore($id)],
+            'email'     => ['string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
+            'password'  => 'required|string|min:6|confirmed',
+            'rating'    => 'integer',
+            'school_id' => 'required|integer',
+            'grade_id'  => 'required|integer',
+            'badges'    => 'array'
+        ];
+        $error = $this->setDataParameters($request, $data, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        if ($error) {
+            return response()->json($error, 422);
+        }
+
+        $response = $this->prepareAndExecuteUpdateQuery($request, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+
+        return $response;
     }
 
     /**
@@ -94,10 +126,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if (!User::destroy($id)) {
-            return response()->json("User with id {$id} not found.", 404);
-        }
-
-        return response()->json([], 204);
+        return $this->prepareAndExecuteDestroyQuery($id, self::MODEL);
     }
 }

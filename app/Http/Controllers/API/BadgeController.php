@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
 use App\Badge;
@@ -10,9 +11,14 @@ use App\Badge;
 class BadgeController extends Controller
 {
     /**
+     * Defines the model class.
+     **/
+    const MODEL = 'App\Badge';
+
+    /**
      * Defines pivot dependencies.
      **/
-    const PIVOT_DEPENDENCIES = ['users'];
+    const PIVOT_DEPENDENCIES = ['users' => 'App\User'];
 
     /**
      * Display a listing of the resource.
@@ -22,14 +28,12 @@ class BadgeController extends Controller
      */
     public function index(Request $request)
     {
-        $model = new Badge;
-        $error = $this->setParameters($request, $model);
+        $error = $this->setQueryParameters($request, self::MODEL);
         if ($error) {
             return response()->json($error, 400);
         }
 
-        $qb = Badge::query();
-        $collection = $this->prepareAndExecuteIndexQuery($qb, [], self::PIVOT_DEPENDENCIES);
+        $collection = $this->prepareAndExecuteIndexQuery(self::MODEL, [], self::PIVOT_DEPENDENCIES);
 
         return response()->json($collection, 200);
     }
@@ -42,7 +46,20 @@ class BadgeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'name'        => 'required|string|unique:badges',
+            'description' => 'required|string',
+            'image'       => 'required|image|max:16384|mimes:jpeg,bmp,png',
+            'users'       => 'array'
+        ];
+        $error = $this->setDataParameters($request, $data, [], self::PIVOT_DEPENDENCIES);
+        if ($error) {
+            return response()->json($error, 422);
+        }
+
+        $response = $this->prepareAndExecuteStoreQuery($request, self::MODEL, [], self::PIVOT_DEPENDENCIES);
+
+        return $response;
     }
 
     /**
@@ -54,14 +71,12 @@ class BadgeController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $model = new Badge;
-        $error = $this->setParameters($request, $model);
+       $error = $this->setQueryParameters($request, self::MODEL);
         if ($error) {
             return response()->json($error, 400);
         }
 
-        $qb = Badge::query();
-        $record = $this->prepareAndExecuteShowQuery($id, $qb, [], self::PIVOT_DEPENDENCIES);
+        $record = $this->prepareAndExecuteShowQuery($id, self::MODEL, [], self::PIVOT_DEPENDENCIES);
         if (!$record) {
             return response()->json("Badge with id {$id} not found.", 404);
         }
@@ -78,7 +93,20 @@ class BadgeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'name'        => ['string', Rule::unique('badges')->ignore($id)],
+            'description' => 'string',
+            'image'       => 'image|max:16384|mimes:jpeg,bmp,png',
+            'users'       => 'array'
+        ];
+        $error = $this->setDataParameters($request, $data, [], self::PIVOT_DEPENDENCIES);
+        if ($error) {
+            return response()->json($error, 422);
+        }
+
+        $response = $this->prepareAndExecuteUpdateQuery($request, $id, self::MODEL, [], self::PIVOT_DEPENDENCIES);
+
+        return $response;
     }
 
     /**
@@ -89,10 +117,6 @@ class BadgeController extends Controller
      */
     public function destroy($id)
     {
-        if (!Badge::destroy($id)) {
-            return response()->json("Badge with id {$id} not found.", 404);
-        }
-
-        return response()->json([], 204);
+        return $this->prepareAndExecuteDestroyQuery($id, self::MODEL);
     }
 }

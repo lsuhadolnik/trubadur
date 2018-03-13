@@ -90,10 +90,8 @@ export default {
             }
         },
         eraseNote () {
-            if (this.notes.length > this.minNotes) {
-                this.notes.pop()
-                this.$emit('notes-changed', this.notes)
-            }
+            this.notes.pop()
+            this.$emit('notes-changed', this.notes)
         },
         eraseAllNotes () {
             this.notes = []

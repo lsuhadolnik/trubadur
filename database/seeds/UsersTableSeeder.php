@@ -24,6 +24,9 @@ class UsersTableSeeder extends DatabaseSeeder
             $user->name = $item['name'];
             $user->email = $item['email'];
             $user->password = bcrypt($item['password']);
+            $user->instrument = $item['instrument'];
+            $user->note_playback_delay = $item['note_playback_delay'];
+            $user->clef = $item['clef'];
 
             $school = School::whereName($item['school'])->first();
             $user->school()->associate($school);

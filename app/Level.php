@@ -12,7 +12,7 @@ class Level extends Model
      * @var array
      */
     protected $fillable = [
-        'level', 'max_note_count',
+        'level', 'range', 'min_notes', 'max_notes',
     ];
 
     /**

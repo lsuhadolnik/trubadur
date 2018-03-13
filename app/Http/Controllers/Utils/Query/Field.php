@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Utils;
+namespace App\Http\Controllers\Utils\Query;
+
+use Illuminate\Http\Request;
 
 trait Field
 {
@@ -21,7 +23,7 @@ trait Field
     public function addDependencyFields($dependencies, $pivotDependencies)
     {
         if (count($this->fields) > 0 && $this->fields[0] !== '*') {
-            foreach ($dependencies as $dependency) {
+            foreach ($dependencies as $dependency => $model) {
                 $field = $dependency . '_id';
                 $this->addField($field);
             }
@@ -37,10 +39,10 @@ trait Field
      * Set the fields array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  string  $model
      * @return string|void
      **/
-    public function setFields($request, $model)
+    public function setFields(Request $request, $model)
     {
         $fields = $request->query($this->FIELDS_INDICATOR);
 
@@ -63,7 +65,7 @@ trait Field
     /**
      * Check if the field exists in the array of fields.
      *
-     * @param  string $field
+     * @param  string  $field
      * @return boolean
      **/
     protected function hasField($field)
@@ -74,7 +76,7 @@ trait Field
     /**
      * Add the field to the array of fields.
      *
-     * @param  string $field
+     * @param  string  $field
      * @return void
      **/
     protected function addField($field)
@@ -87,12 +89,12 @@ trait Field
     /**
      * Verify that fields actually exist on the model.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  string  $model
      * @return string|void
      **/
     private function validateFields($model)
     {
-        $validFields = array_merge($model->getFillable(), ['id', 'created_at', 'updated_at']);
+        $validFields = array_merge((new $model)->getFillable(), ['id', 'created_at', 'updated_at']);
 
         foreach ($this->fields as $field) {
             if (!in_array($field, $validFields)) {

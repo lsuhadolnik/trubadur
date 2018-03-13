@@ -1,6 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Utils;
+namespace App\Http\Controllers\Utils\Query;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 trait Dependency
 {
@@ -11,9 +15,9 @@ trait Dependency
      * @param  array  $dependencies
      * @return \Illuminate\Database\Eloquent\Builder
      **/
-    public function addDependencies($qb, $dependencies)
+    public function addDependencies(Builder $qb, $dependencies)
     {
-        foreach ($dependencies as $dependency) {
+        foreach ($dependencies as $dependency => $model) {
             $qb = $qb->with($dependency);
         }
 
@@ -29,7 +33,7 @@ trait Dependency
      **/
     public function addPivotDependenciesToCollection($collection, $pivotDependencies)
     {
-        foreach ($pivotDependencies as $pivotDependency) {
+        foreach ($pivotDependencies as $pivotDependency => $model) {
             foreach ($collection as $record) {
                 $record[$pivotDependency] = $record->{$pivotDependency}()->pluck('id');
             }
@@ -46,7 +50,7 @@ trait Dependency
     public function addPivotDependenciesToRecord($record, $pivotDependencies)
     {
         if ($record) {
-            foreach ($pivotDependencies as $pivotDependency) {
+            foreach ($pivotDependencies as $pivotDependency => $model) {
                 $record[$pivotDependency] = $record->{$pivotDependency}()->pluck('id');
             }
         }

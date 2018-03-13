@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use App\Http\Controllers\Utils\Dependency;
-use App\Http\Controllers\Utils\Field;
-use App\Http\Controllers\Utils\Filter;
-use App\Http\Controllers\Utils\Order;
-use App\Http\Controllers\Utils\Pagination;
+use App\Http\Controllers\Utils\Helpers;
+use App\Http\Controllers\Utils\Data\Parameters;
+use App\Http\Controllers\Utils\Query\Dependency;
+use App\Http\Controllers\Utils\Query\Field;
+use App\Http\Controllers\Utils\Query\Filter;
+use App\Http\Controllers\Utils\Query\Order;
+use App\Http\Controllers\Utils\Query\Pagination;
+use Validator;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Dependency, Field, Filter, Order, Pagination;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Dependency, Field, Filter, Order, Pagination, Parameters;
 
     const VALID_QUERY_PARAMETERS = ['per_page', 'page', 'order_by', 'order_direction', 'fields'];
 
@@ -22,10 +28,10 @@ class Controller extends BaseController
      * Extract, validate and set the query parameters.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  string  $model
      * @return \Illuminate\Http\Response|void
      **/
-    protected function setParameters($request, $model)
+    protected function setQueryParameters(Request $request, $model)
     {
         foreach ($request->query() as $key => $value) {
             if (!$this->isFilter($key) && !in_array($key, self::VALID_QUERY_PARAMETERS)) {
@@ -62,13 +68,14 @@ class Controller extends BaseController
     /**
      * Prepare the index query based on the defined parameters and execute it.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $qb
+     * @param  string  $model
      * @param  array  $dependencies
      * @param  array  $pivotDependencies
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
      **/
-    protected function prepareAndExecuteIndexQuery($qb, $dependencies = [], $pivotDependencies = [])
+    protected function prepareAndExecuteIndexQuery($model, $dependencies = [], $pivotDependencies = [])
     {
+        $qb = $model::query();
         $qb = $this->addOrderToQuery($qb);
         $qb = $this->addFiltersToQuery($qb);
         $this->addDependencyFields($dependencies, $pivotDependencies);
@@ -82,14 +89,15 @@ class Controller extends BaseController
     /**
      * Prepare the show query based on the defined parameters and execute it.
      *
-     * @param  int  $id
-     * @param  \Illuminate\Database\Eloquent\Builder  $qb
+     * @param  integer  $id
+     * @param  string  $model
      * @param  array  $dependencies
      * @param  array  $pivotDependencies
      * @return \Illuminate\Database\Eloquent\Model|null
      **/
-    protected function prepareAndExecuteShowQuery($id, $qb, $dependencies = [], $pivotDependencies = [])
+    protected function prepareAndExecuteShowQuery($id, $model, $dependencies = [], $pivotDependencies = [])
     {
+        $qb = $model::query();
         $qb = $this->addOrderToQuery($qb);
         $qb = $this->addFiltersToQuery($qb);
         $this->addDependencyFields($dependencies, $pivotDependencies);
@@ -98,5 +106,79 @@ class Controller extends BaseController
         $this->addPivotDependenciesToRecord($record, $pivotDependencies);
 
         return $record;
+    }
+
+    /**
+     * Extract, validate and set the request data.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array  $data
+     * @param  array  $dependencies
+     * @param  array  $pivotDependencies
+     * @return array|void
+     **/
+    protected function setDataParameters(Request $request, $data, $dependencies = [], $pivotDependencies = [])
+    {
+        $validator = Validator::make($request->all(), $data);
+        if ($validator->fails()) {
+            return ['errors' => $validator->errors()];
+        }
+
+        $this->setParameters($request, $data, $dependencies, $pivotDependencies);
+    }
+
+    /**
+     * Prepare the store query based on the given data and execute it.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $model
+     * @param  array  $dependencies
+     * @param  array  $pivotDependencies
+     * @return \Illuminate\Http\Response
+     **/
+    protected function prepareAndExecuteStoreQuery(Request $request, $model, $dependencies = [], $pivotDependencies = [])
+    {
+        $result = $this->createModel($model, $dependencies, $pivotDependencies);
+        if (!$result['success']) {
+            return response()->json($result['error'], $result['code']);
+        }
+
+        return response()->json($result['model'], 201);
+    }
+
+    /**
+     * Prepare the update query based on the given data and execute it.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  integer $id
+     * @param  string  $model
+     * @param  array  $dependencies
+     * @param  array  $pivotDependencies
+     * @return \Illuminate\Http\Response
+     **/
+    protected function prepareAndExecuteUpdateQuery(Request $request, $id, $model, $dependencies = [], $pivotDependencies = [])
+    {
+        $result = $this->updateModel($id, $model, $dependencies, $pivotDependencies);
+        if (!$result['success']) {
+            return response()->json($result['error'], $result['code']);
+        }
+
+        return response()->json([], 204);
+    }
+
+    /**
+     * Prepare the destroy query based on the given data and execute it.
+     *
+     * @param  integer $id
+     * @param  string  $model
+     * @return \Illuminate\Http\Response
+     **/
+    protected function prepareAndExecuteDestroyQuery($id, $model) {
+        if (!$model::destroy($id)) {
+            $modelName = Helpers::extractModelName($model);
+            return response()->json("{$modelName} with id {$id} not found.", 404);
+        }
+
+        return response()->json([], 204);
     }
 }

@@ -20,6 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->integer('rating')->default(1000);
+            $table->enum('instrument', ['acoustic_grand_piano', 'violin', 'vibraphone', 'trumpet', 'cello'])->default('acoustic_grand_piano');
+            $table->integer('note_playback_delay')->default(2000);
+            $table->enum('clef', ['violin', 'bass'])->default('violin');
             $table->integer('school_id')->unsigned();
             $table->integer('grade_id')->unsigned();
             $table->timestamps();

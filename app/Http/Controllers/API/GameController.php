@@ -10,14 +10,19 @@ use App\Game;
 class GameController extends Controller
 {
     /**
+     * Defines the model class.
+     **/
+    const MODEL = 'App\Game';
+
+    /**
      * Defines dependencies.
      **/
-    const DEPENDENCIES = ['winner'];
+    const DEPENDENCIES = ['winner' => 'App\User'];
 
     /**
      * Defines pivot dependencies.
      **/
-    const PIVOT_DEPENDENCIES = ['users'];
+    const PIVOT_DEPENDENCIES = ['users' => 'App\User'];
 
     /**
      * Display a listing of the resource.
@@ -27,14 +32,12 @@ class GameController extends Controller
      */
     public function index(Request $request)
     {
-        $model = new Game;
-        $error = $this->setParameters($request, $model);
+        $error = $this->setQueryParameters($request, self::MODEL);
         if ($error) {
             return response()->json($error, 400);
         }
 
-        $qb = Game::query();
-        $collection = $this->prepareAndExecuteIndexQuery($qb, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        $collection = $this->prepareAndExecuteIndexQuery(self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
 
         return response()->json($collection, 200);
     }
@@ -47,7 +50,18 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'winner_id' => 'numeric',
+            'users'     => 'array'
+        ];
+        $error = $this->setDataParameters($request, $data, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        if ($error) {
+            return response()->json($error, 422);
+        }
+
+        $response = $this->prepareAndExecuteStoreQuery($request, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+
+        return $response;
     }
 
     /**
@@ -59,14 +73,12 @@ class GameController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $model = new Game;
-        $error = $this->setParameters($request, $model);
+        $error = $this->setQueryParameters($request, self::MODEL);
         if ($error) {
             return response()->json($error, 400);
         }
 
-        $qb = Game::query();
-        $record = $this->prepareAndExecuteShowQuery($id, $qb, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        $record = $this->prepareAndExecuteShowQuery($id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
         if (!$record) {
             return response()->json("Game with id {$id} not found.", 404);
         }
@@ -83,7 +95,18 @@ class GameController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'winner_id' => 'numeric',
+            'users'     => 'array'
+        ];
+        $error = $this->setDataParameters($request, $data, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        if ($error) {
+            return response()->json($error, 422);
+        }
+
+        $response = $this->prepareAndExecuteUpdateQuery($request, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+
+        return $response;
     }
 
     /**
@@ -94,10 +117,6 @@ class GameController extends Controller
      */
     public function destroy($id)
     {
-        if (!Game::destroy($id)) {
-            return response()->json("Game with id {$id} not found.", 404);
-        }
-
-        return response()->json([], 204);
+        return $this->prepareAndExecuteDestroyQuery($id, self::MODEL);
     }
 }

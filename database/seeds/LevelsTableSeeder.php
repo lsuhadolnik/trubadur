@@ -19,7 +19,9 @@ class LevelsTableSeeder extends DatabaseSeeder
             $level = new Level;
 
             $level->level = $item['level'];
-            $level->max_note_count = $item['max_note_count'];
+            $level->range = $item['range'];
+            $level->min_notes = $item['min_notes'];
+            $level->max_notes = $item['max_notes'];
 
             $level->saveOrFail();
         }

@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Utils;
+namespace App\Http\Controllers\Utils\Query;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 trait Pagination
 {
@@ -12,23 +15,12 @@ trait Pagination
     private $perPage = 15;
 
     /**
-     * Execute the pagination query with records of the collection containing the requested fields.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $qb
-     * @param  array  $fields
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     **/
-    public function executeWithPagination($qb, $fields) {
-        return is_null($fields) ? $qb->paginate($this->perPage) : $qb->paginate($this->perPage, $fields);
-    }
-
-    /**
      * Set the number of records in a collection that will be returned per single page.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return string|void
      **/
-    public function setPerPage($request)
+    public function setPerPage(Request $request)
     {
         $value = $request->query($this->PER_PAGE_INDICATOR);
 

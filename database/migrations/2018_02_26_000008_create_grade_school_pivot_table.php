@@ -17,7 +17,7 @@ class CreateGradeSchoolPivotTable extends Migration
             $table->integer('grade_id')->unsigned()->index();
             $table->integer('school_id')->unsigned()->index();
             $table->primary(['grade_id', 'school_id']);
-            $table->integer('level_id')->unsigned();
+            $table->integer('level_id')->unsigned()->nullable();
             $table->timestamps();
         });
 
