@@ -36,13 +36,13 @@ class DatabaseSeeder extends Seeder
             'level'     => 'normal',
             'range'     => 12,
             'min_notes' => 4,
-            'max_notes' => 8
+            'max_notes' => 6
         ],
         [
             'level'     => 'hard',
             'range'     => 12,
             'min_notes' => 4,
-            'max_notes' => 10
+            'max_notes' => 8
         ]
     ];
 
