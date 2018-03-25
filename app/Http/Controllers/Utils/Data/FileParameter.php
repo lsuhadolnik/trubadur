@@ -34,6 +34,6 @@ class FileParameter extends Parameter
      * Storage directory for images.
      **/
     public function getDirectory() {
-        return $this->directory();
+        return $this->directory;
     }
 }

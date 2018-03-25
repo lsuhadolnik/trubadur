@@ -5,13 +5,22 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-
 class LevelController extends Controller
 {
     /**
      * Defines the model class.
      **/
     const MODEL = 'App\Level';
+
+    /**
+     * Defines dependencies.
+     **/
+    const DEPENDENCIES = [];
+
+    /**
+     * Defines pivot dependencies.
+     **/
+    const PIVOT_DEPENDENCIES = [];
 
     /**
      * Display a listing of the resource.
@@ -21,14 +30,7 @@ class LevelController extends Controller
      */
     public function index(Request $request)
     {
-        $error = $this->setQueryParameters($request, self::MODEL);
-        if ($error) {
-            return response()->json($error, 400);
-        }
-
-        $collection = $this->prepareAndExecuteIndexQuery(self::MODEL);
-
-        return response()->json($collection, 200);
+        return $this->prepareAndExecuteIndexQuery($request, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -45,14 +47,8 @@ class LevelController extends Controller
             'min_notes' => 'required|numeric|min:2|max:10',
             'max_notes' => 'required|numeric|min:4|max:10'
         ];
-        $error = $this->setDataParameters($request, $data);
-        if ($error) {
-            return response()->json($error, 422);
-        }
 
-        $response = $this->prepareAndExecuteStoreQuery($request, self::MODEL);
-
-        return $response;
+        return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -64,17 +60,7 @@ class LevelController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $error = $this->setQueryParameters($request, self::MODEL);
-        if ($error) {
-            return response()->json($error, 400);
-        }
-
-        $record = $this->prepareAndExecuteShowQuery($id, self::MODEL);
-        if (!$record) {
-            return response()->json("Level with id {$id} not found.", 404);
-        }
-
-        return response()->json($record, 200);
+        return $this->prepareAndExecuteShowQuery($request, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -92,14 +78,8 @@ class LevelController extends Controller
             'min_notes' => 'numeric|min:2|max:10',
             'max_notes' => 'numeric|min:4|max:10'
         ];
-        $error = $this->setDataParameters($request, $data);
-        if ($error) {
-            return response()->json($error, 422);
-        }
 
-        $response = $this->prepareAndExecuteUpdateQuery($request, $id, self::MODEL);
-
-        return $response;
+        return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**

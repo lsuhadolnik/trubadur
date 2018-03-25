@@ -16,6 +16,8 @@
 
 @endforeach
 
+<br>
+
 {{-- Action Button --}}
 @isset($actionText)
 <?php
@@ -34,6 +36,8 @@
 {{ $actionText }}
 @endcomponent
 @endisset
+
+<br>
 
 {{-- Outro Lines --}}
 @foreach ($outroLines as $line)

@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 use App\Grade;
 use App\School;
@@ -58,7 +63,22 @@ class RegisterController extends Controller
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        return redirect()->back()->with('status', 'Sporočilo za potrditev email naslova je bilo poslano!');
+    }
+
+    /**
+     * Create a new user instance after a valid registration and send an email to confirm the registration.
      *
      * @param  array  $data
      * @return \App\User
@@ -70,6 +90,10 @@ class RegisterController extends Controller
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->password = bcrypt($data['password']);
+        $user->email_token = Crypt::encrypt([
+            'name' => $data['name'],
+            'email' => $data['email']
+        ]);
 
         $school = School::first();
         $user->school()->associate($school);
@@ -79,6 +103,39 @@ class RegisterController extends Controller
 
         $user->saveOrFail();
 
+        $user->sendEmailVerificationNotification($user->email_token);
+
         return $user;
+    }
+
+    /**
+     * Process the email verification request and verify the user.
+     *
+     * @param  string  $token
+     * @return \Illuminate\Http\Response
+     */
+    protected function verify($token = null)
+    {
+        if (!$token) {
+            return redirect()->route('login')->withErrors(['email_token' => 'Potrditev email naslova ni uspela! Žeton ni prisoten.']);
+        }
+
+        try {
+            $data = Crypt::decrypt($token);
+        } catch (DecryptException $e) {
+            return redirect()->route('login')->withErrors(['email_token' => 'Potrditev email naslova ni uspela! Žeton je okvarjen.']);
+        }
+
+        $user = User::where(array_merge($data, ['email_token' => $token]))->first();
+        if (!$user) {
+            return redirect()->route('login')->withErrors(['email_token' => 'Potrditev email naslova ni uspela! Žeton je neveljaven.']);
+        }
+
+        $user->verified = true;
+        $user->email_token = null;
+
+        $user->save();
+
+        return redirect()->route('login')->with('status', 'Potrditev email naslova je uspela! Sedaj se lahko prijavite.');
     }
 }

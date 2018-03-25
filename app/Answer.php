@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Grade extends Model
+class Answer extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,7 @@ class Grade extends Model
      * @var array
      */
     protected $fillable = [
-        'grade',
+        'game_id', 'user_id', 'question_id', 'chapter', 'number', 'time', 'n_additions', 'n_deletions', 'n_playbacks', 'success',
     ];
 
     /**
@@ -22,8 +22,13 @@ class Grade extends Model
      */
     protected $hidden = [];
 
-    public function schools()
+    public function gameUser()
     {
-        return $this->belongsToMany('App\School')->withTimestamps()->using('App\GradeSchool');
+        return $this->belongsTo('App\GameUser');
+    }
+
+    public function question()
+    {
+        return $this->belongsTo('App\Question');
     }
 }

@@ -136,6 +136,9 @@ class DatabaseSeeder extends Seeder
     const MIN_USERS_PER_GAME = 1;
     const MAX_USERS_PER_GAME = 4;
 
+    const MIN_LOGINS_PER_USER = 10;
+    const MAX_LOGINS_PER_USER = 50;
+
     /**
      * Run the database seeds.
      *
@@ -150,5 +153,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SchoolsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(GamesTableSeeder::class);
+        $this->call(LoginsTableSeeder::class);
     }
 }

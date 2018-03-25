@@ -16,11 +16,6 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('content');
-            $table->integer('time')->default(0);
-            $table->integer('n_additions')->default(0);
-            $table->integer('n_deletions')->default(0);
-            $table->integer('n_playbacks')->default(0);
-            $table->integer('success')->default(false);
             $table->timestamps();
         });
     }

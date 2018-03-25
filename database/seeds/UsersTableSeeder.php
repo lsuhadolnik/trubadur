@@ -24,6 +24,7 @@ class UsersTableSeeder extends DatabaseSeeder
             $user->name = $item['name'];
             $user->email = $item['email'];
             $user->password = bcrypt($item['password']);
+            $user->verified = true;
             $user->instrument = $item['instrument'];
             $user->note_playback_delay = $item['note_playback_delay'];
             $user->clef = $item['clef'];
@@ -36,9 +37,10 @@ class UsersTableSeeder extends DatabaseSeeder
 
             $user->saveOrFail();
 
-            foreach ($item['badges'] as $badgeName) {
-                $badge = Badge::whereName($badgeName)->first();
-                $user->badges()->attach($badge->id);
+            foreach (self::BADGES as $badge) {
+                $badge = Badge::whereName($badge['name'])->first();
+                $completed = (rand(0, 100) / 100) < 0.5;
+                $user->badges()->attach($badge->id, ['completed' => $completed]);
             }
         }
     }

@@ -26,7 +26,7 @@
             <div class="email__error-group">
                 <ul class="email__error-list">
                     @if ($errors->has('email'))
-                        <li class="email__error">{{ $errors->first('email') }}</li>
+                        <li class="email__error">{!! $errors->first('email') !!}</li>
                     @endif
                 </ul>
             </div>
@@ -34,7 +34,7 @@
             <div class="email__status-group">
                 <ul class="email__status-list">
                     @if (session('status'))
-                        <li class="email__status">{{ session('status') }}</li>
+                        <li class="email__status">{!! session('status') !!}</li>
                     @endif
                 </ul>
             </div>

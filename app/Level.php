@@ -21,4 +21,14 @@ class Level extends Model
      * @var array
      */
     protected $hidden = [];
+
+    public function gradeSchool()
+    {
+        return $this->hasOne('App\GradeSchool');
+    }
+
+    public function games()
+    {
+        return $this->hasMany('App\Game');
+    }
 }

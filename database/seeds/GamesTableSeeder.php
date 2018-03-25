@@ -2,11 +2,21 @@
 
 use Illuminate\Database\Seeder;
 
+use App\Answer;
 use App\Game;
+use App\GameUser;
+use App\Level;
+use App\Question;
 use App\User;
 
 class GamesTableSeeder extends DatabaseSeeder
 {
+    const GAME_MODES = ['practice', 'single', 'multi'];
+    const GAME_TYPES = ['intervals', 'rythm'];
+    const N_CHAPTERS = 3;
+    const N_QUESTIONS = 8;
+    const PITCHES = ['A#3', 'B3', 'C4', 'C#4', 'D4', 'D#4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'A4', 'A#4', 'B4', 'C5', 'C#5'];
+
     /**
      * Run the database seeds.
      *
@@ -14,19 +24,66 @@ class GamesTableSeeder extends DatabaseSeeder
      */
     public function run()
     {
+        DB::table('questions')->delete();
+        DB::table('answers')->delete();
         DB::table('games')->delete();
 
         for ($i = 0; $i < self::N_GAMES; $i++) {
+            $game = new Game;
+
+            $level = Level::inRandomOrder()->first();
+            $game->level()->associate($level);
+
+            $game->mode = self::GAME_MODES[array_rand(self::GAME_MODES)];
+            $game->type = self::GAME_TYPES[array_rand(self::GAME_TYPES)];
+            $game->finished = (rand(0, 100) / 100) < 0.8;
+
+            $game->saveOrFail();
+
             $nUsers = rand(self::MIN_USERS_PER_GAME, self::MAX_USERS_PER_GAME);
             $users = User::inRandomOrder()->take($nUsers)->pluck('id');
 
-            $game = new Game;
-            $game->saveOrFail();
+            $questions = [];
+            for ($j = 0; $j < self::N_CHAPTERS * self::N_QUESTIONS; $j++) {
+                $pitches = self::PITCHES;
+                shuffle($pitches);
+                $nNotes = rand($level->min_notes, $level->max_notes);
+                $content = implode(',', array_slice($pitches, 0, $nNotes));
+                $question = Question::whereContent($content)->first();
+                if (!$question) {
+                    $question = new Question;
+                    $question->content = $content;
+                    $question->saveOrFail();
+                }
+                $questions[] = $question;
+            }
 
-            $game->users()->attach($users);
+            foreach ($users as $userId) {
+                $game->users()->attach($userId, ['points' => $game->finished ? rand(5, 20) : 0]);
+
+                for ($j = 0; $j < self::N_CHAPTERS; $j++) {
+                    for ($k = 0; $k < self::N_QUESTIONS; $k++) {
+                        $answer = new Answer;
+
+                        $answer->game_id = $game->id;
+                        $answer->user_id = $userId;
+                        $answer->question()->associate($questions[$j * self::N_CHAPTERS + $k]);
+                        $answer->chapter = $j;
+                        $answer->number = $k;
+                        $answer->time = rand(10000, 120000);
+                        $answer->n_additions = rand($level->max_notes - 1, 30);
+                        $answer->n_deletions = rand($answer->n_additions - 3, $answer->n_additions);
+                        $answer->n_playbacks = rand(0, 10);
+                        $answer->success = (rand(0, 100) / 100) < 0.7;
+
+                        $answer->saveOrFail();
+                    }
+                }
+            }
 
             $winner = User::find($users[rand(0, $nUsers - 1)]);
             $game->winner()->associate($winner);
+
             $game->saveOrFail();
         }
     }

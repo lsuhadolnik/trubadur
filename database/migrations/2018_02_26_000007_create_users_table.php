@@ -18,11 +18,15 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->boolean('verified')->default(false);
+            $table->string('email_token', 1024)->nullable();
             $table->rememberToken();
+            $table->boolean('admin')->default(false);
             $table->integer('rating')->default(1000);
             $table->enum('instrument', ['acoustic_grand_piano', 'violin', 'vibraphone', 'trumpet', 'cello'])->default('acoustic_grand_piano');
             $table->integer('note_playback_delay')->default(2000);
             $table->enum('clef', ['violin', 'bass'])->default('violin');
+            $table->string('avatar')->default('/storage/images/avatar.svg');
             $table->integer('school_id')->unsigned();
             $table->integer('grade_id')->unsigned();
             $table->timestamps();

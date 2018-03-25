@@ -209,11 +209,13 @@
   color: #000000;
 }
 
-.login__error-group {
+.login__error-group,
+.login__status-group {
   margin-top: 20px;
 }
 
-.login__error-list {
+.login__error-list,
+.login__status-list {
   margin: 0;
   padding: 0;
   list-style-type: none;
@@ -222,6 +224,13 @@
 .login__error {
   margin-bottom: 3px;
   color: #fe664e;
+  font-size: 13px;
+  font-family: "Montserrat Light";
+}
+
+.login__status {
+  margin-bottom: 3px;
+  color: #7cbc42;
   font-size: 13px;
   font-family: "Montserrat Light";
 }
@@ -402,11 +411,13 @@
   color: #000000;
 }
 
-.register__error-group {
-  margin-top: 10px;
+.register__error-group,
+.register__status-group {
+  margin-top: 20px;
 }
 
-.register__error-list {
+.register__error-list,
+.register__status-list {
   margin: 0;
   padding: 0;
   list-style-type: none;
@@ -415,6 +426,13 @@
 .register__error {
   margin-bottom: 3px;
   color: #fe664e;
+  font-size: 13px;
+  font-family: "Montserrat Light";
+}
+
+.register__status {
+  margin-bottom: 3px;
+  color: #7cbc42;
   font-size: 13px;
   font-family: "Montserrat Light";
 }
@@ -816,7 +834,7 @@
 }
 
 .reset__error-group {
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .reset__error-list {

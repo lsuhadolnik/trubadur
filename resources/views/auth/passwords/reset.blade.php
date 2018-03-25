@@ -36,13 +36,13 @@
             <div class="reset__error-group">
                 <ul class="reset__error-list">
                     @if ($errors->has('email'))
-                        <li class="reset__error">{{ $errors->first('email') }}</li>
+                        <li class="reset__error">{!! $errors->first('email') !!}</li>
                     @endif
                     @if ($errors->has('password'))
-                        <li class="reset__error">{{ $errors->first('password') }}</li>
+                        <li class="reset__error">{!! $errors->first('password') !!}</li>
                     @endif
                     @if ($errors->has('password_confirmation'))
-                        <li class="reset__error">{{ $errors->first('password_confirmation') }}</li>
+                        <li class="reset__error">{!! $errors->first('password_confirmation') !!}</li>
                     @endif
                 </ul>
             </div>

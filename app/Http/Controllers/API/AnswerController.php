@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
-class BadgeController extends Controller
+class AnswerController extends Controller
 {
     /**
      * Defines the model class.
      **/
-    const MODEL = 'App\Badge';
+    const MODEL = 'App\Answer';
 
     /**
      * Defines dependencies.
@@ -21,7 +20,7 @@ class BadgeController extends Controller
     /**
      * Defines pivot dependencies.
      **/
-    const PIVOT_DEPENDENCIES = ['users' => 'App\User'];
+    const PIVOT_DEPENDENCIES = [];
 
     /**
      * Display a listing of the resource.
@@ -43,10 +42,14 @@ class BadgeController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'name'        => 'required|string|unique:badges',
-            'description' => 'required|string',
-            'image'       => 'required|image|max:16384|mimes:jpeg,bmp,png',
-            'users'       => 'array'
+            'question_id' => 'required|numeric',
+            'chapter'     => 'required|numeric',
+            'number'      => 'required|numeric',
+            'time'        => 'numeric',
+            'n_additions' => 'numeric',
+            'n_deletions' => 'numeric',
+            'n_playbacks' => 'numeric',
+            'success'     => 'boolean'
         ];
 
         return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -74,10 +77,14 @@ class BadgeController extends Controller
     public function update(Request $request, $id)
     {
         $data = [
-            'name'        => ['string', Rule::unique('badges')->ignore($id)],
-            'description' => 'string',
-            'image'       => 'image|max:16384|mimes:jpeg,bmp,png',
-            'users'       => 'array'
+            'question_id' => 'numeric',
+            'chapter'     => 'numeric',
+            'number'      => 'numeric',
+            'time'        => 'numeric',
+            'n_additions' => 'numeric',
+            'n_deletions' => 'numeric',
+            'n_playbacks' => 'numeric',
+            'success'     => 'boolean'
         ];
 
         return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);

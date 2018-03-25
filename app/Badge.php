@@ -15,8 +15,15 @@ class Badge extends Model
         'name', 'description', 'image',
     ];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [];
+
     public function users()
     {
-        return $this->belongsToMany('App\User')->withTimestamps();
+        return $this->belongsToMany('App\User')->withTimestamps()->using('App\BadgeUser');
     }
 }

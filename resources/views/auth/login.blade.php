@@ -45,10 +45,21 @@
             <div class="login__error-group">
                 <ul class="login__error-list">
                     @if ($errors->has('email'))
-                        <li class="login__error">{{ $errors->first('email') }}</li>
+                        <li class="login__error">{!! $errors->first('email') !!}</li>
                     @endif
                     @if ($errors->has('password'))
-                        <li class="login__error">{{ $errors->first('password') }}</li>
+                        <li class="login__error">{!! $errors->first('password') !!}</li>
+                    @endif
+                    @if ($errors->has('email_token'))
+                        <li class="login__error">{!! $errors->first('email_token') !!}</li>
+                    @endif
+                </ul>
+            </div>
+
+            <div class="login__status-group">
+                <ul class="login__status-list">
+                    @if (session('status'))
+                        <li class="login__status">{!! session('status') !!}</li>
                     @endif
                 </ul>
             </div>

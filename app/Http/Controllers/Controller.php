@@ -31,7 +31,7 @@ class Controller extends BaseController
      * @param  string  $model
      * @return \Illuminate\Http\Response|void
      **/
-    protected function setQueryParameters(Request $request, $model)
+    private function setQueryParameters(Request $request, $model)
     {
         foreach ($request->query() as $key => $value) {
             if (!$this->isFilter($key) && !in_array($key, self::VALID_QUERY_PARAMETERS)) {
@@ -66,49 +66,6 @@ class Controller extends BaseController
     }
 
     /**
-     * Prepare the index query based on the defined parameters and execute it.
-     *
-     * @param  string  $model
-     * @param  array  $dependencies
-     * @param  array  $pivotDependencies
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
-     **/
-    protected function prepareAndExecuteIndexQuery($model, $dependencies = [], $pivotDependencies = [])
-    {
-        $qb = $model::query();
-        $qb = $this->addOrderToQuery($qb);
-        $qb = $this->addFiltersToQuery($qb);
-        $this->addDependencyFields($dependencies, $pivotDependencies);
-        $qb = $this->addDependencies($qb, $dependencies);
-        $collection = $this->hasPagination() ? $qb->paginate($this->getPerPage(), $this->getFields()) : $qb->get($this->getFields());
-        $this->addPivotDependenciesToCollection($collection, $pivotDependencies);
-
-        return $collection;
-    }
-
-    /**
-     * Prepare the show query based on the defined parameters and execute it.
-     *
-     * @param  integer  $id
-     * @param  string  $model
-     * @param  array  $dependencies
-     * @param  array  $pivotDependencies
-     * @return \Illuminate\Database\Eloquent\Model|null
-     **/
-    protected function prepareAndExecuteShowQuery($id, $model, $dependencies = [], $pivotDependencies = [])
-    {
-        $qb = $model::query();
-        $qb = $this->addOrderToQuery($qb);
-        $qb = $this->addFiltersToQuery($qb);
-        $this->addDependencyFields($dependencies, $pivotDependencies);
-        $qb = $this->addDependencies($qb, $dependencies);
-        $record = $qb->find($id, $this->getFields());
-        $this->addPivotDependenciesToRecord($record, $pivotDependencies);
-
-        return $record;
-    }
-
-    /**
      * Extract, validate and set the request data.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -117,7 +74,7 @@ class Controller extends BaseController
      * @param  array  $pivotDependencies
      * @return array|void
      **/
-    protected function setDataParameters(Request $request, $data, $dependencies = [], $pivotDependencies = [])
+    private function setDataParameters(Request $request, $data, $dependencies = [], $pivotDependencies = [])
     {
         $validator = Validator::make($request->all(), $data);
         if ($validator->fails()) {
@@ -128,37 +85,167 @@ class Controller extends BaseController
     }
 
     /**
-     * Prepare the store query based on the given data and execute it.
+     * Prepare the index query based on the defined parameters and execute it.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $model
      * @param  array  $dependencies
      * @param  array  $pivotDependencies
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
+     **/
+    protected function prepareAndExecuteIndexQuery(Request $request, $model, $dependencies = [], $pivotDependencies = [])
+    {
+        $error = $this->setQueryParameters($request, $model);
+        if ($error) {
+            return response()->json($error, 400);
+        }
+
+        $qb = $model::query();
+        $qb = $this->addOrderToQuery($qb);
+        $qb = $this->addFiltersToQuery($qb);
+        $this->addDependencyFields($dependencies, $pivotDependencies);
+        $qb = $this->addDependencies($qb, $dependencies);
+        $collection = $this->hasPagination() ? $qb->paginate($this->getPerPage(), $this->getFields()) : $qb->get($this->getFields());
+        $this->addPivotDependenciesToCollection($collection, $pivotDependencies);
+
+        return response()->json($collection, 200);
+    }
+
+    /**
+     * Prepare the show query based on the defined parameters and execute it.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  integer  $id
+     * @param  string  $model
+     * @param  array  $dependencies
+     * @param  array  $pivotDependencies
+     * @return \Illuminate\Database\Eloquent\Model|null
+     **/
+    protected function prepareAndExecuteShowQuery(Request $request, $id, $model, $dependencies = [], $pivotDependencies = [])
+    {
+        $error = $this->setQueryParameters($request, $model);
+        if ($error) {
+            return response()->json($error, 400);
+        }
+
+        $qb = $model::query();
+        $qb = $this->addOrderToQuery($qb);
+        $qb = $this->addFiltersToQuery($qb);
+        $this->addDependencyFields($dependencies, $pivotDependencies);
+        $qb = $this->addDependencies($qb, $dependencies);
+        $record = $qb->find($id, $this->getFields());
+        if (!$record) {
+            $modelName = Helpers::extractModelName($model);
+            return response()->json("{$modelName} with id {$id} not found.", 404);
+        }
+        $this->addPivotDependenciesToRecord($record, $pivotDependencies);
+
+        return response()->json($record, 200);
+    }
+
+    /**
+     * Prepare the show query for a pivot table based on the defined parameters and execute it.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array  $compositeKey
+     * @param  string  $model
+     * @param  array  $dependencies
+     * @param  array  $pivotDependencies
+     * @return \Illuminate\Database\Eloquent\Model|null
+     **/
+    protected function prepareAndExecutePivotShowQuery(Request $request, $compositeKey, $model, $dependencies = [], $pivotDependencies = [])
+    {
+        $error = $this->setQueryParameters($request, $model);
+        if ($error) {
+            return response()->json($error, 400);
+        }
+
+        $qb = $model::query();
+        $qb = $this->addOrderToQuery($qb);
+        $qb = $this->addFiltersToQuery($qb);
+        $this->addDependencyFields($dependencies, $pivotDependencies);
+        $qb = $this->addDependencies($qb, $dependencies);
+        $record = $qb->where($compositeKey)->first($this->getFields());
+        if (!$record) {
+            $modelName = Helpers::extractModelName($model);
+            $printableCompositeKey = Helpers::getPrintableCompositeKey($compositeKey);
+            return response()->json("{$modelName} with {$printableCompositeKey} not found.", 404);
+        }
+        $this->addPivotDependenciesToRecord($record, $pivotDependencies);
+
+        return response()->json($record, 200);
+    }
+
+    /**
+     * Prepare the store query based on the given data and execute it.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array  $data
+     * @param  string  $model
+     * @param  array  $dependencies
+     * @param  array  $pivotDependencies
      * @return \Illuminate\Http\Response
      **/
-    protected function prepareAndExecuteStoreQuery(Request $request, $model, $dependencies = [], $pivotDependencies = [])
+    protected function prepareAndExecuteStoreQuery(Request $request, $data, $model, $dependencies = [], $pivotDependencies = [])
     {
+        $error = $this->setDataParameters($request, $data, $dependencies, $pivotDependencies);
+        if ($error) {
+            return response()->json($error, 422);
+        }
+
         $result = $this->createModel($model, $dependencies, $pivotDependencies);
         if (!$result['success']) {
             return response()->json($result['error'], $result['code']);
         }
 
-        return response()->json($result['model'], 201);
+        return response()->json($result['record'], 201);
     }
 
     /**
      * Prepare the update query based on the given data and execute it.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  array  $data
      * @param  integer $id
      * @param  string  $model
      * @param  array  $dependencies
      * @param  array  $pivotDependencies
      * @return \Illuminate\Http\Response
      **/
-    protected function prepareAndExecuteUpdateQuery(Request $request, $id, $model, $dependencies = [], $pivotDependencies = [])
+    protected function prepareAndExecuteUpdateQuery(Request $request, $data, $id, $model, $dependencies = [], $pivotDependencies = [])
     {
+        $error = $this->setDataParameters($request, $data, $dependencies, $pivotDependencies);
+        if ($error) {
+            return response()->json($error, 422);
+        }
+
         $result = $this->updateModel($id, $model, $dependencies, $pivotDependencies);
+        if (!$result['success']) {
+            return response()->json($result['error'], $result['code']);
+        }
+
+        return response()->json([], 204);
+    }
+
+    /**
+     * Prepare the update query for a pivot table based on the given data and execute it.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array  $data
+     * @param  array  $compositeKey
+     * @param  string  $model
+     * @param  array  $dependencies
+     * @param  array  $pivotDependencies
+     * @return \Illuminate\Http\Response
+     **/
+    protected function prepareAndExecutePivotUpdateQuery(Request $request, $data, $compositeKey, $model, $dependencies = [], $pivotDependencies = [])
+    {
+        $error = $this->setDataParameters($request, $data, $dependencies, $pivotDependencies);
+        if ($error) {
+            return response()->json($error, 422);
+        }
+
+        $result = $this->updatePivotModel($compositeKey, $model, $dependencies, $pivotDependencies);
         if (!$result['success']) {
             return response()->json($result['error'], $result['code']);
         }
@@ -173,11 +260,33 @@ class Controller extends BaseController
      * @param  string  $model
      * @return \Illuminate\Http\Response
      **/
-    protected function prepareAndExecuteDestroyQuery($id, $model) {
+    protected function prepareAndExecuteDestroyQuery($id, $model)
+    {
         if (!$model::destroy($id)) {
             $modelName = Helpers::extractModelName($model);
             return response()->json("{$modelName} with id {$id} not found.", 404);
         }
+
+        return response()->json([], 204);
+    }
+
+    /**
+     * Prepare the destroy query for a pivot table based on the given data and execute it.
+     *
+     * @param  array  $compositeKey
+     * @param  string  $model
+     * @return \Illuminate\Http\Response
+     **/
+    protected function prepareAndExecutePivotDestroyQuery($compositeKey, $model)
+    {
+        $record = $model::where($compositeKey)->first();
+        if (!$record) {
+            $modelName = Helpers::extractModelName($model);
+            $printableCompositeKey = Helpers::getPrintableCompositeKey($compositeKey);
+            return response()->json("{$modelName} with {$printableCompositeKey} not found.", 404);
+        }
+
+        $model::where($compositeKey)->delete();
 
         return response()->json([], 204);
     }

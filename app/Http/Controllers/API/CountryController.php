@@ -14,6 +14,11 @@ class CountryController extends Controller
     const MODEL = 'App\Country';
 
     /**
+     * Defines dependencies.
+     **/
+    const DEPENDENCIES = [];
+
+    /**
      * Defines pivot dependencies.
      **/
     const PIVOT_DEPENDENCIES = ['schools' => 'App\School'];
@@ -26,14 +31,7 @@ class CountryController extends Controller
      */
     public function index(Request $request)
     {
-        $error = $this->setQueryParameters($request, self::MODEL);
-        if ($error) {
-            return response()->json($error, 400);
-        }
-
-        $collection = $this->prepareAndExecuteIndexQuery(self::MODEL, [], self::PIVOT_DEPENDENCIES);
-
-        return response()->json($collection, 200);
+        return $this->prepareAndExecuteIndexQuery($request, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -47,14 +45,8 @@ class CountryController extends Controller
         $data = [
             'name' => 'required|string|unique:countries'
         ];
-        $error = $this->setDataParameters($request, $data, [], self::PIVOT_DEPENDENCIES);
-        if ($error) {
-            return response()->json($error, 422);
-        }
 
-        $response = $this->prepareAndExecuteStoreQuery($request, self::MODEL, [], self::PIVOT_DEPENDENCIES);
-
-        return $response;
+        return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -66,17 +58,7 @@ class CountryController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $error = $this->setQueryParameters($request, self::MODEL);
-        if ($error) {
-            return response()->json($error, 400);
-        }
-
-        $record = $this->prepareAndExecuteShowQuery($id, self::MODEL, [], self::PIVOT_DEPENDENCIES);
-        if (!$record) {
-            return response()->json("Country with id {$id} not found.", 404);
-        }
-
-        return response()->json($record, 200);
+        return $this->prepareAndExecuteShowQuery($request, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -91,14 +73,8 @@ class CountryController extends Controller
         $data = [
             'name' => ['string', Rule::unique('countries')->ignore($id)]
         ];
-        $error = $this->setDataParameters($request, $data, [], self::PIVOT_DEPENDENCIES);
-        if ($error) {
-            return response()->json($error, 422);
-        }
 
-        $response = $this->prepareAndExecuteUpdateQuery($request, $id, self::MODEL, [], self::PIVOT_DEPENDENCIES);
-
-        return $response;
+        return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**

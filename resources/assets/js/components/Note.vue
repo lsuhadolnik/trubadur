@@ -151,7 +151,10 @@ export default {
             return this.pitch.indexOf('b') >= 0
         },
         natural () {
-            return ((!this.sharp && this.sharpPrevious) || (!this.flat && this.flatPrevious)) && (this.heights[this.previousPitch] === this.heights[this.pitch])
+            return ((!this.sharp && this.sharpPrevious) || (!this.flat && this.flatPrevious)) && (this.heights[this.pitch] === this.heights[this.previousPitch])
+        },
+        noPrefix () {
+            return ((this.sharp && this.sharpPrevious) || (this.flat && this.flatPrevious)) && (this.heights[this.pitch] === this.heights[this.previousPitch])
         },
         pitches () {
             return Object.keys(this.heights)
@@ -205,15 +208,17 @@ export default {
                     break
             }
 
-            if (this.sharp) {
-                const selector = this.type === 'whole' ? '#sharp-whole' : '#sharp'
-                $(this.$el.querySelector(selector)).show()
-            } else if (this.flat) {
-                const selector = this.type === 'whole' ? '#flat-whole' : '#flat'
-                $(this.$el.querySelector(selector)).show()
-            } else if (this.natural) {
-                const selector = this.type === 'whole' ? '#natural-whole' : '#natural'
-                $(this.$el.querySelector(selector)).show()
+            if (!this.noPrefix) {
+                if (this.sharp) {
+                    const selector = this.type === 'whole' ? '#sharp-whole' : '#sharp'
+                    $(this.$el.querySelector(selector)).show()
+                } else if (this.flat) {
+                    const selector = this.type === 'whole' ? '#flat-whole' : '#flat'
+                    $(this.$el.querySelector(selector)).show()
+                } else if (this.natural) {
+                    const selector = this.type === 'whole' ? '#natural-whole' : '#natural'
+                    $(this.$el.querySelector(selector)).show()
+                }
             }
         }
     }

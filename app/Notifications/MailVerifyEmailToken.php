@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class MailResetPasswordToken extends Notification
+class MailVerifyEmailToken extends Notification
 {
     use Queueable;
 
@@ -42,13 +42,12 @@ class MailResetPasswordToken extends Notification
     {
         return (new MailMessage)
                     ->from(env('MAIL_USERNAME'), env('APP_NAME'))
-                    ->subject('Ponastavitev gesla')
-                    ->level('success')
+                    ->subject('Potrditev email naslova')
                     ->greeting('Pozdravljeni!')
-                    ->line('Prejeli smo vaš zahtevek za ponastavitev gesla.')
-                    ->line('Za ponastavitev gesla sledite povezavi:')
-                    ->action('Ponastavi geslo', url('password/reset', $this->token))
-                    ->line('Če ponastavitve gesla niste zahtevali, lahko sporočilo ignorirate.')
+                    ->line('Veseli smo, da ste se odločili za uporabo aplikacije Trubadur.')
+                    ->line('Za uspešno dokončanje registracije, sledite povezavi:')
+                    ->action('Potrdi email naslov', url('register/verify', $this->token))
+                    ->line('Če se ne želite registrirati, lahko sporočilo ignorirate.')
                     ->salutation('Lep pozdrav, ekipa Trubadur');
     }
 

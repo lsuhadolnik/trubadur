@@ -16,12 +16,12 @@ class UserController extends Controller
     /**
      * Defines dependencies.
      **/
-    const DEPENDENCIES = ['school' => 'App\School', 'grade' => 'App\Grade'];
+    const DEPENDENCIES = ['grade' => 'App\Grade', 'school' => 'App\School'];
 
     /**
      * Defines pivot dependencies.
      **/
-    const PIVOT_DEPENDENCIES = ['badges' => 'App\Badge'];
+    const PIVOT_DEPENDENCIES = ['badges' => 'App\Badge', 'games' => 'App\Game'];
 
     /**
      * Display a listing of the resource.
@@ -31,14 +31,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $error = $this->setQueryParameters($request, self::MODEL);
-        if ($error) {
-            return response()->json($error, 400);
-        }
-
-        $collection = $this->prepareAndExecuteIndexQuery(self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-
-        return response()->json($collection, 200);
+        return $this->prepareAndExecuteIndexQuery($request, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -50,22 +43,20 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'name'      => 'required|string|max:255|unique:users',
-            'email'     => 'required|string|email|max:255|unique:users',
-            'password'  => 'required|string|min:6|confirmed',
-            'rating'    => 'integer',
-            'school_id' => 'required|integer',
-            'grade_id'  => 'required|integer',
-            'badges'    => 'array'
+            'name'                => 'required|string|max:255|unique:users',
+            'email'               => 'required|string|email|max:255|unique:users',
+            'password'            => 'required|string|min:6|confirmed',
+            'rating'              => 'integer',
+            'instrument'          => 'string|in:acoustic_grand_piano,violin,vibraphone,trumpet,cello',
+            'note_playback_delay' => 'integer|min:500|max:2500',
+            'clef'                => 'string|in:violin,bass',
+            'avatar'              => 'string',
+            'school_id'           => 'required|integer',
+            'grade_id'            => 'required|integer',
+            'badges'              => 'array'
         ];
-        $error = $this->setDataParameters($request, $data, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-        if ($error) {
-            return response()->json($error, 422);
-        }
 
-        $response = $this->prepareAndExecuteStoreQuery($request, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-
-        return $response;
+        return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -77,17 +68,7 @@ class UserController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $error = $this->setQueryParameters($request, self::MODEL);
-        if ($error) {
-            return response()->json($error, 400);
-        }
-
-        $record = $this->prepareAndExecuteShowQuery($id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-        if (!$record) {
-            return response()->json("User with id {$id} not found.", 404);
-        }
-
-        return response()->json($record, 200);
+        return $this->prepareAndExecuteShowQuery($request, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -100,22 +81,20 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $data = [
-            'name'      => ['string', 'max:255', Rule::unique('users')->ignore($id)],
-            'email'     => ['string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
-            'password'  => 'required|string|min:6|confirmed',
-            'rating'    => 'integer',
-            'school_id' => 'required|integer',
-            'grade_id'  => 'required|integer',
-            'badges'    => 'array'
+            'name'                => ['string', 'max:255', Rule::unique('users')->ignore($id)],
+            'email'               => ['string', 'email', 'max:255', Rule::unique('users')->ignore($id)],
+            'password'            => 'string|min:6|confirmed',
+            'rating'              => 'integer',
+            'instrument'          => 'string|in:acoustic_grand_piano,violin,vibraphone,trumpet,cello',
+            'note_playback_delay' => 'integer|min:500|max:2500',
+            'clef'                => 'string|in:violin,bass',
+            'avatar'              => 'string',
+            'school_id'           => 'integer',
+            'grade_id'            => 'integer',
+            'badges'              => 'array'
         ];
-        $error = $this->setDataParameters($request, $data, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-        if ($error) {
-            return response()->json($error, 422);
-        }
 
-        $response = $this->prepareAndExecuteUpdateQuery($request, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-
-        return $response;
+        return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -127,5 +106,64 @@ class UserController extends Controller
     public function destroy($id)
     {
         return $this->prepareAndExecuteDestroyQuery($id, self::MODEL);
+    }
+
+    /**
+     * Update the specified associated resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $gradeId
+     * @param  int  $schoolId
+     * @return \Illuminate\Http\Response
+     */
+    public function setCompleted(Request $request, $userId, $badgeId)
+    {
+        $data = [
+            'completed' => 'required|boolean'
+        ];
+        $error = $this->setDataParameters($request, $data);
+        if ($error) {
+            return response()->json($error, 422);
+        }
+
+        $user = $this->prepareAndExecuteShowQuery($userId, self::MODEL);
+        if (!$user) {
+            return response()->json("User with id {$gradeId} not found.", 404);
+        }
+
+        $badgeUser = $user->badges()->find($badgeId);
+        if (!$badgeUser) {
+            return response()->json("Badge with id {$badgeId} is not associated with user with id {$userId}.", 404);
+        }
+
+        $badgeUser->completed = $request->get('completed');
+        $badgeUser->saveOrFail();
+
+        return response()->json([], 204);
+    }
+
+    /**
+     * Display the specified associated resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $gradeId
+     * @param  int  $schoolId
+     * @return \Illuminate\Http\Response
+     */
+    public function getCompleted(Request $request, $userId, $badgeId)
+    {
+        $user = $this->prepareAndExecuteShowQuery($userId, self::MODEL);
+        if (!$user) {
+            return response()->json("User with id {$gradeId} not found.", 404);
+        }
+
+        $badgeUser = $user->badges()->find($badgeId);
+        if (!$badgeUser) {
+            return response()->json("Badge with id {$badgeId} is not associated with user with id {$userId}.", 404);
+        }
+
+        $completed = $badgeUser->completed;
+
+        return response()->json($completed, 200);
     }
 }

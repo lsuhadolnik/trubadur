@@ -17,6 +17,7 @@ class CreateBadgeUserPivotTable extends Migration
             $table->integer('badge_id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index();
             $table->primary(['badge_id', 'user_id']);
+            $table->boolean('completed')->default(false);
             $table->timestamps();
         });
 

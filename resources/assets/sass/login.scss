@@ -124,9 +124,9 @@ $time-button-hover: 0.1s * $time-factor;
     color            : $black;
 }
 
-.login__error-group { margin-top: 20px; }
+.login__error-group, .login__status-group { margin-top: 20px; }
 
-.login__error-list {
+.login__error-list, .login__status-list {
     margin          : 0;
     padding         : 0;
     list-style-type : none;
@@ -135,6 +135,13 @@ $time-button-hover: 0.1s * $time-factor;
 .login__error {
     margin-bottom : 3px;
     color         : $neon-red;
+    font-size     : 13px;
+    font-family   : $font-light;
+}
+
+.login__status {
+    margin-bottom : 3px;
+    color         : $green;
     font-size     : 13px;
     font-family   : $font-light;
 }

@@ -13,6 +13,8 @@
 
 Auth::routes();
 
+Route::get('register/verify/{token?}', 'Auth\RegisterController@verify');
+
 Route::middleware('guest')->get('/', function () {
     return view('auth.login');
 });

@@ -3,25 +3,24 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
-class BadgeController extends Controller
+class GradeSchoolController extends Controller
 {
     /**
      * Defines the model class.
      **/
-    const MODEL = 'App\Badge';
+    const MODEL = 'App\GradeSchool';
 
     /**
      * Defines dependencies.
      **/
-    const DEPENDENCIES = [];
+    const DEPENDENCIES = ['grade' => 'App\Grade', 'school' => 'App\School', 'level' => 'App\Level'];
 
     /**
      * Defines pivot dependencies.
      **/
-    const PIVOT_DEPENDENCIES = ['users' => 'App\User'];
+    const PIVOT_DEPENDENCIES = [];
 
     /**
      * Display a listing of the resource.
@@ -43,10 +42,9 @@ class BadgeController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'name'        => 'required|string|unique:badges',
-            'description' => 'required|string',
-            'image'       => 'required|image|max:16384|mimes:jpeg,bmp,png',
-            'users'       => 'array'
+            'grade_id'  => 'required|integer',
+            'school_id' => 'required|integer',
+            'level_id'  => 'required|integer'
         ];
 
         return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -59,9 +57,9 @@ class BadgeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show(Request $request, $gradeId, $schoolId)
     {
-        return $this->prepareAndExecuteShowQuery($request, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        return $this->prepareAndExecutePivotShowQuery($request, ['grade_id' => $gradeId, 'school_id' => $schoolId], self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -71,16 +69,13 @@ class BadgeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $gradeId, $schoolId)
     {
         $data = [
-            'name'        => ['string', Rule::unique('badges')->ignore($id)],
-            'description' => 'string',
-            'image'       => 'image|max:16384|mimes:jpeg,bmp,png',
-            'users'       => 'array'
+            'level_id' => 'integer'
         ];
 
-        return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        return $this->prepareAndExecutePivotUpdateQuery($request, $data, ['grade_id' => $gradeId, 'school_id' => $schoolId], self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -89,8 +84,8 @@ class BadgeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($gradeId, $schoolId)
     {
-        return $this->prepareAndExecuteDestroyQuery($id, self::MODEL);
+        return $this->prepareAndExecutePivotDestroyQuery(['grade_id' => $gradeId, 'school_id' => $schoolId], self::MODEL);
     }
 }

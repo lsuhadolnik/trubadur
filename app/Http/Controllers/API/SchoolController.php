@@ -31,14 +31,7 @@ class SchoolController extends Controller
      */
     public function index(Request $request)
     {
-        $error = $this->setQueryParameters($request, self::MODEL);
-        if ($error) {
-            return response()->json($error, 400);
-        }
-
-        $collection = $this->prepareAndExecuteIndexQuery(self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-
-        return response()->json($collection, 200);
+        return $this->prepareAndExecuteIndexQuery($request, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -55,14 +48,8 @@ class SchoolController extends Controller
             'country_id' => 'required|integer',
             'grades'     => 'array'
         ];
-        $error = $this->setDataParameters($request, $data, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-        if ($error) {
-            return response()->json($error, 422);
-        }
 
-        $response = $this->prepareAndExecuteStoreQuery($request, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-
-        return $response;
+        return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -74,17 +61,7 @@ class SchoolController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $error = $this->setQueryParameters($request, self::MODEL);
-        if ($error) {
-            return response()->json($error, 400);
-        }
-
-        $record = $this->prepareAndExecuteShowQuery($id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-        if (!$record) {
-            return response()->json("School with id {$id} not found.", 404);
-        }
-
-        return response()->json($record, 200);
+        return $this->prepareAndExecuteShowQuery($request, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -102,14 +79,8 @@ class SchoolController extends Controller
             'country_id' => 'integer',
             'grades'     => 'array'
         ];
-        $error = $this->setDataParameters($request, $data, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-        if ($error) {
-            return response()->json($error, 422);
-        }
 
-        $response = $this->prepareAndExecuteUpdateQuery($request, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-
-        return $response;
+        return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -146,8 +117,8 @@ class SchoolController extends Controller
             return response()->json("School with id {$schoolId} not found.", 404);
         }
 
-        $grade = $school->grades()->find($gradeId);
-        if (!$grade) {
+        $gradeSchool = $school->grades()->find($gradeId);
+        if (!$gradeSchool) {
             return response()->json("Grade with id {$gradeId} is not associated with school with id {$schoolId}.", 404);
         }
 
@@ -156,8 +127,8 @@ class SchoolController extends Controller
         if (!$level) {
             return response()->json("Level with id {$levelId} not found.", 404);
         }
-        $grade->pivot->level_id = $levelId;
-        $grade->pivot->saveOrFail();
+        $gradeSchool->level()->associate($level);
+        $gradeSchool->saveOrFail();
 
         return response()->json([], 204);
     }
@@ -177,8 +148,8 @@ class SchoolController extends Controller
             return response()->json("School with id {$schoolId} not found.", 404);
         }
 
-        $grade = $school->grades()->find($gradeId);
-        if (!$grade) {
+        $gradeSchool = $school->grades()->find($gradeId);
+        if (!$gradeSchool) {
             return response()->json("Grade with id {$gradeId} is not associated with school with id {$schoolId}.", 404);
         }
 
@@ -188,11 +159,8 @@ class SchoolController extends Controller
             return response()->json($error, 400);
         }
 
-        $levelId = $grade->pivot->level_id;
+        $levelId = $gradeSchool->level->id;
         $level = $this->prepareAndExecuteShowQuery($levelId, 'App\Level');
-        if (!$level) {
-            return response()->json("Level with id {$levelId} not found.", 404);
-        }
 
         return response()->json($level, 200);
     }

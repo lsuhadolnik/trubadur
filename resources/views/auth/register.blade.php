@@ -43,16 +43,24 @@
             <div class="register__error-group">
                 <ul class="register__error-list">
                     @if ($errors->has('name'))
-                        <li class="register__error">{{ $errors->first('name') }}</li>
+                        <li class="register__error">{!! $errors->first('name') !!}</li>
                     @endif
                     @if ($errors->has('email'))
-                        <li class="register__error">{{ $errors->first('email') }}</li>
+                        <li class="register__error">{!! $errors->first('email') !!}</li>
                     @endif
                     @if ($errors->has('password'))
-                        <li class="register__error">{{ $errors->first('password') }}</li>
+                        <li class="register__error">{!! $errors->first('password') !!}</li>
                     @endif
                     @if ($errors->has('password_confirmation'))
-                        <li class="register__error">{{ $errors->first('password_confirmation') }}</li>
+                        <li class="register__error">{!! $errors->first('password_confirmation') !!}</li>
+                    @endif
+                </ul>
+            </div>
+
+            <div class="register__status-group">
+                <ul class="register__status-list">
+                    @if (session('status'))
+                        <li class="register__status">{!! session('status') !!}</li>
                     @endif
                 </ul>
             </div>
