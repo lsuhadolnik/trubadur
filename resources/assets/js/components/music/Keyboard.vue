@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-@import '../../sass/app';
+@import '../../../sass/app';
 
 .keyboard {
     width  : 45vw;

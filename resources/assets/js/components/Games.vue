@@ -1,23 +1,22 @@
 <style lang="scss" scoped>
 @import '../../sass/app';
 
-.dashboard {
+.games {
     width            : 100%;
     height           : calc(100% - 50px);
     background-color : $aero-blue;
 }
 
-.dashboard__command-wrapper {
+.games__command-wrapper {
     padding        : 20px 0;
     display        : flex;
     align-items    : center;
     flex-direction : column;
 }
 
-.dashboard__command {
+.games__command {
     width                 : calc(100vw / 3);
     height                : 50px;
-    margin                : 10px 0;
     padding-top           : 5px;
     display               : flex;
     justify-content       : center;
@@ -44,31 +43,16 @@
 </style>
 
 <template>
-    <div class="dashboard">
-        <div class="dashboard__command-wrapper">
-            <div class="dashboard__command" @click="open('games')">Igre</div>
-            <div class="dashboard__command" @click="open('leaderboard')">Lestvica</div>
-            <div class="dashboard__command" @click="open('profile', { id: userId })">Profil</div>
-            <div class="dashboard__command" @click="open('settings')">Nastavitve</div>
+    <div class="games">
+        <div class="games__command-wrapper">
+            <div class="games__command" @click="open('intervals')">Intervali</div>
         </div>
     </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-
 export default {
-    created () {
-        this.fetchMe()
-    },
-    computed: {
-        ...mapState(['me']),
-        userId () {
-            return this.me ? this.me.id : 0
-        }
-    },
     methods: {
-        ...mapActions(['fetchMe']),
         open (name, params = {}) {
             this.$router.push({ name: name, params: params })
         }

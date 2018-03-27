@@ -46,12 +46,12 @@
 
 <template>
     <div class="header">
-        <div class="header__title" @click="dashboard">TRUBADUR</div>
+        <div class="header__title" @click="open('dashboard')">TRUBADUR</div>
         <div class="header__user">
-            <div class="header__username">{{ username }}</div>
+            <div class="header__username">{{ userName }}</div>
             <div class="header__logout">
                 <icon class="header__logout-icon" name="sign-out" @click.native="logout($event)"></icon>
-                <form id="header__logout-form" action="logout" method="POST">
+                <form id="header__logout-form" action="/logout" method="POST">
                     <input type="hidden" name="_token" :value="csrfToken">
                 </form>
             </div>
@@ -70,18 +70,18 @@ export default {
         }
     },
     created () {
-        this.fetchUser()
+        this.fetchMe().then(() => { })
     },
     computed: {
-        ...mapState(['user']),
-        username () {
-            return this.user ? this.user.name : ''
+        ...mapState(['me']),
+        userName () {
+            return this.me ? this.me.name : ''
         }
     },
     methods: {
-        ...mapActions(['fetchUser']),
-        dashboard () {
-            this.$router.push({ name: 'dashboard' })
+        ...mapActions(['fetchMe']),
+        open (name, params = {}) {
+            this.$router.push({ name: name, params: params })
         },
         logout (event) {
             event.preventDefault()

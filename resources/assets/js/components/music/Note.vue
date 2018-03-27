@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-@import '../../sass/app';
+@import '../../../sass/app';
 
 .note__hidden { display: none; }
 
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { numberProp, stringProp } from '../utils/propValidators'
+import { numberProp, stringProp } from '../../utils/propValidators'
 
 export default {
     props: {

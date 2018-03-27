@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-@import '../../sass/app';
+@import '../../../sass/app';
 
 .stave__svg {
     width    : 45vw;
@@ -44,7 +44,7 @@
 
 <script>
 import Note from './Note.vue'
-import { numberProp, stringProp, objectProp } from '../utils/propValidators'
+import { numberProp, stringProp, objectProp } from '../../utils/propValidators'
 
 export default {
     props: {

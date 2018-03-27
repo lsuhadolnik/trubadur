@@ -1,21 +1,21 @@
 <style lang="scss" scoped>
 @import '../../sass/app';
 
-.footer {
+.leaderboard {
     width            : 100%;
-    height           : 100px;
-    background-color : $dark-gray;
+    height           : calc(100% - 50px);
+    background-color : $aero-blue;
 }
 </style>
 
 <template>
-    <div class="footer"></div>
+    <div class="leaderboard">
+        LESTVICA
+    </div>
 </template>
 
 <script>
 export default {
-    data () {
-        return { }
-    }
+
 }
 </script>

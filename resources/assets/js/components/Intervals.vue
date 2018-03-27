@@ -165,8 +165,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import Stave from './Stave'
-import Keyboard from './Keyboard.vue'
+import Stave from './music/Stave'
+import Keyboard from './music/Keyboard.vue'
 
 export default {
     data () {
