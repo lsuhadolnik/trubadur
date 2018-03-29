@@ -53,6 +53,9 @@
                     @if ($errors->has('email_token'))
                         <li class="login__error">{!! $errors->first('email_token') !!}</li>
                     @endif
+                    @if ($errors->has('csrf_token'))
+                        <li class="login__error">{!! $errors->first('csrf_token') !!}</li>
+                    @endif
                 </ul>
             </div>
 

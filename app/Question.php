@@ -12,7 +12,7 @@ class Question extends Model
      * @var array
      */
     protected $fillable = [
-        'content',
+        'game_id', 'chapter', 'number', 'content',
     ];
 
     /**
@@ -24,6 +24,6 @@ class Question extends Model
 
     public function game()
     {
-        return $this->belongsTo('App\Answer');
+        return $this->belongsTo('App\Game');
     }
 }

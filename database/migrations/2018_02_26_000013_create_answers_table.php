@@ -18,13 +18,11 @@ class CreateAnswersTable extends Migration
             $table->integer('game_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('question_id')->unsigned();
-            $table->integer('chapter');
-            $table->integer('number');
-            $table->integer('time')->default(0);
-            $table->integer('n_additions')->default(0);
-            $table->integer('n_deletions')->default(0);
-            $table->integer('n_playbacks')->default(0);
-            $table->integer('success')->default(false);
+            $table->integer('time');
+            $table->integer('n_additions');
+            $table->integer('n_deletions');
+            $table->integer('n_playbacks');
+            $table->integer('success');
             $table->timestamps();
         });
 

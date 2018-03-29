@@ -12,7 +12,7 @@ class Answer extends Model
      * @var array
      */
     protected $fillable = [
-        'game_id', 'user_id', 'question_id', 'chapter', 'number', 'time', 'n_additions', 'n_deletions', 'n_playbacks', 'success',
+        'game_id', 'user_id', 'question_id', 'time', 'n_additions', 'n_deletions', 'n_playbacks', 'success',
     ];
 
     /**
@@ -22,9 +22,14 @@ class Answer extends Model
      */
     protected $hidden = [];
 
-    public function gameUser()
+    public function game()
     {
-        return $this->belongsTo('App\GameUser');
+        return $this->belongsTo('App\Game');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 
     public function question()

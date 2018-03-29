@@ -32,6 +32,11 @@ class Game extends Model
         return $this->belongsTo('App\Level');
     }
 
+    public function questions()
+    {
+        return $this->hasMany('App\Question');
+    }
+
     public function users()
     {
         return $this->belongsToMany('App\User')->withTimestamps()->using('App\GameUser');

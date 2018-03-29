@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->boolean('admin')->default(false);
             $table->integer('rating')->default(1000);
-            $table->enum('instrument', ['acoustic_grand_piano', 'violin', 'vibraphone', 'trumpet', 'cello'])->default('acoustic_grand_piano');
+            $table->enum('instrument', ['clarinet', 'guitar', 'piano', 'trumpet', 'violin'])->default('piano');
             $table->integer('note_playback_delay')->default(2000);
             $table->enum('clef', ['violin', 'bass'])->default('violin');
             $table->string('avatar')->default('/storage/images/avatar.svg');

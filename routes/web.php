@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/generator', function () {
+    return view('extra.generator');
+});
+
 Auth::routes();
 
 Route::get('register/verify/{token?}', 'Auth\RegisterController@verify');

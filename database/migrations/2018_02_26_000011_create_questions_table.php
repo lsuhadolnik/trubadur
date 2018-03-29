@@ -15,8 +15,15 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('content');
+            $table->integer('game_id')->unsigned();
+            $table->integer('chapter');
+            $table->integer('number');
+            $table->string('content')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('questions', function (Blueprint $table) {
+            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

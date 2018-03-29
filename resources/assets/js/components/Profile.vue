@@ -50,8 +50,6 @@
             <div class="profile__user-info">Ime: {{ name }}</div>
             <div class="profile__user-info">E-mail: {{ email }}</div>
             <img class="profile__avatar" :src="avatar"/>
-            <div class="profile__user-info">Št. točk: {{ rating }}</div>
-            <div class="profile__user-info">Inštrument: {{ instrument }}</div>
             <div class="profile__user-info">Šola: {{ school }}</div>
             <div class="profile__user-info">Razred: {{ grade }}</div>
         </div>

@@ -15,7 +15,7 @@ class AnswerController extends Controller
     /**
      * Defines dependencies.
      **/
-    const DEPENDENCIES = [];
+    const DEPENDENCIES = ['game' => 'App\Game', 'user' => 'App\User', 'question' => 'App\Question'];
 
     /**
      * Defines pivot dependencies.
@@ -42,14 +42,14 @@ class AnswerController extends Controller
     public function store(Request $request)
     {
         $data = [
+            'game_id'     => 'required|numeric',
+            'user_id'     => 'required|numeric',
             'question_id' => 'required|numeric',
-            'chapter'     => 'required|numeric',
-            'number'      => 'required|numeric',
-            'time'        => 'numeric',
-            'n_additions' => 'numeric',
-            'n_deletions' => 'numeric',
-            'n_playbacks' => 'numeric',
-            'success'     => 'boolean'
+            'time'        => 'required|numeric|min:0|max:120000',
+            'n_additions' => 'required|numeric|min:0',
+            'n_deletions' => 'required|numeric|min:0',
+            'n_playbacks' => 'required|numeric|min:0',
+            'success'     => 'required|boolean'
         ];
 
         return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -77,9 +77,9 @@ class AnswerController extends Controller
     public function update(Request $request, $id)
     {
         $data = [
+            'game_id'     => 'numeric',
+            'user_id'     => 'numeric',
             'question_id' => 'numeric',
-            'chapter'     => 'numeric',
-            'number'      => 'numeric',
             'time'        => 'numeric',
             'n_additions' => 'numeric',
             'n_deletions' => 'numeric',

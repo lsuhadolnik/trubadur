@@ -55,12 +55,9 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
-    created () {
-        this.fetchMe()
-    },
     computed: {
         ...mapState(['me']),
         userId () {
@@ -68,7 +65,6 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchMe']),
         open (name, params = {}) {
             this.$router.push({ name: name, params: params })
         }

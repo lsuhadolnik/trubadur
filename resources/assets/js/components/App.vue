@@ -16,8 +16,15 @@
 
 <script>
 import NavHeader from './NavHeader.vue'
+import { mapActions } from 'vuex'
 
 export default {
+    created () {
+        this.fetchMe().then(() => { })
+    },
+    methods: {
+        ...mapActions(['fetchMe'])
+    },
     components: {
         navHeader: NavHeader
     }

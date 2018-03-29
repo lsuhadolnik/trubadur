@@ -44,40 +44,42 @@ class GamesTableSeeder extends DatabaseSeeder
             $users = User::inRandomOrder()->take($nUsers)->pluck('id');
 
             $questions = [];
-            for ($j = 0; $j < self::N_CHAPTERS * self::N_QUESTIONS; $j++) {
-                $pitches = self::PITCHES;
-                shuffle($pitches);
-                $nNotes = rand($level->min_notes, $level->max_notes);
-                $content = implode(',', array_slice($pitches, 0, $nNotes));
-                $question = Question::whereContent($content)->first();
-                if (!$question) {
+            for ($j = 0; $j < self::N_CHAPTERS; $j++) {
+                for ($k = 0; $k < self::N_QUESTIONS; $k++) {
+                    $pitches = self::PITCHES;
+                    shuffle($pitches);
+                    $nNotes = rand($level->min_notes, $level->max_notes);
+                    $content = implode(',', array_slice($pitches, 0, $nNotes));
+
                     $question = new Question;
+
+                    $question->game()->associate($game);
+                    $question->chapter = $j;
+                    $question->number = $k;
                     $question->content = $content;
+
                     $question->saveOrFail();
+
+                    $questions[] = $question;
                 }
-                $questions[] = $question;
             }
 
             foreach ($users as $userId) {
                 $game->users()->attach($userId, ['points' => $game->finished ? rand(5, 20) : 0]);
 
-                for ($j = 0; $j < self::N_CHAPTERS; $j++) {
-                    for ($k = 0; $k < self::N_QUESTIONS; $k++) {
-                        $answer = new Answer;
+                foreach ($questions as $question) {
+                    $answer = new Answer;
 
-                        $answer->game_id = $game->id;
-                        $answer->user_id = $userId;
-                        $answer->question()->associate($questions[$j * self::N_CHAPTERS + $k]);
-                        $answer->chapter = $j;
-                        $answer->number = $k;
-                        $answer->time = rand(10000, 120000);
-                        $answer->n_additions = rand($level->max_notes - 1, 30);
-                        $answer->n_deletions = rand($answer->n_additions - 3, $answer->n_additions);
-                        $answer->n_playbacks = rand(0, 10);
-                        $answer->success = (rand(0, 100) / 100) < 0.7;
+                    $answer->game_id = $game->id;
+                    $answer->user_id = $userId;
+                    $answer->question()->associate($question);
+                    $answer->success = (rand(0, 100) / 100) < 0.7;
+                    $answer->time = $answer->success ? rand(10000, 120000) : 120000;
+                    $answer->n_additions = rand($level->max_notes - 1, 30);
+                    $answer->n_deletions = rand($answer->n_additions - 3, $answer->n_additions);
+                    $answer->n_playbacks = rand(0, 10);
 
-                        $answer->saveOrFail();
-                    }
+                    $answer->saveOrFail();
                 }
             }
 

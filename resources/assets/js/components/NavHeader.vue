@@ -61,16 +61,13 @@
 
 <script>
 import 'vue-awesome/icons/sign-out'
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
     data () {
         return {
             csrfToken: window.Laravel.csrfToken
         }
-    },
-    created () {
-        this.fetchMe().then(() => { })
     },
     computed: {
         ...mapState(['me']),
@@ -79,7 +76,6 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchMe']),
         open (name, params = {}) {
             this.$router.push({ name: name, params: params })
         },

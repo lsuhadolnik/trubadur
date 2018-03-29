@@ -11,6 +11,7 @@ mix
     .copyDirectory('resources/assets/images', 'public/images')
     .copyDirectory('resources/assets/fonts', 'public/fonts')
     .copyDirectory('resources/assets/soundfonts', 'public/soundfonts')
+    .copyDirectory('resources/assets/js/extra', 'public/js/extra')
     // copying of libraries
     .copyDirectory('resources/assets/js/lib', 'public/lib')
 
