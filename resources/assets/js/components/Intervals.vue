@@ -181,7 +181,7 @@ export default {
                 'Db5': 'C#5'
             },
             nChapters: 3,
-            nQuestions: 8,
+            nQuestions: 1,
             maxTimePerQuestion: 120000,
             timer: null,
             chapter: 1,
@@ -232,7 +232,7 @@ export default {
         ...mapGetters(['getInstrumentChannel'])
     },
     methods: {
-        ...mapActions(['fetchMe', 'fetchLevel', 'updateGame', 'updateGameUser', 'storeQuestion', 'storeAnswer', 'setupMidi']),
+        ...mapActions(['fetchMe', 'fetchLevel', 'updateGame', 'finishGameUser', 'generateQuestion', 'storeAnswer', 'setupMidi']),
         playNote (pitch, delay) {
             this.$emit('play-note', pitch, delay)
         },
@@ -272,7 +272,7 @@ export default {
             return new Date().getTime()
         },
         nextQuestion () {
-            this.storeQuestion({ game_id: this.game.id, chapter: this.chapter, number: this.number }).then((question) => {
+            this.generateQuestion({ game_id: this.game.id, chapter: this.chapter, number: this.number }).then((question) => {
                 this.questionId = question.id
                 this.sample = question.content.split(',')
                 this.$nextTick(() => this.addNote(this.sample[0]))
@@ -334,7 +334,7 @@ export default {
             })
         },
         finishGame () {
-            this.updateGameUser({ gameId: this.game.id, userId: this.me.id }).then(() => {
+            this.finishGameUser({ gameId: this.game.id, userId: this.me.id }).then(() => {
                 this.fetchMe(true).then(() => {
                     // TODO: route to game statistics
                     this.$router.push({ name: 'dashboard' })

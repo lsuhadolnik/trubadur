@@ -46232,7 +46232,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 'Db5': 'C#5'
             },
             nChapters: 3,
-            nQuestions: 8,
+            nQuestions: 1,
             maxTimePerQuestion: 120000,
             timer: null,
             chapter: 1,
@@ -46284,7 +46284,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['me', 'midi']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['getInstrumentChannel'])),
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'fetchLevel', 'updateGame', 'updateGameUser', 'storeQuestion', 'storeAnswer', 'setupMidi']), {
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'fetchLevel', 'updateGame', 'finishGameUser', 'generateQuestion', 'storeAnswer', 'setupMidi']), {
         playNote: function playNote(pitch, delay) {
             this.$emit('play-note', pitch, delay);
         },
@@ -46336,7 +46336,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         nextQuestion: function nextQuestion() {
             var _this4 = this;
 
-            this.storeQuestion({ game_id: this.game.id, chapter: this.chapter, number: this.number }).then(function (question) {
+            this.generateQuestion({ game_id: this.game.id, chapter: this.chapter, number: this.number }).then(function (question) {
                 _this4.questionId = question.id;
                 _this4.sample = question.content.split(',');
                 _this4.$nextTick(function () {
@@ -46406,7 +46406,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         finishGame: function finishGame() {
             var _this6 = this;
 
-            this.updateGameUser({ gameId: this.game.id, userId: this.me.id }).then(function () {
+            this.finishGameUser({ gameId: this.game.id, userId: this.me.id }).then(function () {
                 _this6.fetchMe(true).then(function () {
                     // TODO: route to game statistics
                     _this6.$router.push({ name: 'dashboard' });
@@ -49877,13 +49877,13 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
                 });
             });
         },
-        updateGameUser: function updateGameUser(_ref10, _ref11) {
+        finishGameUser: function finishGameUser(_ref10, _ref11) {
             var state = _ref10.state;
             var gameId = _ref11.gameId,
                 userId = _ref11.userId;
 
             return new Promise(function (resolve, reject) {
-                axios.put('/api/gameuser/' + gameId + '/' + userId).then(function (response) {
+                axios.put('/api/gameuser/' + gameId + '/' + userId + '/finish').then(function (response) {
                     resolve();
                 }).catch(function (error) {
                     console.log(error);
@@ -49891,11 +49891,11 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
                 });
             });
         },
-        storeQuestion: function storeQuestion(_ref12, data) {
+        generateQuestion: function generateQuestion(_ref12, data) {
             var state = _ref12.state;
 
             return new Promise(function (resolve, reject) {
-                axios.post('/api/questions', data).then(function (response) {
+                axios.post('/api/questions/generate', data).then(function (response) {
                     resolve(response.data);
                 }).catch(function (error) {
                     console.log(error);

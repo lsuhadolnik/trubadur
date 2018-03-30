@@ -169,9 +169,9 @@ export default new Vuex.Store({
                     })
             })
         },
-        updateGameUser ({ state }, { gameId, userId }) {
+        finishGameUser ({ state }, { gameId, userId }) {
             return new Promise((resolve, reject) => {
-                axios.put('/api/gameuser/' + gameId + '/' + userId)
+                axios.put('/api/gameuser/' + gameId + '/' + userId + '/finish')
                     .then(response => {
                         resolve()
                     })
@@ -181,9 +181,9 @@ export default new Vuex.Store({
                     })
             })
         },
-        storeQuestion ({ state }, data) {
+        generateQuestion ({ state }, data) {
             return new Promise((resolve, reject) => {
-                axios.post('/api/questions', data)
+                axios.post('/api/questions/generate', data)
                     .then(response => {
                         resolve(response.data)
                     })

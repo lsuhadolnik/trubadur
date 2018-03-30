@@ -210,10 +210,9 @@ class Controller extends BaseController
      * @param  string  $model
      * @param  array  $dependencies
      * @param  array  $pivotDependencies
-     * @param  boolean  $withRecord
      * @return \Illuminate\Http\Response
      **/
-    protected function prepareAndExecuteUpdateQuery(Request $request, $data, $id, $model, $dependencies = [], $pivotDependencies = [], $withRecord = false)
+    protected function prepareAndExecuteUpdateQuery(Request $request, $data, $id, $model, $dependencies = [], $pivotDependencies = [])
     {
         $error = $this->setDataParameters($request, $data, $dependencies, $pivotDependencies);
         if ($error) {
@@ -225,7 +224,7 @@ class Controller extends BaseController
             return response()->json($result['error'], $result['code']);
         }
 
-        return response()->json($withRecord ? $result['record'] : [], 204);
+        return response()->json([], 204);
     }
 
     /**
@@ -237,10 +236,9 @@ class Controller extends BaseController
      * @param  string  $model
      * @param  array  $dependencies
      * @param  array  $pivotDependencies
-     * @param  boolean  $withRecord
      * @return \Illuminate\Http\Response
      **/
-    protected function prepareAndExecutePivotUpdateQuery(Request $request, $data, $compositeKey, $model, $dependencies = [], $pivotDependencies = [], $withRecord = false)
+    protected function prepareAndExecutePivotUpdateQuery(Request $request, $data, $compositeKey, $model, $dependencies = [], $pivotDependencies = [])
     {
         $error = $this->setDataParameters($request, $data, $dependencies, $pivotDependencies);
         if ($error) {
@@ -252,7 +250,7 @@ class Controller extends BaseController
             return response()->json($result['error'], $result['code']);
         }
 
-        return response()->json($withRecord ? $result['record'] : [], 204);
+        return response()->json([], 204);
     }
 
     /**

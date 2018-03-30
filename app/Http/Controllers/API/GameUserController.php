@@ -78,7 +78,12 @@ class GameUserController extends Controller
      */
     public function update(Request $request, $gameId, $userId)
     {
-        return $this->prepareAndExecutePivotUpdateQuery($request, ['game_id' => $gameId, 'user_id' => $userId], self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        $data = [
+            'points'   => 'integer',
+            'finished' => 'boolean'
+        ];
+
+        return $this->prepareAndExecutePivotUpdateQuery($request, $data, ['game_id' => $gameId, 'user_id' => $userId], self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -113,7 +118,7 @@ class GameUserController extends Controller
             return response()->json("Game with id {$gameId} has already been finished for the user with id {$userId}.", 400);
         }
 
-        if ($gameUser->game->mode != 'practice') {
+        if ($gameUser->game->mode !== 'practice') {
             $level = Level::find($gameUser->game->level_id);
             $levelFactors = ['easy' => 1, 'normal' => 2, 'hard' => 3];
             $levelFactor = $levelFactors[$level->level];
