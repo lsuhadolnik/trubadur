@@ -54,7 +54,8 @@ class GradeSchoolController extends Controller
      * Display the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $gradeId
+     * @param  int  $schoolId
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, $gradeId, $schoolId)
@@ -66,7 +67,8 @@ class GradeSchoolController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $gradeId
+     * @param  int  $schoolId
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $gradeId, $schoolId)
@@ -81,7 +83,8 @@ class GradeSchoolController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $gradeId
+     * @param  int  $schoolId
      * @return \Illuminate\Http\Response
      */
     public function destroy($gradeId, $schoolId)

@@ -17,10 +17,12 @@ Route::middleware('auth:api')->resource('answers', 'API\AnswerController', ['exc
 Route::middleware('auth:api')->resource('badges', 'API\BadgeController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('countries', 'API\CountryController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('games', 'API\GameController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->get('games/{id}/statistics', 'API\GameController@statistics');
 Route::middleware('auth:api')->resource('grades', 'API\GradeController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('levels', 'API\LevelController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('logins', 'API\LoginController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('questions', 'API\QuestionController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->post('questions/generate', 'API\QuestionController@generate');
 Route::middleware('auth:api')->resource('schools', 'API\SchoolController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('users', 'API\UserController', ['except' => ['create', 'edit']]);
 
@@ -40,6 +42,8 @@ Route::middleware('auth:api')->get('gameuser/{gameId}/{userId}', 'API\GameUserCo
 Route::middleware('auth:api')->put('gameuser/{gameId}/{userId}', 'API\GameUserController@update')
     ->where(['gameId' => '[0-9]+', 'userId' => '[0-9]+']);
 Route::middleware('auth:api')->delete('gameuser/{gameId}/{userId}', 'API\GameUserController@destroy')
+    ->where(['gameId' => '[0-9]+', 'userId' => '[0-9]+']);
+Route::middleware('auth:api')->put('gameuser/{gameId}/{userId}/finish', 'API\GameUserController@finish')
     ->where(['gameId' => '[0-9]+', 'userId' => '[0-9]+']);
 
 Route::middleware('auth:api')->get('gradeschool', 'API\GradeSchoolController@index');

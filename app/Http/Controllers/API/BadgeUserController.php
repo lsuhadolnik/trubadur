@@ -54,7 +54,8 @@ class BadgeUserController extends Controller
      * Display the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $badgeId
+     * @param  int  $userId
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, $badgeId, $userId)
@@ -66,7 +67,8 @@ class BadgeUserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $badgeId
+     * @param  int  $userId
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $badgeId, $userId)
@@ -81,7 +83,8 @@ class BadgeUserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $badgeId
+     * @param  int  $userId
      * @return \Illuminate\Http\Response
      */
     public function destroy($badgeId, $userId)

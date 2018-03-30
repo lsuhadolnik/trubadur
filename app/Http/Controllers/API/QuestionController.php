@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
 use App\Game;
@@ -49,34 +48,12 @@ class QuestionController extends Controller
         $data = [
             'game_id' => 'required|numeric',
             'chapter' => 'required|numeric|min:1|max:3',
-            'number'  => 'required|numeric|min:1|max:8'
+            'number'  => 'required|numeric|min:1|max:8',
+            'content' => 'string'
         ];
 
-        if ($request->has('game_id') && $request->has('chapter') && $request->has('number')) {
-            $question = Question::where($request->all())->first();
-            if ($question) {
-                return response()->json($question, 200);
-            }
-        }
+        return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
 
-        $response = $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-        if ($response->status() != 201) {
-            return $response;
-        }
-
-        $question = $response->getOriginalContent();
-        $game = Game::with('level')->find($request->get('game_id'));
-
-        switch ($game->type) {
-            case 'intervals':
-                $question->content = $this->generateIntervalsQuestion($game->level, $question);
-                break;
-            case 'rhythm':
-                break;
-        }
-        $question->saveOrFail();
-
-        return response()->json($question, 201);
     }
 
     /**
@@ -103,7 +80,8 @@ class QuestionController extends Controller
         $data = [
             'game_id' => 'numeric',
             'chapter' => 'numeric',
-            'number'  => 'numeric'
+            'number'  => 'numeric',
+            'content' => 'string'
         ];
 
         return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -121,7 +99,42 @@ class QuestionController extends Controller
     }
 
     /**
-     * Generates a random intervals question based on the given level.
+     * Generate a new question.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function generate(Request $request)
+    {
+        if ($request->has('game_id') && $request->has('chapter') && $request->has('number')) {
+            $question = Question::where($request->all())->first();
+            if ($question) {
+                return response()->json($question, 201);
+            }
+        }
+
+        $response = $this->store($request);
+        if ($response->status() != 201) {
+            return $response;
+        }
+
+        $question = $response->getOriginalContent();
+        $game = Game::with('level')->find($request->get('game_id'));
+
+        switch ($game->type) {
+            case 'intervals':
+                $question->content = $this->generateIntervalsQuestion($game->level, $question);
+                break;
+            case 'rhythm':
+                break;
+        }
+        $question->saveOrFail();
+
+        return response()->json($question, 201);
+    }
+
+    /**
+     * Generate a random intervals question based on the given level.
      *
      * @param  \App\Level  $level
      * @param  \App\Question  $question

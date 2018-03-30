@@ -99,9 +99,9 @@ export default new Vuex.Store({
                 }
             })
         },
-        fetchUsers () {
+        fetchUsers ({ state }, params = { }) {
             return new Promise((resolve, reject) => {
-                axios.get('/api/users', { params: { per_page: 10, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' } })
+                axios.get('/api/users', { params: params })
                     .then(response => {
                         resolve(response.data)
                     })

@@ -68,7 +68,7 @@ class UserController extends Controller
      */
     public function show(Request $request, $id)
     {
-        return $this->prepareAndExecuteShowQuery($request, $id > 0 ?: $request->user()->id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        return $this->prepareAndExecuteShowQuery($request, $id > 0 ? $id : $request->user()->id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**

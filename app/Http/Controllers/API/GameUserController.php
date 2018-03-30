@@ -59,7 +59,8 @@ class GameUserController extends Controller
      * Display the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $gameId
+     * @param  int  $userId
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, $gameId, $userId)
@@ -71,12 +72,38 @@ class GameUserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $gameId
+     * @param  int  $userId
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $gameId, $userId)
     {
-        $response = $this->prepareAndExecutePivotShowQuery($request, ['game_id' => $gameId, 'user_id' => $userId], self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        return $this->prepareAndExecutePivotUpdateQuery($request, ['game_id' => $gameId, 'user_id' => $userId], self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $gameId
+     * @param  int  $userId
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($gameId, $userId)
+    {
+        return $this->prepareAndExecutePivotDestroyQuery(['game_id' => $gameId, 'user_id' => $userId], self::MODEL);
+    }
+
+    /**
+     * Finish the game for a single user. Calculate his points based on the answers he provided.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $gameId
+     * @param  int  $userId
+     * @return \Illuminate\Http\Response
+     */
+    public function finish(Request $request, $gameId, $userId)
+    {
+        $response = $this->show($request, $gameId, $userId);
         if ($response->status() != 200) {
             return $response;
         }
@@ -109,17 +136,6 @@ class GameUserController extends Controller
         }
 
         return response()->json([], 204);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($gameId, $userId)
-    {
-        return $this->prepareAndExecutePivotDestroyQuery(['game_id' => $gameId, 'user_id' => $userId], self::MODEL);
     }
 
     /**

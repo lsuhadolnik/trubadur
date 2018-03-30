@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Answer;
+use App\GameUser;
+
 class GameController extends Controller
 {
     /**
@@ -91,5 +94,49 @@ class GameController extends Controller
     public function destroy($id)
     {
         return $this->prepareAndExecuteDestroyQuery($id, self::MODEL);
+    }
+
+    /**
+     * Generate game statistics.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function statistics(Request $request, $id)
+    {
+        $response = $this->show($request, $id);
+        if ($response->status() !== 200) {
+            return $response;
+        }
+
+        $game = $response->getOriginalContent();
+        $users = $game->users()->orderBy('points', 'desc')->get(['name', 'rating', 'avatar', 'points']);
+
+        $answers = Answer::where(['game_id' => $game->id, 'user_id' => $request->user()->id])->get();
+        $timeAvg = $answers->avg('time');
+        $nAdditionsAvg = $answers->avg('n_additions');
+        $nDeletionsAvg = $answers->avg('n_deletions');
+        $nPlaybacksAvg = $answers->avg('n_playbacks');
+        $successAvg = $answers->avg('success');
+        $successAvgByChapter = [];
+        for ($i = 1; $i <= 3; $i++) {
+            $successAvgByChapter[] = $answers->where('question.chapter', $i)->avg('success');
+        }
+        $successes = $answers->pluck('success')->all();
+
+        return response()->json([
+            'users'      => $users,
+            'level'      => $game->level->level,
+            'statistics' => [
+                'timeAvg'             => $timeAvg,
+                'nAdditionsAvg'       => $nAdditionsAvg,
+                'nDeletionsAvg'       => $nDeletionsAvg,
+                'nPlaybacksAvg'       => $nPlaybacksAvg,
+                'successAvg'          => $successAvg,
+                'successAvgByChapter' => $successAvgByChapter,
+                'successes'           => $successes
+            ]
+        ], 200);
     }
 }
