@@ -19,6 +19,7 @@ class CreateGameUserPivotTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->primary(['game_id', 'user_id']);
             $table->integer('points')->default(0);
+            $table->boolean('finished')->default(false);
             $table->timestamps();
         });
 

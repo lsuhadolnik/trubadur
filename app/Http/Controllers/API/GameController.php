@@ -15,7 +15,7 @@ class GameController extends Controller
     /**
      * Defines dependencies.
      **/
-    const DEPENDENCIES = ['winner' => 'App\User', 'level' => 'App\Level'];
+    const DEPENDENCIES = ['level' => 'App\Level'];
 
     /**
      * Defines pivot dependencies.
@@ -42,11 +42,9 @@ class GameController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'winner_id' => 'numeric',
             'level_id'  => 'required|numeric',
             'mode'      => 'required|string|in:practice,single,multi',
             'type'      => 'required|string|in:intervals,rythm',
-            'finished'  => 'boolean',
             'users'     => 'array'
         ];
 
@@ -75,11 +73,9 @@ class GameController extends Controller
     public function update(Request $request, $id)
     {
         $data = [
-            'winner_id' => 'numeric',
             'level_id'  => 'numeric',
             'mode'      => 'string|in:practice,single,multi',
             'type'      => 'string|in:intervals,rythm',
-            'finished'  => 'boolean',
             'users'     => 'array'
         ];
 

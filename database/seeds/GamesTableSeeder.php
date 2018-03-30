@@ -36,7 +36,6 @@ class GamesTableSeeder extends DatabaseSeeder
 
             $game->mode = self::GAME_MODES[array_rand(self::GAME_MODES)];
             $game->type = self::GAME_TYPES[array_rand(self::GAME_TYPES)];
-            $game->finished = (rand(0, 100) / 100) < 0.8;
 
             $game->saveOrFail();
 
@@ -44,8 +43,8 @@ class GamesTableSeeder extends DatabaseSeeder
             $users = User::inRandomOrder()->take($nUsers)->pluck('id');
 
             $questions = [];
-            for ($j = 0; $j < self::N_CHAPTERS; $j++) {
-                for ($k = 0; $k < self::N_QUESTIONS; $k++) {
+            for ($j = 1; $j <= self::N_CHAPTERS; $j++) {
+                for ($k = 1; $k <= self::N_QUESTIONS; $k++) {
                     $pitches = self::PITCHES;
                     shuffle($pitches);
                     $nNotes = rand($level->min_notes, $level->max_notes);
@@ -65,7 +64,11 @@ class GamesTableSeeder extends DatabaseSeeder
             }
 
             foreach ($users as $userId) {
-                $game->users()->attach($userId, ['points' => $game->finished ? rand(5, 20) : 0]);
+                $finished = (rand(0, 100) / 100) < 0.8;
+                $game->users()->attach($userId, [
+                    // 'points'   => $finished ? rand(0, 20) : -5,
+                    // 'finished' => $finished
+                ]);
 
                 foreach ($questions as $question) {
                     $answer = new Answer;
@@ -82,9 +85,6 @@ class GamesTableSeeder extends DatabaseSeeder
                     $answer->saveOrFail();
                 }
             }
-
-            $winner = User::find($users[rand(0, $nUsers - 1)]);
-            $game->winner()->associate($winner);
 
             $game->saveOrFail();
         }

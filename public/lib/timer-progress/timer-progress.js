@@ -5,21 +5,30 @@
 
 /**
  * Creates an SVG-based circular timer progress bar, which functions like an actual timer.
- * @param {!Object.<string, any>} options   an object containing attributes of timer progress bar:
- *                                              'container': an SVG object, which functions as a placeholder for other SVG elements with dimensions already set (obligatory),
- *                                              'stroke-width': width of the timer progress bar in px (optional),
- *                                              'color-container': background color of the placeholder SVG element (optional; default: color inherited from parent),
- *                                              'color-circle': stroke color of the underlying circle SVG element (optional; default: lightgray),
- *                                              'color-path': stroke color of the path SVG element (optional; default: black),
- *                                              'color-text': fill color of the text SVG element (optional; default: black),
- *                                              'color-alert': fill color of the text SVG element when time is under 3 seconds (optional; default: red),
- *                                              'font-size': size of the text font in px (optional),
- *                                              'font-family': font family of the text font (optional; default: sans-serif)
+ * @param {!Object.<string, any>} options        an object containing attributes of timer progress bar:
+ *                                                  'container': an SVG object, which functions as a placeholder for other SVG elements (obligatory),
+ *                                                  'width-container': width of the SVG placeholder in px (optional; default: 500px),
+ *                                                  'height-container': height of the SVG placeholder in px (optional; default: 500px),
+ *                                                  'stroke-width': width of the timer progress bar in px (optional),
+ *                                                  'color-container': background color of the placeholder SVG element (optional; default: color inherited from parent),
+ *                                                  'color-circle': stroke color of the underlying circle SVG element (optional; default: lightgray),
+ *                                                  'color-path': stroke color of the path SVG element (optional; default: black),
+ *                                                  'color-text': fill color of the text SVG element (optional; default: black),
+ *                                                  'color-alert': fill color of the text SVG element when time is under 3 seconds (optional; default: red),
+ *                                                  'font-size': size of the text font in px (optional),
+ *                                                  'font-family': font family of the text font (optional; default: sans-serif)
+ * @param {boolean}               displayText    flag indicating whether the text in the middle of the circle representing the time left (in seconds) is displayed (optional; default: true)
+ * @param {number}                nDecimals      number of decimals of the text representing the time left (optional; default: 0)
+ * @param {boolean}               displayCircle  flag indicating whether the circle indicating progress is displayed (optional; default: true)
  *
  * @constructor
  */
-function TimerProgress (options) {
+function TimerProgress (options, displayText = true, nDecimals = 0, displayCircle = true) {
+    const width = options['width-container'] || 500
+    const height = options['height-container'] || 500
     this.container = new SVGElement(options['container'], {
+        'width': width + 'px',
+        'height': height + 'px',
         'style': 'background-color: ' + (options['color-container'] || 'inherit')
     })
 
@@ -43,10 +52,43 @@ function TimerProgress (options) {
     this.text = new SVGElement('text', {
         'fill': this.colorText,
         'text-anchor': 'middle',
+        'alignment-baseline': 'middle',
         'font-family': options['font-family'] || 'sans-serif'
     })
     this.container.appendChild(this.text)
     this.colorAlert = options['color-alert'] || 'red'
+
+    this.nDecimals = nDecimals
+
+    const shorter =  width > height ? height : width
+
+    this.cx = width / 2
+    this.cy = height / 2
+    this.r = (shorter / 2) * 0.85
+
+    this.circle.set('cx', this.cx)
+    this.circle.set('cy', this.cy)
+    this.circle.set('r', this.r)
+    this.circle.set('stroke-width', this.strokeWidth || shorter / 10)
+
+    this.path.set('stroke-width', (this.strokeWidth || shorter / 10) + 1)
+
+    this.text.set('font-size', (this.fontSize > 0 ? this.fontSize : shorter / 6) + 'px')
+    this.text.set('x', width / 2)
+    this.text.set('y', height / 2)
+
+    if (!displayCircle) {
+        this.circle.set('visibility', 'hidden')
+        this.path.set('visibility', 'hidden')
+    }
+
+    if (!displayText) {
+        this.text.set('visibility', 'hidden')
+    } else {
+        this.text.element().textContent = 100
+    }
+
+    this.running = false
 }
 
 TimerProgress.prototype.polarToCartesian = function (cx, cy, r, degrees) {
@@ -58,9 +100,9 @@ TimerProgress.prototype.polarToCartesian = function (cx, cy, r, degrees) {
 }
 
 TimerProgress.prototype.describeArc = function (x, y, r, startAngle, endAngle) {
-    var start = this.polarToCartesian(x, y, r, endAngle)
-    var end = this.polarToCartesian(x, y, r, startAngle)
-    var largeArcSweep = endAngle - startAngle <= 180 ? '0' : '1'
+    const start = this.polarToCartesian(x, y, r, endAngle)
+    const end = this.polarToCartesian(x, y, r, startAngle)
+    const largeArcSweep = endAngle - startAngle <= 180 ? '0' : '1'
     return [
         'M', start.x, start.y,
         'A', r, r, 0, largeArcSweep, 0, end.x, end.y
@@ -81,7 +123,6 @@ TimerProgress.prototype.frame = function (context) {
             context.degrees = 360
         } else {
             clearInterval(context.id)
-            context.started = false
             context.running = false
         }
     } else {
@@ -106,50 +147,23 @@ TimerProgress.prototype.frame = function (context) {
 
 /**
  * Runs the timer progress.
- * @param {number|string} time      number of milliseconds defining the timer duration (if 'inf', then the timer will be executed for indefinite duration; compulsory)
- * @param {number} alertTime        number of milliseconds defining how much time before the end of the timer should the text in the middle of the circle change its color (optional; default: 0)
- * @param {boolean} displayText     flag indicating whether the text in the middle of the circle representing the time left (in seconds) is displayed (optional; default: true)
- * @param {number} nDecimals        number of decimals of the text representing the time left (optional; default: 0)
- * @param {boolean} displayCircle   flag indicating whether the circle indicating progress is displayed (optional; default: true)
+ * @param {number|string} time  number of milliseconds defining the timer duration (if 'inf', then the timer will be executed for indefinite duration; compulsory)
+ * @param {number} alertTime    number of milliseconds defining how much time before the end of the timer should the text in the middle of the circle change its color (optional; default: 0)
  */
-TimerProgress.prototype.run = function (time, alertTime = 0, displayText = true, nDecimals = 0, displayCircle = true) {
-    var width = this.container.element().clientWidth || this.container.element().parentNode.clientWidth
-    var height = this.container.element().clientHeight || this.container.element().parentNode.clientHeight
-    var shorter =  width > height ? height : width
-    this.cx = width / 2
-    this.cy = height / 2
-    this.r = (shorter / 2) * 0.85
-
-    this.circle.set('cx', this.cx)
-    this.circle.set('cy', this.cy)
-    this.circle.set('r', this.r)
-    this.circle.set('stroke-width', this.strokeWidth || shorter / 10)
-
-    this.path.set('stroke-width', (this.strokeWidth || shorter / 10) + 1)
-
-    this.text.set('x', width / 2)
-    this.text.set('y', (height / 2) * 1.145)
-    this.text.set('font-size', (this.fontSize > 0 ? this.fontSize : shorter / 6) + 'px')
-
+TimerProgress.prototype.run = function (time, alertTime = 0) {
     this.infinite = time === 'inf'
 
-    if (!displayCircle) {
-        this.circle.set('visibility', 'hidden')
-        this.path.set('visibility', 'hidden')
-    }
-
-    if (this.infinite || !displayText) {
+    if (this.infinite) {
         this.text.set('visibility', 'hidden')
     }
+    this.text.set('fill', this.colorText)
 
     this.alertTime = alertTime / 1000
-    this.nDecimals = nDecimals
 
     this.time = this.infinite ? 3000 : time
     this.degrees = 360
     this.speed = this.time / this.degrees
 
-    this.started = true
     this.running = true
     this.id = setInterval(this.frame, this.speed, this)
 }
@@ -158,7 +172,7 @@ TimerProgress.prototype.run = function (time, alertTime = 0, displayText = true,
  * Tells whether the timer progress is already running.
  */
 TimerProgress.prototype.isRunning = function () {
-    return this.started
+    return this.running
 }
 
 /**
@@ -181,20 +195,6 @@ TimerProgress.prototype.isPaused = function () {
  */
 TimerProgress.prototype.resume = function () {
     this.running = true
-    this.id = setInterval(this.frame, this.speed, this)
-}
-
-/**
- * Resets the timer progress.
- */
-TimerProgress.prototype.reset = function () {
-    this.running = false
-    clearInterval(this.id)
-
-    this.text.set('fill', this.colorText)
-    this.degrees = 360
-    this.running = true
-    this.started = true
     this.id = setInterval(this.frame, this.speed, this)
 }
 
@@ -231,7 +231,7 @@ SVGElement.prototype.set = function (key, val) {
 
 SVGElement.prototype.setBulk = function (options) {
     if (options !== null) {
-        for (var key in options) {
+        for (let key in options) {
             if (options.hasOwnProperty(key))
                 this.set(key, options[key])
         }

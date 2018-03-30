@@ -215,7 +215,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchMe', 'storeMe', 'fetchSchools', 'fetchGrades']),
+        ...mapActions(['fetchMe', 'updateMe', 'fetchSchools', 'fetchGrades']),
         onSchoolSelected () {
             this.filteredGrades = this.grades.filter(grade => this.selectedSchool.grades.indexOf(grade.id) >= 0)
             this.selectedGrade = this.filteredGrades[0]
@@ -243,7 +243,7 @@ export default {
                 data['note_playback_delay'] = parseFloat(this.selectedNotePlaybackDelay) * 1000
             }
 
-            this.storeMe(data)
+            this.updateMe(data)
         }
     }
 }

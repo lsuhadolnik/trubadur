@@ -37,6 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
             'locale:sl',
+            'https'
         ],
         'api' => [
             'throttle:60,1',
@@ -60,6 +61,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'admin' => \App\Http\Middleware\VerifyAdmin::class,
         'locale' => \App\Http\Middleware\SetLocale::class,
+        'https' => \App\Http\Middleware\ForceHttps::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
 }

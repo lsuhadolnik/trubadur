@@ -70,7 +70,7 @@ export default new Vuex.Store({
                 }
             })
         },
-        storeMe ({ dispatch, commit, state }, data) {
+        updateMe ({ dispatch, commit, state }, data) {
             return new Promise((resolve, reject) => {
                 axios.put('/api/users/' + state.me.id, data)
                     .then(response => {
@@ -162,6 +162,18 @@ export default new Vuex.Store({
                 axios.post('/api/games', data)
                     .then(response => {
                         resolve(response.data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        reject(error)
+                    })
+            })
+        },
+        updateGameUser ({ state }, { gameId, userId }) {
+            return new Promise((resolve, reject) => {
+                axios.put('/api/gameuser/' + gameId + '/' + userId)
+                    .then(response => {
+                        resolve()
                     })
                     .catch(error => {
                         console.log(error)

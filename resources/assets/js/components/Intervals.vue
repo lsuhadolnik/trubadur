@@ -24,11 +24,14 @@
 .intervals__progress-wrapper {
     padding-top     : 25px;
     display         : flex;
-    justify-content : center;
-    color           : $black;
-    font-family     : $font-regular;
-    font-size       : 25px;
-    font-weight     : bolder;
+    justify-content : space-evenly;
+    align-items     : center;
+}
+
+.intervals__progress {
+    color       : $black;
+    font-family : $font-title;
+    font-size   : 40px;
 }
 
 .intervals__stave-keyboard-wrapper {
@@ -115,8 +118,11 @@
     <div class="intervals">
         <img class="intervals__loader" src="/images/loader.svg" v-show="loading"/>
         <div v-show="!loading">
+            <i
             <div class="intervals__progress-wrapper">
-                {{ number }} / {{ nQuestions }}
+                <div class="intervals__progress">{{ chapter }} / {{ nChapters }}</div>
+                <div class="intervals__progress">{{ number }} / {{ nQuestions }}</div>
+                <svg id="timer"></svg>
             </div>
             <div class="debug">
                 {{ sample.join(',') }} | {{ answer.map(a => a.pitch).join(',') }}
@@ -177,12 +183,14 @@ export default {
             nChapters: 3,
             nQuestions: 8,
             maxTimePerQuestion: 120000,
+            timer: null,
             chapter: 1,
             number: 1,
             questionId: 0,
             sample: [],
             answer: [],
             startTime: 0,
+            timeoutId: 0,
             nAdditions: 0,
             nDeletions: 0,
             nPlaybacks: 0,
@@ -204,12 +212,27 @@ export default {
             })
         }
     },
+    mounted () {
+        this.$nextTick(() => {
+            this.timer = new TimerProgress({ // eslint-disable-line no-undef
+                'container': this.$el.querySelector('#timer'),
+                'width-container': 100,
+                'height-container': 100,
+                'stroke-width': 10,
+                'color-circle': '#F7E967',
+                'color-path': '#A9CF54',
+                'color-alert': '#FE664E',
+                'font-size': 40,
+                'font-family': 'Bebas Neue'
+            })
+        })
+    },
     computed: {
         ...mapState(['me', 'midi']),
         ...mapGetters(['getInstrumentChannel'])
     },
     methods: {
-        ...mapActions(['fetchMe', 'fetchLevel', 'setupMidi', 'storeQuestion', 'storeAnswer']),
+        ...mapActions(['fetchMe', 'fetchLevel', 'updateGame', 'updateGameUser', 'storeQuestion', 'storeAnswer', 'setupMidi']),
         playNote (pitch, delay) {
             this.$emit('play-note', pitch, delay)
         },
@@ -256,9 +279,9 @@ export default {
                 this.playNotes()
 
                 this.loading = false
+                this.timer.run(this.maxTimePerQuestion, 10000)
                 this.startTime = this.getCurrentTimeInMilliseconds()
-
-                setTimeout(() => {
+                this.timeoutId = setTimeout(() => {
                     this.saveAnswer(this.maxTimePerQuestion, false)
                 }, this.maxTimePerQuestion)
             })
@@ -280,7 +303,6 @@ export default {
                     continue
                 }
                 this.notification = 'Odgovor je napačen.'
-                console.log('Wrong answer... ' + this.answer.map(answer => answer.pitch))
                 return
             }
 
@@ -288,6 +310,8 @@ export default {
         },
         saveAnswer (time, success = true) {
             this.loading = true
+            clearTimeout(this.timeoutId)
+            this.timer.pause()
 
             this.storeAnswer({ game_id: this.game.id, user_id: this.me.id, question_id: this.questionId, time: time, n_additions: this.nAdditions, n_deletions: this.nDeletions, n_playbacks: this.nPlaybacks, success: success }).then(() => {
                 this.clearNotes()
@@ -302,12 +326,19 @@ export default {
                 }
 
                 if (this.chapter > this.nChapters) {
-                    // TODO: route to game statistics
-                    this.$router.push({ name: 'dashboard' })
+                    this.finishGame()
                 } else {
                     this.number++
                     this.nextQuestion()
                 }
+            })
+        },
+        finishGame () {
+            this.updateGameUser({ gameId: this.game.id, userId: this.me.id }).then(() => {
+                this.fetchMe(true).then(() => {
+                    // TODO: route to game statistics
+                    this.$router.push({ name: 'dashboard' })
+                })
             })
         }
     },

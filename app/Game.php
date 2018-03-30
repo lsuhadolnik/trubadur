@@ -12,7 +12,7 @@ class Game extends Model
      * @var array
      */
     protected $fillable = [
-        'winner_id', 'level_id', 'mode', 'type', 'finished',
+        'level_id', 'mode', 'type',
     ];
 
     /**
@@ -21,11 +21,6 @@ class Game extends Model
      * @var array
      */
     protected $hidden = [];
-
-    public function winner()
-    {
-        return $this->belongsTo('App\User');
-    }
 
     public function level()
     {

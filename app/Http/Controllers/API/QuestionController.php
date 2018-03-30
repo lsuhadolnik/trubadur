@@ -125,7 +125,7 @@ class QuestionController extends Controller
      *
      * @param  \App\Level  $level
      * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     private function generateIntervalsQuestion(Level $level, Question $question)
     {
