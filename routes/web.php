@@ -11,22 +11,9 @@
 |
 */
 
-Route::get('/generator', function () {
-    return view('extra.generator');
-});
-
 Auth::routes();
-
 Route::get('register/verify/{token?}', 'Auth\RegisterController@verify');
-
-Route::middleware('guest')->get('/', function () {
-    return view('auth.login');
-});
-
-Route::get('/{vue_capture?}', function () {
-    return view('home');
-})->where('vue_capture', '[\/\w\.-]*');
-
-Route::get('/home', function () {
-    return view('home');
-});
+Route::middleware('guest')->get('/', 'Auth\LoginController@showLoginForm');
+Route::get('/{vue_capture?}', 'HomeController@index')->where('vue_capture', '[\/\w\.-]*');
+Route::get('/home', 'HomeController@index');
+Route::get('/generator', 'GeneratorController@index');

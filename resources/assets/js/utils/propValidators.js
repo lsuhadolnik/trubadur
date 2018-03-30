@@ -19,6 +19,13 @@ export function objectProp (required = true) {
     }
 }
 
+export function objectNullProp (required = true) {
+    return {
+        validator: (value) => (typeof value) === 'object',
+        required: required
+    }
+}
+
 export function stringProp (required = true) {
     return {
         type: String,

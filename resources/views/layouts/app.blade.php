@@ -25,6 +25,9 @@
         <script src="{{ asset('lib/midi/midi.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('lib/midi/util/dom_request_xhr.js') }}" type="text/javascript"></script>
         <script src="{{ asset('lib/midi/util/dom_request_script.js') }}" type="text/javascript"></script>
+
+        <!-- timer-progress -->
+        <script src="{{ asset('lib/timer-progress/timer-progress.js') }}" type="text/javascript"></script>
     </head>
     <body>
         <div id="app">

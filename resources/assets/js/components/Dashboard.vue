@@ -46,10 +46,11 @@
 <template>
     <div class="dashboard">
         <div class="dashboard__command-wrapper">
-            <div class="dashboard__command" @click="open('games')">Igre</div>
+            <div class="dashboard__command" @click="open('gameTypes')">Igre</div>
             <div class="dashboard__command" @click="open('leaderboard')">Lestvica</div>
             <div class="dashboard__command" @click="open('profile', { id: userId })">Profil</div>
             <div class="dashboard__command" @click="open('settings')">Nastavitve</div>
+            <div class="dashboard__command" @click="open('test', { me: me })">Test</div>
         </div>
     </div>
 </template>

@@ -58,7 +58,7 @@ export default new Vuex.Store({
                 if (!force && state.me) {
                     resolve()
                 } else {
-                    axios.get('/api/me')
+                    axios.get('/api/users/0')
                         .then(response => {
                             commit('setMe', response.data)
                             resolve()
@@ -99,6 +99,18 @@ export default new Vuex.Store({
                 }
             })
         },
+        fetchUsers () {
+            return new Promise((resolve, reject) => {
+                axios.get('/api/users', { params: { per_page: 10, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' } })
+                    .then(response => {
+                        resolve(response.data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        reject(error)
+                    })
+            })
+        },
         fetchSchools ({ commit, state }, force = false) {
             return new Promise((resolve, reject) => {
                 if (!force && state.schools) {
@@ -131,6 +143,54 @@ export default new Vuex.Store({
                             reject(error)
                         })
                 }
+            })
+        },
+        fetchLevel ({ state }, { gradeId, schoolId }) {
+            return new Promise((resolve, reject) => {
+                axios.get('/api/gradeschool/' + gradeId + '/' + schoolId)
+                    .then(response => {
+                        resolve(response.data.level)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        reject(error)
+                    })
+            })
+        },
+        storeGame ({ state }, data) {
+            return new Promise((resolve, reject) => {
+                axios.post('/api/games', data)
+                    .then(response => {
+                        resolve(response.data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        reject(error)
+                    })
+            })
+        },
+        storeQuestion ({ state }, data) {
+            return new Promise((resolve, reject) => {
+                axios.post('/api/questions', data)
+                    .then(response => {
+                        resolve(response.data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        reject(error)
+                    })
+            })
+        },
+        storeAnswer ({ state }, data) {
+            return new Promise((resolve, reject) => {
+                axios.post('/api/answers', data)
+                    .then(response => {
+                        resolve(response.data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        reject(error)
+                    })
             })
         },
         setupMidi ({ commit, state }) {

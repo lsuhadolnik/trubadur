@@ -168,6 +168,7 @@ export default {
     data () {
         return {
             title: 'Nastavitve',
+            loading: true,
             selectedSchool: null,
             selectedGrade: null,
             filteredGrades: [],
@@ -188,23 +189,24 @@ export default {
         }
     },
     created () {
-        this.selectedInstrument = this.me.instrument
-        this.selectedClef = this.me.clef
-        this.selectedNotePlaybackDelay = this.me.note_playback_delay / 1000
+        this.fetchMe().then(() => {
+            this.selectedInstrument = this.me.instrument
+            this.selectedClef = this.me.clef
+            this.selectedNotePlaybackDelay = this.me.note_playback_delay / 1000
 
-        this.fetchSchools().then(() => {
-            this.fetchGrades().then(() => {
-                this.selectedSchool = this.schools.filter((school) => school.id === this.me.school.id)[0]
-                this.filteredGrades = this.grades.filter(grade => this.selectedSchool.grades.indexOf(grade.id) >= 0)
-                this.selectedGrade = this.grades.filter((grade) => grade.id === this.me.grade.id)[0]
+            this.fetchSchools().then(() => {
+                this.fetchGrades().then(() => {
+                    this.selectedSchool = this.schools.filter((school) => school.id === this.me.school.id)[0]
+                    this.filteredGrades = this.grades.filter(grade => this.selectedSchool.grades.indexOf(grade.id) >= 0)
+                    this.selectedGrade = this.grades.filter((grade) => grade.id === this.me.grade.id)[0]
+
+                    this.loading = false
+                })
             })
         })
     },
     computed: {
         ...mapState(['me', 'schools', 'grades']),
-        loading () {
-            return !this.me || !this.schools || !this.grades
-        },
         hasSchools () {
             return !this.loading && this.schools.length > 0
         },
@@ -213,7 +215,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['storeMe', 'fetchSchools', 'fetchGrades']),
+        ...mapActions(['fetchMe', 'storeMe', 'fetchSchools', 'fetchGrades']),
         onSchoolSelected () {
             this.filteredGrades = this.grades.filter(grade => this.selectedSchool.grades.indexOf(grade.id) >= 0)
             this.selectedGrade = this.filteredGrades[0]

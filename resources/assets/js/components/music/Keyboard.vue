@@ -63,9 +63,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { numberProp, objectNullProp } from '../../utils/propValidators'
 
 export default {
+    props: {
+        channel: numberProp(),
+        midi: objectNullProp()
+    },
     data () {
         return {
             keys: {
@@ -131,8 +135,7 @@ export default {
     computed: {
         nKeys () {
             return this.keys.white.length
-        },
-        ...mapGetters(['midi'])
+        }
     },
     methods: {
         getKeyByCode (keyCode) {
@@ -178,11 +181,11 @@ export default {
         },
         noteOn (midiPitch) {
             // channel id, note number, velocity, delay
-            this.midi.noteOn(0, midiPitch, 32, 0)
+            this.midi.noteOn(this.channel, midiPitch, 32, 0)
         },
         noteOff (midiPitch) {
             // channel id, note number, delay
-            this.midi.noteOff(0, midiPitch, 0.5)
+            this.midi.noteOff(this.channel, midiPitch, 0.5)
         },
         playNote (pitch, delay) {
             const key = this.getKeyByPitch(pitch)

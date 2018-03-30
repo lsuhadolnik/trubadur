@@ -22,7 +22,8 @@ Route::middleware('auth:api')->resource('levels', 'API\LevelController', ['excep
 Route::middleware('auth:api')->resource('logins', 'API\LoginController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('questions', 'API\QuestionController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('schools', 'API\SchoolController', ['except' => ['create', 'edit']]);
-Route::middleware('auth:api')->resource('users', 'API\UserController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->resource('users', 'API\UserController', ['except' => ['show', 'create', 'edit']]);
+Route::middleware('auth:api')->get('users/{id}', 'API\UserController@show');
 
 Route::middleware('auth:api')->get('badgeuser', 'API\BadgeUserController@index');
 Route::middleware('auth:api')->post('badgeuser', 'API\BadgeUserController@store');
@@ -51,6 +52,6 @@ Route::middleware('auth:api')->put('gradeschool/{gradeId}/{schoolId}', 'API\Grad
 Route::middleware('auth:api')->delete('gradeschool/{gradeId}/{schoolId}', 'API\GradeSchoolController@destroy')
     ->where(['gradeId' => '[0-9]+', 'schoolId' => '[0-9]+']);
 
-Route::middleware('auth:api')->get('me', function (Request $request) {
-    return app()->make('App\Http\Controllers\API\UserController')->show($request, $request->user()->id);
-});
+// Route::middleware('auth:api')->get('me', function (Request $request) {
+//     return app()->make('App\Http\Controllers\API\UserController')->show($request, $request->user()->id);
+// });

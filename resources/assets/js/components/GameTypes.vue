@@ -17,6 +17,7 @@
 .games__command {
     width                 : calc(100vw / 3);
     height                : 50px;
+    margin                : 10px 0;
     padding-top           : 5px;
     display               : flex;
     justify-content       : center;
@@ -45,7 +46,7 @@
 <template>
     <div class="games">
         <div class="games__command-wrapper">
-            <div class="games__command" @click="open('intervals')">Intervali</div>
+            <div class="games__command" @click="open('gameModes', { type: 'intervals' })">Intervali</div>
         </div>
     </div>
 </template>
