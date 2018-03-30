@@ -22,14 +22,14 @@ if (mix.config.inProduction) {
 }
 
 // BrowserSync automatically monitors files for changes, and injects the changes into the browser without requiring a manual refresh
-// mix.browserSync({
-//     proxy: 'localhost:8000',
-//     browser: process.platform === 'darwin' ? 'google chrome' : 'chrome',
-//     open: 'local',
-//     reloadDelay: 1000,
-//     reloadThrottle: 1500,
-//     files: [
-//         'public/**/*.js',
-//         'public/**/*.css'
-//     ]
-// })
+mix.browserSync({
+    proxy: 'localhost:8000',
+    browser: process.platform === 'darwin' ? 'google chrome' : 'chrome',
+    open: 'local',
+    reloadDelay: 2000,
+    reloadThrottle: 3000,
+    files: [
+        'public/**/*.js',
+        'public/**/*.css'
+    ]
+})

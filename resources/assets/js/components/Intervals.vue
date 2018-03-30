@@ -21,6 +21,43 @@
     }
 }
 
+.intervals__instructions-wrapper {
+    padding        : 20px 0;
+    display        : flex;
+    align-items    : center;
+    flex-direction : column;
+}
+
+.intervals__instructions-command {
+    width                 : calc(100vw / 3);
+    height                : 50px;
+    margin                : 10px 0;
+    padding-top           : 5px;
+    display               : flex;
+    justify-content       : center;
+    align-items           : center;
+    font-size             : 20px;
+    font-family           : $font-title;
+    background-color      : $blue;
+    color                 : $black;
+    opacity               : 0.8;
+    -webkit-touch-callout : none;
+    -webkit-user-select   : none;
+    -khtml-user-select    : none;
+    -moz-user-select      : none;
+    -ms-user-select       : none;
+    user-select           : none;
+    cursor                : pointer;
+    transition            : opacity 0.1s linear;
+
+    @include breakpoint-tablet { opacity : 1; }
+    @include breakpoint-phone  { opacity : 1; }
+
+    &:hover { opacity: 1; }
+}
+
+.intervals__instructions-list-item { padding: 10px; }
+
 .intervals__progress-wrapper {
     padding-top     : 25px;
     display         : flex;
@@ -117,8 +154,16 @@
 <template>
     <div class="intervals">
         <img class="intervals__loader" src="/images/loader.svg" v-show="loading"/>
-        <div v-show="!loading">
-            <i
+        <div class="intervals__instructions-wrapper" v-show="!loading && instructing">
+            <div class="intervals__instructions-command" @click="startGame()">Začni igro</div>
+            <ul class="intervals__instructions-list">
+                <li class="intervals__instructions-list-item">Preizkusil se boš v igri ugotavljanja intervalov</li>
+                <li class="intervals__instructions-list-item">Igra je razdeljena v 3 poglavja, vsako izmed njih pa ima 8 vprašanj</li>
+                <li class="intervals__instructions-list-item">Za odgovor na posamezno vprašanje imaš na voljo natanko 120 sekund</li>
+                <li class="intervals__instructions-list-item">Na koncu igre si lahko ogledaš statistiko</li>
+            </ul>
+        </div>
+        <div v-show="!loading && !instructing">
             <div class="intervals__progress-wrapper">
                 <div class="intervals__progress">{{ chapter }} / {{ nChapters }}</div>
                 <div class="intervals__progress">{{ number }} / {{ nQuestions }}</div>
@@ -155,6 +200,7 @@ export default {
     data () {
         return {
             loading: true,
+            instructing: true,
             playing: false,
             notes: {
                 type: 'whole',
@@ -181,7 +227,7 @@ export default {
                 'Db5': 'C#5'
             },
             nChapters: 3,
-            nQuestions: 1,
+            nQuestions: 8,
             maxTimePerQuestion: 120000,
             timer: null,
             chapter: 1,
@@ -206,8 +252,7 @@ export default {
                     this.notes.delay = this.me.note_playback_delay
                     this.notes.clef = this.me.clef
                     this.channel = this.getInstrumentChannel(this.me.instrument)
-
-                    this.nextQuestion()
+                    this.loading = false
                 })
             })
         }
@@ -270,6 +315,11 @@ export default {
         },
         getCurrentTimeInMilliseconds () {
             return new Date().getTime()
+        },
+        startGame () {
+            this.loading = true
+            this.instructing = false
+            this.nextQuestion()
         },
         nextQuestion () {
             this.generateQuestion({ game_id: this.game.id, chapter: this.chapter, number: this.number }).then((question) => {

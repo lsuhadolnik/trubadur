@@ -1732,6 +1732,37 @@ var index_esm = {
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+window._ = __webpack_require__(18);
+window.$ = window.jQuery = __webpack_require__(20);
+window.Vue = __webpack_require__(21);
+window.axios = __webpack_require__(24);
+
+window.axios.defaults.headers.common = {
+  'Accept': 'application/json',
+  'X-CSRF-TOKEN': window.Laravel.csrfToken,
+  'X-Requested-With': 'XMLHttpRequest'
+
+  /**
+   * Echo exposes an expressive API for subscribing to channels and listening
+   * for events that are broadcast by Laravel. Echo and event broadcasting
+   * allows your team to easily build robust real-time web applications.
+   */
+
+  // import Echo from 'laravel-echo'
+
+  // window.Pusher = require('pusher-js')
+
+  // window.Echo = new Echo({
+  //     broadcaster: 'pusher',
+  //     key: 'your-pusher-key'
+  // })
+
+};
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports) {
 
 var g;
@@ -1758,7 +1789,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1858,7 +1889,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1935,37 +1966,6 @@ function functionProp() {
         required: required
     };
 }
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-window._ = __webpack_require__(18);
-window.$ = window.jQuery = __webpack_require__(20);
-window.Vue = __webpack_require__(21);
-window.axios = __webpack_require__(24);
-
-window.axios.defaults.headers.common = {
-  'Accept': 'application/json',
-  'X-CSRF-TOKEN': window.Laravel.csrfToken,
-  'X-Requested-With': 'XMLHttpRequest'
-
-  /**
-   * Echo exposes an expressive API for subscribing to channels and listening
-   * for events that are broadcast by Laravel. Echo and event broadcasting
-   * allows your team to easily build robust real-time web applications.
-   */
-
-  // import Echo from 'laravel-echo'
-
-  // window.Pusher = require('pusher-js')
-
-  // window.Echo = new Echo({
-  //     broadcaster: 'pusher',
-  //     key: 'your-pusher-key'
-  // })
-
-};
 
 /***/ }),
 /* 9 */
@@ -2491,7 +2491,7 @@ module.exports = __webpack_require__(118);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__);
@@ -19599,7 +19599,7 @@ new Vue({ // eslint-disable-line no-new
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(19)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(19)(module)))
 
 /***/ }),
 /* 19 */
@@ -40510,7 +40510,7 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(22).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(22).setImmediate))
 
 /***/ }),
 /* 22 */
@@ -40762,7 +40762,7 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(9)))
 
 /***/ }),
 /* 24 */
@@ -40780,7 +40780,7 @@ module.exports = __webpack_require__(25);
 var utils = __webpack_require__(3);
 var bind = __webpack_require__(10);
 var Axios = __webpack_require__(27);
-var defaults = __webpack_require__(6);
+var defaults = __webpack_require__(7);
 
 /**
  * Create an instance of Axios
@@ -40863,7 +40863,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(6);
+var defaults = __webpack_require__(7);
 var utils = __webpack_require__(3);
 var InterceptorManager = __webpack_require__(36);
 var dispatchRequest = __webpack_require__(37);
@@ -41395,7 +41395,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(3);
 var transformData = __webpack_require__(38);
 var isCancel = __webpack_require__(13);
-var defaults = __webpack_require__(6);
+var defaults = __webpack_require__(7);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -41657,7 +41657,7 @@ Vue.directive('focus', { inserted: function inserted(el) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_awesome_components_Icon__ = __webpack_require__(15);
@@ -46031,7 +46031,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-4f5997e7] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-4f5997e7] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-4f5997e7] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-4f5997e7] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-4f5997e7] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-4f5997e7] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-4f5997e7]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-4f5997e7]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-4f5997e7]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-4f5997e7]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-4f5997e7] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-4f5997e7]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-4f5997e7] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-4f5997e7] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-4f5997e7] {\n  margin-top: 30px;\n}\n.login__button[data-v-4f5997e7] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.login__button[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-4f5997e7] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-4f5997e7], .login__status-group[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-4f5997e7], .login__status-list[data-v-4f5997e7] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.login__status[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-4f5997e7] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-4f5997e7] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-4f5997e7] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-4f5997e7] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-4f5997e7] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-4f5997e7] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-4f5997e7]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-4f5997e7]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-4f5997e7]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-4f5997e7]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-4f5997e7] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-4f5997e7] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-4f5997e7] {\n  margin-top: 30px;\n}\n.register__button[data-v-4f5997e7] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.register__button[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-4f5997e7] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-4f5997e7], .register__status-group[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.register__error-list[data-v-4f5997e7], .register__status-list[data-v-4f5997e7] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.register__status[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-4f5997e7] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-4f5997e7] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-4f5997e7] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-4f5997e7] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-4f5997e7] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-4f5997e7] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-4f5997e7]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-4f5997e7]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-4f5997e7]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-4f5997e7]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-4f5997e7] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.email__button[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-4f5997e7] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-4f5997e7], .email__status-group[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-4f5997e7], .email__status-list[data-v-4f5997e7] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-4f5997e7] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-4f5997e7] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-4f5997e7] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-4f5997e7] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-4f5997e7] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-4f5997e7] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-4f5997e7]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-4f5997e7]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-4f5997e7]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-4f5997e7]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-4f5997e7] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-4f5997e7] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.reset__error-list[data-v-4f5997e7] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-4f5997e7] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  background-color: #CAFCD8;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-4f5997e7]:focus {\n  outline: 0;\n}\ninput[data-v-4f5997e7] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n}\n.intervals[data-v-4f5997e7] {\n  width: 100%;\n  height: calc(100% - 50px);\n  background-color: #CAFCD8;\n}\n.intervals__loader[data-v-4f5997e7] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  width: 100px;\n  height: 100px;\n}\n@media only screen and (max-width: 767px) {\n.intervals__loader[data-v-4f5997e7] {\n      width: 75px;\n      height: 75px;\n}\n}\n.intervals__progress-wrapper[data-v-4f5997e7] {\n  padding-top: 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: space-evenly;\n      -ms-flex-pack: space-evenly;\n          justify-content: space-evenly;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.intervals__progress[data-v-4f5997e7] {\n  color: #000000;\n  font-family: \"Bebas Neue\";\n  font-size: 40px;\n}\n.intervals__stave-keyboard-wrapper[data-v-4f5997e7] {\n  padding: 25px 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n@media only screen and (orientation: portrait) {\n.intervals__stave-keyboard-wrapper[data-v-4f5997e7] {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.intervals__stave[data-v-4f5997e7] {\n  margin-right: 2.5vw;\n}\n@include-breakpoint-portrait {\n.intervals__stave {\n    margin-right: 0;\n}\n}\n.intervals__keyboard[data-v-4f5997e7] {\n  margin-left: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.intervals__keyboard[data-v-4f5997e7] {\n      margin-top: 5vh;\n      margin-left: 0;\n}\n}\n.intervals__command-wrapper[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.intervals__command[data-v-4f5997e7] {\n  width: calc(100vw / 3);\n  height: 50px;\n  padding-top: 5px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 20px;\n  font-family: \"Bebas Neue\";\n  color: #000000;\n  opacity: 0.8;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n  -webkit-transition: opacity 0.1s linear;\n  transition: opacity 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.intervals__command[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.intervals__command[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.intervals__command[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.intervals__command.disabled[data-v-4f5997e7] {\n    opacity: 1;\n    -webkit-filter: brightness(1.5);\n            filter: brightness(1.5);\n    cursor: not-allowed;\n}\n.intervals__command--delete[data-v-4f5997e7] {\n  background-color: #fe664e;\n}\n.intervals__command--replay[data-v-4f5997e7] {\n  background-color: #27a9e0;\n}\n.intervals__command--next[data-v-4f5997e7] {\n  background-color: #7cbc42;\n}\n.intervals__notification[data-v-4f5997e7] {\n  margin-top: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  color: #fe664e;\n  font-family: \"Montserrat Light\";\n  font-size: 18px;\n}\n.debug[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  font-size: 15px;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.login[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.login__logo[data-v-4f5997e7] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.login__form[data-v-4f5997e7] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-title[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-content[data-v-4f5997e7] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.login__form-group[data-v-4f5997e7] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.login__form-subtitle[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.login__form-group--link[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.login__form-input[data-v-4f5997e7] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.login__form-input--error[data-v-4f5997e7] {\n  border-color: #fe664e;\n}\n.login__form-input[data-v-4f5997e7]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-4f5997e7]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-4f5997e7]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-input[data-v-4f5997e7]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.login__form-checkbox-label[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-4f5997e7] {\n  cursor: pointer;\n}\n.login__form-checkbox[data-v-4f5997e7]:focus {\n    outline: 0;\n}\n.login__form-text[data-v-4f5997e7] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__form-link[data-v-4f5997e7] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.login__button-group[data-v-4f5997e7] {\n  margin-top: 30px;\n}\n.login__button[data-v-4f5997e7] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.login__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.login__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.login__button[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.login__button_submit[data-v-4f5997e7] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.login__error-group[data-v-4f5997e7], .login__status-group[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.login__error-list[data-v-4f5997e7], .login__status-list[data-v-4f5997e7] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.login__error[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.login__status[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.register[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.register__logo[data-v-4f5997e7] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.register__form[data-v-4f5997e7] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-title[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-content[data-v-4f5997e7] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.register__form-group[data-v-4f5997e7] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.register__form-group--link[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.register__form-subtitle[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.register__form-input[data-v-4f5997e7] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.register__form-input--error[data-v-4f5997e7] {\n  border-color: #fe664e;\n}\n.register__form-input[data-v-4f5997e7]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-4f5997e7]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-4f5997e7]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-input[data-v-4f5997e7]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.register__form-text[data-v-4f5997e7] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__form-link[data-v-4f5997e7] {\n  font-size: 15px;\n  font-family: \"Montserrat Light\";\n}\n.register__button-group[data-v-4f5997e7] {\n  margin-top: 30px;\n}\n.register__button[data-v-4f5997e7] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.register__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.register__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.register__button[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.register__button_submit[data-v-4f5997e7] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.register__error-group[data-v-4f5997e7], .register__status-group[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.register__error-list[data-v-4f5997e7], .register__status-list[data-v-4f5997e7] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.register__error[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.register__status[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.email[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.email__logo[data-v-4f5997e7] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.email__form[data-v-4f5997e7] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-title[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-content[data-v-4f5997e7] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.email__form-group[data-v-4f5997e7] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.email__form-subtitle[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.email__form-input[data-v-4f5997e7] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.email__form-input--error[data-v-4f5997e7] {\n  border-color: #fe664e;\n}\n.email__form-input[data-v-4f5997e7]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-4f5997e7]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-4f5997e7]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__form-input[data-v-4f5997e7]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.email__button-group[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.email__button[data-v-4f5997e7] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.email__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.email__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.email__button[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.email__button_cancel[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.email__button_submit[data-v-4f5997e7] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.email__error-group[data-v-4f5997e7], .email__status-group[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.email__error-list[data-v-4f5997e7], .email__status-list[data-v-4f5997e7] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.email__error[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n.email__status[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #7cbc42;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n@font-face {\n  font-family: 'Bebas Neue';\n  src: url(\"/fonts/BebasNeue.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Light';\n  src: url(\"/fonts/Montserrat-Light.woff2\") format(\"woff2\");\n}\n@font-face {\n  font-family: 'Montserrat Regular';\n  src: url(\"/fonts/Montserrat-Regular.woff2\") format(\"woff2\");\n}\n.reset[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.reset__logo[data-v-4f5997e7] {\n  width: calc(100% - 400px);\n  height: 100%;\n  background-image: url(\"/images/troubadours.jpg\");\n  background-origin: content-box;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.reset__form[data-v-4f5997e7] {\n  width: 400px;\n  padding: 75px 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-title[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  font-size: 75px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-content[data-v-4f5997e7] {\n  width: 275px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.reset__form-group[data-v-4f5997e7] {\n  margin-bottom: 15px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.reset__form-group--link[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.reset__form-subtitle[data-v-4f5997e7] {\n  width: 100%;\n  margin-bottom: 10px;\n  font-size: 26px;\n  font-family: \"Bebas Neue\", Verdana;\n}\n.reset__form-input[data-v-4f5997e7] {\n  width: 100%;\n  height: 35px;\n  padding: 5px;\n  background-color: #ffffff;\n  color: #000000;\n  font-size: 15px;\n  font-family: \"Montserrat Regular\";\n  border: 1px solid rgba(119, 119, 128, 0.33);\n  outline: none;\n}\n.reset__form-input--error[data-v-4f5997e7] {\n  border-color: #fe664e;\n}\n.reset__form-input[data-v-4f5997e7]::-webkit-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-4f5997e7]:-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-4f5997e7]::-ms-input-placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__form-input[data-v-4f5997e7]::placeholder {\n  color: #777780;\n  font-family: \"Montserrat Light\";\n}\n.reset__button-group[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  margin-top: 30px;\n}\n.reset__button[data-v-4f5997e7] {\n  width: 125px;\n  height: 50px;\n  padding-top: 5px;\n  font-size: 25px;\n  font-family: \"Bebas Neue\";\n  border: 0;\n  opacity: 0.7;\n  cursor: pointer;\n  -webkit-transition: all 0.1s linear;\n  transition: all 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.reset__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.reset__button[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.reset__button[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.reset__button_cancel[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #fe664e;\n  color: #000000;\n  text-decoration: none;\n}\n.reset__button_submit[data-v-4f5997e7] {\n  background-color: #64ee8a;\n  color: #000000;\n}\n.reset__error-group[data-v-4f5997e7] {\n  margin-top: 20px;\n}\n.reset__error-list[data-v-4f5997e7] {\n  margin: 0;\n  padding: 0;\n  list-style-type: none;\n}\n.reset__error[data-v-4f5997e7] {\n  margin-bottom: 3px;\n  color: #fe664e;\n  font-size: 13px;\n  font-family: \"Montserrat Light\";\n}\n*[data-v-4f5997e7] {\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  -webkit-touch-callout: none;\n  -webkit-text-size-adjust: none;\n  -webkit-tap-highlight-color: transparent;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\nhtml[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n}\nbody[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  background-color: #CAFCD8;\n  font-family: \"Montserrat Regular\";\n}\nbutton[data-v-4f5997e7]:focus {\n  outline: 0;\n}\ninput[data-v-4f5997e7] {\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n#app[data-v-4f5997e7] {\n  width: 100%;\n  height: 100%;\n}\n.intervals[data-v-4f5997e7] {\n  width: 100%;\n  height: calc(100% - 50px);\n  background-color: #CAFCD8;\n}\n.intervals__loader[data-v-4f5997e7] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  width: 100px;\n  height: 100px;\n}\n@media only screen and (max-width: 767px) {\n.intervals__loader[data-v-4f5997e7] {\n      width: 75px;\n      height: 75px;\n}\n}\n.intervals__instructions-wrapper[data-v-4f5997e7] {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.intervals__instructions-command[data-v-4f5997e7] {\n  width: calc(100vw / 3);\n  height: 50px;\n  margin: 10px 0;\n  padding-top: 5px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 20px;\n  font-family: \"Bebas Neue\";\n  background-color: #27a9e0;\n  color: #000000;\n  opacity: 0.8;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n  -webkit-transition: opacity 0.1s linear;\n  transition: opacity 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.intervals__instructions-command[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.intervals__instructions-command[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.intervals__instructions-command[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.intervals__instructions-list-item[data-v-4f5997e7] {\n  padding: 10px;\n}\n.intervals__progress-wrapper[data-v-4f5997e7] {\n  padding-top: 25px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: space-evenly;\n      -ms-flex-pack: space-evenly;\n          justify-content: space-evenly;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.intervals__progress[data-v-4f5997e7] {\n  color: #000000;\n  font-family: \"Bebas Neue\";\n  font-size: 40px;\n}\n.intervals__stave-keyboard-wrapper[data-v-4f5997e7] {\n  padding: 25px 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n@media only screen and (orientation: portrait) {\n.intervals__stave-keyboard-wrapper[data-v-4f5997e7] {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.intervals__stave[data-v-4f5997e7] {\n  margin-right: 2.5vw;\n}\n@include-breakpoint-portrait {\n.intervals__stave {\n    margin-right: 0;\n}\n}\n.intervals__keyboard[data-v-4f5997e7] {\n  margin-left: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.intervals__keyboard[data-v-4f5997e7] {\n      margin-top: 5vh;\n      margin-left: 0;\n}\n}\n.intervals__command-wrapper[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.intervals__command[data-v-4f5997e7] {\n  width: calc(100vw / 3);\n  height: 50px;\n  padding-top: 5px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 20px;\n  font-family: \"Bebas Neue\";\n  color: #000000;\n  opacity: 0.8;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n  -webkit-transition: opacity 0.1s linear;\n  transition: opacity 0.1s linear;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.intervals__command[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.intervals__command[data-v-4f5997e7] {\n      opacity: 1;\n}\n}\n.intervals__command[data-v-4f5997e7]:hover {\n    opacity: 1;\n}\n.intervals__command.disabled[data-v-4f5997e7] {\n    opacity: 1;\n    -webkit-filter: brightness(1.5);\n            filter: brightness(1.5);\n    cursor: not-allowed;\n}\n.intervals__command--delete[data-v-4f5997e7] {\n  background-color: #fe664e;\n}\n.intervals__command--replay[data-v-4f5997e7] {\n  background-color: #27a9e0;\n}\n.intervals__command--next[data-v-4f5997e7] {\n  background-color: #7cbc42;\n}\n.intervals__notification[data-v-4f5997e7] {\n  margin-top: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  color: #fe664e;\n  font-family: \"Montserrat Light\";\n  font-size: 18px;\n}\n.debug[data-v-4f5997e7] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  color: #777780;\n  font-family: \"Montserrat Light\";\n  font-size: 15px;\n}\n", ""]);
 
 // exports
 
@@ -46196,6 +46196,51 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -46206,6 +46251,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     data: function data() {
         return {
             loading: true,
+            instructing: true,
             playing: false,
             notes: {
                 type: 'whole',
@@ -46232,7 +46278,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 'Db5': 'C#5'
             },
             nChapters: 3,
-            nQuestions: 1,
+            nQuestions: 8,
             maxTimePerQuestion: 120000,
             timer: null,
             chapter: 1,
@@ -46259,8 +46305,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     _this.notes.delay = _this.me.note_playback_delay;
                     _this.notes.clef = _this.me.clef;
                     _this.channel = _this.getInstrumentChannel(_this.me.instrument);
-
-                    _this.nextQuestion();
+                    _this.loading = false;
                 });
             });
         }
@@ -46332,6 +46377,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         getCurrentTimeInMilliseconds: function getCurrentTimeInMilliseconds() {
             return new Date().getTime();
+        },
+        startGame: function startGame() {
+            this.loading = true;
+            this.instructing = false;
+            this.nextQuestion();
         },
         nextQuestion: function nextQuestion() {
             var _this4 = this;
@@ -46520,7 +46570,7 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: ur
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Note_vue__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Note_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Note_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_propValidators__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_propValidators__ = __webpack_require__(8);
 //
 //
 //
@@ -46754,7 +46804,7 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: ur
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
 //
 //
 //
@@ -47763,7 +47813,7 @@ exports.push([module.i, "\n@font-face {\n  font-family: 'Bebas Neue';\n  src: ur
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 //
@@ -48117,8 +48167,39 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: !_vm.loading,
-            expression: "!loading"
+            value: !_vm.loading && _vm.instructing,
+            expression: "!loading && instructing"
+          }
+        ],
+        staticClass: "intervals__instructions-wrapper"
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "intervals__instructions-command",
+            on: {
+              click: function($event) {
+                _vm.startGame()
+              }
+            }
+          },
+          [_vm._v("Začni igro")]
+        ),
+        _vm._v(" "),
+        _vm._m(0)
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.loading && !_vm.instructing,
+            expression: "!loading && !instructing"
           }
         ]
       },
@@ -48220,7 +48301,34 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "intervals__instructions-list" }, [
+      _c("li", { staticClass: "intervals__instructions-list-item" }, [
+        _vm._v("Preizkusil se boš v igri ugotavljanja intervalov")
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "intervals__instructions-list-item" }, [
+        _vm._v(
+          "Igra je razdeljena v 3 poglavja, vsako izmed njih pa ima 8 vprašanj"
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "intervals__instructions-list-item" }, [
+        _vm._v(
+          "Za odgovor na posamezno vprašanje imaš na voljo natanko 120 sekund"
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "intervals__instructions-list-item" }, [
+        _vm._v("Na koncu igre si lahko ogledaš statistiko")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -49690,7 +49798,7 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
 
