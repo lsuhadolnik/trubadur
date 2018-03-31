@@ -50,7 +50,7 @@
             <div class="dashboard__command" @click="open('leaderboard')">Lestvica</div>
             <div class="dashboard__command" @click="open('profile', { id: userId })">Profil</div>
             <div class="dashboard__command" @click="open('settings')">Nastavitve</div>
-            <div class="dashboard__command" @click="open('test', { me: me })">Test</div>
+            <div class="dashboard__command" @click="open('test')">Test</div>
         </div>
     </div>
 </template>

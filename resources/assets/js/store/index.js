@@ -4,6 +4,14 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+function handleError (error) {
+    switch (error.response.status) {
+        case 401:
+            window.location.href = 'login'
+            break
+    }
+}
+
 export default new Vuex.Store({
     state: {
         me: null,
@@ -64,21 +72,29 @@ export default new Vuex.Store({
                             resolve()
                         })
                         .catch(error => {
-                            console.log(error)
+                            handleError(error)
                             reject(error)
                         })
                 }
             })
         },
         updateMe ({ dispatch, commit, state }, data) {
+            const changeInstrument = state.me.instrument !== data.instrument
             return new Promise((resolve, reject) => {
                 axios.put('/api/users/' + state.me.id, data)
                     .then(response => {
-                        dispatch('fetchMe', true)
-                        resolve()
+                        dispatch('fetchMe', true).then(() => {
+                            if (changeInstrument) {
+                                dispatch('setupMidi', true).then(() => {
+                                    resolve()
+                                })
+                            } else {
+                                resolve()
+                            }
+                        })
                     })
                     .catch(error => {
-                        console.log(error)
+                        handleError(error)
                         reject(error)
                     })
             })
@@ -93,7 +109,7 @@ export default new Vuex.Store({
                             resolve(response.data)
                         })
                         .catch(error => {
-                            console.log(error)
+                            handleError(error)
                             reject(error)
                         })
                 }
@@ -106,7 +122,7 @@ export default new Vuex.Store({
                         resolve(response.data)
                     })
                     .catch(error => {
-                        console.log(error)
+                        handleError(error)
                         reject(error)
                     })
             })
@@ -122,7 +138,7 @@ export default new Vuex.Store({
                             resolve()
                         })
                         .catch(error => {
-                            console.log(error)
+                            handleError(error)
                             reject(error)
                         })
                 }
@@ -139,7 +155,7 @@ export default new Vuex.Store({
                             resolve()
                         })
                         .catch(error => {
-                            console.log(error)
+                            handleError(error)
                             reject(error)
                         })
                 }
@@ -152,7 +168,7 @@ export default new Vuex.Store({
                         resolve(response.data.level)
                     })
                     .catch(error => {
-                        console.log(error)
+                        handleError(error)
                         reject(error)
                     })
             })
@@ -164,7 +180,7 @@ export default new Vuex.Store({
                         resolve(response.data)
                     })
                     .catch(error => {
-                        console.log(error)
+                        handleError(error)
                         reject(error)
                     })
             })
@@ -176,7 +192,7 @@ export default new Vuex.Store({
                         resolve()
                     })
                     .catch(error => {
-                        console.log(error)
+                        handleError(error)
                         reject(error)
                     })
             })
@@ -188,7 +204,7 @@ export default new Vuex.Store({
                         resolve(response.data)
                     })
                     .catch(error => {
-                        console.log(error)
+                        handleError(error)
                         reject(error)
                     })
             })
@@ -200,29 +216,28 @@ export default new Vuex.Store({
                         resolve(response.data)
                     })
                     .catch(error => {
-                        console.log(error)
+                        handleError(error)
                         reject(error)
                     })
             })
         },
-        setupMidi ({ commit, state }) {
+        setupMidi ({ commit, state }, force = false) {
             return new Promise((resolve, reject) => {
-                if (state.midi) {
+                if (!force && state.midi) {
                     resolve()
-                }
-                MIDI.loadPlugin({
-                    soundfontUrl: '/soundfonts/',
-                    instruments: Object.keys(state.instruments).map(name => state.instruments[name].soundfont),
-                    onsuccess: () => {
-                        for (let name in state.instruments) {
-                            let instrument = state.instruments[name]
+                } else {
+                    const instrument = state.instruments[state.me.instrument]
+                    MIDI.loadPlugin({
+                        soundfontUrl: '/soundfonts/',
+                        instrument: instrument.soundfont,
+                        onsuccess: () => {
                             MIDI.setVolume(instrument.channel, 127)
                             MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number)
+                            commit('setMidi', MIDI)
+                            resolve()
                         }
-                        commit('setMidi', MIDI)
-                        resolve()
-                    }
-                })
+                    })
+                }
             })
         }
     }

@@ -79,9 +79,13 @@ export default {
         }
     },
     created () {
-        this.fetchMe().then(() => {
-            this.loading = false
-        })
+        if (!this.type) {
+            this.$router.push({ name: 'dashboard' })
+        } else {
+            this.fetchMe().then(() => {
+                this.loading = false
+            })
+        }
     },
     computed: {
         ...mapState(['me'])

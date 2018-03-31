@@ -243,7 +243,12 @@ export default {
                 data['note_playback_delay'] = parseFloat(this.selectedNotePlaybackDelay) * 1000
             }
 
-            this.updateMe(data)
+            if (Object.keys(data).length > 0) {
+                this.loading = true
+                this.updateMe(data).then(() => {
+                    this.loading = false
+                })
+            }
         }
     }
 }

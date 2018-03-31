@@ -158,8 +158,9 @@
             <div class="intervals__instructions-command" @click="startGame()">Začni igro</div>
             <ul class="intervals__instructions-list">
                 <li class="intervals__instructions-list-item">Preizkusil se boš v igri ugotavljanja intervalov</li>
-                <li class="intervals__instructions-list-item">Igra je razdeljena v 3 poglavja, vsako izmed njih pa ima 8 vprašanj</li>
+                <li class="intervals__instructions-list-item">Igra je razdeljena v 3 poglavja, vsako izmed njih ima 8 vprašanj</li>
                 <li class="intervals__instructions-list-item">Za odgovor na posamezno vprašanje imaš na voljo natanko 120 sekund</li>
+                <li class="intervals__instructions-list-item" v-show="game.mode !== 'practice'">Uspešnost reševanja nalog bo vplivala na tvoj položaj na lestvici</li>
                 <li class="intervals__instructions-list-item">Na koncu igre si lahko ogledaš statistiko</li>
             </ul>
         </div>
@@ -200,7 +201,7 @@ export default {
     data () {
         return {
             loading: true,
-            instructing: true,
+            instructing: false,
             playing: false,
             notes: {
                 type: 'whole',
@@ -247,12 +248,19 @@ export default {
         if (!this.game) {
             this.$router.push({ name: 'dashboard' })
         } else {
-            this.setupMidi().then(() => {
-                this.fetchMe().then(() => {
-                    this.notes.delay = this.me.note_playback_delay
-                    this.notes.clef = this.me.clef
-                    this.channel = this.getInstrumentChannel(this.me.instrument)
-                    this.loading = false
+            this.fetchMe().then(() => {
+                this.notes.delay = this.me.note_playback_delay
+                this.notes.clef = this.me.clef
+                this.channel = this.getInstrumentChannel(this.me.instrument)
+
+                this.setupMidi().then(() => {
+                    this.generateQuestion({ game_id: this.game.id, chapter: this.chapter, number: this.number }).then((question) => {
+                        this.questionId = question.id
+                        this.sample = question.content.split(',')
+                        this.$nextTick(() => this.addNote(this.sample[0]))
+                        this.loading = false
+                        this.instructing = true
+                    })
                 })
             })
         }
@@ -271,6 +279,9 @@ export default {
                 'font-family': 'Bebas Neue'
             })
         })
+    },
+    destroyed () {
+        clearTimeout(this.timeoutId)
     },
     computed: {
         ...mapState(['me', 'midi']),
@@ -317,24 +328,13 @@ export default {
             return new Date().getTime()
         },
         startGame () {
-            this.loading = true
             this.instructing = false
-            this.nextQuestion()
-        },
-        nextQuestion () {
-            this.generateQuestion({ game_id: this.game.id, chapter: this.chapter, number: this.number }).then((question) => {
-                this.questionId = question.id
-                this.sample = question.content.split(',')
-                this.$nextTick(() => this.addNote(this.sample[0]))
-                this.playNotes()
-
-                this.loading = false
-                this.timer.run(this.maxTimePerQuestion, 10000)
-                this.startTime = this.getCurrentTimeInMilliseconds()
-                this.timeoutId = setTimeout(() => {
-                    this.saveAnswer(this.maxTimePerQuestion, false)
-                }, this.maxTimePerQuestion)
-            })
+            this.playNotes()
+            this.timer.run(this.maxTimePerQuestion, 10000)
+            this.startTime = this.getCurrentTimeInMilliseconds()
+            this.timeoutId = setTimeout(() => {
+                this.saveAnswer(this.maxTimePerQuestion, false)
+            }, this.maxTimePerQuestion)
         },
         checkCorrectness () {
             const timeElapsed = this.getCurrentTimeInMilliseconds() - this.startTime
@@ -381,6 +381,21 @@ export default {
                     this.number++
                     this.nextQuestion()
                 }
+            })
+        },
+        nextQuestion () {
+            this.generateQuestion({ game_id: this.game.id, chapter: this.chapter, number: this.number }).then((question) => {
+                this.questionId = question.id
+                this.sample = question.content.split(',')
+                this.$nextTick(() => this.addNote(this.sample[0]))
+                this.playNotes()
+
+                this.loading = false
+                this.timer.run(this.maxTimePerQuestion, 10000)
+                this.startTime = this.getCurrentTimeInMilliseconds()
+                this.timeoutId = setTimeout(() => {
+                    this.saveAnswer(this.maxTimePerQuestion, false)
+                }, this.maxTimePerQuestion)
             })
         },
         finishGame () {

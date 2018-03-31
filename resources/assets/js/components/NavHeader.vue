@@ -69,6 +69,9 @@ export default {
             csrfToken: window.Laravel.csrfToken
         }
     },
+    created () {
+        this.$parent.$on('logout', this.logout)
+    },
     computed: {
         ...mapState(['me']),
         userName () {

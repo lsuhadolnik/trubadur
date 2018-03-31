@@ -11,6 +11,12 @@
     background-color : $aero-blue;
 }
 
+.profile__title {
+    font-family : $font-regular;
+    font-size   : 30px;
+    font-weight : bold;
+}
+
 .profile__loader {
     position  : absolute;
     top       : 50%;
@@ -23,12 +29,6 @@
         width  : 75px;
         height : 75px;
     }
-}
-
-.profile__title {
-    font-family : $font-regular;
-    font-size   : 30px;
-    font-weight : bold;
 }
 
 .profile__user-info {
