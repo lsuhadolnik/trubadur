@@ -24,7 +24,7 @@ function generateIntervalSequence (output = true) {
     const semitones = []
     const statistics = {}
 
-    for (let pitch in pitches) {
+    for (let pitch of pitches) {
         statistics[pitch] = 0
     }
 
@@ -81,7 +81,7 @@ function generateBulk () { // eslint-disable-line no-unused-vars
     const noteStatistics = {}
     const intervalStatistics = {}
 
-    for (let pitch in pitches) {
+    for (let pitch of pitches) {
         noteStatistics[pitch] = 0
     }
 
