@@ -69,6 +69,12 @@ export default {
             user: null
         }
     },
+    created () {
+        this.fetchUser(this.id).then((user) => {
+            this.user = user
+            this.loading = false
+        })
+    },
     computed: {
         name () {
             return this.user ? this.user.name : ''
@@ -91,12 +97,6 @@ export default {
         grade () {
             return this.user ? this.user.grade.grade : ''
         }
-    },
-    created () {
-        this.fetchUser(this.id).then((user) => {
-            this.user = user
-            this.loading = false
-        })
     },
     methods: {
         ...mapActions(['fetchUser'])

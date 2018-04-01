@@ -160,7 +160,7 @@
                 <li class="intervals__instructions-list-item">Preizkusil se boš v igri ugotavljanja intervalov</li>
                 <li class="intervals__instructions-list-item">Igra je razdeljena v 3 poglavja, vsako izmed njih ima 8 vprašanj</li>
                 <li class="intervals__instructions-list-item">Za odgovor na posamezno vprašanje imaš na voljo natanko 120 sekund</li>
-                <li class="intervals__instructions-list-item" v-show="game.mode !== 'practice'">Uspešnost reševanja nalog bo vplivala na tvoj položaj na lestvici</li>
+                <li class="intervals__instructions-list-item" v-show="!isPractice">Uspešnost reševanja nalog bo vplivala na tvoj položaj na lestvici</li>
                 <li class="intervals__instructions-list-item">Na koncu igre si lahko ogledaš statistiko</li>
             </ul>
         </div>
@@ -285,7 +285,10 @@ export default {
     },
     computed: {
         ...mapState(['me', 'midi']),
-        ...mapGetters(['getInstrumentChannel'])
+        ...mapGetters(['getInstrumentChannel']),
+        isPractice () {
+            return this.game ? (this.game.mode === 'practice') : false
+        }
     },
     methods: {
         ...mapActions(['fetchMe', 'fetchLevel', 'updateGame', 'finishGameUser', 'generateQuestion', 'storeAnswer', 'setupMidi']),
@@ -401,8 +404,7 @@ export default {
         finishGame () {
             this.finishGameUser({ gameId: this.game.id, userId: this.me.id }).then(() => {
                 this.fetchMe(true).then(() => {
-                    // TODO: route to game statistics
-                    this.$router.push({ name: 'dashboard' })
+                    this.$router.push({ name: 'gameStatistics', params: { id: this.game.id } })
                 })
             })
         }

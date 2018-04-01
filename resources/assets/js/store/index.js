@@ -39,6 +39,7 @@ export default new Vuex.Store({
                 soundfont: 'violin'
             }
         },
+        currentInstruments: new Set([]),
         midi: null
     },
     getters: {
@@ -58,6 +59,9 @@ export default new Vuex.Store({
         },
         setMidi: (state, midi) => {
             state.midi = midi
+        },
+        addToCurrentInstruments: (state, name) => {
+            state.currentInstruments.add(name)
         }
     },
     actions: {
@@ -221,18 +225,36 @@ export default new Vuex.Store({
                     })
             })
         },
+        fetchGameStatistics ({ state }, id) {
+            return new Promise((resolve, reject) => {
+                axios.get('/api/games/' + id + '/statistics')
+                    .then(response => {
+                        resolve(response.data)
+                    })
+                    .catch(error => {
+                        handleError(error)
+                        reject(error)
+                    })
+            })
+        },
         setupMidi ({ commit, state }, force = false) {
             return new Promise((resolve, reject) => {
                 if (!force && state.midi) {
                     resolve()
                 } else {
-                    const instrument = state.instruments[state.me.instrument]
+                    commit('addToCurrentInstruments', state.me.instrument)
+                    const currentInstruments = [...state.currentInstruments]
+
                     MIDI.loadPlugin({
                         soundfontUrl: '/soundfonts/',
-                        instrument: instrument.soundfont,
+                        instruments: currentInstruments.map(name => state.instruments[name].soundfont),
+                        targetFormat: 'mp3',
                         onsuccess: () => {
-                            MIDI.setVolume(instrument.channel, 127)
-                            MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number)
+                            for (let name of currentInstruments) {
+                                let instrument = state.instruments[name]
+                                MIDI.setVolume(instrument.channel, 127)
+                                MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number)
+                            }
                             commit('setMidi', MIDI)
                             resolve()
                         }

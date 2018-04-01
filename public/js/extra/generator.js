@@ -22,6 +22,11 @@ function generateIntervalSequence (output = true) {
 
     const sample = []
     const semitones = []
+    const statistics = {}
+
+    for (let pitch in pitches) {
+        statistics[pitch] = 0
+    }
 
     const nPitches = pitches.length
     let pitch = pitches[Math.floor(Math.random() * nPitches)]
@@ -46,12 +51,14 @@ function generateIntervalSequence (output = true) {
         nSemitones = Math.floor(Math.random() * (range + 1))
         intervalIndex = direction === 'down' ? (pitchIndex - nSemitones) : (pitchIndex + nSemitones)
         pitch = pitches[intervalIndex]
-        if (i >= 2 && sample[i - 2] === sample[i - 1] && sample[i - 1] === pitch) {
+        if (statistics[pitch] === 2 || ((i === 1 || i === nNotes - 1) && sample[i - 1] === pitch)) {
             i--
             continue
         }
         sample.push(pitch)
         semitones.push(nSemitones)
+        statistics[pitch]++
+
     }
 
     const sampleIntervals = semitones.map(n => intervals[n])
@@ -75,8 +82,8 @@ function generateBulk () { // eslint-disable-line no-unused-vars
     const noteStatistics = {}
     const intervalStatistics = {}
 
-    for (let i = 0; i < pitches.length; i++) {
-        noteStatistics[pitches[i]] = 0
+    for (let pitch in pitches) {
+        noteStatistics[pitch] = 0
     }
 
     for (let i = 0; i < Object.keys(intervals).length; i++) {

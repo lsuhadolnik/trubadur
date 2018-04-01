@@ -1,4 +1,4 @@
-<style lang="scss" scoped>
+12<style lang="scss" scoped>
 @import '../../../sass/app';
 
 .keyboard {
@@ -124,13 +124,13 @@ export default {
     },
     mounted () {
         this.$nextTick(() => {
-            window.addEventListener('keydown', (event) => this.keydown(event))
-            window.addEventListener('keyup', (event) => this.keyup(event))
+            window.addEventListener('keydown', this.keydown)
+            window.addEventListener('keyup', this.keyup)
         })
     },
-    destroyed () {
-        window.removeEventListener('keywdown', (event) => this.keydown(event))
-        window.removeEventListener('keyup', (event) => this.keyup(event))
+    beforeDestroy () {
+        window.removeEventListener('keydown', this.keydown)
+        window.removeEventListener('keyup', this.keyup)
     },
     computed: {
         nKeys () {
@@ -165,6 +165,7 @@ export default {
             this.$emit('note-played', key.pitch)
         },
         keydown (event) {
+            event.preventDefault()
             const key = this.getKeyByCode(event.keyCode)
             if (key && !key.pressed) {
                 key.pressed = true
@@ -172,6 +173,7 @@ export default {
             }
         },
         keyup (event) {
+            event.preventDefault()
             const key = this.getKeyByCode(event.keyCode)
             if (key && key.pressed) {
                 key.pressed = false
@@ -185,12 +187,12 @@ export default {
         },
         noteOff (midiPitch) {
             // channel id, note number, delay
-            this.midi.noteOff(this.channel, midiPitch, 0.5)
+            this.midi.noteOff(this.channel, midiPitch, 0.2)
         },
         playNote (pitch, delay) {
             const key = this.getKeyByPitch(pitch)
             this.noteOn(key.midiPitch)
-            setTimeout(() => this.noteOff(key.midiPitch), delay)
+            setTimeout(() => this.noteOff(key.midiPitch), 500)
         }
     }
 }

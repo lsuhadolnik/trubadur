@@ -11,6 +11,12 @@
     background-color : $aero-blue;
 }
 
+.settings__title {
+    font-family : $font-regular;
+    font-size   : 30px;
+    font-weight : bold;
+}
+
 .settings__loader {
     position  : absolute;
     top       : 50%;
@@ -23,12 +29,6 @@
         width  : 75px;
         height : 75px;
     }
-}
-
-.settings__title {
-    font-family : $font-regular;
-    font-size   : 30px;
-    font-weight : bold;
 }
 
 .settings__select-wrapper {

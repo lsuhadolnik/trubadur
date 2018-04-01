@@ -7,6 +7,7 @@ import Icon from 'vue-awesome/components/Icon'
 import App from '../components/App.vue'
 import Dashboard from '../components/Dashboard.vue'
 import GameModes from '../components/GameModes.vue'
+import GameStatistics from '../components/GameStatistics.vue'
 import GameTypes from '../components/GameTypes.vue'
 import Intervals from '../components/Intervals.vue'
 import Leaderboard from '../components/Leaderboard.vue'
@@ -17,8 +18,9 @@ import Test from '../components/Test.vue'
 Vue.component('icon', Icon)
 Vue.component('app', App)
 Vue.component('dashboard', Dashboard)
-Vue.component('games-types', GameTypes)
 Vue.component('game-modes', GameModes)
+Vue.component('game-statistics', GameStatistics)
+Vue.component('games-types', GameTypes)
 Vue.component('intervals', Intervals)
 Vue.component('leaderboard', Leaderboard)
 Vue.component('profile', Profile)
@@ -50,6 +52,12 @@ export default new VueRouter({
             name: 'intervals',
             path: '/game/intervals',
             component: Intervals,
+            props: true
+        },
+        {
+            name: 'gameStatistics',
+            path: '/game/:id/statistics',
+            component: GameStatistics,
             props: true
         },
         {

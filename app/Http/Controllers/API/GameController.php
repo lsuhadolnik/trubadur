@@ -111,7 +111,7 @@ class GameController extends Controller
         }
 
         $game = $response->getOriginalContent();
-        $users = $game->users()->orderBy('points', 'desc')->get(['name', 'rating', 'avatar', 'points']);
+        $users = $game->users()->orderBy('points', 'desc')->get(['id', 'name', 'rating', 'avatar', 'points']);
 
         $answers = Answer::where(['game_id' => $game->id, 'user_id' => $request->user()->id])->get();
         $timeAvg = $answers->avg('time');
@@ -121,13 +121,16 @@ class GameController extends Controller
         $successAvg = $answers->avg('success');
         $successAvgByChapter = [];
         for ($i = 1; $i <= 3; $i++) {
-            $successAvgByChapter[] = $answers->where('question.chapter', $i)->avg('success');
+            $successAvgByChapter[$i] = $answers->where('question.chapter', $i)->avg('success');
         }
-        $successes = $answers->pluck('success')->all();
+        $successByChapter = [];
+        for ($i = 1; $i <= 3; $i++) {
+            $successByChapter[$i] = $answers->where('question.chapter', $i)->pluck('success')->all();
+        }
 
         return response()->json([
             'users'      => $users,
-            'level'      => $game->level->level,
+            'difficulty' => $game->level->level,
             'statistics' => [
                 'timeAvg'             => $timeAvg,
                 'nAdditionsAvg'       => $nAdditionsAvg,
@@ -135,7 +138,7 @@ class GameController extends Controller
                 'nPlaybacksAvg'       => $nPlaybacksAvg,
                 'successAvg'          => $successAvg,
                 'successAvgByChapter' => $successAvgByChapter,
-                'successes'           => $successes
+                'successByChapter'    => $successByChapter
             ]
         ], 200);
     }
