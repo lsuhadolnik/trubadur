@@ -22,21 +22,20 @@
 .dashboard__name {
     width           : 80%;
     padding         : 5px 0;
-    display         : flex;
-    justify-content : center;
+    text-align      : center;
     font-size       : 25px;
 }
 
 .dashboard__level-rating { font-size: 17px; }
 
-.dashboard__notification-label { margin-top: 20px; }
+.dashboard__label { margin-top: 20px; }
 </style>
 
 <!-- override -->
 <style lang="scss">
 @import '../../sass/variables/index';
 
-.button .button__full { background-color: $sea-green !important; }
+.dashboard__area .button .button__full { background-color: $sea-green !important; }
 </style>
 
 <template>
@@ -53,7 +52,7 @@
             </div>
             <div class="dashboard__area">
                 <element-title text="obvestila"></element-title>
-                <label class="dashboard__notification-label">Ni novih obvestil.</label>
+                <label class="dashboard__label">Ni novih obvestil.</label>
             </div>
         </div>
 

@@ -15,7 +15,7 @@
     position        : absolute;
     width           : 100%;
     height          : 100%;
-    border          : 2px solid black;
+    border          : 3px solid black;
     border-radius   : 6px;
     display         : flex;
     align-items     : center;
@@ -24,13 +24,12 @@
 }
 
 .button__full {
-    position         : absolute;
-    top              : 6px;
-    left             : 6px;
-    width            : 100%;
-    height           : 100%;
-    border-radius    : 6px;
-    background-color : $white;
+    position      : absolute;
+    top           : 6px;
+    left          : 6px;
+    width         : 100%;
+    height        : 100%;
+    border-radius : 6px;
 }
 </style>
 

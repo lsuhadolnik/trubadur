@@ -16,6 +16,7 @@
     top              : 0;
     left             : 0;
     background-color : $sunglow;
+    z-index          : 100;
 }
 
 .header__menu-button {
@@ -39,7 +40,7 @@
 }
 
 .menu {
-    position         : absolute;
+    position         : fixed;
     top              : 70px;
     left             : -$menu-width;
     width            : $menu-width;
@@ -81,8 +82,10 @@
     cursor           : pointer;
     background-color : transparent;
 
-    &:hover, &--active { background-color: $golden-tainoi; }
+    &:hover { background-color: $golden-tainoi; }
 }
+
+.menu-item--active { background-color: $golden-tainoi; }
 
 .menu__image {
     width  : 65px;
@@ -103,7 +106,7 @@
             <div class="header__title" @click="dashboard()">TRUBADUR</div>
         </div>
         <div class="menu" :class="{ 'menu--open': isMenuInitialized && isMenuOpened, 'menu--close': isMenuInitialized && !isMenuOpened }">
-            <div class="menu__item" v-for="item in menuItems" @click="open(item)">
+            <div class="menu__item" :class="{ 'menu-item--active': isItemActive(item) }" v-for="item in menuItems" @click="open(item)">
                 <img class="menu__image" :src="'/images/menu/' + item.image + '.svg'"></img>
                 <label class="menu__label">{{ item.name | uppercase }}</label>
             </div>
@@ -127,11 +130,11 @@ export default {
             isMenuInitialized: false,
             isMenuOpened: false,
             menuItems: [
-                { name: 'igra', route: 'gameTypes', image: 'game', active: false },
-                { name: 'profil', route: 'profile', image: 'profile', active: false },
-                { name: 'lestvica', route: 'leaderboard', image: 'leaderboard', active: false },
-                { name: 'nastavitve', route: 'settings', image: 'settings', active: false },
-                { name: 'odjava', route: 'logout', image: 'logout', active: false }
+                { name: 'igra', route: 'gameTypes', image: 'game' },
+                { name: 'profil', route: 'profile', image: 'profile' },
+                { name: 'lestvica', route: 'leaderboard', image: 'leaderboard' },
+                { name: 'nastavitve', route: 'settings', image: 'settings' },
+                { name: 'odjava', route: 'logout', image: 'logout' }
             ]
         }
     },
@@ -156,6 +159,9 @@ export default {
             this.isMenuInitialized = true
             this.isMenuOpened = !this.isMenuOpened
             this.scroll()
+        },
+        isItemActive (item) {
+            return item.route === this.$route.name
         },
         open (item) {
             let func

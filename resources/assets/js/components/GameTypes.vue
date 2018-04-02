@@ -1,56 +1,85 @@
 <style lang="scss" scoped>
 @import '../../sass/variables/index';
 
-.games { width: 100%; }
+$choose-height: 170px;
 
-.games__command-wrapper {
-    padding        : 20px 0;
+.game-types { width: 100%; }
+
+.game-types__content {
+    width          : 100%;
+    height         : 100%;
     display        : flex;
     align-items    : center;
     flex-direction : column;
 }
 
-.games__command {
-    width                 : calc(100vw / 3);
-    height                : 50px;
-    margin                : 10px 0;
-    padding-top           : 5px;
-    display               : flex;
-    justify-content       : center;
-    align-items           : center;
-    font-size             : 20px;
-    font-family           : $font-title;
-    background-color      : $blue;
-    color                 : $black;
-    opacity               : 0.8;
-    -webkit-touch-callout : none;
-    -webkit-user-select   : none;
-    -khtml-user-select    : none;
-    -moz-user-select      : none;
-    -ms-user-select       : none;
-    user-select           : none;
-    cursor                : pointer;
-    transition            : opacity 0.1s linear;
+.game-types__choose {
+    width          : 100%;
+    height         : $choose-height;
+    padding-top    : 20px;
+    display        : flex;
+    align-items    : center;
+    flex-direction : column;
+}
 
-    @include breakpoint-tablet { opacity : 1; }
-    @include breakpoint-phone  { opacity : 1; }
+.game-types__label { margin: 20px 0 5px 0; }
 
-    &:hover { opacity: 1; }
+.game-types__arrow {
+    width  : 30px;
+    height : 30px;
+}
+
+.game-types__options {
+    width            : 100%;
+    min-height       : calc(100vh - #{$header-height} - #{$choose-height});
+    padding          : 20px 0;
+    display          : flex;
+    align-items      : center;
+    flex-direction   : column;
+    background-color : $sunglow;
 }
 </style>
 
+<!-- override -->
+<style lang="scss">
+@import '../../sass/variables/index';
+
+.game-types__choose .title { font-size: 25px; }
+.game-types__options .button .button__full { background-color: $golden-tainoi !important; }
+</style>
+
 <template>
-    <div class="games">
-        <div class="games__command-wrapper">
-            <div class="games__command" @click="open('gameModes', { type: 'intervals' })">Intervali</div>
+    <div class="game-types">
+        <div class="game-types__content">
+            <div class="game-types__choose">
+                <element-title text="izberi igro"></element-title>
+                <label class="game-types__label">Izberi področje igre</label>
+                <img class="game-types__arrow" id="arrow"/>
+            </div>
+            <div class="game-types__options">
+                <element-button text="intervali" @click.native="reroute('gameModes', { type: 'intervals' })"></element-button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    data () {
+        return {
+            loading: true
+        }
+    },
+    mounted () {
+        this.$nextTick(() => {
+            const arrow = this.$el.querySelector('#arrow')
+            const context = this
+            arrow.onload = () => { context.loading = false }
+            arrow.src = '/images/arrows/down.svg'
+        })
+    },
     methods: {
-        open (name, params = {}) {
+        reroute (name, params = {}) {
             this.$router.push({ name: name, params: params })
         }
     }
