@@ -1,14 +1,11 @@
 <style lang="scss" scoped>
-@import '../../sass/app';
+@import '../../sass/variables/index';
 
 .settings {
     width            : 100%;
-    height           : calc(100% - 50px);
-    padding          : 10px;
     display          : flex;
     align-items      : center;
     flex-direction   : column;
-    background-color : $aero-blue;
 }
 
 .settings__title {
@@ -34,7 +31,6 @@
 .settings__select-wrapper {
     width            : 100%;
     height           : 100%;
-    position         : relative;
     border           : 1px solid $dolphin-transparent;
     background-color : transparent;
     cursor           : pointer;
@@ -43,11 +39,11 @@
     &:hover:not(.settings__select-wrapper--disabled) { border-color: $blue; }
 
     &:after {
-        position         : absolute;
+        position         : relative;
         content          : '';
         width            : 0;
         height           : 0;
-        top              : 43%;
+        top              : -50%;
         left             : 94%;
         border           : 5px solid transparent;
         border-top-color : $black;
@@ -98,10 +94,9 @@
     border-radius      : 5px;
     background-color   : $silver-chalice;
     outline            : none;
-    opacity            : 0.7;
+    -moz-appearance    : none;
     -webkit-appearance : none;
     appearance         : none;
-    transition         : opacity 0.2s linear;
 
     &:hover { opacity: 1; }
 
@@ -110,6 +105,7 @@
         height             : 25px;
         border-radius      : 50%;
         background-color   : $egg-blue;
+        -moz-appearance    : none;
         -webkit-appearance : none;
         appearance         : none;
         cursor             : pointer;

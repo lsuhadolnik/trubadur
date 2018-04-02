@@ -50,7 +50,7 @@ class UserController extends Controller
             'instrument'          => 'string|in:clarinet,guitar,piano,trumpet,violin',
             'note_playback_delay' => 'integer|min:500|max:2500',
             'clef'                => 'string|in:violin,bass',
-            'avatar'              => 'string',
+            'avatar'              => 'image|max:16384|mimes:jpeg,bmp,png,svg+xml',
             'school_id'           => 'required|integer',
             'grade_id'            => 'required|integer',
             'badges'              => 'array'
@@ -88,7 +88,7 @@ class UserController extends Controller
             'instrument'          => 'string|in:clarinet,guitar,piano,trumpet,violin',
             'note_playback_delay' => 'integer|min:500|max:2500',
             'clef'                => 'string|in:violin,bass',
-            'avatar'              => 'string',
+            'avatar'              => 'image|max:16384|mimes:jpeg,bmp,png,svg+xml',
             'school_id'           => 'integer',
             'grade_id'            => 'integer',
             'badges'              => 'array'

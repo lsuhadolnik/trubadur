@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-@import '../../../sass/app';
+@import '../../../sass/variables/index';
 
 .stave__svg {
     width    : 45vw;
@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import Note from './Note.vue'
 import { numberProp, stringProp, objectProp } from '../../utils/propValidators'
 
 export default {
@@ -118,9 +117,6 @@ export default {
         isNatural (pitch) {
             return !this.isSharp(pitch) && !this.isFlat(pitch)
         }
-    },
-    components: {
-        note: Note
     }
 }
 </script>

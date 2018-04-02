@@ -1,14 +1,11 @@
 <style lang="scss" scoped>
-@import '../../sass/app';
+@import '../../sass/variables/index';
 
 .leaderboard {
     width            : 100%;
-    height           : calc(100% - 50px);
-    padding          : 10px;
     display          : flex;
     align-items      : center;
     flex-direction   : column;
-    background-color : $aero-blue;
 }
 
 .leaderboard__loader {
@@ -80,7 +77,7 @@
                 <tbody>
                     <tr class="leaderboard__table-row leaderboard__table-row--body" @click="open('profile', { id: user.id })" v-for="user in users">
                         <td class="leaderboard__table-column leaderboard__table-column--body">
-                            <img class="leaderboard__avatar" :src="user.avatar"/>
+                            <img class="leaderboard__avatar" :id="'avatar_' + user.id"/>
                         </td>
                         <td class="leaderboard__table-column leaderboard__table-column--body">{{ user.name }}</td>
                         <td class="leaderboard__table-column leaderboard__table-column--body">{{ user.rating }}</td>
@@ -102,10 +99,25 @@ export default {
             users: []
         }
     },
-    created () {
-        this.fetchUsers({ per_page: 10, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then((users) => {
-            this.users = users.data
-            this.loading = false
+    mounted () {
+        this.$nextTick(() => {
+            this.fetchUsers({ per_page: 10, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then((users) => {
+                this.users = users.data
+
+                this.$nextTick(() => {
+                    const context = this
+                    let nLoaded = 0
+                    for (let user of this.users) {
+                        let avatar = this.$el.querySelector('#avatar_' + user.id)
+                        avatar.onload = () => {
+                            if (++nLoaded === context.users.length) {
+                                context.loading = false
+                            }
+                        }
+                        avatar.src = user.avatar
+                    }
+                })
+            })
         })
     },
     methods: {

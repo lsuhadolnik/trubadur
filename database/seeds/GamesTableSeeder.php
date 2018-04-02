@@ -66,8 +66,8 @@ class GamesTableSeeder extends DatabaseSeeder
             foreach ($users as $userId) {
                 $finished = (rand(0, 100) / 100) < 0.8;
                 $game->users()->attach($userId, [
-                    // 'points'   => $finished ? rand(0, 20) : -5,
-                    // 'finished' => $finished
+                    'points'   => $finished ? rand(0, 20) : -5,
+                    'finished' => $finished
                 ]);
 
                 foreach ($questions as $question) {

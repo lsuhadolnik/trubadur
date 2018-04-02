@@ -1,5 +1,5 @@
 12<style lang="scss" scoped>
-@import '../../../sass/app';
+@import '../../../sass/variables/index';
 
 .keyboard {
     width  : 45vw;
@@ -129,6 +129,7 @@ export default {
         })
     },
     beforeDestroy () {
+        this.$parent.$off('play-note', this.playNote)
         window.removeEventListener('keydown', this.keydown)
         window.removeEventListener('keyup', this.keyup)
     },

@@ -1,32 +1,34 @@
 <style lang="scss" scoped>
-@import '../../sass/app';
+@import '../../sass/variables/index';
 
 .app {
-    width  : 100%;
-    height : 100%;
+    width             : 100%;
+    height            : 100%;
+    background-image  : url('/images/backgrounds/sparse.png');
+    background-repeat : repeat;
 }
+
+.app--sticky { padding-top: $header-height; }
 </style>
 
 <template>
     <div class="app">
-        <nav-header></nav-header>
-        <router-view></router-view>
+        <header-menu @sticky-header="setStickyHeader"></header-menu>
+        <router-view :class="{ 'app--sticky': isHeaderSticky }"></router-view>
     </div>
 </template>
 
 <script>
-import NavHeader from './NavHeader.vue'
-import { mapActions } from 'vuex'
-
 export default {
-    created () {
-        this.fetchMe()
+    data () {
+        return {
+            isHeaderSticky: false
+        }
     },
     methods: {
-        ...mapActions(['fetchMe'])
-    },
-    components: {
-        navHeader: NavHeader
+        setStickyHeader (value) {
+            this.isHeaderSticky = value
+        }
     }
 }
 </script>

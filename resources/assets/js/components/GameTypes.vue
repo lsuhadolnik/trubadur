@@ -1,11 +1,7 @@
 <style lang="scss" scoped>
-@import '../../sass/app';
+@import '../../sass/variables/index';
 
-.games {
-    width            : 100%;
-    height           : calc(100% - 50px);
-    background-color : $aero-blue;
-}
+.games { width: 100%; }
 
 .games__command-wrapper {
     padding        : 20px 0;

@@ -14,18 +14,21 @@
 }
 
 @font-face {
-  font-family: 'Bebas Neue';
-  src: url("/fonts/BebasNeue.woff2") format("woff2");
+  font-family: 'GothamRounded-Bold';
+  src: url("/fonts/GothamRounded-Bold.eot");
+  src: url("/fonts/GothamRounded-Bold.eot?#iefix") format("embedded-opentype"), url("/fonts/GothamRounded-Bold.woff2") format("woff2"), url("/fonts/GothamRounded-Bold.woff") format("woff"), url("/fonts/GothamRounded-Bold.ttf") format("truetype"), url("/fonts/GothamRounded-Bold.svg#Gotham-Bold") format("svg");
 }
 
 @font-face {
-  font-family: 'Montserrat Light';
-  src: url("/fonts/Montserrat-Light.woff2") format("woff2");
+  font-family: 'GothamRounded-Book';
+  src: url("/fonts/GothamRounded-Book.eot");
+  src: url("/fonts/GothamRounded-Book.eot?#iefix") format("embedded-opentype"), url("/fonts/GothamRounded-Book.woff2") format("woff2"), url("/fonts/GothamRounded-Book.woff") format("woff"), url("/fonts/GothamRounded-Book.ttf") format("truetype"), url("/fonts/GothamRounded-Book.svg#Gotham-Medium") format("svg");
 }
 
 @font-face {
-  font-family: 'Montserrat Regular';
-  src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
+  font-family: 'GothamRounded-Light';
+  src: url("/fonts/GothamRounded-Light.eot");
+  src: url("/fonts/GothamRounded-Light.eot?#iefix") format("embedded-opentype"), url("/fonts/GothamRounded-Light.woff2") format("woff2"), url("/fonts/GothamRounded-Light.woff") format("woff"), url("/fonts/GothamRounded-Light.ttf") format("truetype"), url("/fonts/GothamRounded-Light.svg#Gotham-Light") format("svg");
 }
 
 .login {
@@ -70,7 +73,7 @@
       -ms-flex-pack: center;
           justify-content: center;
   font-size: 75px;
-  font-family: "Bebas Neue", Verdana;
+  font-family: "GothamRounded-Bold", Verdana;
 }
 
 .login__form-content {
@@ -98,7 +101,7 @@
   width: 100%;
   margin-bottom: 10px;
   font-size: 26px;
-  font-family: "Bebas Neue", Verdana;
+  font-family: "GothamRounded-Bold", Verdana;
 }
 
 .login__form-group--link {
@@ -112,7 +115,7 @@
   background-color: #ffffff;
   color: #000000;
   font-size: 15px;
-  font-family: "Montserrat Regular";
+  font-family: "GothamRounded-Book";
   border: 1px solid rgba(119, 119, 128, 0.33);
   outline: none;
 }
@@ -123,22 +126,22 @@
 
 .login__form-input::-webkit-input-placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .login__form-input:-ms-input-placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .login__form-input::-ms-input-placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .login__form-input::placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .login__form-checkbox-label {
@@ -149,7 +152,7 @@
       -ms-flex-align: center;
           align-items: center;
   font-size: 15px;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
   cursor: pointer;
 }
 
@@ -163,12 +166,12 @@
 
 .login__form-text {
   font-size: 15px;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .login__form-link {
   font-size: 15px;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .login__button-group {
@@ -180,7 +183,7 @@
   height: 50px;
   padding-top: 5px;
   font-size: 25px;
-  font-family: "Bebas Neue";
+  font-family: "GothamRounded-Bold";
   border: 0;
   opacity: 0.7;
   cursor: pointer;
@@ -225,29 +228,14 @@
   margin-bottom: 3px;
   color: #fe664e;
   font-size: 13px;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .login__status {
   margin-bottom: 3px;
   color: #7cbc42;
   font-size: 13px;
-  font-family: "Montserrat Light";
-}
-
-@font-face {
-  font-family: 'Bebas Neue';
-  src: url("/fonts/BebasNeue.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: 'Montserrat Light';
-  src: url("/fonts/Montserrat-Light.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: 'Montserrat Regular';
-  src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
+  font-family: "GothamRounded-Light";
 }
 
 .register {
@@ -292,7 +280,7 @@
       -ms-flex-pack: center;
           justify-content: center;
   font-size: 75px;
-  font-family: "Bebas Neue", Verdana;
+  font-family: "GothamRounded-Bold", Verdana;
 }
 
 .register__form-content {
@@ -324,7 +312,7 @@
   width: 100%;
   margin-bottom: 10px;
   font-size: 26px;
-  font-family: "Bebas Neue", Verdana;
+  font-family: "GothamRounded-Bold", Verdana;
 }
 
 .register__form-input {
@@ -334,7 +322,7 @@
   background-color: #ffffff;
   color: #000000;
   font-size: 15px;
-  font-family: "Montserrat Regular";
+  font-family: "GothamRounded-Book";
   border: 1px solid rgba(119, 119, 128, 0.33);
   outline: none;
 }
@@ -345,32 +333,32 @@
 
 .register__form-input::-webkit-input-placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .register__form-input:-ms-input-placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .register__form-input::-ms-input-placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .register__form-input::placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .register__form-text {
   font-size: 15px;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .register__form-link {
   font-size: 15px;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .register__button-group {
@@ -382,7 +370,7 @@
   height: 50px;
   padding-top: 5px;
   font-size: 25px;
-  font-family: "Bebas Neue";
+  font-family: "GothamRounded-Bold";
   border: 0;
   opacity: 0.7;
   cursor: pointer;
@@ -427,29 +415,14 @@
   margin-bottom: 3px;
   color: #fe664e;
   font-size: 13px;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .register__status {
   margin-bottom: 3px;
   color: #7cbc42;
   font-size: 13px;
-  font-family: "Montserrat Light";
-}
-
-@font-face {
-  font-family: 'Bebas Neue';
-  src: url("/fonts/BebasNeue.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: 'Montserrat Light';
-  src: url("/fonts/Montserrat-Light.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: 'Montserrat Regular';
-  src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
+  font-family: "GothamRounded-Light";
 }
 
 .email {
@@ -494,7 +467,7 @@
       -ms-flex-pack: center;
           justify-content: center;
   font-size: 75px;
-  font-family: "Bebas Neue", Verdana;
+  font-family: "GothamRounded-Bold", Verdana;
 }
 
 .email__form-content {
@@ -522,7 +495,7 @@
   width: 100%;
   margin-bottom: 10px;
   font-size: 26px;
-  font-family: "Bebas Neue", Verdana;
+  font-family: "GothamRounded-Bold", Verdana;
 }
 
 .email__form-input {
@@ -532,7 +505,7 @@
   background-color: #ffffff;
   color: #000000;
   font-size: 15px;
-  font-family: "Montserrat Regular";
+  font-family: "GothamRounded-Book";
   border: 1px solid rgba(119, 119, 128, 0.33);
   outline: none;
 }
@@ -543,22 +516,22 @@
 
 .email__form-input::-webkit-input-placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .email__form-input:-ms-input-placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .email__form-input::-ms-input-placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .email__form-input::placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .email__button-group {
@@ -576,7 +549,7 @@
   height: 50px;
   padding-top: 5px;
   font-size: 25px;
-  font-family: "Bebas Neue";
+  font-family: "GothamRounded-Bold";
   border: 0;
   opacity: 0.7;
   cursor: pointer;
@@ -636,29 +609,14 @@
   margin-bottom: 3px;
   color: #fe664e;
   font-size: 13px;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .email__status {
   margin-bottom: 3px;
   color: #7cbc42;
   font-size: 13px;
-  font-family: "Montserrat Light";
-}
-
-@font-face {
-  font-family: 'Bebas Neue';
-  src: url("/fonts/BebasNeue.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: 'Montserrat Light';
-  src: url("/fonts/Montserrat-Light.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: 'Montserrat Regular';
-  src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
+  font-family: "GothamRounded-Light";
 }
 
 .reset {
@@ -703,7 +661,7 @@
       -ms-flex-pack: center;
           justify-content: center;
   font-size: 75px;
-  font-family: "Bebas Neue", Verdana;
+  font-family: "GothamRounded-Bold", Verdana;
 }
 
 .reset__form-content {
@@ -735,7 +693,7 @@
   width: 100%;
   margin-bottom: 10px;
   font-size: 26px;
-  font-family: "Bebas Neue", Verdana;
+  font-family: "GothamRounded-Bold", Verdana;
 }
 
 .reset__form-input {
@@ -745,7 +703,7 @@
   background-color: #ffffff;
   color: #000000;
   font-size: 15px;
-  font-family: "Montserrat Regular";
+  font-family: "GothamRounded-Book";
   border: 1px solid rgba(119, 119, 128, 0.33);
   outline: none;
 }
@@ -756,22 +714,22 @@
 
 .reset__form-input::-webkit-input-placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .reset__form-input:-ms-input-placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .reset__form-input::-ms-input-placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .reset__form-input::placeholder {
   color: #777780;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 .reset__button-group {
@@ -789,7 +747,7 @@
   height: 50px;
   padding-top: 5px;
   font-size: 25px;
-  font-family: "Bebas Neue";
+  font-family: "GothamRounded-Bold";
   border: 0;
   opacity: 0.7;
   cursor: pointer;
@@ -847,7 +805,7 @@
   margin-bottom: 3px;
   color: #fe664e;
   font-size: 13px;
-  font-family: "Montserrat Light";
+  font-family: "GothamRounded-Light";
 }
 
 * {
@@ -873,23 +831,42 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #CAFCD8;
-  font-family: "Montserrat Regular";
+  background-color: #FFD15E;
+  color: #000000;
+  font-family: "GothamRounded-Bold", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 button:focus {
   outline: 0;
 }
 
-input {
-  -webkit-user-select: auto;
-  -moz-user-select: auto;
-  -ms-user-select: auto;
-  user-select: auto;
-}
-
 #app {
   width: 100%;
   height: 100%;
+}
+
+.icon {
+  color: #000000;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.1s linear;
+  transition: opacity 0.1s linear;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .icon {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .icon {
+    opacity: 1;
+  }
+}
+
+.icon:hover {
+  opacity: 1;
 }
 

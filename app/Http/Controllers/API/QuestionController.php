@@ -106,12 +106,12 @@ class QuestionController extends Controller
      */
     public function generate(Request $request)
     {
-        if ($request->has('game_id') && $request->has('chapter') && $request->has('number')) {
-            $question = Question::where($request->all())->first();
-            if ($question) {
-                return response()->json($question, 201);
-            }
-        }
+        // if ($request->has('game_id') && $request->has('chapter') && $request->has('number')) {
+        //     $question = Question::where($request->all())->first();
+        //     if ($question) {
+        //         return response()->json($question, 201);
+        //     }
+        // }
 
         $response = $this->store($request);
         if ($response->status() != 201) {
@@ -156,11 +156,18 @@ class QuestionController extends Controller
         $pitches = ['A#3', 'B3', 'C4', 'C#4', 'D4', 'D#4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'A4', 'A#4', 'B4', 'C5', 'C#5'];
 
         $sample = [];
+        $pitchOccurrences = [];
+
+        foreach ($pitches as $pitch) {
+            $pitchOccurrences[$pitch] = 0;
+        }
+
         $pitchIndex = 0;
         $topRange = 0;
         $bottomRange = 0;
-        $range = 0;
+        $rangeSum = 0;
         $direction = '';
+        $range = 0;
         $nSemitones = 0;
         $intervalIndex = 0;
 
@@ -175,9 +182,10 @@ class QuestionController extends Controller
             // define possible range (steps allowed to the top / bottom)
             $topRange = count($pitches) - $pitchIndex - 1;
             $bottomRange = $pitchIndex;
+            $rangeSum = $topRange + $bottomRange;
 
-            // randomly choose direction of the interval
-            $direction = rand(0, 1) ? 'down' : 'up';
+            // choose direction of the interval by using weighted random
+            $direction = $this->weightedRandom(['down' => $bottomRange / $rangeSum, 'up' => $topRange / $rangeSum]);
 
             // potentially limit the range of the interval with the level's predefined range
             $range = $direction == 'down' ? min($levelRange, $bottomRange) : min($levelRange, $topRange);
@@ -186,11 +194,40 @@ class QuestionController extends Controller
             $nSemitones = rand(0, $range);
             $intervalIndex = $direction == 'down' ? ($pitchIndex - $nSemitones) : ($pitchIndex + $nSemitones);
 
-            // based on the range find the pitch and add it to the sample
+            // based on the range find the pitch
             $pitch = $pitches[$intervalIndex];
+
+            // check if the pitch satisfies the defined constraints
+            if ($pitchOccurrences[$pitch] === 2 || (($i === 1 || $i === $nNotes - 1) && $sample[$i - 1] === $pitch)) {
+                $i--;
+                continue;
+            }
+
+            // add the pitch to the sample
             $sample[] = $pitch;
+
+            // keep track of how many times each of the pitches already occurred in the sample
+            $pitchOccurrences[$pitch]++;
         }
 
         return implode(',', $sample);
+    }
+
+    /**
+     * Generate a weighted random value based on the probabilities of each key.
+     *
+     * @param  array  $options
+     * @return mixed
+     */
+    private function weightedRandom($options)
+    {
+        $sum = 0;
+        $rand = rand(0, 1000) / 1000;
+        foreach ($options as $option => $probability) {
+            $sum += $probability;
+            if ($rand <= $sum) {
+                return $option;
+            }
+        }
     }
 }

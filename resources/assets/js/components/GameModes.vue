@@ -1,11 +1,7 @@
 <style lang="scss" scoped>
-@import '../../sass/app';
+@import '../../sass/variables/index';
 
-.game-modes {
-    width            : 100%;
-    height           : calc(100% - 50px);
-    background-color : $aero-blue;
-}
+.game-modes { width: 100%; }
 
 .game-modes__loader {
     position  : absolute;

@@ -1,18 +1,15 @@
 <style lang="scss" scoped>
-@import '../../sass/app';
+@import '../../sass/variables/index';
 
 .profile {
     width            : 100%;
-    height           : calc(100% - 50px);
-    padding          : 10px;
     display          : flex;
     align-items      : center;
     flex-direction   : column;
-    background-color : $aero-blue;
 }
 
 .profile__title {
-    font-family : $font-regular;
+    font-family : $font-title;
     font-size   : 30px;
     font-weight : bold;
 }
@@ -32,7 +29,7 @@
 }
 
 .profile__user-info {
-    font-family : $font-regular;
+    font-family : $font-title;
     font-size   : 20px;
 }
 
@@ -49,7 +46,7 @@
         <div v-show="!loading">
             <div class="profile__user-info">Ime: {{ name }}</div>
             <div class="profile__user-info">E-mail: {{ email }}</div>
-            <img class="profile__avatar" :src="avatar"/>
+            <img class="profile__avatar" id="avatar"/>
             <div class="profile__user-info">Šola: {{ school }}</div>
             <div class="profile__user-info">Razred: {{ grade }}</div>
             <div class="profile__user-info">Št. točk: {{ rating }}</div>
@@ -69,10 +66,16 @@ export default {
             user: null
         }
     },
-    created () {
-        this.fetchUser(this.id).then((user) => {
-            this.user = user
-            this.loading = false
+    mounted () {
+        this.$nextTick(() => {
+            this.fetchUser(this.id).then((user) => {
+                this.user = user
+
+                const avatar = this.$el.querySelector('#avatar')
+                const context = this
+                avatar.onload = () => { context.loading = false }
+                avatar.src = user.avatar
+            })
         })
     },
     computed: {
@@ -81,9 +84,6 @@ export default {
         },
         email () {
             return this.user ? this.user.email : ''
-        },
-        avatar () {
-            return this.user ? this.user.avatar : ''
         },
         rating () {
             return this.user ? this.user.rating : 0

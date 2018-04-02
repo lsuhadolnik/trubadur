@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-@import '../../../sass/app';
+@import '../../../sass/variables/index';
 
 .note__hidden { display: none; }
 

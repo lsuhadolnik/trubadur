@@ -1,0 +1,132 @@
+@import '../variables/index';
+
+$time-button-hover: 0.1s * $time-factor;
+
+.email {
+    width   : 100%;
+    height  : 100%;
+    display : flex;
+}
+
+.email__logo {
+    width             : calc(100% - 400px);
+    height            : 100%;
+    background-image  : url('/images/troubadours.jpg');
+    background-origin : content-box;
+    background-repeat : no-repeat;
+    background-size   : cover;
+}
+
+.email__form {
+    width          : 400px;
+    padding        : 75px 25px;
+    display        : flex;
+    align-items    : center;
+    flex-direction : column;
+}
+
+.email__form-title {
+    width           : 100%;
+    margin-bottom   : 30px;
+    display         : flex;
+    justify-content : center;
+    font-size       : 75px;
+    font-family     : $font-title, Verdana;
+}
+
+.email__form-content {
+    width          : 275px;
+    display        : flex;
+    flex-direction : column;
+}
+
+.email__form-group {
+    margin-bottom  : 15px;
+    display        : flex;
+    align-items    : center;
+}
+
+.email__form-subtitle {
+    width         : 100%;
+    margin-bottom : 10px;
+    font-size     : 26px;
+    font-family   : $font-title, Verdana;
+}
+
+.email__form-input {
+    width            : 100%;
+    height           : 35px;
+    padding          : 5px;
+    background-color : $white;
+    color            : $black;
+    font-size        : 15px;
+    font-family      : $font-regular;
+    border           : 1px solid $dolphin-transparent;
+    outline          : none;
+}
+
+.email__form-input--error { border-color: $neon-red; }
+
+.email__form-input::placeholder {
+    color       : $dolphin;
+    font-family : $font-light;
+}
+
+.email__button-group {
+    display         : flex;
+    justify-content : space-between;
+    margin-top      : 30px;
+}
+
+.email__button {
+    width       : 125px;
+    height      : 50px;
+    padding-top : 5px;
+    font-size   : 25px;
+    font-family : $font-title;
+    border      : 0;
+    opacity     : 0.7;
+    cursor      : pointer;
+    transition  : all $time-button-hover linear;
+
+    @include breakpoint-tablet { opacity : 1; }
+    @include breakpoint-phone  { opacity : 1; }
+
+    &:hover { opacity: 1; }
+}
+
+.email__button_cancel {
+    display          : flex;
+    align-items      : center;
+    justify-content  : center;
+    background-color : $neon-red;
+    color            : $black;
+    text-decoration  : none;
+}
+
+.email__button_submit {
+    background-color : $pale-green;
+    color            : $black;
+}
+
+.email__error-group, .email__status-group { margin-top: 20px; }
+
+.email__error-list, .email__status-list {
+    margin          : 0;
+    padding         : 0;
+    list-style-type : none;
+}
+
+.email__error {
+    margin-bottom : 3px;
+    color         : $neon-red;
+    font-size     : 13px;
+    font-family   : $font-light;
+}
+
+.email__status {
+    margin-bottom : 3px;
+    color         : $green;
+    font-size     : 13px;
+    font-family   : $font-light;
+}

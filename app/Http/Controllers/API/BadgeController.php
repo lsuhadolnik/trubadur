@@ -45,7 +45,7 @@ class BadgeController extends Controller
         $data = [
             'name'        => 'required|string|unique:badges',
             'description' => 'required|string',
-            'image'       => 'required|image|max:16384|mimes:jpeg,bmp,png',
+            'image'       => 'required|image|max:16384|mimes:jpeg,bmp,png,svg+xml',
             'users'       => 'array'
         ];
 
@@ -76,7 +76,7 @@ class BadgeController extends Controller
         $data = [
             'name'        => ['string', Rule::unique('badges')->ignore($id)],
             'description' => 'string',
-            'image'       => 'image|max:16384|mimes:jpeg,bmp,png',
+            'image'       => 'image|max:16384|mimes:jpeg,bmp,png,svg+xml',
             'users'       => 'array'
         ];
 

@@ -25,6 +25,7 @@ class UsersTableSeeder extends DatabaseSeeder
             $user->email = $item['email'];
             $user->password = bcrypt($item['password']);
             $user->verified = true;
+            $user->rating = rand(500, 2500);
             $user->instrument = $item['instrument'];
             $user->note_playback_delay = $item['note_playback_delay'];
             $user->clef = $item['clef'];

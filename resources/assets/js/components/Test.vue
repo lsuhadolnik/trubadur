@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-@import '../../sass/app';
+@import '../../sass/variables/index';
 
 .test {
     width            : 100%;

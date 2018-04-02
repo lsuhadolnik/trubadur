@@ -20,7 +20,7 @@ class BadgesTableSeeder extends DatabaseSeeder
 
             $badge->name = $item['name'];
             $badge->description = $item['description'];
-            $badge->image = '/storage/images/' . $item['image'] . '.png';
+            $badge->image = '/images/badges/' . $item['image'] . '.svg';
 
             $badge->saveOrFail();
         }

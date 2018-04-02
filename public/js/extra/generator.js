@@ -43,18 +43,25 @@ function generateIntervalSequence (output = true) {
 
     for (let i = 1; i < nNotes; i++) {
         pitchIndex = pitches.indexOf(pitch)
+
         topRange = nPitches - pitchIndex - 1
         bottomRange = pitchIndex
         rangeSum = topRange + bottomRange
+
         direction = weightedRand({ 'down': bottomRange / rangeSum, 'up': topRange / rangeSum })
+
         range = direction === 'down' ? Math.min(levelRange, bottomRange) : Math.min(levelRange, topRange)
+
         nSemitones = Math.floor(Math.random() * (range + 1))
         intervalIndex = direction === 'down' ? (pitchIndex - nSemitones) : (pitchIndex + nSemitones)
+
         pitch = pitches[intervalIndex]
+
         if (statistics[pitch] === 2 || ((i === 1 || i === nNotes - 1) && sample[i - 1] === pitch)) {
             i--
             continue
         }
+
         sample.push(pitch)
         semitones.push(nSemitones)
         statistics[pitch]++

@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->enum('instrument', ['clarinet', 'guitar', 'piano', 'trumpet', 'violin'])->default('piano');
             $table->integer('note_playback_delay')->default(2000);
             $table->enum('clef', ['violin', 'bass'])->default('violin');
-            $table->string('avatar')->default('/storage/images/avatar.svg');
+            $table->string('avatar')->default('/images/avatars/default.svg');
             $table->integer('school_id')->unsigned();
             $table->integer('grade_id')->unsigned();
             $table->timestamps();

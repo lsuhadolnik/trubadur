@@ -1,14 +1,11 @@
 <style lang="scss" scoped>
-@import '../../sass/app';
+@import '../../sass/variables/index';
 
 .game-statistics {
     width            : 100%;
-    height           : calc(100% - 50px);
-    padding          : 10px;
     display          : flex;
     align-items      : center;
     flex-direction   : column;
-    background-color : $aero-blue;
 }
 
 .game-statistics__title {

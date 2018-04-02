@@ -1,11 +1,7 @@
 <style lang="scss" scoped>
-@import '../../sass/app';
+@import '../../sass/variables/index';
 
-.intervals {
-    width            : 100%;
-    height           : calc(100% - 50px);
-    background-color : $aero-blue;
-}
+.intervals { width: 100%; }
 
 .intervals__loader {
     position  : absolute;
@@ -193,8 +189,6 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import Stave from './music/Stave'
-import Keyboard from './music/Keyboard.vue'
 
 export default {
     props: ['game'],
@@ -276,7 +270,7 @@ export default {
                 'color-path': '#A9CF54',
                 'color-alert': '#FE664E',
                 'font-size': 40,
-                'font-family': 'Bebas Neue'
+                'font-family': 'GothamRounded-Bold'
             })
         })
     },
@@ -408,10 +402,6 @@ export default {
                 })
             })
         }
-    },
-    components: {
-        stave: Stave,
-        keyboard: Keyboard
     }
 }
 </script>
