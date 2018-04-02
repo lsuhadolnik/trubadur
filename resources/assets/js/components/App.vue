@@ -3,9 +3,11 @@
 
 .app {
     width             : 100%;
-    height            : 100%;
+    height            : auto;
     background-image  : url('/images/backgrounds/sparse.png');
     background-repeat : repeat;
+
+    @include breakpoint-portrait { height: 100%; }
 }
 
 .app--sticky { padding-top: $header-height; }

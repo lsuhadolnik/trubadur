@@ -19,6 +19,11 @@
     flex-direction : column;
 }
 
+.dashboard__avatar {
+    width  : 120px;
+    height : 120px;
+}
+
 .dashboard__name {
     width           : 80%;
     padding         : 5px 0;

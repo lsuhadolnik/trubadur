@@ -19,6 +19,8 @@
     z-index          : 100;
 }
 
+.header--colored { background-color: $sunglow; }
+
 .header__menu-button {
     position : absolute;
     top      : 15px;
@@ -99,14 +101,14 @@
 
 <template>
     <div class="header-menu">
-        <div class="header" :class="{ 'header--sticky': isHeaderSticky }">
-            <div class="header__menu-button" @click="toggleMenu()">
+        <div class="header" :class="{ 'header--sticky': isHeaderSticky, 'header--colored': isHeaderColored }">
+            <div class="header__menu-button" @click="toggleMenu($event)">
                 <icon class="icon header__icon" name="bars"></icon>
             </div>
             <div class="header__title" @click="dashboard()">TRUBADUR</div>
         </div>
-        <div class="menu" :class="{ 'menu--open': isMenuInitialized && isMenuOpened, 'menu--close': isMenuInitialized && !isMenuOpened }">
-            <div class="menu__item" :class="{ 'menu-item--active': isItemActive(item) }" v-for="item in menuItems" @click="open(item)">
+        <div class="menu" :class="{ 'menu--open': isMenuInitialized && isMenuOpened, 'menu--close': isMenuInitialized && !isMenuOpened }" v-click-outside="clickedOutsideMenu">
+            <div class="menu__item" :class="{ 'menu-item--active': isItemActive(item) }" v-for="item in menuItems" @click="open($event, item)">
                 <img class="menu__image" :src="'/images/menu/' + item.image + '.svg'"></img>
                 <label class="menu__label">{{ item.name | uppercase }}</label>
             </div>
@@ -127,6 +129,7 @@ export default {
         return {
             csrfToken: window.Laravel.csrfToken,
             isHeaderSticky: false,
+            isHeaderColored: false,
             isMenuInitialized: false,
             isMenuOpened: false,
             menuItems: [
@@ -140,6 +143,7 @@ export default {
     },
     created () {
         window.addEventListener('scroll', this.scroll)
+        this.colorHeader(this.$route.name)
     },
     beforeDestroy () {
         window.removeEventListener('scroll', this.scroll)
@@ -150,20 +154,35 @@ export default {
             return this.user ? this.me.id : 0
         }
     },
+    watch: {
+        '$route' (to, from) {
+            this.colorHeader(to.name)
+        }
+    },
     methods: {
+        colorHeader (route) {
+            this.isHeaderColored = ['gameModes', 'intervals', 'gameStatistics'].indexOf(route) >= 0
+        },
         scroll () {
             this.isHeaderSticky = this.isMenuOpened ? true : window.pageYOffset > 0
             this.$emit('sticky-header', this.isHeaderSticky)
         },
-        toggleMenu () {
+        toggleMenu (event) {
             this.isMenuInitialized = true
             this.isMenuOpened = !this.isMenuOpened
             this.scroll()
+            event.stopPropagation()
+        },
+        clickedOutsideMenu (event) {
+            if (this.isMenuOpened) {
+                this.isMenuOpened = false
+                this.scroll()
+            }
         },
         isItemActive (item) {
             return item.route === this.$route.name
         },
-        open (item) {
+        open (event, item) {
             let func
 
             switch (item.route) {
@@ -180,11 +199,12 @@ export default {
                     break
             }
 
-            this.toggleMenu()
+            this.toggleMenu(event)
             setTimeout(() => func, 0.2 * 1000)
         },
         dashboard () {
             this.isMenuOpened = false
+            this.scroll()
             this.reroute('dashboard')
         },
         reroute (name, params = {}) {

@@ -50,7 +50,8 @@ $choose-height: 170px;
 
 <template>
     <div class="game-types">
-        <div class="game-types__content">
+        <loader v-show="loading"></loader>
+        <div class="game-types__content" v-show="!loading">
             <div class="game-types__choose">
                 <element-title text="izberi igro"></element-title>
                 <label class="game-types__label">Izberi področje igre</label>

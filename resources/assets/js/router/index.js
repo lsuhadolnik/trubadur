@@ -58,7 +58,7 @@ export default new VueRouter({
         },
         {
             name: 'gameModes',
-            path: '/game/modes',
+            path: '/game/:type/modes',
             component: GameModes,
             props: true
         },

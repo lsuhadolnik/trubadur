@@ -3,63 +3,51 @@
 
 .game-modes { width: 100%; }
 
-.game-modes__loader {
-    position  : absolute;
-    top       : 50%;
-    left      : 50%;
-    transform : translate(-50%, -50%);
-    width     : 100px;
-    height    : 100px;
-
-    @include breakpoint-phone {
-        width  : 75px;
-        height : 75px;
-    }
-}
-
-.game-modes__command-wrapper {
-    padding        : 20px 0;
+.game-modes__content {
+    width          : 100%;
+    height         : calc(100vh - #{$header-height});
     display        : flex;
     align-items    : center;
     flex-direction : column;
 }
 
-.game-modes__command {
-    width                 : calc(100vw / 3);
-    height                : 50px;
-    margin                : 10px 0;
-    padding-top           : 5px;
-    display               : flex;
-    justify-content       : center;
-    align-items           : center;
-    font-size             : 20px;
-    font-family           : $font-title;
-    background-color      : $blue;
-    color                 : $black;
-    opacity               : 0.8;
-    -webkit-touch-callout : none;
-    -webkit-user-select   : none;
-    -khtml-user-select    : none;
-    -moz-user-select      : none;
-    -ms-user-select       : none;
-    user-select           : none;
-    cursor                : pointer;
-    transition            : opacity 0.1s linear;
+.game-modes__item {
+    width           : 100%;
+    padding         : 20px;
+    flex            : 1;
+    display         : flex;
+    align-items     : center;
+    justify-content : space-between;
 
-    @include breakpoint-tablet { opacity : 1; }
-    @include breakpoint-phone  { opacity : 1; }
+    &:nth-last-child(2n + 1) { background-color: $golden-tainoi; }
+    &:nth-last-child(2n)     { background-color: $sunglow;       }
+}
 
-    &:hover { opacity: 1; }
+.game-modes__image {
+    width  : 100px;
+    height : 100px;
+}
+
+.game-modes__label {
+    font-size  : 20px;
+    text-align : center;
+}
+
+.game-modes__arrow {
+    width  : 30px;
+    height : 30px;
 }
 </style>
 
 <template>
     <div class="game-modes">
-        <img class="game-modes__loader" src="/images/loader.svg" v-show="loading"/>
-        <div class="game-modes__command-wrapper" v-show="!loading">
-            <div class="game-modes__command" @click="createGame('practice')">Vaja</div>
-            <div class="game-modes__command" @click="createGame('single')">En igralec</div>
-            <!-- <div class="game-modes__command" @click="createGame('multi')">Več igralcev</div> -->
+        <loader v-show="loading"></loader>
+        <div class="game-modes__content" v-show="!loading">
+            <div class="game-modes__item" v-for="mode in modes" @click="createGame(mode.mode)">
+                <img class="game-modes__image" :id="'image_' + mode.mode"/>
+                <label class="game-modes__label">{{ mode.name | uppercase }}</label>
+                <img class="game-modes__arrow" :id="'arrow_' + mode.mode"/>
+            </div>
         </div>
     </div>
 </template>
@@ -71,17 +59,40 @@ export default {
     props: ['type'],
     data () {
         return {
-            loading: true
+            loading: true,
+            modes: [
+                { name: 'vaja', mode: 'practice', image: 'practice' },
+                { name: '1 igralec', mode: 'single', image: 'single' },
+                { name: 'več igralcev', mode: 'multi', image: 'multi' }
+            ]
         }
     },
-    created () {
-        if (!this.type) {
-            this.$router.push({ name: 'dashboard' })
-        } else {
+    mounted () {
+        this.$nextTick(() => {
             this.fetchMe().then(() => {
-                this.loading = false
+                const context = this
+
+                let nLoaded = 0
+
+                for (let mode of this.modes) {
+                    const arrow = this.$el.querySelector('#arrow_' + mode.image)
+                    arrow.onload = () => {
+                        if (++nLoaded === context.modes.length * 2) {
+                            context.loading = false
+                        }
+                    }
+                    arrow.src = '/images/arrows/right.svg'
+
+                    let image = this.$el.querySelector('#image_' + mode.image)
+                    image.onload = () => {
+                        if (++nLoaded === context.modes.length * 2) {
+                            context.loading = false
+                        }
+                    }
+                    image.src = '/images/games/' + mode.image + '.svg'
+                }
             })
-        }
+        })
     },
     computed: {
         ...mapState(['me'])
