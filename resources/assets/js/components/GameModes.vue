@@ -19,6 +19,8 @@
     align-items     : center;
     justify-content : space-between;
 
+    @include breakpoint-tablet { padding: 40px; }
+
     &:nth-child(odd)  { background-color: $golden-tainoi; }
     &:nth-child(even) { background-color: $sunglow;       }
 }
@@ -26,16 +28,43 @@
 .game-modes__image {
     width  : 100px;
     height : 100px;
+
+    @include breakpoint-tablet {
+        width  : 150px;
+        height : 150px;
+    }
+
+    @include breakpoint-large-phone-landscape {
+        width  : 85px;
+        height : 85px;
+    }
+
+    @include breakpoint-phone-landscape {
+        width  : 85px;
+        height : 85px;
+    }
+
+    @include breakpoint-small-phone-landscape {
+        width  : 70px;
+        height : 70px;
+    }
 }
 
 .game-modes__label {
     font-size  : 20px;
     text-align : center;
+
+    @include breakpoint-tablet { font-size: 40px; }
 }
 
 .game-modes__arrow {
     width  : 30px;
     height : 30px;
+
+    @include breakpoint-tablet {
+        width  : 50px;
+        height : 50px;
+    }
 }
 </style>
 

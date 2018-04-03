@@ -191,13 +191,13 @@
   transition: all 0.1s linear;
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
   .login__button {
     opacity: 1;
   }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {
   .login__button {
     opacity: 1;
   }
@@ -378,13 +378,13 @@
   transition: all 0.1s linear;
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
   .register__button {
     opacity: 1;
   }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {
   .register__button {
     opacity: 1;
   }
@@ -557,13 +557,13 @@
   transition: all 0.1s linear;
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
   .email__button {
     opacity: 1;
   }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {
   .email__button {
     opacity: 1;
   }
@@ -755,13 +755,13 @@
   transition: all 0.1s linear;
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
   .reset__button {
     opacity: 1;
   }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {
   .reset__button {
     opacity: 1;
   }
@@ -855,13 +855,13 @@ button:focus {
   transition: opacity 0.1s linear;
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
   .icon {
     opacity: 1;
   }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {
   .icon {
     opacity: 1;
   }

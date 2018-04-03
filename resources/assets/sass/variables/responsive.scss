@@ -1,3 +1,4 @@
+// computer
 @mixin breakpoint-2560 {
     @media only screen and (min-width: 1921px) and (max-width: 2560px) { @content; }
 }
@@ -18,18 +19,107 @@
     @media only screen and (min-width: 1025px) and (max-width: 1280px) { @content; }
 }
 
+// tablet (iPad)
 @mixin breakpoint-tablet {
-    @media only screen and (min-width: 768px) and (max-width: 1024px) { @content; }
+    @media only screen
+    and (min-device-width: 768px)
+    and (max-device-width: 1024px)
+    { @content; }
 }
 
+@mixin breakpoint-tablet-portrait {
+    @media only screen
+    and (min-device-width: 768px)
+    and (max-device-width: 1024px)
+    and (orientation: portrait)
+    { @content; }
+}
+
+@mixin breakpoint-tablet-landscape {
+    @media only screen
+    and (min-device-width: 768px)
+    and (max-device-width: 1024px)
+    and (orientation: landscape)
+    { @content; }
+}
+
+// large phone (iPhone X)
+@mixin breakpoint-large-phone {
+    @media only screen
+    and (min-device-width: 375px)
+    and (max-device-width: 812px)
+    and (-webkit-device-pixel-ratio: 3)
+    { @content; }
+}
+
+@mixin breakpoint-large-phone-portrait {
+    @media only screen
+    and (min-device-width: 375px)
+    and (max-device-width: 812px)
+    and (-webkit-device-pixel-ratio: 3)
+    and (orientation: portrait)
+    { @content; }
+}
+
+@mixin breakpoint-large-phone-landscape {
+    @media only screen
+    and (min-device-width: 375px)
+    and (max-device-width: 812px)
+    and (-webkit-device-pixel-ratio: 3)
+    and (orientation: landscape)
+    { @content; }
+}
+
+// phone (iPhone 6, 7, 8 | iPhone 6, 7, 8 Plus)
 @mixin breakpoint-phone {
-    @media only screen and (max-width: 767px) { @content; }
+    @media only screen
+    and (min-device-width: 375px)
+    and (max-device-width: 767px)
+    { @content; }
 }
 
+@mixin breakpoint-phone-portrait {
+    @media only screen
+    and (min-device-width: 375px)
+    and (max-device-width: 767px)
+    and (orientation: portrait)
+    { @content; }
+}
+
+@mixin breakpoint-phone-landscape {
+    @media only screen
+    and (min-device-width: 375px)
+    and (max-device-width: 767px)
+    and (orientation: landscape)
+    { @content; }
+}
+
+
+// small phone (iPhone 5, 5S )
 @mixin breakpoint-small-phone {
-    @media only screen and (max-height: 568px) { @content; }
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 568px)
+    { @content; }
 }
 
+@mixin breakpoint-small-phone-portrait {
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 568px)
+    and (orientation: portrait)
+    { @content; }
+}
+
+@mixin breakpoint-small-phone-landscape {
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 568px)
+    and (orientation: landscape)
+    { @content; }
+}
+
+// orientation
 @mixin breakpoint-portrait {
     @media only screen and (orientation: portrait) { @content; }
 }
@@ -38,6 +128,7 @@
     @media only screen and (orientation: landscape) { @content; }
 }
 
+// iOS
 @mixin ios {
     @supports (-webkit-overflow-scrolling: touch) { @content; }
 }

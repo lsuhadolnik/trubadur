@@ -46,7 +46,7 @@
     top              : 70px;
     left             : -$menu-width;
     width            : $menu-width;
-    height           : 100vh;
+    height           : calc(100vh - #{$header-height});
     display          : flex;
     align-items      : center;
     flex-direction   : column;
@@ -57,12 +57,39 @@
         left  : -$menu-width-small;
         width : $menu-width-small;
     }
+
+    @include breakpoint-large-phone-landscape {
+        left                  : -$menu-width * 2;
+        width                 : $menu-width * 2;
+        padding               : 0 5px 30px 5px;
+        display               : grid;
+        grid-template-columns : repeat(2, 1fr);
+    }
+
+    @include breakpoint-phone-landscape {
+        left                  : -$menu-width * 2;
+        width                 : $menu-width * 2;
+        padding               : 0 5px 30px 5px;
+        display               : grid;
+        grid-template-columns : repeat(2, 1fr);
+    }
+
+    @include breakpoint-small-phone-landscape {
+        left                  : -$menu-width-small * 2;
+        width                 : $menu-width-small * 2;
+        padding               : 0 5px 30px 5px;
+        display               : grid;
+        grid-template-columns : repeat(2, 1fr);
+        grid-row-gap          : 5px;
+    }
 }
 
 .menu--open {
     animation: open $menu-animation-time ease-out 0s forwards;
 
-    @include breakpoint-small-phone { animation-name: open-small; }
+    @include breakpoint-small-phone             { animation-name: open-small;           }
+    @include breakpoint-landscape               { animation-name: open-landscape;       }
+    @include breakpoint-small-phone-landscape   { animation-name: open-small-landscape; }
 
     @keyframes open {
         from { left : -$menu-width; }
@@ -73,12 +100,24 @@
         from { left : -$menu-width-small; }
         to   { left : 0;                  }
     }
+
+    @keyframes open-landscape {
+        from { left : -$menu-width * 2; }
+        to   { left : 0;                }
+    }
+
+    @keyframes open-small-landscape {
+        from { left : -$menu-width-small * 2; }
+        to   { left : 0;                      }
+    }
 }
 
 .menu--close {
     animation: close $menu-animation-time ease-in 0s;
 
-    @include breakpoint-small-phone { animation-name: close-small; }
+    @include breakpoint-small-phone             { animation-name: close-small;           }
+    @include breakpoint-landscape               { animation-name: close-landscape;       }
+    @include breakpoint-small-phone-landscape   { animation-name: close-small-landscape; }
 
     @keyframes close {
         from { left : 0;            }
@@ -89,11 +128,23 @@
         from { left : 0;                  }
         to   { left : -$menu-width-small; }
     }
+
+    @keyframes close-landscape {
+        from { left : 0;                }
+        to   { left : -$menu-width * 2; }
+    }
+
+    @keyframes close-small-landscape {
+        from { left : 0;                      }
+        to   { left : -$menu-width-small * 2; }
+    }
 }
 
 .menu__item {
     width            : calc(#{$menu-width} * 0.8);
     height           : calc(#{$menu-width} * 0.8);
+    grid-column      : span 1;
+    justify-self     : center;
     display          : flex;
     align-items      : center;
     justify-content  : center;
@@ -105,6 +156,21 @@
     @include breakpoint-small-phone {
         width  : calc(#{$menu-width-small} * 0.8);
         height : calc(#{$menu-width-small} * 0.8);
+    }
+
+    @include breakpoint-large-phone-landscape {
+        width  : calc(#{$menu-width} * 0.85);
+        height : calc(#{$menu-width} * 0.75);
+    }
+
+    @include breakpoint-phone-landscape {
+        width  : calc(#{$menu-width} * 0.9);
+        height : calc(#{$menu-width} * 0.75);
+    }
+
+    @include breakpoint-small-phone-landscape {
+        width  : calc(#{$menu-width-small} * 0.9);
+        height : calc(#{$menu-width-small} * 0.7);
     }
 
     &:hover { background-color: $golden-tainoi; }
