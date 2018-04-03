@@ -27,7 +27,7 @@
 }
 
 @mixin breakpoint-small-phone {
-    @media only screen and (max-height: 600px) { @content; }
+    @media only screen and (max-height: 568px) { @content; }
 }
 
 @mixin breakpoint-portrait {

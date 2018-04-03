@@ -4,7 +4,7 @@
 .app {
     width: 100%;
 
-    // @include ios { padding-bottom: $bottom-padding-ios; }
+    @include ios { padding-bottom: $bottom-padding-ios; }
 }
 
 .app--sticky { padding-top: $header-height; }

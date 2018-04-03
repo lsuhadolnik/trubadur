@@ -122,7 +122,11 @@
     }
 }
 
-.menu__label { font-size: 12px; }
+.menu__label {
+    font-size: 12px;
+
+    @include breakpoint-small-phone { font-size: 11px; }
+}
 
 .menu__logout-form { display: none; }
 </style>
