@@ -26,6 +26,10 @@
     @media only screen and (max-width: 767px) { @content; }
 }
 
+@mixin breakpoint-small-phone {
+    @media only screen and (max-height: 600px) { @content; }
+}
+
 @mixin breakpoint-portrait {
     @media only screen and (orientation: portrait) { @content; }
 }

@@ -41645,12 +41645,15 @@ module.exports = function spread(callback) {
 Vue.filter('capitalize', function (value) {
     return value[0].toUpperCase() + value.slice(1);
 });
+
 Vue.filter('uppercase', function (value) {
     return value.toUpperCase();
 });
+
 Vue.directive('focus', { inserted: function inserted(el) {
         return el.focus();
     } });
+
 Vue.directive('click-outside', {
     bind: function bind(el, binding, vnode) {
         this.event = function (event) {
@@ -44890,7 +44893,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.app[data-v-117390fa] {\n  width: 100%;\n  height: auto;\n  background-image: url(\"/images/backgrounds/sparse.png\");\n  background-repeat: repeat;\n}\n@media only screen and (orientation: portrait) {\n.app[data-v-117390fa] {\n      height: 100%;\n}\n}\n.app--sticky[data-v-117390fa] {\n  padding-top: 70px;\n}\n", ""]);
+exports.push([module.i, "\n.app[data-v-117390fa] {\n  width: 100%;\n  height: 100%;\n}\n.app--sticky[data-v-117390fa] {\n  padding-top: 70px;\n}\n", ""]);
 
 // exports
 
@@ -44901,10 +44904,6 @@ exports.push([module.i, "\n.app[data-v-117390fa] {\n  width: 100%;\n  height: au
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
 //
 //
 //
@@ -46772,7 +46771,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.header[data-v-3a473b7a] {\n  width: 100%;\n  height: 70px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  background-color: transparent;\n  -webkit-transition: background-color 0.2s linear;\n  transition: background-color 0.2s linear;\n}\n.header--sticky[data-v-3a473b7a] {\n  position: fixed;\n  top: 0;\n  left: 0;\n  background-color: #FDBB2F;\n  z-index: 100;\n}\n.header--colored[data-v-3a473b7a] {\n  background-color: #FDBB2F;\n}\n.header__menu-button[data-v-3a473b7a] {\n  position: absolute;\n  top: 15px;\n  left: 20px;\n  padding: 5px;\n  cursor: pointer;\n}\n.header__icon[data-v-3a473b7a] {\n  width: 30px;\n  height: 30px;\n}\n.header__title[data-v-3a473b7a] {\n  color: #000000;\n  font-size: 25px;\n  font-family: \"GothamRounded-Bold\";\n  cursor: pointer;\n}\n.menu[data-v-3a473b7a] {\n  position: fixed;\n  top: 70px;\n  left: -130px;\n  width: 130px;\n  height: 100vh;\n  padding: 10px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #FDBB2F;\n  z-index: 100;\n}\n.menu--open[data-v-3a473b7a] {\n  -webkit-animation: open-data-v-3a473b7a 0.2s ease-out 0s forwards;\n          animation: open-data-v-3a473b7a 0.2s ease-out 0s forwards;\n}\n@-webkit-keyframes open-data-v-3a473b7a {\nfrom {\n    left: -130px;\n}\nto {\n    left: 0;\n}\n}\n@keyframes open-data-v-3a473b7a {\nfrom {\n    left: -130px;\n}\nto {\n    left: 0;\n}\n}\n.menu--close[data-v-3a473b7a] {\n  -webkit-animation: close-data-v-3a473b7a 0.2s ease-in 0s;\n          animation: close-data-v-3a473b7a 0.2s ease-in 0s;\n}\n@-webkit-keyframes close-data-v-3a473b7a {\nfrom {\n    left: 0;\n}\nto {\n    left: -130px;\n}\n}\n@keyframes close-data-v-3a473b7a {\nfrom {\n    left: 0;\n}\nto {\n    left: -130px;\n}\n}\n.menu__item[data-v-3a473b7a] {\n  width: calc(130px * 0.8);\n  height: calc(130px * 0.8);\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  border-radius: 10px;\n  cursor: pointer;\n  background-color: transparent;\n}\n.menu__item[data-v-3a473b7a]:hover {\n    background-color: #FFD15E;\n}\n.menu-item--active[data-v-3a473b7a] {\n  background-color: #FFD15E;\n}\n.menu__image[data-v-3a473b7a] {\n  width: 65px;\n  height: 65px;\n}\n.menu__label[data-v-3a473b7a] {\n  font-size: 14px;\n}\n.menu__logout-form[data-v-3a473b7a] {\n  display: none;\n}\n", ""]);
+exports.push([module.i, "\n.header[data-v-3a473b7a] {\n  width: 100%;\n  height: 70px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  background-color: transparent;\n  -webkit-transition: background-color 0.2s linear;\n  transition: background-color 0.2s linear;\n}\n.header--sticky[data-v-3a473b7a] {\n  position: fixed;\n  top: 0;\n  left: 0;\n  background-color: #FDBB2F;\n  z-index: 100;\n}\n.header--colored[data-v-3a473b7a] {\n  background-color: #FDBB2F;\n}\n.header__menu-button[data-v-3a473b7a] {\n  position: absolute;\n  top: 15px;\n  left: 20px;\n  padding: 5px;\n  cursor: pointer;\n}\n.header__icon[data-v-3a473b7a] {\n  width: 30px;\n  height: 30px;\n}\n.header__title[data-v-3a473b7a] {\n  color: #000000;\n  font-size: 25px;\n  font-family: \"GothamRounded-Bold\";\n  cursor: pointer;\n}\n.menu[data-v-3a473b7a] {\n  position: fixed;\n  top: 70px;\n  left: -120px;\n  width: 120px;\n  height: 100vh;\n  padding: 10px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #FDBB2F;\n  z-index: 100;\n}\n@media only screen and (max-height: 600px) {\n.menu[data-v-3a473b7a] {\n      left: -100px;\n      width: 100px;\n}\n}\n.menu--open[data-v-3a473b7a] {\n  -webkit-animation: open-data-v-3a473b7a 0.2s ease-out 0s forwards;\n          animation: open-data-v-3a473b7a 0.2s ease-out 0s forwards;\n}\n@media only screen and (max-height: 600px) {\n.menu--open[data-v-3a473b7a] {\n      -webkit-animation-name: open-small-data-v-3a473b7a;\n              animation-name: open-small-data-v-3a473b7a;\n}\n}\n@-webkit-keyframes open-data-v-3a473b7a {\nfrom {\n    left: -120px;\n}\nto {\n    left: 0;\n}\n}\n@keyframes open-data-v-3a473b7a {\nfrom {\n    left: -120px;\n}\nto {\n    left: 0;\n}\n}\n@-webkit-keyframes open-small-data-v-3a473b7a {\nfrom {\n    left: -100px;\n}\nto {\n    left: 0;\n}\n}\n@keyframes open-small-data-v-3a473b7a {\nfrom {\n    left: -100px;\n}\nto {\n    left: 0;\n}\n}\n.menu--close[data-v-3a473b7a] {\n  -webkit-animation: close-data-v-3a473b7a 0.2s ease-in 0s;\n          animation: close-data-v-3a473b7a 0.2s ease-in 0s;\n}\n@media only screen and (max-height: 600px) {\n.menu--close[data-v-3a473b7a] {\n      -webkit-animation-name: close-small-data-v-3a473b7a;\n              animation-name: close-small-data-v-3a473b7a;\n}\n}\n@-webkit-keyframes close-data-v-3a473b7a {\nfrom {\n    left: 0;\n}\nto {\n    left: -120px;\n}\n}\n@keyframes close-data-v-3a473b7a {\nfrom {\n    left: 0;\n}\nto {\n    left: -120px;\n}\n}\n@-webkit-keyframes close-small-data-v-3a473b7a {\nfrom {\n    left: 0;\n}\nto {\n    left: -100px;\n}\n}\n@keyframes close-small-data-v-3a473b7a {\nfrom {\n    left: 0;\n}\nto {\n    left: -100px;\n}\n}\n.menu__item[data-v-3a473b7a] {\n  width: calc(120px * 0.75);\n  height: calc(120px * 0.75);\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  border-radius: 10px;\n  cursor: pointer;\n  background-color: transparent;\n}\n@media only screen and (max-height: 600px) {\n.menu__item[data-v-3a473b7a] {\n      width: calc(100px * 0.75);\n      height: calc(100px * 0.75);\n}\n}\n.menu__item[data-v-3a473b7a]:hover {\n    background-color: #FFD15E;\n}\n.menu-item--active[data-v-3a473b7a] {\n  background-color: #FFD15E;\n}\n.menu__image[data-v-3a473b7a] {\n  width: 65px;\n  height: 65px;\n}\n@media only screen and (max-height: 600px) {\n.menu__image[data-v-3a473b7a] {\n      width: 50px;\n      height: 50px;\n}\n}\n.menu__label[data-v-3a473b7a] {\n  font-size: 13px;\n}\n.menu__logout-form[data-v-3a473b7a] {\n  display: none;\n}\n", ""]);
 
 // exports
 
@@ -46788,6 +46787,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(4);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //

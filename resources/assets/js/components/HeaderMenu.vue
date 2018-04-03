@@ -53,29 +53,48 @@
     flex-direction   : column;
     background-color : $sunglow;
     z-index          : 100;
+
+    @include breakpoint-small-phone {
+        left  : -$menu-width-small;
+        width : $menu-width-small;
+    }
 }
 
 .menu--open {
-    animation : open $menu-animation-time ease-out 0s forwards;
+    animation: open $menu-animation-time ease-out 0s forwards;
+
+    @include breakpoint-small-phone { animation-name: open-small; }
 
     @keyframes open {
         from { left : -$menu-width; }
         to   { left : 0;            }
     }
+
+    @keyframes open-small {
+        from { left : -$menu-width-small; }
+        to   { left : 0;                  }
+    }
 }
 
 .menu--close {
-    animation : close $menu-animation-time ease-in 0s;
+    animation: close $menu-animation-time ease-in 0s;
+
+    @include breakpoint-small-phone { animation-name: close-small; }
 
     @keyframes close {
         from { left : 0;            }
         to   { left : -$menu-width; }
     }
+
+    @keyframes close-small {
+        from { left : 0;                  }
+        to   { left : -$menu-width-small; }
+    }
 }
 
 .menu__item {
-    width            : calc(#{$menu-width} * 0.8);
-    height           : calc(#{$menu-width} * 0.8);
+    width            : calc(#{$menu-width} * 0.75);
+    height           : calc(#{$menu-width} * 0.75);
     display          : flex;
     align-items      : center;
     justify-content  : center;
@@ -83,6 +102,11 @@
     border-radius    : 10px;
     cursor           : pointer;
     background-color : transparent;
+
+    @include breakpoint-small-phone {
+        width  : calc(#{$menu-width-small} * 0.75);
+        height : calc(#{$menu-width-small} * 0.75);
+    }
 
     &:hover { background-color: $golden-tainoi; }
 }
@@ -92,9 +116,14 @@
 .menu__image {
     width  : 65px;
     height : 65px;
+
+    @include breakpoint-small-phone {
+        width  : 50px;
+        height : 50px;
+    }
 }
 
-.menu__label { font-size: 14px; }
+.menu__label { font-size: 13px; }
 
 .menu__logout-form { display: none; }
 </style>
