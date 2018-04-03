@@ -1,90 +1,101 @@
 <style lang="scss" scoped>
 @import '../../sass/variables/index';
 
-.settings {
+$instructions-height        : 275px;
+$select-arrow-wrapper-width : 45px;
+
+.settings { width: 100%; }
+
+.settings__content {
+    width          : 100%;
+    height         : 100%;
+    padding-bottom : 50px;
+    display        : flex;
+    align-items    : center;
+    flex-direction : column;
+}
+
+.settings__instructions {
+    width          : 100%;
+    height         : $instructions-height;
+    padding-top    : 10px;
+    display        : flex;
+    align-items    : center;
+    flex-direction : column;
+}
+
+.settings__image {
+    width         : 120px;
+    height        : 120px;
+    margin-bottom : 10px;
+}
+
+.settings__label { margin: 20px 0 5px 0; }
+
+.settings__arrow {
+    width  : 30px;
+    height : 30px;
+}
+
+.settings__elements {
     width            : 100%;
+    padding          : 40px 10%;
     display          : flex;
     align-items      : center;
     flex-direction   : column;
+    background-color : $jaffa;
 }
 
-.settings__title {
-    font-family : $font-regular;
-    font-size   : 30px;
-    font-weight : bold;
-}
-
-.settings__loader {
-    position  : absolute;
-    top       : 50%;
-    left      : 50%;
-    transform : translate(-50%, -50%);
-    width     : 100px;
-    height    : 100px;
-
-    @include breakpoint-phone {
-        width  : 75px;
-        height : 75px;
-    }
-}
+.settings__element { margin-bottom: 20px; }
 
 .settings__select-wrapper {
-    width            : 100%;
-    height           : 100%;
-    border           : 1px solid $dolphin-transparent;
-    background-color : transparent;
-    cursor           : pointer;
-    transition       : border-color 0.1s linear;
-
-    &:hover:not(.settings__select-wrapper--disabled) { border-color: $blue; }
+    width  : 100%;
+    height : 100%;
+    cursor : pointer;
 
     &:after {
         position         : relative;
         content          : '';
-        width            : 0;
-        height           : 0;
-        top              : -50%;
-        left             : 94%;
-        border           : 5px solid transparent;
-        border-top-color : $black;
+        width            : $select-arrow-wrapper-width;
+        background-color : $sandy-brown;
         pointer-events   : none;
     }
-}
-
-.settings__select-wrapper--disabled {
-    border-color : $dolphin-very-transparent;
-    cursor       : not-allowed;
 }
 
 .settings__select {
     width              : 100%;
     height             : 100%;
-    padding            : 5px 30px 5px 5px;
+    padding            : 10px 30px 10px 10px;
     border             : none;
     border-radius      : 0;
-    background-color   : transparent;
-    color              : $very-dark-gray;
-    font-size          : 14px;
-    font-family        : $font-light;
-    white-space        : nowrap;
-    text-overflow      : ellipsis;
+    background-color   : $tacao;
+    font-size          : 18px;
+    font-family        : $font-bold;
     overflow           : hidden;
+    outline            : none;
     -moz-appearance    : none;
     -webkit-appearance : none;
-    outline            : none;
+    appearance         : none;
     cursor             : pointer;
-    transition         : color 0.1s linear;
-
-    &:hover:not(:disabled), &:focus:not(:disabled) { color: $black; }
-
-    &:disabled {
-        background-color : $very-light-gray;
-        opacity          : 0.35;
-        cursor           : not-allowed;
-    }
 }
 
-.settings__slider-wrapper { display: flex; }
+.settings__select-arrow-wrapper {
+    width            : $select-arrow-wrapper-width;
+    display          : flex;
+    align-items      : center;
+    justify-content  : center;
+    background-color : $sandy-brown;
+}
+
+.settings__select-arrow {
+    width  : 20px;
+    height : 20px;
+}
+
+.settings__slider-wrapper {
+    width   : 100%;
+    display : flex;
+}
 
 .settings__slider-label { width: 20%; }
 
@@ -93,10 +104,14 @@
     height             : 15px;
     border-radius      : 5px;
     background-color   : $silver-chalice;
+    opacity            : 0.7;
     outline            : none;
     -moz-appearance    : none;
     -webkit-appearance : none;
     appearance         : none;
+
+    @include breakpoint-tablet { opacity : 1; }
+    @include breakpoint-phone  { opacity : 1; }
 
     &:hover { opacity: 1; }
 
@@ -123,36 +138,37 @@
 
 <template>
     <div class="settings">
-        <div class="settings__title">{{ title | uppercase }}</div>
-        <img class="settings__loader" src="/images/loader.svg" v-show="loading"/>
-        <div v-show="!loading">
-            <div class="settings__select-wrapper" :class="{ 'settings__select-wrapper--disabled': !hasSchools }">
-                <select class="settings__select" v-model="selectedSchool" @change="onSchoolSelected()">
-                    <option class="settings__option" :value="school" v-for="school in schools">{{ school.name }}</option>
-                </select>
+        <loader v-show="loading"></loader>
+        <div class="settings__content" v-show="!loading">
+            <div class="settings__instructions">
+                <img class="settings__image" id="image"/>
+                <element-title text="nastavitve"></element-title>
+                <label class="settings__label">Uredi svoje nastavitve za igro.</label>
+                <img class="settings__arrow" id="arrow"/>
             </div>
-            <div class="settings__select-wrapper" :class="{ 'settings__select-wrapper--disabled': !hasGrades }">
-                <select class="settings__select" v-model="selectedGrade">
-                    <option class="settings__option" :value="grade" v-for="grade in filteredGrades">{{ grade.grade }}</option>
-                </select>
+            <div class="settings__elements">
+                <div class="settings__element settings__select-wrapper">
+                    <select class="settings__select" v-model="selectedInstrument">
+                        <option class="settings__option" :value="key" v-for="(value, key) in instruments">{{ value }}</option>
+                    </select>
+                    <!-- <div class="settings__select-arrow-wrapper">
+                        <img class="settings__select-arrow" id="arrow_instrument"/>
+                    </div> -->
+                </div>
+                <div class="settings__element settings__select-wrapper">
+                    <select class="settings__select" v-model="selectedClef">
+                        <option class="settings__option" :value="key" v-for="(value, key) in clefs">{{ value }}</option>
+                    </select>
+                    <!-- <div class="settings__select-arrow-wrapper">
+                        <img class="settings__select-arrow" id="arrow_clef"/>
+                    </div> -->
+                </div>
+                <div class="settings__element settings__slider-wrapper">
+                    <label for="notePlaybackDelay" class="settings__slider-label">{{ selectedNotePlaybackDelay }} s</label>
+                    <input type="range" class="settings__slider" id="notePlaybackDelay" min="0.5" max="2.5" step="0.1" v-model="selectedNotePlaybackDelay"/>
+                </div>
+                <element-button text="shrani" @click.native="save()"></element-button>
             </div>
-            <div class="settings__select-wrapper">
-                <select class="settings__select" v-model="selectedInstrument">
-                    <option class="settings__option" :value="key" v-for="(value, key) in instruments">{{ value }}</option>
-                </select>
-            </div>
-            <div class="settings__select-wrapper">
-                <select class="settings__select" v-model="selectedClef">
-                    <option class="settings__option" :value="key" v-for="(value, key) in clefs">{{ value }}</option>
-                </select>
-            </div>
-            <div class="settings__slider-wrapper">
-                <label for="notePlaybackDelay" class="settings__slider-label">{{ selectedNotePlaybackDelay }} s</label>
-                <input type="range" class="settings__slider" id="notePlaybackDelay" min="0.5" max="2.5" step="0.1" v-model="selectedNotePlaybackDelay"/>
-            </div>
-
-
-            <div @click="save()" style="border: 1px solid black; padding: 5px; cursor: pointer;">SAVE</div>
         </div>
     </div>
 </template>
@@ -163,11 +179,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
     data () {
         return {
-            title: 'Nastavitve',
             loading: true,
-            selectedSchool: null,
-            selectedGrade: null,
-            filteredGrades: [],
             instruments: {
                 guitar: 'Kitara',
                 clarinet: 'Klarinet',
@@ -181,51 +193,49 @@ export default {
                 bass: 'Basovski'
             },
             selectedClef: null,
-            selectedNotePlaybackDelay: 0.5
+            selectedNotePlaybackDelay: 1
         }
     },
-    created () {
-        this.fetchMe().then(() => {
-            this.selectedInstrument = this.me.instrument
-            this.selectedClef = this.me.clef
-            this.selectedNotePlaybackDelay = this.me.note_playback_delay / 1000
+    mounted () {
+        this.$nextTick(() => {
+            this.fetchMe().then(() => {
+                this.selectedInstrument = this.me.instrument
+                this.selectedClef = this.me.clef
+                this.selectedNotePlaybackDelay = this.me.note_playback_delay / 1000
 
-            this.fetchSchools().then(() => {
-                this.fetchGrades().then(() => {
-                    this.selectedSchool = this.schools.filter((school) => school.id === this.me.school.id)[0]
-                    this.filteredGrades = this.grades.filter(grade => this.selectedSchool.grades.indexOf(grade.id) >= 0)
-                    this.selectedGrade = this.grades.filter((grade) => grade.id === this.me.grade.id)[0]
+                const context = this
 
-                    this.loading = false
-                })
+                let nLoaded = 0
+
+                const image = this.$el.querySelector('#image')
+                image.onload = () => {
+                    if (++nLoaded === 2) {
+                        context.loading = false
+                    }
+                }
+                image.src = '/images/settings/settings.svg'
+
+                const arrow = this.$el.querySelector('#arrow')
+                // const arrowInstrument = this.$el.querySelector('#arrow_instrument')
+                // const arrowClef = this.$el.querySelector('#arrow_clef')
+                arrow.onload = () => {
+                    if (++nLoaded === 2) {
+                        context.loading = false
+                    }
+                }
+                arrow.src = '/images/arrows/down.svg'
+                // arrowInstrument.src = '/images/arrows/down.svg'
+                // arrowClef.src = '/images/arrows/down.svg'
             })
         })
     },
     computed: {
-        ...mapState(['me', 'schools', 'grades']),
-        hasSchools () {
-            return !this.loading && this.schools.length > 0
-        },
-        hasGrades () {
-            return !this.loading && this.filteredGrades.length > 0
-        }
+        ...mapState(['me'])
     },
     methods: {
-        ...mapActions(['fetchMe', 'updateMe', 'fetchSchools', 'fetchGrades']),
-        onSchoolSelected () {
-            this.filteredGrades = this.grades.filter(grade => this.selectedSchool.grades.indexOf(grade.id) >= 0)
-            this.selectedGrade = this.filteredGrades[0]
-        },
+        ...mapActions(['fetchMe', 'updateMe']),
         save () {
             const data = {}
-
-            if (this.selectedSchool.id !== this.me.school.id) {
-                data['school_id'] = this.selectedSchool.id
-            }
-
-            if (this.selectedGrade.id !== this.me.grade.id) {
-                data['grade_id'] = this.selectedGrade.id
-            }
 
             if (this.selectedInstrument !== this.me.instrument) {
                 data['instrument'] = this.selectedInstrument
