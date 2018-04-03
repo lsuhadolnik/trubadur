@@ -47,17 +47,32 @@ $select-arrow-wrapper-width : 45px;
     background-color : $jaffa;
 }
 
+.settings__element-label-wrapper {
+    width         : 100%;
+    margin-bottom : 5px;
+    padding-left  : 2px;
+}
+
+.settings__element-label {
+    color     : $espresso;
+    font-size : 15px;
+}
+
 .settings__element { margin-bottom: 20px; }
 
 .settings__select-wrapper {
-    width  : 100%;
-    height : 100%;
-    cursor : pointer;
+    position : relative;
+    width    : 100%;
+    height   : 100%;
+    cursor   : pointer;
 
     &:after {
-        position         : relative;
         content          : '';
+        position         : absolute;
+        top              : 0;
+        right            : 0;
         width            : $select-arrow-wrapper-width;
+        height           : 100%;
         background-color : $sandy-brown;
         pointer-events   : none;
     }
@@ -80,17 +95,15 @@ $select-arrow-wrapper-width : 45px;
     cursor             : pointer;
 }
 
-.settings__select-arrow-wrapper {
-    width            : $select-arrow-wrapper-width;
-    display          : flex;
-    align-items      : center;
-    justify-content  : center;
-    background-color : $sandy-brown;
-}
-
 .settings__select-arrow {
-    width  : 20px;
-    height : 20px;
+    position       : absolute;
+    top            : 17px;
+    right          : -8px;
+    width          : 40px;
+    height         : 40px;
+    fill           : $espresso;
+    z-index        : 1;
+    pointer-events : none;
 }
 
 .settings__slider-wrapper {
@@ -98,18 +111,19 @@ $select-arrow-wrapper-width : 45px;
     display : flex;
 }
 
-.settings__slider-label { width: 20%; }
+.settings__slider-label { width: 60px; }
 
 .settings__slider {
-    width              : 80%;
+    width              : calc(100% - 60px);
     height             : 15px;
     border-radius      : 5px;
-    background-color   : $silver-chalice;
+    background-color   : $tacao;
     opacity            : 0.7;
     outline            : none;
     -moz-appearance    : none;
     -webkit-appearance : none;
     appearance         : none;
+    cursor             : pointer;
 
     @include breakpoint-tablet { opacity : 1; }
     @include breakpoint-phone  { opacity : 1; }
@@ -120,7 +134,7 @@ $select-arrow-wrapper-width : 45px;
         width              : 25px;
         height             : 25px;
         border-radius      : 50%;
-        background-color   : $egg-blue;
+        background-color   : $espresso;
         -moz-appearance    : none;
         -webkit-appearance : none;
         appearance         : none;
@@ -131,9 +145,20 @@ $select-arrow-wrapper-width : 45px;
         width            : 25px;
         height           : 25px;
         border-radius    : 50%;
-        background-color : $egg-blue;
+        background-color : $espresso;
         cursor           : pointer;
     }
+}
+</style>
+
+<!-- override -->
+<style lang="scss">
+@import '../../sass/variables/index';
+
+.settings__elements .button {
+    margin-top: 50px;
+
+    .button__full { background-color: $tacao !important; }
 }
 </style>
 
@@ -148,21 +173,30 @@ $select-arrow-wrapper-width : 45px;
                 <img class="settings__arrow" id="arrow"/>
             </div>
             <div class="settings__elements">
+                <div class="settings__element-label-wrapper">
+                    <label class="settings__element-label">INŠTRUMENT</label>
+                </div>
                 <div class="settings__element settings__select-wrapper">
                     <select class="settings__select" v-model="selectedInstrument">
                         <option class="settings__option" :value="key" v-for="(value, key) in instruments">{{ value }}</option>
                     </select>
-                    <!-- <div class="settings__select-arrow-wrapper">
-                        <img class="settings__select-arrow" id="arrow_instrument"/>
-                    </div> -->
+                    <svg class="settings__select-arrow" viewBox="0 0 100 100">
+                       <use id="arrow_instrument"></use>
+                    </svg>
+                </div>
+                <div class="settings__element-label-wrapper">
+                    <label class="settings__element-label">KLJUČ</label>
                 </div>
                 <div class="settings__element settings__select-wrapper">
                     <select class="settings__select" v-model="selectedClef">
                         <option class="settings__option" :value="key" v-for="(value, key) in clefs">{{ value }}</option>
                     </select>
-                    <!-- <div class="settings__select-arrow-wrapper">
-                        <img class="settings__select-arrow" id="arrow_clef"/>
-                    </div> -->
+                    <svg class="settings__select-arrow" viewBox="0 0 100 100">
+                       <use id="arrow_clef"></use>
+                    </svg>
+                </div>
+                <div class="settings__element-label-wrapper">
+                    <label class="settings__element-label">RAZMAK MED PREDVAJANIMI TONI</label>
                 </div>
                 <div class="settings__element settings__slider-wrapper">
                     <label for="notePlaybackDelay" class="settings__slider-label">{{ selectedNotePlaybackDelay }} s</label>
@@ -210,23 +244,29 @@ export default {
 
                 const image = this.$el.querySelector('#image')
                 image.onload = () => {
-                    if (++nLoaded === 2) {
+                    if (++nLoaded === 3) {
                         context.loading = false
                     }
                 }
                 image.src = '/images/settings/settings.svg'
 
                 const arrow = this.$el.querySelector('#arrow')
-                // const arrowInstrument = this.$el.querySelector('#arrow_instrument')
-                // const arrowClef = this.$el.querySelector('#arrow_clef')
                 arrow.onload = () => {
-                    if (++nLoaded === 2) {
+                    if (++nLoaded === 3) {
                         context.loading = false
                     }
                 }
                 arrow.src = '/images/arrows/down.svg'
-                // arrowInstrument.src = '/images/arrows/down.svg'
-                // arrowClef.src = '/images/arrows/down.svg'
+
+                const arrowInstrument = this.$el.querySelector('#arrow_instrument')
+                const arrowClef = this.$el.querySelector('#arrow_clef')
+                arrowInstrument.onload = () => {
+                    if (++nLoaded === 3) {
+                        context.loading = false
+                    }
+                }
+                arrowInstrument.href.baseVal = '/images/arrows/down.svg#element'
+                arrowClef.href.baseVal = '/images/arrows/down.svg#element'
             })
         })
     },

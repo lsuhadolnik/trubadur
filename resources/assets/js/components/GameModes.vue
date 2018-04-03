@@ -19,8 +19,8 @@
     align-items     : center;
     justify-content : space-between;
 
-    &:nth-last-child(2n + 1) { background-color: $golden-tainoi; }
-    &:nth-last-child(2n)     { background-color: $sunglow;       }
+    &:nth-child(odd)  { background-color: $golden-tainoi; }
+    &:nth-child(even) { background-color: $sunglow;       }
 }
 
 .game-modes__image {

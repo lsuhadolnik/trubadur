@@ -52,8 +52,8 @@ $instructions-height: 290px;
     height : 65px;
     cursor : pointer;
 
-    &:nth-last-child(2n + 1) { background-color: $skeptic; }
-    &:nth-last-child(2n)     { background-color: $neptune; }
+    &:nth-child(odd)  { background-color: $skeptic; }
+    &:nth-child(even) { background-color: $neptune; }
 }
 
 .leaderboard__table-column {
@@ -72,6 +72,22 @@ $instructions-height: 290px;
     width  : 50px;
     height : 50px;
 }
+
+.leaderboard__pagination {
+    width           : 100px;
+    margin-top      : 30px;
+    display         : flex;
+    justify-content : space-between;
+}
+
+.leaderboard__pagination-arrow {
+    width   : 55px;
+    height  : 55px;
+    padding : 10px;
+    cursor  : pointer;
+}
+
+.leaderboard__pagination-arrow--disabled { opacity: 0; }
 </style>
 
 <!-- override -->
@@ -101,7 +117,7 @@ $instructions-height: 290px;
                 </thead>
                 <tbody>
                     <tr class="leaderboard__table-row leaderboard__table-row--body" @click="reroute('profile', { id: user.id })" v-for="(user, index) in users">
-                        <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--1">{{ index + 1 }}</td>
+                        <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--1">{{ numbers[index] }}</td>
                         <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--2">
                             <img class="leaderboard__avatar" :id="'avatar_' + user.id"/>
                         </td>
@@ -110,6 +126,10 @@ $instructions-height: 290px;
                     </tr>
                 </tbody>
             </table>
+            <div class="leaderboard__pagination" v-show="hasLess || hasMore">
+                <img class="leaderboard__pagination-arrow" :class="{ 'leaderboard__pagination-arrow--disabled': !hasLess }" id="arrow_pagination_left" @click="previousPage()"/>
+                <img class="leaderboard__pagination-arrow" :class="{ 'leaderboard__pagination-arrow--disabled': !hasMore }" id="arrow_pagination_right" @click="nextPage()"/>
+            </div>
         </div>
     </div>
 </template>
@@ -121,13 +141,14 @@ export default {
     data () {
         return {
             loading: true,
-            users: []
+            perPage: 2,
+            data: null
         }
     },
     mounted () {
         this.$nextTick(() => {
-            this.fetchUsers({ per_page: 3, page: 1, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then((users) => {
-                this.users = users.data
+            this.fetchUsers({ per_page: this.perPage, page: 1, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then((data) => {
+                this.data = data
 
                 this.$nextTick(() => {
                     const context = this
@@ -150,6 +171,22 @@ export default {
                     }
                     arrow.src = '/images/arrows/down.svg'
 
+                    const arrowPaginationLeft = this.$el.querySelector('#arrow_pagination_left')
+                    arrowPaginationLeft.onload = () => {
+                        if (++nLoaded === context.users.length + 2) {
+                            context.loading = false
+                        }
+                    }
+                    arrowPaginationLeft.src = '/images/arrows/left.svg'
+
+                    const arrowPaginationRight = this.$el.querySelector('#arrow_pagination_right')
+                    arrowPaginationRight.onload = () => {
+                        if (++nLoaded === context.users.length + 2) {
+                            context.loading = false
+                        }
+                    }
+                    arrowPaginationRight.src = '/images/arrows/right.svg'
+
                     for (let user of this.users) {
                         let avatar = this.$el.querySelector('#avatar_' + user.id)
                         avatar.onload = () => {
@@ -163,8 +200,57 @@ export default {
             })
         })
     },
+    computed: {
+        users () {
+            return this.data ? this.data.data : []
+        },
+        numbers () {
+            const numbers = []
+            if (this.data) {
+                for (let i = this.data.from; i <= this.data.to; i++) {
+                    numbers.push(i)
+                }
+            }
+            return numbers
+        },
+        hasLess () {
+            return this.data ? this.data.current_page > 1 : false
+        },
+        hasMore () {
+            return this.data ? this.data.current_page < Math.round(this.data.total / this.data.per_page) : false
+        }
+    },
     methods: {
         ...mapActions(['fetchUsers']),
+        previousPage () {
+            this.repaginate(this.data.current_page - 1)
+        },
+        nextPage () {
+            this.repaginate(this.data.current_page + 1)
+        },
+        repaginate (page) {
+            this.loading = true
+
+            this.fetchUsers({ per_page: this.perPage, page: page, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then((data) => {
+                this.data = data
+
+                this.$nextTick(() => {
+                    const context = this
+
+                    let nLoaded = 0
+
+                    for (let user of this.users) {
+                        let avatar = this.$el.querySelector('#avatar_' + user.id)
+                        avatar.onload = () => {
+                            if (++nLoaded === context.users.length) {
+                                context.loading = false
+                            }
+                        }
+                        avatar.src = user.avatar
+                    }
+                })
+            })
+        },
         reroute (name, params = {}) {
             this.$router.push({ name: name, params: params })
         }

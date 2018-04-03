@@ -44893,7 +44893,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.app[data-v-117390fa] {\n  width: 100%;\n}\n@supports (-webkit-overflow-scrolling: touch) {\n.app[data-v-117390fa] {\n      padding-bottom: 44px;\n}\n}\n.app--sticky[data-v-117390fa] {\n  padding-top: 70px;\n}\n", ""]);
+exports.push([module.i, "\n.app[data-v-117390fa] {\n  width: 100%;\n}\n.app--sticky[data-v-117390fa] {\n  padding-top: 70px;\n}\n", ""]);
 
 // exports
 
@@ -45578,7 +45578,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.game-modes[data-v-49c1c1f7] {\n  width: 100%;\n}\n.game-modes__content[data-v-49c1c1f7] {\n  width: 100%;\n  height: calc(100vh - 70px);\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.game-modes__item[data-v-49c1c1f7] {\n  width: 100%;\n  padding: 20px;\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.game-modes__item[data-v-49c1c1f7]:nth-last-child(2n + 1) {\n    background-color: #FFD15E;\n}\n.game-modes__item[data-v-49c1c1f7]:nth-last-child(2n) {\n    background-color: #FDBB2F;\n}\n.game-modes__image[data-v-49c1c1f7] {\n  width: 100px;\n  height: 100px;\n}\n.game-modes__label[data-v-49c1c1f7] {\n  font-size: 20px;\n  text-align: center;\n}\n.game-modes__arrow[data-v-49c1c1f7] {\n  width: 30px;\n  height: 30px;\n}\n", ""]);
+exports.push([module.i, "\n.game-modes[data-v-49c1c1f7] {\n  width: 100%;\n}\n.game-modes__content[data-v-49c1c1f7] {\n  width: 100%;\n  height: calc(100vh - 70px);\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.game-modes__item[data-v-49c1c1f7] {\n  width: 100%;\n  padding: 20px;\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.game-modes__item[data-v-49c1c1f7]:nth-child(odd) {\n    background-color: #FFD15E;\n}\n.game-modes__item[data-v-49c1c1f7]:nth-child(even) {\n    background-color: #FDBB2F;\n}\n.game-modes__image[data-v-49c1c1f7] {\n  width: 100px;\n  height: 100px;\n}\n.game-modes__label[data-v-49c1c1f7] {\n  font-size: 20px;\n  text-align: center;\n}\n.game-modes__arrow[data-v-49c1c1f7] {\n  width: 30px;\n  height: 30px;\n}\n", ""]);
 
 // exports
 
@@ -48436,7 +48436,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.leaderboard[data-v-668f1f56] {\n  width: 100%;\n}\n.leaderboard__content[data-v-668f1f56] {\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.leaderboard__instructions[data-v-668f1f56] {\n  width: 100%;\n  height: 290px;\n  padding-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.leaderboard__image[data-v-668f1f56] {\n  width: 120px;\n  height: 120px;\n  margin-bottom: 10px;\n}\n.leaderboard__label[data-v-668f1f56] {\n  margin: 20px 0 25px 0;\n}\n.leaderboard__arrow[data-v-668f1f56] {\n  width: 30px;\n  height: 30px;\n}\n.leaderboard__table[data-v-668f1f56] {\n  width: 100%;\n  margin-top: 20px;\n  border-collapse: collapse;\n}\n.leaderboard__table-row--header[data-v-668f1f56] {\n  height: 30px;\n  background-color: #72B7AE;\n  color: #2D514D;\n}\n.leaderboard__table-row--body[data-v-668f1f56] {\n  height: 65px;\n  cursor: pointer;\n}\n.leaderboard__table-row--body[data-v-668f1f56]:nth-last-child(2n + 1) {\n    background-color: #BFE3D3;\n}\n.leaderboard__table-row--body[data-v-668f1f56]:nth-last-child(2n) {\n    background-color: #72B7AE;\n}\n.leaderboard__table-column[data-v-668f1f56] {\n  padding: 5px 10px;\n  text-align: left;\n}\n.leaderboard__table-column[data-v-668f1f56]:last-child {\n    text-align: right;\n}\n.leaderboard__table-column--1[data-v-668f1f56] {\n  width: 10%;\n}\n.leaderboard__table-column--2[data-v-668f1f56] {\n  width: 20%;\n}\n.leaderboard__table-column--3[data-v-668f1f56] {\n  width: 40%;\n}\n.leaderboard__table-column--4[data-v-668f1f56] {\n  width: 20%;\n}\n.leaderboard__avatar[data-v-668f1f56] {\n  width: 50px;\n  height: 50px;\n}\n", ""]);
+exports.push([module.i, "\n.leaderboard[data-v-668f1f56] {\n  width: 100%;\n}\n.leaderboard__content[data-v-668f1f56] {\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.leaderboard__instructions[data-v-668f1f56] {\n  width: 100%;\n  height: 290px;\n  padding-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.leaderboard__image[data-v-668f1f56] {\n  width: 120px;\n  height: 120px;\n  margin-bottom: 10px;\n}\n.leaderboard__label[data-v-668f1f56] {\n  margin: 20px 0 25px 0;\n}\n.leaderboard__arrow[data-v-668f1f56] {\n  width: 30px;\n  height: 30px;\n}\n.leaderboard__table[data-v-668f1f56] {\n  width: 100%;\n  margin-top: 20px;\n  border-collapse: collapse;\n}\n.leaderboard__table-row--header[data-v-668f1f56] {\n  height: 30px;\n  background-color: #72B7AE;\n  color: #2D514D;\n}\n.leaderboard__table-row--body[data-v-668f1f56] {\n  height: 65px;\n  cursor: pointer;\n}\n.leaderboard__table-row--body[data-v-668f1f56]:nth-child(odd) {\n    background-color: #BFE3D3;\n}\n.leaderboard__table-row--body[data-v-668f1f56]:nth-child(even) {\n    background-color: #72B7AE;\n}\n.leaderboard__table-column[data-v-668f1f56] {\n  padding: 5px 10px;\n  text-align: left;\n}\n.leaderboard__table-column[data-v-668f1f56]:last-child {\n    text-align: right;\n}\n.leaderboard__table-column--1[data-v-668f1f56] {\n  width: 10%;\n}\n.leaderboard__table-column--2[data-v-668f1f56] {\n  width: 20%;\n}\n.leaderboard__table-column--3[data-v-668f1f56] {\n  width: 40%;\n}\n.leaderboard__table-column--4[data-v-668f1f56] {\n  width: 20%;\n}\n.leaderboard__avatar[data-v-668f1f56] {\n  width: 50px;\n  height: 50px;\n}\n.leaderboard__pagination[data-v-668f1f56] {\n  width: 100px;\n  margin-top: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.leaderboard__pagination-arrow[data-v-668f1f56] {\n  width: 55px;\n  height: 55px;\n  padding: 10px;\n  cursor: pointer;\n}\n.leaderboard__pagination-arrow--disabled[data-v-668f1f56] {\n  opacity: 0;\n}\n", ""]);
 
 // exports
 
@@ -48606,6 +48606,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -48613,15 +48633,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     data: function data() {
         return {
             loading: true,
-            users: []
+            perPage: 2,
+            data: null
         };
     },
     mounted: function mounted() {
         var _this = this;
 
         this.$nextTick(function () {
-            _this.fetchUsers({ per_page: 3, page: 1, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then(function (users) {
-                _this.users = users.data;
+            _this.fetchUsers({ per_page: _this.perPage, page: 1, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then(function (data) {
+                _this.data = data;
 
                 _this.$nextTick(function () {
                     var context = _this;
@@ -48643,6 +48664,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         }
                     };
                     arrow.src = '/images/arrows/down.svg';
+
+                    var arrowPaginationLeft = _this.$el.querySelector('#arrow_pagination_left');
+                    arrowPaginationLeft.onload = function () {
+                        if (++nLoaded === context.users.length + 2) {
+                            context.loading = false;
+                        }
+                    };
+                    arrowPaginationLeft.src = '/images/arrows/left.svg';
+
+                    var arrowPaginationRight = _this.$el.querySelector('#arrow_pagination_right');
+                    arrowPaginationRight.onload = function () {
+                        if (++nLoaded === context.users.length + 2) {
+                            context.loading = false;
+                        }
+                    };
+                    arrowPaginationRight.src = '/images/arrows/right.svg';
 
                     var _iteratorNormalCompletion = true;
                     var _didIteratorError = false;
@@ -48679,7 +48716,79 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
     },
 
+    computed: {
+        users: function users() {
+            return this.data ? this.data.data : [];
+        },
+        numbers: function numbers() {
+            var numbers = [];
+            if (this.data) {
+                for (var i = this.data.from; i <= this.data.to; i++) {
+                    numbers.push(i);
+                }
+            }
+            return numbers;
+        },
+        hasLess: function hasLess() {
+            return this.data ? this.data.current_page > 1 : false;
+        },
+        hasMore: function hasMore() {
+            return this.data ? this.data.current_page < Math.round(this.data.total / this.data.per_page) : false;
+        }
+    },
     methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchUsers']), {
+        previousPage: function previousPage() {
+            this.repaginate(this.data.current_page - 1);
+        },
+        nextPage: function nextPage() {
+            this.repaginate(this.data.current_page + 1);
+        },
+        repaginate: function repaginate(page) {
+            var _this2 = this;
+
+            this.loading = true;
+
+            this.fetchUsers({ per_page: this.perPage, page: page, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then(function (data) {
+                _this2.data = data;
+
+                _this2.$nextTick(function () {
+                    var context = _this2;
+
+                    var nLoaded = 0;
+
+                    var _iteratorNormalCompletion2 = true;
+                    var _didIteratorError2 = false;
+                    var _iteratorError2 = undefined;
+
+                    try {
+                        for (var _iterator2 = _this2.users[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                            var user = _step2.value;
+
+                            var avatar = _this2.$el.querySelector('#avatar_' + user.id);
+                            avatar.onload = function () {
+                                if (++nLoaded === context.users.length) {
+                                    context.loading = false;
+                                }
+                            };
+                            avatar.src = user.avatar;
+                        }
+                    } catch (err) {
+                        _didIteratorError2 = true;
+                        _iteratorError2 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                _iterator2.return();
+                            }
+                        } finally {
+                            if (_didIteratorError2) {
+                                throw _iteratorError2;
+                            }
+                        }
+                    }
+                });
+            });
+        },
         reroute: function reroute(name) {
             var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
@@ -48772,7 +48881,7 @@ var render = function() {
                         staticClass:
                           "leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--1"
                       },
-                      [_vm._v(_vm._s(index + 1))]
+                      [_vm._v(_vm._s(_vm.numbers[index]))]
                     ),
                     _vm._v(" "),
                     _c(
@@ -48810,7 +48919,49 @@ var render = function() {
                 )
               })
             )
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.hasLess || _vm.hasMore,
+                  expression: "hasLess || hasMore"
+                }
+              ],
+              staticClass: "leaderboard__pagination"
+            },
+            [
+              _c("img", {
+                staticClass: "leaderboard__pagination-arrow",
+                class: {
+                  "leaderboard__pagination-arrow--disabled": !_vm.hasLess
+                },
+                attrs: { id: "arrow_pagination_left" },
+                on: {
+                  click: function($event) {
+                    _vm.previousPage()
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("img", {
+                staticClass: "leaderboard__pagination-arrow",
+                class: {
+                  "leaderboard__pagination-arrow--disabled": !_vm.hasMore
+                },
+                attrs: { id: "arrow_pagination_right" },
+                on: {
+                  click: function($event) {
+                    _vm.nextPage()
+                  }
+                }
+              })
+            ]
+          )
         ]
       )
     ],
@@ -50184,6 +50335,7 @@ var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(125)
+  __webpack_require__(149)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
@@ -50263,7 +50415,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.settings[data-v-1482191a] {\n  width: 100%;\n}\n.settings__content[data-v-1482191a] {\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.settings__instructions[data-v-1482191a] {\n  width: 100%;\n  height: 290px;\n  padding-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.settings__image[data-v-1482191a] {\n  width: 120px;\n  height: 120px;\n  margin-bottom: 10px;\n}\n.settings__label[data-v-1482191a] {\n  margin: 20px 0 25px 0;\n}\n.settings__arrow[data-v-1482191a] {\n  width: 30px;\n  height: 30px;\n}\n.settings__elements[data-v-1482191a] {\n  width: 100%;\n  margin-top: 20px;\n  padding: 40px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #EB7D3D;\n}\n.settings__element[data-v-1482191a] {\n  margin-bottom: 20px;\n}\n.settings__select-wrapper[data-v-1482191a] {\n  width: 100%;\n  height: 100%;\n  cursor: pointer;\n}\n.settings__select-wrapper[data-v-1482191a]:after {\n    position: relative;\n    content: '';\n    width: 45px;\n    background-color: #F4945D;\n    pointer-events: none;\n}\n.settings__select[data-v-1482191a] {\n  width: 100%;\n  height: 100%;\n  padding: 10px 30px 10px 10px;\n  border: none;\n  border-radius: 0;\n  background-color: #F8A16E;\n  font-size: 18px;\n  font-family: \"GothamRounded-Bold\";\n  overflow: hidden;\n  outline: none;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  appearance: none;\n  cursor: pointer;\n}\n.settings__select-arrow-wrapper[data-v-1482191a] {\n  width: 45px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #F4945D;\n}\n.settings__select-arrow[data-v-1482191a] {\n  width: 20px;\n  height: 20px;\n}\n.settings__slider-wrapper[data-v-1482191a] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.settings__slider-label[data-v-1482191a] {\n  width: 20%;\n}\n.settings__slider[data-v-1482191a] {\n  width: 80%;\n  height: 15px;\n  border-radius: 5px;\n  background-color: #a0a0a0;\n  opacity: 0.7;\n  outline: none;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  appearance: none;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.settings__slider[data-v-1482191a] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.settings__slider[data-v-1482191a] {\n      opacity: 1;\n}\n}\n.settings__slider[data-v-1482191a]:hover {\n    opacity: 1;\n}\n.settings__slider[data-v-1482191a]::-webkit-slider-thumb {\n    width: 25px;\n    height: 25px;\n    border-radius: 50%;\n    background-color: #04BFBF;\n    -moz-appearance: none;\n    -webkit-appearance: none;\n    appearance: none;\n    cursor: pointer;\n}\n.settings__slider[data-v-1482191a]::-moz-range-thumb {\n    width: 25px;\n    height: 25px;\n    border-radius: 50%;\n    background-color: #04BFBF;\n    cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n.settings[data-v-1482191a] {\n  width: 100%;\n}\n.settings__content[data-v-1482191a] {\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.settings__instructions[data-v-1482191a] {\n  width: 100%;\n  height: 290px;\n  padding-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.settings__image[data-v-1482191a] {\n  width: 120px;\n  height: 120px;\n  margin-bottom: 10px;\n}\n.settings__label[data-v-1482191a] {\n  margin: 20px 0 25px 0;\n}\n.settings__arrow[data-v-1482191a] {\n  width: 30px;\n  height: 30px;\n}\n.settings__elements[data-v-1482191a] {\n  width: 100%;\n  margin-top: 20px;\n  padding: 40px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #EB7D3D;\n}\n.settings__element-label-wrapper[data-v-1482191a] {\n  width: 100%;\n  margin-bottom: 5px;\n  padding-left: 2px;\n}\n.settings__element-label[data-v-1482191a] {\n  color: #66361B;\n  font-size: 15px;\n}\n.settings__element[data-v-1482191a] {\n  margin-bottom: 20px;\n}\n.settings__select-wrapper[data-v-1482191a] {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  cursor: pointer;\n}\n.settings__select-wrapper[data-v-1482191a]:after {\n    content: '';\n    position: absolute;\n    top: 0;\n    right: 0;\n    width: 45px;\n    height: 100%;\n    background-color: #F4945D;\n    pointer-events: none;\n}\n.settings__select[data-v-1482191a] {\n  width: 100%;\n  height: 100%;\n  padding: 10px 30px 10px 10px;\n  border: none;\n  border-radius: 0;\n  background-color: #F8A16E;\n  font-size: 18px;\n  font-family: \"GothamRounded-Bold\";\n  overflow: hidden;\n  outline: none;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  appearance: none;\n  cursor: pointer;\n}\n.settings__select-arrow[data-v-1482191a] {\n  position: absolute;\n  top: 17px;\n  right: -8px;\n  width: 40px;\n  height: 40px;\n  fill: #66361B;\n  z-index: 1;\n  pointer-events: none;\n}\n.settings__slider-wrapper[data-v-1482191a] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.settings__slider-label[data-v-1482191a] {\n  width: 60px;\n}\n.settings__slider[data-v-1482191a] {\n  width: calc(100% - 60px);\n  height: 15px;\n  border-radius: 5px;\n  background-color: #F8A16E;\n  opacity: 0.7;\n  outline: none;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  appearance: none;\n  cursor: pointer;\n}\n@media only screen and (min-width: 768px) and (max-width: 1024px) {\n.settings__slider[data-v-1482191a] {\n      opacity: 1;\n}\n}\n@media only screen and (max-width: 767px) {\n.settings__slider[data-v-1482191a] {\n      opacity: 1;\n}\n}\n.settings__slider[data-v-1482191a]:hover {\n    opacity: 1;\n}\n.settings__slider[data-v-1482191a]::-webkit-slider-thumb {\n    width: 25px;\n    height: 25px;\n    border-radius: 50%;\n    background-color: #66361B;\n    -moz-appearance: none;\n    -webkit-appearance: none;\n    appearance: none;\n    cursor: pointer;\n}\n.settings__slider[data-v-1482191a]::-moz-range-thumb {\n    width: 25px;\n    height: 25px;\n    border-radius: 50%;\n    background-color: #66361B;\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -50277,6 +50429,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -50491,23 +50677,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
                 var image = _this.$el.querySelector('#image');
                 image.onload = function () {
-                    if (++nLoaded === 2) {
+                    if (++nLoaded === 3) {
                         context.loading = false;
                     }
                 };
                 image.src = '/images/settings/settings.svg';
 
                 var arrow = _this.$el.querySelector('#arrow');
-                // const arrowInstrument = this.$el.querySelector('#arrow_instrument')
-                // const arrowClef = this.$el.querySelector('#arrow_clef')
                 arrow.onload = function () {
-                    if (++nLoaded === 2) {
+                    if (++nLoaded === 3) {
                         context.loading = false;
                     }
                 };
                 arrow.src = '/images/arrows/down.svg';
-                // arrowInstrument.src = '/images/arrows/down.svg'
-                // arrowClef.src = '/images/arrows/down.svg'
+
+                var arrowInstrument = _this.$el.querySelector('#arrow_instrument');
+                var arrowClef = _this.$el.querySelector('#arrow_clef');
+                arrowInstrument.onload = function () {
+                    if (++nLoaded === 3) {
+                        context.loading = false;
+                    }
+                };
+                arrowInstrument.href.baseVal = '/images/arrows/down.svg#element';
+                arrowClef.href.baseVal = '/images/arrows/down.svg#element';
             });
         });
     },
@@ -50605,6 +50797,8 @@ var render = function() {
             "div",
             { staticClass: "settings__elements" },
             [
+              _vm._m(0),
+              _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "settings__element settings__select-wrapper" },
@@ -50647,9 +50841,20 @@ var render = function() {
                         [_vm._v(_vm._s(value))]
                       )
                     })
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "settings__select-arrow",
+                      attrs: { viewBox: "0 0 100 100" }
+                    },
+                    [_c("use", { attrs: { id: "arrow_instrument" } })]
                   )
                 ]
               ),
+              _vm._v(" "),
+              _vm._m(1),
               _vm._v(" "),
               _c(
                 "div",
@@ -50693,9 +50898,20 @@ var render = function() {
                         [_vm._v(_vm._s(value))]
                       )
                     })
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "settings__select-arrow",
+                      attrs: { viewBox: "0 0 100 100" }
+                    },
+                    [_c("use", { attrs: { id: "arrow_clef" } })]
                   )
                 ]
               ),
+              _vm._v(" "),
+              _vm._m(2),
               _vm._v(" "),
               _c(
                 "div",
@@ -50754,7 +50970,36 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "settings__element-label-wrapper" }, [
+      _c("label", { staticClass: "settings__element-label" }, [
+        _vm._v("INŠTRUMENT")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "settings__element-label-wrapper" }, [
+      _c("label", { staticClass: "settings__element-label" }, [_vm._v("KLJUČ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "settings__element-label-wrapper" }, [
+      _c("label", { staticClass: "settings__element-label" }, [
+        _vm._v("RAZMAK MED PREDVAJANIMI TONI")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -52182,6 +52427,49 @@ function handleError(error) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(150);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("b328aef0", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1482191a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1&bustCache!./Settings.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1482191a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1&bustCache!./Settings.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 150 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.settings__elements .button {\n  margin-top: 50px;\n}\n.settings__elements .button .button__full {\n    background-color: #F8A16E !important;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);
