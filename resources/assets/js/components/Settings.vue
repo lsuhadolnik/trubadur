@@ -1,7 +1,7 @@
 <style lang="scss" scoped>
 @import '../../sass/variables/index';
 
-$instructions-height        : 275px;
+$instructions-height        : 290px;
 $select-arrow-wrapper-width : 45px;
 
 .settings { width: 100%; }
@@ -9,7 +9,7 @@ $select-arrow-wrapper-width : 45px;
 .settings__content {
     width          : 100%;
     height         : 100%;
-    padding-bottom : 50px;
+    padding-bottom : $bottom-padding;
     display        : flex;
     align-items    : center;
     flex-direction : column;
@@ -30,7 +30,7 @@ $select-arrow-wrapper-width : 45px;
     margin-bottom : 10px;
 }
 
-.settings__label { margin: 20px 0 5px 0; }
+.settings__label { margin: $label-margin; }
 
 .settings__arrow {
     width  : 30px;
@@ -39,6 +39,7 @@ $select-arrow-wrapper-width : 45px;
 
 .settings__elements {
     width            : 100%;
+    margin-top       : $content-margin;
     padding          : 40px 10%;
     display          : flex;
     align-items      : center;

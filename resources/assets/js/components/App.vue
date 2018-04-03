@@ -2,8 +2,9 @@
 @import '../../sass/variables/index';
 
 .app {
-    width  : 100%;
-    height : 100%;
+    width: 100%;
+
+    @include ios { padding-bottom: $bottom-padding-ios; }
 }
 
 .app--sticky { padding-top: $header-height; }

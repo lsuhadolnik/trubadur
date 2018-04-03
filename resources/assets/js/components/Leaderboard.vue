@@ -1,14 +1,14 @@
 <style lang="scss" scoped>
 @import '../../sass/variables/index';
 
-$instructions-height: 275px;
+$instructions-height: 290px;
 
 .leaderboard { width: 100%; }
 
 .leaderboard__content {
     width          : 100%;
     height         : 100%;
-    padding-bottom : 50px;
+    padding-bottom : $bottom-padding;
     display        : flex;
     align-items    : center;
     flex-direction : column;
@@ -24,12 +24,12 @@ $instructions-height: 275px;
 }
 
 .leaderboard__image {
-    width  : 120px;
-    height : 120px;
-    margin-bottom: 10px;
+    width         : 120px;
+    height        : 120px;
+    margin-bottom : 10px;
 }
 
-.leaderboard__label { margin: 20px 0 5px 0; }
+.leaderboard__label { margin: $label-margin; }
 
 .leaderboard__arrow {
     width  : 30px;
@@ -38,10 +38,9 @@ $instructions-height: 275px;
 
 .leaderboard__table {
     width           : 100%;
+    margin-top      : $content-margin;
     border-collapse : collapse;
 }
-
-.leaderboard__table-row { }
 
 .leaderboard__table-row--header {
     height           : 30px;

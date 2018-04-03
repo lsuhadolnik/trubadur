@@ -37,3 +37,7 @@
 @mixin breakpoint-landscape {
     @media only screen and (orientation: landscape) { @content; }
 }
+
+@mixin ios {
+    @supports (-webkit-overflow-scrolling: touch) { @content; }
+}

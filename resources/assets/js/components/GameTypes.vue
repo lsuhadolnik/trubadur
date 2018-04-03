@@ -8,6 +8,7 @@ $choose-height: 170px;
 .game-types__content {
     width          : 100%;
     height         : 100%;
+    padding-bottom : $bottom-padding;
     display        : flex;
     align-items    : center;
     flex-direction : column;
@@ -22,7 +23,7 @@ $choose-height: 170px;
     flex-direction : column;
 }
 
-.game-types__label { margin: 20px 0 5px 0; }
+.game-types__label { margin: $label-margin; }
 
 .game-types__arrow {
     width  : 30px;
@@ -31,7 +32,8 @@ $choose-height: 170px;
 
 .game-types__options {
     width            : 100%;
-    min-height       : calc(100vh - #{$header-height} - #{$choose-height});
+    min-height       : calc(100vh - #{$header-height} - #{$choose-height} - #{$content-margin} - #{$bottom-padding});
+    margin-top       : $content-margin;
     padding          : 20px 0;
     display          : flex;
     align-items      : center;
