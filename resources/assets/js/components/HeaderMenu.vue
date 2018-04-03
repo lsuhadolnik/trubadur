@@ -47,7 +47,6 @@
     left             : -$menu-width;
     width            : $menu-width;
     height           : 100vh;
-    padding          : 10px 0;
     display          : flex;
     align-items      : center;
     flex-direction   : column;
@@ -93,8 +92,8 @@
 }
 
 .menu__item {
-    width            : calc(#{$menu-width} * 0.75);
-    height           : calc(#{$menu-width} * 0.75);
+    width            : calc(#{$menu-width} * 0.8);
+    height           : calc(#{$menu-width} * 0.8);
     display          : flex;
     align-items      : center;
     justify-content  : center;
@@ -104,8 +103,8 @@
     background-color : transparent;
 
     @include breakpoint-small-phone {
-        width  : calc(#{$menu-width-small} * 0.75);
-        height : calc(#{$menu-width-small} * 0.75);
+        width  : calc(#{$menu-width-small} * 0.8);
+        height : calc(#{$menu-width-small} * 0.8);
     }
 
     &:hover { background-color: $golden-tainoi; }
@@ -123,7 +122,7 @@
     }
 }
 
-.menu__label { font-size: 13px; }
+.menu__label { font-size: 12px; }
 
 .menu__logout-form { display: none; }
 </style>

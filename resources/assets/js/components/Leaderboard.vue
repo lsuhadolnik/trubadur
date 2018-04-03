@@ -126,7 +126,7 @@ export default {
     },
     mounted () {
         this.$nextTick(() => {
-            this.fetchUsers({ per_page: 10, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then((users) => {
+            this.fetchUsers({ per_page: 3, page: 1, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then((users) => {
                 this.users = users.data
 
                 this.$nextTick(() => {
