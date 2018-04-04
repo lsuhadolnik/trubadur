@@ -2,23 +2,28 @@
 
 @section('content')
 <div class="login">
-    <div class="login__logo"></div>
+    <div class="login__header">
+        <div class="header__title">TRUBADUR</div>
+    </div>
+
+    <div class="login__title">PRIJAVA</div>
+
     <form class="login__form" method="POST" action="{{ route('login') }}">
         {{ csrf_field() }}
 
-        <div class="login__form-title">TRUBADUR</div>
-
         <div class="login__form-content">
             <div class="login__form-group">
-                <div class="login__form-subtitle">Prijava</div>
+                <div class="login__form-label-wrapper">
+                    <label class="login__form-label" for="name">E-MAIL</label>
+                </div>
+                <input class="login__form-input" type="email" id="name" name="email" title="Vnesite e-mail" value="{{ old('email') }}" required autofocus/>
             </div>
 
             <div class="login__form-group">
-                <input class="login__form-input {{ $errors->has('email') ? 'login__form-input--error' : '' }}" type="email" name="email" placeholder="E-mail" title="Vnesite e-mail" value="{{ old('email') }}" required autofocus/>
-            </div>
-
-            <div class="login__form-group">
-                <input class="login__form-input {{ $errors->has('password') ? 'login__form-input--error' : '' }}" type="password" name="password" placeholder="Geslo" title="Vnesite geslo" required/>
+                <div class="login__form-label-wrapper">
+                    <label class="login__form-label" for="name">GESLO</label>
+                </div>
+                <input class="login__form-input" type="password" id="password" name="password" title="Vnesite geslo" required/>
             </div>
 
             <div class="login__form-group">
@@ -27,21 +32,9 @@
                     &nbsp;Zapomni si me
                 </label>
             </div>
+        </div>
 
-            <div class="login__form-group login__form-group--link">
-                <a class="login__form-link" href="{{ route('password.request') }}">Ste pozabili geslo?</a>
-            </div>
-
-            <div class="login__form-group">
-                <span class="login__form-text">Še niste registrirani?&nbsp;</span>
-                <a class="login__form-link" href="{{ route('register') }}">Ustvarite račun</a>
-                <span class="login__form-text">.</span>
-            </div>
-
-            <div class="login__form-group login__button-group">
-                <button class="login__button login__button_submit" type="submit">Prijava</button>
-            </div>
-
+        @if ($errors->count() > 0)
             <div class="login__error-group">
                 <ul class="login__error-list">
                     @if ($errors->has('email'))
@@ -58,15 +51,32 @@
                     @endif
                 </ul>
             </div>
+        @endif
 
+        @if (session('status'))
             <div class="login__status-group">
                 <ul class="login__status-list">
-                    @if (session('status'))
-                        <li class="login__status">{!! session('status') !!}</li>
-                    @endif
+                    <li class="login__status">{!! session('status') !!}</li>
                 </ul>
             </div>
+        @endif
+
+        <div class="login__button" onclick="this.parentNode.submit()">
+            <input type="submit" hidden/>
+            <div class="login__button-hollow">PRIJAVA</div>
+            <div class="login__button-full"></div>
         </div>
     </form>
+
+    <div class="login__links">
+        <div class="login__link-group">
+            <a class="login__link" href="{{ route('password.request') }}">Ste pozabili geslo?</a>
+        </div>
+
+        <div class="login__link-group">
+            <span class="login__link-label">Še niste registrirani?&nbsp;</span><br/>
+            <a class="login__link" href="{{ route('register') }}">Ustvarite račun</a>
+        </div>
+    </div>
 </div>
 @endsection

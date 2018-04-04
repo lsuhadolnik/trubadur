@@ -86,7 +86,7 @@ $select-arrow-wrapper-width : 45px;
     border-radius      : 0;
     background-color   : $tacao;
     font-size          : 18px;
-    font-family        : $font-bold;
+    font-family        : $font-bold, sans-serif;
     overflow           : hidden;
     outline            : none;
     -moz-appearance    : none;
@@ -196,7 +196,7 @@ $select-arrow-wrapper-width : 45px;
                     </svg>
                 </div>
                 <div class="settings__element-label-wrapper">
-                    <label class="settings__element-label">RAZMAK MED PREDVAJANIMI TONI</label>
+                    <label class="settings__element-label">PAVZA MED PREDVAJANIMI TONI</label>
                 </div>
                 <div class="settings__element settings__slider-wrapper">
                     <label for="notePlaybackDelay" class="settings__slider-label">{{ selectedNotePlaybackDelay }} s</label>

@@ -30,14 +30,14 @@
 }
 
 .header__icon {
-    width  : 30px;
-    height : 30px;
+    width      : 30px;
+    height     : 30px;
+    transition : opacity $button-transition-time linear;
 }
 
 .header__title {
     color       : $black;
     font-size   : 25px;
-    font-family : $font-bold;
     cursor      : pointer;
 }
 
@@ -201,7 +201,7 @@
     <div class="header-menu">
         <div class="header" :class="{ 'header--sticky': isHeaderSticky, 'header--colored': isHeaderColored }">
             <div class="header__menu-button" @click="toggleMenu($event)">
-                <icon class="icon header__icon" name="bars"></icon>
+                <icon class="header__icon" name="bars"></icon>
             </div>
             <div class="header__title" @click="dashboard()">TRUBADUR</div>
         </div>

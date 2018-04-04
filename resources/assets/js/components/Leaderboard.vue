@@ -141,7 +141,7 @@ export default {
     data () {
         return {
             loading: true,
-            perPage: 2,
+            perPage: 10,
             data: null
         }
     },
