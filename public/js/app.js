@@ -47390,7 +47390,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.intervals[data-v-4f5997e7] {\n  width: 100%;\n  padding-bottom: 20px;\n}\n.intervals__instructions[data-v-4f5997e7] {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.intervals__instructions-list-item[data-v-4f5997e7] {\n  padding: 10px;\n}\n.intervals__progress-wrapper[data-v-4f5997e7] {\n  padding: 20px 2.5vw 0 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n@media only screen and (orientation: portrait) {\n.intervals__progress-wrapper[data-v-4f5997e7] {\n      padding-top: 20px;\n      -webkit-box-pack: space-evenly;\n          -ms-flex-pack: space-evenly;\n              justify-content: space-evenly;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.intervals__progress-chapters[data-v-4f5997e7] {\n  width: 50%;\n  margin-right: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n@media only screen and (orientation: portrait) {\n.intervals__progress-chapters[data-v-4f5997e7] {\n      width: 100%;\n      margin-right: 0;\n      padding: 0 2.5vw 15px 2.5vw;\n}\n}\n.intervals__progress-chapter[data-v-4f5997e7] {\n  position: relative;\n  width: calc((100vw - 4vw) / 3);\n  height: 20px;\n  background-color: #A4D395;\n}\n.intervals__progress-chapter[data-v-4f5997e7]:first-child {\n    margin-right: 2vw;\n    border-radius: 10px 0 0 10px;\n}\n.intervals__progress-chapter[data-v-4f5997e7]:last-child {\n    margin-left: 2vw;\n    border-radius: 0 10px 10px 0;\n}\n@media only screen and (orientation: portrait) {\n.intervals__progress-chapter[data-v-4f5997e7] {\n      width: calc((100% - 4vw) / 3);\n}\n}\n.intervals__progress-question[data-v-4f5997e7] {\n  position: absolute;\n  height: 20px;\n  background-color: #6CC075;\n}\n.intervals__progress-question[data-v-4f5997e7]:last-child {\n    border-radius: 0 10px 10px 0;\n}\n.intervals__progress-question[data-v-4f5997e7]:first-child {\n    border-radius: 10px 0 0 10px;\n}\n.intervals__stave-keyboard-wrapper[data-v-4f5997e7] {\n  margin-top: 10px;\n  padding: 0 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n@media only screen and (orientation: portrait) {\n.intervals__stave-keyboard-wrapper[data-v-4f5997e7] {\n      margin-top: 0;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.intervals__stave[data-v-4f5997e7] {\n  margin-right: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.intervals__stave[data-v-4f5997e7] {\n      margin-right: 0;\n}\n}\n.intervals__keyboard[data-v-4f5997e7] {\n  margin-left: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.intervals__keyboard[data-v-4f5997e7] {\n      margin-top: 10px;\n      margin-left: 0;\n}\n}\n.intervals__commands[data-v-4f5997e7] {\n  margin-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: space-evenly;\n      -ms-flex-pack: space-evenly;\n          justify-content: space-evenly;\n}\n@media only screen and (orientation: portrait) {\n.intervals__commands[data-v-4f5997e7] {\n      margin-top: 20px;\n}\n}\n.intervals__notification-label[data-v-4f5997e7] {\n  color: #D2495F;\n  font-size: 18px;\n}\n.intervals__notification-label--portrait[data-v-4f5997e7] {\n  margin-top: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n@media only screen and (orientation: landscape) {\n.intervals__notification-label--portrait[data-v-4f5997e7] {\n      display: none;\n}\n}\n.intervals__notification-label--landscape[data-v-4f5997e7] {\n  width: 150px;\n  text-align: center;\n}\n@media only screen and (orientation: portrait) {\n.intervals__notification-label--landscape[data-v-4f5997e7] {\n      display: none;\n}\n}\n", ""]);
+exports.push([module.i, "\n.intervals[data-v-4f5997e7] {\n  width: 100%;\n  padding-bottom: 20px;\n}\n.intervals__instructions[data-v-4f5997e7] {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.intervals__instructions-list-item[data-v-4f5997e7] {\n  padding: 8px 20px 8px 3px;\n}\n.intervals__progress-wrapper[data-v-4f5997e7] {\n  padding: 20px 2.5vw 0 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n@media only screen and (orientation: portrait) {\n.intervals__progress-wrapper[data-v-4f5997e7] {\n      padding-top: 20px;\n      -webkit-box-pack: space-evenly;\n          -ms-flex-pack: space-evenly;\n              justify-content: space-evenly;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.intervals__progress-chapters[data-v-4f5997e7] {\n  width: 50%;\n  margin-right: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n@media only screen and (orientation: portrait) {\n.intervals__progress-chapters[data-v-4f5997e7] {\n      width: 100%;\n      margin-right: 0;\n      padding: 0 2.5vw 15px 2.5vw;\n}\n}\n.intervals__progress-chapter[data-v-4f5997e7] {\n  position: relative;\n  width: calc((100vw - 4vw) / 3);\n  height: 20px;\n  background-color: #A4D395;\n}\n.intervals__progress-chapter[data-v-4f5997e7]:first-child {\n    margin-right: 2vw;\n    border-radius: 10px 0 0 10px;\n}\n.intervals__progress-chapter:first-child .intervals__progress-question[data-v-4f5997e7] {\n      border-radius: 10px 0 0 10px;\n}\n.intervals__progress-chapter[data-v-4f5997e7]:last-child {\n    margin-left: 2vw;\n    border-radius: 0 10px 10px 0;\n}\n@media only screen and (orientation: portrait) {\n.intervals__progress-chapter[data-v-4f5997e7] {\n      width: calc((100% - 4vw) / 3);\n}\n}\n.intervals__progress-question[data-v-4f5997e7] {\n  position: absolute;\n  height: 20px;\n  background-color: #6CC075;\n}\n.intervals__stave-keyboard-wrapper[data-v-4f5997e7] {\n  margin-top: 10px;\n  padding: 0 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n@media only screen and (orientation: portrait) {\n.intervals__stave-keyboard-wrapper[data-v-4f5997e7] {\n      margin-top: 0;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.intervals__stave[data-v-4f5997e7] {\n  margin-right: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.intervals__stave[data-v-4f5997e7] {\n      margin-right: 0;\n}\n}\n.intervals__keyboard[data-v-4f5997e7] {\n  margin-left: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.intervals__keyboard[data-v-4f5997e7] {\n      margin-top: 10px;\n      margin-left: 0;\n}\n}\n.intervals__commands[data-v-4f5997e7] {\n  margin-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: space-evenly;\n      -ms-flex-pack: space-evenly;\n          justify-content: space-evenly;\n}\n@media only screen and (orientation: portrait) {\n.intervals__commands[data-v-4f5997e7] {\n      margin-top: 20px;\n}\n}\n.intervals__notification-label[data-v-4f5997e7] {\n  color: #D2495F;\n  font-size: 18px;\n}\n.intervals__notification-label--portrait[data-v-4f5997e7] {\n  margin-top: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n@media only screen and (orientation: landscape) {\n.intervals__notification-label--portrait[data-v-4f5997e7] {\n      display: none;\n}\n}\n.intervals__notification-label--landscape[data-v-4f5997e7] {\n  width: 150px;\n  text-align: center;\n}\n@media only screen and (orientation: portrait) {\n.intervals__notification-label--landscape[data-v-4f5997e7] {\n      display: none;\n}\n}\n", ""]);
 
 // exports
 
@@ -47444,7 +47444,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-//
 //
 //
 //
@@ -47763,8 +47762,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         var _this2 = this;
 
         this.$nextTick(function () {
-            _this2.originalBackgroundImage = document.body.style.backgroundImage;
-            document.body.style.backgroundImage = 'none';
+            // this.originalBackgroundImage = document.body.style.backgroundImage
+            // document.body.style.backgroundImage = 'none'
 
             _this2.timer = new TimerProgress({ // eslint-disable-line no-undef
                 'container': _this2.$el.querySelector('#timer'),
@@ -47774,13 +47773,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 'color-circle': '#F8A16E',
                 'color-path': '#EB7D3D',
                 'color-alert': '#D2495F',
-                'font-size': 30,
+                'font-size': 25,
                 'font-family': 'GothamRounded-Bold'
             });
         });
     },
     beforeDestroy: function beforeDestroy() {
-        document.body.style.backgroundImage = this.originalBackgroundImage;
+        // document.body.style.backgroundImage = this.originalBackgroundImage
         clearTimeout(this.timeoutId);
     },
 
@@ -47994,6 +47993,16 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
+            _c("li", { staticClass: "intervals__instructions-list-item" }, [
+              _vm._v("Za vnos not na notno črtovje uporabi klaviaturo")
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "intervals__instructions-list-item" }, [
+              _vm._v(
+                "Na voljo imaš še ukaz za brisanje not, ponovno predvajanje tonov in premik na naslednje vprašanje"
+              )
+            ]),
+            _vm._v(" "),
             _c(
               "li",
               {
@@ -48054,7 +48063,12 @@ var render = function() {
                         }
                       ],
                       staticClass: "intervals__progress-question",
-                      style: { width: _vm.number * 100 / _vm.nQuestions + "%" }
+                      style: {
+                        width:
+                          (_vm.chapter > n
+                            ? 100
+                            : (_vm.number - 1) * 100 / _vm.nQuestions) + "%"
+                      }
                     })
                   ]
                 )

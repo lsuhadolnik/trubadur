@@ -13,7 +13,7 @@
     flex-direction : column;
 }
 
-.intervals__instructions-list-item { padding: 10px; }
+.intervals__instructions-list-item { padding: 8px 20px 8px 3px; }
 
 .intervals__progress-wrapper {
     padding         : 20px 2.5vw 0 2.5vw;
@@ -49,6 +49,8 @@
     &:first-child {
         margin-right  : 2vw;
         border-radius : 10px 0 0 10px;
+
+        .intervals__progress-question { border-radius: 10px 0 0 10px; }
     }
 
     &:last-child {
@@ -56,18 +58,13 @@
         border-radius : 0 10px 10px 0;
     }
 
-    @include breakpoint-portrait {
-        width: calc((100% - 4vw) / 3);
-    }
+    @include breakpoint-portrait { width: calc((100% - 4vw) / 3); }
 }
 
 .intervals__progress-question {
     position         : absolute;
     height           : 20px;
     background-color : $fern;
-
-    &:last-child  { border-radius : 0 10px 10px 0; }
-    &:first-child { border-radius : 10px 0 0 10px; }
 }
 
 .intervals__stave-keyboard-wrapper {
@@ -196,6 +193,8 @@
                 <li class="intervals__instructions-list-item">Preizkusil se boš v igri ugotavljanja intervalov</li>
                 <li class="intervals__instructions-list-item">Igra je razdeljena v 3 poglavja, vsako izmed njih ima 8 vprašanj</li>
                 <li class="intervals__instructions-list-item">Za odgovor na posamezno vprašanje imaš na voljo natanko 120 sekund</li>
+                <li class="intervals__instructions-list-item">Za vnos not na notno črtovje uporabi klaviaturo</li>
+                <li class="intervals__instructions-list-item">Na voljo imaš še ukaz za brisanje not, ponovno predvajanje tonov in premik na naslednje vprašanje</li>
                 <li class="intervals__instructions-list-item" v-show="!isPractice">Uspešnost reševanja nalog bo vplivala na tvoj položaj na lestvici</li>
                 <li class="intervals__instructions-list-item">Na koncu igre si lahko ogledaš statistiko</li>
             </ul>
@@ -204,7 +203,7 @@
             <div class="intervals__progress-wrapper">
                 <div class="intervals__progress-chapters">
                     <div class="intervals__progress-chapter" v-for="n in nChapters">
-                        <div class="intervals__progress-question" :style="{ 'width': (number * 100 / nQuestions) + '%' }" v-show="chapter >= n"></div>
+                        <div class="intervals__progress-question" :style="{ 'width': (chapter > n ? 100 : ((number - 1) * 100 / nQuestions)) + '%' }" v-show="chapter >= n"></div>
                     </div>
                 </div>
                 <svg id="timer"></svg>
@@ -311,8 +310,8 @@ export default {
     },
     mounted () {
         this.$nextTick(() => {
-            this.originalBackgroundImage = document.body.style.backgroundImage
-            document.body.style.backgroundImage = 'none'
+            // this.originalBackgroundImage = document.body.style.backgroundImage
+            // document.body.style.backgroundImage = 'none'
 
             this.timer = new TimerProgress({ // eslint-disable-line no-undef
                 'container': this.$el.querySelector('#timer'),
@@ -322,13 +321,13 @@ export default {
                 'color-circle': '#F8A16E',
                 'color-path': '#EB7D3D',
                 'color-alert': '#D2495F',
-                'font-size': 30,
+                'font-size': 25,
                 'font-family': 'GothamRounded-Bold'
             })
         })
     },
     beforeDestroy () {
-        document.body.style.backgroundImage = this.originalBackgroundImage
+        // document.body.style.backgroundImage = this.originalBackgroundImage
         clearTimeout(this.timeoutId)
     },
     computed: {
