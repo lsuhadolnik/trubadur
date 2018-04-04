@@ -31,12 +31,12 @@
   src: url("/fonts/GothamRounded-Light.eot?#iefix") format("embedded-opentype"), url("/fonts/GothamRounded-Light.woff2") format("woff2"), url("/fonts/GothamRounded-Light.woff") format("woff"), url("/fonts/GothamRounded-Light.ttf") format("truetype"), url("/fonts/GothamRounded-Light.svg#Gotham-Light") format("svg");
 }
 
-.login {
+.auth {
   width: 100%;
   padding-bottom: 50px;
 }
 
-.login__header {
+.auth__header {
   width: 100%;
   height: 70px;
   display: -webkit-box;
@@ -56,13 +56,13 @@
   cursor: pointer;
 }
 
-.login__title {
+.auth__title {
   margin: 30px 0 40px 0;
   font-size: 40px;
   text-align: center;
 }
 
-.login__form {
+.auth__form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -75,7 +75,7 @@
           flex-direction: column;
 }
 
-.login__form-content {
+.auth__form-content {
   width: 100%;
   padding: 30px 10%;
   display: -webkit-box;
@@ -91,22 +91,26 @@
   background-color: #FDBB2F;
 }
 
-.login__form-group {
+.auth__form-group {
   width: 100%;
   margin-bottom: 20px;
 }
 
-.login__form-label-wrapper {
+.auth__form-group--checkbox {
+  padding-top: 10px;
+}
+
+.auth__form-label-wrapper {
   margin-bottom: 5px;
   padding-left: 2px;
 }
 
-.login__form-label {
+.auth__form-label {
   color: #7C5D24;
   font-size: 15px;
 }
 
-.login__form-input {
+.auth__form-input {
   width: 100%;
   height: 50px;
   padding: 0 10px;
@@ -118,56 +122,91 @@
   outline: none;
 }
 
-.login__form-input:-webkit-autofill,
-.login__form-input:-webkit-autofill:hover,
-.login__form-input:-webkit-autofill:focus {
+.auth__form-input:-webkit-autofill,
+.auth__form-input:-webkit-autofill:hover,
+.auth__form-input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0 100px #FFD15E inset !important;
 }
 
-.login__form-checkbox-label {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+.auth__form-checkbox-label {
+  position: relative;
+  padding: 4px 0 0 35px;
+  font-size: 15px;
   cursor: pointer;
 }
 
-.login__form-checkbox {
+.auth__form-checkbox-label:hover .auth__form-checkbox-checkmark {
+  background-color: #FFD15E;
+}
+
+.auth__form-checkbox {
+  position: absolute;
+  display: none;
   cursor: pointer;
 }
 
-.login__form-checkbox:focus {
-  outline: 0;
+.auth__form-checkbox:checked ~ .auth__form-checkbox-checkmark {
+  background-color: #FFD15E;
 }
 
-.login__error-group,
-.login__status-group {
+.auth__form-checkbox:checked ~ .auth__form-checkbox-checkmark:after {
+  opacity: 1;
+}
+
+.auth__form-checkbox-checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #FFD15E;
+  -webkit-transition: background-color 0.1s linear;
+  transition: background-color 0.1s linear;
+}
+
+.auth__form-checkbox-checkmark:after {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border-width: 0 3px 3px 0;
+  border-style: solid;
+  border-color: #000000;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  opacity: 0;
+  -webkit-transition: opacity 0.1s linear;
+  transition: opacity 0.1s linear;
+}
+
+.auth__error-group,
+.auth__status-group {
   margin-top: 30px;
   padding: 0 30px;
 }
 
-.login__error-list,
-.login__status-list {
+.auth__error-list,
+.auth__status-list {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.login__error {
+.auth__error {
   margin-bottom: 3px;
   color: #D2495F;
   font-size: 14px;
 }
 
-.login__status {
+.auth__status {
   margin-bottom: 3px;
   color: #38643C;
   font-size: 14px;
 }
 
-.login__button {
+.auth__button {
   position: relative;
   width: 175px;
   height: 50px;
@@ -179,12 +218,12 @@
   transition: filter 0.1s linear, -webkit-filter 0.1s linear;
 }
 
-.login__button:hover {
+.auth__button:hover {
   -webkit-filter: brightness(0.85);
           filter: brightness(0.85);
 }
 
-.login__button-hollow {
+.auth__button-hollow {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -202,7 +241,7 @@
   z-index: 1;
 }
 
-.login__button-full {
+.auth__button-full {
   position: absolute;
   top: 6px;
   left: 6px;
@@ -212,7 +251,7 @@
   background-color: #EB7D3D;
 }
 
-.login__links {
+.auth__links {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -226,19 +265,19 @@
           flex-direction: column;
 }
 
-.login__link-group {
+.auth__link-group {
   margin-bottom: 30px;
   text-align: center;
 }
 
-.login__link {
+.auth__link {
   text-decoration: underline;
 }
 
-.login__link:link,
-.login__link:visited,
-.login__link:hover,
-.login__link:active {
+.auth__link:link,
+.auth__link:visited,
+.auth__link:hover,
+.auth__link:active {
   color: #000000;
 }
 
