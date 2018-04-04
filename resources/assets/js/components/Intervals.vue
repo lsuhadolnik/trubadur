@@ -1,157 +1,197 @@
 <style lang="scss" scoped>
 @import '../../sass/variables/index';
 
-.intervals { width: 100%; }
-
-.intervals__loader {
-    position  : absolute;
-    top       : 50%;
-    left      : 50%;
-    transform : translate(-50%, -50%);
-    width     : 100px;
-    height    : 100px;
-
-    @include breakpoint-phone {
-        width  : 75px;
-        height : 75px;
-    }
+.intervals {
+    width          : 100%;
+    padding-bottom : 20px;
 }
 
-.intervals__instructions-wrapper {
+.intervals__instructions {
     padding        : 20px 0;
     display        : flex;
     align-items    : center;
     flex-direction : column;
 }
 
-.intervals__instructions-command {
-    width                 : calc(100vw / 3);
-    height                : 50px;
-    margin                : 10px 0;
-    padding-top           : 5px;
-    display               : flex;
-    justify-content       : center;
-    align-items           : center;
-    font-size             : 20px;
-    font-family           : $font-title;
-    background-color      : $blue;
-    color                 : $black;
-    opacity               : 0.8;
-    -webkit-touch-callout : none;
-    -webkit-user-select   : none;
-    -khtml-user-select    : none;
-    -moz-user-select      : none;
-    -ms-user-select       : none;
-    user-select           : none;
-    cursor                : pointer;
-    transition            : opacity 0.1s linear;
-
-    @include breakpoint-tablet { opacity : 1; }
-    @include breakpoint-phone  { opacity : 1; }
-
-    &:hover { opacity: 1; }
-}
-
 .intervals__instructions-list-item { padding: 10px; }
 
 .intervals__progress-wrapper {
-    padding-top     : 25px;
+    padding         : 20px 2.5vw 0 2.5vw;
     display         : flex;
-    justify-content : space-evenly;
+    justify-content : space-between;
     align-items     : center;
+
+    @include breakpoint-portrait {
+        padding-top     : 20px;
+        justify-content : space-evenly;
+        flex-direction  : column;
+    }
 }
 
-.intervals__progress {
-    color       : $black;
-    font-family : $font-title;
-    font-size   : 40px;
+.intervals__progress-chapters {
+    width        : 50%;
+    margin-right : 20px;
+    display      : flex;
+
+    @include breakpoint-portrait {
+        width        : 100%;
+        margin-right : 0;
+        padding      : 0 2.5vw 15px 2.5vw;
+    }
+}
+
+.intervals__progress-chapter {
+    position         : relative;
+    width            : calc((100vw - 4vw) / 3);
+    height           : 20px;
+    background-color : $moss-green;
+
+    &:first-child {
+        margin-right  : 2vw;
+        border-radius : 10px 0 0 10px;
+    }
+
+    &:last-child {
+        margin-left   : 2vw;
+        border-radius : 0 10px 10px 0;
+    }
+
+    @include breakpoint-portrait {
+        width: calc((100% - 4vw) / 3);
+    }
+}
+
+.intervals__progress-question {
+    position         : absolute;
+    height           : 20px;
+    background-color : $fern;
+
+    &:last-child  { border-radius : 0 10px 10px 0; }
+    &:first-child { border-radius : 10px 0 0 10px; }
 }
 
 .intervals__stave-keyboard-wrapper {
-    padding         : 25px 2.5vw;
+    margin-top      : 10px;
+    padding         : 0 2.5vw;
     display         : flex;
     justify-content : center;
     align-items     : center;
     flex-direction  : row;
 
-    @include breakpoint-portrait { flex-direction: column; }
+    @include breakpoint-portrait {
+        margin-top     : 0;
+        flex-direction : column;
+    }
 }
 
 .intervals__stave {
     margin-right: 2.5vw;
 
-    @include-breakpoint-portrait { margin-right: 0; }
+    @include breakpoint-portrait { margin-right: 0; }
 }
 
 .intervals__keyboard {
     margin-left: 2.5vw;
 
     @include breakpoint-portrait {
-        margin-top  : 5vh;
+        margin-top  : 10px;
         margin-left : 0;
     }
 }
 
-.intervals__command-wrapper { display: flex; }
+.intervals__commands {
+    margin-top      : 10px;
+    display         : flex;
+    justify-content : space-evenly;
 
-.intervals__command {
-    width                 : calc(100vw / 3);
-    height                : 50px;
-    padding-top           : 5px;
-    display               : flex;
-    justify-content       : center;
-    align-items           : center;
-    font-size             : 20px;
-    font-family           : $font-title;
-    color                 : $black;
-    opacity               : 0.8;
-    -webkit-touch-callout : none;
-    -webkit-user-select   : none;
-    -khtml-user-select    : none;
-    -moz-user-select      : none;
-    -ms-user-select       : none;
-    user-select           : none;
-    cursor                : pointer;
-    transition            : opacity 0.1s linear;
-
-    @include breakpoint-tablet { opacity : 1; }
-    @include breakpoint-phone  { opacity : 1; }
-
-    &:hover { opacity: 1; }
-
-    &.disabled {
-        opacity : 1;
-        filter  : brightness(1.5);
-        cursor  : not-allowed;
-    }
+    @include breakpoint-portrait { margin-top: 20px; }
 }
 
-.intervals__command--delete { background-color : $neon-red; }
-.intervals__command--replay { background-color : $blue;     }
-.intervals__command--next   { background-color : $green;    }
-
-.intervals__notification {
-    margin-top      : 20px;
-    display         : flex;
-    justify-content : center;
-    color           : $neon-red;
-    font-family     : $font-light;
+.intervals__notification-label {
+    color           : $cabaret;
     font-size       : 18px;
 }
 
-.debug {
-    display     : flex;
-    color       : $dolphin;
-    font-family : $font-light;
-    font-size   : 15px;
+.intervals__notification-label--portrait {
+    margin-top      : 20px;
+    display         : flex;
+    justify-content : center;
+
+    @include breakpoint-landscape { display: none; }
+}
+
+.intervals__notification-label--landscape {
+    width      : 150px;
+    text-align : center;
+
+    @include breakpoint-portrait { display: none; }
+}
+</style>
+
+<!-- override -->
+<style lang="scss">
+@import '../../sass/variables/index';
+
+.intervals__instructions .button {
+    margin: 30px 0 40px 0;
+
+    .button__full { background-color: $sea-green; }
+}
+.intervals__command--delete .button {
+    width  : 100px !important;
+    height : 60px !important;
+
+    @include breakpoint-small-phone-portrait {
+        width  : 100px !important;
+        height : 50px !important;
+
+        .button__hollow {
+            padding   : 2px;
+            font-size : 13px;
+        }
+    }
+
+    .button__full { background-color: $jaffa; }
+}
+.intervals__command--replay .button {
+    width  : 115px !important;
+    height : 60px !important;
+
+    @include breakpoint-small-phone-portrait {
+        width  : 100px !important;
+        height : 50px !important;
+
+        .button__hollow {
+            padding   : 2px;
+            font-size : 13px;
+        }
+    }
+
+    .button__full{ background-color: $jaffa; }
+}
+.intervals__command--next .button {
+    width  : 100px !important;
+    height : 60px !important;
+
+    @include breakpoint-small-phone-portrait {
+        width  : 90px !important;
+        height : 50px !important;
+
+        .button__hollow {
+            padding   : 2px;
+            font-size : 13px;
+        }
+    }
+
+    .button__full { background-color: $fern; }
 }
 </style>
 
 <template>
     <div class="intervals">
-        <img class="intervals__loader" src="/images/loader.svg" v-show="loading"/>
-        <div class="intervals__instructions-wrapper" v-show="!loading && instructing">
-            <div class="intervals__instructions-command" @click="startGame()">Začni igro</div>
+        <loader v-show="loading"></loader>
+        <div class="intervals__instructions" v-show="!loading && instructing">
+            <element-button text="začni" @click.native="startGame()"></element-button>
             <ul class="intervals__instructions-list">
                 <li class="intervals__instructions-list-item">Preizkusil se boš v igri ugotavljanja intervalov</li>
                 <li class="intervals__instructions-list-item">Igra je razdeljena v 3 poglavja, vsako izmed njih ima 8 vprašanj</li>
@@ -162,13 +202,15 @@
         </div>
         <div v-show="!loading && !instructing">
             <div class="intervals__progress-wrapper">
-                <div class="intervals__progress">{{ chapter }} / {{ nChapters }}</div>
-                <div class="intervals__progress">{{ number }} / {{ nQuestions }}</div>
+                <div class="intervals__progress-chapters">
+                    <div class="intervals__progress-chapter" v-for="n in nChapters">
+                        <div class="intervals__progress-question" :style="{ 'width': (number * 100 / nQuestions) + '%' }" v-show="chapter >= n"></div>
+                    </div>
+                </div>
                 <svg id="timer"></svg>
+                <label class="intervals__notification-label intervals__notification-label--landscape">{{ notification }}</label>
             </div>
-            <div class="debug">
-                {{ sample.join(',') }} | {{ answer.map(a => a.pitch).join(',') }}
-            </div>
+            <label style="padding-left: 10px" v-show="debug">{{ sample.join(',') }} | {{ answer.map(a => a.pitch).join(',') }}</label>
             <div class="intervals__stave-keyboard-wrapper">
                 <div class="intervals__stave">
                     <stave :n-notes="sample.length" :note-type="notes.type" :clef="notes.clef" :sharp-flat-map="sharpFlatMap" @notes-changed="notesChanged"></stave>
@@ -177,12 +219,18 @@
                     <keyboard :channel="channel" :midi="midi" @note-played="addNote"></keyboard>
                 </div>
             </div>
-            <div class="intervals__command-wrapper">
-                <div class="intervals__command intervals__command--delete" :class="{ 'disabled': answer.length <= 1 }" @click="removeNote">IZBRIŠI NOTO</div>
-                <div class="intervals__command intervals__command--replay" :class="{ 'disabled': playing }" @click="playNotes">PREDVAJAJ</div>
-                <div class="intervals__command intervals__command--next" @click="checkCorrectness">NAPREJ</div>
+            <div class="intervals__commands">
+                <div class="intervals__command--delete">
+                    <element-button text="izbriši noto" :disable="answer.length <= 1" @click.native="removeNote()"></element-button>
+                </div>
+                <div class="intervals__command--replay">
+                    <element-button text="predvajaj" :disable="playing" @click.native="playNotes()"></element-button>
+                </div>
+                <div class="intervals__command--next">
+                    <element-button text="naprej" :disable="playing" @click.native="checkCorrectness()"></element-button>
+                </div>
             </div>
-            <div class="intervals__notification">{{ notification }}</div>
+            <label class="intervals__notification-label intervals__notification-label--portrait">{{ notification }}</label>
         </div>
     </div>
 </template>
@@ -195,8 +243,10 @@ export default {
     data () {
         return {
             loading: true,
+            originalBackgroundImage: '',
             instructing: false,
             playing: false,
+            debug: false,
             notes: {
                 type: 'whole',
                 delay: 0,
@@ -261,20 +311,24 @@ export default {
     },
     mounted () {
         this.$nextTick(() => {
+            this.originalBackgroundImage = document.body.style.backgroundImage
+            document.body.style.backgroundImage = 'none'
+
             this.timer = new TimerProgress({ // eslint-disable-line no-undef
                 'container': this.$el.querySelector('#timer'),
                 'width-container': 100,
                 'height-container': 100,
                 'stroke-width': 10,
-                'color-circle': '#F7E967',
-                'color-path': '#A9CF54',
-                'color-alert': '#FE664E',
-                'font-size': 40,
+                'color-circle': '#F8A16E',
+                'color-path': '#EB7D3D',
+                'color-alert': '#D2495F',
+                'font-size': 30,
                 'font-family': 'GothamRounded-Bold'
             })
         })
     },
-    destroyed () {
+    beforeDestroy () {
+        document.body.style.backgroundImage = this.originalBackgroundImage
         clearTimeout(this.timeoutId)
     },
     computed: {

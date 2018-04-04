@@ -17,3 +17,17 @@ Vue.directive('click-outside', {
         document.body.removeEventListener('click', this.event)
     }
 })
+
+Vue.directive('touch-outside', {
+    bind (el, binding, vnode) {
+        this.event = (event) => {
+            if (!(el === event.target || el.contains(event.target))) {
+                vnode.context[binding.expression](event)
+            }
+        }
+        document.body.addEventListener('touchstart', this.event)
+    },
+    unbind (el) {
+        document.body.removeEventListener('touchstart', this.event)
+    }
+})

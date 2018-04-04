@@ -47,7 +47,7 @@ $choose-height: 170px;
 @import '../../sass/variables/index';
 
 .game-types__choose .title { font-size: 25px; }
-.game-types__options .button .button__full { background-color: $golden-tainoi !important; }
+.game-types__options .button .button__full { background-color: $golden-tainoi; }
 </style>
 
 <template>

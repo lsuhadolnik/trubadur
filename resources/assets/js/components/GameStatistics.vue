@@ -1,31 +1,15 @@
 <style lang="scss" scoped>
 @import '../../sass/variables/index';
 
-.game-statistics {
-    width            : 100%;
-    display          : flex;
-    align-items      : center;
-    flex-direction   : column;
-}
+.game-statistics { width: 100%; }
 
-.game-statistics__title {
-    font-family : $font-regular;
-    font-size   : 30px;
-    font-weight : bold;
-}
-
-.game-statistics__loader {
-    position  : absolute;
-    top       : 50%;
-    left      : 50%;
-    transform : translate(-50%, -50%);
-    width     : 100px;
-    height    : 100px;
-
-    @include breakpoint-phone {
-        width  : 75px;
-        height : 75px;
-    }
+.game-statistics__content {
+    width          : 100%;
+    height         : 100%;
+    padding        : 20px 0 $bottom-padding 0;
+    display        : flex;
+    align-items    : center;
+    flex-direction : column;
 }
 
 .game-statistics__table {
@@ -72,9 +56,9 @@
 
 <template>
     <div class="game-statistics">
-        <div class="game-statistics__title">{{ title | uppercase }}</div>
-        <img class="game-statistics__loader" src="/images/loader.svg" v-show="loading"/>
-        <div v-if="!loading">
+        <loader v-show="loading"></loader>
+        <div class="game-statistics__content" v-if="!loading">
+            <element-title text="statistika"></element-title>
             <table class="game-statistics__table">
                 <thead>
                     <tr class="game-statistics__table-row game-statistics__table-row--header">

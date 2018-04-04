@@ -1,55 +1,114 @@
 <style lang="scss" scoped>
 @import '../../sass/variables/index';
 
-.profile {
-    width            : 100%;
-    display          : flex;
-    align-items      : center;
-    flex-direction   : column;
-}
+.profile { width: 100%; }
 
-.profile__title {
-    font-family : $font-title;
-    font-size   : 30px;
-    font-weight : bold;
-}
-
-.profile__loader {
-    position  : absolute;
-    top       : 50%;
-    left      : 50%;
-    transform : translate(-50%, -50%);
-    width     : 100px;
-    height    : 100px;
-
-    @include breakpoint-phone {
-        width  : 75px;
-        height : 75px;
-    }
+.profile__content {
+    width          : 100%;
+    padding        : 20px 0 $bottom-padding 0;
+    display        : flex;
+    align-items    : center;
+    flex-direction : column;
 }
 
 .profile__user-info {
-    font-family : $font-title;
-    font-size   : 20px;
+    width            : 100%;
+    padding          : 20px 10px;
+    display          : flex;
+    align-items      : center;
+    flex-direction   : column;
+    background-color : $tacao;
 }
 
 .profile__avatar {
-    width  : 100px;
-    height : 100px;
+    width  : 120px;
+    height : 120px;
 }
+
+.profile__name {
+    padding-bottom  : 10px;
+    text-align      : center;
+    font-size       : 25px;
+}
+
+.profile__level-rating-wrapper {
+    width           : 100%;
+    display         : flex;
+    justify-content : space-between;
+}
+
+.profile__level-rating {
+    width           : 80px;
+    height          : 35px;
+    border-radius   : 10px;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    text-align      : center;
+}
+
+.profile__level  { background-color: $neptune; }
+.profile__rating { background-color: $cabaret; }
+
+.profile__elements {
+    width            : 100%;
+    padding          : 40px 10%;
+    display          : flex;
+    align-items      : center;
+    flex-direction   : column;
+    background-color : $jaffa;
+}
+
+.profile__element-label-wrapper {
+    width         : 100%;
+    margin-bottom : 5px;
+}
+
+.profile__element-label {
+    color     : $espresso;
+    font-size : 15px;
+}
+
+.profile__element {
+    width         : 100%;
+    margin-bottom : 20px;
+}
+
+.profile__text-label { font-size: 18px; }
 </style>
 
 <template>
     <div class="profile">
-        <div class="profile__title">{{ title | uppercase }}</div>
-        <img class="profile__loader" src="/images/loader.svg" v-show="loading"/>
-        <div v-show="!loading">
-            <div class="profile__user-info">Ime: {{ name }}</div>
-            <div class="profile__user-info">E-mail: {{ email }}</div>
-            <img class="profile__avatar" id="avatar"/>
-            <div class="profile__user-info">Šola: {{ school }}</div>
-            <div class="profile__user-info">Razred: {{ grade }}</div>
-            <div class="profile__user-info">Št. točk: {{ rating }}</div>
+       <loader v-show="loading"></loader>
+        <div class="profile__content" v-show="!loading">
+            <div class="profile__user-info">
+                <label class="profile__name">{{ name }}</label>
+                <img class="profile__avatar" id="avatar"/>
+                <div class="profile__level-rating-wrapper">
+                    <div class="profile__level-rating profile__level">{{ level }}</div>
+                    <div class="profile__level-rating profile__rating">{{ rating }}</div>
+                </div>
+            </div>
+            <div class="profile__elements">
+                <div class="profile__element-label-wrapper">
+                    <label class="profile__element-label">UPORABNIŠKO IME</label>
+                </div>
+                <div class="profile__element">
+                    <label class="profile__text-label">{{ name }}</label>
+                </div>
+                <div class="profile__element-label-wrapper">
+                    <label class="profile__element-label">ŠOLA</label>
+                </div>
+                <div class="profile__element">
+                    <label class="profile__text-label">{{ school }}</label>
+                </div>
+                <div class="profile__element-label-wrapper">
+                    <label class="profile__element-label">LETNIK</label>
+                </div>
+                <div class="profile__element">
+                    <label class="profile__text-label">{{ grade }}.</label>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -84,6 +143,9 @@ export default {
         },
         email () {
             return this.user ? this.user.email : ''
+        },
+        level () {
+            return this.user ? 'NIVO 1' : '' // TODO: add levels table to the database (refactor levels -> difficulties)
         },
         rating () {
             return this.user ? this.user.rating : 0

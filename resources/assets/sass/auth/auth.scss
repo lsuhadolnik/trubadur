@@ -64,11 +64,16 @@
     border                : none;
     -webkit-border-radius : 0;
     border-radius         : 0;
+    caret-color           : $black;
     background-color      : $golden-tainoi;
     color                 : $black;
     font-size             : 18px;
     font-family           : $font-bold, sans-serif;
     outline               : none;
+    -webkit-user-select   : auto;
+    -moz-user-select      : auto;
+    -ms-user-select       : auto;
+    user-select           : auto;
 
     &:-webkit-autofill,
     &:-webkit-autofill:hover,

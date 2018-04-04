@@ -115,11 +115,17 @@
   height: 50px;
   padding: 0 10px;
   border: none;
+  border-radius: 0;
+  caret-color: #000000;
   background-color: #FFD15E;
   color: #000000;
   font-size: 18px;
   font-family: "GothamRounded-Bold", sans-serif;
   outline: none;
+  -webkit-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+  user-select: auto;
 }
 
 .auth__form-input:-webkit-autofill,
@@ -284,8 +290,9 @@
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  -webkit-touch-callout: none;
   -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -304,6 +311,7 @@ body {
   height: 100%;
   background-image: url("/images/backgrounds/sparse.png");
   background-repeat: repeat;
+  background-color: #FFD15E;
   margin: 0;
   padding: 0;
   color: #000000;

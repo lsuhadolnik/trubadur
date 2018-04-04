@@ -11,6 +11,11 @@
     &:hover { filter: brightness(0.85); }
 }
 
+.button--disabled {
+    cursor         : not-allowed;
+    pointer-events : none;
+}
+
 .button__hollow {
     position        : absolute;
     width           : 100%;
@@ -20,6 +25,7 @@
     display         : flex;
     align-items     : center;
     justify-content : center;
+    text-align      : center;
     z-index         : 1;
 }
 
@@ -34,18 +40,19 @@
 </style>
 
 <template>
-    <div class="button">
+    <div class="button" :class="{ 'button--disabled': disable }">
         <div class="button__hollow">{{ text | uppercase }}</div>
         <div class="button__full"></div>
     </div>
 </template>
 
 <script>
-import { stringProp } from '../../utils/propValidators'
+import { stringProp, booleanProp } from '../../utils/propValidators'
 
 export default {
     props: {
-        text: stringProp()
+        text: stringProp(),
+        disable: booleanProp(false)
     }
 }
 </script>

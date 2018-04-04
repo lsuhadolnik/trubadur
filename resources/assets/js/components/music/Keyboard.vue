@@ -28,7 +28,10 @@
     pointer-events : none;
     text-anchor    : middle;
 
-    @include breakpoint-phone { display: none; }
+    @include breakpoint-tablet      { display: none; }
+    @include breakpoint-large-phone { display: none; }
+    @include breakpoint-phone       { display: none; }
+    @include breakpoint-small-phone { display: none; }
 }
 
 .keyboard__key-text--white {

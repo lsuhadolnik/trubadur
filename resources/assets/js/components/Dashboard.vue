@@ -40,7 +40,7 @@
 <style lang="scss">
 @import '../../sass/variables/index';
 
-.dashboard__area .button .button__full { background-color: $sea-green !important; }
+.dashboard__area .button .button__full { background-color: $sea-green; }
 </style>
 
 <template>
@@ -49,8 +49,8 @@
         <div class="dashboard__content" v-show="!loading">
             <div class="dashboard__area">
                 <img class="dashboard__avatar" id="avatar"/>
-                <div class="dashboard__name">{{ name }}</div>
-                <div class="dashboard__level-rating">NIVO {{ level }} | {{ rating }}</div>
+                <label class="dashboard__name">{{ name }}</label>
+                <label class="dashboard__level-rating">NIVO {{ level }} | {{ rating }}</label>
             </div>
             <div class="dashboard__area">
                 <element-button text="igra" @click.native="reroute('gameTypes')"></element-button>

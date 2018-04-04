@@ -158,7 +158,7 @@ $select-arrow-wrapper-width : 45px;
 .settings__elements .button {
     margin-top: 50px;
 
-    .button__full { background-color: $tacao !important; }
+    .button__full { background-color: $tacao; }
 }
 </style>
 

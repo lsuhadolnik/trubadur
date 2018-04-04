@@ -3,7 +3,6 @@ import '../bootstrap'
 import VueRouter from 'vue-router'
 
 import Icon from 'vue-awesome/components/Icon'
-
 import App from '../components/App.vue'
 import Button from '../components/elements/Button.vue'
 import Dashboard from '../components/Dashboard.vue'

@@ -200,12 +200,12 @@
 <template>
     <div class="header-menu">
         <div class="header" :class="{ 'header--sticky': isHeaderSticky, 'header--colored': isHeaderColored }">
-            <div class="header__menu-button" @click="toggleMenu($event)">
+            <div class="header__menu-button" @click="toggleMenu">
                 <icon class="header__icon" name="bars"></icon>
             </div>
             <div class="header__title" @click="dashboard()">TRUBADUR</div>
         </div>
-        <div class="menu" :class="{ 'menu--open': isMenuInitialized && isMenuOpened, 'menu--close': isMenuInitialized && !isMenuOpened }" v-click-outside="clickedOutsideMenu">
+        <div class="menu" :class="{ 'menu--open': isMenuInitialized && isMenuOpened, 'menu--close': isMenuInitialized && !isMenuOpened }" v-click-outside="clickedOutsideMenu" v-touch-outside="clickedOutsideMenu">
             <div class="menu__item" :class="{ 'menu-item--active': isItemActive(item) }" v-for="item in menuItems" @click="open($event, item)">
                 <img class="menu__image" :src="'/images/menu/' + item.image + '.svg'"></img>
                 <label class="menu__label">{{ item.name | uppercase }}</label>
@@ -230,6 +230,7 @@ export default {
             isHeaderColored: false,
             isMenuInitialized: false,
             isMenuOpened: false,
+            outsideClick: false,
             menuItems: [
                 { name: 'igra', route: 'gameTypes', image: 'game' },
                 { name: 'profil', route: 'profile', image: 'profile' },
@@ -266,14 +267,19 @@ export default {
             this.$emit('sticky-header', this.isHeaderSticky)
         },
         toggleMenu (event) {
-            this.isMenuInitialized = true
-            this.isMenuOpened = !this.isMenuOpened
-            this.scroll()
-            event.stopPropagation()
+            if (!this.outsideClick) {
+                this.isMenuInitialized = true
+                this.isMenuOpened = !this.isMenuOpened
+                this.scroll()
+                event.stopPropagation()
+            }
+            this.outsideClick = false
         },
         clickedOutsideMenu (event) {
             if (this.isMenuOpened) {
                 this.isMenuOpened = false
+                // using this property instead of event.stopPropagation() which does not work for touch events
+                this.outsideClick = true
                 this.scroll()
             }
         },
