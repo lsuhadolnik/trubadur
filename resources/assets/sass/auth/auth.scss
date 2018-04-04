@@ -58,15 +58,17 @@
 }
 
 .auth__form-input {
-    width            : 100%;
-    height           : 50px;
-    padding          : 0 10px;
-    border           : none;
-    background-color : $golden-tainoi;
-    color            : $black;
-    font-size        : 18px;
-    font-family      : $font-bold, sans-serif;
-    outline          : none;
+    width                 : 100%;
+    height                : 50px;
+    padding               : 0 10px;
+    border                : none;
+    -webkit-border-radius : 0;
+    border-radius         : 0;
+    background-color      : $golden-tainoi;
+    color                 : $black;
+    font-size             : 18px;
+    font-family           : $font-bold, sans-serif;
+    outline               : none;
 
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
