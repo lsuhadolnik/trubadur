@@ -37,12 +37,13 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Laravel\Passport\Http\Middleware\CreateFreshApiToken::class,
             'locale:sl',
-            // 'https'
+            'https',
         ],
         'api' => [
             'throttle:60,1',
             'bindings',
             'locale:en',
+            'https',
         ],
     ];
 
