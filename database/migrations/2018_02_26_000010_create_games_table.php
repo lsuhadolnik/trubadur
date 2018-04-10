@@ -15,14 +15,14 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('level_id')->unsigned();
+            $table->integer('difficulty_id')->unsigned();
             $table->enum('mode', ['practice', 'single', 'multi']);
             $table->enum('type', ['intervals', 'rythm']);
             $table->timestamps();
         });
 
         Schema::table('games', function (Blueprint $table) {
-            $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('difficulty_id')->references('id')->on('difficulties')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

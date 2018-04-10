@@ -12,12 +12,12 @@ trait Order
     private $VALID_ORDER_DIRECTIONS = ['asc', 'desc', 'ASC', 'DESC'];
 
     /**
-     * Defines the attribute by which the items in the collection are sorted.
+     * Defines the attribute(s) by which the items in the collection are sorted.
      **/
     private $orderBy = null;
 
     /**
-     * Defines the default sorting direction of the items in the collection.
+     * Defines the default sorting direction(s) of the items in the collection.
      **/
     private $orderDirection = 'asc';
 
@@ -30,7 +30,9 @@ trait Order
     public function addOrderToQuery(Builder $qb)
     {
         if (!is_null($this->orderBy)) {
-            $qb = $qb->orderBy($this->orderBy, $this->orderDirection);
+            for ($i = 0; $i < count($this->orderBy); $i++) {
+                $qb = $qb->orderBy($this->orderBy[$i], is_array($this->orderDirection) ? $this->orderDirection[$i] : $this->orderDirection);
+            }
         }
 
         return $qb;
@@ -50,11 +52,14 @@ trait Order
         if (!is_null($value)) {
             $validAttributes = array_merge((new $model)->getFillable(), ['id', 'created_at', 'updated_at']);
 
-            if (!in_array($value, $validAttributes)) {
-                return $value;
+            $tokens = explode(',', $value);
+            foreach ($tokens as $token) {
+                if (!in_array($token, $validAttributes)) {
+                    return $token;
+                }
             }
 
-            $this->orderBy = $value;
+            $this->orderBy = $tokens;
         }
     }
 
@@ -79,11 +84,14 @@ trait Order
         $value = $request->query($this->ORDER_DIRECTION_INDICATOR);
 
         if (!is_null($value)) {
-            if (!in_array($value, $this->VALID_ORDER_DIRECTIONS)) {
-                return $value;
+            $tokens = explode(',', $value);
+            foreach ($tokens as $token) {
+                if (!in_array($token, $this->VALID_ORDER_DIRECTIONS)) {
+                    return $token;
+                }
             }
 
-            $this->orderDirection = $value;
+            $this->orderDirection = $tokens;
         }
     }
 

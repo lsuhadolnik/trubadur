@@ -99,27 +99,7 @@ export default {
     mounted () {
         this.$nextTick(() => {
             this.fetchMe().then(() => {
-                const context = this
-
-                let nLoaded = 0
-
-                for (let mode of this.modes) {
-                    const arrow = this.$el.querySelector('#arrow_' + mode.image)
-                    arrow.onload = () => {
-                        if (++nLoaded === context.modes.length * 2) {
-                            context.loading = false
-                        }
-                    }
-                    arrow.src = '/images/arrows/right.svg'
-
-                    let image = this.$el.querySelector('#image_' + mode.image)
-                    image.onload = () => {
-                        if (++nLoaded === context.modes.length * 2) {
-                            context.loading = false
-                        }
-                    }
-                    image.src = '/images/games/' + mode.image + '.svg'
-                }
+                this.loadImages()
             })
         })
     },
@@ -127,9 +107,32 @@ export default {
         ...mapState(['me'])
     },
     methods: {
-        ...mapActions(['fetchMe', 'fetchLevel', 'storeGame']),
+        ...mapActions(['fetchMe', 'fetchDifficulty', 'storeGame']),
+        loadImages () {
+            const context = this
+
+            let nLoaded = 0
+
+            for (let mode of this.modes) {
+                const arrow = this.$el.querySelector('#arrow_' + mode.image)
+                arrow.onload = () => {
+                    if (++nLoaded === context.modes.length * 2) {
+                        context.loading = false
+                    }
+                }
+                arrow.src = '/images/arrows/right.svg'
+
+                let image = this.$el.querySelector('#image_' + mode.image)
+                image.onload = () => {
+                    if (++nLoaded === context.modes.length * 2) {
+                        context.loading = false
+                    }
+                }
+                image.src = '/images/games/' + mode.image + '.svg'
+            }
+        },
         createGame (mode) {
-            this.fetchLevel({ gradeId: this.me.grade_id, schoolId: this.me.school_id }).then((level) => {
+            this.fetchDifficulty({ gradeId: this.me.grade_id, schoolId: this.me.school_id }).then((difficulty) => {
                 const users = []
                 switch (mode) {
                     case 'practice':
@@ -142,7 +145,7 @@ export default {
                         break
                 }
 
-                this.storeGame({ level_id: level.id, mode: mode, type: this.type, users: users }).then((game) => {
+                this.storeGame({ difficulty_id: difficulty.id, mode: mode, type: this.type, users: users }).then((game) => {
                     this.open('intervals', { game: game })
                 })
             })

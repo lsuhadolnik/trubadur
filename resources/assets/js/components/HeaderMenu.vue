@@ -226,6 +226,8 @@ export default {
     data () {
         return {
             csrfToken: window.Laravel.csrfToken,
+            originalBackgroundImage: '',
+            uncoloredRoutes: ['gameModes', 'intervals', 'gameStatistics'],
             isHeaderSticky: false,
             isHeaderColored: false,
             isMenuInitialized: false,
@@ -243,6 +245,7 @@ export default {
     created () {
         window.addEventListener('scroll', this.scroll)
         this.colorHeader(this.$route.name)
+        this.colorBackground(this.$route.name)
     },
     beforeDestroy () {
         window.removeEventListener('scroll', this.scroll)
@@ -255,12 +258,22 @@ export default {
     },
     watch: {
         '$route' (to, from) {
+            console.log(to.name)
             this.colorHeader(to.name)
+            this.colorBackground(to.name)
         }
     },
     methods: {
         colorHeader (route) {
-            this.isHeaderColored = ['gameModes', 'intervals', 'gameStatistics'].indexOf(route) >= 0
+            this.isHeaderColored = this.uncoloredRoutes.indexOf(route) >= 0
+        },
+        colorBackground (route) {
+            if (this.uncoloredRoutes.indexOf(route) >= 0) {
+                this.originalBackgroundImage = document.body.style.backgroundImage
+                document.body.style.backgroundImage = 'none'
+            } else {
+                document.body.style.backgroundImage = this.originalBackgroundImage
+            }
         },
         scroll () {
             this.isHeaderSticky = this.isMenuOpened ? true : window.pageYOffset > 0

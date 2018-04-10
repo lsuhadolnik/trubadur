@@ -47,7 +47,7 @@
     justify-content       : center;
     align-items           : center;
     font-size             : 20px;
-    font-family           : $font-title;
+    font-family           : $font-bold;
     background-color      : $blue;
     color                 : $black;
     opacity               : 0.8;

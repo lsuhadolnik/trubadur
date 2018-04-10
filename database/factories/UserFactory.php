@@ -11,7 +11,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'password'            => $password ?: $password = bcrypt('secret'),
         'remember_token'      => str_random(10),
         'instrument'          => $faker->randomElement(['acoustic_grand_piano', 'violin', 'vibraphone', 'trumpet', 'cello']),
-        'note_playback_delay' => rand(500, 2500),
+        'note_playback_delay' => rand(1500, 5000),
         'clef'                => $faker->randomElement(['violin', 'bass']),
         'rating'              => rand(500, 1500),
         'school_id'           => function () {

@@ -3,8 +3,8 @@
 use Illuminate\Database\Seeder;
 
 use App\Country;
+use App\Difficulty;
 use App\Grade;
-use App\Level;
 use App\School;
 
 class SchoolsTableSeeder extends DatabaseSeeder
@@ -29,34 +29,39 @@ class SchoolsTableSeeder extends DatabaseSeeder
 
             $school->saveOrFail();
 
-            foreach (self::GRADES as $grade) {
+            $nGrades = self::GRADES[$school->type];
+
+            for ($n = self::MIN_GRADE; $n <= $nGrades; $n++) {
                 switch ($school->type) {
                     case 'primary':
-                        $level = 'easy';
+                        $range = 3;
+                        $maxNotes = 4;
                         break;
                     case 'high':
-                        switch ($grade) {
+                        switch ($n) {
                             case 1:
-                                $level = 'easy';
+                                $range = 5;
+                                $maxNotes = 6;
                                 break;
                             case 2:
-                                $level = 'normal';
+                                $range = 12;
+                                $maxNotes = 6;
                                 break;
                             case 3:
                             case 4:
-                                $level = 'hard';
+                                $range = 12;
+                                $maxNotes = 8;
                                 break;
                         }
                         break;
                     case 'university':
-                        $level = 'hard';
+                        $range = 12;
+                        $maxNotes = 8;
                         break;
-                    default:
-                        $level = 'normal';
                 }
-                $grade = Grade::whereGrade($grade)->first();
-                $level = Level::whereLevel($level)->first();
-                $school->grades()->attach($grade->id, ['level_id' => $level->id]);
+                $grade = Grade::whereGrade($n)->first();
+                $difficulty = Difficulty::where(['range' => $range, 'max_notes' => $maxNotes])->first();
+                $school->grades()->attach($grade->id, ['difficulty_id' => $difficulty->id]);
             }
         }
     }

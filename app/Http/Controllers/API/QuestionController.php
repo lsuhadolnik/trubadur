@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Difficulty;
 use App\Game;
-use App\Level;
 use App\Question;
 
 class QuestionController extends Controller
@@ -106,12 +106,12 @@ class QuestionController extends Controller
      */
     public function generate(Request $request)
     {
-        // if ($request->has('game_id') && $request->has('chapter') && $request->has('number')) {
-        //     $question = Question::where($request->all())->first();
-        //     if ($question) {
-        //         return response()->json($question, 201);
-        //     }
-        // }
+        if ($request->has('game_id') && $request->has('chapter') && $request->has('number')) {
+            $question = Question::where($request->all())->first();
+            if ($question) {
+                return response()->json($question, 201);
+            }
+        }
 
         $response = $this->store($request);
         if ($response->status() != 201) {
@@ -119,11 +119,11 @@ class QuestionController extends Controller
         }
 
         $question = $response->getOriginalContent();
-        $game = Game::with('level')->find($request->get('game_id'));
+        $game = Game::with('difficulty')->find($request->get('game_id'));
 
         switch ($game->type) {
             case 'intervals':
-                $question->content = $this->generateIntervalsQuestion($game->level, $question);
+                $question->content = $this->generateIntervalsQuestion($game->difficulty, $question);
                 break;
             case 'rhythm':
                 break;
@@ -134,24 +134,17 @@ class QuestionController extends Controller
     }
 
     /**
-     * Generate a random intervals question based on the given level.
+     * Generate a random intervals question based on the given difficulty.
      *
-     * @param  \App\Level  $level
+     * @param  \App\Difficulty  $difficulty
      * @param  \App\Question  $question
      * @return string
      */
-    private function generateIntervalsQuestion(Level $level, Question $question)
+    private function generateIntervalsQuestion(Difficulty $difficulty, Question $question)
     {
-        $levelRange = $level->range;
-        switch ($level->level) {
-            case 'easy':
-            case 'normal':
-                $nNotes = $level->min_notes + $question->chapter - 1;
-                break;
-            case 'hard':
-                $nNotes = $level->min_notes + 2 * ($question->chapter - 1);
-                break;
-        }
+        $difficultyRange = $difficulty->range;
+        $nChapters = 3;
+        $nNotes = $difficulty->max_notes - $nChapters + $question->chapter;
 
         $pitches = ['A#3', 'B3', 'C4', 'C#4', 'D4', 'D#4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'A4', 'A#4', 'B4', 'C5', 'C#5'];
 
@@ -187,8 +180,8 @@ class QuestionController extends Controller
             // choose direction of the interval by using weighted random
             $direction = $this->weightedRandom(['down' => $bottomRange / $rangeSum, 'up' => $topRange / $rangeSum]);
 
-            // potentially limit the range of the interval with the level's predefined range
-            $range = $direction == 'down' ? min($levelRange, $bottomRange) : min($levelRange, $topRange);
+            // potentially limit the range of the interval with the difficulties' predefined range
+            $range = $direction == 'down' ? min($difficultyRange, $bottomRange) : min($difficultyRange, $topRange);
 
             // randomly choose the actual range
             $nSemitones = rand(0, $range);

@@ -7,7 +7,7 @@ Vue.use(Vuex)
 function handleError (error) {
     switch (error.response.status) {
         case 401:
-            window.location.href = 'login'
+            window.location.href = '/login'
             break
     }
 }
@@ -131,6 +131,18 @@ export default new Vuex.Store({
                     })
             })
         },
+        fetchLevel ({ state }, params = { }) {
+            return new Promise((resolve, reject) => {
+                axios.get('/api/levels/find', { params: params })
+                    .then(response => {
+                        resolve(response.data)
+                    })
+                    .catch(error => {
+                        handleError(error)
+                        reject(error)
+                    })
+            })
+        },
         fetchSchools ({ commit, state }, force = false) {
             return new Promise((resolve, reject) => {
                 if (!force && state.schools) {
@@ -165,11 +177,23 @@ export default new Vuex.Store({
                 }
             })
         },
-        fetchLevel ({ state }, { gradeId, schoolId }) {
+        fetchDifficulty ({ state }, { gradeId, schoolId }) {
             return new Promise((resolve, reject) => {
                 axios.get('/api/gradeschool/' + gradeId + '/' + schoolId)
                     .then(response => {
-                        resolve(response.data.level)
+                        resolve(response.data.difficulty)
+                    })
+                    .catch(error => {
+                        handleError(error)
+                        reject(error)
+                    })
+            })
+        },
+        fetchUserBadges ({ state }, params = { }) {
+            return new Promise((resolve, reject) => {
+                axios.get('/api/badgeuser', { params: params })
+                    .then(response => {
+                        resolve(response.data)
                     })
                     .catch(error => {
                         handleError(error)

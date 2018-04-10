@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+
+use App\Level;
 
 class LevelController extends Controller
 {
@@ -42,10 +45,9 @@ class LevelController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'level'     => 'required|string|in:easy,normal,hard',
-            'range'     => 'required|numeric|min:2|max:12',
-            'min_notes' => 'required|numeric|min:2|max:10',
-            'max_notes' => 'required|numeric|min:4|max:10'
+            'level'      => 'required|numeric',
+            'min_rating' => 'required|numeric',
+            'max_rating' => 'required|numeric'
         ];
 
         return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -73,10 +75,9 @@ class LevelController extends Controller
     public function update(Request $request, $id)
     {
         $data = [
-            'level'     => 'string|in:easy,normal,hard',
-            'range'     => 'numeric|min:2|max:12',
-            'min_notes' => 'numeric|min:2|max:10',
-            'max_notes' => 'numeric|min:4|max:10'
+            'level'      => ['integer', Rule::unique('levels')->ignore($id)],
+            'min_rating' => 'numeric',
+            'max_rating' => 'numeric'
         ];
 
         return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -91,5 +92,26 @@ class LevelController extends Controller
     public function destroy($id)
     {
         return $this->prepareAndExecuteDestroyQuery($id, self::MODEL);
+    }
+
+    /**
+     * Find the level base on the given rating.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function find(Request $request)
+    {
+        if (!$request->has('rating')) {
+            return response()->json("Set 'rating' query parameter.", 400);
+        }
+
+        $rating = $request->get('rating');
+        $level = Level::where([['min_rating', '<=', $rating], ['max_rating', '>', $rating]])->first();
+        if (!$level) {
+            response()->json("Level not found for the given 'rating'.", 404);
+        }
+
+        return response()->json($level, 200);
     }
 }

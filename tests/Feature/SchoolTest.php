@@ -6,8 +6,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+use App\Difficulty;
 use App\Grade;
-use App\Level;
 use App\School;
 
 class SchoolTest extends TestCase
@@ -52,8 +52,8 @@ class SchoolTest extends TestCase
     private function createCollection() {
         $schools = factory(School::class, self::SCHOOL_COUNT)->create()->each(function ($school) {
             factory(Grade::class, self::GRADE_COUNT)->create()->each(function ($grade) use ($school) {
-                $level = factory(Level::class)->create();
-                $school->grades()->attach($grade->id, ['level_id' => $level->id]);
+                $difficulty = factory(Difficulty::class)->create();
+                $school->grades()->attach($grade->id, ['difficulty_id' => $difficulty->id]);
             });
         });
 
@@ -92,8 +92,8 @@ class SchoolTest extends TestCase
     private function createRecord() {
         $school = factory(School::class)->create();
         factory(Grade::class, self::GRADE_COUNT)->create()->each(function ($grade) use ($school) {
-            $level = factory(Level::class)->create();
-            $school->grades()->attach($grade->id, ['level_id' => $level->id]);
+            $difficulty = factory(Difficulty::class)->create();
+            $school->grades()->attach($grade->id, ['difficulty_id' => $difficulty->id]);
         });
 
         return $school;
@@ -105,26 +105,5 @@ class SchoolTest extends TestCase
         $this->assertEquals($record->type, $item['type']);
         $this->assertEquals($record->country_id, $item['country_id']);
         $this->assertCount(self::GRADE_COUNT, $item['grades']);
-    }
-
-    /**
-     * Test getting an associated record from the API.
-     *
-     * @return void
-     */
-    public function testShowLevel()
-    {
-        $school = factory(School::class)->create();
-        $grade = factory(Grade::class)->create();
-        $level = factory(Level::class)->create();
-        $school->grades()->attach($grade->id, ['level_id' => $level->id]);
-
-        $response = $this->getJson("api/schools/{$school->id}/grades/{$grade->id}/level");
-        $response
-            ->assertStatus(200)
-            ->assertJson([
-                'id' => $level->id,
-                'level' => $level->level
-            ]);
     }
 }

@@ -16,7 +16,7 @@ class ForceHttps
     public function handle($request, Closure $next)
     {
         if (env('APP_ENV') === 'production' && (!$request->secure() || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) and $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'http'))) {
-            return redirect()->secure($request->getRequestUri());
+            return redirect()->secure($request->path());
         }
 
         return $next($request);

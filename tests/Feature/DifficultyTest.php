@@ -6,7 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class LevelTest extends TestCase
+class DifficultyTest extends TestCase
 {
     use RefreshDatabase;
 

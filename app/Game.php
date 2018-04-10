@@ -12,7 +12,7 @@ class Game extends Model
      * @var array
      */
     protected $fillable = [
-        'level_id', 'mode', 'type',
+        'difficulty_id', 'mode', 'type',
     ];
 
     /**
@@ -22,9 +22,9 @@ class Game extends Model
      */
     protected $hidden = [];
 
-    public function level()
+    public function difficulty()
     {
-        return $this->belongsTo('App\Level');
+        return $this->belongsTo('App\Difficulty');
     }
 
     public function questions()

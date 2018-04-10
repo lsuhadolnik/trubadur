@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Answer;
-use App\GameUser;
 
 class GameController extends Controller
 {
@@ -18,7 +17,7 @@ class GameController extends Controller
     /**
      * Defines dependencies.
      **/
-    const DEPENDENCIES = ['level' => 'App\Level'];
+    const DEPENDENCIES = ['difficulty' => 'App\Difficulty'];
 
     /**
      * Defines pivot dependencies.
@@ -45,10 +44,10 @@ class GameController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'level_id'  => 'required|numeric',
-            'mode'      => 'required|string|in:practice,single,multi',
-            'type'      => 'required|string|in:intervals,rythm',
-            'users'     => 'array'
+            'difficulty_id' => 'required|numeric',
+            'mode'          => 'required|string|in:practice,single,multi',
+            'type'          => 'required|string|in:intervals,rythm',
+            'users'         => 'array'
         ];
 
         return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -76,10 +75,10 @@ class GameController extends Controller
     public function update(Request $request, $id)
     {
         $data = [
-            'level_id'  => 'numeric',
-            'mode'      => 'string|in:practice,single,multi',
-            'type'      => 'string|in:intervals,rythm',
-            'users'     => 'array'
+            'difficulty_id' => 'numeric',
+            'mode'          => 'string|in:practice,single,multi',
+            'type'          => 'string|in:intervals,rythm',
+            'users'         => 'array'
         ];
 
         return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -130,7 +129,7 @@ class GameController extends Controller
 
         return response()->json([
             'users'      => $users,
-            'difficulty' => $game->level->level,
+            'difficulty' => $game->difficulty,
             'statistics' => [
                 'timeAvg'             => $timeAvg,
                 'nAdditionsAvg'       => $nAdditionsAvg,

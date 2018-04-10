@@ -15,10 +15,10 @@ class GradesTableSeeder extends DatabaseSeeder
     {
         DB::table('grades')->delete();
 
-        foreach (self::GRADES as $item) {
+        for ($n = self::MIN_GRADE; $n <= self::MAX_GRADE; $n++) {
             $grade = new Grade;
 
-            $grade->grade = $item;
+            $grade->grade = $n;
 
             $grade->saveOrFail();
         }

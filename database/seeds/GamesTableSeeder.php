@@ -5,7 +5,7 @@ use Illuminate\Database\Seeder;
 use App\Answer;
 use App\Game;
 use App\GameUser;
-use App\Level;
+use App\Difficulty;
 use App\Question;
 use App\User;
 
@@ -31,8 +31,8 @@ class GamesTableSeeder extends DatabaseSeeder
         for ($i = 0; $i < self::N_GAMES; $i++) {
             $game = new Game;
 
-            $level = Level::inRandomOrder()->first();
-            $game->level()->associate($level);
+            $difficulty = Difficulty::inRandomOrder()->first();
+            $game->difficulty()->associate($difficulty);
 
             $game->mode = self::GAME_MODES[array_rand(self::GAME_MODES)];
             $game->type = self::GAME_TYPES[array_rand(self::GAME_TYPES)];
@@ -47,7 +47,7 @@ class GamesTableSeeder extends DatabaseSeeder
                 for ($k = 1; $k <= self::N_QUESTIONS; $k++) {
                     $pitches = self::PITCHES;
                     shuffle($pitches);
-                    $nNotes = rand($level->min_notes, $level->max_notes);
+                    $nNotes = rand($difficulty->min_notes, $difficulty->max_notes);
                     $content = implode(',', array_slice($pitches, 0, $nNotes));
 
                     $question = new Question;
@@ -78,7 +78,7 @@ class GamesTableSeeder extends DatabaseSeeder
                     $answer->question()->associate($question);
                     $answer->success = (rand(0, 100) / 100) < 0.7;
                     $answer->time = $answer->success ? rand(10000, 120000) : 120000;
-                    $answer->n_additions = rand($level->max_notes - 1, 30);
+                    $answer->n_additions = rand($difficulty->max_notes - 1, 30);
                     $answer->n_deletions = rand($answer->n_additions - 3, $answer->n_additions);
                     $answer->n_playbacks = rand(0, 10);
 

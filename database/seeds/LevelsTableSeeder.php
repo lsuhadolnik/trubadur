@@ -15,15 +15,31 @@ class LevelsTableSeeder extends DatabaseSeeder
     {
         DB::table('levels')->delete();
 
-        foreach (self::LEVELS as $item) {
+        $currentRating = 0;
+        for ($n = 1; $n <= 100; $n++) {
             $level = new Level;
 
-            $level->level = $item['level'];
-            $level->range = $item['range'];
-            $level->min_notes = $item['min_notes'];
-            $level->max_notes = $item['max_notes'];
+            $level->level = $n;
+            if ($n <= 5) {
+                $factor = 400;
+            } else if ($n > 5 && $n <= 10) {
+                $factor = 800;
+            } else if ($n > 10 && $n <= 15) {
+                $factor = 1500;
+            } else if ($n > 15 && $n <= 20) {
+                $factor = 3000;
+            } else if ($n > 20 && $n <= 30) {
+                $factor = 5000;
+            } else {
+                $factor = 10000;
+            }
+
+            $level->min_rating = $currentRating;
+            $level->max_rating = $currentRating + $factor - 1;
 
             $level->saveOrFail();
+
+            $currentRating += $factor;
         }
     }
 }

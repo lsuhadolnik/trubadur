@@ -17,14 +17,14 @@ class CreateGradeSchoolPivotTable extends Migration
             $table->integer('grade_id')->unsigned()->index();
             $table->integer('school_id')->unsigned()->index();
             $table->primary(['grade_id', 'school_id']);
-            $table->integer('level_id')->unsigned()->nullable();
+            $table->integer('difficulty_id')->unsigned()->nullable();
             $table->timestamps();
         });
 
         Schema::table('grade_school', function (Blueprint $table) {
             $table->foreign('grade_id')->references('id')->on('grades')->onDelete('cascade');
             $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade');
-            $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('difficulty_id')->references('id')->on('difficulties')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

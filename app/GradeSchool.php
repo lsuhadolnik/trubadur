@@ -29,7 +29,7 @@ class GradeSchool extends Pivot
      * @var array
      */
     protected $fillable = [
-        'grade_id', 'school_id', 'level_id',
+        'grade_id', 'school_id', 'difficulty_id',
     ];
 
     /**
@@ -49,8 +49,8 @@ class GradeSchool extends Pivot
         return $this->belongsTo('App\School');
     }
 
-    public function level()
+    public function difficulty()
     {
-        return $this->belongsTo('App\Level');
+        return $this->belongsTo('App\Difficulty');
     }
 }

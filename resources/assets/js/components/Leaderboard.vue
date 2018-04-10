@@ -151,51 +151,7 @@ export default {
                 this.data = data
 
                 this.$nextTick(() => {
-                    const context = this
-
-                    let nLoaded = 0
-
-                    const image = this.$el.querySelector('#image')
-                    image.onload = () => {
-                        if (++nLoaded === context.users.length + 2) {
-                            context.loading = false
-                        }
-                    }
-                    image.src = '/images/leaderboard/leaderboard.svg'
-
-                    const arrow = this.$el.querySelector('#arrow')
-                    arrow.onload = () => {
-                        if (++nLoaded === context.users.length + 2) {
-                            context.loading = false
-                        }
-                    }
-                    arrow.src = '/images/arrows/down.svg'
-
-                    const arrowPaginationLeft = this.$el.querySelector('#arrow_pagination_left')
-                    arrowPaginationLeft.onload = () => {
-                        if (++nLoaded === context.users.length + 2) {
-                            context.loading = false
-                        }
-                    }
-                    arrowPaginationLeft.src = '/images/arrows/left.svg'
-
-                    const arrowPaginationRight = this.$el.querySelector('#arrow_pagination_right')
-                    arrowPaginationRight.onload = () => {
-                        if (++nLoaded === context.users.length + 2) {
-                            context.loading = false
-                        }
-                    }
-                    arrowPaginationRight.src = '/images/arrows/right.svg'
-
-                    for (let user of this.users) {
-                        let avatar = this.$el.querySelector('#avatar_' + user.id)
-                        avatar.onload = () => {
-                            if (++nLoaded === context.users.length + 2) {
-                                context.loading = false
-                            }
-                        }
-                        avatar.src = user.avatar
-                    }
+                    this.loadImages()
                 })
             })
         })
@@ -222,6 +178,53 @@ export default {
     },
     methods: {
         ...mapActions(['fetchUsers']),
+        loadImages () {
+            const context = this
+
+            let nLoaded = 0
+
+            const image = this.$el.querySelector('#image')
+            image.onload = () => {
+                if (++nLoaded === context.users.length + 4) {
+                    context.loading = false
+                }
+            }
+            image.src = '/images/leaderboard/leaderboard.svg'
+
+            const arrow = this.$el.querySelector('#arrow')
+            arrow.onload = () => {
+                if (++nLoaded === context.users.length + 4) {
+                    context.loading = false
+                }
+            }
+            arrow.src = '/images/arrows/down.svg'
+
+            const arrowPaginationLeft = this.$el.querySelector('#arrow_pagination_left')
+            arrowPaginationLeft.onload = () => {
+                if (++nLoaded === context.users.length + 4) {
+                    context.loading = false
+                }
+            }
+            arrowPaginationLeft.src = '/images/arrows/left.svg'
+
+            const arrowPaginationRight = this.$el.querySelector('#arrow_pagination_right')
+            arrowPaginationRight.onload = () => {
+                if (++nLoaded === context.users.length + 4) {
+                    context.loading = false
+                }
+            }
+            arrowPaginationRight.src = '/images/arrows/right.svg'
+
+            for (let user of this.users) {
+                let avatar = this.$el.querySelector('#avatar_' + user.id)
+                avatar.onload = () => {
+                    if (++nLoaded === context.users.length + 4) {
+                        context.loading = false
+                    }
+                }
+                avatar.src = user.avatar
+            }
+        },
         previousPage () {
             this.repaginate(this.data.current_page - 1)
         },

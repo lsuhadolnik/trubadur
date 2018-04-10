@@ -75,13 +75,17 @@ export default {
     },
     mounted () {
         this.$nextTick(() => {
-            const arrow = this.$el.querySelector('#arrow')
-            const context = this
-            arrow.onload = () => { context.loading = false }
-            arrow.src = '/images/arrows/down.svg'
+            this.loadImages()
         })
     },
     methods: {
+        loadImages () {
+            const context = this
+
+            const arrow = this.$el.querySelector('#arrow')
+            arrow.onload = () => { context.loading = false }
+            arrow.src = '/images/arrows/down.svg'
+        },
         reroute (name, params = {}) {
             this.$router.push({ name: name, params: params })
         }

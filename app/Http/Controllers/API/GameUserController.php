@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Answer;
+use App\Difficulty;
 use App\GameUser;
-use App\Level;
 
 class GameUserController extends Controller
 {
@@ -114,33 +114,51 @@ class GameUserController extends Controller
         }
 
         $gameUser = $response->getOriginalContent();
-        if ($gameUser->finished) {
-            return response()->json("Game with id {$gameId} has already been finished for the user with id {$userId}.", 400);
-        }
+        // if ($gameUser->finished) {
+        //     return response()->json("Game with id {$gameId} has already been finished for the user with id {$userId}.", 400);
+        // }
 
         if ($gameUser->game->mode !== 'practice') {
-            $level = Level::find($gameUser->game->level_id);
-            $levelFactors = ['easy' => 1, 'normal' => 2, 'hard' => 3];
-            $levelFactor = $levelFactors[$level->level];
+            $difficulty = Difficulty::find($gameUser->game->difficulty_id);
+            $rangeFactor = $this->getRangeFactor($difficulty->range);
+            $noteCountFactors = [4 => 1, 5 => 1.2, 6 => 1.5, 7 => 1.75, 8 => 2];
+            $noteCountFactor = $noteCountFactors[$difficulty->max_notes];
 
             $answers = Answer::where(['game_id' => $gameId, 'user_id' => $userId])->with('question')->get();
-            $chapterFactors = [1 => 1, 2 => 1.25, 3 => 1.5];
             $successFactors = [true => 1.1, false => -0.75];
 
             $points = 0;
             foreach ($answers as $answer) {
-                $points += $levelFactor * $this->getTimeFactor($answer->time, $answer->success) * $chapterFactors[$answer->question->chapter] * $successFactors[$answer->success];
+                $points += $rangeFactor * $noteCountFactor * $this->getTimeFactor($answer->time, $answer->success) * $successFactors[$answer->success];
             }
 
-            $gameUser->finished = true;
             $gameUser->points = $points;
-            $gameUser->saveOrFail();
 
             $gameUser->user->rating += $points;
             $gameUser->user->saveOrFail();
         }
 
+        $gameUser->finished = true;
+        $gameUser->saveOrFail();
+
         return response()->json([], 204);
+    }
+
+    /**
+     * Determines the interval range factor used for calculating the points contribution of a single answer.
+     *
+     * @param  int  $range
+     * @return int
+     */
+    private function getRangeFactor($range)
+    {
+        if ($range <= 5) {
+            return 1;
+        } else if ($range > 5 && $range <= 9) {
+            return 1.75;
+        } else {
+            return 2.5;
+        }
     }
 
     /**

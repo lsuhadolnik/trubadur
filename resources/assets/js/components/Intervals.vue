@@ -242,7 +242,6 @@ export default {
     data () {
         return {
             loading: true,
-            originalBackgroundImage: '',
             instructing: false,
             playing: false,
             debug: false,
@@ -310,9 +309,6 @@ export default {
     },
     mounted () {
         this.$nextTick(() => {
-            // this.originalBackgroundImage = document.body.style.backgroundImage
-            // document.body.style.backgroundImage = 'none'
-
             this.timer = new TimerProgress({ // eslint-disable-line no-undef
                 'container': this.$el.querySelector('#timer'),
                 'width-container': 100,
@@ -327,7 +323,6 @@ export default {
         })
     },
     beforeDestroy () {
-        // document.body.style.backgroundImage = this.originalBackgroundImage
         clearTimeout(this.timeoutId)
     },
     computed: {
@@ -338,7 +333,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchMe', 'fetchLevel', 'updateGame', 'finishGameUser', 'generateQuestion', 'storeAnswer', 'setupMidi']),
+        ...mapActions(['fetchMe', 'finishGameUser', 'generateQuestion', 'storeAnswer', 'setupMidi']),
         playNote (pitch, delay) {
             this.$emit('play-note', pitch, delay)
         },

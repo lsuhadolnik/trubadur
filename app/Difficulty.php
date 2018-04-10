@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Level extends Model
+class Difficulty extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,7 +12,7 @@ class Level extends Model
      * @var array
      */
     protected $fillable = [
-        'level', 'min_rating', 'max_rating',
+        'range', 'min_notes', 'max_notes',
     ];
 
     /**
@@ -21,4 +21,14 @@ class Level extends Model
      * @var array
      */
     protected $hidden = [];
+
+    public function gradeSchool()
+    {
+        return $this->hasOne('App\GradeSchool');
+    }
+
+    public function games()
+    {
+        return $this->hasMany('App\Game');
+    }
 }

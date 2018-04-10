@@ -5,17 +5,17 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class GradeSchoolController extends Controller
+class DifficultyController extends Controller
 {
     /**
      * Defines the model class.
      **/
-    const MODEL = 'App\GradeSchool';
+    const MODEL = 'App\Difficulty';
 
     /**
      * Defines dependencies.
      **/
-    const DEPENDENCIES = ['grade' => 'App\Grade', 'school' => 'App\School', 'difficulty' => 'App\Difficulty'];
+    const DEPENDENCIES = [];
 
     /**
      * Defines pivot dependencies.
@@ -42,9 +42,9 @@ class GradeSchoolController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'grade_id'      => 'required|integer',
-            'school_id'     => 'required|integer',
-            'difficulty_id' => 'required|integer'
+            'range'     => 'required|numeric|min:1|max:12',
+            'min_notes' => 'required|numeric|min:4|max:4',
+            'max_notes' => 'required|numeric|min:4|max:8'
         ];
 
         return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -54,41 +54,40 @@ class GradeSchoolController extends Controller
      * Display the specified resource.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $gradeId
-     * @param  int  $schoolId
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $gradeId, $schoolId)
+    public function show(Request $request, $id)
     {
-        return $this->prepareAndExecutePivotShowQuery($request, ['grade_id' => $gradeId, 'school_id' => $schoolId], self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        return $this->prepareAndExecuteShowQuery($request, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $gradeId
-     * @param  int  $schoolId
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $gradeId, $schoolId)
+    public function update(Request $request, $id)
     {
         $data = [
-            'difficulty_id' => 'integer'
+            'range'     => 'numeric|min:1|max:12',
+            'min_notes' => 'numeric|min:4|max:4',
+            'max_notes' => 'numeric|min:4|max:8'
         ];
 
-        return $this->prepareAndExecutePivotUpdateQuery($request, $data, ['grade_id' => $gradeId, 'school_id' => $schoolId], self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $gradeId
-     * @param  int  $schoolId
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($gradeId, $schoolId)
+    public function destroy($id)
     {
-        return $this->prepareAndExecutePivotDestroyQuery(['grade_id' => $gradeId, 'school_id' => $schoolId], self::MODEL);
+        return $this->prepareAndExecuteDestroyQuery($id, self::MODEL);
     }
 }

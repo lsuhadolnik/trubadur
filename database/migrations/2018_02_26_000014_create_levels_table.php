@@ -15,10 +15,9 @@ class CreateLevelsTable extends Migration
     {
         Schema::create('levels', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('level', ['easy', 'normal', 'hard']);
-            $table->integer('range');
-            $table->integer('min_notes');
-            $table->integer('max_notes');
+            $table->integer('level');
+            $table->integer('min_rating');
+            $table->integer('max_rating');
             $table->timestamps();
         });
     }

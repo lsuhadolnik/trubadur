@@ -70,16 +70,18 @@ import { mapState, mapActions } from 'vuex'
 export default {
     data () {
         return {
-            loading: true
+            loading: true,
+            level: 0
         }
     },
     mounted () {
         this.$nextTick(() => {
             this.fetchMe().then(() => {
-                const avatar = this.$el.querySelector('#avatar')
-                const context = this
-                avatar.onload = () => { context.loading = false }
-                avatar.src = this.me.avatar
+                this.fetchLevel({ rating: this.me.rating }).then((level) => {
+                    this.level = level.level
+
+                    this.loadImages()
+                })
             })
         })
     },
@@ -88,15 +90,19 @@ export default {
         name () {
             return this.me ? this.me.name : ''
         },
-        level () {
-            return this.me ? '1' : '' // TODO: add levels table to the database (refactor levels -> difficulties)
-        },
         rating () {
             return this.me ? this.me.rating : 0
         }
     },
     methods: {
-        ...mapActions(['fetchMe']),
+        ...mapActions(['fetchMe', 'fetchLevel']),
+        loadImages () {
+            const context = this
+
+            const avatar = this.$el.querySelector('#avatar')
+            avatar.onload = () => { context.loading = false }
+            avatar.src = this.me.avatar
+        },
         reroute (name, params = {}) {
             this.$router.push({ name: name, params: params })
         }

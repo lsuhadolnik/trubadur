@@ -32,28 +32,9 @@ class DatabaseSeeder extends Seeder
     ];
 
     const GRADES = [
-        1, 2, 3, 4
-    ];
-
-    const LEVELS = [
-        [
-            'level'     => 'easy',
-            'range'     => 5,
-            'min_notes' => 4,
-            'max_notes' => 6
-        ],
-        [
-            'level'     => 'normal',
-            'range'     => 12,
-            'min_notes' => 4,
-            'max_notes' => 6
-        ],
-        [
-            'level'     => 'hard',
-            'range'     => 12,
-            'min_notes' => 4,
-            'max_notes' => 8
-        ]
+        'primary'    => 6,
+        'high'       => 4,
+        'university' => 5
     ];
 
     const SCHOOLS = [
@@ -123,7 +104,7 @@ class DatabaseSeeder extends Seeder
             'email'               => 'vivaldi@trubadur.si',
             'password'            => 'vivaldi123',
             'instrument'          => 'trumpet',
-            'note_playback_delay' => 1000,
+            'note_playback_delay' => 3000,
             'clef'                => 'violin',
             'school'              => 'Port Regis',
             'grade'               => '4',
@@ -134,13 +115,21 @@ class DatabaseSeeder extends Seeder
             'email'               => 'haydn@trubadur.si',
             'password'            => 'haydn123',
             'instrument'          => 'violin',
-            'note_playback_delay' => 500,
+            'note_playback_delay' => 4500,
             'clef'                => 'bass',
             'school'              => 'Professional Performing Arts High School',
             'grade'               => '2',
             'badges'              => ['Best in the group', '20 questions without mistake']
         ]
     ];
+
+    const MIN_GRADE = 1;
+    const MAX_GRADE = 6;
+
+    const MIN_RANGE = 1;
+    const MAX_RANGE = 12;
+    const MIN_NOTES = 4;
+    const MAX_NOTES = 8;
 
     const N_GAMES = 10;
     const MIN_USERS_PER_GAME = 1;
@@ -159,10 +148,11 @@ class DatabaseSeeder extends Seeder
         $this->call(CountriesTableSeeder::class);
         $this->call(BadgesTableSeeder::class);
         $this->call(GradesTableSeeder::class);
-        $this->call(LevelsTableSeeder::class);
+        $this->call(DifficultiesTableSeeder::class);
         $this->call(SchoolsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(GamesTableSeeder::class);
         $this->call(LoginsTableSeeder::class);
+        $this->call(LevelsTableSeeder::class);
     }
 }

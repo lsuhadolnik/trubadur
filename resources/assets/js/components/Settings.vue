@@ -2,7 +2,6 @@
 @import '../../sass/variables/index';
 
 $instructions-height        : 290px;
-$select-arrow-wrapper-width : 45px;
 
 .settings { width: 100%; }
 
@@ -200,7 +199,7 @@ $select-arrow-wrapper-width : 45px;
                 </div>
                 <div class="settings__element settings__slider-wrapper">
                     <label for="notePlaybackDelay" class="settings__slider-label">{{ selectedNotePlaybackDelay }} s</label>
-                    <input type="range" class="settings__slider" id="notePlaybackDelay" min="0.5" max="2.5" step="0.1" v-model="selectedNotePlaybackDelay"/>
+                    <input type="range" class="settings__slider" id="notePlaybackDelay" :min="minPlaybackDelay" :max="maxPlaybackDelay" step="0.1" v-model="selectedNotePlaybackDelay"/>
                 </div>
                 <element-button text="shrani" @click.native="save()"></element-button>
             </div>
@@ -228,7 +227,9 @@ export default {
                 bass: 'Basovski'
             },
             selectedClef: null,
-            selectedNotePlaybackDelay: 1
+            selectedNotePlaybackDelay: 1,
+            minPlaybackDelay: 1.5,
+            maxPlaybackDelay: 5
         }
     },
     mounted () {
@@ -238,35 +239,7 @@ export default {
                 this.selectedClef = this.me.clef
                 this.selectedNotePlaybackDelay = this.me.note_playback_delay / 1000
 
-                const context = this
-
-                let nLoaded = 0
-
-                const image = this.$el.querySelector('#image')
-                image.onload = () => {
-                    if (++nLoaded === 3) {
-                        context.loading = false
-                    }
-                }
-                image.src = '/images/settings/settings.svg'
-
-                const arrow = this.$el.querySelector('#arrow')
-                arrow.onload = () => {
-                    if (++nLoaded === 3) {
-                        context.loading = false
-                    }
-                }
-                arrow.src = '/images/arrows/down.svg'
-
-                const arrowInstrument = this.$el.querySelector('#arrow_instrument')
-                const arrowClef = this.$el.querySelector('#arrow_clef')
-                arrowInstrument.onload = () => {
-                    if (++nLoaded === 3) {
-                        context.loading = false
-                    }
-                }
-                arrowInstrument.href.baseVal = '/images/arrows/down.svg#element'
-                arrowClef.href.baseVal = '/images/arrows/down.svg#element'
+                this.loadImages()
             })
         })
     },
@@ -275,6 +248,37 @@ export default {
     },
     methods: {
         ...mapActions(['fetchMe', 'updateMe']),
+        loadImages () {
+            const context = this
+
+            let nLoaded = 0
+
+            const image = this.$el.querySelector('#image')
+            image.onload = () => {
+                if (++nLoaded === 3) {
+                    context.loading = false
+                }
+            }
+            image.src = '/images/settings/settings.svg'
+
+            const arrow = this.$el.querySelector('#arrow')
+            arrow.onload = () => {
+                if (++nLoaded === 3) {
+                    context.loading = false
+                }
+            }
+            arrow.src = '/images/arrows/down.svg'
+
+            const arrowInstrument = this.$el.querySelector('#arrow_instrument')
+            const arrowClef = this.$el.querySelector('#arrow_clef')
+            arrowInstrument.onload = () => {
+                if (++nLoaded === 3) {
+                    context.loading = false
+                }
+            }
+            arrowInstrument.href.baseVal = '/images/arrows/down.svg#element'
+            arrowClef.href.baseVal = '/images/arrows/down.svg#element'
+        },
         save () {
             const data = {}
 
