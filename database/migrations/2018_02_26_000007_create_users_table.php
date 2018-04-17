@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('email_token', 1024)->nullable();
             $table->rememberToken();
             $table->boolean('admin')->default(false);
-            $table->integer('rating')->default(1000);
+            $table->integer('rating')->default(0);
             $table->enum('instrument', ['clarinet', 'guitar', 'piano', 'trumpet', 'violin'])->default('piano');
             $table->integer('note_playback_delay')->default(2000);
             $table->enum('clef', ['violin', 'bass'])->default('violin');
