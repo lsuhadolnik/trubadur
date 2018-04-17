@@ -27,7 +27,7 @@ Route::middleware('auth:api')->resource('questions', 'API\QuestionController', [
 Route::middleware('auth:api')->post('questions/generate', 'API\QuestionController@generate');
 Route::middleware('auth:api')->resource('schools', 'API\SchoolController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('users', 'API\UserController', ['except' => ['create', 'edit']]);
-Route::get('users/{userId}/complete', 'API\UserController@complete')
+Route::middleware('auth:api')->put('users/{userId}/complete', 'API\UserController@complete')
     ->where(['userId' => '[0-9]+']);
 
 Route::middleware('auth:api')->get('badgeuser', 'API\BadgeUserController@index');

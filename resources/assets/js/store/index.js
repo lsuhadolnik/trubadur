@@ -249,6 +249,18 @@ export default new Vuex.Store({
                     })
             })
         },
+        completeBadges ({ state }, userId) {
+            return new Promise((resolve, reject) => {
+                axios.put('/api/users/' + userId + '/complete')
+                    .then(response => {
+                        resolve()
+                    })
+                    .catch(error => {
+                        handleError(error)
+                        reject(error)
+                    })
+            })
+        },
         generateQuestion ({ state }, data) {
             return new Promise((resolve, reject) => {
                 axios.post('/api/questions/generate', data)

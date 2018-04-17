@@ -29,7 +29,7 @@ class GameUser extends Pivot
      * @var array
      */
     protected $fillable = [
-        'game_id', 'user_id', 'points', 'finished',
+        'game_id', 'user_id', 'instrument', 'points', 'finished',
     ];
 
     /**

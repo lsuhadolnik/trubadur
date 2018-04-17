@@ -333,7 +333,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchMe', 'finishGameUser', 'generateQuestion', 'storeAnswer', 'setupMidi']),
+        ...mapActions(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi']),
         playNote (pitch, delay) {
             this.$emit('play-note', pitch, delay)
         },
@@ -445,7 +445,9 @@ export default {
         },
         finishGame () {
             this.finishGameUser({ gameId: this.game.id, userId: this.me.id }).then(() => {
-                this.$router.push({ name: 'gameStatistics', params: { id: this.game.id } })
+                this.completeBadges(this.me.id).then(() => {
+                    this.$router.push({ name: 'gameStatistics', params: { id: this.game.id } })
+                })
             })
         }
     }

@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
             'image'       => 'trophy'
         ],
         [
-            'name'        => 'Dokončana igra vsak dan v tednu',
-            'description' => 'Vsak dan v tednu moraš dokončati igro.',
+            'name'        => 'Dokončana igra 7 dni zapored',
+            'description' => '7 dni zapored moraš dokončati igro.',
             'image'       => 'trophy'
         ],
         [
@@ -45,8 +45,8 @@ class DatabaseSeeder extends Seeder
             'image'       => 'flag'
         ],
         [
-            'name'        => 'Prijava vsak dan v tednu',
-            'description' => 'Vsak dan v tednu se moraš prijaviti v aplikacijo.',
+            'name'        => 'Prijava 7 dni zapored',
+            'description' => '7 dni zapored moraš dokončati igro.',
             'image'       => 'flag'
         ],
         [

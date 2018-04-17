@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use DateInterval;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 
 use App\Answer;
 use App\Badge;
 use App\BadgeUser;
 use App\Game;
 use App\GameUser;
-use App\Login;
 
 class UserController extends Controller
 {
@@ -125,12 +126,8 @@ class UserController extends Controller
      */
     public function complete(Request $request, $userId)
     {
-        $totalAnswers = 3 * 8;
-
         $completedBadgeIds = BadgeUser::where(['user_id' => $userId, 'completed' => true])->pluck('badge_id')->all();
         $badges = Badge::whereNotIn('id', $completedBadgeIds)->get(['id', 'name']);
-
-        $completeBadges = [];
 
         foreach ($badges as $badge) {
             switch ($badge->name) {
@@ -138,49 +135,118 @@ class UserController extends Controller
                     $count = Answer::where(['user_id' => $userId, 'success' => true])
                         ->select(DB::raw('COUNT(*) AS total'))
                         ->groupBy('game_id')
-                        ->having('total', '=', $totalAnswers)
+                        ->having('total', '=', 24)
                         ->get()
                         ->count();
                     if ($count > 0) {
-                        $completeBadges[] = $badge->id;
+                        BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
+                            ->update(['completed' => true]);
                     }
                     break;
                 case 'Igra s 50% točnostjo':
-                    $count = Answer::where(['user_id' => $userId, 'success' => true])
+                    $userGameIds = GameUser::where(['user_id' => $userId, 'finished' => true])
+                        ->pluck('game_id')
+                        ->all();
+                    $count = Answer::whereIn('game_id', $userGameIds)
+                        ->where(['user_id' => $userId, 'success' => true])
                         ->select('game_id', DB::raw('COUNT(*) AS total'))
                         ->groupBy('game_id')
-                        ->having('total', '>=', $totalAnswers / 2)
+                        ->having('total', '>=', 12)
                         ->get()
                         ->count();
                     if ($count > 0) {
-                        $completeBadges[] = $badge->id;
+                        BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
+                            ->update(['completed' => true]);
                     }
                     break;
                 case 'Igra končana v 25 minutah':
-                    $count = Answer::where(['user_id' => $userId])
+                    $userGameIds = GameUser::where(['user_id' => $userId, 'finished' => true])
+                        ->pluck('game_id')
+                        ->all();
+                    $count = Answer::whereIn('game_id', $userGameIds)
+                        ->where(['user_id' => $userId])
                         ->select(DB::raw('SUM(time) AS total'))
                         ->groupBy('game_id')
                         ->having('total', '<=', 1000 * 60 * 25)
                         ->get()
                         ->count();
                     if ($count > 0) {
-                        $completeBadges[] = $badge->id;
+                        BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
+                            ->update(['completed' => true]);
                     }
                     break;
                 case 'Dokončana igra 3 dni zapored':
+                    if ($this->hasFinishedGame($userId, 2)) {
+                        BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
+                            ->update(['completed' => true]);
+                    }
                     break;
-                case 'Dokončana igra vsak dan v tednu':
+                case 'Dokončana igra 7 dni zapored':
+                    if ($this->hasFinishedGame($userId, 6)) {
+                        BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
+                            ->update(['completed' => true]);
+                    }
                     break;
                 case 'Dokončana igra z vsemi različnimi inštrumenti':
-                    break;
-                case 'Prijava 3 dni zapored':
-                    $logins = Login::where(['user_id' => $userId])->get();
-                    break;
-                case 'Prijava vsak dan v tednu':
+                    $count = GameUser::where(['user_id' => $userId, 'finished' => true])
+                        ->select(DB::raw('COUNT(*)'))
+                        ->groupBy('instrument')
+                        ->get()
+                        ->count();
+                    if ($count === 5) {
+                        BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
+                            ->update(['completed' => true]);
+                    }
                     break;
                 case 'Zmaga v večigralski igri':
+                    $userGameIds = GameUser::where(['user_id' => $userId])
+                        ->pluck('game_id')
+                        ->all();
+                    $gameIds = Game::whereIn('id', $userGameIds)
+                        ->whereMode('multi')
+                        ->pluck('id')
+                        ->all();
+                    foreach ($gameIds as $gameId) {
+                        $userIds = GameUser::where(['game_id' => $gameId])
+                            ->orderBy('points', 'desc')
+                            ->pluck('user_id')
+                            ->all();
+                        if ($userIds[0] == $userId) {
+                            BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
+                                ->update(['completed' => true]);
+                            break;
+                        }
+                    }
                     break;
             }
         }
+
+        return response()->json([], 204);
+    }
+
+    /**
+     * Check whether the user has finished a game each day in previous n days.
+     *
+     * @param  int  $userId
+     * @param  int  $days
+     * @return boolean
+     */
+    private function hasFinishedGame($userId, $days) {
+        $success = true;
+        $date = new DateTime;
+
+        for ($i = 1; $i <= $days; $i++) {
+            $date->sub(new DateInterval('P1D'));
+            $count = GameUser::where(['user_id' => $userId, 'finished' => true])
+                ->whereDate('created_at', '=', $date->format('Y-m-d'))
+                ->get()
+                ->count();
+            if ($count === 0) {
+                $success = false;
+                break;
+            }
+        }
+
+        return $success;
     }
 }
