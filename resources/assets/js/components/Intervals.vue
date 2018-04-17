@@ -445,9 +445,7 @@ export default {
         },
         finishGame () {
             this.finishGameUser({ gameId: this.game.id, userId: this.me.id }).then(() => {
-                this.fetchMe(true).then(() => {
-                    this.$router.push({ name: 'gameStatistics', params: { id: this.game.id } })
-                })
+                this.$router.push({ name: 'gameStatistics', params: { id: this.game.id } })
             })
         }
     }

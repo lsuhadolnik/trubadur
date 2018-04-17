@@ -107,7 +107,7 @@ export default {
         ...mapState(['me'])
     },
     methods: {
-        ...mapActions(['fetchMe', 'fetchDifficulty', 'storeGame']),
+        ...mapActions(['fetchMe', 'fetchDifficulty', 'storeGame', 'updateGameUser']),
         loadImages () {
             const context = this
 
@@ -146,7 +146,9 @@ export default {
                 }
 
                 this.storeGame({ difficulty_id: difficulty.id, mode: mode, type: this.type, users: users }).then((game) => {
-                    this.open('intervals', { game: game })
+                    this.updateGameUser({ gameId: game.id, userId: this.me.id, data: { instrument: this.me.instrument } }).then(() => {
+                        this.open('intervals', { game: game })
+                    })
                 })
             })
         },

@@ -201,11 +201,35 @@ export default new Vuex.Store({
                     })
             })
         },
+        fetchLevels ({ state }, params = { }) {
+            return new Promise((resolve, reject) => {
+                axios.get('/api/levels', { params: params })
+                    .then(response => {
+                        resolve(response.data)
+                    })
+                    .catch(error => {
+                        handleError(error)
+                        reject(error)
+                    })
+            })
+        },
         storeGame ({ state }, data) {
             return new Promise((resolve, reject) => {
                 axios.post('/api/games', data)
                     .then(response => {
                         resolve(response.data)
+                    })
+                    .catch(error => {
+                        handleError(error)
+                        reject(error)
+                    })
+            })
+        },
+        updateGameUser ({ state }, { gameId, userId, data }) {
+            return new Promise((resolve, reject) => {
+                axios.put('/api/gameuser/' + gameId + '/' + userId, data)
+                    .then(response => {
+                        resolve()
                     })
                     .catch(error => {
                         handleError(error)

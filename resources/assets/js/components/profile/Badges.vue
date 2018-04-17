@@ -20,18 +20,16 @@
     background-color      : $moss-green;
 }
 
-.badges__grid--incomplete { padding-top: 0; }
-
-.badges__badge-wrapper {
+.badges__badge {
     grid-column     : span 1;
     display         : flex;
     align-items     : center;
     flex-direction  : column;
 }
 
-.badges__badge-image { max-width: 120px; }
+.badges__image { max-width: 120px; }
 
-.badges__badge-name {
+.badges__name {
     min-height    : 120px;
     margin-bottom : 10px;
     padding       : 5px 0;
@@ -43,7 +41,7 @@
     text-align    : center;
 }
 
-.badges__badge-description { text-align: center; }
+.badges__description { text-align: center; }
 </style>
 
 <template>
@@ -51,17 +49,10 @@
         <loader v-show="loading"></loader>
         <div class="badges__content" v-show="!loading">
             <div class="badges__grid">
-                <div class="badges__badge-wrapper" v-for="(badge, index) in completedBadges">
-                    <img class="badges__badge-image" :id="'completed_badge_' + index"/>
-                    <div class="badges__badge-name">{{ badge.name | uppercase }}</div>
-                    <div class="badges__badge-description">{{ badge.description }}</div>
-                </div>
-            </div>
-            <div class="badges__grid badges__grid--incomplete">
-                <div class="badges__badge-wrapper" v-for="(badge, index) in incompleteBadges">
-                    <img class="badges__badge-image" :id="'incomplete_badge_' + index"/>
-                    <div class="badges__badge-name">{{ badge.name | uppercase }}</div>
-                    <div class="badges__badge-description">{{ badge.description }}</div>
+                <div class="badges__badge" v-for="(badge, index) in badges">
+                    <img class="badges__image" :id="'badge_' + index"/>
+                    <div class="badges__name">{{ badge.name | uppercase }}</div>
+                    <div class="badges__description">{{ badge.description }}</div>
                 </div>
             </div>
         </div>
@@ -99,11 +90,8 @@ export default {
     },
     computed: {
         ...mapState(['me']),
-        completedBadges () {
-            return this.userBadges.length > 0 ? this.userBadges.filter(userBadge => userBadge.completed).map(userBadge => userBadge.badge) : []
-        },
-        incompleteBadges () {
-            return this.userBadges.length > 0 ? this.userBadges.filter(userBadge => !userBadge.completed).map(userBadge => userBadge.badge) : []
+        badges () {
+            return this.userBadges.length > 0 ? this.userBadges.map(userBadge => userBadge.badge) : []
         }
     },
     methods: {
@@ -114,24 +102,18 @@ export default {
             let nLoaded = 0
             const nTotal = this.userBadges.length
 
-            for (let i = 0; i < this.completedBadges.length; i++) {
-                const badge = this.$el.querySelector('#completed_badge_' + i)
+            for (let i = 0; i < this.userBadges.length; i++) {
+                const badge = this.$el.querySelector('#badge_' + i)
                 badge.onload = () => {
                     if (++nLoaded === nTotal) {
                         context.loading = false
                     }
                 }
-                badge.src = this.completedBadges[i].image
-            }
-
-            for (let i = 0; i < this.incompleteBadges.length; i++) {
-                const badge = this.$el.querySelector('#incomplete_badge_' + i)
-                badge.onload = () => {
-                    if (++nLoaded === nTotal) {
-                        context.loading = false
-                    }
+                if (this.userBadges[i].completed) {
+                    badge.src = this.userBadges[i].badge.image
+                } else {
+                    badge.src = '/images/badges/locked.svg'
                 }
-                badge.src = '/images/badges/locked.svg'
             }
         }
     }

@@ -18,6 +18,7 @@ class CreateGameUserPivotTable extends Migration
             $table->integer('game_id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index();
             $table->primary(['game_id', 'user_id']);
+            $table->enum('instrument', ['clarinet', 'guitar', 'piano', 'trumpet', 'violin']);
             $table->integer('points')->default(0);
             $table->boolean('finished')->default(false);
             $table->timestamps();

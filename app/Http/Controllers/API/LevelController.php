@@ -46,6 +46,8 @@ class LevelController extends Controller
     {
         $data = [
             'level'      => 'required|numeric',
+            'label'      => 'string',
+            'image'      => 'required|image|max:16384|mimes:jpeg,bmp,png,svg+xml',
             'min_rating' => 'required|numeric',
             'max_rating' => 'required|numeric'
         ];
@@ -76,6 +78,8 @@ class LevelController extends Controller
     {
         $data = [
             'level'      => ['integer', Rule::unique('levels')->ignore($id)],
+            'label'      => 'string',
+            'image'      => 'image|max:16384|mimes:jpeg,bmp,png,svg+xml',
             'min_rating' => 'numeric',
             'max_rating' => 'numeric'
         ];

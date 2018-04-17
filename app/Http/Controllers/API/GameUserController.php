@@ -46,10 +46,11 @@ class GameUserController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'game_id'  => 'required|integer',
-            'user_id'  => 'required|integer',
-            'points'   => 'integer',
-            'finished' => 'boolean'
+            'game_id'    => 'required|integer',
+            'user_id'    => 'required|integer',
+            'instrument' => 'required|string|in:clarinet,guitar,piano,trumpet,violin',
+            'points'     => 'integer',
+            'finished'   => 'boolean'
         ];
 
         return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -79,8 +80,9 @@ class GameUserController extends Controller
     public function update(Request $request, $gameId, $userId)
     {
         $data = [
-            'points'   => 'integer',
-            'finished' => 'boolean'
+            'instrument' => 'required|string|in:clarinet,guitar,piano,trumpet,violin',
+            'points'     => 'integer',
+            'finished'   => 'boolean'
         ];
 
         return $this->prepareAndExecutePivotUpdateQuery($request, $data, ['game_id' => $gameId, 'user_id' => $userId], self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -114,9 +116,9 @@ class GameUserController extends Controller
         }
 
         $gameUser = $response->getOriginalContent();
-        // if ($gameUser->finished) {
-        //     return response()->json("Game with id {$gameId} has already been finished for the user with id {$userId}.", 400);
-        // }
+        if ($gameUser->finished) {
+            return response()->json("Game with id {$gameId} has already been finished for the user with id {$userId}.", 400);
+        }
 
         if ($gameUser->game->mode !== 'practice') {
             $difficulty = Difficulty::find($gameUser->game->difficulty_id);

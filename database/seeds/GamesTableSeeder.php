@@ -13,6 +13,7 @@ class GamesTableSeeder extends DatabaseSeeder
 {
     const GAME_MODES = ['practice', 'single', 'multi'];
     const GAME_TYPES = ['intervals', 'rythm'];
+    const INSTRUMENTS = ['clarinet', 'guitar', 'piano', 'trumpet', 'violin'];
     const N_CHAPTERS = 3;
     const N_QUESTIONS = 8;
     const PITCHES = ['A#3', 'B3', 'C4', 'C#4', 'D4', 'D#4', 'E4', 'F4', 'F#4', 'G4', 'G#4', 'A4', 'A#4', 'B4', 'C5', 'C#5'];
@@ -64,10 +65,12 @@ class GamesTableSeeder extends DatabaseSeeder
             }
 
             foreach ($users as $userId) {
+                $instrument = self::INSTRUMENTS[array_rand(self::INSTRUMENTS)];
                 $finished = (rand(0, 100) / 100) < 0.8;
                 $game->users()->attach($userId, [
-                    'points'   => $finished ? rand(0, 20) : -5,
-                    'finished' => $finished
+                    'instrument' => $instrument,
+                    'points'     => $finished ? rand(0, 20) : -5,
+                    'finished'   => $finished
                 ]);
 
                 foreach ($questions as $question) {

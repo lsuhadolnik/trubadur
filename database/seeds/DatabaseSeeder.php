@@ -10,25 +10,51 @@ class DatabaseSeeder extends Seeder
 
     const BADGES = [
         [
-            'name'        => 'All answers correct',
-            'description' => 'You need to answer correctly to all the questions in a single game.',
-            'image'       => 'crown'
-        ],
-        [
-            'name'        => '20 questions without mistake',
-            'description' => 'You need to answer correctly to 20 consecutive questions.',
-            'image'       => 'trophy'
-        ],
-        [
-            'name'        => 'Best in the group',
-            'description' => 'You are best in the group.',
+            'name'        => 'Igra brez napake',
+            'description' => 'Pravilno moraš odgovoriti na vsa vprašanja v igri.',
             'image'       => 'star'
         ],
         [
-            'name'        => '10 game winning streak',
-            'description' => 'You won 10 games in a row.',
+            'name'        => 'Igra s 50% točnostjo',
+            'description' => 'Pravilno moraš odgovoriti na vsaj 50% vprašanj v igri.',
+            'image'       => 'star'
+        ],
+        [
+            'name'        => 'Igra končana v 25 minutah',
+            'description' => 'Igro moraš končati v času izpod 25 minut.',
+            'image'       => 'star'
+        ],
+        [
+            'name'        => 'Dokončana igra 3 dni zapored',
+            'description' => '3 dni zapored moraš dokončati igro.',
+            'image'       => 'trophy'
+        ],
+        [
+            'name'        => 'Dokončana igra vsak dan v tednu',
+            'description' => 'Vsak dan v tednu moraš dokončati igro.',
+            'image'       => 'trophy'
+        ],
+        [
+            'name'        => 'Dokončana igra z vsemi različnimi inštrumenti',
+            'description' => 'Dokončati moraš vsaj 1 igro z vsakim od inštrumentov.',
+            'image'       => 'trophy'
+        ],
+        [
+            'name'        => 'Prijava 3 dni zapored',
+            'description' => '3 dni zapored se moraš prijaviti v aplikacijo.',
             'image'       => 'flag'
+        ],
+        [
+            'name'        => 'Prijava vsak dan v tednu',
+            'description' => 'Vsak dan v tednu se moraš prijaviti v aplikacijo.',
+            'image'       => 'flag'
+        ],
+        [
+            'name'        => 'Zmaga v večigralski igri',
+            'description' => 'Zmagati moraš v igri večigralskega načina.',
+            'image'       => 'crown'
         ]
+
     ];
 
     const GRADES = [
@@ -121,6 +147,16 @@ class DatabaseSeeder extends Seeder
             'grade'               => '2',
             'badges'              => ['Best in the group', '20 questions without mistake']
         ]
+    ];
+
+    const LEVELS = [
+        5 => 'Konservatorij za glasbo in balet Ljubljana',
+        10 => 'Akademija za Glasbo',
+        15 => 'Slovenska filharmonija',
+        20 => 'Berklee College of Music',
+        25 => 'Yale School of Music',
+        30 => 'The Julliard School',
+        35 => 'Carnegie Hall'
     ];
 
     const MIN_GRADE = 1;

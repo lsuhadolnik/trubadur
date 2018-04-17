@@ -16,7 +16,7 @@ class LevelsTableSeeder extends DatabaseSeeder
         DB::table('levels')->delete();
 
         $currentRating = 0;
-        for ($n = 1; $n <= 100; $n++) {
+        for ($n = 1; $n <= 35; $n++) {
             $level = new Level;
 
             $level->level = $n;
@@ -34,6 +34,10 @@ class LevelsTableSeeder extends DatabaseSeeder
                 $factor = 10000;
             }
 
+            if (array_key_exists($n, self::LEVELS)) {
+                $level->label = self::LEVELS[$n];
+                $level->image = '/images/levels/default.svg';
+            }
             $level->min_rating = $currentRating;
             $level->max_rating = $currentRating + $factor - 1;
 

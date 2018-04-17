@@ -4,7 +4,15 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+
+use App\Answer;
+use App\Badge;
+use App\BadgeUser;
+use App\Game;
+use App\GameUser;
+use App\Login;
 
 class UserController extends Controller
 {
@@ -109,61 +117,70 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified associated resource.
+     * Potentially complete the user's badges.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $gradeId
-     * @param  int  $schoolId
+     * @param  int  $userId
      * @return \Illuminate\Http\Response
      */
-    public function setCompleted(Request $request, $userId, $badgeId)
+    public function complete(Request $request, $userId)
     {
-        $data = [
-            'completed' => 'required|boolean'
-        ];
-        $error = $this->setDataParameters($request, $data);
-        if ($error) {
-            return response()->json($error, 422);
+        $totalAnswers = 3 * 8;
+
+        $completedBadgeIds = BadgeUser::where(['user_id' => $userId, 'completed' => true])->pluck('badge_id')->all();
+        $badges = Badge::whereNotIn('id', $completedBadgeIds)->get(['id', 'name']);
+
+        $completeBadges = [];
+
+        foreach ($badges as $badge) {
+            switch ($badge->name) {
+                case 'Igra brez napake':
+                    $count = Answer::where(['user_id' => $userId, 'success' => true])
+                        ->select(DB::raw('COUNT(*) AS total'))
+                        ->groupBy('game_id')
+                        ->having('total', '=', $totalAnswers)
+                        ->get()
+                        ->count();
+                    if ($count > 0) {
+                        $completeBadges[] = $badge->id;
+                    }
+                    break;
+                case 'Igra s 50% točnostjo':
+                    $count = Answer::where(['user_id' => $userId, 'success' => true])
+                        ->select('game_id', DB::raw('COUNT(*) AS total'))
+                        ->groupBy('game_id')
+                        ->having('total', '>=', $totalAnswers / 2)
+                        ->get()
+                        ->count();
+                    if ($count > 0) {
+                        $completeBadges[] = $badge->id;
+                    }
+                    break;
+                case 'Igra končana v 25 minutah':
+                    $count = Answer::where(['user_id' => $userId])
+                        ->select(DB::raw('SUM(time) AS total'))
+                        ->groupBy('game_id')
+                        ->having('total', '<=', 1000 * 60 * 25)
+                        ->get()
+                        ->count();
+                    if ($count > 0) {
+                        $completeBadges[] = $badge->id;
+                    }
+                    break;
+                case 'Dokončana igra 3 dni zapored':
+                    break;
+                case 'Dokončana igra vsak dan v tednu':
+                    break;
+                case 'Dokončana igra z vsemi različnimi inštrumenti':
+                    break;
+                case 'Prijava 3 dni zapored':
+                    $logins = Login::where(['user_id' => $userId])->get();
+                    break;
+                case 'Prijava vsak dan v tednu':
+                    break;
+                case 'Zmaga v večigralski igri':
+                    break;
+            }
         }
-
-        $user = $this->prepareAndExecuteShowQuery($userId, self::MODEL);
-        if (!$user) {
-            return response()->json("User with id {$gradeId} not found.", 404);
-        }
-
-        $badgeUser = $user->badges()->find($badgeId);
-        if (!$badgeUser) {
-            return response()->json("Badge with id {$badgeId} is not associated with user with id {$userId}.", 404);
-        }
-
-        $badgeUser->completed = $request->get('completed');
-        $badgeUser->saveOrFail();
-
-        return response()->json([], 204);
-    }
-
-    /**
-     * Display the specified associated resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $gradeId
-     * @param  int  $schoolId
-     * @return \Illuminate\Http\Response
-     */
-    public function getCompleted(Request $request, $userId, $badgeId)
-    {
-        $user = $this->prepareAndExecuteShowQuery($userId, self::MODEL);
-        if (!$user) {
-            return response()->json("User with id {$gradeId} not found.", 404);
-        }
-
-        $badgeUser = $user->badges()->find($badgeId);
-        if (!$badgeUser) {
-            return response()->json("Badge with id {$badgeId} is not associated with user with id {$userId}.", 404);
-        }
-
-        $completed = $badgeUser->completed;
-
-        return response()->json($completed, 200);
     }
 }
