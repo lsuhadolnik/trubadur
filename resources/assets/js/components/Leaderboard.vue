@@ -116,13 +116,13 @@ $instructions-height: 290px;
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="leaderboard__table-row leaderboard__table-row--body" @click="reroute('profile', { id: user.id })" v-for="(user, index) in users">
-                        <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--1">{{ numbers[index] }}</td>
+                    <tr class="leaderboard__table-row leaderboard__table-row--body" @click="reroute('profile', { id: users[i - 1].id })" v-for="i in users.length">
+                        <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--1">{{ numbers[i - 1] }}</td>
                         <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--2">
-                            <img class="leaderboard__avatar" :id="'avatar_' + user.id"/>
+                            <img class="leaderboard__avatar" :id="'avatar_' + i"/>
                         </td>
-                        <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--3">{{ user.name }}</td>
-                        <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--4">{{ user.rating }}</td>
+                        <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--3">{{ users[i - 1].name }}</td>
+                        <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--4">{{ users[i - 1].rating }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -216,14 +216,14 @@ export default {
             }
             arrowPaginationRight.src = '/images/arrows/right.svg'
 
-            for (let user of this.users) {
-                let avatar = this.$el.querySelector('#avatar_' + user.id)
+            for (let i = 0; i < this.users.length; i++) {
+                let avatar = this.$el.querySelector('#avatar_' + (i + 1))
                 avatar.onload = () => {
                     if (++nLoaded === nTotal) {
                         context.loading = false
                     }
                 }
-                avatar.src = user.avatar
+                avatar.src = this.users[i].avatar
             }
         },
         previousPage () {
@@ -244,14 +244,14 @@ export default {
                     let nLoaded = 0
                     const nTotal = this.users.length
 
-                    for (let user of this.users) {
-                        let avatar = this.$el.querySelector('#avatar_' + user.id)
+                    for (let i = 0; i < this.users.length; i++) {
+                        let avatar = this.$el.querySelector('#avatar_' + (i + 1))
                         avatar.onload = () => {
                             if (++nLoaded === nTotal) {
                                 context.loading = false
                             }
                         }
-                        avatar.src = user.avatar
+                        avatar.src = this.users[i].avatar
                     }
                 })
             })

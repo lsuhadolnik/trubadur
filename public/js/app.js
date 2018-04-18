@@ -49371,35 +49371,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             };
             arrowPaginationRight.src = '/images/arrows/right.svg';
 
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = this.users[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var user = _step.value;
-
-                    var avatar = this.$el.querySelector('#avatar_' + user.id);
-                    avatar.onload = function () {
-                        if (++nLoaded === nTotal) {
-                            context.loading = false;
-                        }
-                    };
-                    avatar.src = user.avatar;
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
+            for (var i = 0; i < this.users.length; i++) {
+                var avatar = this.$el.querySelector('#avatar_' + (i + 1));
+                avatar.onload = function () {
+                    if (++nLoaded === nTotal) {
+                        context.loading = false;
                     }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
+                };
+                avatar.src = this.users[i].avatar;
             }
         },
         previousPage: function previousPage() {
@@ -49422,35 +49401,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     var nLoaded = 0;
                     var nTotal = _this2.users.length;
 
-                    var _iteratorNormalCompletion2 = true;
-                    var _didIteratorError2 = false;
-                    var _iteratorError2 = undefined;
-
-                    try {
-                        for (var _iterator2 = _this2.users[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                            var user = _step2.value;
-
-                            var avatar = _this2.$el.querySelector('#avatar_' + user.id);
-                            avatar.onload = function () {
-                                if (++nLoaded === nTotal) {
-                                    context.loading = false;
-                                }
-                            };
-                            avatar.src = user.avatar;
-                        }
-                    } catch (err) {
-                        _didIteratorError2 = true;
-                        _iteratorError2 = err;
-                    } finally {
-                        try {
-                            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                                _iterator2.return();
+                    for (var i = 0; i < _this2.users.length; i++) {
+                        var avatar = _this2.$el.querySelector('#avatar_' + (i + 1));
+                        avatar.onload = function () {
+                            if (++nLoaded === nTotal) {
+                                context.loading = false;
                             }
-                        } finally {
-                            if (_didIteratorError2) {
-                                throw _iteratorError2;
-                            }
-                        }
+                        };
+                        avatar.src = _this2.users[i].avatar;
                     }
                 });
             });
@@ -49528,7 +49486,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "tbody",
-              _vm._l(_vm.users, function(user, index) {
+              _vm._l(_vm.users.length, function(i) {
                 return _c(
                   "tr",
                   {
@@ -49536,7 +49494,7 @@ var render = function() {
                       "leaderboard__table-row leaderboard__table-row--body",
                     on: {
                       click: function($event) {
-                        _vm.reroute("profile", { id: user.id })
+                        _vm.reroute("profile", { id: _vm.users[i - 1].id })
                       }
                     }
                   },
@@ -49547,7 +49505,7 @@ var render = function() {
                         staticClass:
                           "leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--1"
                       },
-                      [_vm._v(_vm._s(_vm.numbers[index]))]
+                      [_vm._v(_vm._s(_vm.numbers[i - 1]))]
                     ),
                     _vm._v(" "),
                     _c(
@@ -49559,7 +49517,7 @@ var render = function() {
                       [
                         _c("img", {
                           staticClass: "leaderboard__avatar",
-                          attrs: { id: "avatar_" + user.id }
+                          attrs: { id: "avatar_" + i }
                         })
                       ]
                     ),
@@ -49570,7 +49528,7 @@ var render = function() {
                         staticClass:
                           "leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--3"
                       },
-                      [_vm._v(_vm._s(user.name))]
+                      [_vm._v(_vm._s(_vm.users[i - 1].name))]
                     ),
                     _vm._v(" "),
                     _c(
@@ -49579,7 +49537,7 @@ var render = function() {
                         staticClass:
                           "leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--4"
                       },
-                      [_vm._v(_vm._s(user.rating))]
+                      [_vm._v(_vm._s(_vm.users[i - 1].rating))]
                     )
                   ]
                 )
@@ -50801,6 +50759,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         }
                     };
                     badge.src = this.userBadges[i].badge.image;
+                    badge.style.display = 'block';
                 } else {
                     badge.style.display = 'none';
                 }

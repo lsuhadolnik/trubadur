@@ -444,6 +444,7 @@ export default {
                         }
                     }
                     badge.src = this.userBadges[i].badge.image
+                    badge.style.display = 'block'
                 } else {
                     badge.style.display = 'none'
                 }
