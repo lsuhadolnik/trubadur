@@ -263,7 +263,7 @@
             <div class="me__level-progress-wrapper" @click="openTab('levels')">
                 <label class="me__level-progress-label">KJE SEM</label>
                 <div class="me__level-progress-bar">
-                    <div class="me__level-progress-bar-overlay" :style="{ 'width': ((levelMaxRating - rating) * 100 / (levelMaxRating - levelMinRating)) + '%' }"></div>
+                    <div class="me__level-progress-bar-overlay" :style="{ 'width': (rating * 100 / (levelMaxRating - levelMinRating)) + '%' }"></div>
                 </div>
                 <div class="me__level-progress-bar-labels">
                     <label class="me__level-progress-label">NIVO {{ levelLevel }}</label>
