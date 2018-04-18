@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
+use App\Badge;
 use App\Grade;
 use App\School;
 use App\User;
@@ -133,6 +134,9 @@ class RegisterController extends Controller
 
         $user->verified = true;
         $user->email_token = null;
+
+        $badgeIds = Badge::pluck('id')->all();
+        $user->badges()->sync($badgeIds);
 
         $user->save();
 
