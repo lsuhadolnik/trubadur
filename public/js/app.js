@@ -49420,6 +49420,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     var context = _this2;
 
                     var nLoaded = 0;
+                    var nTotal = _this2.users.length;
 
                     var _iteratorNormalCompletion2 = true;
                     var _didIteratorError2 = false;
@@ -49431,7 +49432,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
                             var avatar = _this2.$el.querySelector('#avatar_' + user.id);
                             avatar.onload = function () {
-                                if (++nLoaded === context.users.length) {
+                                alert(nLoaded); // eslint-disable-line no-undef
+                                if (++nLoaded === nTotal) {
                                     context.loading = false;
                                 }
                             };
