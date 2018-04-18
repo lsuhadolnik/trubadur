@@ -2482,7 +2482,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(17);
-module.exports = __webpack_require__(166);
+module.exports = __webpack_require__(161);
 
 
 /***/ }),
@@ -2496,7 +2496,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(160);
 
 
 
@@ -41730,9 +41730,6 @@ Vue.directive('touch-outside', {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_music_Stave_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__components_music_Stave_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_elements_Title_vue__ = __webpack_require__(155);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_elements_Title_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__components_elements_Title_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_Test_vue__ = __webpack_require__(160);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_Test_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__components_Test_vue__);
-
 
 
 
@@ -41812,11 +41809,6 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
         name: 'settings',
         path: '/settings',
         component: __WEBPACK_IMPORTED_MODULE_19__components_Settings_vue___default.a
-    }, {
-        name: 'test',
-        path: '/test',
-        component: __WEBPACK_IMPORTED_MODULE_22__components_Test_vue___default.a,
-        props: true
     }]
 }));
 
@@ -46034,6 +46026,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var context = this;
 
             var nLoaded = 0;
+            var nTotal = this.modes.length * 2;
 
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
@@ -46045,7 +46038,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
                     var arrow = this.$el.querySelector('#arrow_' + mode.image);
                     arrow.onload = function () {
-                        if (++nLoaded === context.modes.length * 2) {
+                        if (++nLoaded === nTotal) {
                             context.loading = false;
                         }
                     };
@@ -46053,7 +46046,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
                     var image = this.$el.querySelector('#image_' + mode.image);
                     image.onload = function () {
-                        if (++nLoaded === context.modes.length * 2) {
+                        if (++nLoaded === nTotal) {
                             context.loading = false;
                         }
                     };
@@ -46395,9 +46388,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
 
 
 
@@ -46407,13 +46397,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         return {
             title: 'Statistika igre',
             loading: true,
-            difficulties: {
-                'easy': 'lahka',
-                'normal': 'srednja',
-                'hard': 'težka'
-            },
             users: [],
-            difficulty: '',
             statistics: null
         };
     },
@@ -46422,7 +46406,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
         this.fetchGameStatistics(this.id).then(function (data) {
             _this.users = data.users;
-            _this.difficulty = _this.difficulties[data.difficulty];
             _this.statistics = data.statistics;
             _this.loading = false;
         });
@@ -46550,11 +46533,6 @@ var render = function() {
                     )
                   })
                 )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "game-statistics__info" }, [
-                _c("strong", [_vm._v("Težavnost igre:")]),
-                _vm._v(" " + _vm._s(_vm.difficulty) + "\n        ")
               ]),
               _vm._v(" "),
               _vm._m(1),
@@ -49359,10 +49337,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var context = this;
 
             var nLoaded = 0;
+            var nTotal = this.users.length + 4;
 
             var image = this.$el.querySelector('#image');
             image.onload = function () {
-                if (++nLoaded === context.users.length + 4) {
+                if (++nLoaded === nTotal) {
                     context.loading = false;
                 }
             };
@@ -49370,7 +49349,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             var arrow = this.$el.querySelector('#arrow');
             arrow.onload = function () {
-                if (++nLoaded === context.users.length + 4) {
+                if (++nLoaded === nTotal) {
                     context.loading = false;
                 }
             };
@@ -49378,7 +49357,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             var arrowPaginationLeft = this.$el.querySelector('#arrow_pagination_left');
             arrowPaginationLeft.onload = function () {
-                if (++nLoaded === context.users.length + 4) {
+                if (++nLoaded === nTotal) {
                     context.loading = false;
                 }
             };
@@ -49386,7 +49365,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             var arrowPaginationRight = this.$el.querySelector('#arrow_pagination_right');
             arrowPaginationRight.onload = function () {
-                if (++nLoaded === context.users.length + 4) {
+                if (++nLoaded === nTotal) {
                     context.loading = false;
                 }
             };
@@ -49402,7 +49381,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
                     var avatar = this.$el.querySelector('#avatar_' + user.id);
                     avatar.onload = function () {
-                        if (++nLoaded === context.users.length + 4) {
+                        if (++nLoaded === nTotal) {
                             context.loading = false;
                         }
                     };
@@ -50795,6 +50774,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     }),
     methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'updateMe', 'fetchUser', 'fetchLevel', 'fetchUserBadges', 'fetchSchools', 'fetchGrades']), {
         loadImages: function loadImages() {
+            var _this2 = this;
+
             var context = this;
 
             var nLoaded = 0;
@@ -50803,6 +50784,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var avatar = this.$el.querySelector('#avatar');
             avatar.onload = function () {
                 if (++nLoaded === nTotal) {
+                    _this2.loadAdditionalImages();
                     context.loading = false;
                 }
             };
@@ -50813,6 +50795,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 if (i < this.userBadges.length) {
                     badge.onload = function () {
                         if (++nLoaded === nTotal) {
+                            _this2.loadAdditionalImages();
                             context.loading = false;
                         }
                     };
@@ -50822,21 +50805,27 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 }
             }
 
-            var arrowSchool = this.$el.querySelector('#arrow_school');
-            var arrowGrade = this.$el.querySelector('#arrow_grade');
-            arrowSchool.onload = function () {
+            var arrow = new Image(); // eslint-disable-line no-undef
+            arrow.onload = function () {
                 if (++nLoaded === nTotal) {
+                    _this2.loadAdditionalImages();
                     context.loading = false;
                 }
             };
+            arrow.src = '/images/arrows/down.svg';
+        },
+        loadAdditionalImages: function loadAdditionalImages() {
+            var arrowSchool = this.$el.querySelector('#arrow_school');
             arrowSchool.href.baseVal = '/images/arrows/down.svg#element';
+
+            var arrowGrade = this.$el.querySelector('#arrow_grade');
             arrowGrade.href.baseVal = '/images/arrows/down.svg#element';
         },
         filterGrades: function filterGrades() {
-            var _this2 = this;
+            var _this3 = this;
 
             this.filteredGrades = this.grades.filter(function (grade) {
-                return _this2.selectedSchool.grades.indexOf(grade.id) >= 0;
+                return _this3.selectedSchool.grades.indexOf(grade.id) >= 0;
             });
         },
         onSchoolSelected: function onSchoolSelected() {
@@ -50844,14 +50833,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.selectedGrade = this.filteredGrades[0];
         },
         edit: function edit() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.selectedName = this.user.name;
             this.selectedSchool = this.schools.filter(function (school) {
-                return school.id === _this3.user.school.id;
+                return school.id === _this4.user.school.id;
             })[0];
             this.selectedGrade = this.grades.filter(function (grade) {
-                return grade.id === _this3.user.grade.id;
+                return grade.id === _this4.user.grade.id;
             })[0];
             this.filterGrades();
 
@@ -50861,7 +50850,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.editing = false;
         },
         update: function update() {
-            var _this4 = this;
+            var _this5 = this;
 
             var data = {};
 
@@ -50882,9 +50871,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             if (Object.keys(data).length > 0) {
                 this.loading = true;
                 this.updateMe(data).then(function () {
-                    _this4.fetchUser(_this4.user.id).then(function (user) {
-                        _this4.user = user;
-                        _this4.loading = false;
+                    _this5.fetchUser(_this5.user.id).then(function (user) {
+                        _this5.user = user;
+                        _this5.loading = false;
                     });
                 });
             }
@@ -52895,13 +52884,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['me'])),
     methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'updateMe']), {
         loadImages: function loadImages() {
+            var _this2 = this;
+
             var context = this;
 
             var nLoaded = 0;
+            var nTotal = 2;
 
             var image = this.$el.querySelector('#image');
             image.onload = function () {
-                if (++nLoaded === 3) {
+                if (++nLoaded === nTotal) {
+                    _this2.loadAdditionalImages();
                     context.loading = false;
                 }
             };
@@ -52909,24 +52902,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             var arrow = this.$el.querySelector('#arrow');
             arrow.onload = function () {
-                if (++nLoaded === 3) {
+                if (++nLoaded === nTotal) {
+                    _this2.loadAdditionalImages();
                     context.loading = false;
                 }
             };
             arrow.src = '/images/arrows/down.svg';
-
+        },
+        loadAdditionalImages: function loadAdditionalImages() {
             var arrowInstrument = this.$el.querySelector('#arrow_instrument');
-            var arrowClef = this.$el.querySelector('#arrow_clef');
-            arrowInstrument.onload = function () {
-                if (++nLoaded === 3) {
-                    context.loading = false;
-                }
-            };
             arrowInstrument.href.baseVal = '/images/arrows/down.svg#element';
+
+            var arrowClef = this.$el.querySelector('#arrow_clef');
             arrowClef.href.baseVal = '/images/arrows/down.svg#element';
         },
         save: function save() {
-            var _this2 = this;
+            var _this3 = this;
 
             var data = {};
 
@@ -52945,7 +52936,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             if (Object.keys(data).length > 0) {
                 this.loading = true;
                 this.updateMe(data).then(function () {
-                    _this2.loading = false;
+                    _this3.loading = false;
                 });
             }
         }
@@ -53739,590 +53730,6 @@ if (false) {
 
 /***/ }),
 /* 160 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(161)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(163)
-/* template */
-var __vue_template__ = __webpack_require__(164)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-b5c7676e"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Test.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-b5c7676e", Component.options)
-  } else {
-    hotAPI.reload("data-v-b5c7676e", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 161 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(162);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("34ff03cb", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b5c7676e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Test.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-b5c7676e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Test.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 162 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n.test[data-v-b5c7676e] {\n  width: 100%;\n  height: calc(100% - 50px);\n  padding: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #CAFCD8;\n}\n.test__title[data-v-b5c7676e] {\n  font-family: \"GothamRounded-Book\";\n  font-size: 30px;\n  font-weight: bold;\n}\n.test__loader[data-v-b5c7676e] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  width: 100px;\n  height: 100px;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.test__loader[data-v-b5c7676e] {\n      width: 75px;\n      height: 75px;\n}\n}\n.test__command-wrapper[data-v-b5c7676e] {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.test__command[data-v-b5c7676e] {\n  width: calc(100vw / 3);\n  height: 50px;\n  margin: 10px 0;\n  padding-top: 5px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  font-size: 20px;\n  font-family: \"GothamRounded-Bold\";\n  background-color: #27a9e0;\n  color: #000000;\n  opacity: 0.8;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  cursor: pointer;\n  -webkit-transition: opacity 0.1s linear;\n  transition: opacity 0.1s linear;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.test__command[data-v-b5c7676e] {\n      opacity: 1;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.test__command[data-v-b5c7676e] {\n      opacity: 1;\n}\n}\n.test__command[data-v-b5c7676e]:hover {\n    opacity: 1;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 163 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            title: 'test',
-            loading: false,
-            pitches: ['A3', 'B3', 'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'Bb3', 'Db4', 'Eb4', 'Gb4', 'Ab4', 'Bb4', 'Db5'],
-            sounds: {},
-            audios: {},
-            maxAudios: 50,
-            delay: 1000,
-            playing: false,
-            playingTimeoutId: 0,
-            timeoutIds: [],
-            melodies: {
-                jingleBells: ['E4', 'E4', 'E4', 'E4', 'E4', 'E4', 'E4', 'G4', 'C4', 'D4', 'E4', 'F4', 'F4', 'F4', 'F4', 'F4', 'E4', 'E4', 'E4', 'E4', 'D4', 'D4', 'E4', 'D4', 'G4', 'E4', 'E4', 'E4', 'E4', 'E4', 'E4', 'E4', 'G4', 'C4', 'D4', 'E4', 'F4', 'F4', 'F4', 'F4', 'F4', 'E4', 'E4', 'E4', 'G4', 'G4', 'F4', 'D4', 'C4'],
-                scale: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5', 'C5', 'B4', 'A4', 'G4', 'F4', 'E4', 'D4', 'C4']
-            },
-            store: {
-                dbConnection: null,
-                dbName: 'cache',
-                tableName: 'sounds'
-            },
-            browser: ''
-        };
-    },
-    created: function created() {
-        // this.loadSounds('piano')
-    },
-    destroyed: function destroyed() {
-        this.stopPlaying();
-    },
-
-    methods: {
-        determineBrowser: function determineBrowser() {
-            // Opera 8.0+
-            var isOpera = !!window.opr && !!opr.addons || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0; // eslint-disable-line no-undef
-            if (isOpera) {
-                this.browser = 'opera';
-            }
-
-            // Firefox 1.0+
-            var isFirefox = typeof InstallTrigger !== 'undefined';
-            if (isFirefox) {
-                this.browser = 'firefox';
-            }
-
-            // Safari 3.0+ '[object HTMLElementConstructor]'
-            var isSafari = /constructor/i.test(window.HTMLElement) || function (p) {
-                return p.toString() === '[object SafariRemoteNotification]';
-            }(!window['safari'] || typeof safari !== 'undefined' && safari.pushNotification); // eslint-disable-line no-undef
-            if (isSafari) {
-                this.browser = 'safari';
-            }
-
-            // Internet Explorer 6-11
-            var isIE = false || !!document.documentMode;
-            if (isIE) {
-                this.browser = 'ie';
-            }
-
-            // Edge 20+
-            var isEdge = !isIE && !!window.StyleMedia;
-            if (isEdge) {
-                this.browser = 'edge';
-            }
-
-            // Chrome 1+
-            var isChrome = !!window.chrome && !!window.chrome.webstore;
-            if (isChrome) {
-                this.browser = 'chrome';
-            }
-        },
-        loadSounds: function loadSounds(instrument) {
-            var _this = this;
-
-            this.store.dbConnection = new JsStore.Instance(); // eslint-disable-line no-undef
-
-            JsStore.isDbExist(this.store.dbName, // eslint-disable-line no-undef
-            function (exists) {
-                // database already exists
-                if (exists) {
-                    _this.store.dbConnection.openDb(_this.store.dbName);
-                    _this.store.dbConnection.select({ From: _this.store.tableName, Where: { instrument: instrument } }, function (data) {
-                        // data was already present in the store
-                        if (data.length > 0) {
-                            var _iteratorNormalCompletion = true;
-                            var _didIteratorError = false;
-                            var _iteratorError = undefined;
-
-                            try {
-                                for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                                    var sound = _step.value;
-
-                                    _this.sounds[sound.pitch] = sound.data;
-                                }
-                            } catch (err) {
-                                _didIteratorError = true;
-                                _iteratorError = err;
-                            } finally {
-                                try {
-                                    if (!_iteratorNormalCompletion && _iterator.return) {
-                                        _iterator.return();
-                                    }
-                                } finally {
-                                    if (_didIteratorError) {
-                                        throw _iteratorError;
-                                    }
-                                }
-                            }
-
-                            _this.initializeAudio();
-                            console.log(data.length + ' records loaded from the \'' + _this.store.tableName + '\' table.');
-                            // otherwise, load sounds from the server and store them into the store
-                        } else {
-                            _this.fetchSounds(instrument);
-                        }
-                    }, function (error) {
-                        return console.log('An error occurred while getting the data from the table \'' + _this.store.tableName + '\': ' + error._message);
-                    });
-                    // database does not exist, therefore create one
-                } else {
-                    var table = _this.getSoundsTableSchema();
-                    _this.store.dbConnection.createDb({ Name: _this.store.dbName, Tables: [table] });
-
-                    // load sounds from the server and store them into the store
-                    _this.fetchSounds(instrument);
-                }
-            }, function (error) {
-                return console.log(error._message);
-            });
-        },
-        getSoundsTableSchema: function getSoundsTableSchema() {
-            return {
-                Name: this.store.tableName,
-                Columns: [{
-                    Name: 'id',
-                    PrimaryKey: true,
-                    AutoIncrement: true
-                }, {
-                    Name: 'pitch',
-                    NotNull: true,
-                    DataType: 'string'
-                }, {
-                    Name: 'instrument',
-                    NotNull: true,
-                    DataType: 'string'
-                }, {
-                    Name: 'data',
-                    NotNull: true,
-                    DataType: 'string'
-                }]
-            };
-        },
-        fetchSounds: function fetchSounds(instrument) {
-            var _this2 = this;
-
-            axios.get('/soundfonts/' + instrument + '.json').then(function (response) {
-                _this2.sounds = response.data;
-                _this2.initializeAudio();
-
-                var data = Object.keys(response.data).map(function (pitch) {
-                    return { pitch: pitch, instrument: instrument, data: response.data[pitch] };
-                });
-
-                // store data into the store
-                _this2.store.dbConnection.insert({ Into: _this2.store.tableName, Values: data }, function (rowsAdded) {
-                    if (rowsAdded > 0) {
-                        console.log(rowsAdded + ' records added to the \'' + _this2.store.tableName + '\' table.');
-                    }
-                }, function (error) {
-                    return console.log('An error occurred while adding the data to the table \'' + _this2.store.tableName + '\': ' + error._message);
-                });
-            }).catch(function (error) {
-                return console.log(error);
-            });
-        },
-        initializeAudio: function initializeAudio() {
-            this.audios = [];
-            for (var i = 0; i < this.maxAudios; i++) {
-                var audio = new Audio(); // eslint-disable-line no-undef
-                this.audios.push(audio);
-            }
-        },
-        play: function play(pitch) {
-            var _iteratorNormalCompletion2 = true;
-            var _didIteratorError2 = false;
-            var _iteratorError2 = undefined;
-
-            try {
-                for (var _iterator2 = this.audios[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                    var audio = _step2.value;
-
-                    if (!audio.paused) {
-                        continue;
-                    }
-                    audio.currentTime = 0;
-                    audio.src = this.sounds[pitch];
-                    audio.play();
-                    break;
-                }
-            } catch (err) {
-                _didIteratorError2 = true;
-                _iteratorError2 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                        _iterator2.return();
-                    }
-                } finally {
-                    if (_didIteratorError2) {
-                        throw _iteratorError2;
-                    }
-                }
-            }
-        },
-        startPlaying: function startPlaying(notes) {
-            var _this3 = this;
-
-            if (!this.playing) {
-                this.playing = true;
-
-                var _loop = function _loop(i) {
-                    _this3.timeoutIds.push(setTimeout(function () {
-                        return _this3.play(notes[i]);
-                    }, i * _this3.delay));
-                };
-
-                for (var i = 0; i < notes.length; i++) {
-                    _loop(i);
-                }
-
-                this.playingTimeoutId = setTimeout(function () {
-                    _this3.playing = false;
-                }, notes.length * this.delay);
-            }
-        },
-        stopPlaying: function stopPlaying() {
-            var _iteratorNormalCompletion3 = true;
-            var _didIteratorError3 = false;
-            var _iteratorError3 = undefined;
-
-            try {
-                for (var _iterator3 = this.timeoutIds[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                    var timeoutId = _step3.value;
-
-                    clearTimeout(timeoutId);
-                }
-            } catch (err) {
-                _didIteratorError3 = true;
-                _iteratorError3 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                        _iterator3.return();
-                    }
-                } finally {
-                    if (_didIteratorError3) {
-                        throw _iteratorError3;
-                    }
-                }
-            }
-
-            this.timeoutIds = [];
-
-            clearTimeout(this.playingTimeoutId);
-            this.playing = false;
-
-            var _iteratorNormalCompletion4 = true;
-            var _didIteratorError4 = false;
-            var _iteratorError4 = undefined;
-
-            try {
-                for (var _iterator4 = this.audios[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                    var audio = _step4.value;
-
-                    if (!audio.paused) {
-                        audio.pause();
-                        audio.currentTime = 0;
-                    }
-                }
-            } catch (err) {
-                _didIteratorError4 = true;
-                _iteratorError4 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
-                        _iterator4.return();
-                    }
-                } finally {
-                    if (_didIteratorError4) {
-                        throw _iteratorError4;
-                    }
-                }
-            }
-        }
-    }
-});
-
-/***/ }),
-/* 164 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "test" }, [
-    _c("div", { staticClass: "test__title" }, [
-      _vm._v(_vm._s(_vm._f("uppercase")(_vm.title)))
-    ]),
-    _vm._v(" "),
-    _c("img", {
-      directives: [
-        {
-          name: "show",
-          rawName: "v-show",
-          value: _vm.loading,
-          expression: "loading"
-        }
-      ],
-      staticClass: "test__loader",
-      attrs: { src: "/images/loader.svg" }
-    }),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: !_vm.loading,
-            expression: "!loading"
-          }
-        ],
-        staticClass: "test__command-wrapper"
-      },
-      [
-        !_vm.playing
-          ? _c(
-              "div",
-              {
-                staticClass: "test__command",
-                on: {
-                  click: function($event) {
-                    _vm.startPlaying(_vm.melodies.scale)
-                  }
-                }
-              },
-              [_vm._v("Play")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.playing
-          ? _c(
-              "div",
-              {
-                staticClass: "test__command",
-                on: {
-                  click: function($event) {
-                    _vm.stopPlaying()
-                  }
-                }
-              },
-              [_vm._v("Stop")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", [_vm._v(_vm._s(this.playing ? "Playing" : "Not playing"))]),
-        _vm._v(" "),
-        _vm._l(_vm.pitches, function(pitch) {
-          return _c("div", [
-            _c(
-              "div",
-              {
-                staticClass: "test__command",
-                on: {
-                  click: function($event) {
-                    _vm.play(pitch)
-                  }
-                }
-              },
-              [_vm._v("Play " + _vm._s(pitch))]
-            )
-          ])
-        })
-      ],
-      2
-    )
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-b5c7676e", module.exports)
-  }
-}
-
-/***/ }),
-/* 165 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54708,7 +54115,7 @@ function handleError(error) {
 }));
 
 /***/ }),
-/* 166 */
+/* 161 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

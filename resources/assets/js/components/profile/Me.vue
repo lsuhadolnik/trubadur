@@ -428,6 +428,7 @@ export default {
             const avatar = this.$el.querySelector('#avatar')
             avatar.onload = () => {
                 if (++nLoaded === nTotal) {
+                    this.loadAdditionalImages()
                     context.loading = false
                 }
             }
@@ -438,6 +439,7 @@ export default {
                 if (i < this.userBadges.length) {
                     badge.onload = () => {
                         if (++nLoaded === nTotal) {
+                            this.loadAdditionalImages()
                             context.loading = false
                         }
                     }
@@ -447,14 +449,20 @@ export default {
                 }
             }
 
-            const arrowSchool = this.$el.querySelector('#arrow_school')
-            const arrowGrade = this.$el.querySelector('#arrow_grade')
-            arrowSchool.onload = () => {
+            const arrow = new Image() // eslint-disable-line no-undef
+            arrow.onload = () => {
                 if (++nLoaded === nTotal) {
+                    this.loadAdditionalImages()
                     context.loading = false
                 }
             }
+            arrow.src = '/images/arrows/down.svg'
+        },
+        loadAdditionalImages () {
+            const arrowSchool = this.$el.querySelector('#arrow_school')
             arrowSchool.href.baseVal = '/images/arrows/down.svg#element'
+
+            const arrowGrade = this.$el.querySelector('#arrow_grade')
             arrowGrade.href.baseVal = '/images/arrows/down.svg#element'
         },
         filterGrades () {

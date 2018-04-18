@@ -252,10 +252,12 @@ export default {
             const context = this
 
             let nLoaded = 0
+            const nTotal = 2
 
             const image = this.$el.querySelector('#image')
             image.onload = () => {
-                if (++nLoaded === 3) {
+                if (++nLoaded === nTotal) {
+                    this.loadAdditionalImages()
                     context.loading = false
                 }
             }
@@ -263,20 +265,18 @@ export default {
 
             const arrow = this.$el.querySelector('#arrow')
             arrow.onload = () => {
-                if (++nLoaded === 3) {
+                if (++nLoaded === nTotal) {
+                    this.loadAdditionalImages()
                     context.loading = false
                 }
             }
             arrow.src = '/images/arrows/down.svg'
-
+        },
+        loadAdditionalImages () {
             const arrowInstrument = this.$el.querySelector('#arrow_instrument')
-            const arrowClef = this.$el.querySelector('#arrow_clef')
-            arrowInstrument.onload = () => {
-                if (++nLoaded === 3) {
-                    context.loading = false
-                }
-            }
             arrowInstrument.href.baseVal = '/images/arrows/down.svg#element'
+
+            const arrowClef = this.$el.querySelector('#arrow_clef')
             arrowClef.href.baseVal = '/images/arrows/down.svg#element'
         },
         save () {

@@ -182,10 +182,11 @@ export default {
             const context = this
 
             let nLoaded = 0
+            const nTotal = this.users.length + 4
 
             const image = this.$el.querySelector('#image')
             image.onload = () => {
-                if (++nLoaded === context.users.length + 4) {
+                if (++nLoaded === nTotal) {
                     context.loading = false
                 }
             }
@@ -193,7 +194,7 @@ export default {
 
             const arrow = this.$el.querySelector('#arrow')
             arrow.onload = () => {
-                if (++nLoaded === context.users.length + 4) {
+                if (++nLoaded === nTotal) {
                     context.loading = false
                 }
             }
@@ -201,7 +202,7 @@ export default {
 
             const arrowPaginationLeft = this.$el.querySelector('#arrow_pagination_left')
             arrowPaginationLeft.onload = () => {
-                if (++nLoaded === context.users.length + 4) {
+                if (++nLoaded === nTotal) {
                     context.loading = false
                 }
             }
@@ -209,7 +210,7 @@ export default {
 
             const arrowPaginationRight = this.$el.querySelector('#arrow_pagination_right')
             arrowPaginationRight.onload = () => {
-                if (++nLoaded === context.users.length + 4) {
+                if (++nLoaded === nTotal) {
                     context.loading = false
                 }
             }
@@ -218,7 +219,7 @@ export default {
             for (let user of this.users) {
                 let avatar = this.$el.querySelector('#avatar_' + user.id)
                 avatar.onload = () => {
-                    if (++nLoaded === context.users.length + 4) {
+                    if (++nLoaded === nTotal) {
                         context.loading = false
                     }
                 }

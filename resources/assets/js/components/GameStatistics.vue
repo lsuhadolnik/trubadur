@@ -79,9 +79,6 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="game-statistics__info">
-                <strong>Težavnost igre:</strong> {{ difficulty }}
-            </div>
             <div class="game-statistics__info game-statistics__line">
                 <strong>Statistika odgovorov:</strong>
             </div>
@@ -120,20 +117,13 @@ export default {
         return {
             title: 'Statistika igre',
             loading: true,
-            difficulties: {
-                'easy': 'lahka',
-                'normal': 'srednja',
-                'hard': 'težka'
-            },
             users: [],
-            difficulty: '',
             statistics: null
         }
     },
     created () {
         this.fetchGameStatistics(this.id).then((data) => {
             this.users = data.users
-            this.difficulty = this.difficulties[data.difficulty]
             this.statistics = data.statistics
             this.loading = false
         })

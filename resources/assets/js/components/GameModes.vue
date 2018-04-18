@@ -112,11 +112,12 @@ export default {
             const context = this
 
             let nLoaded = 0
+            const nTotal = this.modes.length * 2
 
             for (let mode of this.modes) {
                 const arrow = this.$el.querySelector('#arrow_' + mode.image)
                 arrow.onload = () => {
-                    if (++nLoaded === context.modes.length * 2) {
+                    if (++nLoaded === nTotal) {
                         context.loading = false
                     }
                 }
@@ -124,7 +125,7 @@ export default {
 
                 let image = this.$el.querySelector('#image_' + mode.image)
                 image.onload = () => {
-                    if (++nLoaded === context.modes.length * 2) {
+                    if (++nLoaded === nTotal) {
                         context.loading = false
                     }
                 }

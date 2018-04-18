@@ -22,7 +22,6 @@ import Profile from '../components/Profile.vue'
 import Settings from '../components/Settings.vue'
 import Stave from '../components/music/Stave.vue'
 import Title from '../components/elements/Title.vue'
-import Test from '../components/Test.vue'
 
 Vue.component('icon', Icon)
 Vue.component('app', App)
@@ -86,12 +85,6 @@ export default new VueRouter({
             name: 'settings',
             path: '/settings',
             component: Settings
-        },
-        {
-            name: 'test',
-            path: '/test',
-            component: Test,
-            props: true
         }
     ]
 })
