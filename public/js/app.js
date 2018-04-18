@@ -48037,7 +48037,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             playing: false,
             playingTimeoutId: null,
             noteTimeoutIds: [],
-            debug: false,
+            debug: true,
             notes: {
                 type: 'whole',
                 delay: 0,
@@ -48063,7 +48063,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 'Db5': 'C#5'
             },
             nChapters: 3,
-            nQuestions: 8,
+            nQuestions: 1,
             maxTimePerQuestion: 120000,
             timer: null,
             chapter: 1,

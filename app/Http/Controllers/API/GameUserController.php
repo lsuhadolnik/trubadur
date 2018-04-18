@@ -124,14 +124,15 @@ class GameUserController extends Controller
             $difficulty = Difficulty::find($gameUser->game->difficulty_id);
             $rangeFactor = $this->getRangeFactor($difficulty->range);
             $noteCountFactors = [4 => 1, 5 => 1.2, 6 => 1.5, 7 => 1.75, 8 => 2];
-            $noteCountFactor = $noteCountFactors[$difficulty->max_notes];
+            $noteCount = $difficulty->max_notes;
+            $noteCountFactor = $noteCountFactors[$noteCount];
 
             $answers = Answer::where(['game_id' => $gameId, 'user_id' => $userId])->with('question')->get();
-            $successFactors = [true => 1.1, false => -0.75];
+            $successFactors = [true => 1, false => -0.75];
 
             $points = 0;
             foreach ($answers as $answer) {
-                $points += $rangeFactor * $noteCountFactor * $this->getTimeFactor($answer->time, $answer->success) * $successFactors[$answer->success];
+                $points += $rangeFactor * $noteCountFactor * $this->getTimeFactor($answer->time, $answer->success) * $this->getAdditionsDeletionsFactor($noteCount, $answer->nAdditions, $answer->nDeletions, $answer->success) * $successFactors[$answer->success];
             }
 
             $gameUser->points = $points;
@@ -150,16 +151,16 @@ class GameUserController extends Controller
      * Determines the interval range factor used for calculating the points contribution of a single answer.
      *
      * @param  int  $range
-     * @return int
+     * @return float
      */
     private function getRangeFactor($range)
     {
         if ($range <= 5) {
             return 1;
         } else if ($range > 5 && $range <= 9) {
-            return 1.75;
+            return 1.25;
         } else {
-            return 2.5;
+            return 1.5;
         }
     }
 
@@ -168,22 +169,60 @@ class GameUserController extends Controller
      *
      * @param  int  $time
      * @param  boolean  $success
-     * @return int
+     * @return float
      */
     private function getTimeFactor($time, $success)
     {
         if (!$success) {
-            return 1;
+            return 3;
         }
 
-        if ($time <= 30000) {
+        if ($time <= 20000) {
             return 3;
-        } else if ($time > 30000 && $time <= 60000) {
+        } else if ($time > 20000 && $time <= 25000) {
+            return 2.5;
+        } else if ($time > 25000 && $time <= 30000) {
             return 2;
-        } else if ($time > 60000 && $time <= 90000) {
+        } else if ($time > 30000 && $time <= 40000) {
+            return 1.5;
+        } else if ($time > 40000 && $time <= 60000) {
             return 1;
+        } else if ($time > 60000 && $time <= 80000) {
+            return 0.5;
         } else {
+            return 0.1;
+        }
+    }
+
+    /**
+     * Determines the additions/deletions factor used for calculating the points contribution of a single answer.
+     *
+     * @param  int  $noteCount
+     * @param  int  $nAdditions
+     * @param  int  $nDeletions
+     * @param  boolean  $success
+     * @return float
+     */
+    private function getAdditionsDeletionsFactor($noteCount, $nAdditions, $nDeletions, $success)
+    {
+        if (!$success) {
+            return 3;
+        }
+
+        $nTotal = $nAdditions + $nDeletions - ($noteCount - 1);
+
+        if ($nTotal <= 2) {
+            return 2;
+        } else if ($nTotal > 2 && $nTotal <= 5) {
+            return 1.5;
+        } else if ($nTotal > 5 && $nTotal <= 9) {
+            return 1;
+        } else if ($nTotal > 9 && $nTotal <= 12) {
             return 0.75;
+        } else if ($nTotal > 12 && $nTotal <= 16) {
+            return 0.33;
+        } else {
+            return 0.1;
         }
     }
 }
