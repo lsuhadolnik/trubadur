@@ -112,33 +112,43 @@ class GameController extends Controller
         $game = $response->getOriginalContent();
         $users = $game->users()->orderBy('points', 'desc')->get(['id', 'name', 'rating', 'avatar', 'points']);
 
-        $answers = Answer::where(['game_id' => $game->id, 'user_id' => $request->user()->id])->get();
-        $timeAvg = $answers->avg('time');
-        $nAdditionsAvg = $answers->avg('n_additions');
-        $nDeletionsAvg = $answers->avg('n_deletions');
-        $nPlaybacksAvg = $answers->avg('n_playbacks');
-        $successAvg = $answers->avg('success');
-        $successAvgByChapter = [];
-        for ($i = 1; $i <= 3; $i++) {
-            $successAvgByChapter[$i] = $answers->where('question.chapter', $i)->avg('success');
+        $participated = false;
+        foreach ($users as $user) {
+            if ($user->id === $request->user()->id) {
+                $participated = true;
+                break;
+            }
         }
-        $successByChapter = [];
-        for ($i = 1; $i <= 3; $i++) {
-            $successByChapter[$i] = $answers->where('question.chapter', $i)->pluck('success')->all();
+
+        $statistics = null;
+
+        if ($participated) {
+            $answers = Answer::where(['game_id' => $game->id, 'user_id' => $request->user()->id])->get();
+
+            $statistics = [];
+
+            $statistics['timeAvg'] = $answers->avg('time');
+            $statistics['nAdditionsAvg'] = $answers->avg('n_additions');
+            $statistics['nDeletionsAvg'] = $answers->avg('n_deletions');
+            $statistics['nPlaybacksAvg'] = $answers->avg('n_playbacks');
+
+            $statistics['successAvg'] = $answers->avg('success');
+
+            $statistics['successAvgByChapter'] = [];
+            for ($i = 1; $i <= 3; $i++) {
+                $statistics['successAvgByChapter'][$i] = $answers->where('question.chapter', $i)->avg('success');
+            }
+
+            $statistics['successByChapter'] = [];
+            for ($i = 1; $i <= 3; $i++) {
+                $statistics['successByChapter'][$i] = $answers->where('question.chapter', $i)->pluck('success')->all();
+            }
         }
 
         return response()->json([
             'users'      => $users,
             'difficulty' => $game->difficulty,
-            'statistics' => [
-                'timeAvg'             => $timeAvg,
-                'nAdditionsAvg'       => $nAdditionsAvg,
-                'nDeletionsAvg'       => $nDeletionsAvg,
-                'nPlaybacksAvg'       => $nPlaybacksAvg,
-                'successAvg'          => $successAvg,
-                'successAvgByChapter' => $successAvgByChapter,
-                'successByChapter'    => $successByChapter
-            ]
+            'statistics' => $statistics
         ], 200);
     }
 }

@@ -46070,6 +46070,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         createGame: function createGame(mode) {
             var _this2 = this;
 
+            this.loading = true;
+
             this.fetchDifficulty({ gradeId: this.me.grade_id, schoolId: this.me.school_id }).then(function (difficulty) {
                 var users = [];
                 switch (mode) {
@@ -46085,12 +46087,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
                 _this2.storeGame({ difficulty_id: difficulty.id, mode: mode, type: _this2.type, users: users }).then(function (game) {
                     _this2.updateGameUser({ gameId: game.id, userId: _this2.me.id, data: { instrument: _this2.me.instrument } }).then(function () {
-                        _this2.open('intervals', { game: game });
+                        _this2.loading = false;
+                        _this2.reroute('intervals', { game: game });
                     });
                 });
             });
         },
-        open: function open(name) {
+        reroute: function reroute(name) {
             var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
             this.$router.push({ name: name, params: params });
@@ -46388,6 +46391,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -46395,7 +46400,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     props: ['id'],
     data: function data() {
         return {
-            title: 'Statistika igre',
             loading: true,
             users: [],
             statistics: null
@@ -46412,7 +46416,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchGameStatistics']), {
-        open: function open(name) {
+        reroute: function reroute(name) {
             var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
             this.$router.push({ name: name, params: params });
@@ -46484,7 +46488,7 @@ var render = function() {
                           "game-statistics__table-row game-statistics__table-row--body",
                         on: {
                           click: function($event) {
-                            _vm.open("profile", { id: user.id })
+                            _vm.reroute("profile", { id: user.id })
                           }
                         }
                       },
@@ -46535,98 +46539,134 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm._m(1),
-              _vm._v(" "),
-              _c("ul", { staticClass: "game-statistics__answer-list" }, [
-                _c("li", [
-                  _c("i", [_vm._v("Povprečen čas:")]),
-                  _vm._v(" " + _vm._s(_vm.formatTime(_vm.statistics.timeAvg)))
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("i", [_vm._v("Povprečno št. dodanih not:")]),
-                  _vm._v(
-                    " " + _vm._s(_vm.formatNumber(_vm.statistics.nAdditionsAvg))
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("i", [_vm._v("Povprečno št. izbrisanih not:")]),
-                  _vm._v(
-                    " " + _vm._s(_vm.formatNumber(_vm.statistics.nDeletionsAvg))
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("i", [_vm._v("Povprečno št. predvajanj:")]),
-                  _vm._v(
-                    " " + _vm._s(_vm.formatNumber(_vm.statistics.nPlaybacksAvg))
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _vm._l(3, function(n) {
-                return _c("div", { staticClass: "game-statistics__chapter" }, [
-                  _c(
+              _vm.statistics
+                ? _c(
                     "div",
-                    {
-                      staticClass: "game-statistics__info game-statistics__line"
-                    },
+                    { staticClass: "game-statistics__details" },
                     [
-                      _c("strong", [
-                        _vm._v("Poglavje " + _vm._s("1 + " + (n + 2)) + ":")
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "ul",
-                    { staticClass: "game-statistics__success-list" },
-                    _vm._l(_vm.statistics.successByChapter[n], function(
-                      success,
-                      index
-                    ) {
-                      return _c("li", [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c(
+                        "ul",
+                        { staticClass: "game-statistics__answer-list" },
+                        [
+                          _c("li", [
+                            _c("i", [_vm._v("Povprečen čas:")]),
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm.formatTime(_vm.statistics.timeAvg))
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c("i", [_vm._v("Povprečno št. dodanih not:")]),
+                            _vm._v(
+                              " " +
+                                _vm._s(
+                                  _vm.formatNumber(_vm.statistics.nAdditionsAvg)
+                                )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c("i", [_vm._v("Povprečno št. izbrisanih not:")]),
+                            _vm._v(
+                              " " +
+                                _vm._s(
+                                  _vm.formatNumber(_vm.statistics.nDeletionsAvg)
+                                )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _c("i", [_vm._v("Povprečno št. predvajanj:")]),
+                            _vm._v(
+                              " " +
+                                _vm._s(
+                                  _vm.formatNumber(_vm.statistics.nPlaybacksAvg)
+                                )
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(3, function(n) {
+                        return _c(
+                          "div",
+                          { staticClass: "game-statistics__chapter" },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "game-statistics__info game-statistics__line"
+                              },
+                              [
+                                _c("strong", [
+                                  _vm._v(
+                                    "Poglavje " + _vm._s("1 + " + (n + 2)) + ":"
+                                  )
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "ul",
+                              { staticClass: "game-statistics__success-list" },
+                              _vm._l(
+                                _vm.statistics.successByChapter[n],
+                                function(success, index) {
+                                  return _c("li", [
+                                    _vm._v(
+                                      "\n                        " +
+                                        _vm._s(index + 1) +
+                                        ". " +
+                                        _vm._s(_vm.formatSuccess(success)) +
+                                        "\n                    "
+                                    )
+                                  ])
+                                }
+                              )
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "game-statistics__success-chapter"
+                              },
+                              [
+                                _c("i", [_vm._v("Povprečje")]),
+                                _vm._v(
+                                  ": " +
+                                    _vm._s(
+                                      _vm.formatPercent(
+                                        _vm.statistics.successAvgByChapter[n]
+                                      )
+                                    ) +
+                                    "\n                "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "game-statistics__info" }, [
+                        _c("strong", [_vm._v("Skupno povprečje")]),
                         _vm._v(
-                          "\n                    " +
-                            _vm._s(index + 1) +
-                            ". " +
-                            _vm._s(_vm.formatSuccess(success)) +
-                            "\n                "
+                          ": " +
+                            _vm._s(
+                              _vm.formatPercent(_vm.statistics.successAvg)
+                            ) +
+                            "\n            "
                         )
                       ])
-                    })
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "game-statistics__success-chapter" },
-                    [
-                      _c("i", [_vm._v("Povprečje")]),
-                      _vm._v(
-                        ": " +
-                          _vm._s(
-                            _vm.formatPercent(
-                              _vm.statistics.successAvgByChapter[n]
-                            )
-                          ) +
-                          "\n            "
-                      )
-                    ]
+                    ],
+                    2
                   )
-                ])
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "game-statistics__info" }, [
-                _c("strong", [_vm._v("Skupno povprečje")]),
-                _vm._v(
-                  ": " +
-                    _vm._s(_vm.formatPercent(_vm.statistics.successAvg)) +
-                    "\n        "
-                )
-              ])
+                : _vm._e()
             ],
-            2
+            1
           )
         : _vm._e()
     ],
@@ -48257,6 +48297,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             this.finishGameUser({ gameId: this.game.id, userId: this.me.id }).then(function () {
                 _this7.completeBadges(_this7.me.id).then(function () {
+                    _this7.loading = false;
                     _this7.$router.push({ name: 'gameStatistics', params: { id: _this7.game.id } });
                 });
             });

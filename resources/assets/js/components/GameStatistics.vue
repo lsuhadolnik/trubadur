@@ -69,7 +69,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="game-statistics__table-row game-statistics__table-row--body" @click="open('profile', { id: user.id })" v-for="(user, index) in users">
+                    <tr class="game-statistics__table-row game-statistics__table-row--body" @click="reroute('profile', { id: user.id })" v-for="(user, index) in users">
                         <td class="game-statistics__table-column game-statistics__table-column--body">{{ index + 1 }}</td>
                         <td class="game-statistics__table-column game-statistics__table-column--body">
                             <img class="game-statistics__avatar" :src="user.avatar"/>
@@ -79,30 +79,32 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="game-statistics__info game-statistics__line">
-                <strong>Statistika odgovorov:</strong>
-            </div>
-            <ul class="game-statistics__answer-list">
-                <li><i>Povprečen čas:</i> {{ formatTime(statistics.timeAvg) }}</li>
-                <li><i>Povprečno št. dodanih not:</i> {{ formatNumber(statistics.nAdditionsAvg) }}</li>
-                <li><i>Povprečno št. izbrisanih not:</i> {{ formatNumber(statistics.nDeletionsAvg) }}</li>
-                <li><i>Povprečno št. predvajanj:</i> {{ formatNumber(statistics.nPlaybacksAvg) }}</li>
-            </ul>
-            <div class="game-statistics__chapter" v-for="n in 3">
+            <div class="game-statistics__details" v-if="statistics">
                 <div class="game-statistics__info game-statistics__line">
-                    <strong>Poglavje {{ '1 + ' + (n + 2) }}:</strong>
+                    <strong>Statistika odgovorov:</strong>
                 </div>
-                <ul class="game-statistics__success-list">
-                    <li v-for="(success, index) in statistics.successByChapter[n]">
-                        {{ index + 1 }}. {{ formatSuccess(success) }}
-                    </li>
+                <ul class="game-statistics__answer-list">
+                    <li><i>Povprečen čas:</i> {{ formatTime(statistics.timeAvg) }}</li>
+                    <li><i>Povprečno št. dodanih not:</i> {{ formatNumber(statistics.nAdditionsAvg) }}</li>
+                    <li><i>Povprečno št. izbrisanih not:</i> {{ formatNumber(statistics.nDeletionsAvg) }}</li>
+                    <li><i>Povprečno št. predvajanj:</i> {{ formatNumber(statistics.nPlaybacksAvg) }}</li>
                 </ul>
-                <div class="game-statistics__success-chapter">
-                    <i>Povprečje</i>: {{ formatPercent(statistics.successAvgByChapter[n]) }}
+                <div class="game-statistics__chapter" v-for="n in 3">
+                    <div class="game-statistics__info game-statistics__line">
+                        <strong>Poglavje {{ '1 + ' + (n + 2) }}:</strong>
+                    </div>
+                    <ul class="game-statistics__success-list">
+                        <li v-for="(success, index) in statistics.successByChapter[n]">
+                            {{ index + 1 }}. {{ formatSuccess(success) }}
+                        </li>
+                    </ul>
+                    <div class="game-statistics__success-chapter">
+                        <i>Povprečje</i>: {{ formatPercent(statistics.successAvgByChapter[n]) }}
+                    </div>
                 </div>
-            </div>
-            <div class="game-statistics__info">
-                <strong>Skupno povprečje</strong>: {{ formatPercent(statistics.successAvg) }}
+                <div class="game-statistics__info">
+                    <strong>Skupno povprečje</strong>: {{ formatPercent(statistics.successAvg) }}
+                </div>
             </div>
         </div>
     </div>
@@ -115,7 +117,6 @@ export default {
     props: ['id'],
     data () {
         return {
-            title: 'Statistika igre',
             loading: true,
             users: [],
             statistics: null
@@ -130,7 +131,7 @@ export default {
     },
     methods: {
         ...mapActions(['fetchGameStatistics']),
-        open (name, params = {}) {
+        reroute (name, params = {}) {
             this.$router.push({ name: name, params: params })
         },
         formatPoints (points) {

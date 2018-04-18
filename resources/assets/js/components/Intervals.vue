@@ -461,6 +461,7 @@ export default {
         finishGame () {
             this.finishGameUser({ gameId: this.game.id, userId: this.me.id }).then(() => {
                 this.completeBadges(this.me.id).then(() => {
+                    this.loading = false
                     this.$router.push({ name: 'gameStatistics', params: { id: this.game.id } })
                 })
             })

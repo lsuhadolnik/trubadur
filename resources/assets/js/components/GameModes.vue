@@ -133,6 +133,8 @@ export default {
             }
         },
         createGame (mode) {
+            this.loading = true
+
             this.fetchDifficulty({ gradeId: this.me.grade_id, schoolId: this.me.school_id }).then((difficulty) => {
                 const users = []
                 switch (mode) {
@@ -148,12 +150,13 @@ export default {
 
                 this.storeGame({ difficulty_id: difficulty.id, mode: mode, type: this.type, users: users }).then((game) => {
                     this.updateGameUser({ gameId: game.id, userId: this.me.id, data: { instrument: this.me.instrument } }).then(() => {
-                        this.open('intervals', { game: game })
+                        this.loading = false
+                        this.reroute('intervals', { game: game })
                     })
                 })
             })
         },
-        open (name, params = {}) {
+        reroute (name, params = {}) {
             this.$router.push({ name: name, params: params })
         }
     }
