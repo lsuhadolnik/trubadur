@@ -50935,7 +50935,7 @@ var render = function() {
                   staticClass: "me__level-progress-bar-overlay",
                   style: {
                     width:
-                      _vm.rating *
+                      (_vm.rating - _vm.levelMinRating) *
                         100 /
                         (_vm.levelMaxRating - _vm.levelMinRating) +
                       "%"
