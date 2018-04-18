@@ -127,8 +127,8 @@ $instructions-height: 290px;
                 </tbody>
             </table>
             <div class="leaderboard__pagination" v-show="hasLess || hasMore">
-                <img class="leaderboard__pagination-arrow" :class="{ 'leaderboard__pagination-arrow--disabled': !hasLess }" id="arrow_pagination_left" @click="previousPage()"/>
-                <img class="leaderboard__pagination-arrow" :class="{ 'leaderboard__pagination-arrow--disabled': !hasMore }" id="arrow_pagination_right" @click="nextPage()"/>
+                <img class="leaderboard__pagination-arrow" :class="{ 'leaderboard__pagination-arrow--disabled': !hasLess }" id="arrow_pagination_left" @click="previousPage()" v-show="false"/>
+                <img class="leaderboard__pagination-arrow" :class="{ 'leaderboard__pagination-arrow--disabled': !hasMore }" id="arrow_pagination_right" @click="nextPage()" v-show="false"/>
             </div>
         </div>
     </div>

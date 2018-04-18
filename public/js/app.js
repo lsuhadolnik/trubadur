@@ -49560,6 +49560,14 @@ var render = function() {
             },
             [
               _c("img", {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: false,
+                    expression: "false"
+                  }
+                ],
                 staticClass: "leaderboard__pagination-arrow",
                 class: {
                   "leaderboard__pagination-arrow--disabled": !_vm.hasLess
@@ -49573,6 +49581,14 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("img", {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: false,
+                    expression: "false"
+                  }
+                ],
                 staticClass: "leaderboard__pagination-arrow",
                 class: {
                   "leaderboard__pagination-arrow--disabled": !_vm.hasMore
