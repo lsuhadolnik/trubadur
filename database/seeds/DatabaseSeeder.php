@@ -75,19 +75,9 @@ class DatabaseSeeder extends Seeder
             'country' => 'Slovenija'
         ],
         [
-            'name'    => 'Glasbena šola Mengeš',
+            'name'    => 'Glasbena šola',
             'type'    => 'primary',
             'country' => 'Slovenija'
-        ],
-        [
-            'name'    => 'Port Regis',
-            'type'    => 'primary',
-            'country' => 'Velika Britanija'
-        ],
-        [
-            'name'    => 'Professional Performing Arts High School',
-            'type'    => 'high',
-            'country' => 'Združene države Amerike'
         ]
     ];
 
@@ -96,61 +86,39 @@ class DatabaseSeeder extends Seeder
             'name'                => 'Wolfgang Amadeus Mozart',
             'email'               => 'mozart@trubadur.si',
             'password'            => 'mozart123',
-            'instrument'          => 'piano',
-            'note_playback_delay' => 2000,
+            'instrument'          => 'guitar',
+            'note_playback_delay' => 2500,
             'clef'                => 'violin',
-            'school'              => 'Akademija za Glasbo',
+            'school'              => 'Konservatorij za glasbo in balet Ljubljana',
             'grade'               => '2',
-            'badges'              => ['All answers correct', '20 questions without mistake']
+            'badges'              => ['Igra s 50% točnostjo', 'Zmaga v večigralski igri']
         ],
         [
             'name'                => 'Ludwig van Beethoven',
             'email'               => 'beethoven@trubadur.si',
             'password'            => 'beethoven123',
-            'instrument'          => 'guitar',
-            'note_playback_delay' => 1500,
+            'instrument'          => 'piano',
+            'note_playback_delay' => 2000,
             'clef'                => 'violin',
             'school'              => 'Konservatorij za glasbo in balet Ljubljana',
             'grade'               => '1',
-            'badges'              => ['All answers correct', '10 game winning streak']
+            'badges'              => ['Igra končana v 25 minutah', 'Zmaga v večigralski igri']
         ],
         [
             'name'                => 'Johannes Brahms',
             'email'               => 'brahms@trubadur.si',
             'password'            => 'brahms123',
             'instrument'          => 'clarinet',
-            'note_playback_delay' => 2500,
-            'clef'                => 'bass',
-            'school'              => 'Glasbena šola Mengeš',
-            'grade'               => '3',
-            'badges'              => ['20 questions without mistake', 'Best in the group']
-        ],
-        [
-            'name'                => 'Antonio Vivaldi',
-            'email'               => 'vivaldi@trubadur.si',
-            'password'            => 'vivaldi123',
-            'instrument'          => 'trumpet',
             'note_playback_delay' => 3000,
             'clef'                => 'violin',
-            'school'              => 'Port Regis',
-            'grade'               => '4',
-            'badges'              => ['Best in the group', '10 game winning streak']
-        ],
-            [
-            'name'                => 'Joseph Haydn',
-            'email'               => 'haydn@trubadur.si',
-            'password'            => 'haydn123',
-            'instrument'          => 'violin',
-            'note_playback_delay' => 4500,
-            'clef'                => 'bass',
-            'school'              => 'Professional Performing Arts High School',
-            'grade'               => '2',
-            'badges'              => ['Best in the group', '20 questions without mistake']
+            'school'              => 'Glasbena šola',
+            'grade'               => '5',
+            'badges'              => ['Igra s 50% točnostjo']
         ]
     ];
 
     const LEVELS = [
-        5 => 'Konservatorij za glasbo in balet Ljubljana',
+        5  => 'Konservatorij za glasbo in balet Ljubljana',
         10 => 'Akademija za Glasbo',
         15 => 'Slovenska filharmonija',
         20 => 'Berklee College of Music',

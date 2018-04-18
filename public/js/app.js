@@ -48004,6 +48004,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 
@@ -48014,6 +48017,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             loading: true,
             instructing: false,
             playing: false,
+            playingTimeoutId: null,
+            noteTimeoutIds: [],
             debug: false,
             notes: {
                 type: 'whole',
@@ -48137,20 +48142,52 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 this.notification = '';
                 this.nPlaybacks++;
                 this.playing = true;
+                this.noteTimeoutIds = [];
 
                 var _loop = function _loop(i) {
-                    setTimeout(function () {
+                    _this3.noteTimeoutIds.push(setTimeout(function () {
                         return _this3.playNote(_this3.sample[i], _this3.notes.delay);
-                    }, i * _this3.notes.delay);
+                    }, i * _this3.notes.delay));
                 };
 
                 for (var i = 0; i < this.sample.length; i++) {
                     _loop(i);
                 }
 
-                setTimeout(function () {
+                this.playingTimeoutId = setTimeout(function () {
                     _this3.playing = false;
                 }, this.sample.length * this.notes.delay);
+            }
+        },
+        stopNotes: function stopNotes() {
+            if (this.playing) {
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = this.noteTimeoutIds[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var timeoutId = _step.value;
+
+                        clearTimeout(timeoutId);
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator.return) {
+                            _iterator.return();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+
+                clearTimeout(this.playingTimeoutId);
+                this.playing = false;
             }
         },
         getCurrentTimeInMilliseconds: function getCurrentTimeInMilliseconds() {
@@ -48297,29 +48334,37 @@ var render = function() {
           _vm._v(" "),
           _c("ul", { staticClass: "intervals__instructions-list" }, [
             _c("li", { staticClass: "intervals__instructions-list-item" }, [
-              _vm._v("Preizkusil se boš v igri ugotavljanja intervalov")
+              _vm._v("Preizkusil se boš v igri ugotavljanja intervalov.")
             ]),
             _vm._v(" "),
             _c("li", { staticClass: "intervals__instructions-list-item" }, [
               _vm._v(
-                "Igra je razdeljena v 3 poglavja, vsako izmed njih ima 8 vprašanj"
+                "Igra je razdeljena v 3 poglavja, vsako izmed njih ima 8 vprašanj."
               )
             ]),
             _vm._v(" "),
             _c("li", { staticClass: "intervals__instructions-list-item" }, [
               _vm._v(
-                "Za odgovor na posamezno vprašanje imaš na voljo natanko 120 sekund"
+                "Za odgovor na posamezno vprašanje imaš na voljo natanko 120 sekund."
               )
             ]),
             _vm._v(" "),
             _c("li", { staticClass: "intervals__instructions-list-item" }, [
-              _vm._v("Za vnos not na notno črtovje uporabi klaviaturo")
+              _vm._v("Za vnos not na notno črtovje uporabi klaviaturo.")
             ]),
             _vm._v(" "),
             _c("li", { staticClass: "intervals__instructions-list-item" }, [
               _vm._v(
-                "Na voljo imaš še ukaz za brisanje not, ponovno predvajanje tonov in premik na naslednje vprašanje"
+                "Na voljo imaš še ukaz za brisanje not, ponovno predvajanje tonov in premik na naslednje vprašanje."
               )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "intervals__instructions-list-item" }, [
+              _vm._v("Če bo tvoj odgovor napačen, se ti bo izpisalo obvestilo.")
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "intervals__instructions-list-item" }, [
+              _vm._v("Število odgovorov na posamezno vprašanje je neomejeno.")
             ]),
             _vm._v(" "),
             _c(
@@ -48337,13 +48382,13 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "Uspešnost reševanja nalog bo vplivala na tvoj položaj na lestvici"
+                  "Uspešnost reševanja nalog bo vplivala na tvoj položaj na lestvici."
                 )
               ]
             ),
             _vm._v(" "),
             _c("li", { staticClass: "intervals__instructions-list-item" }, [
-              _vm._v("Na koncu igre si lahko ogledaš statistiko")
+              _vm._v("Na koncu igre si lahko ogledaš statistiko.")
             ])
           ])
         ],
@@ -48490,10 +48535,35 @@ var render = function() {
               { staticClass: "intervals__command--replay" },
               [
                 _c("element-button", {
-                  attrs: { text: "predvajaj", disable: _vm.playing },
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.playing,
+                      expression: "!playing"
+                    }
+                  ],
+                  attrs: { text: "predvajaj" },
                   nativeOn: {
                     click: function($event) {
                       _vm.playNotes()
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("element-button", {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.playing,
+                      expression: "playing"
+                    }
+                  ],
+                  attrs: { text: "ustavi" },
+                  nativeOn: {
+                    click: function($event) {
+                      _vm.stopNotes()
                     }
                   }
                 })
@@ -49726,7 +49796,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.levels[data-v-5b057fe8] {\n  width: 100%;\n}\n.levels__content[data-v-5b057fe8] {\n  width: 100%;\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #BFE3D3;\n}\n.levels__area[data-v-5b057fe8] {\n  width: 100%;\n  padding: 0 5%;\n}\n.levels__level[data-v-5b057fe8] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.levels__label-wrapper[data-v-5b057fe8] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.levels__label-wrapper--level[data-v-5b057fe8] {\n  width: 25%;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n}\n.levels__label-wrapper--label[data-v-5b057fe8] {\n  width: 55%;\n  padding-left: 10px;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.levels__label[data-v-5b057fe8] {\n  font-size: 14px;\n  text-align: center;\n}\n.levels__image-wrapper[data-v-5b057fe8] {\n  width: 20%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.levels__image[data-v-5b057fe8] {\n  width: 100%;\n  height: 100%;\n}\n.levels__line-wrapper[data-v-5b057fe8] {\n  width: 20%;\n  height: 100px;\n  margin-left: 25%;\n  vertical-align: top;\n}\n.levels__line[data-v-5b057fe8] {\n  stroke: #000000;\n  stroke-width: 3px;\n}\n", ""]);
+exports.push([module.i, "\n.levels[data-v-5b057fe8] {\n  width: 100%;\n}\n.levels__content[data-v-5b057fe8] {\n  width: 100%;\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #BFE3D3;\n}\n.levels__area[data-v-5b057fe8] {\n  width: 100%;\n  padding: 0 5%;\n}\n.levels__level[data-v-5b057fe8] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.levels__label-wrapper[data-v-5b057fe8] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.levels__label-wrapper--level[data-v-5b057fe8] {\n  width: 20%;\n  padding-right: 10px;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n}\n.levels__label-wrapper--label[data-v-5b057fe8] {\n  width: 45%;\n  padding-left: 10px;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n}\n.levels__label[data-v-5b057fe8] {\n  font-size: 13px;\n}\n.levels__label--level[data-v-5b057fe8] {\n  text-align: right;\n}\n.levels__label--label[data-v-5b057fe8] {\n  text-align: left;\n}\n.levels__image-wrapper[data-v-5b057fe8] {\n  width: 35%;\n  max-width: 120px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.levels__image[data-v-5b057fe8] {\n  width: 100%;\n  height: 100%;\n}\n.levels__line-wrapper[data-v-5b057fe8] {\n  width: 35%;\n  height: 100px;\n  margin-left: 20%;\n  vertical-align: top;\n}\n.levels__line[data-v-5b057fe8] {\n  stroke: #000000;\n  stroke-width: 5px;\n}\n", ""]);
 
 // exports
 
@@ -49740,6 +49810,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
 //
 //
 //
@@ -49851,9 +49923,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             _this.fetchUser(_this.id).then(function (user) {
                 _this.user = user;
 
-                // TODO: delete!
-                _this.user.rating = 17000;
-
                 _this.fetchLevels({ per_page: 0 }).then(function (levels) {
                     _this.levels = levels;
 
@@ -49959,9 +50028,11 @@ var render = function() {
                     "levels__label-wrapper levels__label-wrapper--level"
                 },
                 [
-                  _c("label", { staticClass: "levels__label" }, [
-                    _vm._v("NIVO " + _vm._s(level.level))
-                  ])
+                  _c(
+                    "label",
+                    { staticClass: "levels__label levels__label--level" },
+                    [_vm._v("NIVO " + _vm._s(level.level))]
+                  )
                 ]
               ),
               _vm._v(" "),
@@ -49979,9 +50050,11 @@ var render = function() {
                     "levels__label-wrapper levels__label-wrapper--label"
                 },
                 [
-                  _c("label", { staticClass: "levels__label" }, [
-                    _vm._v(_vm._s(_vm._f("uppercase")(level.label)))
-                  ])
+                  _c(
+                    "label",
+                    { staticClass: "levels__label levels__label--label" },
+                    [_vm._v(_vm._s(_vm._f("uppercase")(level.label)))]
+                  )
                 ]
               )
             ]),

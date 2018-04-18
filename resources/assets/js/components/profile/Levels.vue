@@ -26,23 +26,25 @@
 .levels__label-wrapper { display: flex; }
 
 .levels__label-wrapper--level {
-    width           : 25%;
-    justify-content : flex-start;
+    width           : 20%;
+    padding-right   : 10px;
+    justify-content : flex-end;
 }
 
 .levels__label-wrapper--label {
-    width           : 55%;
+    width           : 45%;
     padding-left    : 10px;
-    justify-content : center;
+    justify-content : flex-start;
 }
 
-.levels__label {
-    font-size  : 14px;
-    text-align : center;
-}
+.levels__label { font-size: 13px; }
+
+.levels__label--level { text-align: right; }
+.levels__label--label { text-align: left;  }
 
 .levels__image-wrapper {
-    width           : 20%;
+    width           : 35%;
+    max-width       : 120px;
     display         : flex;
     align-items     : center;
     justify-content : center;
@@ -54,15 +56,15 @@
 }
 
 .levels__line-wrapper {
-    width          : 20%;
+    width          : 35%;
     height         : 100px;
-    margin-left    : 25%;
+    margin-left    : 20%;
     vertical-align : top;
 }
 
 .levels__line {
     stroke       : $black;
-    stroke-width : 3px;
+    stroke-width : 5px;
 }
 </style>
 
@@ -73,13 +75,13 @@
             <div class="levels__area" v-for="level in levelsWithLabel">
                 <div class="levels__level">
                     <div class="levels__label-wrapper levels__label-wrapper--level">
-                        <label class="levels__label">NIVO {{ level.level }}</label>
+                        <label class="levels__label levels__label--level">NIVO {{ level.level }}</label>
                     </div>
                     <div class="levels__image-wrapper">
                         <img class="levels__image" :id="'level_' + level.level"/>
                     </div>
                     <div class="levels__label-wrapper levels__label-wrapper--label">
-                        <label class="levels__label">{{ level.label | uppercase }}</label>
+                        <label class="levels__label levels__label--label">{{ level.label | uppercase }}</label>
                     </div>
                 </div>
                 <svg class="levels__line-wrapper" v-if="level.id !== levelsWithLabel[levelsWithLabel.length - 1].id">
@@ -106,9 +108,6 @@ export default {
         this.$nextTick(() => {
             this.fetchUser(this.id).then((user) => {
                 this.user = user
-
-                // TODO: delete!
-                this.user.rating = 17000
 
                 this.fetchLevels({ per_page: 0 }).then((levels) => {
                     this.levels = levels

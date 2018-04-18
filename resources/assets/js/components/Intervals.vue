@@ -190,13 +190,15 @@
         <div class="intervals__instructions" v-show="!loading && instructing">
             <element-button text="začni" @click.native="startGame()"></element-button>
             <ul class="intervals__instructions-list">
-                <li class="intervals__instructions-list-item">Preizkusil se boš v igri ugotavljanja intervalov</li>
-                <li class="intervals__instructions-list-item">Igra je razdeljena v 3 poglavja, vsako izmed njih ima 8 vprašanj</li>
-                <li class="intervals__instructions-list-item">Za odgovor na posamezno vprašanje imaš na voljo natanko 120 sekund</li>
-                <li class="intervals__instructions-list-item">Za vnos not na notno črtovje uporabi klaviaturo</li>
-                <li class="intervals__instructions-list-item">Na voljo imaš še ukaz za brisanje not, ponovno predvajanje tonov in premik na naslednje vprašanje</li>
-                <li class="intervals__instructions-list-item" v-show="!isPractice">Uspešnost reševanja nalog bo vplivala na tvoj položaj na lestvici</li>
-                <li class="intervals__instructions-list-item">Na koncu igre si lahko ogledaš statistiko</li>
+                <li class="intervals__instructions-list-item">Preizkusil se boš v igri ugotavljanja intervalov.</li>
+                <li class="intervals__instructions-list-item">Igra je razdeljena v 3 poglavja, vsako izmed njih ima 8 vprašanj.</li>
+                <li class="intervals__instructions-list-item">Za odgovor na posamezno vprašanje imaš na voljo natanko 120 sekund.</li>
+                <li class="intervals__instructions-list-item">Za vnos not na notno črtovje uporabi klaviaturo.</li>
+                <li class="intervals__instructions-list-item">Na voljo imaš še ukaz za brisanje not, ponovno predvajanje tonov in premik na naslednje vprašanje.</li>
+                <li class="intervals__instructions-list-item">Če bo tvoj odgovor napačen, se ti bo izpisalo obvestilo.</li>
+                <li class="intervals__instructions-list-item">Število odgovorov na posamezno vprašanje je neomejeno.</li>
+                <li class="intervals__instructions-list-item" v-show="!isPractice">Uspešnost reševanja nalog bo vplivala na tvoj položaj na lestvici.</li>
+                <li class="intervals__instructions-list-item">Na koncu igre si lahko ogledaš statistiko.</li>
             </ul>
         </div>
         <div v-show="!loading && !instructing">
@@ -223,7 +225,8 @@
                     <element-button text="izbriši noto" :disable="answer.length <= 1" @click.native="removeNote()"></element-button>
                 </div>
                 <div class="intervals__command--replay">
-                    <element-button text="predvajaj" :disable="playing" @click.native="playNotes()"></element-button>
+                    <element-button text="predvajaj" @click.native="playNotes()" v-show="!playing"></element-button>
+                    <element-button text="ustavi" @click.native="stopNotes()" v-show="playing"></element-button>
                 </div>
                 <div class="intervals__command--next">
                     <element-button text="naprej" :disable="playing" @click.native="checkCorrectness()"></element-button>
@@ -244,6 +247,8 @@ export default {
             loading: true,
             instructing: false,
             playing: false,
+            playingTimeoutId: null,
+            noteTimeoutIds: [],
             debug: false,
             notes: {
                 type: 'whole',
@@ -361,12 +366,22 @@ export default {
                 this.notification = ''
                 this.nPlaybacks++
                 this.playing = true
+                this.noteTimeoutIds = []
 
                 for (let i = 0; i < this.sample.length; i++) {
-                    setTimeout(() => this.playNote(this.sample[i], this.notes.delay), i * this.notes.delay)
+                    this.noteTimeoutIds.push(setTimeout(() => this.playNote(this.sample[i], this.notes.delay), i * this.notes.delay))
                 }
 
-                setTimeout(() => { this.playing = false }, this.sample.length * this.notes.delay)
+                this.playingTimeoutId = setTimeout(() => { this.playing = false }, this.sample.length * this.notes.delay)
+            }
+        },
+        stopNotes () {
+            if (this.playing) {
+                for (const timeoutId of this.noteTimeoutIds) {
+                    clearTimeout(timeoutId)
+                }
+                clearTimeout(this.playingTimeoutId)
+                this.playing = false
             }
         },
         getCurrentTimeInMilliseconds () {
