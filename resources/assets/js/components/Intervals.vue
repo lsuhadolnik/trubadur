@@ -249,7 +249,7 @@ export default {
             playing: false,
             playingTimeoutId: null,
             noteTimeoutIds: [],
-            debug: true,
+            debug: false,
             notes: {
                 type: 'whole',
                 delay: 0,
@@ -275,7 +275,7 @@ export default {
                 'Db5': 'C#5'
             },
             nChapters: 3,
-            nQuestions: 1,
+            nQuestions: 8,
             maxTimePerQuestion: 120000,
             timer: null,
             chapter: 1,

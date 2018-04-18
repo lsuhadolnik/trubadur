@@ -70,18 +70,17 @@
     height            : 25px;
     margin-top        : 20px;
     border-radius     : 10px;
-    background-color : $tacao;
-}
-
-.me__level-progress-bar-overlay {
-    position          : absolute;
-    width             : 50%;
-    height            : 25px;
-    border-radius     : 10px;
     background-image  : url('/images/backgrounds/progress.png');
     background-repeat : repeat;
     background-size   : contain;
     background-color  : $golden-tainoi;
+    overflow          : hidden;
+}
+
+.me__level-progress-bar-overlay {
+    position         : absolute;
+    height           : 25px;
+    background-color : $tacao;
 }
 
 .me__level-progress-bar-labels {
@@ -263,7 +262,8 @@
             <div class="me__level-progress-wrapper" @click="openTab('levels')">
                 <label class="me__level-progress-label">KJE SEM</label>
                 <div class="me__level-progress-bar">
-                    <div class="me__level-progress-bar-overlay" :style="{ 'width': ((rating - levelMinRating) * 100 / (levelMaxRating - levelMinRating)) + '%' }"></div>
+                    <div class="me__level-progress-bar-overlay" :style="{ 'width': (100 - progressBarPercentage) + '%', 'margin-left': progressBarPercentage + '%' }"></div>
+                    <div class="me__level-progress-bar-cover"></div>
                 </div>
                 <div class="me__level-progress-bar-labels">
                     <label class="me__level-progress-label">NIVO {{ levelLevel }}</label>
@@ -415,6 +415,9 @@ export default {
         },
         hasLatestBadges () {
             return this.userBadges.length > 0
+        },
+        progressBarPercentage () {
+            return (this.rating - this.levelMinRating) * 100 / (this.levelMaxRating - this.levelMinRating)
         }
     },
     methods: {
