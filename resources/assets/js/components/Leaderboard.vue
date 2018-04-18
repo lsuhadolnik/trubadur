@@ -247,7 +247,6 @@ export default {
                     for (let user of this.users) {
                         let avatar = this.$el.querySelector('#avatar_' + user.id)
                         avatar.onload = () => {
-                            alert(nLoaded) // eslint-disable-line no-undef
                             if (++nLoaded === nTotal) {
                                 context.loading = false
                             }

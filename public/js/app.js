@@ -49432,7 +49432,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
                             var avatar = _this2.$el.querySelector('#avatar_' + user.id);
                             avatar.onload = function () {
-                                alert(nLoaded); // eslint-disable-line no-undef
                                 if (++nLoaded === nTotal) {
                                     context.loading = false;
                                 }
