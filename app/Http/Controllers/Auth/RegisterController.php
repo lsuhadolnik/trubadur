@@ -96,10 +96,10 @@ class RegisterController extends Controller
             'email' => $data['email']
         ]);
 
-        $school = School::first();
+        $school = School::whereName('Konservatorij za glasbo in balet Ljubljana')->first();
         $user->school()->associate($school);
 
-        $grade = Grade::first();
+        $grade = Grade::whereGrade(1)->first();
         $user->grade()->associate($grade);
 
         $user->saveOrFail();

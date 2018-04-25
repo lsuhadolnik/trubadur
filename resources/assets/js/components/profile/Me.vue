@@ -106,8 +106,9 @@
 }
 
 .me__latest-badges-label {
-    color     : $espresso;
-    font-size : 15px;
+    color      : $espresso;
+    font-size  : 15px;
+    text-align : center;
 }
 
 .me__latest-badges {
@@ -277,7 +278,7 @@
                 </div>
                 <div class="me__latest-badges" @click="openTab('badges')">
                     <img class="me__latest-badge-image" :id="'latest_badge_' + n" v-for="n in nLatestBadges"/>
-                    <label class="me__latest-badges-label" v-if="!hasLatestBadges">Ni dosežkov.</label>
+                    <label class="me__latest-badges-label" v-if="!hasLatestBadges">Niste še osvojili nobenega dosežka.</label>
                 </div>
             </div>
 

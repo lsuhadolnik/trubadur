@@ -3,7 +3,7 @@
 
 .intervals {
     width          : 100%;
-    padding-bottom : 20px;
+    padding-bottom : 44px;
 }
 
 .intervals__instructions {
@@ -16,13 +16,13 @@
 .intervals__instructions-list-item { padding: 8px 20px 8px 3px; }
 
 .intervals__progress-wrapper {
-    padding         : 20px 2.5vw 0 2.5vw;
+    padding         : 5px 2.5vw 0 2.5vw;
     display         : flex;
     justify-content : space-between;
     align-items     : center;
 
     @include breakpoint-portrait {
-        padding-top     : 20px;
+        padding-top     : 10px;
         justify-content : space-evenly;
         flex-direction  : column;
     }
@@ -36,7 +36,7 @@
     @include breakpoint-portrait {
         width        : 100%;
         margin-right : 0;
-        padding      : 0 2.5vw 15px 2.5vw;
+        padding      : 0 2.5vw 10px 2.5vw;
     }
 }
 
@@ -90,14 +90,11 @@
 .intervals__keyboard {
     margin-left: 2.5vw;
 
-    @include breakpoint-portrait {
-        margin-top  : 10px;
-        margin-left : 0;
-    }
+    @include breakpoint-portrait { margin-left: 0; }
 }
 
 .intervals__commands {
-    margin-top      : 10px;
+    margin-top      : 5px;
     display         : flex;
     justify-content : space-evenly;
 
@@ -135,52 +132,130 @@
     .button__full { background-color: $sea-green; }
 }
 .intervals__command--delete .button {
-    width  : 100px !important;
-    height : 60px !important;
-
-    @include breakpoint-small-phone-portrait {
+    @include breakpoint-small-phone {
         width  : 100px !important;
         height : 50px !important;
 
-        .button__hollow {
-            padding   : 2px;
-            font-size : 13px;
-        }
+        .button__hollow { font-size: 11px; }
+    }
+
+    @include breakpoint-phone {
+        width  : 100px !important;
+        height : 60px !important;
+
+        .button__hollow { font-size: 13px; }
+    }
+
+    @include breakpoint-large-phone {
+        width  : 100px !important;
+        height : 60px !important;
+
+        .button__hollow { font-size: 13px; }
+    }
+
+    @include breakpoint-tablet {
+        width  : 150px !important;
+        height : 60px !important;
+
+        .button__hollow { font-size: 15px; }
+    }
+
+    @include breakpoint-landscape {
+        width  : 130px !important;
+        height : 40px !important;
+    }
+
+    @include breakpoint-tablet-landscape {
+        width  : 175px !important;
+        height : 50px !important;
     }
 
     .button__full { background-color: $jaffa; }
+    .button__hollow { padding: 2px; }
 }
 .intervals__command--replay .button {
-    width  : 115px !important;
-    height : 60px !important;
-
-    @include breakpoint-small-phone-portrait {
+    @include breakpoint-small-phone {
         width  : 100px !important;
         height : 50px !important;
 
-        .button__hollow {
-            padding   : 2px;
-            font-size : 13px;
-        }
+        .button__hollow { font-size: 11px; }
     }
 
-    .button__full{ background-color: $jaffa; }
+    @include breakpoint-phone {
+        width  : 115px !important;
+        height : 60px !important;
+
+        .button__hollow { font-size: 13px; }
+    }
+
+    @include breakpoint-large-phone {
+        width  : 115px !important;
+        height : 60px !important;
+
+        .button__hollow { font-size: 13px; }
+    }
+
+    @include breakpoint-tablet {
+        width  : 150px !important;
+        height : 60px !important;
+
+        .button__hollow { font-size: 15px; }
+    }
+
+    @include breakpoint-landscape {
+        width  : 130px !important;
+        height : 40px !important;
+    }
+
+    @include breakpoint-tablet-landscape {
+        width  : 175px !important;
+        height : 50px !important;
+    }
+
+    .button__full { background-color: $jaffa; }
+    .button__hollow { padding: 2px; }
 }
 .intervals__command--next .button {
-    width  : 100px !important;
-    height : 60px !important;
-
-    @include breakpoint-small-phone-portrait {
+    @include breakpoint-small-phone {
         width  : 90px !important;
         height : 50px !important;
 
-        .button__hollow {
-            padding   : 2px;
-            font-size : 13px;
-        }
+        .button__hollow { font-size: 11px; }
+    }
+
+    @include breakpoint-phone {
+        width  : 100px !important;
+        height : 60px !important;
+
+        .button__hollow { font-size: 13px; }
+    }
+
+    @include breakpoint-large-phone {
+        width  : 100px !important;
+        height : 60px !important;
+
+        .button__hollow { font-size: 13px; }
+    }
+
+    @include breakpoint-tablet {
+        width  : 150px !important;
+        height : 60px !important;
+
+        .button__hollow { font-size: 15px; }
+    }
+
+    @include breakpoint-landscape {
+        width  : 130px !important;
+        height : 40px !important;
+    }
+
+    @include breakpoint-tablet-landscape {
+        width  : 175px !important;
+        height : 50px !important;
     }
 
     .button__full { background-color: $fern; }
+    .button__hollow { padding: 2px; }
 }
 </style>
 
@@ -193,10 +268,10 @@
                 <li class="intervals__instructions-list-item">Preizkusil se boš v igri ugotavljanja intervalov.</li>
                 <li class="intervals__instructions-list-item">Igra je razdeljena v 3 poglavja, vsako izmed njih ima 8 vprašanj.</li>
                 <li class="intervals__instructions-list-item">Za odgovor na posamezno vprašanje imaš na voljo natanko 120 sekund.</li>
+                <li class="intervals__instructions-list-item">Število odgovorov na posamezno vprašanje je omejeno.</li>
                 <li class="intervals__instructions-list-item">Za vnos not na notno črtovje uporabi klaviaturo.</li>
                 <li class="intervals__instructions-list-item">Na voljo imaš še ukaz za brisanje not, ponovno predvajanje tonov in premik na naslednje vprašanje.</li>
                 <li class="intervals__instructions-list-item">Če bo tvoj odgovor napačen, se ti bo izpisalo obvestilo.</li>
-                <li class="intervals__instructions-list-item">Število odgovorov na posamezno vprašanje je neomejeno.</li>
                 <li class="intervals__instructions-list-item" v-show="!isPractice">Uspešnost reševanja nalog bo vplivala na tvoj položaj na lestvici.</li>
                 <li class="intervals__instructions-list-item">Na koncu igre si lahko ogledaš statistiko.</li>
             </ul>
@@ -217,7 +292,7 @@
                     <stave :n-notes="sample.length" :note-type="notes.type" :clef="notes.clef" :sharp-flat-map="sharpFlatMap" @notes-changed="notesChanged"></stave>
                 </div>
                 <div class="intervals__keyboard">
-                    <keyboard :channel="channel" :midi="midi" @note-played="addNote"></keyboard>
+                    <keyboard :channel="channel" :midi="midi" @note-played="addNote" @key-pressed="keyPressed"></keyboard>
                 </div>
             </div>
             <div class="intervals__commands">
@@ -229,7 +304,7 @@
                     <element-button text="ustavi" @click.native="stopNotes()" v-show="playing"></element-button>
                 </div>
                 <div class="intervals__command--next">
-                    <element-button text="naprej" :disable="playing" @click.native="checkCorrectness()"></element-button>
+                    <element-button :text="'naprej (' + (maxAnswersPerQuestion - nAnswers) + ')'" :disable="playing" @click.native="checkCorrectness()"></element-button>
                 </div>
             </div>
             <label class="intervals__notification-label intervals__notification-label--portrait">{{ notification }}</label>
@@ -241,7 +316,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
-    props: ['game'],
+    props: ['game', 'difficulty'],
     data () {
         return {
             loading: true,
@@ -277,6 +352,8 @@ export default {
             nChapters: 3,
             nQuestions: 8,
             maxTimePerQuestion: 120000,
+            nAnswers: 0,
+            maxAnswersPerQuestion: 0,
             timer: null,
             chapter: 1,
             number: 1,
@@ -292,9 +369,19 @@ export default {
         }
     },
     created () {
-        if (!this.game) {
+        if (!this.game || !this.difficulty) {
             this.$router.push({ name: 'dashboard' })
         } else {
+            if (this.difficulty.range <= 3) {
+                this.maxAnswersPerQuestion = 2
+            } else if (this.difficulty.range <= 5) {
+                this.maxAnswersPerQuestion = 3
+            } else if (this.difficulty.range <= 8) {
+                this.maxAnswersPerQuestion = 4
+            } else {
+                this.maxAnswersPerQuestion = 5
+            }
+
             this.fetchMe().then(() => {
                 this.notes.delay = this.me.note_playback_delay
                 this.notes.clef = this.me.clef
@@ -316,13 +403,13 @@ export default {
         this.$nextTick(() => {
             this.timer = new TimerProgress({ // eslint-disable-line no-undef
                 'container': this.$el.querySelector('#timer'),
-                'width-container': 100,
-                'height-container': 100,
+                'width-container': 80,
+                'height-container': 80,
                 'stroke-width': 10,
                 'color-circle': '#F8A16E',
                 'color-path': '#EB7D3D',
                 'color-alert': '#D2495F',
-                'font-size': 25,
+                'font-size': 20,
                 'font-family': 'GothamRounded-Bold'
             })
         })
@@ -384,6 +471,11 @@ export default {
                 this.playing = false
             }
         },
+        keyPressed (pitch) {
+            const n = this.answer.length
+            const correct = pitch === this.sample[n] || (pitch in this.sharpFlatMap && this.sharpFlatMap[pitch] === this.sample[n])
+            this.$emit('color-key', { pitch: pitch, correct: correct })
+        },
         getCurrentTimeInMilliseconds () {
             return new Date().getTime()
         },
@@ -406,6 +498,8 @@ export default {
                 return
             }
 
+            this.nAnswers++
+
             for (let i = 0; i < this.sample.length; i++) {
                 const answerPitch = this.answer[i].pitch
                 const correctPitch = this.sample[i]
@@ -413,6 +507,9 @@ export default {
                     continue
                 }
                 this.notification = 'Odgovor je napačen.'
+                if (this.nAnswers === this.maxAnswersPerQuestion) {
+                    this.saveAnswer(timeElapsed, false)
+                }
                 return
             }
 
@@ -423,12 +520,13 @@ export default {
             clearTimeout(this.timeoutId)
             this.timer.pause()
 
-            this.storeAnswer({ game_id: this.game.id, user_id: this.me.id, question_id: this.questionId, time: time, n_additions: this.nAdditions, n_deletions: this.nDeletions, n_playbacks: this.nPlaybacks, success: success }).then(() => {
+            this.storeAnswer({ game_id: this.game.id, user_id: this.me.id, question_id: this.questionId, time: time, n_additions: this.nAdditions, n_deletions: this.nDeletions, n_playbacks: this.nPlaybacks, n_answers: this.nAnswers, success: success }).then(() => {
                 this.clearNotes()
                 this.startTime = 0
                 this.nAdditions = 0
                 this.nDeletions = 0
                 this.nPlaybacks = 0
+                this.nAnswers = 0
 
                 if (this.number === this.nQuestions) {
                     this.number = 0

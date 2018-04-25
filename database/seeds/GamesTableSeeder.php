@@ -84,6 +84,7 @@ class GamesTableSeeder extends DatabaseSeeder
                     $answer->n_additions = rand($difficulty->max_notes - 1, 30);
                     $answer->n_deletions = rand($answer->n_additions - 3, $answer->n_additions);
                     $answer->n_playbacks = rand(0, 10);
+                    $answer->n_answers = rand(1, 5);
 
                     $answer->saveOrFail();
                 }

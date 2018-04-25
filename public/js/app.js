@@ -46088,7 +46088,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 _this2.storeGame({ difficulty_id: difficulty.id, mode: mode, type: _this2.type, users: users }).then(function (game) {
                     _this2.updateGameUser({ gameId: game.id, userId: _this2.me.id, data: { instrument: _this2.me.instrument } }).then(function () {
                         _this2.loading = false;
-                        _this2.reroute('intervals', { game: game });
+                        _this2.reroute('intervals', { game: game, difficulty: difficulty });
                     });
                 });
             });
@@ -47732,7 +47732,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.intervals[data-v-13f0c5b2] {\n  width: 100%;\n  padding-bottom: 20px;\n}\n.intervals__instructions[data-v-13f0c5b2] {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.intervals__instructions-list-item[data-v-13f0c5b2] {\n  padding: 8px 20px 8px 3px;\n}\n.intervals__progress-wrapper[data-v-13f0c5b2] {\n  padding: 20px 2.5vw 0 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n@media only screen and (orientation: portrait) {\n.intervals__progress-wrapper[data-v-13f0c5b2] {\n      padding-top: 20px;\n      -webkit-box-pack: space-evenly;\n          -ms-flex-pack: space-evenly;\n              justify-content: space-evenly;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.intervals__progress-chapters[data-v-13f0c5b2] {\n  width: 50%;\n  margin-right: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n@media only screen and (orientation: portrait) {\n.intervals__progress-chapters[data-v-13f0c5b2] {\n      width: 100%;\n      margin-right: 0;\n      padding: 0 2.5vw 15px 2.5vw;\n}\n}\n.intervals__progress-chapter[data-v-13f0c5b2] {\n  position: relative;\n  width: calc((100vw - 4vw) / 3);\n  height: 20px;\n  background-color: #A4D395;\n}\n.intervals__progress-chapter[data-v-13f0c5b2]:first-child {\n    margin-right: 2vw;\n    border-radius: 10px 0 0 10px;\n}\n.intervals__progress-chapter:first-child .intervals__progress-question[data-v-13f0c5b2] {\n      border-radius: 10px 0 0 10px;\n}\n.intervals__progress-chapter[data-v-13f0c5b2]:last-child {\n    margin-left: 2vw;\n    border-radius: 0 10px 10px 0;\n}\n@media only screen and (orientation: portrait) {\n.intervals__progress-chapter[data-v-13f0c5b2] {\n      width: calc((100% - 4vw) / 3);\n}\n}\n.intervals__progress-question[data-v-13f0c5b2] {\n  position: absolute;\n  height: 20px;\n  background-color: #6CC075;\n}\n.intervals__stave-keyboard-wrapper[data-v-13f0c5b2] {\n  margin-top: 10px;\n  padding: 0 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n@media only screen and (orientation: portrait) {\n.intervals__stave-keyboard-wrapper[data-v-13f0c5b2] {\n      margin-top: 0;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.intervals__stave[data-v-13f0c5b2] {\n  margin-right: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.intervals__stave[data-v-13f0c5b2] {\n      margin-right: 0;\n}\n}\n.intervals__keyboard[data-v-13f0c5b2] {\n  margin-left: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.intervals__keyboard[data-v-13f0c5b2] {\n      margin-top: 10px;\n      margin-left: 0;\n}\n}\n.intervals__commands[data-v-13f0c5b2] {\n  margin-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: space-evenly;\n      -ms-flex-pack: space-evenly;\n          justify-content: space-evenly;\n}\n@media only screen and (orientation: portrait) {\n.intervals__commands[data-v-13f0c5b2] {\n      margin-top: 20px;\n}\n}\n.intervals__notification-label[data-v-13f0c5b2] {\n  color: #D2495F;\n  font-size: 18px;\n}\n.intervals__notification-label--portrait[data-v-13f0c5b2] {\n  margin-top: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n@media only screen and (orientation: landscape) {\n.intervals__notification-label--portrait[data-v-13f0c5b2] {\n      display: none;\n}\n}\n.intervals__notification-label--landscape[data-v-13f0c5b2] {\n  width: 150px;\n  text-align: center;\n}\n@media only screen and (orientation: portrait) {\n.intervals__notification-label--landscape[data-v-13f0c5b2] {\n      display: none;\n}\n}\n", ""]);
+exports.push([module.i, "\n.intervals[data-v-13f0c5b2] {\n  width: 100%;\n  padding-bottom: 44px;\n}\n.intervals__instructions[data-v-13f0c5b2] {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.intervals__instructions-list-item[data-v-13f0c5b2] {\n  padding: 8px 20px 8px 3px;\n}\n.intervals__progress-wrapper[data-v-13f0c5b2] {\n  padding: 5px 2.5vw 0 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n@media only screen and (orientation: portrait) {\n.intervals__progress-wrapper[data-v-13f0c5b2] {\n      padding-top: 10px;\n      -webkit-box-pack: space-evenly;\n          -ms-flex-pack: space-evenly;\n              justify-content: space-evenly;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.intervals__progress-chapters[data-v-13f0c5b2] {\n  width: 50%;\n  margin-right: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n@media only screen and (orientation: portrait) {\n.intervals__progress-chapters[data-v-13f0c5b2] {\n      width: 100%;\n      margin-right: 0;\n      padding: 0 2.5vw 10px 2.5vw;\n}\n}\n.intervals__progress-chapter[data-v-13f0c5b2] {\n  position: relative;\n  width: calc((100vw - 4vw) / 3);\n  height: 20px;\n  background-color: #A4D395;\n}\n.intervals__progress-chapter[data-v-13f0c5b2]:first-child {\n    margin-right: 2vw;\n    border-radius: 10px 0 0 10px;\n}\n.intervals__progress-chapter:first-child .intervals__progress-question[data-v-13f0c5b2] {\n      border-radius: 10px 0 0 10px;\n}\n.intervals__progress-chapter[data-v-13f0c5b2]:last-child {\n    margin-left: 2vw;\n    border-radius: 0 10px 10px 0;\n}\n@media only screen and (orientation: portrait) {\n.intervals__progress-chapter[data-v-13f0c5b2] {\n      width: calc((100% - 4vw) / 3);\n}\n}\n.intervals__progress-question[data-v-13f0c5b2] {\n  position: absolute;\n  height: 20px;\n  background-color: #6CC075;\n}\n.intervals__stave-keyboard-wrapper[data-v-13f0c5b2] {\n  margin-top: 10px;\n  padding: 0 2.5vw;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n@media only screen and (orientation: portrait) {\n.intervals__stave-keyboard-wrapper[data-v-13f0c5b2] {\n      margin-top: 0;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n}\n}\n.intervals__stave[data-v-13f0c5b2] {\n  margin-right: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.intervals__stave[data-v-13f0c5b2] {\n      margin-right: 0;\n}\n}\n.intervals__keyboard[data-v-13f0c5b2] {\n  margin-left: 2.5vw;\n}\n@media only screen and (orientation: portrait) {\n.intervals__keyboard[data-v-13f0c5b2] {\n      margin-left: 0;\n}\n}\n.intervals__commands[data-v-13f0c5b2] {\n  margin-top: 5px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: space-evenly;\n      -ms-flex-pack: space-evenly;\n          justify-content: space-evenly;\n}\n@media only screen and (orientation: portrait) {\n.intervals__commands[data-v-13f0c5b2] {\n      margin-top: 20px;\n}\n}\n.intervals__notification-label[data-v-13f0c5b2] {\n  color: #D2495F;\n  font-size: 18px;\n}\n.intervals__notification-label--portrait[data-v-13f0c5b2] {\n  margin-top: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n@media only screen and (orientation: landscape) {\n.intervals__notification-label--portrait[data-v-13f0c5b2] {\n      display: none;\n}\n}\n.intervals__notification-label--landscape[data-v-13f0c5b2] {\n  width: 150px;\n  text-align: center;\n}\n@media only screen and (orientation: portrait) {\n.intervals__notification-label--landscape[data-v-13f0c5b2] {\n      display: none;\n}\n}\n", ""]);
 
 // exports
 
@@ -47772,7 +47772,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.intervals__instructions .button {\n  margin: 30px 0 40px 0;\n}\n.intervals__instructions .button .button__full {\n    background-color: #33966D;\n}\n.intervals__command--delete .button {\n  width: 100px !important;\n  height: 60px !important;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.intervals__command--delete .button {\n      width: 100px !important;\n      height: 50px !important;\n}\n.intervals__command--delete .button .button__hollow {\n        padding: 2px;\n        font-size: 13px;\n}\n}\n.intervals__command--delete .button .button__full {\n    background-color: #EB7D3D;\n}\n.intervals__command--replay .button {\n  width: 115px !important;\n  height: 60px !important;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.intervals__command--replay .button {\n      width: 100px !important;\n      height: 50px !important;\n}\n.intervals__command--replay .button .button__hollow {\n        padding: 2px;\n        font-size: 13px;\n}\n}\n.intervals__command--replay .button .button__full {\n    background-color: #EB7D3D;\n}\n.intervals__command--next .button {\n  width: 100px !important;\n  height: 60px !important;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.intervals__command--next .button {\n      width: 90px !important;\n      height: 50px !important;\n}\n.intervals__command--next .button .button__hollow {\n        padding: 2px;\n        font-size: 13px;\n}\n}\n.intervals__command--next .button .button__full {\n    background-color: #6CC075;\n}\n", ""]);
+exports.push([module.i, "\n.intervals__instructions .button {\n  margin: 30px 0 40px 0;\n}\n.intervals__instructions .button .button__full {\n    background-color: #33966D;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.intervals__command--delete .button {\n    width: 100px !important;\n    height: 50px !important;\n}\n.intervals__command--delete .button .button__hollow {\n      font-size: 11px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.intervals__command--delete .button {\n    width: 100px !important;\n    height: 60px !important;\n}\n.intervals__command--delete .button .button__hollow {\n      font-size: 13px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {\n.intervals__command--delete .button {\n    width: 100px !important;\n    height: 60px !important;\n}\n.intervals__command--delete .button .button__hollow {\n      font-size: 13px;\n}\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.intervals__command--delete .button {\n    width: 150px !important;\n    height: 60px !important;\n}\n.intervals__command--delete .button .button__hollow {\n      font-size: 15px;\n}\n}\n@media only screen and (orientation: landscape) {\n.intervals__command--delete .button {\n    width: 130px !important;\n    height: 40px !important;\n}\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {\n.intervals__command--delete .button {\n    width: 175px !important;\n    height: 50px !important;\n}\n}\n.intervals__command--delete .button .button__full {\n  background-color: #EB7D3D;\n}\n.intervals__command--delete .button .button__hollow {\n  padding: 2px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.intervals__command--replay .button {\n    width: 100px !important;\n    height: 50px !important;\n}\n.intervals__command--replay .button .button__hollow {\n      font-size: 11px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.intervals__command--replay .button {\n    width: 115px !important;\n    height: 60px !important;\n}\n.intervals__command--replay .button .button__hollow {\n      font-size: 13px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {\n.intervals__command--replay .button {\n    width: 115px !important;\n    height: 60px !important;\n}\n.intervals__command--replay .button .button__hollow {\n      font-size: 13px;\n}\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.intervals__command--replay .button {\n    width: 150px !important;\n    height: 60px !important;\n}\n.intervals__command--replay .button .button__hollow {\n      font-size: 15px;\n}\n}\n@media only screen and (orientation: landscape) {\n.intervals__command--replay .button {\n    width: 130px !important;\n    height: 40px !important;\n}\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {\n.intervals__command--replay .button {\n    width: 175px !important;\n    height: 50px !important;\n}\n}\n.intervals__command--replay .button .button__full {\n  background-color: #EB7D3D;\n}\n.intervals__command--replay .button .button__hollow {\n  padding: 2px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.intervals__command--next .button {\n    width: 90px !important;\n    height: 50px !important;\n}\n.intervals__command--next .button .button__hollow {\n      font-size: 11px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.intervals__command--next .button {\n    width: 100px !important;\n    height: 60px !important;\n}\n.intervals__command--next .button .button__hollow {\n      font-size: 13px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {\n.intervals__command--next .button {\n    width: 100px !important;\n    height: 60px !important;\n}\n.intervals__command--next .button .button__hollow {\n      font-size: 13px;\n}\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.intervals__command--next .button {\n    width: 150px !important;\n    height: 60px !important;\n}\n.intervals__command--next .button .button__hollow {\n      font-size: 15px;\n}\n}\n@media only screen and (orientation: landscape) {\n.intervals__command--next .button {\n    width: 130px !important;\n    height: 40px !important;\n}\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {\n.intervals__command--next .button {\n    width: 175px !important;\n    height: 50px !important;\n}\n}\n.intervals__command--next .button .button__full {\n  background-color: #6CC075;\n}\n.intervals__command--next .button .button__hollow {\n  padding: 2px;\n}\n", ""]);
 
 // exports
 
@@ -48025,11 +48025,86 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['game'],
+    props: ['game', 'difficulty'],
     data: function data() {
         return {
             loading: true,
@@ -48065,6 +48140,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             nChapters: 3,
             nQuestions: 8,
             maxTimePerQuestion: 120000,
+            nAnswers: 0,
+            maxAnswersPerQuestion: 0,
             timer: null,
             chapter: 1,
             number: 1,
@@ -48082,9 +48159,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     created: function created() {
         var _this = this;
 
-        if (!this.game) {
+        if (!this.game || !this.difficulty) {
             this.$router.push({ name: 'dashboard' });
         } else {
+            if (this.difficulty.range <= 3) {
+                this.maxAnswersPerQuestion = 2;
+            } else if (this.difficulty.range <= 5) {
+                this.maxAnswersPerQuestion = 3;
+            } else if (this.difficulty.range <= 8) {
+                this.maxAnswersPerQuestion = 4;
+            } else {
+                this.maxAnswersPerQuestion = 5;
+            }
+
             this.fetchMe().then(function () {
                 _this.notes.delay = _this.me.note_playback_delay;
                 _this.notes.clef = _this.me.clef;
@@ -48110,13 +48197,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         this.$nextTick(function () {
             _this2.timer = new TimerProgress({ // eslint-disable-line no-undef
                 'container': _this2.$el.querySelector('#timer'),
-                'width-container': 100,
-                'height-container': 100,
+                'width-container': 80,
+                'height-container': 80,
                 'stroke-width': 10,
                 'color-circle': '#F8A16E',
                 'color-path': '#EB7D3D',
                 'color-alert': '#D2495F',
-                'font-size': 25,
+                'font-size': 20,
                 'font-family': 'GothamRounded-Bold'
             });
         });
@@ -48208,6 +48295,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 this.playing = false;
             }
         },
+        keyPressed: function keyPressed(pitch) {
+            var n = this.answer.length;
+            var correct = pitch === this.sample[n] || pitch in this.sharpFlatMap && this.sharpFlatMap[pitch] === this.sample[n];
+            this.$emit('color-key', { pitch: pitch, correct: correct });
+        },
         getCurrentTimeInMilliseconds: function getCurrentTimeInMilliseconds() {
             return new Date().getTime();
         },
@@ -48232,6 +48324,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 return;
             }
 
+            this.nAnswers++;
+
             for (var i = 0; i < this.sample.length; i++) {
                 var answerPitch = this.answer[i].pitch;
                 var correctPitch = this.sample[i];
@@ -48239,6 +48333,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     continue;
                 }
                 this.notification = 'Odgovor je napačen.';
+                if (this.nAnswers === this.maxAnswersPerQuestion) {
+                    this.saveAnswer(timeElapsed, false);
+                }
                 return;
             }
 
@@ -48253,12 +48350,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             clearTimeout(this.timeoutId);
             this.timer.pause();
 
-            this.storeAnswer({ game_id: this.game.id, user_id: this.me.id, question_id: this.questionId, time: time, n_additions: this.nAdditions, n_deletions: this.nDeletions, n_playbacks: this.nPlaybacks, success: success }).then(function () {
+            this.storeAnswer({ game_id: this.game.id, user_id: this.me.id, question_id: this.questionId, time: time, n_additions: this.nAdditions, n_deletions: this.nDeletions, n_playbacks: this.nPlaybacks, n_answers: this.nAnswers, success: success }).then(function () {
                 _this5.clearNotes();
                 _this5.startTime = 0;
                 _this5.nAdditions = 0;
                 _this5.nDeletions = 0;
                 _this5.nPlaybacks = 0;
+                _this5.nAnswers = 0;
 
                 if (_this5.number === _this5.nQuestions) {
                     _this5.number = 0;
@@ -48369,6 +48467,10 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("li", { staticClass: "intervals__instructions-list-item" }, [
+              _vm._v("Število odgovorov na posamezno vprašanje je omejeno.")
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "intervals__instructions-list-item" }, [
               _vm._v("Za vnos not na notno črtovje uporabi klaviaturo.")
             ]),
             _vm._v(" "),
@@ -48380,10 +48482,6 @@ var render = function() {
             _vm._v(" "),
             _c("li", { staticClass: "intervals__instructions-list-item" }, [
               _vm._v("Če bo tvoj odgovor napačen, se ti bo izpisalo obvestilo.")
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "intervals__instructions-list-item" }, [
-              _vm._v("Število odgovorov na posamezno vprašanje je neomejeno.")
             ]),
             _vm._v(" "),
             _c(
@@ -48522,7 +48620,10 @@ var render = function() {
               [
                 _c("keyboard", {
                   attrs: { channel: _vm.channel, midi: _vm.midi },
-                  on: { "note-played": _vm.addNote }
+                  on: {
+                    "note-played": _vm.addNote,
+                    "key-pressed": _vm.keyPressed
+                  }
                 })
               ],
               1
@@ -48595,7 +48696,13 @@ var render = function() {
               { staticClass: "intervals__command--next" },
               [
                 _c("element-button", {
-                  attrs: { text: "naprej", disable: _vm.playing },
+                  attrs: {
+                    text:
+                      "naprej (" +
+                      (_vm.maxAnswersPerQuestion - _vm.nAnswers) +
+                      ")",
+                    disable: _vm.playing
+                  },
                   nativeOn: {
                     click: function($event) {
                       _vm.checkCorrectness()
@@ -48718,7 +48825,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.keyboard[data-v-1d2aae08] {\n  width: 45vw;\n  height: 13.5vw;\n}\n@media only screen and (orientation: portrait) {\n.keyboard[data-v-1d2aae08] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n.keyboard__key[data-v-1d2aae08] {\n  cursor: pointer;\n}\n.keyboard__key--white[data-v-1d2aae08] {\n  fill: #ffffff;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n.keyboard__key--black[data-v-1d2aae08] {\n  fill: #000000;\n}\n.keyboard__key--pressed[data-v-1d2aae08] {\n  fill: #64ee8a;\n}\n.keyboard__key-text[data-v-1d2aae08] {\n  font-family: \"GothamRounded-Book\";\n  pointer-events: none;\n  text-anchor: middle;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n.keyboard__key-text--white[data-v-1d2aae08] {\n  fill: #000000;\n  font-size: 4px;\n}\n.keyboard__key-text--black[data-v-1d2aae08] {\n  fill: #ffffff;\n  font-size: 3px;\n}\n.keyboard__frame[data-v-1d2aae08] {\n  width: 100px;\n  height: 100px;\n  fill: none;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n", ""]);
+exports.push([module.i, "\n.keyboard[data-v-1d2aae08] {\n  width: 45vw;\n  height: 13.5vw;\n}\n@media only screen and (orientation: portrait) {\n.keyboard[data-v-1d2aae08] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n.keyboard__key[data-v-1d2aae08] {\n  cursor: pointer;\n}\n.keyboard__key--white[data-v-1d2aae08] {\n  fill: #ffffff;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n.keyboard__key--black[data-v-1d2aae08] {\n  fill: #000000;\n}\n.keyboard__key--correct[data-v-1d2aae08] {\n  fill: #64ee8a;\n}\n.keyboard__key--incorrect[data-v-1d2aae08] {\n  fill: #D2495F;\n}\n.keyboard__key-text[data-v-1d2aae08] {\n  font-family: \"GothamRounded-Book\";\n  pointer-events: none;\n  text-anchor: middle;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n.keyboard__key-text--white[data-v-1d2aae08] {\n  fill: #000000;\n  font-size: 4px;\n}\n.keyboard__key-text--black[data-v-1d2aae08] {\n  fill: #ffffff;\n  font-size: 3px;\n}\n.keyboard__frame[data-v-1d2aae08] {\n  width: 100px;\n  height: 100px;\n  fill: none;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n", ""]);
 
 // exports
 
@@ -48799,6 +48906,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
 
 
 
@@ -48810,8 +48919,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     data: function data() {
         return {
             keys: {
-                white: [{ pitch: 'A3', midiPitch: 57, code: 81, name: 'Q', pressed: false }, { pitch: 'B3', midiPitch: 59, code: 81, name: 'W', pressed: false }, { pitch: 'C4', midiPitch: 60, code: 87, name: 'E', pressed: false }, { pitch: 'D4', midiPitch: 62, code: 69, name: 'R', pressed: false }, { pitch: 'E4', midiPitch: 64, code: 82, name: 'T', pressed: false }, { pitch: 'F4', midiPitch: 65, code: 84, name: 'Z', pressed: false }, { pitch: 'G4', midiPitch: 67, code: 89, name: 'U', pressed: false }, { pitch: 'A4', midiPitch: 69, code: 85, name: 'I', pressed: false }, { pitch: 'B4', midiPitch: 71, code: 73, name: 'O', pressed: false }, { pitch: 'C5', midiPitch: 72, code: 79, name: 'P', pressed: false }, { pitch: 'D5', midiPitch: 74, code: 79, name: 'Š', pressed: false }],
-                black: [{ midiPitch: -1, code: -1 }, { pitch: 'Bb3', midiPitch: 58, code: 49, name: '2', pressed: false }, { midiPitch: -1, code: -1 }, { pitch: 'Db4', midiPitch: 61, code: 51, name: '4', pressed: false }, { pitch: 'Eb4', midiPitch: 63, code: 52, name: '5', pressed: false }, { midiPitch: -1, code: -1 }, { pitch: 'Gb4', midiPitch: 66, code: 54, name: '7', pressed: false }, { pitch: 'Ab4', midiPitch: 68, code: 55, name: '8', pressed: false }, { pitch: 'Bb4', midiPitch: 70, code: 56, name: '9', pressed: false }, { midiPitch: -1, code: -1 }, { pitch: 'Db5', midiPitch: 73, code: 48, name: '?', pressed: false }, { midiPitch: -1, code: -1 }]
+                white: [{ pitch: 'A3', midiPitch: 57, code: 81, name: 'Q', correct: false, incorrect: false }, { pitch: 'B3', midiPitch: 59, code: 87, name: 'W', correct: false, incorrect: false }, { pitch: 'C4', midiPitch: 60, code: 69, name: 'E', correct: false, incorrect: false }, { pitch: 'D4', midiPitch: 62, code: 82, name: 'R', correct: false, incorrect: false }, { pitch: 'E4', midiPitch: 64, code: 84, name: 'T', correct: false, incorrect: false }, { pitch: 'F4', midiPitch: 65, code: 89, name: 'Z', correct: false, incorrect: false }, { pitch: 'G4', midiPitch: 67, code: 85, name: 'U', correct: false, incorrect: false }, { pitch: 'A4', midiPitch: 69, code: 73, name: 'I', correct: false, incorrect: false }, { pitch: 'B4', midiPitch: 71, code: 79, name: 'O', correct: false, incorrect: false }, { pitch: 'C5', midiPitch: 72, code: 80, name: 'P', correct: false, incorrect: false }, { pitch: 'D5', midiPitch: 74, code: 219, name: 'Š', correct: false, incorrect: false }],
+                black: [{ midiPitch: -1, code: -1 }, { pitch: 'Bb3', midiPitch: 58, code: 50, name: '2', correct: false, incorrect: false }, { midiPitch: -1, code: -1 }, { pitch: 'Db4', midiPitch: 61, code: 52, name: '4', correct: false, incorrect: false }, { pitch: 'Eb4', midiPitch: 63, code: 53, name: '5', correct: false, incorrect: false }, { midiPitch: -1, code: -1 }, { pitch: 'Gb4', midiPitch: 66, code: 55, name: '7', correct: false, incorrect: false }, { pitch: 'Ab4', midiPitch: 68, code: 56, name: '8', correct: false, incorrect: false }, { pitch: 'Bb4', midiPitch: 70, code: 57, name: '9', correct: false, incorrect: false }, { midiPitch: -1, code: -1 }, { pitch: 'Db5', midiPitch: 73, code: 189, name: '?', correct: false, incorrect: false }, { midiPitch: -1, code: -1 }]
             },
             pitchMap: {
                 'A#3': 'Bb3',
@@ -48828,11 +48937,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 'Cb5': 'B4',
                 'C#5': 'Db5'
             },
-            helperTextVisible: true
+            helperTextVisible: false
         };
     },
     created: function created() {
         this.$parent.$on('play-note', this.playNote);
+        this.$parent.$on('color-key', this.colorKey);
     },
     mounted: function mounted() {
         var _this = this;
@@ -48844,6 +48954,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     },
     beforeDestroy: function beforeDestroy() {
         this.$parent.$off('play-note', this.playNote);
+        this.$parent.$off('color-key', this.colorKey);
         window.removeEventListener('keydown', this.keydown);
         window.removeEventListener('keyup', this.keyup);
     },
@@ -48873,28 +48984,28 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         },
         mousedown: function mousedown(event, key) {
             event.preventDefault();
-            key.pressed = true;
-            this.noteOn(key.midiPitch);
+            this.$emit('key-pressed', key.pitch);
         },
         mouseup: function mouseup(event, key) {
             event.preventDefault();
-            key.pressed = false;
+            key.correct = false;
+            key.incorrect = false;
             this.noteOff(key.midiPitch);
             this.$emit('note-played', key.pitch);
         },
         keydown: function keydown(event) {
             event.preventDefault();
             var key = this.getKeyByCode(event.keyCode);
-            if (key && !key.pressed) {
-                key.pressed = true;
-                this.noteOn(key.midiPitch);
+            if (key && !(key.correct || key.incorrect)) {
+                this.$emit('key-pressed', key.pitch);
             }
         },
         keyup: function keyup(event) {
             event.preventDefault();
             var key = this.getKeyByCode(event.keyCode);
-            if (key && key.pressed) {
-                key.pressed = false;
+            if (key && (key.correct || key.incorrect)) {
+                key.correct = false;
+                key.incorrect = false;
                 this.noteOff(key.midiPitch);
                 this.$emit('note-played', key.pitch);
             }
@@ -48915,6 +49026,15 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             setTimeout(function () {
                 return _this2.noteOff(key.midiPitch);
             }, 500);
+        },
+        colorKey: function colorKey(_ref) {
+            var pitch = _ref.pitch,
+                correct = _ref.correct;
+
+            var key = this.getKeyByPitch(pitch);
+            var which = correct ? 'correct' : 'incorrect';
+            key[which] = true;
+            this.noteOn(key.midiPitch);
         }
     }
 });
@@ -48942,7 +49062,10 @@ var render = function() {
       _vm._l(_vm.keys.white, function(key, index) {
         return _c("rect", {
           staticClass: "keyboard__key keyboard__key--white",
-          class: { "keyboard__key--pressed": key.pressed },
+          class: {
+            "keyboard__key--correct": key.correct,
+            "keyboard__key--incorrect": key.incorrect
+          },
           attrs: {
             x: 100 / _vm.nKeys * index + "%",
             y: "0%",
@@ -48970,7 +49093,10 @@ var render = function() {
         return key.midiPitch !== -1
           ? _c("rect", {
               staticClass: "keyboard__key keyboard__key--black",
-              class: { "keyboard__key--pressed": key.pressed },
+              class: {
+                "keyboard__key--correct": key.correct,
+                "keyboard__key--incorrect": key.incorrect
+              },
               attrs: {
                 x: 100 / _vm.nKeys * (0.666 + index - 1) + "%",
                 y: "0%",
@@ -50297,7 +50423,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.me[data-v-7cb87396] {\n  width: 100%;\n}\n.me__content[data-v-7cb87396] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.me__user-info[data-v-7cb87396] {\n  width: 100%;\n  padding: 20px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #F8A16E;\n}\n.me__avatar[data-v-7cb87396] {\n  width: 120px;\n  height: 120px;\n}\n.me__name[data-v-7cb87396] {\n  width: 100%;\n  padding: 5px 0;\n  text-align: center;\n  font-size: 25px;\n}\n.me__level-rating-wrapper[data-v-7cb87396] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.me__level-rating[data-v-7cb87396] {\n  width: 100px;\n  height: 35px;\n  border-radius: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n}\n.me__level[data-v-7cb87396] {\n  background-color: #72B7AE;\n}\n.me__rating[data-v-7cb87396] {\n  background-color: #D2495F;\n}\n.me__level-progress-wrapper[data-v-7cb87396] {\n  width: 100%;\n  padding: 25px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #EB7D3D;\n}\n.me__level-progress-label[data-v-7cb87396] {\n  color: #66361B;\n  font-size: 15px;\n}\n.me__level-progress-bar[data-v-7cb87396] {\n  position: relative;\n  width: 100%;\n  height: 25px;\n  margin-top: 20px;\n  border-radius: 10px;\n  background-image: url(\"/images/backgrounds/progress.png\");\n  background-repeat: repeat;\n  background-size: contain;\n  background-color: #FFD15E;\n  overflow: hidden;\n}\n.me__level-progress-bar-overlay[data-v-7cb87396] {\n  position: absolute;\n  height: 25px;\n  background-color: #F8A16E;\n}\n.me__level-progress-bar-labels[data-v-7cb87396] {\n  width: 100%;\n  margin-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.me__latest-badges-wrapper[data-v-7cb87396] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.me__latest-badges-label-wrapper[data-v-7cb87396] {\n  width: 100%;\n  padding: 5px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #EB7D3D;\n}\n.me__latest-badges-label[data-v-7cb87396] {\n  color: #66361B;\n  font-size: 15px;\n}\n.me__latest-badges[data-v-7cb87396] {\n  width: 100%;\n  min-height: 100px;\n  padding: 10px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  background-color: #A4D395;\n  cursor: pointer;\n}\n.me__latest-badge-image[data-v-7cb87396] {\n  width: calc(100% / 3);\n  height: 100%;\n  max-height: 150px;\n}\n.me__elements[data-v-7cb87396] {\n  width: 100%;\n  padding: 40px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #EB7D3D;\n}\n.me__element-label-wrapper[data-v-7cb87396] {\n  width: 100%;\n  margin-bottom: 5px;\n  padding-left: 2px;\n}\n.me__element-label[data-v-7cb87396] {\n  color: #66361B;\n  font-size: 15px;\n}\n.me__element[data-v-7cb87396] {\n  width: 100%;\n  margin-bottom: 20px;\n}\n.me__text-label[data-v-7cb87396] {\n  font-size: 18px;\n}\n.me__input[data-v-7cb87396] {\n  width: 100%;\n  height: 41px;\n  padding: 0 10px;\n  border: none;\n  border-radius: 0;\n  caret-color: #000000;\n  background-color: #F8A16E;\n  color: #000000;\n  font-size: 18px;\n  font-family: \"GothamRounded-Bold\", sans-serif;\n  outline: none;\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n.me__input[data-v-7cb87396]:-webkit-autofill, .me__input[data-v-7cb87396]:-webkit-autofill:hover, .me__input[data-v-7cb87396]:-webkit-autofill:focus {\n    -webkit-box-shadow: 0 0 0 100px #F8A16E inset !important;\n}\n.me__select-wrapper[data-v-7cb87396] {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  cursor: pointer;\n}\n.me__select-wrapper[data-v-7cb87396]:after {\n    content: '';\n    position: absolute;\n    top: 0;\n    right: 0;\n    width: 45px;\n    height: 100%;\n    background-color: #F4945D;\n    pointer-events: none;\n}\n.me__select[data-v-7cb87396] {\n  width: 100%;\n  height: 100%;\n  padding: 10px 30px 10px 10px;\n  border: none;\n  border-radius: 0;\n  background-color: #F8A16E;\n  font-size: 18px;\n  font-family: \"GothamRounded-Bold\", sans-serif;\n  overflow: hidden;\n  outline: none;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  appearance: none;\n  cursor: pointer;\n}\n.me__select-arrow[data-v-7cb87396] {\n  position: absolute;\n  top: 17px;\n  right: -8px;\n  width: 40px;\n  height: 40px;\n  fill: #66361B;\n  z-index: 1;\n  pointer-events: none;\n}\n.me__commands[data-v-7cb87396] {\n  width: 100%;\n  margin-top: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.me__command--save[data-v-7cb87396] {\n  margin-top: 15px;\n}\n", ""]);
+exports.push([module.i, "\n.me[data-v-7cb87396] {\n  width: 100%;\n}\n.me__content[data-v-7cb87396] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.me__user-info[data-v-7cb87396] {\n  width: 100%;\n  padding: 20px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #F8A16E;\n}\n.me__avatar[data-v-7cb87396] {\n  width: 120px;\n  height: 120px;\n}\n.me__name[data-v-7cb87396] {\n  width: 100%;\n  padding: 5px 0;\n  text-align: center;\n  font-size: 25px;\n}\n.me__level-rating-wrapper[data-v-7cb87396] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.me__level-rating[data-v-7cb87396] {\n  width: 100px;\n  height: 35px;\n  border-radius: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n}\n.me__level[data-v-7cb87396] {\n  background-color: #72B7AE;\n}\n.me__rating[data-v-7cb87396] {\n  background-color: #D2495F;\n}\n.me__level-progress-wrapper[data-v-7cb87396] {\n  width: 100%;\n  padding: 25px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #EB7D3D;\n}\n.me__level-progress-label[data-v-7cb87396] {\n  color: #66361B;\n  font-size: 15px;\n}\n.me__level-progress-bar[data-v-7cb87396] {\n  position: relative;\n  width: 100%;\n  height: 25px;\n  margin-top: 20px;\n  border-radius: 10px;\n  background-image: url(\"/images/backgrounds/progress.png\");\n  background-repeat: repeat;\n  background-size: contain;\n  background-color: #FFD15E;\n  overflow: hidden;\n}\n.me__level-progress-bar-overlay[data-v-7cb87396] {\n  position: absolute;\n  height: 25px;\n  background-color: #F8A16E;\n}\n.me__level-progress-bar-labels[data-v-7cb87396] {\n  width: 100%;\n  margin-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.me__latest-badges-wrapper[data-v-7cb87396] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.me__latest-badges-label-wrapper[data-v-7cb87396] {\n  width: 100%;\n  padding: 5px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #EB7D3D;\n}\n.me__latest-badges-label[data-v-7cb87396] {\n  color: #66361B;\n  font-size: 15px;\n  text-align: center;\n}\n.me__latest-badges[data-v-7cb87396] {\n  width: 100%;\n  min-height: 100px;\n  padding: 10px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  background-color: #A4D395;\n  cursor: pointer;\n}\n.me__latest-badge-image[data-v-7cb87396] {\n  width: calc(100% / 3);\n  height: 100%;\n  max-height: 150px;\n}\n.me__elements[data-v-7cb87396] {\n  width: 100%;\n  padding: 40px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #EB7D3D;\n}\n.me__element-label-wrapper[data-v-7cb87396] {\n  width: 100%;\n  margin-bottom: 5px;\n  padding-left: 2px;\n}\n.me__element-label[data-v-7cb87396] {\n  color: #66361B;\n  font-size: 15px;\n}\n.me__element[data-v-7cb87396] {\n  width: 100%;\n  margin-bottom: 20px;\n}\n.me__text-label[data-v-7cb87396] {\n  font-size: 18px;\n}\n.me__input[data-v-7cb87396] {\n  width: 100%;\n  height: 41px;\n  padding: 0 10px;\n  border: none;\n  border-radius: 0;\n  caret-color: #000000;\n  background-color: #F8A16E;\n  color: #000000;\n  font-size: 18px;\n  font-family: \"GothamRounded-Bold\", sans-serif;\n  outline: none;\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n.me__input[data-v-7cb87396]:-webkit-autofill, .me__input[data-v-7cb87396]:-webkit-autofill:hover, .me__input[data-v-7cb87396]:-webkit-autofill:focus {\n    -webkit-box-shadow: 0 0 0 100px #F8A16E inset !important;\n}\n.me__select-wrapper[data-v-7cb87396] {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  cursor: pointer;\n}\n.me__select-wrapper[data-v-7cb87396]:after {\n    content: '';\n    position: absolute;\n    top: 0;\n    right: 0;\n    width: 45px;\n    height: 100%;\n    background-color: #F4945D;\n    pointer-events: none;\n}\n.me__select[data-v-7cb87396] {\n  width: 100%;\n  height: 100%;\n  padding: 10px 30px 10px 10px;\n  border: none;\n  border-radius: 0;\n  background-color: #F8A16E;\n  font-size: 18px;\n  font-family: \"GothamRounded-Bold\", sans-serif;\n  overflow: hidden;\n  outline: none;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  appearance: none;\n  cursor: pointer;\n}\n.me__select-arrow[data-v-7cb87396] {\n  position: absolute;\n  top: 17px;\n  right: -8px;\n  width: 40px;\n  height: 40px;\n  fill: #66361B;\n  z-index: 1;\n  pointer-events: none;\n}\n.me__commands[data-v-7cb87396] {\n  width: 100%;\n  margin-top: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.me__command--save[data-v-7cb87396] {\n  margin-top: 15px;\n}\n", ""]);
 
 // exports
 
@@ -50351,6 +50477,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
 //
 //
 //
@@ -51005,7 +51132,7 @@ var render = function() {
                 _vm._v(" "),
                 !_vm.hasLatestBadges
                   ? _c("label", { staticClass: "me__latest-badges-label" }, [
-                      _vm._v("Ni dosežkov.")
+                      _vm._v("Niste še osvojili nobenega dosežka.")
                     ])
                   : _vm._e()
               ],

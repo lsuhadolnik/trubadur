@@ -46,9 +46,10 @@ class AnswerController extends Controller
             'user_id'     => 'required|numeric',
             'question_id' => 'required|numeric',
             'time'        => 'required|numeric|min:0|max:120000',
-            'n_additions' => 'required|numeric|min:0',
+            'n_additions' => 'required|numeric|min:1',
             'n_deletions' => 'required|numeric|min:0',
-            'n_playbacks' => 'required|numeric|min:0',
+            'n_playbacks' => 'required|numeric|min:1',
+            'n_answers'   => 'required|numeric|min:1',
             'success'     => 'required|boolean'
         ];
 
@@ -80,10 +81,11 @@ class AnswerController extends Controller
             'game_id'     => 'numeric',
             'user_id'     => 'numeric',
             'question_id' => 'numeric',
-            'time'        => 'numeric',
-            'n_additions' => 'numeric',
-            'n_deletions' => 'numeric',
-            'n_playbacks' => 'numeric',
+            'time'        => 'numeric|min:0|max:120000',
+            'n_additions' => 'numeric|min:1',
+            'n_deletions' => 'numeric|min:0',
+            'n_playbacks' => 'numeric|min:1',
+            'n_answers'   => 'numeric|min:1',
             'success'     => 'boolean'
         ];
 
