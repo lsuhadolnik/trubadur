@@ -241,16 +241,16 @@ export default {
                 this.$nextTick(() => {
                     const context = this
 
-                    let nLoaded = 0
-                    const nTotal = this.users.length
+                    // TODO: fix the issue of loader not disappearing on mobile production
+                    let nLoaded = 0 // eslint-disable-line no-unused-vars
+                    const nTotal = this.users.length // eslint-disable-line no-unused-vars
+
+                    const image = new Image() // eslint-disable-line no-undef
+                    image.onload = () => { context.loading = false }
+                    image.src = this.users[0].avatar
 
                     for (let i = 0; i < this.users.length; i++) {
                         let avatar = this.$el.querySelector('#avatar_' + (i + 1))
-                        avatar.onload = () => {
-                            if (++nLoaded === nTotal) {
-                                context.loading = false
-                            }
-                        }
                         avatar.src = this.users[i].avatar
                     }
                 })
