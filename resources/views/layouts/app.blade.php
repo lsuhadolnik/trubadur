@@ -5,6 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
+        <!-- Icon -->
+        <link href="{{ asset('images/icon.ico') }}" rel="shortcut icon">
+
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
@@ -26,8 +29,8 @@
         <script src="{{ asset('lib/midi/util/dom_request_xhr.js') }}" type="text/javascript"></script>
         <script src="{{ asset('lib/midi/util/dom_request_script.js') }}" type="text/javascript"></script>
 
-        <!-- timer-progress -->
-        <script src="{{ asset('lib/timer-progress/timer-progress.js') }}" type="text/javascript"></script>
+        <!-- TimerProgress -->
+        <script src="{{ asset('lib/timer-progress/timer-progress.min.js') }}" type="text/javascript"></script>
     </head>
     <body>
         <div id="app">
