@@ -16,7 +16,7 @@
                 <div class="auth__form-label-wrapper">
                     <label class="auth__form-label" for="name">IME</label>
                 </div>
-                <input class="auth__form-input" type="text" id="name" name="name" title="Vnesite ime" value="{{ old('email') }}" required autofocus/>
+                <input class="auth__form-input" type="text" id="name" name="name" title="Vnesite ime" value="{{ old('name') }}" required autofocus/>
             </div>
 
             <div class="auth__form-group">

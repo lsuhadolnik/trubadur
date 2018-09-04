@@ -101,7 +101,7 @@ class GameUserController extends Controller
     }
 
     /**
-     * Finish the game for a single user. Calculate his points based on the answers he provided.
+     * Finish the game for a single user. Calculate his/her points based on the answers he/she provided.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $gameId
