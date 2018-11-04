@@ -62,61 +62,15 @@ export default {
 
         },
 
-        render(notes) {
+        _clear: function(){
 
-            // notes = [
-            //     {type: "n", symbol: "4",  duration: new Fraction(3).div(8), dot: true},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(8)},
-            //     {type: "n", symbol: "8",  duration: new Fraction(3).div(8), dot: true},
-            //     {type: "n", symbol: "16", duration: new Fraction(1).div(16)},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            // ];
+            this.VF.context.clear();
 
-            var renderQueue = [];
+        },
 
-            var tuple_buffer = [];
-            var last_tuple_type = -1;
+        _vex_draw_voice: function(renderQueue){
 
-            for(let i = 0; i < notes.length; i++){
-
-                if(!notes[i])
-                    continue; // Handle undefined and false elements...
-
-                let newNote = new StaveNote(
-                    {
-                        clef: "treble", 
-                        keys: ["g/4"], 
-                        duration: notes[i].symbol 
-                    }
-                );
-
-                if(notes[i].dot)
-                    newNote.addDot(0); // enako je tudi newNote.addDotToAll()
-
-                // HANDLE TUPLETS
-                // TODO: Handle different tuple length
-                //if(notes[i].tuple_type ){
-
-                //    tuple_buffer.push(newNote);
-                //    last_tuple_type = notes[i].tuple_type;
-
-                //     TODO!! HANDLE tuplet type change... če je bla prej triola in potem ni več
-                //} else {
-
-                //    if(tuple_buffer){
-                //        renderQueue.push(new Tuplet(tuple_buffer));
-                //        tuple_buffer = [];
-                //        last_tuple_type = -1;
-                //    }
-
-                //    
-                //}
-
-                renderQueue.push(newNote);
-
-            }
+            // Create new voice everytime
 
             // Create a voice in 4/4 and add above notes
             this.VF.first_stave.voice = new VF.Voice(
@@ -137,17 +91,79 @@ export default {
 
             // Render voice
             this.VF.first_stave.voice.draw(this.VF.context, this.VF.first_stave.stave);
+        },
 
-            debugger;
+        _vex_draw_stave: function(){
+            
+            // Create a stave at position 0, 0 of width 400 on the canvas.
+            this.VF.first_stave.stave = new VF.Stave(0,0, this.info.width);
 
-            let dataVF = this.VF;
-            var beams = VF.Beam.generateBeams(renderQueue);
-            beams.forEach(function(b) {b.setContext(dataVF.context).draw()});
+            // Add a clef and time signature.
+            this.VF.first_stave.stave.addTimeSignature(
+                this.bar.num_beats
+                +"/"
+                +this.bar.base_note
+            );
 
+            // Connect it to the rendering context and draw!
+            this.VF.first_stave.stave.setContext(this.VF.context).draw();
+        },
+
+        render(notes, cursor) {
+
+            // notes = [
+            //     {type: "n", symbol: "4",  duration: new Fraction(3).div(8), dot: true},
+            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(8)},
+            //     {type: "n", symbol: "8",  duration: new Fraction(3).div(8), dot: true},
+            //     {type: "n", symbol: "16", duration: new Fraction(1).div(16)},
+            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
+            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
+            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
+            // ];
+
+            // Clear all notes from svg
+            this._clear();
+
+            // Redraw staves
+            this._vex_draw_stave();
+
+            var renderQueue = [];
+            for(let i = 0; i < notes.length; i++){
+
+                // Bye bye, false note
+                if(!notes[i]) { continue; }
+                    
+                // Handle notes and rests
+                let newNote = new StaveNote(
+                    {
+                        clef: "treble", 
+                        keys: ["g/4"], 
+                        duration: notes[i].symbol 
+                    }
+                );
+
+    	        // Handle dots
+                if(notes[i].dot)
+                    newNote.addDot(0); // enako je tudi newNote.addDotToAll()
+
+                if(i == cursor.position){
+                    newNote.setStyle({
+                        fillStyle: "blue", 
+                        strokeStyle: "blue"
+                    });
+                }
+
+                renderQueue.push(newNote);
+            }
+
+            // Render the Voice
+            this._vex_draw_voice(renderQueue);
 
         }
     },
     mounted(){
+
+        // INIT
 
         // VexFlow Magic
         let VF = Vex.Flow;
@@ -164,19 +180,6 @@ export default {
 
         // And get a drawing context:
         this.VF.context = this.VF.renderer.getContext();
-
-        // Create a stave at position 10, 40 of width 400 on the canvas.
-        this.VF.first_stave.stave = new VF.Stave(0,0, this.info.width);
-
-        // Add a clef and time signature.
-        this.VF.first_stave.stave.addTimeSignature(
-            this.bar.num_beats
-            +"/"
-            +this.bar.base_note
-        );
-
-        // Connect it to the rendering context and draw!
-        this.VF.first_stave.stave.setContext(this.VF.context).draw();
         
     },
 

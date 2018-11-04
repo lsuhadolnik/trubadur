@@ -1,22 +1,14 @@
 <template>
     <div class="rhythm-game__wrap">
 
-        <div class="rhythm-game__progress">
+        <!--<div class="rhythm-game__progress">
             <CircleTimer></CircleTimer>
             <ProgressBar></ProgressBar>
-        </div>
+        </div>-->
         
         <StaffView ref="staff_view" :bar="bar" :cursor="cursor" />
         
         <Keyboard v-bind="{key_callback: keyboard_click}" />
-
-        <div class="rhythm-game__control-keys">
-
-            <sexy-button text="BRIŠI" color="green" w="175px"/>
-            <sexy-button text="PONOVI" color="green" w="175px" />
-            <sexy-button text="NADALJUJ" color="orange" w="175px" />
-            
-        </div>
 
 
     </div>
@@ -37,22 +29,7 @@
     }
     
 
-    .rhythm-game__control-keys{
-        width: 100%;
-        display: flex;
-        bottom: 0;
-        justify-content: center;
 
-    }
-
-    .rhythm-game__control-keys .button{
-        display:inline-block;
-        margin-left: 10px;
-    }
-
-    .rhythm-game__control-keys .button:first{
-        margin-left: 0px;
-    }
 
 </style>
 
