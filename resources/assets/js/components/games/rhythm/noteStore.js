@@ -6,10 +6,7 @@ var NoteStore = function(bar, cursor, render_function) {
     this.bar = bar;
     this.cursor = cursor;
     this.notes = [ // TODO!!!
-        {type:"r", symbol: "4r", duration: new Fraction(1,4)},
-        {type:"r", symbol: "4r", duration: new Fraction(1,4)},
-        {type:"r", symbol: "4r", duration: new Fraction(1,4)},
-        {type:"r", symbol: "4r", duration: new Fraction(1,4)}
+        
     ];
 
     // Init notes with default
@@ -24,6 +21,8 @@ var NoteStore = function(bar, cursor, render_function) {
     }
 
     this.add_note = function(event) {
+
+        
 
         // Poštimej triole... Ta postopek odpade, če so notri triole
         // Mogoče dej triole kar direkt v pod-array...
@@ -43,8 +42,8 @@ var NoteStore = function(bar, cursor, render_function) {
         // Add note
         this.notes.splice(this.cursor.position, 0, event);
         
-        new_rests = this.generate_rests_for_duration(remaining);
-        this.notes = notes.concat(new_rests).concat(ostanek);
+        let new_rests = this.generate_rests_for_duration(remaining);
+        this.notes = this.notes.concat(new_rests).concat(ostanek);
 
 
         render_function(this.notes)
@@ -70,10 +69,9 @@ var NoteStore = function(bar, cursor, render_function) {
     }
 
     this.generate_rests_for_duration = function(remaining) {
-        debugger;
+        
         let rests = [];
         while(remaining > 0){
-
             if(remaining.compare(new Fraction(1,4)) >= 0){
                 var num = remaining.mul(4).floor();
                 for(var i = 0; i < num; i++){
@@ -93,8 +91,8 @@ var NoteStore = function(bar, cursor, render_function) {
                     remaining = remaining.add(new Fraction(-1,16));
                 }
             }
-
         }
+        return rests;
     }
 
 }

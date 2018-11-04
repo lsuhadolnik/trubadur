@@ -30,7 +30,7 @@ export default {
 
             info: {
                 width: 300,
-                height: 100,
+                height: 200,
             },
 
             VF: {
@@ -40,10 +40,6 @@ export default {
                     stave: null,
                     voice: null
                 },
-                second_stave: {
-                    stave: null,
-                    voice: null
-                }
             }
         }
     },
@@ -84,6 +80,9 @@ export default {
             var last_tuple_type = -1;
 
             for(let i = 0; i < notes.length; i++){
+
+                if(!notes[i])
+                    continue; // Handle undefined and false elements...
 
                 let newNote = new StaveNote(
                     {
@@ -138,6 +137,8 @@ export default {
 
             // Render voice
             this.VF.first_stave.voice.draw(this.VF.context, this.VF.first_stave.stave);
+
+            debugger;
 
             let dataVF = this.VF;
             var beams = VF.Beam.generateBeams(renderQueue);
