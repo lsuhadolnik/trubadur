@@ -60,7 +60,8 @@ $choose-height: 170px;
                 <img class="game-types__arrow" id="arrow"/>
             </div>
             <div class="game-types__options">
-                <element-button text="intervali" @click.native="reroute('gameModes', { type: 'intervals' })"></element-button>
+                <element-button text="Melodični narek" @click.native="reroute('gameModes', { type: 'intervals' })"></element-button>
+                <element-button text="Ritmični narek" @click.native="reroute('gameModes', { type: 'rhythm' })"></element-button>
             </div>
         </div>
     </div>

@@ -28,7 +28,9 @@
         <script src="{{ asset('lib/midi/midi.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('lib/midi/util/dom_request_xhr.js') }}" type="text/javascript"></script>
         <script src="{{ asset('lib/midi/util/dom_request_script.js') }}" type="text/javascript"></script>
-
+        
+        <!-- VexFlow -->
+        
         <!-- TimerProgress -->
         <script src="{{ asset('lib/timer-progress/timer-progress.min.js') }}" type="text/javascript"></script>
     </head>

@@ -1,5 +1,17 @@
-<style lang="scss" scoped>
+<template>
+    <div class="button" :class="{ 'button--disabled': disable }">
+        <div :class="['button__hollow', customClass]">
+            {{text}}
+            <slot></slot>
+        </div>
+        <div class="button__full" :class="{'button__green':color=='green', 'button__orange':color=='orange'}"></div>
+    </div>
+</template>
+
+<style lang="scss">
+
 @import '../../../sass/variables/index';
+
 
 .button {
     position   : relative;
@@ -37,23 +49,30 @@
     height        : 100%;
     border-radius : 6px;
 }
+
+.button__green{
+    background-color: $sea-green;
+}
+
+.button__orange{
+    background-color: $jaffa;
+}
+
 </style>
 
-<template>
-    <div class="button" :class="{ 'button--disabled': disable }">
-        <div :class="['button__hollow', customClass]">{{ text | uppercase }}</div>
-        <div class="button__full"></div>
-    </div>
-</template>
-
 <script>
+
 import { stringProp, booleanProp } from '../../utils/propValidators'
 
 export default {
+
     props: {
-        text: stringProp(),
+        text: stringProp(false),
         disable: booleanProp(false),
-        customClass: stringProp(false)
+        customClass: stringProp(false),
+        color: stringProp(false)
     }
 }
+
 </script>
+

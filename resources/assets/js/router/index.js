@@ -11,7 +11,10 @@ import GameModes from '../components/GameModes.vue'
 import GameStatistics from '../components/GameStatistics.vue'
 import GameTypes from '../components/GameTypes.vue'
 import HeaderMenu from '../components/HeaderMenu.vue'
+
 import Intervals from '../components/Intervals.vue'
+import Rhythm from '../components/games/rhythm/Rhythm.vue'
+
 import Keyboard from '../components/music/Keyboard.vue'
 import Leaderboard from '../components/Leaderboard.vue'
 import Levels from '../components/profile/Levels.vue'
@@ -62,6 +65,12 @@ export default new VueRouter({
             name: 'intervals',
             path: '/game/intervals',
             component: Intervals,
+            props: true
+        },
+        {
+            name: 'rhythm',
+            path: '/game/rhythm',
+            component: Rhythm,
             props: true
         },
         {

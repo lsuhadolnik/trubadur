@@ -14,7 +14,7 @@ mix
     .copyDirectory('resources/assets/js/extra', 'public/js/extra')
     // copying of libraries
     .copyDirectory('resources/assets/js/lib', 'public/lib')
-
+    
 // suffixes compiled assets with a unique token to force browsers to load the fresh assets instead of serving stale copies of the code
 // versioned files are usually unnecessary in development, so use versioning only in production
 if (mix.config.inProduction) {
