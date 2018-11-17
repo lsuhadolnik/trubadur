@@ -44,28 +44,9 @@ export default {
         }
     },
     methods: {
-        test_render: function(event){
-
-            
-            var notes = [
-                // A quarter-note C.
-                new StaveNote({clef: "treble", keys: ["g/4"], duration: event.symbol }),
-            ];
-
-            this.VF.first_stave.voice.addTickables(notes);
-
-            var formatter = new VF.Formatter()
-                .format([this.VF.first_stave.voice], this.info.width);
-
-            // Render voice
-            this.VF.first_stave.voice.draw(this.VF.context, this.VF.first_stave.stave);
-
-        },
 
         _clear: function(){
-
             this.VF.context.clear();
-
         },
 
         _vex_draw_voice: function(renderQueue){
@@ -85,12 +66,21 @@ export default {
 
             this.VF.first_stave.voice.addTickables(renderQueue);
 
+            var beams = VF.Beam.generateBeams(this.VF.first_stave.voice);
+            VF.Formatter.FormatAndDraw(
+                this.VF.context, 
+                this.VF.first_stave.stave, 
+                this.VF.first_stave.voice
+            );*/
             
+
             var formatter = new VF.Formatter()
                 .format([this.VF.first_stave.voice], this.info.width);
 
             // Render voice
             this.VF.first_stave.voice.draw(this.VF.context, this.VF.first_stave.stave);
+            
+            //beams.forEach(function(b) {b.setContext(context).draw()})
         },
 
         _vex_draw_stave: function(){

@@ -1,64 +1,33 @@
 <template>
 
     <div class="rythm-game__keyboard_wrap">
-        <div class="rhythm-game__keyboard">
+        <div class="rhythm-game__event-keys">
+            <div class="rhythm-game__keyboard">
 
-            <div class="row">
-                <div class="col">
-                    <two-rows-button></two-rows-button>
-                </div>
-                <div class="col">
-                    <div class="row">
-                        <sexy-button text="h" color="green" @click.native="half_note()" />
-                        <sexy-button text="q" color="green" @click.native="quarter_note()" />
-                        <sexy-button text="e" color="green" @click.native="eight_note()" />
-                        <sexy-button text="s" color="green" @click.native="sixteenth_note()" />
-                    </div>
-                    <div class="row">
-                        <sexy-button text="h" color="green" @click.native="dot()" />
-                        <sexy-button text="q" color="green" @click.native="slur()" />
-                        <sexy-button text="e" color="green" @click.native="tuplet()" />
-                    </div>
-                </div>
-            </div>
-            
-                <!-- MusiSync staff font maps letters to note symbols... -->
                 <div class="row rhythm-game__keyboard-row">
-                    <sexy-button text="w" color="green" @click.native="whole_note()" />
+                    <sexy-button color="orange" @click.native="move_cursor_forward()" >
+                        <span style="font-family: Gotham round;">
+                            &gt;
+                        </span>
+                    </sexy-button>
                     <sexy-button text="h" color="green" @click.native="half_note()" />
                     <sexy-button text="q" color="green" @click.native="quarter_note()" />
                     <sexy-button text="e" color="green" @click.native="eight_note()" />
                     <sexy-button text="s" color="green" @click.native="sixteenth_note()" />
                 </div>
-                
                 <div class="row rhythm-game__keyboard-row">
-                    <sexy-button text="W" color="green" @click.native="keyboardClick('wr')" />
-                    <sexy-button text="H" color="green" @click.native="keyboardClick('hr')" />
-                    <sexy-button text="Q" color="green" @click.native="keyboardClick('qr')" />
-                    <sexy-button text="E" color="green" @click.native="keyboardClick('er')" />
-                    <sexy-button text="S" color="green" @click.native="keyboardClick('sr')" />
-                </div>
-                
-                <div class="row rhythm-game__keyboard-row">
-                    <sexy-button color="orange" @click.native="delete_note()">
-                        <span style="padding-bottom:20px; font-family: Gotham round;">
-                            DEL
+                    <sexy-button color="orange" @click.native="move_cursor_backwards()" >
+                        <span style="font-family: Gotham round;">
+                            &lt;
                         </span>
                     </sexy-button>
-                    <sexy-button color="green" @click.native="keyboardClick('dot')">
-                        <span style="padding-bottom:30px">.</span>
-                    </sexy-button>
-                    <sexy-button color="green" @click.native="keyboardClick('divide2')">
-                        <span style="padding-bottom:20px">/2</span>
-                    </sexy-button>
-                    <sexy-button color="green" @click.native="keyboardClick('divide3')">
-                        <span style="padding-bottom:20px">/3</span>
-                    </sexy-button>
-                    
+                    <sexy-button text="." color="green" @click.native="dot()" />
+                    <sexy-button text="u" color="green" @click.native="tie()" />
+                    <sexy-button text="T" color="green" @click.native="tuplet()" />
                 </div>
 
+            </div>
         </div>
-
         <div class="row rhythm-game__control-keys">
 
             <sexy-button text="BRIŠI" color="green" w="175px" @click.native="delete_note()"/>
@@ -71,7 +40,22 @@
 
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
+    .clearfix {
+        clear: both;
+    }
+
+    .button-spacer {
+        display: inline-block;
+        width: 1px;
+    }
+
+    
+    .rythm-game__keyboard_wrap {
+        
+        padding: 0 10px 0 10px;
+    }
 
     .rhythm-game__keyboard {
         font-size: 20px;
@@ -79,30 +63,30 @@
     }
 
     .rhythm-game__keyboard-row{
-        display: flex;
-        justify-content: center;
-        margin-bottom: 15px;
+        
+        margin-bottom: 5px;
     }
 
     .rhythm-game__keyboard-row .button{
-        display: inline-block;
         width: 50px;
-        //font-family: MusiSync;
-        margin-left: 10px;
-        //font-size: 40px;
+        font-family: MusiSync;
+        margin-left: 4px;
+        font-size: 40px;
+    }
+
+    .rhythm-game__event-keys {
+        display: flex;
+        justify-content: center;
     }
 
     .rhythm-game__control-keys{
-        width: 100%;
         display: flex;
-        bottom: 0;
         justify-content: center;
-
     }
 
-    .rhythm-game__control-keys .button{
-        display:inline-block;
-        margin-left: 10px;
+    .rhythm-game__control-keys  .button{
+        margin: 10px;
+        width: 110px;
     }
 
     .rhythm-game__control-keys .button:first{
@@ -115,6 +99,7 @@
 <script>
 
 import SexyButton from "../../elements/SexyButton.vue"
+import TwoRowsButton from "../../elements/TwoRowsButton.vue"
 
 var Fraction = require('fraction.js');
 
@@ -172,6 +157,38 @@ export default {
             
         },
 
+        move_cursor_forward(){
+
+            this.key_callback({
+                type: '>'
+            });
+
+        },
+
+        move_cursor_backwards(){
+
+            this.key_callback({
+                type: '<'
+            });
+
+        },
+
+        dot() {
+
+            this.key_callback({
+                type: 'dot'
+            });
+
+        },
+
+        tie() {
+
+            this.key_callback({
+                type: 'tie'
+            });
+
+        },
+
         delete_note(){
 
             this.key_callback({
@@ -187,7 +204,7 @@ export default {
         }
     },
     components: {
-        SexyButton
+        SexyButton, TwoRowsButton
     },
     props: [
         'key_callback'

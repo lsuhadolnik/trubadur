@@ -8,14 +8,45 @@
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 @import '../../../sass/variables/index';
 
+/*.button {
+    display: inline-block;
+    position: relative;
+}
+
+.button__hollow {
+    position: relative;
+    z-index: 100;
+    display: inline-block;
+    border-radius: 6px;
+    border: 3px solid $black;
+    text-align: center;
+    min-width: 50px;
+    min-height: 50px;
+    vertical-align: middle;
+}
+
+.button__full {
+    z-index: 50;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    display: inline-block;
+    background: $sea-green;
+    color: $sea-green;
+    border-radius: 6px;
+    min-width: 50px;
+    min-height: 50px;
+}*/
 
 .button {
+    display    : inline-block;
+    //padding    : 0 10px 0 0;
     position   : relative;
-    width      : 175px;
+    width      : 50px;
     height     : 50px;
     cursor     : pointer;
     transition : filter $button-transition-time linear;

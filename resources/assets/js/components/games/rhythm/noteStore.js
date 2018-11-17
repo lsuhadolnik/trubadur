@@ -4,6 +4,11 @@ var Fraction = require("fraction.js");
 
 var NoteStore = function(bar, cursor, render_function) {
 
+    // The supported note durations.
+    // CUrrently supports up to a sixteenth note with a dot.
+    this.supportedLengths = [1, 2, 4, 8, 16, 32];
+    this.supportedRests   = [4, 8, 16, 32];
+
     this.bar = bar;
     this.cursor = cursor;
     this.notes = [ // TODO!!!
@@ -28,14 +33,73 @@ var NoteStore = function(bar, cursor, render_function) {
         {   // This is a note
             this.add_note(event);
         } 
+        else if(event.type == 'dot')
+        {
+            this.add_dot();
+        }
+        else if(event.type == 'tie')
+        {
+            this.add_tie();
+        }
         else if(event.type == 'delete')
         {   // Delete (backspace)
             this.delete_note();
         }
+        else if(event.type == '>')
+        {
+            this._move_cursor_forward();
+            this._call_render();
+        }
+        else if(event.type == '<')
+        {
+            this._move_cursor_backwards();
+            this._call_render();
+        }
+
+    }
+
+    this.add_tie = function(){
+        
+    }
+
+    this.add_dot = function() {
+
+        this._move_cursor_backwards()
+        let note = this.notes[this.cursor.position];
+
+        debugger;
+
+        this._move_cursor_forward()
+        this.delete_note();
+        
+        if(note.dot){
+            note.duration = note.duration.div(1.5);
+            note.dot = false; 
+        } 
+        else 
+        {
+            note.duration = note.duration.mul(1.5);
+            note.dot = true;    
+        }
+        
+        this.add_note(note);
 
     }
 
     this.add_note = function(event) {
+
+        // Check if the note is in supported range...
+        let supported = false;
+        for(let i = 0; i < this.supportedLengths.length && !supported; i++)
+            if (event.duration.d == this.supportedLengths[i])
+                supported = true; 
+        
+        if(!supported)
+        {
+            console.error("Note length not supported... ("+event.duration.d+")");
+            return;
+        }
+            
 
         var rests_info = this.sum_silence_until_edited();
         // RETURNS: object
@@ -84,7 +148,7 @@ var NoteStore = function(bar, cursor, render_function) {
         // 
         this.notes = this.notes.concat(new_rests).concat(ostanek);
         // Move cursor forward
-        this.move_cursor_forward();
+        this._move_cursor_forward();
 
         // And render the result
         this._call_render()
@@ -103,7 +167,7 @@ var NoteStore = function(bar, cursor, render_function) {
         //
         //         |  (note to delete) (rest/note) ... (rest/note)
         // cursor--^
-        this.move_cursor_backwards();
+        this._move_cursor_backwards();
         // Change current note to a rest
         this.notes[this.cursor.position].type = "r";
 
@@ -137,15 +201,21 @@ var NoteStore = function(bar, cursor, render_function) {
 
     }
 
-    this.move_cursor_forward = function(){
+    this._move_cursor_forward = function(){
 
-        this.cursor.position ++;
+        if(this.notes.length <= this.cursor.position)
+            this.cursor.position = this.notes.length - 1;
+        else
+            this.cursor.position ++;
 
     }
 
-    this.move_cursor_backwards = function(){
+    this._move_cursor_backwards = function(){
 
-        this.cursor.position --;
+        if(0 >= this.cursor.position)
+            this.cursor.position = 0;
+        else
+            this.cursor.position --;
 
     }
 
@@ -195,7 +265,7 @@ var NoteStore = function(bar, cursor, render_function) {
             //  Example:
             //      (16) (16r) (8r) (4r) (4r) (4r)
             //
-            let durations = [4, 8, 16];
+            let durations = this.supportedRests;
             for(var idx_duration = 0; idx_duration < durations.length; idx_duration++){
 
                 let duration = durations[idx_duration];

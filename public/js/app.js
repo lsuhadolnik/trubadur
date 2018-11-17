@@ -3343,7 +3343,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-be802b54"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -3380,7 +3380,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(19);
-module.exports = __webpack_require__(186);
+module.exports = __webpack_require__(197);
 
 
 /***/ }),
@@ -3394,7 +3394,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(196);
 
 
 
@@ -43098,25 +43098,25 @@ Vue.directive('touch-outside', {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Intervals_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_Intervals_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_games_rhythm_Rhythm_vue__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_games_rhythm_Rhythm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_games_rhythm_Rhythm_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_music_Keyboard_vue__ = __webpack_require__(129);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_music_Keyboard_vue__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_music_Keyboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_music_Keyboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Leaderboard_vue__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Leaderboard_vue__ = __webpack_require__(145);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Leaderboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_Leaderboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_profile_Levels_vue__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_profile_Levels_vue__ = __webpack_require__(152);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_profile_Levels_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_profile_Levels_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_elements_Loader_vue__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_elements_Loader_vue__ = __webpack_require__(157);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_elements_Loader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_elements_Loader_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_profile_Me_vue__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_profile_Me_vue__ = __webpack_require__(162);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_profile_Me_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_profile_Me_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_music_Note_vue__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_music_Note_vue__ = __webpack_require__(169);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_music_Note_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_music_Note_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_Profile_vue__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_Profile_vue__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_Profile_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Settings_vue__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Settings_vue__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Settings_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__components_Settings_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_music_Stave_vue__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_music_Stave_vue__ = __webpack_require__(186);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_music_Stave_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__components_music_Stave_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_elements_Title_vue__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_elements_Title_vue__ = __webpack_require__(191);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_elements_Title_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__components_elements_Title_vue__);
 
 
@@ -50152,7 +50152,7 @@ var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(109)
 /* template */
-var __vue_template__ = __webpack_require__(128)
+var __vue_template__ = __webpack_require__(139)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -50225,7 +50225,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rythm-game__wrap {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__staff {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  bottom: 0;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button {\n  display: inline-block;\n  margin-left: 10px;\n}\n.rhythm-game__control-keys .button:first {\n  margin-left: 0px;\n}\n", ""]);
+exports.push([module.i, "\n.rythm-game__wrap {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__staff {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -50240,36 +50240,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_CircleTimer_vue__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_CircleTimer_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_CircleTimer_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_ProgressBar_vue__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_ProgressBar_vue__ = __webpack_require__(119);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_ProgressBar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__elements_ProgressBar_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__StaffView_vue__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__StaffView_vue__ = __webpack_require__(124);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__StaffView_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__StaffView_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RhythmKeyboard_vue__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RhythmKeyboard_vue__ = __webpack_require__(128);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RhythmKeyboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__RhythmKeyboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__noteStore__ = __webpack_require__(127);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__noteStore__ = __webpack_require__(138);
 //
 //
 //
@@ -50359,13 +50336,13 @@ var content = __webpack_require__(111);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("a0945b9a", content, false, {});
+var update = __webpack_require__(1)("229ec4c4", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-be802b54\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SexyButton.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-be802b54\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SexyButton.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-be802b54\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SexyButton.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-be802b54\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SexyButton.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -50383,7 +50360,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.button {\n  position: relative;\n  width: 175px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n}\n.button:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hollow {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full {\n  position: absolute;\n  top: 6px;\n  left: 6px;\n  width: 100%;\n  height: 100%;\n  border-radius: 6px;\n}\n.button__green {\n  background-color: #33966D;\n}\n.button__orange {\n  background-color: #EB7D3D;\n}\n", ""]);
+exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 6px;\n  left: 6px;\n  width: 100%;\n  height: 100%;\n  border-radius: 6px;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n", ""]);
 
 // exports
 
@@ -50395,6 +50372,37 @@ exports.push([module.i, "\n.button {\n  position: relative;\n  width: 175px;\n  
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(5);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -50518,17 +50526,21 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(115)
+}
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(117)
 /* template */
-var __vue_template__ = __webpack_require__(115)
+var __vue_template__ = __webpack_require__(118)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-565f2198"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -50564,11 +50576,112 @@ module.exports = Component.exports
 /* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(116);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("3e93b46e", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-565f2198\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CircleTimer.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-565f2198\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CircleTimer.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 116 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.circle-timer__wrap[data-v-565f2198] {\n  display: inline-block;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 117 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    props: {
+        time: {
+            type: Number,
+            default: 120
+        }
+    },
+
+    data: function data() {
+        return {
+            timer: null
+        };
+    },
+    mounted: function mounted() {
+        this.timer = new TimerProgress({ // eslint-disable-line no-undef
+            'container': this.$el.querySelector('#timer'),
+            'width-container': 80,
+            'height-container': 80,
+            'stroke-width': 10,
+            'color-circle': '#F8A16E',
+            'color-path': '#EB7D3D',
+            'color-alert': '#D2495F',
+            'font-size': 20,
+            'font-family': 'GothamRounded-Bold'
+        });
+    },
+
+
+    methods: {
+        run: function run() {
+            this.timer.run(this.time, 50);
+        }
+    }
+
+});
+
+/***/ }),
+/* 118 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    circle timer here... :)\n")])
+  return _c("div", { staticClass: "circle-timer__wrap" }, [
+    _c("svg", { attrs: { id: "timer" } })
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50581,21 +50694,25 @@ if (false) {
 }
 
 /***/ }),
-/* 116 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(120)
+}
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(122)
 /* template */
-var __vue_template__ = __webpack_require__(117)
+var __vue_template__ = __webpack_require__(123)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-3ff07905"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -50628,14 +50745,87 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 117 */
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(121);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("2b82e348", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ff07905\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ProgressBar.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ff07905\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ProgressBar.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.intervals__progress-chapter[data-v-3ff07905] {\n  background: red;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 122 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    props: {
+        chapterCount: {
+            type: Number,
+            default: 3
+        }
+
+    },
+
+    computed: {
+        chapterWidth: function chapterWidth() {
+            return { 'width': (chapter > n ? 100 : (number - 1) * 100 / nQuestions) + '%' };
+        }
+    }
+
+});
+
+/***/ }),
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Progress bar here...\n")])
+  return _c("div", { staticClass: "intervals__progress-chapters" })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50648,15 +50838,15 @@ if (false) {
 }
 
 /***/ }),
-/* 118 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(119)
+var __vue_script__ = __webpack_require__(125)
 /* template */
-var __vue_template__ = __webpack_require__(121)
+var __vue_template__ = __webpack_require__(127)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -50695,12 +50885,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 119 */
+/* 125 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vexflow__);
 //
 //
@@ -50747,70 +50937,14 @@ var Tuplet = VF.Tuplet;
     },
 
     methods: {
-        test_render: function test_render(event) {
 
-            var notes = [
-            // A quarter-note C.
-            new StaveNote({ clef: "treble", keys: ["g/4"], duration: event.symbol })];
-
-            this.VF.first_stave.voice.addTickables(notes);
-
-            var formatter = new VF.Formatter().format([this.VF.first_stave.voice], this.info.width);
-
-            // Render voice
-            this.VF.first_stave.voice.draw(this.VF.context, this.VF.first_stave.stave);
+        _clear: function _clear() {
+            this.VF.context.clear();
         },
 
-        render: function render(notes) {
+        _vex_draw_voice: function _vex_draw_voice(renderQueue) {
 
-            // notes = [
-            //     {type: "n", symbol: "4",  duration: new Fraction(3).div(8), dot: true},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(8)},
-            //     {type: "n", symbol: "8",  duration: new Fraction(3).div(8), dot: true},
-            //     {type: "n", symbol: "16", duration: new Fraction(1).div(16)},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            // ];
-
-            var renderQueue = [];
-
-            var tuple_buffer = [];
-            var last_tuple_type = -1;
-
-            for (var i = 0; i < notes.length; i++) {
-
-                if (!notes[i]) continue; // Handle undefined and false elements...
-
-                var newNote = new StaveNote({
-                    clef: "treble",
-                    keys: ["g/4"],
-                    duration: notes[i].symbol
-                });
-
-                if (notes[i].dot) newNote.addDot(0); // enako je tudi newNote.addDotToAll()
-
-                // HANDLE TUPLETS
-                // TODO: Handle different tuple length
-                //if(notes[i].tuple_type ){
-
-                //    tuple_buffer.push(newNote);
-                //    last_tuple_type = notes[i].tuple_type;
-
-                //     TODO!! HANDLE tuplet type change... če je bla prej triola in potem ni več
-                //} else {
-
-                //    if(tuple_buffer){
-                //        renderQueue.push(new Tuplet(tuple_buffer));
-                //        tuple_buffer = [];
-                //        last_tuple_type = -1;
-                //    }
-
-                //    
-                //}
-
-                renderQueue.push(newNote);
-            }
+            // Create new voice everytime
 
             // Create a voice in 4/4 and add above notes
             this.VF.first_stave.voice = new VF.Voice({
@@ -50823,21 +50957,86 @@ var Tuplet = VF.Tuplet;
 
             this.VF.first_stave.voice.addTickables(renderQueue);
 
+            /*var beams = VF.Beam.generateBeams(this.VF.first_stave.voice);
+            VF.Formatter.FormatAndDraw(
+                this.VF.context, 
+                this.VF.first_stave.stave, 
+                this.VF.first_stave.voice
+            );*/
+
             var formatter = new VF.Formatter().format([this.VF.first_stave.voice], this.info.width);
 
             // Render voice
             this.VF.first_stave.voice.draw(this.VF.context, this.VF.first_stave.stave);
 
-            debugger;
+            //beams.forEach(function(b) {b.setContext(context).draw()})
+        },
 
-            var dataVF = this.VF;
-            var beams = VF.Beam.generateBeams(renderQueue);
-            beams.forEach(function (b) {
-                b.setContext(dataVF.context).draw();
-            });
+        _vex_draw_stave: function _vex_draw_stave() {
+
+            // Create a stave at position 0, 0 of width 400 on the canvas.
+            this.VF.first_stave.stave = new VF.Stave(0, 0, this.info.width);
+
+            // Add a clef and time signature.
+            this.VF.first_stave.stave.addTimeSignature(this.bar.num_beats + "/" + this.bar.base_note);
+
+            // Connect it to the rendering context and draw!
+            this.VF.first_stave.stave.setContext(this.VF.context).draw();
+        },
+
+        render: function render(notes, cursor) {
+
+            // notes = [
+            //     {type: "n", symbol: "4",  duration: new Fraction(3).div(8), dot: true},
+            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(8)},
+            //     {type: "n", symbol: "8",  duration: new Fraction(3).div(8), dot: true},
+            //     {type: "n", symbol: "16", duration: new Fraction(1).div(16)},
+            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
+            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
+            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
+            // ];
+
+            // Clear all notes from svg
+            this._clear();
+
+            // Redraw staves
+            this._vex_draw_stave();
+
+            var renderQueue = [];
+            for (var i = 0; i < notes.length; i++) {
+
+                // Bye bye, false note
+                if (!notes[i]) {
+                    continue;
+                }
+
+                // Handle notes and rests
+                var newNote = new StaveNote({
+                    clef: "treble",
+                    keys: ["g/4"],
+                    duration: notes[i].symbol
+                });
+
+                // Handle dots
+                if (notes[i].dot) newNote.addDot(0); // enako je tudi newNote.addDotToAll()
+
+                if (i == cursor.position) {
+                    newNote.setStyle({
+                        fillStyle: "blue",
+                        strokeStyle: "blue"
+                    });
+                }
+
+                renderQueue.push(newNote);
+            }
+
+            // Render the Voice
+            this._vex_draw_voice(renderQueue);
         }
     },
     mounted: function mounted() {
+
+        // INIT
 
         // VexFlow Magic
         var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
@@ -50851,20 +51050,11 @@ var Tuplet = VF.Tuplet;
 
         // And get a drawing context:
         this.VF.context = this.VF.renderer.getContext();
-
-        // Create a stave at position 10, 40 of width 400 on the canvas.
-        this.VF.first_stave.stave = new VF.Stave(0, 0, this.info.width);
-
-        // Add a clef and time signature.
-        this.VF.first_stave.stave.addTimeSignature(this.bar.num_beats + "/" + this.bar.base_note);
-
-        // Connect it to the rendering context and draw!
-        this.VF.first_stave.stave.setContext(this.VF.context).draw();
     }
 });
 
 /***/ }),
-/* 120 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -75112,7 +75302,7 @@ var Crescendo = exports.Crescendo = function (_Note) {
 //# sourceMappingURL=vexflow-debug.js.map
 
 /***/ }),
-/* 121 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -75149,25 +75339,25 @@ if (false) {
 }
 
 /***/ }),
-/* 122 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(123)
+  __webpack_require__(129)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(125)
+var __vue_script__ = __webpack_require__(131)
 /* template */
-var __vue_template__ = __webpack_require__(126)
+var __vue_template__ = __webpack_require__(137)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-79470641"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -75200,23 +75390,23 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 123 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(124);
+var content = __webpack_require__(130);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("665da87a", content, false, {});
+var update = __webpack_require__(1)("5f9db332", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-79470641\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./RhythmKeyboard.vue", function() {
-     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-79470641\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./RhythmKeyboard.vue");
+   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-79470641\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./RhythmKeyboard.vue", function() {
+     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-79470641\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./RhythmKeyboard.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -75226,7 +75416,7 @@ if(false) {
 }
 
 /***/ }),
-/* 124 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -75234,19 +75424,21 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm-game__keyboard {\n  font-size: 20px;\n  margin-bottom: 20px;\n}\n.rhythm-game__keyboard-row {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  margin-bottom: 15px;\n}\n.rhythm-game__keyboard-row .button {\n  display: inline-block;\n  width: 50px;\n  font-family: MusiSync;\n  margin-left: 10px;\n  font-size: 40px;\n}\n", ""]);
+exports.push([module.i, "\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  margin-bottom: 20px;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  width: 50px;\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 125 */
+/* 131 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_TwoRowsButton_vue__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_TwoRowsButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_TwoRowsButton_vue__);
 //
 //
 //
@@ -75311,6 +75503,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -75319,226 +75546,392 @@ var Fraction = __webpack_require__(10);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    methods: {
-        whole_note: function whole_note() {
+        methods: {
+                whole_note: function whole_note() {
 
-            this.key_callback({
-                type: 'n',
-                symbol: 'w',
-                duration: new Fraction(1)
-            });
+                        this.key_callback({
+                                type: 'n',
+                                symbol: 'w',
+                                duration: new Fraction(1)
+                        });
+                },
+                half_note: function half_note() {
+
+                        this.key_callback({
+                                type: 'n',
+                                symbol: '2',
+                                duration: new Fraction(1).div(2)
+                        });
+                },
+                quarter_note: function quarter_note() {
+
+                        this.key_callback({
+                                type: 'n',
+                                symbol: '4',
+                                duration: new Fraction(1).div(4)
+                        });
+                },
+                eight_note: function eight_note() {
+
+                        this.key_callback({
+                                type: 'n',
+                                symbol: '8',
+                                duration: new Fraction(1).div(8)
+                        });
+                },
+                sixteenth_note: function sixteenth_note() {
+
+                        this.key_callback({
+                                type: 'n',
+                                symbol: '16',
+                                duration: new Fraction(1).div(16)
+                        });
+                },
+                move_cursor_forward: function move_cursor_forward() {
+
+                        this.key_callback({
+                                type: '>'
+                        });
+                },
+                move_cursor_backwards: function move_cursor_backwards() {
+
+                        this.key_callback({
+                                type: '<'
+                        });
+                },
+                dot: function dot() {
+
+                        this.key_callback({
+                                type: 'dot'
+                        });
+                },
+                tie: function tie() {
+
+                        this.key_callback({
+                                type: 'tie'
+                        });
+                },
+                delete_note: function delete_note() {
+
+                        this.key_callback({
+                                type: 'delete'
+                        });
+                },
+                keyboardClick: function keyboardClick(key) {
+
+                        this.key_callback();
+                }
         },
-        half_note: function half_note() {
-
-            this.key_callback({
-                type: 'n',
-                symbol: '2',
-                duration: new Fraction(1).div(2)
-            });
+        components: {
+                SexyButton: __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default.a, TwoRowsButton: __WEBPACK_IMPORTED_MODULE_1__elements_TwoRowsButton_vue___default.a
         },
-        quarter_note: function quarter_note() {
-
-            this.key_callback({
-                type: 'n',
-                symbol: '4',
-                duration: new Fraction(1).div(4)
-            });
-        },
-        eight_note: function eight_note() {
-
-            this.key_callback({
-                type: 'n',
-                symbol: '8',
-                duration: new Fraction(1).div(8)
-            });
-        },
-        sixteenth_note: function sixteenth_note() {
-
-            this.key_callback({
-                type: 'n',
-                symbol: '16',
-                duration: new Fraction(1).div(16)
-            });
-        },
-        keyboardClick: function keyboardClick(key) {
-
-            this.key_callback();
-        }
-    },
-    components: {
-        SexyButton: __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default.a
-    },
-    props: ['key_callback']
+        props: ['key_callback']
 
 });
 
 /***/ }),
-/* 126 */
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(133)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(135)
+/* template */
+var __vue_template__ = __webpack_require__(136)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-3d6aa9f6"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/elements/TwoRowsButton.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3d6aa9f6", Component.options)
+  } else {
+    hotAPI.reload("data-v-3d6aa9f6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 133 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(134);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("acc54384", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3d6aa9f6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TwoRowsButton.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3d6aa9f6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TwoRowsButton.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 134 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.two-rows-button__wrap[data-v-3d6aa9f6] {\n  display: inline-block;\n  padding: 0 10px 0 0;\n  position: relative;\n  width: 50px;\n  height: 100px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n}\n.two-rows-button__wrap[data-v-3d6aa9f6]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-3d6aa9f6] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.two-rows-button__hollow[data-v-3d6aa9f6] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.two-rows-button__full[data-v-3d6aa9f6] {\n  position: absolute;\n  top: 6px;\n  left: 6px;\n  width: 100%;\n  height: 100%;\n  border-radius: 6px;\n  background-color: #EB7D3D;\n}\n.button__green[data-v-3d6aa9f6] {\n  background-color: #33966D;\n}\n.button__orange[data-v-3d6aa9f6] {\n  background-color: #EB7D3D;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 135 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "rhythm-game__keyboard" }, [
-    _c(
-      "div",
-      { staticClass: "row rhythm-game__keyboard-row" },
-      [
-        _c("sexy-button", {
-          attrs: { text: "w", color: "green" },
-          nativeOn: {
-            click: function($event) {
-              _vm.whole_note()
-            }
-          }
-        }),
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "two-rows-button__wrap" }, [
+      _c("div", { staticClass: "two-rows-button__hollow" }, [
+        _c("div", { staticClass: "two-rows-button__top-space" }, [
+          _vm._v("\n            <\n        ")
+        ]),
         _vm._v(" "),
-        _c("sexy-button", {
-          attrs: { text: "h", color: "green" },
-          nativeOn: {
-            click: function($event) {
-              _vm.half_note()
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("sexy-button", {
-          attrs: { text: "q", color: "green" },
-          nativeOn: {
-            click: function($event) {
-              _vm.quarter_note()
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("sexy-button", {
-          attrs: { text: "e", color: "green" },
-          nativeOn: {
-            click: function($event) {
-              _vm.eight_note()
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("sexy-button", {
-          attrs: { text: "s", color: "green" },
-          nativeOn: {
-            click: function($event) {
-              _vm.sixteenth_note()
-            }
-          }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row rhythm-game__keyboard-row" },
-      [
-        _c("sexy-button", {
-          attrs: { text: "W", color: "green" },
-          nativeOn: {
-            click: function($event) {
-              _vm.keyboardClick("wr")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("sexy-button", {
-          attrs: { text: "H", color: "green" },
-          nativeOn: {
-            click: function($event) {
-              _vm.keyboardClick("hr")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("sexy-button", {
-          attrs: { text: "Q", color: "green" },
-          nativeOn: {
-            click: function($event) {
-              _vm.keyboardClick("qr")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("sexy-button", {
-          attrs: { text: "E", color: "green" },
-          nativeOn: {
-            click: function($event) {
-              _vm.keyboardClick("er")
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("sexy-button", {
-          attrs: { text: "S", color: "green" },
-          nativeOn: {
-            click: function($event) {
-              _vm.keyboardClick("sr")
-            }
-          }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row rhythm-game__keyboard-row" },
-      [
+        _c("div", { staticClass: "two-rows-button__bottom-space" }, [
+          _vm._v("\n            >\n        ")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "two-rows-button__full" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3d6aa9f6", module.exports)
+  }
+}
+
+/***/ }),
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "rythm-game__keyboard_wrap" }, [
+    _c("div", { staticClass: "rhythm-game__event-keys" }, [
+      _c("div", { staticClass: "rhythm-game__keyboard" }, [
         _c(
-          "sexy-button",
-          {
-            attrs: { color: "green" },
-            nativeOn: {
-              click: function($event) {
-                _vm.keyboardClick("dot")
-              }
-            }
-          },
+          "div",
+          { staticClass: "row rhythm-game__keyboard-row" },
           [
-            _c("span", { staticStyle: { "padding-bottom": "30px" } }, [
-              _vm._v(".")
-            ])
-          ]
+            _c(
+              "sexy-button",
+              {
+                attrs: { color: "orange" },
+                nativeOn: {
+                  click: function($event) {
+                    _vm.move_cursor_forward()
+                  }
+                }
+              },
+              [
+                _c("span", { staticStyle: { "font-family": "Gotham round" } }, [
+                  _vm._v("\n                        >\n                    ")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("sexy-button", {
+              attrs: { text: "h", color: "green" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.half_note()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("sexy-button", {
+              attrs: { text: "q", color: "green" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.quarter_note()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("sexy-button", {
+              attrs: { text: "e", color: "green" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.eight_note()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("sexy-button", {
+              attrs: { text: "s", color: "green" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.sixteenth_note()
+                }
+              }
+            })
+          ],
+          1
         ),
         _vm._v(" "),
         _c(
-          "sexy-button",
-          {
-            attrs: { color: "green" },
-            nativeOn: {
-              click: function($event) {
-                _vm.keyboardClick("divide2")
-              }
-            }
-          },
+          "div",
+          { staticClass: "row rhythm-game__keyboard-row" },
           [
-            _c("span", { staticStyle: { "padding-bottom": "20px" } }, [
-              _vm._v("/2")
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "sexy-button",
-          {
-            attrs: { color: "green" },
-            nativeOn: {
-              click: function($event) {
-                _vm.keyboardClick("divide3")
+            _c(
+              "sexy-button",
+              {
+                attrs: { color: "orange" },
+                nativeOn: {
+                  click: function($event) {
+                    _vm.move_cursor_backwards()
+                  }
+                }
+              },
+              [
+                _c("span", { staticStyle: { "font-family": "Gotham round" } }, [
+                  _vm._v("\n                        <\n                    ")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("sexy-button", {
+              attrs: { text: ".", color: "green" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.dot()
+                }
               }
-            }
-          },
-          [
-            _c("span", { staticStyle: { "padding-bottom": "20px" } }, [
-              _vm._v("/3")
-            ])
-          ]
+            }),
+            _vm._v(" "),
+            _c("sexy-button", {
+              attrs: { text: "u", color: "green" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.tie()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("sexy-button", {
+              attrs: { text: "T", color: "green" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.tuplet()
+                }
+              }
+            })
+          ],
+          1
         )
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row rhythm-game__control-keys" },
+      [
+        _c("sexy-button", {
+          attrs: { text: "BRIŠI", color: "green", w: "175px" },
+          nativeOn: {
+            click: function($event) {
+              _vm.delete_note()
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("sexy-button", {
+          attrs: { text: "PONOVI", color: "green", w: "175px" }
+        }),
+        _vm._v(" "),
+        _c("sexy-button", {
+          attrs: { text: "NADALJUJ", color: "orange", w: "175px" }
+        })
       ],
       1
     )
@@ -75555,7 +75948,7 @@ if (false) {
 }
 
 /***/ }),
-/* 127 */
+/* 138 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -75563,60 +75956,207 @@ var Fraction = __webpack_require__(10);
 
 var NoteStore = function NoteStore(bar, cursor, render_function) {
 
+    // The supported note durations.
+    // CUrrently supports up to a sixteenth note with a dot.
+    this.supportedLengths = [1, 2, 4, 8, 16, 32];
+    this.supportedRests = [4, 8, 16, 32];
+
     this.bar = bar;
     this.cursor = cursor;
     this.notes = [// TODO!!!
+    { type: "r", symbol: "wr", duration: new Fraction(1) }];
 
-    ];
+    this._call_render = function () {
+
+        render_function(this.notes, this.cursor);
+    };
 
     // Init notes with default
-    render_function(this.notes);
+    this._call_render(this.notes);
 
     this.handle_button = function (event) {
 
         if (event.type == 'n') {
             // This is a note
             this.add_note(event);
+        } else if (event.type == 'dot') {
+            this.add_dot();
+        } else if (event.type == 'tie') {
+            this.add_tie();
+        } else if (event.type == 'delete') {
+            // Delete (backspace)
+            this.delete_note();
+        } else if (event.type == '>') {
+            this._move_cursor_forward();
+            this._call_render();
+        } else if (event.type == '<') {
+            this._move_cursor_backwards();
+            this._call_render();
         }
+    };
+
+    this.add_tie = function () {};
+
+    this.add_dot = function () {
+
+        this._move_cursor_backwards();
+        var note = this.notes[this.cursor.position];
+
+        debugger;
+
+        this._move_cursor_forward();
+        this.delete_note();
+
+        if (note.dot) {
+            note.duration = note.duration.div(1.5);
+            note.dot = false;
+        } else {
+            note.duration = note.duration.mul(1.5);
+            note.dot = true;
+        }
+
+        this.add_note(note);
     };
 
     this.add_note = function (event) {
 
-        // Poštimej triole... Ta postopek odpade, če so notri triole
-        // Mogoče dej triole kar direkt v pod-array...
-        var rests_info = this.sum_silence_until_edited();
-
-        if (rests_info.duration < event.duration) {
-            alert("Nota je predolga.");
+        // Check if the note is in supported range...
+        var supported = false;
+        for (var i = 0; i < this.supportedLengths.length && !supported; i++) {
+            if (event.duration.d == this.supportedLengths[i]) supported = true;
+        }if (!supported) {
+            console.error("Note length not supported... (" + event.duration.d + ")");
             return;
         }
 
+        var rests_info = this.sum_silence_until_edited();
+        // RETURNS: object
+        //      rests_info.rests -> array    -    indices of summed rests
+        //      rests_info.duration -> Fraction - duration of summed rests
+
+        // If the event duration exceeds the duration of summed notes
+        if (rests_info.duration < event.duration) {
+            // Notify user
+            alert("Nota je predolga.");
+            // and Quit
+            return;
+        }
+        // Get the remaining silence duration - will be filled with new rests
         var remaining = rests_info.duration.sub(event.duration); // prostor - trajanje
+
+        // --- Delete rests ---
+        // What this splice does:  splice(from_idx, num_elements_to_delete, [el1, el2, ...])
+        // *** IT ALTERS THE ORIGINAL ARRAY (this.notes) ***
+        //      -   from the position of the first rest
+        //      -   delete all rests (number to delete = length of all rests)
+        //      -   discard the remainder (deleted rests)
+        this.notes.splice(rests_info.rests[0], rests_info.rests.length);
+        // What this splice does:
+        // *** IT ALTERS THE ORIGINAl ARRAY (this.notes) ***
+        //      -   from current position (at the cursor)
+        //      -   delete all notes
+        //      -   store the deleted notes in ostanek
+        //  All non-rests are collected here.
+        //  example: 
+        //  
+        //         | rest  rest  rest  note note note ...
+        // cursor--^   ---deleted---    ----ostanek-----
+        var ostanek = this.notes.splice(this.cursor.position);
+
+        // Add the note
+        // Add the new note to the current position (at the cursor)
+        this.notes.splice(this.cursor.position, 0, event);
+
+        // Now generate new rests to fill the remaining space
+        // Returns an array of event objects - rests
+        var new_rests = this.generate_rests_for_duration(remaining);
+        // Add all up: 
+        // 
+        //  | (new note) (new rest) ... (new rest) (ostanek_note) ... (ostanek_note)
+        // 
+        this.notes = this.notes.concat(new_rests).concat(ostanek);
+        // Move cursor forward
+        this._move_cursor_forward();
+
+        // And render the result
+        this._call_render();
+    };
+
+    this.delete_note = function () {
+
+        // If you are at the beginning, you can't delete anything else
+        if (this.cursor.position == 0) {
+            // So you quit
+            return;
+        }
+
+        // Move one note back - so the situation is as follows
+        //
+        //         |  (note to delete) (rest/note) ... (rest/note)
+        // cursor--^
+        this._move_cursor_backwards();
+        // Change current note to a rest
+        this.notes[this.cursor.position].type = "r";
+
+        // Sum up all rests from current position
+        // If there are any more rests, they will get added too
+        //
+        //      | (rest) ... (rest) (note)
+        //
+        var rests_info = this.sum_silence_until_edited();
+        // RETURNS: object
+        //      rests_info.rests -> array    -    indices of summed rests
+        //      rests_info.duration -> Fraction - duration of summed rests
+        var remaining = rests_info.duration;
 
         // Delete rests
         this.notes.splice(rests_info.rests[0], rests_info.rests.length);
         var ostanek = this.notes.splice(this.cursor.position);
 
-        // Add note
-        this.notes.splice(this.cursor.position, 0, event);
-
+        // Now generate new rests to fill the remaining space
+        // Returns an array of event objects - rests
         var new_rests = this.generate_rests_for_duration(remaining);
+        // Add all up: 
+        // 
+        //  | (new note) (new rest) ... (new rest) (ostanek_note) ... (ostanek_note)
+        // 
         this.notes = this.notes.concat(new_rests).concat(ostanek);
 
-        render_function(this.notes);
+        // And render the result
+        this._call_render();
+    };
+
+    this._move_cursor_forward = function () {
+
+        if (this.notes.length <= this.cursor.position) this.cursor.position = this.notes.length - 1;else this.cursor.position++;
+    };
+
+    this._move_cursor_backwards = function () {
+
+        if (0 >= this.cursor.position) this.cursor.position = 0;else this.cursor.position--;
     };
 
     this.sum_silence_until_edited = function () {
 
+        // Instantiate the duration and rests array
         var duration = new Fraction(0);
         var rests = [];
+
+        // Start at the cursor position
         var i = this.cursor.position;
+        // Visit all following notes
         while (i < this.notes.length) {
+            // First, check the condition
+            // Until a note or a user-edited rest is met...
             if (this.notes[i].user_edited || this.notes[i].type != "r") {
+                // Then exit the loop
                 break;
             }
+
             duration = duration.add(this.notes[i].duration);
+            // Add the index of the rest
             rests.push(i);
+            // Move forward
             i++;
         }
 
@@ -75627,27 +76167,65 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
 
     this.generate_rests_for_duration = function (remaining) {
 
+        // OMG!
+        // Please don't look at it.
+        // I will improve it once, I promise.
+
         var rests = [];
+        // While there is some space left to fill
         while (remaining > 0) {
-            if (remaining.compare(new Fraction(1, 4)) >= 0) {
-                var num = remaining.mul(4).floor();
-                for (var i = 0; i < num; i++) {
-                    rests.unshift({ type: "r", symbol: "4", duration: new Fraction(1, 4) });
-                    remaining = remaining.add(new Fraction(-1, 4));
-                }
-            } else if (remaining.compare(new Fraction(1, 8)) >= 0) {
-                var num = remaining.mul(8).floor();
-                for (var i = 0; i < num; i++) {
-                    rests.unshift({ type: "r", symbol: "8", duration: new Fraction(1, 8) });
-                    remaining = remaining.add(new Fraction(-1, 8));
-                }
-            } else if (remaining.compare(new Fraction(1, 16)) >= 0) {
-                var num = remaining.mul(16).floor();
-                for (var i = 0; i < num; i++) {
-                    rests.unshift({ type: "r", symbol: "16", duration: new Fraction(1, 16) });
-                    remaining = remaining.add(new Fraction(-1, 16));
+
+            // Try different durations...
+            // Try the longer durations first, and add them to back...
+            // This will keep smaller duarions together
+            //  Example:
+            //      (16) (16r) (8r) (4r) (4r) (4r)
+            //
+            var durations = this.supportedRests;
+            for (var idx_duration = 0; idx_duration < durations.length; idx_duration++) {
+
+                var duration = durations[idx_duration];
+
+                // If it fits...
+                if (remaining.compare(new Fraction(1, duration)) >= 0) {
+                    // Divide the remaining duration with duration...
+                    // This yields the number of notes of this duration that can be filled
+                    // Get the whole part
+                    var num = remaining.mul(duration).floor();
+                    // Keep subtracting for as long as the note fits...
+                    for (var i = 0; i < num; i++) {
+                        rests.unshift({
+                            type: "r",
+                            symbol: duration.toString() + "r",
+                            duration: new Fraction(1, duration)
+                        });
+                        remaining = remaining.add(new Fraction(-1, duration));
+                    }
+
+                    // Else if... 
+                    break; // Break the first loop
                 }
             }
+
+            /*if(remaining.compare(new Fraction(1,4)) >= 0){
+                var num = remaining.mul(4).floor();
+                for(var i = 0; i < num; i++){
+                    rests.unshift({type:"r", symbol: "4", duration: new Fraction(1,4)});
+                    remaining = remaining.add(new Fraction(-1,4));
+                }
+            } else if(remaining.compare(new Fraction(1,8)) >= 0){
+                var num = remaining.mul(8).floor();
+                for(var i = 0; i < num; i++){
+                    rests.unshift({type:"r", symbol: "8", duration: new Fraction(1,8)});
+                    remaining = remaining.add(new Fraction(-1,8));
+                }
+            } else if(remaining.compare(new Fraction(1,16)) >= 0){
+                var num = remaining.mul(16).floor();
+                for(var i = 0; i < num; i++){
+                    rests.unshift({type:"r", symbol: "16", duration: new Fraction(1,16)});
+                    remaining = remaining.add(new Fraction(-1,16));
+                }
+            } */
         }
         return rests;
     };
@@ -75656,7 +76234,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
 /* harmony default export */ __webpack_exports__["a"] = (NoteStore);
 
 /***/ }),
-/* 128 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -75667,13 +76245,6 @@ var render = function() {
     "div",
     { staticClass: "rhythm-game__wrap" },
     [
-      _c(
-        "div",
-        { staticClass: "rhythm-game__progress" },
-        [_c("CircleTimer"), _vm._v(" "), _c("ProgressBar")],
-        1
-      ),
-      _vm._v(" "),
       _c("StaffView", {
         ref: "staff_view",
         attrs: { bar: _vm.bar, cursor: _vm.cursor }
@@ -75682,25 +76253,6 @@ var render = function() {
       _c(
         "Keyboard",
         _vm._b({}, "Keyboard", { key_callback: _vm.keyboard_click }, false)
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "rhythm-game__control-keys" },
-        [
-          _c("sexy-button", {
-            attrs: { text: "BRIŠI", color: "green", w: "175px" }
-          }),
-          _vm._v(" "),
-          _c("sexy-button", {
-            attrs: { text: "PONOVI", color: "green", w: "175px" }
-          }),
-          _vm._v(" "),
-          _c("sexy-button", {
-            attrs: { text: "NADALJUJ", color: "orange", w: "175px" }
-          })
-        ],
-        1
       )
     ],
     1
@@ -75717,19 +76269,19 @@ if (false) {
 }
 
 /***/ }),
-/* 129 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(130)
+  __webpack_require__(141)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(132)
+var __vue_script__ = __webpack_require__(143)
 /* template */
-var __vue_template__ = __webpack_require__(133)
+var __vue_template__ = __webpack_require__(144)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -75768,13 +76320,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 130 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(131);
+var content = __webpack_require__(142);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -75794,7 +76346,7 @@ if(false) {
 }
 
 /***/ }),
-/* 131 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -75808,7 +76360,7 @@ exports.push([module.i, "\n.keyboard[data-v-1d2aae08] {\n  width: 45vw;\n  heigh
 
 
 /***/ }),
-/* 132 */
+/* 143 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -76017,7 +76569,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 });
 
 /***/ }),
-/* 133 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -76154,20 +76706,20 @@ if (false) {
 }
 
 /***/ }),
-/* 134 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(135)
-  __webpack_require__(137)
+  __webpack_require__(146)
+  __webpack_require__(148)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(139)
+var __vue_script__ = __webpack_require__(150)
 /* template */
-var __vue_template__ = __webpack_require__(140)
+var __vue_template__ = __webpack_require__(151)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -76206,13 +76758,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 135 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(136);
+var content = __webpack_require__(147);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -76232,7 +76784,7 @@ if(false) {
 }
 
 /***/ }),
-/* 136 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -76246,13 +76798,13 @@ exports.push([module.i, "\n.leaderboard[data-v-19d0d496] {\n  width: 100%;\n}\n.
 
 
 /***/ }),
-/* 137 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(138);
+var content = __webpack_require__(149);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -76272,7 +76824,7 @@ if(false) {
 }
 
 /***/ }),
-/* 138 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -76286,7 +76838,7 @@ exports.push([module.i, "\n.leaderboard__instructions .title {\n  font-size: 25p
 
 
 /***/ }),
-/* 139 */
+/* 150 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -76567,7 +77119,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 140 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -76793,19 +77345,19 @@ if (false) {
 }
 
 /***/ }),
-/* 141 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(142)
+  __webpack_require__(153)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(144)
+var __vue_script__ = __webpack_require__(155)
 /* template */
-var __vue_template__ = __webpack_require__(145)
+var __vue_template__ = __webpack_require__(156)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -76844,13 +77396,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 142 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(143);
+var content = __webpack_require__(154);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -76870,7 +77422,7 @@ if(false) {
 }
 
 /***/ }),
-/* 143 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -76884,7 +77436,7 @@ exports.push([module.i, "\n.levels[data-v-5b057fe8] {\n  width: 100%;\n}\n.level
 
 
 /***/ }),
-/* 144 */
+/* 155 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -77065,7 +77617,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 145 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -77167,19 +77719,19 @@ if (false) {
 }
 
 /***/ }),
-/* 146 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(147)
+  __webpack_require__(158)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(149)
+var __vue_script__ = __webpack_require__(160)
 /* template */
-var __vue_template__ = __webpack_require__(150)
+var __vue_template__ = __webpack_require__(161)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -77218,13 +77770,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 147 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(148);
+var content = __webpack_require__(159);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -77244,7 +77796,7 @@ if(false) {
 }
 
 /***/ }),
-/* 148 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -77258,7 +77810,7 @@ exports.push([module.i, "\n.loader[data-v-4f02ae04] {\n  position: absolute;\n  
 
 
 /***/ }),
-/* 149 */
+/* 160 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -77289,7 +77841,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
-/* 150 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -77312,20 +77864,20 @@ if (false) {
 }
 
 /***/ }),
-/* 151 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(152)
-  __webpack_require__(154)
+  __webpack_require__(163)
+  __webpack_require__(165)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(156)
+var __vue_script__ = __webpack_require__(167)
 /* template */
-var __vue_template__ = __webpack_require__(157)
+var __vue_template__ = __webpack_require__(168)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -77364,13 +77916,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 152 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(153);
+var content = __webpack_require__(164);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -77390,7 +77942,7 @@ if(false) {
 }
 
 /***/ }),
-/* 153 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -77404,13 +77956,13 @@ exports.push([module.i, "\n.me[data-v-7cb87396] {\n  width: 100%;\n}\n.me__conte
 
 
 /***/ }),
-/* 154 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(155);
+var content = __webpack_require__(166);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -77430,7 +77982,7 @@ if(false) {
 }
 
 /***/ }),
-/* 155 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -77444,7 +77996,7 @@ exports.push([module.i, "\n.me__commands .me__command--edit .button .button__ful
 
 
 /***/ }),
-/* 156 */
+/* 167 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -77991,7 +78543,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 157 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -78472,19 +79024,19 @@ if (false) {
 }
 
 /***/ }),
-/* 158 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(159)
+  __webpack_require__(170)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(161)
+var __vue_script__ = __webpack_require__(172)
 /* template */
-var __vue_template__ = __webpack_require__(162)
+var __vue_template__ = __webpack_require__(173)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -78523,13 +79075,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 159 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(160);
+var content = __webpack_require__(171);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -78549,7 +79101,7 @@ if(false) {
 }
 
 /***/ }),
-/* 160 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -78563,7 +79115,7 @@ exports.push([module.i, "\n.note__hidden[data-v-443c4dda] {\n  display: none;\n}
 
 
 /***/ }),
-/* 161 */
+/* 172 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78799,7 +79351,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 162 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -79346,19 +79898,19 @@ if (false) {
 }
 
 /***/ }),
-/* 163 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(164)
+  __webpack_require__(175)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(166)
+var __vue_script__ = __webpack_require__(177)
 /* template */
-var __vue_template__ = __webpack_require__(167)
+var __vue_template__ = __webpack_require__(178)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -79397,13 +79949,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 164 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(165);
+var content = __webpack_require__(176);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79423,7 +79975,7 @@ if(false) {
 }
 
 /***/ }),
-/* 165 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -79437,7 +79989,7 @@ exports.push([module.i, "\n.profile[data-v-4bdda942] {\n  width: 100%;\n}\n.prof
 
 
 /***/ }),
-/* 166 */
+/* 177 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -79512,7 +80064,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 167 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -79595,20 +80147,20 @@ if (false) {
 }
 
 /***/ }),
-/* 168 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(169)
-  __webpack_require__(171)
+  __webpack_require__(180)
+  __webpack_require__(182)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(173)
+var __vue_script__ = __webpack_require__(184)
 /* template */
-var __vue_template__ = __webpack_require__(174)
+var __vue_template__ = __webpack_require__(185)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -79647,13 +80199,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 169 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(170);
+var content = __webpack_require__(181);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79673,7 +80225,7 @@ if(false) {
 }
 
 /***/ }),
-/* 170 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -79687,13 +80239,13 @@ exports.push([module.i, "\n.settings[data-v-095e6bda] {\n  width: 100%;\n}\n.set
 
 
 /***/ }),
-/* 171 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(172);
+var content = __webpack_require__(183);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79713,7 +80265,7 @@ if(false) {
 }
 
 /***/ }),
-/* 172 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -79727,7 +80279,7 @@ exports.push([module.i, "\n.settings__elements .button {\n  margin-top: 50px;\n}
 
 
 /***/ }),
-/* 173 */
+/* 184 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -80046,7 +80598,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 174 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -80322,19 +80874,19 @@ if (false) {
 }
 
 /***/ }),
-/* 175 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(176)
+  __webpack_require__(187)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(178)
+var __vue_script__ = __webpack_require__(189)
 /* template */
-var __vue_template__ = __webpack_require__(179)
+var __vue_template__ = __webpack_require__(190)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -80373,13 +80925,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 176 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(177);
+var content = __webpack_require__(188);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -80399,7 +80951,7 @@ if(false) {
 }
 
 /***/ }),
-/* 177 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -80413,7 +80965,7 @@ exports.push([module.i, "\n.stave__svg[data-v-0430ad04] {\n  width: 45vw;\n  hei
 
 
 /***/ }),
-/* 178 */
+/* 189 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -80551,7 +81103,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 179 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -80685,19 +81237,19 @@ if (false) {
 }
 
 /***/ }),
-/* 180 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(181)
+  __webpack_require__(192)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(183)
+var __vue_script__ = __webpack_require__(194)
 /* template */
-var __vue_template__ = __webpack_require__(184)
+var __vue_template__ = __webpack_require__(195)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -80736,13 +81288,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 181 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(182);
+var content = __webpack_require__(193);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -80762,7 +81314,7 @@ if(false) {
 }
 
 /***/ }),
-/* 182 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -80776,7 +81328,7 @@ exports.push([module.i, "\n.title[data-v-76a54612] {\n  padding: 10px 20px;\n  b
 
 
 /***/ }),
-/* 183 */
+/* 194 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -80807,7 +81359,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 184 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -80829,7 +81381,7 @@ if (false) {
 }
 
 /***/ }),
-/* 185 */
+/* 196 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -81215,7 +81767,7 @@ function handleError(error) {
 }));
 
 /***/ }),
-/* 186 */
+/* 197 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
