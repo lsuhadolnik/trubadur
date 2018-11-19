@@ -29,7 +29,7 @@ export default {
         return {
 
             info: {
-                width: 300,
+                width: window.innerWidth * 0.98,
                 height: 200,
             },
 
@@ -49,7 +49,7 @@ export default {
             this.VF.context.clear();
         },
 
-        _vex_draw_voice: function(renderQueue){
+        _vex_draw_voice: function(renderQueue, optionals){
 
             // Create new voice everytime
 
@@ -66,21 +66,41 @@ export default {
 
             this.VF.first_stave.voice.addTickables(renderQueue);
 
-            var beams = VF.Beam.generateBeams(this.VF.first_stave.voice);
-            VF.Formatter.FormatAndDraw(
-                this.VF.context, 
-                this.VF.first_stave.stave, 
-                this.VF.first_stave.voice
-            );*/
+            //var beams = VF.Beam.generateBeams(this.VF.first_stave.voice);
+            //VF.Formatter.FormatAndDraw(
+            //    this.VF.context, 
+            //    this.VF.first_stave.stave, 
+            //    this.VF.first_stave.voice
+            //);
             
+
+            // Been trying different factors.
+            // If you change this, make sure, that 16 sixteenth notes fit onto the screen.
+            var maxNotesWidth = this.info.width * 0.8;
 
             var formatter = new VF.Formatter()
-                .format([this.VF.first_stave.voice], this.info.width);
+                .format([this.VF.first_stave.voice], this.info.width * 0.8);
 
             // Render voice
+            //beams.forEach(function(b) {b.setContext(context).draw()})
+
             this.VF.first_stave.voice.draw(this.VF.context, this.VF.first_stave.stave);
             
-            //beams.forEach(function(b) {b.setContext(context).draw()})
+            
+
+            // Draw optionals...
+            if(optionals) {
+
+                if(optionals.ties) {
+
+                    let data = this;
+                    // Draw ties
+                    optionals.ties.forEach(function(t) {t.setContext(data.VF.context).draw()})
+
+                }
+
+            }
+
         },
 
         _vex_draw_stave: function(){
@@ -102,20 +122,22 @@ export default {
         render(notes, cursor) {
 
             // notes = [
-            //     {type: "n", symbol: "4",  duration: new Fraction(3).div(8), dot: true},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(8)},
-            //     {type: "n", symbol: "8",  duration: new Fraction(3).div(8), dot: true},
-            //     {type: "n", symbol: "16", duration: new Fraction(1).div(16)},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            // ];
+            //      {type: "n", symbol: "4",  duration: new Fraction(3).div(8), dot: true},
+            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(8)},
+            //      {type: "n", symbol: "8",  duration: new Fraction(3).div(8), dot: true},
+            //      {type: "n", symbol: "16", duration: new Fraction(1).div(16)},
+            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
+            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3, tie:true},
+            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3, tie:true},
+            //  ];
 
             // Clear all notes from svg
             this._clear();
 
             // Redraw staves
             this._vex_draw_stave();
+
+            let ties = [];
 
             var renderQueue = [];
             for(let i = 0; i < notes.length; i++){
@@ -136,6 +158,19 @@ export default {
                 if(notes[i].dot)
                     newNote.addDot(0); // enako je tudi newNote.addDotToAll()
 
+                if(notes[i].tie && i > 0){
+                
+                    // tie is:
+                    //  - this note + last note
+                    ties.push(new VF.StaveTie({
+                        first_note: renderQueue[i - 1],
+                        last_note:  newNote,
+                        first_indices: [0],
+                        last_indices:  [0]
+                    }));
+
+                }
+
                 if(i == cursor.position){
                     newNote.setStyle({
                         fillStyle: "blue", 
@@ -147,7 +182,9 @@ export default {
             }
 
             // Render the Voice
-            this._vex_draw_voice(renderQueue);
+            this._vex_draw_voice(renderQueue, {
+                ties: ties
+            });
 
         }
     },

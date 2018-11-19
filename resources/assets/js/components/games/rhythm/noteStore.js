@@ -5,7 +5,7 @@ var Fraction = require("fraction.js");
 var NoteStore = function(bar, cursor, render_function) {
 
     // The supported note durations.
-    // CUrrently supports up to a sixteenth note with a dot.
+    // Currently supports up to a sixteenth note with a dot.
     this.supportedLengths = [1, 2, 4, 8, 16, 32];
     this.supportedRests   = [4, 8, 16, 32];
 
@@ -25,7 +25,7 @@ var NoteStore = function(bar, cursor, render_function) {
     }
 
     // Init notes with default
-    this._call_render(this.notes);
+    this._call_render();
 
     this.handle_button = function(event) {
 
@@ -55,10 +55,20 @@ var NoteStore = function(bar, cursor, render_function) {
             this._move_cursor_backwards();
             this._call_render();
         }
-
     }
 
     this.add_tie = function(){
+        
+        let n = this.cursor.position;
+
+        // Don't do anything if this is the first note...
+        if(n <= 0) {
+            return;
+        }
+
+        this.notes[n].tie = !this.notes[n].tie;
+        
+        this._call_render();
         
     }
 
@@ -66,8 +76,6 @@ var NoteStore = function(bar, cursor, render_function) {
 
         this._move_cursor_backwards()
         let note = this.notes[this.cursor.position];
-
-        debugger;
 
         this._move_cursor_forward()
         this.delete_note();
@@ -98,6 +106,13 @@ var NoteStore = function(bar, cursor, render_function) {
         {
             console.error("Note length not supported... ("+event.duration.d+")");
             return;
+        }
+           
+        //console.log("Checking for tie..")
+        if(this.cursor.position > 0 
+            && this.cursor.position < this.notes.length
+            && this.notes[this.cursor.position].tie){
+                event.tie = true;
         }
             
 

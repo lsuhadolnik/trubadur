@@ -50921,7 +50921,7 @@ var Tuplet = VF.Tuplet;
         return {
 
             info: {
-                width: 300,
+                width: window.innerWidth * 0.98,
                 height: 200
             },
 
@@ -50942,7 +50942,7 @@ var Tuplet = VF.Tuplet;
             this.VF.context.clear();
         },
 
-        _vex_draw_voice: function _vex_draw_voice(renderQueue) {
+        _vex_draw_voice: function _vex_draw_voice(renderQueue, optionals) {
 
             // Create new voice everytime
 
@@ -50957,19 +50957,37 @@ var Tuplet = VF.Tuplet;
 
             this.VF.first_stave.voice.addTickables(renderQueue);
 
-            /*var beams = VF.Beam.generateBeams(this.VF.first_stave.voice);
-            VF.Formatter.FormatAndDraw(
-                this.VF.context, 
-                this.VF.first_stave.stave, 
-                this.VF.first_stave.voice
-            );*/
+            //var beams = VF.Beam.generateBeams(this.VF.first_stave.voice);
+            //VF.Formatter.FormatAndDraw(
+            //    this.VF.context, 
+            //    this.VF.first_stave.stave, 
+            //    this.VF.first_stave.voice
+            //);
 
-            var formatter = new VF.Formatter().format([this.VF.first_stave.voice], this.info.width);
+
+            // Been trying different factors.
+            // If you change this, make sure, that 16 sixteenth notes fit onto the screen.
+            var maxNotesWidth = this.info.width * 0.8;
+
+            var formatter = new VF.Formatter().format([this.VF.first_stave.voice], this.info.width * 0.8);
 
             // Render voice
+            //beams.forEach(function(b) {b.setContext(context).draw()})
+
             this.VF.first_stave.voice.draw(this.VF.context, this.VF.first_stave.stave);
 
-            //beams.forEach(function(b) {b.setContext(context).draw()})
+            // Draw optionals...
+            if (optionals) {
+
+                if (optionals.ties) {
+
+                    var data = this;
+                    // Draw ties
+                    optionals.ties.forEach(function (t) {
+                        t.setContext(data.VF.context).draw();
+                    });
+                }
+            }
         },
 
         _vex_draw_stave: function _vex_draw_stave() {
@@ -50987,20 +51005,22 @@ var Tuplet = VF.Tuplet;
         render: function render(notes, cursor) {
 
             // notes = [
-            //     {type: "n", symbol: "4",  duration: new Fraction(3).div(8), dot: true},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(8)},
-            //     {type: "n", symbol: "8",  duration: new Fraction(3).div(8), dot: true},
-            //     {type: "n", symbol: "16", duration: new Fraction(1).div(16)},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            //     {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            // ];
+            //      {type: "n", symbol: "4",  duration: new Fraction(3).div(8), dot: true},
+            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(8)},
+            //      {type: "n", symbol: "8",  duration: new Fraction(3).div(8), dot: true},
+            //      {type: "n", symbol: "16", duration: new Fraction(1).div(16)},
+            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
+            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3, tie:true},
+            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3, tie:true},
+            //  ];
 
             // Clear all notes from svg
             this._clear();
 
             // Redraw staves
             this._vex_draw_stave();
+
+            var ties = [];
 
             var renderQueue = [];
             for (var i = 0; i < notes.length; i++) {
@@ -51020,6 +51040,18 @@ var Tuplet = VF.Tuplet;
                 // Handle dots
                 if (notes[i].dot) newNote.addDot(0); // enako je tudi newNote.addDotToAll()
 
+                if (notes[i].tie && i > 0) {
+
+                    // tie is:
+                    //  - this note + last note
+                    ties.push(new VF.StaveTie({
+                        first_note: renderQueue[i - 1],
+                        last_note: newNote,
+                        first_indices: [0],
+                        last_indices: [0]
+                    }));
+                }
+
                 if (i == cursor.position) {
                     newNote.setStyle({
                         fillStyle: "blue",
@@ -51031,7 +51063,9 @@ var Tuplet = VF.Tuplet;
             }
 
             // Render the Voice
-            this._vex_draw_voice(renderQueue);
+            this._vex_draw_voice(renderQueue, {
+                ties: ties
+            });
         }
     },
     mounted: function mounted() {
@@ -75617,6 +75651,18 @@ var Fraction = __webpack_require__(10);
                                 type: 'delete'
                         });
                 },
+                tuplet: function tuplet() {
+
+                        /*this.key_callback({
+                            type: 'n',
+                            duration: new Fraction(1,4),
+                            symbol: 'tuplet',
+                            tuplet_type: 3,
+                            notes: {
+                              }
+                        });*/
+                        alert("Work in progress...");
+                },
                 keyboardClick: function keyboardClick(key) {
 
                         this.key_callback();
@@ -75957,7 +76003,7 @@ var Fraction = __webpack_require__(10);
 var NoteStore = function NoteStore(bar, cursor, render_function) {
 
     // The supported note durations.
-    // CUrrently supports up to a sixteenth note with a dot.
+    // Currently supports up to a sixteenth note with a dot.
     this.supportedLengths = [1, 2, 4, 8, 16, 32];
     this.supportedRests = [4, 8, 16, 32];
 
@@ -75972,7 +76018,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
     };
 
     // Init notes with default
-    this._call_render(this.notes);
+    this._call_render();
 
     this.handle_button = function (event) {
 
@@ -75995,14 +76041,24 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
         }
     };
 
-    this.add_tie = function () {};
+    this.add_tie = function () {
+
+        var n = this.cursor.position;
+
+        // Don't do anything if this is the first note...
+        if (n <= 0) {
+            return;
+        }
+
+        this.notes[n].tie = !this.notes[n].tie;
+
+        this._call_render();
+    };
 
     this.add_dot = function () {
 
         this._move_cursor_backwards();
         var note = this.notes[this.cursor.position];
-
-        debugger;
 
         this._move_cursor_forward();
         this.delete_note();
@@ -76027,6 +76083,11 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
         }if (!supported) {
             console.error("Note length not supported... (" + event.duration.d + ")");
             return;
+        }
+
+        //console.log("Checking for tie..")
+        if (this.cursor.position > 0 && this.cursor.position < this.notes.length && this.notes[this.cursor.position].tie) {
+            event.tie = true;
         }
 
         var rests_info = this.sum_silence_until_edited();

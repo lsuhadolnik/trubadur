@@ -197,6 +197,21 @@ export default {
 
         },
 
+        tuplet() {
+
+            /*this.key_callback({
+                type: 'n',
+                duration: new Fraction(1,4),
+                symbol: 'tuplet',
+                tuplet_type: 3,
+                notes: {
+
+                }
+            });*/
+            alert("Work in progress...");
+
+        },
+
         keyboardClick(key) {
 
             this.key_callback();
