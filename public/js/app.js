@@ -50281,8 +50281,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -50922,16 +50920,14 @@ var Tuplet = VF.Tuplet;
 
             info: {
                 width: window.innerWidth * 0.98,
-                height: 200
+                height: 200,
+                staveCount: 2
             },
 
             VF: {
                 renderer: null,
                 context: null,
-                first_stave: {
-                    stave: null,
-                    voice: null
-                }
+                staves: []
             }
         };
     },
@@ -50942,39 +50938,31 @@ var Tuplet = VF.Tuplet;
             this.VF.context.clear();
         },
 
-        _vex_draw_voice: function _vex_draw_voice(renderQueue, optionals) {
+        _vex_draw_voice: function _vex_draw_voice(stave, renderQueue, optionals) {
 
-            // Create new voice everytime
+            // Create a new voice everytime
 
-            // Create a voice in 4/4 and add above notes
-            this.VF.first_stave.voice = new VF.Voice({
+            var voice = new VF.Voice({
                 num_beats: this.bar.num_beats,
                 beat_value: this.bar.base_note
             });
             // DISABLE strict timing
-            this.VF.first_stave.voice.setMode(__WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Voice.Mode.SOFT);
-            this.VF.first_stave.voice.setStrict(false);
+            voice.setMode(__WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Voice.Mode.SOFT);
+            voice.setStrict(false);
 
-            this.VF.first_stave.voice.addTickables(renderQueue);
-
-            //var beams = VF.Beam.generateBeams(this.VF.first_stave.voice);
-            //VF.Formatter.FormatAndDraw(
-            //    this.VF.context, 
-            //    this.VF.first_stave.stave, 
-            //    this.VF.first_stave.voice
-            //);
-
+            // Add render queue
+            voice.addTickables(renderQueue);
 
             // Been trying different factors.
             // If you change this, make sure, that 16 sixteenth notes fit onto the screen.
             var maxNotesWidth = this.info.width * 0.8;
 
-            var formatter = new VF.Formatter().format([this.VF.first_stave.voice], this.info.width * 0.8);
+            var formatter = new VF.Formatter().format([voice], maxNotesWidth);
 
             // Render voice
             //beams.forEach(function(b) {b.setContext(context).draw()})
 
-            this.VF.first_stave.voice.draw(this.VF.context, this.VF.first_stave.stave);
+            voice.draw(this.VF.context, stave);
 
             // Draw optionals...
             if (optionals) {
@@ -50990,23 +50978,35 @@ var Tuplet = VF.Tuplet;
             }
         },
 
-        _vex_draw_stave: function _vex_draw_stave() {
+        _vex_draw_staves: function _vex_draw_staves() {
 
-            // Create a stave at position 0, 0 of width 400 on the canvas.
-            this.VF.first_stave.stave = new VF.Stave(0, 0, this.info.width);
+            this.VF.staves = [];
 
-            // Add a clef and time signature.
-            this.VF.first_stave.stave.addTimeSignature(this.bar.num_beats + "/" + this.bar.base_note);
+            for (var idx_stave = 0; idx_stave < this.info.staveCount; idx_stave++) {
 
-            // Connect it to the rendering context and draw!
-            this.VF.first_stave.stave.setContext(this.VF.context).draw();
+                var staveHeight = 60;
+
+                var stave = new VF.Stave(0, staveHeight * idx_stave, this.info.width);
+
+                this.VF.staves.push(stave);
+
+                // If this is the first stave
+                if (idx_stave == 0) {
+                    // Add a clef and time signature.
+                    stave.addTimeSignature(this.bar.num_beats + "/" + this.bar.base_note);
+                }
+
+                // Connect it to the rendering context and draw!
+                stave.setContext(this.VF.context).draw();
+            }
         },
 
         render: function render(notes, cursor) {
+            // Render onto n bars. Assumes no bar overlapping...
 
             // notes = [
             //      {type: "n", symbol: "4",  duration: new Fraction(3).div(8), dot: true},
-            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(8)},
+            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(8), tie: true}, // Last 2 notes are tied
             //      {type: "n", symbol: "8",  duration: new Fraction(3).div(8), dot: true},
             //      {type: "n", symbol: "16", duration: new Fraction(1).div(16)},
             //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
@@ -51018,11 +51018,13 @@ var Tuplet = VF.Tuplet;
             this._clear();
 
             // Redraw staves
-            this._vex_draw_stave();
+            this._vex_draw_staves();
+
+            var staveIndex = 0;
 
             var ties = [];
-
             var renderQueue = [];
+            var currentDuration = new Fraction(0);
             for (var i = 0; i < notes.length; i++) {
 
                 // Bye bye, false note
@@ -51060,12 +51062,27 @@ var Tuplet = VF.Tuplet;
                 }
 
                 renderQueue.push(newNote);
+                currentDuration = currentDuration.add(notes[i].duration);
+
+                if (currentDuration.compare(new Fraction(1)) == 0) {
+
+                    this._vex_draw_voice(this.VF.staves[staveIndex], renderQueue, {
+                        ties: ties
+                    });
+
+                    renderQueue = [];
+                    ties = [];
+                    staveIndex++;
+                    currentDuration = new Fraction(0);
+                }
             }
 
-            // Render the Voice
-            this._vex_draw_voice(renderQueue, {
-                ties: ties
-            });
+            if (renderQueue.length > 0) {
+                // Draw the rest
+                this._vex_draw_voice(this.VF.staves[staveIndex + 1], renderQueue, {
+                    ties: ties
+                });
+            }
         }
     },
     mounted: function mounted() {
@@ -51076,7 +51093,7 @@ var Tuplet = VF.Tuplet;
         var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
 
         // Create an SVG renderer and attach it to the DIV element named "boo".
-        var div = document.getElementById("first-stave");
+        var div = document.getElementById("first-row");
         this.VF.renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
 
         // Size our svg:
@@ -75353,12 +75370,12 @@ var staticRenderFns = [
     return _c("div", { staticClass: "rhythm-game__staff" }, [
       _c("div", {
         staticClass: "rhythm-game__staff__first-row",
-        attrs: { id: "first-stave" }
+        attrs: { id: "first-row" }
       }),
       _vm._v(" "),
       _c("div", {
         staticClass: "rhythm-game__staff__second-row",
-        attrs: { id: "second-stave" }
+        attrs: { id: "second-row" }
       })
     ])
   }
@@ -76010,7 +76027,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
     this.bar = bar;
     this.cursor = cursor;
     this.notes = [// TODO!!!
-    { type: "r", symbol: "wr", duration: new Fraction(1) }];
+    { type: "r", symbol: "wr", duration: new Fraction(1) }, { type: "r", symbol: "wr", duration: new Fraction(1) }];
 
     this._call_render = function () {
 
@@ -76088,6 +76105,21 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
         //console.log("Checking for tie..")
         if (this.cursor.position > 0 && this.cursor.position < this.notes.length && this.notes[this.cursor.position].tie) {
             event.tie = true;
+        }
+
+        // Check if the new composition fits in bars correctly
+        // If it can be put onto 2 full bars without overlapping
+        // 
+        // Example:
+        //  4/4 time
+        // (1/4) (1/4) (1/4) (1/4) [BARLINE] (1/4) ... <- this fits
+        //
+        // (1/2) (1/4) (1/2) <- This does not fit - the bar is too long
+        //
+        if (!this.check_sum_fit(event)) {
+            // Notify user
+
+            // break
         }
 
         var rests_info = this.sum_silence_until_edited();
@@ -76267,29 +76299,11 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
                     break; // Break the first loop
                 }
             }
-
-            /*if(remaining.compare(new Fraction(1,4)) >= 0){
-                var num = remaining.mul(4).floor();
-                for(var i = 0; i < num; i++){
-                    rests.unshift({type:"r", symbol: "4", duration: new Fraction(1,4)});
-                    remaining = remaining.add(new Fraction(-1,4));
-                }
-            } else if(remaining.compare(new Fraction(1,8)) >= 0){
-                var num = remaining.mul(8).floor();
-                for(var i = 0; i < num; i++){
-                    rests.unshift({type:"r", symbol: "8", duration: new Fraction(1,8)});
-                    remaining = remaining.add(new Fraction(-1,8));
-                }
-            } else if(remaining.compare(new Fraction(1,16)) >= 0){
-                var num = remaining.mul(16).floor();
-                for(var i = 0; i < num; i++){
-                    rests.unshift({type:"r", symbol: "16", duration: new Fraction(1,16)});
-                    remaining = remaining.add(new Fraction(-1,16));
-                }
-            } */
         }
         return rests;
     };
+
+    this.check_sum_fit = function (event) {};
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (NoteStore);

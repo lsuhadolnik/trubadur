@@ -12,6 +12,7 @@ var NoteStore = function(bar, cursor, render_function) {
     this.bar = bar;
     this.cursor = cursor;
     this.notes = [ // TODO!!!
+        {type:"r", symbol:"wr", duration:new Fraction(1)},
         {type:"r", symbol:"wr", duration:new Fraction(1)}
     ];
 
@@ -115,6 +116,20 @@ var NoteStore = function(bar, cursor, render_function) {
                 event.tie = true;
         }
             
+        // Check if the new composition fits in bars correctly
+        // If it can be put onto 2 full bars without overlapping
+        // 
+        // Example:
+        //  4/4 time
+        // (1/4) (1/4) (1/4) (1/4) [BARLINE] (1/4) ... <- this fits
+        //
+        // (1/2) (1/4) (1/2) <- This does not fit - the bar is too long
+        //
+        if(!this.check_sum_fit(event)){
+            // Notify user
+            
+            // break
+        }
 
         var rests_info = this.sum_silence_until_edited();
         // RETURNS: object
@@ -306,27 +321,12 @@ var NoteStore = function(bar, cursor, render_function) {
                 }    
             }
 
-            /*if(remaining.compare(new Fraction(1,4)) >= 0){
-                var num = remaining.mul(4).floor();
-                for(var i = 0; i < num; i++){
-                    rests.unshift({type:"r", symbol: "4", duration: new Fraction(1,4)});
-                    remaining = remaining.add(new Fraction(-1,4));
-                }
-            } else if(remaining.compare(new Fraction(1,8)) >= 0){
-                var num = remaining.mul(8).floor();
-                for(var i = 0; i < num; i++){
-                    rests.unshift({type:"r", symbol: "8", duration: new Fraction(1,8)});
-                    remaining = remaining.add(new Fraction(-1,8));
-                }
-            } else if(remaining.compare(new Fraction(1,16)) >= 0){
-                var num = remaining.mul(16).floor();
-                for(var i = 0; i < num; i++){
-                    rests.unshift({type:"r", symbol: "16", duration: new Fraction(1,16)});
-                    remaining = remaining.add(new Fraction(-1,16));
-                }
-            } */
         }
         return rests;
+    }
+
+    this.check_sum_fit = function(event) {
+
     }
 
 

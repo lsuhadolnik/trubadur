@@ -29,8 +29,6 @@
     }
     
 
-
-
 </style>
 
 
@@ -77,6 +75,7 @@ export default {
             this.cursor,
             this.$refs.staff_view.render
         );
+
     }
 }
     

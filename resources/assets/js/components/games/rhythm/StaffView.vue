@@ -2,8 +2,8 @@
 
     <div class="rhythm-game__staff">
 
-        <div class="rhythm-game__staff__first-row"  id="first-stave"></div>
-        <div class="rhythm-game__staff__second-row" id="second-stave"></div>
+        <div class="rhythm-game__staff__first-row"  id="first-row"></div>
+        <div class="rhythm-game__staff__second-row" id="second-row"></div>
 
     </div>
 
@@ -31,15 +31,13 @@ export default {
             info: {
                 width: window.innerWidth * 0.98,
                 height: 200,
+                staveCount: 2
             },
 
             VF: {
                 renderer: null,
                 context: null,
-                first_stave:  {
-                    stave: null,
-                    voice: null
-                },
+                staves:  [],
             }
         }
     },
@@ -49,29 +47,22 @@ export default {
             this.VF.context.clear();
         },
 
-        _vex_draw_voice: function(renderQueue, optionals){
+        _vex_draw_voice: function(stave, renderQueue, optionals){
 
-            // Create new voice everytime
+            // Create a new voice everytime
 
-            // Create a voice in 4/4 and add above notes
-            this.VF.first_stave.voice = new VF.Voice(
+            let voice = new VF.Voice(
                 {
                     num_beats: this.bar.num_beats,  
                     beat_value: this.bar.base_note
                 }
             );
             // DISABLE strict timing
-            this.VF.first_stave.voice.setMode(Vex.Flow.Voice.Mode.SOFT);
-            this.VF.first_stave.voice.setStrict(false);
+            voice.setMode(Vex.Flow.Voice.Mode.SOFT);
+            voice.setStrict(false);
 
-            this.VF.first_stave.voice.addTickables(renderQueue);
-
-            //var beams = VF.Beam.generateBeams(this.VF.first_stave.voice);
-            //VF.Formatter.FormatAndDraw(
-            //    this.VF.context, 
-            //    this.VF.first_stave.stave, 
-            //    this.VF.first_stave.voice
-            //);
+            // Add render queue
+            voice.addTickables(renderQueue);
             
 
             // Been trying different factors.
@@ -79,15 +70,13 @@ export default {
             var maxNotesWidth = this.info.width * 0.8;
 
             var formatter = new VF.Formatter()
-                .format([this.VF.first_stave.voice], this.info.width * 0.8);
+                .format([voice], maxNotesWidth);
 
             // Render voice
             //beams.forEach(function(b) {b.setContext(context).draw()})
 
-            this.VF.first_stave.voice.draw(this.VF.context, this.VF.first_stave.stave);
+            voice.draw(this.VF.context, stave);
             
-            
-
             // Draw optionals...
             if(optionals) {
 
@@ -103,27 +92,46 @@ export default {
 
         },
 
-        _vex_draw_stave: function(){
+        _vex_draw_staves: function(){
             
-            // Create a stave at position 0, 0 of width 400 on the canvas.
-            this.VF.first_stave.stave = new VF.Stave(0,0, this.info.width);
+            this.VF.staves = [];
 
-            // Add a clef and time signature.
-            this.VF.first_stave.stave.addTimeSignature(
-                this.bar.num_beats
-                +"/"
-                +this.bar.base_note
-            );
+            for(let idx_stave = 0; idx_stave < this.info.staveCount; idx_stave++){
 
-            // Connect it to the rendering context and draw!
-            this.VF.first_stave.stave.setContext(this.VF.context).draw();
+                let staveHeight = 60;
+
+                let stave = new VF.Stave(
+                    0,
+                    staveHeight * idx_stave, 
+                    this.info.width);
+
+
+                this.VF.staves.push(stave);
+
+                // If this is the first stave
+                if(idx_stave == 0){
+                    // Add a clef and time signature.
+                    stave.addTimeSignature(
+                        this.bar.num_beats
+                        +"/"
+                        +this.bar.base_note
+                    );
+                }
+                
+
+                // Connect it to the rendering context and draw!
+                stave.setContext(this.VF.context).draw();
+
+            }
+
         },
 
         render(notes, cursor) {
+            // Render onto n bars. Assumes no bar overlapping...
 
             // notes = [
             //      {type: "n", symbol: "4",  duration: new Fraction(3).div(8), dot: true},
-            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(8)},
+            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(8), tie: true}, // Last 2 notes are tied
             //      {type: "n", symbol: "8",  duration: new Fraction(3).div(8), dot: true},
             //      {type: "n", symbol: "16", duration: new Fraction(1).div(16)},
             //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
@@ -135,11 +143,13 @@ export default {
             this._clear();
 
             // Redraw staves
-            this._vex_draw_stave();
+            this._vex_draw_staves();
 
-            let ties = [];
+            let staveIndex = 0;
 
+            var ties = [];
             var renderQueue = [];
+            var currentDuration = new Fraction(0);
             for(let i = 0; i < notes.length; i++){
 
                 // Bye bye, false note
@@ -179,12 +189,30 @@ export default {
                 }
 
                 renderQueue.push(newNote);
+                currentDuration = currentDuration.add(notes[i].duration);
+
+                
+                if(currentDuration.compare(new Fraction(1)) == 0){
+                    
+                    this._vex_draw_voice(this.VF.staves[staveIndex], renderQueue, {
+                        ties: ties
+                    });
+
+                    renderQueue = [];
+                    ties = [];
+                    staveIndex ++;
+                    currentDuration = new Fraction(0);
+                }
+
             }
 
-            // Render the Voice
-            this._vex_draw_voice(renderQueue, {
-                ties: ties
-            });
+            if(renderQueue.length > 0){
+                // Draw the rest
+                this._vex_draw_voice(this.VF.staves[staveIndex + 1], renderQueue, {
+                    ties: ties
+                });
+            }
+            
 
         }
     },
@@ -196,7 +224,7 @@ export default {
         let VF = Vex.Flow;
 
         // Create an SVG renderer and attach it to the DIV element named "boo".
-        var div = document.getElementById("first-stave")
+        var div = document.getElementById("first-row")
         this.VF.renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
 
         // Size our svg:
