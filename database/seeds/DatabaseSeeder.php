@@ -118,13 +118,15 @@ class DatabaseSeeder extends Seeder
     ];
 
     const LEVELS = [
-        5  => 'Konservatorij za glasbo in balet Ljubljana',
-        10 => 'Akademija za Glasbo',
-        15 => 'Slovenska filharmonija',
-        20 => 'Berklee College of Music',
-        25 => 'Yale School of Music',
-        30 => 'The Julliard School',
-        35 => 'Carnegie Hall'
+        5  => 'Recital za Glasbeno Mladino v Cankarjevem domu',
+        10 => 'Nastop s Komornim godalnim orkestrom Slovenske Filharmonije',
+        15 => 'Snemanje v studiih RTV Slovenija',
+        20 => 'Solo nastop z Orkestrom Slovenske Filharmonije',
+        25 => 'Sodelovanje v Evropskem mladinskem orkestru',
+        30 => 'Solo nastop v koncertni dvorani Concertgebow v Amsterdamu',
+        35 => 'Igranje na evropski turneji s koncertno agencijo European Artistic Services',
+        40 => 'Finale Evropskega tekmovanja mladih glasbenikov',
+        45 => 'Zmaga na Evropskem tekmovanju mladih glasbenikov'
     ];
 
     const MIN_GRADE = 1;
@@ -135,7 +137,7 @@ class DatabaseSeeder extends Seeder
     const MIN_NOTES = 4;
     const MAX_NOTES = 8;
 
-    const N_GAMES = 10;
+    const N_GAMES = 50;
     const MIN_USERS_PER_GAME = 1;
     const MAX_USERS_PER_GAME = 4;
 

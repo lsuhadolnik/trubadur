@@ -16,22 +16,24 @@ class LevelsTableSeeder extends DatabaseSeeder
         DB::table('levels')->delete();
 
         $currentRating = 0;
-        for ($n = 1; $n <= 35; $n++) {
+        for ($n = 1; $n <= 45; $n++) {
             $level = new Level;
 
             $level->level = $n;
             if ($n <= 5) {
-                $factor = 400;
+                $factor = 250;
             } else if ($n > 5 && $n <= 10) {
-                $factor = 800;
+                $factor = 500;
             } else if ($n > 10 && $n <= 15) {
-                $factor = 1500;
+                $factor = 1000;
             } else if ($n > 15 && $n <= 20) {
-                $factor = 3000;
+                $factor = 2000;
             } else if ($n > 20 && $n <= 30) {
-                $factor = 5000;
+                $factor = 3000;
+            } else if ($n > 30 && $n <= 40) {
+                $factor = 4000;
             } else {
-                $factor = 10000;
+                $factor = 5000;
             }
 
             if (array_key_exists($n, self::LEVELS)) {
