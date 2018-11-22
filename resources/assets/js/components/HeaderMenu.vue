@@ -21,6 +21,8 @@
 
 .header--colored { background-color: $sunglow; }
 
+.header--hidden { display: none; }
+
 .header__menu-button {
     position : absolute;
     top      : 15px;
@@ -199,7 +201,7 @@
 
 <template>
     <div class="header-menu">
-        <div class="header" :class="{ 'header--sticky': isHeaderSticky, 'header--colored': isHeaderColored }">
+        <div class="header" :class="{ 'header--sticky': isHeaderSticky, 'header--colored': isHeaderColored, 'header--hidden': isHeaderHidden }">
             <div class="header__menu-button" @click="toggleMenu">
                 <icon class="header__icon" name="bars"></icon>
             </div>
@@ -230,6 +232,7 @@ export default {
             uncoloredRoutes: ['gameModes', 'intervals', 'gameStatistics'],
             isHeaderSticky: false,
             isHeaderColored: false,
+            isHeaderHidden: false,
             isMenuInitialized: false,
             isMenuOpened: false,
             outsideClick: false,
@@ -244,11 +247,14 @@ export default {
     },
     created () {
         window.addEventListener('scroll', this.scroll)
+        window.addEventListener('resize', this.hideHeader)
         this.colorHeader(this.$route.name)
         this.colorBackground(this.$route.name)
+        this.hideHeader()
     },
     beforeDestroy () {
         window.removeEventListener('scroll', this.scroll)
+        window.removeEventListener('resize', this.hideHeader)
     },
     computed: {
         ...mapState(['me']),
@@ -260,18 +266,22 @@ export default {
         '$route' (to, from) {
             this.colorHeader(to.name)
             this.colorBackground(to.name)
+            this.hideHeader()
         }
     },
     methods: {
+        scroll () {
+            this.isHeaderSticky = this.isMenuOpened ? true : (!this.isHeaderHidden && window.pageYOffset > 0)
+            this.$emit('sticky-header', this.isHeaderSticky)
+        },
         colorHeader (route) {
             this.isHeaderColored = this.uncoloredRoutes.indexOf(route) >= 0
         },
         colorBackground (route) {
             $('body').css('background-image', this.uncoloredRoutes.indexOf(route) >= 0 ? 'none' : this.backgroundImage)
         },
-        scroll () {
-            this.isHeaderSticky = this.isMenuOpened ? true : window.pageYOffset > 0
-            this.$emit('sticky-header', this.isHeaderSticky)
+        hideHeader () {
+            this.isHeaderHidden = window.innerHeight < window.innerWidth && this.$route.path === '/game/intervals'
         },
         toggleMenu (event) {
             if (!this.outsideClick) {

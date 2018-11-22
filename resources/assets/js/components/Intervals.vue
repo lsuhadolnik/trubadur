@@ -3,7 +3,10 @@
 
 .intervals {
     width          : 100%;
+    height         : 100vh;
     padding-bottom : 44px;
+
+    @include breakpoint-landscape { position: relative; }
 }
 
 .intervals__instructions {
@@ -15,28 +18,74 @@
 
 .intervals__instructions-list-item { padding: 8px 20px 8px 3px; }
 
+.intervals__logic {
+    display: flex;
+
+    @include breakpoint-portrait { display: block; }
+}
+
+.intervals__stave-keyboard-wrapper {
+    width      : 65vw;
+    margin-top : 10px;
+    padding    : 0 2.5vw;
+
+    @include breakpoint-portrait { margin-top: 0; }
+}
+
+.intervals__stave { margin-bottom: 5px; }
+
+.intervals__commands {
+    width           : 35vw;
+    padding         : 0 2.5vw;
+    display         : flex;
+    justify-content : space-evenly;
+    align-items     : center;
+    flex-direction  : column;
+
+    @include breakpoint-portrait {
+        width          : 100vw;
+        margin-top     : 10px;
+        padding        : 0;
+        flex-direction : row;
+    }
+
+    @include breakpoint-small-phone-landscape { padding-bottom: 25px; }
+    @include breakpoint-large-phone-landscape { padding-bottom: 20px; }
+}
+
+.intervals__state {
+    padding : 0 2.5vw;
+    display : flex;
+
+    @include breakpoint-portrait {
+        padding-top : 25px;
+        display     : block;
+    }
+}
+
 .intervals__progress-wrapper {
-    padding         : 5px 2.5vw 0 2.5vw;
+    width           : 77.5vw;
+    height          : 65px;
     display         : flex;
     justify-content : space-between;
     align-items     : center;
 
     @include breakpoint-portrait {
-        padding-top     : 10px;
+        width           : 100%;
+        height          : auto;
+        padding-right   : 0;
         justify-content : space-evenly;
         flex-direction  : column;
     }
 }
 
 .intervals__progress-chapters {
-    width        : 50%;
-    margin-right : 20px;
-    display      : flex;
+    width   : 40vw;
+    display : flex;
 
     @include breakpoint-portrait {
-        width        : 100%;
-        margin-right : 0;
-        padding      : 0 2.5vw 10px 2.5vw;
+        width          : 100%;
+        padding-bottom : 10px;
     }
 }
 
@@ -67,58 +116,22 @@
     background-color : $fern;
 }
 
-.intervals__stave-keyboard-wrapper {
-    margin-top      : 10px;
-    padding         : 0 2.5vw;
-    display         : flex;
-    justify-content : center;
-    align-items     : center;
-    flex-direction  : row;
-
-    @include breakpoint-portrait {
-        margin-top     : 0;
-        flex-direction : column;
-    }
-}
-
-.intervals__stave {
-    margin-right: 2.5vw;
-
-    @include breakpoint-portrait { margin-right: 0; }
-}
-
-.intervals__keyboard {
-    margin-left: 2.5vw;
-
-    @include breakpoint-portrait { margin-left: 0; }
-}
-
-.intervals__commands {
-    margin-top      : 5px;
-    display         : flex;
-    justify-content : space-evenly;
-
-    @include breakpoint-portrait { margin-top: 20px; }
-}
-
 .intervals__notification-label {
-    color           : $cabaret;
-    font-size       : 18px;
+    height       : 45px;
+    display      : flex;
+    align-items  : center;
+    text-align   : center;
+    color        : $cabaret;
+    font-size    : 17px;
 }
 
-.intervals__notification-label--portrait {
-    margin-top      : 20px;
-    display         : flex;
-    justify-content : center;
+.intervals__timer {
+    position : absolute;
+    right    : 2.5vw;
+    bottom   : 45px;
 
-    @include breakpoint-landscape { display: none; }
-}
-
-.intervals__notification-label--landscape {
-    width      : 150px;
-    text-align : center;
-
-    @include breakpoint-portrait { display: none; }
+    @include breakpoint-portrait { position: unset; }
+    @include breakpoint-tablet-landscape { position: unset; }
 }
 </style>
 
@@ -277,37 +290,38 @@
             </ul>
         </div>
         <div v-show="!loading && !instructing">
-            <div class="intervals__progress-wrapper">
-                <div class="intervals__progress-chapters">
-                    <div class="intervals__progress-chapter" v-for="n in nChapters">
-                        <div class="intervals__progress-question" :style="{ 'width': (chapter > n ? 100 : ((number - 1) * 100 / nQuestions)) + '%' }" v-show="chapter >= n"></div>
-                    </div>
-                </div>
-                <svg id="timer"></svg>
-                <label class="intervals__notification-label intervals__notification-label--landscape">{{ notification }}</label>
-            </div>
             <label style="padding-left: 10px" v-show="debug">{{ sample.join(',') }} | {{ answer.map(a => a.pitch).join(',') }}</label>
-            <div class="intervals__stave-keyboard-wrapper">
-                <div class="intervals__stave">
-                    <stave :n-notes="sample.length" :note-type="notes.type" :clef="notes.clef" :sharp-flat-map="sharpFlatMap" @notes-changed="notesChanged"></stave>
-                </div>
-                <div class="intervals__keyboard">
+            <div class="intervals__logic">
+                <div class="intervals__stave-keyboard-wrapper">
+                    <div class="intervals__stave">
+                        <stave :n-notes="sample.length" :note-type="notes.type" :clef="notes.clef" :sharp-flat-map="sharpFlatMap" @notes-changed="notesChanged"></stave>
+                    </div>
                     <keyboard :channel="channel" :midi="midi" @note-played="addNote" @key-pressed="keyPressed"></keyboard>
                 </div>
+                <div class="intervals__commands">
+                    <div class="intervals__command--delete">
+                        <element-button text="izbriši noto" :disable="answer.length <= 1" @click.native="removeNote()"></element-button>
+                    </div>
+                    <div class="intervals__command--replay">
+                        <element-button text="predvajaj" @click.native="playNotes()" v-show="!playing"></element-button>
+                        <element-button text="ustavi" @click.native="stopNotes()" v-show="playing"></element-button>
+                    </div>
+                    <div class="intervals__command--next">
+                        <element-button :text="'naprej (' + (maxAnswersPerQuestion - nAnswers) + ')'" :disable="playing" @click.native="checkCorrectness()"></element-button>
+                    </div>
+                </div>
             </div>
-            <div class="intervals__commands">
-                <div class="intervals__command--delete">
-                    <element-button text="izbriši noto" :disable="answer.length <= 1" @click.native="removeNote()"></element-button>
-                </div>
-                <div class="intervals__command--replay">
-                    <element-button text="predvajaj" @click.native="playNotes()" v-show="!playing"></element-button>
-                    <element-button text="ustavi" @click.native="stopNotes()" v-show="playing"></element-button>
-                </div>
-                <div class="intervals__command--next">
-                    <element-button :text="'naprej (' + (maxAnswersPerQuestion - nAnswers) + ')'" :disable="playing" @click.native="checkCorrectness()"></element-button>
+            <div class="intervals__state">
+                <div class="intervals__progress-wrapper">
+                    <div class="intervals__progress-chapters">
+                        <div class="intervals__progress-chapter" v-for="n in nChapters">
+                            <div class="intervals__progress-question" :style="{ 'width': (chapter > n ? 100 : ((number - 1) * 100 / nQuestions)) + '%' }" v-show="chapter >= n"></div>
+                        </div>
+                    </div>
+                    <label class="intervals__notification-label">{{ notification }}</label>
+                    <svg class="intervals__timer" id="timer"></svg>
                 </div>
             </div>
-            <label class="intervals__notification-label intervals__notification-label--portrait">{{ notification }}</label>
         </div>
     </div>
 </template>

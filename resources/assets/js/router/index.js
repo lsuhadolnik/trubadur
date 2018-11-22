@@ -18,6 +18,7 @@ import Levels from '../components/profile/Levels.vue'
 import Loader from '../components/elements/Loader.vue'
 import Me from '../components/profile/Me.vue'
 import Note from '../components/music/Note.vue'
+import PageNotFound from '../components/PageNotFound.vue'
 import Profile from '../components/Profile.vue'
 import Settings from '../components/Settings.vue'
 import Stave from '../components/music/Stave.vue'
@@ -32,17 +33,11 @@ Vue.component('header-menu', HeaderMenu)
 Vue.component('keyboard', Keyboard)
 Vue.component('loader', Loader)
 Vue.component('note', Note)
+Vue.component('page-not-found', PageNotFound)
 Vue.component('profile-me', Me)
 Vue.component('profile-levels', Levels)
 Vue.component('profile-badges', Badges)
 Vue.component('stave', Stave)
-
-const PageNotFound = Vue.component('page-not-found', {
-    template: '',
-    created: () => {
-        window.location.href = '/home'
-    }
-})
 
 Vue.use(VueRouter)
 
