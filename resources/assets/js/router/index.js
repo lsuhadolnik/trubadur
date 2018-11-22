@@ -37,6 +37,13 @@ Vue.component('profile-levels', Levels)
 Vue.component('profile-badges', Badges)
 Vue.component('stave', Stave)
 
+const PageNotFound = Vue.component('page-not-found', {
+    template: '',
+    created: () => {
+        window.location.href = '/home'
+    }
+})
+
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -85,6 +92,11 @@ export default new VueRouter({
             name: 'settings',
             path: '/settings',
             component: Settings
+        },
+        {
+            name: 'pageNotFound',
+            path: '*',
+            component: PageNotFound
         }
     ]
 })

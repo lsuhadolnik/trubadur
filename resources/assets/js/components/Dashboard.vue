@@ -60,7 +60,6 @@
                 <label class="dashboard__label">Ni novih obvestil.</label>
             </div>
         </div>
-
     </div>
 </template>
 
