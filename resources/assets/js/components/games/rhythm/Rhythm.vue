@@ -21,12 +21,6 @@
     .rythm-game__wrap {
         touch-action: manipulation;
     }
-
-    .rhythm-game__staff {
-        display: flex;
-        justify-content: center;
-        
-    }
     
 
 </style>
@@ -58,7 +52,8 @@ export default {
                 base_note: 4
             },
             cursor: {
-                position: 0
+                position: 0,
+                x: 0
             }
         }
     },

@@ -1,13 +1,45 @@
 <template>
 
     <div class="rhythm-game__staff">
-
-        <div class="rhythm-game__staff__first-row"  id="first-row"></div>
-        <div class="rhythm-game__staff__second-row" id="second-row"></div>
-
+        
+        <div class="rhythm-game__staff__first-row" @click="_minimap_clicked">
+            <div id="first-row" ></div>
+        </div>
+        
+        <div class="rhythm-game__staff__second-row">
+            <div id="second-row"></div>
+        </div>
+        
     </div>
 
 </template>
+
+<style lang="scss" scoped>
+
+    .rhythm-game__staff__first-row {
+        
+    }
+
+    #first-row {
+        transform: scale(0.5) translate(-50%, 0);
+    }
+
+    .rhythm-game__staff__second-row {
+        /*background:red;*/
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+        height: 145px;
+        /*scroll-behavior: smooth;
+        -webkit-scroll-behavior: smooth;*/
+    }
+
+    #second-row {
+        -webkit-transform: scale(2) translate(25%, 25%);
+        transform: scale(2) translate(25%, 25%);
+    }
+
+</style>
+
 
 <script>
 
@@ -29,25 +61,37 @@ export default {
         return {
 
             info: {
-                width: window.innerWidth * 0.98,
-                height: 200,
-                staveCount: 2
+                width: 2*(window.innerWidth),
+                height: 60,
+                staveCount: 2,
+                barWidth: window.innerWidth,
+                barHeight: 60,
+                barOffsetY: 30,
+
+                maxStaveWidth: 320,
+
+                lastMinimapBubbleX: 0,
+                lastMinimapBubbleW: 0
             },
 
             VF: {
-                renderer: null,
-                context: null,
-                staves:  [],
+                el_ids : [
+                    {
+                        id: "first-row",
+                        role: "minimap",
+                        bubble_class: "minimap-bubble"
+                    }, 
+                    {
+                        id: "second-row",
+                        role: "zoomview"
+                    }
+                ]
             }
         }
     },
     methods: {
 
-        _clear: function(){
-            this.VF.context.clear();
-        },
-
-        _vex_draw_voice: function(stave, renderQueue, optionals){
+        _vex_draw_voice: function(context, stave, renderQueue, optionals){
 
             // Create a new voice everytime
 
@@ -67,7 +111,7 @@ export default {
 
             // Been trying different factors.
             // If you change this, make sure, that 16 sixteenth notes fit onto the screen.
-            var maxNotesWidth = this.info.width * 0.8;
+            var maxNotesWidth = this.info.width * 0.8 * 0.5;
 
             var formatter = new VF.Formatter()
                 .format([voice], maxNotesWidth);
@@ -75,38 +119,32 @@ export default {
             // Render voice
             //beams.forEach(function(b) {b.setContext(context).draw()})
 
-            voice.draw(this.VF.context, stave);
+            voice.draw(context, stave);
             
             // Draw optionals...
             if(optionals) {
 
                 if(optionals.ties) {
 
-                    let data = this;
-                    // Draw ties
-                    optionals.ties.forEach(function(t) {t.setContext(data.VF.context).draw()})
+                    optionals.ties.forEach(function(t) {t.setContext(context).draw()})
 
                 }
 
             }
-
         },
 
-        _vex_draw_staves: function(){
+        _vex_draw_staves: function(context){
             
-            this.VF.staves = [];
+            let staves = [];
 
             for(let idx_stave = 0; idx_stave < this.info.staveCount; idx_stave++){
 
-                let staveHeight = 60;
-
                 let stave = new VF.Stave(
-                    0,
-                    staveHeight * idx_stave, 
+                    this.info.barWidth * idx_stave,
+                    -this.info.barOffsetY, // staveHeight * idx_stave
                     this.info.width);
 
-
-                this.VF.staves.push(stave);
+                staves.push(stave);
 
                 // If this is the first stave
                 if(idx_stave == 0){
@@ -118,15 +156,88 @@ export default {
                     );
                 }
                 
-
                 // Connect it to the rendering context and draw!
-                stave.setContext(this.VF.context).draw();
+                stave.setContext(context).draw();
 
             }
 
+            return staves;
+
         },
 
-        render(notes, cursor) {
+        _minimap_clicked(event) {
+
+            let v = document.getElementById("second-row").parentNode;
+
+            // Content width
+            let contentWidth = v.scrollWidth;
+
+            // Screen width
+            let screenWidth = window.innerWidth;
+
+            // Touch X
+            let touchX = event.clientX;
+
+            let sDoSomeMath = (touchX / screenWidth) * contentWidth - screenWidth / 2;
+
+            v.scroll(sDoSomeMath, 0);
+
+            // Animate bubble
+            let x =  (touchX / screenWidth) * minimapWidth;
+            x = x - screenWidth*3/8;
+            x = Math.min(Math.max(0, x), minimapWidth - this.info.lastMinimapBubbleW);
+            let bubble_class = this.VF.el_ids[0].bubble_class;
+            let rect = document.querySelector("."+bubble_class);
+            rect.setAttribute("x", x);
+
+        },
+
+        _cursor_rendered(descriptor, cursorNode){
+
+            if(!cursorNode)
+                return;
+
+            let zoomViewScroll = document.getElementById("second-row").parentNode;
+
+            let scrollWidth = zoomViewScroll.scrollWidth;            
+            let screenWidth = window.innerWidth;
+        
+            let bbox = cursorNode.attrs.el.getBoundingClientRect();
+            let startX = bbox.left + bbox.width / 2;
+
+            zoomViewScroll.scroll({
+                left: startX - screenWidth*3/4,
+                top: 0,
+                behavior: 'smooth'
+            });
+            
+            if(descriptor.role == "minimap") {
+
+                // GET THAT RECT
+                let rect = document.querySelector("."+descriptor.bubble_class);
+                
+                let svg = descriptor.context;
+                let minimapWidth = svg.width;
+
+                let width = (screenWidth / scrollWidth) * minimapWidth;
+
+                let x =  (startX / screenWidth) * minimapWidth;
+                x = x - screenWidth*3/8;
+                x = Math.min(Math.max(0, x), minimapWidth - width);
+                
+                this.info.lastMinimapBubbleX = x;
+                this.info.lastMinimapBubbleW = width;
+
+                rect.setAttribute("x", x);
+                rect.setAttribute("width", width);
+
+
+            }            
+
+        },
+
+        _render_context(descriptor, notes, cursor){
+
             // Render onto n bars. Assumes no bar overlapping...
 
             // notes = [
@@ -139,18 +250,24 @@ export default {
             //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3, tie:true},
             //  ];
 
+            // element from el_ids array
+            // We created the context in mounted()
+            let context = descriptor.context;
+
             // Clear all notes from svg
-            this._clear();
+            context.clear();
 
             // Redraw staves
-            this._vex_draw_staves();
+            let staves = this._vex_draw_staves(context);
 
             let staveIndex = 0;
+
+            let cursorNote = null;
 
             var ties = [];
             var renderQueue = [];
             var currentDuration = new Fraction(0);
-            for(let i = 0; i < notes.length; i++){
+            for(var i = 0; i < notes.length; i++){
 
                 // Bye bye, false note
                 if(!notes[i]) { continue; }
@@ -160,7 +277,7 @@ export default {
                     {
                         clef: "treble", 
                         keys: ["g/4"], 
-                        duration: notes[i].symbol 
+                        duration: notes[i].symbol
                     }
                 );
 
@@ -186,17 +303,24 @@ export default {
                         fillStyle: "blue", 
                         strokeStyle: "blue"
                     });
+
+                    cursorNote = newNote;
+                    console.log(cursorNote);
                 }
 
                 renderQueue.push(newNote);
-                currentDuration = currentDuration.add(notes[i].duration);
 
+                currentDuration = currentDuration.add(notes[i].duration);
                 
                 if(currentDuration.compare(new Fraction(1)) == 0){
                     
-                    this._vex_draw_voice(this.VF.staves[staveIndex], renderQueue, {
+                    this._vex_draw_voice(context, staves[staveIndex], renderQueue, {
                         ties: ties
                     });
+
+                    for(let ff = 0; ff < renderQueue.length; ff++){
+                        renderQueue[ff].attrs.el.setAttribute("onclick", "noteClicked("+i+")");
+                    }
 
                     renderQueue = [];
                     ties = [];
@@ -208,12 +332,37 @@ export default {
 
             if(renderQueue.length > 0){
                 // Draw the rest
-                this._vex_draw_voice(this.VF.staves[staveIndex + 1], renderQueue, {
+                this._vex_draw_voice(context, staves[staveIndex + 1], renderQueue, {
                     ties: ties
                 });
             }
-            
 
+        
+            // Render the minimap rectangle
+            if(descriptor.role == "minimap"){
+
+                descriptor.context.rect(
+                    this.info.lastMinimapBubbleX, 
+                    0, 
+                    this.info.lastMinimapBubbleW, 
+                    this.info.barHeight, {
+                    class: descriptor.bubble_class,
+                    fill: "red",
+                    opacity: 0.5
+                });
+            }
+
+            
+            this._cursor_rendered(descriptor, cursorNote);
+
+        },
+
+        
+
+        render(notes, cursor) {
+            for(var i = 0; i < this.VF.el_ids.length; i++){
+                this._render_context(this.VF.el_ids[i], notes, cursor);
+            }
         }
     },
     mounted(){
@@ -223,19 +372,20 @@ export default {
         // VexFlow Magic
         let VF = Vex.Flow;
 
-        // Create an SVG renderer and attach it to the DIV element named "boo".
-        var div = document.getElementById("first-row")
-        this.VF.renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
+        for(let idx_context = 0; idx_context < this.VF.el_ids.length; idx_context++)
+        {
+            var div = document.getElementById(this.VF.el_ids[idx_context].id)
+            let renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
 
-        // Size our svg:
-        this.VF.renderer.resize(
-            this.info.width,
-            this.info.height,
-        );
+            // Size our svg:
+            renderer.resize(
+                this.info.width,
+                this.info.height,
+            );
 
-        // And get a drawing context:
-        this.VF.context = this.VF.renderer.getContext();
-        
+            this.VF.el_ids[idx_context].context = renderer.getContext();
+        }
+
     },
 
 }
