@@ -50999,15 +50999,27 @@ var Tuplet = VF.Tuplet;
 
                 maxStaveWidth: 320,
 
+                bubble_class: "minimap-bubble",
                 lastMinimapBubbleX: 0,
-                lastMinimapBubbleW: 0
+                lastMinimapBubbleW: 0,
+
+                minimap_in_click: false,
+
+                note_x_positions: [],
+
+                scrollBuffer: {
+                    minimapX: 0,
+                    scrollX: 0
+                },
+
+                cursorBarClass: "cursor-bar"
+
             },
 
             VF: {
                 el_ids: [{
                     id: "first-row",
-                    role: "minimap",
-                    bubble_class: "minimap-bubble"
+                    role: "minimap"
                 }, {
                     id: "second-row",
                     role: "zoomview"
@@ -51017,6 +51029,91 @@ var Tuplet = VF.Tuplet;
     },
 
     methods: {
+
+        note_clicked: function note_clicked(Xoffset) {
+
+            console.log("ALERT!");
+
+            var zoomView = document.getElementById("second-row").parentNode;
+            var screenWidth = window.innerWidth;
+            var zoomScrollWidth = zoomView.scrollWidth;
+
+            var zoomScrollLeft = zoomView.scrollLeft;
+
+            var x = zoomScrollLeft + Xoffset;
+
+            var minIndex = 999;
+            var minDiff = 9999;
+            var poss = this.info.note_x_positions;
+            for (var i = 0; i < poss.length; i++) {
+                if (Math.abs(poss[i] - x) < minDiff) {
+                    minDiff = Math.abs(poss[i] - x);
+                    minIndex = i;
+                }
+            }
+
+            if (minDiff < 50) {
+                //alert("Cursor now on X("+minIndex+"), distance:"+minDiff)
+                this.cursor.position = minIndex;
+                this._save_scroll();
+                this.$parent.notes._call_render();
+                this._restore_scroll();
+            }
+        },
+
+        _get_scroll_data: function _get_scroll_data() {
+
+            // Vrni: 
+            // - Screen Width
+            // - Zoom Width
+            // ...
+
+        },
+
+        _save_scroll: function _save_scroll() {
+
+            var zoomView = document.getElementById("second-row").parentNode;
+            this.info.scrollBuffer.scrollX = zoomView.scrollLeft;
+
+            var bubble = document.querySelector("." + this.info.bubble_class);
+            this.info.scrollBuffer.minimapX = bubble.getAttribute('x');
+        },
+
+        _restore_scroll: function _restore_scroll() {
+            var zoomView = document.getElementById("second-row").parentNode;
+            zoomView.scroll(this.info.scrollBuffer.scrollX, 0);
+
+            var bubble = document.querySelector("." + this.info.bubble_class);
+            bubble.setAttribute('x', this.info.scrollBuffer.minimapX);
+        },
+
+        scrolled: function scrolled(x, hasScrolled) {
+
+            // Sprejme x koordinato začetka odmika ali balončka
+            var minimap = document.getElementById("first-row");
+            var bubble = document.querySelector("." + this.info.bubble_class);
+            var zoomView = document.getElementById("second-row").parentNode;
+            if (!hasScrolled) zoomView.scroll(x, 0);
+
+            var zoomScrollWidth = zoomView.scrollWidth;
+            var bubbleScrollWidth = minimap.scrollWidth;
+            var bubbleWidth = bubble.getAttribute("width");
+
+            var bubbleX = x / zoomScrollWidth * bubbleScrollWidth;
+
+            bubbleX = Math.max(0, bubbleX);
+            bubbleX = Math.min(bubbleScrollWidth - bubbleWidth, bubbleX);
+
+            bubble.setAttribute("x", bubbleX);
+            this.info.lastMinimapBubbleX = bubbleX;
+        },
+
+        _set_bubble_width: function _set_bubble_width(w) {
+            var rect = document.querySelector("." + this.info.bubble_class);
+            if (rect) rect.setAttribute("width", w);
+
+            this.info.lastMinimapBubbleW = w;
+        },
 
         _vex_draw_voice: function _vex_draw_voice(context, stave, renderQueue, optionals) {
 
@@ -51080,7 +51177,7 @@ var Tuplet = VF.Tuplet;
             return staves;
         },
 
-        _minimap_clicked: function _minimap_clicked(event) {
+        _minimap_clicked: function _minimap_clicked(x) {
 
             var v = document.getElementById("second-row").parentNode;
 
@@ -51091,58 +51188,37 @@ var Tuplet = VF.Tuplet;
             var screenWidth = window.innerWidth;
 
             // Touch X
-            var touchX = event.clientX;
+            var touchX = x;
 
             var sDoSomeMath = touchX / screenWidth * contentWidth - screenWidth / 2;
 
-            v.scroll(sDoSomeMath, 0);
-
-            // Animate bubble
-            var x = touchX / screenWidth * minimapWidth;
-            x = x - screenWidth * 3 / 8;
-            x = Math.min(Math.max(0, x), minimapWidth - this.info.lastMinimapBubbleW);
-            var bubble_class = this.VF.el_ids[0].bubble_class;
-            var rect = document.querySelector("." + bubble_class);
-            rect.setAttribute("x", x);
+            this.scrolled(sDoSomeMath);
         },
-        _cursor_rendered: function _cursor_rendered(descriptor, cursorNode) {
+        _cursor_rendered: function _cursor_rendered(cursorNode, descriptor) {
 
             if (!cursorNode) return;
 
-            var zoomViewScroll = document.getElementById("second-row").parentNode;
-
-            var scrollWidth = zoomViewScroll.scrollWidth;
             var screenWidth = window.innerWidth;
 
             var bbox = cursorNode.attrs.el.getBoundingClientRect();
             var startX = bbox.left + bbox.width / 2;
 
-            zoomViewScroll.scroll({
-                left: startX - screenWidth * 3 / 4,
-                top: 0,
-                behavior: 'smooth'
-            });
+            var sR = document.getElementById("second-row").parentElement;
+            var scrollWidth = sR.scrollWidth;
+            var minimapWidth = screenWidth * 2;
+            this._set_bubble_width(screenWidth / scrollWidth * minimapWidth);
 
-            if (descriptor.role == "minimap") {
+            //this.scrolled(startX - screenWidth*3/4);    
 
-                // GET THAT RECT
-                var rect = document.querySelector("." + descriptor.bubble_class);
-
-                var svg = descriptor.context;
-                var _minimapWidth = svg.width;
-
-                var width = screenWidth / scrollWidth * _minimapWidth;
-
-                var x = startX / screenWidth * _minimapWidth;
-                x = x - screenWidth * 3 / 8;
-                x = Math.min(Math.max(0, x), _minimapWidth - width);
-
-                this.info.lastMinimapBubbleX = x;
-                this.info.lastMinimapBubbleW = width;
-
-                rect.setAttribute("x", x);
-                rect.setAttribute("width", width);
+            if (descriptor.role == "zoomview") {
+                alert("At " + startX);
+                var cE = document.getElementsByClassName(this.info.cursorBarClass);
+                for (var idx_cursor = 0; idx_cursor < cE.length; idx_cursor++) {
+                    cE[idx_cursor].setAttribute('x', startX);
+                }
             }
+
+            this.scrolled(startX - screenWidth * 0.5);
         },
         _render_context: function _render_context(descriptor, notes, cursor) {
 
@@ -51164,6 +51240,8 @@ var Tuplet = VF.Tuplet;
 
             // Clear all notes from svg
             context.clear();
+
+            this.info.note_x_positions = [];
 
             // Redraw staves
             var staves = this._vex_draw_staves(context);
@@ -51211,7 +51289,6 @@ var Tuplet = VF.Tuplet;
                     });
 
                     cursorNote = newNote;
-                    console.log(cursorNote);
                 }
 
                 renderQueue.push(newNote);
@@ -51224,8 +51301,16 @@ var Tuplet = VF.Tuplet;
                         ties: ties
                     });
 
-                    for (var ff = 0; ff < renderQueue.length; ff++) {
-                        renderQueue[ff].attrs.el.setAttribute("onclick", "noteClicked(" + i + ")");
+                    if (descriptor.role == 'zoomview') {
+
+                        var kk = document.getElementById("second-row").parentElement.scrollLeft;
+
+                        for (var ff = 0; ff < renderQueue.length; ff++) {
+                            this.info.note_x_positions.push(
+                            // Unsupported in iOS Safari
+                            //renderQueue[ff].attrs.el.getClientRects()[0].x
+                            renderQueue[ff].attrs.el.getBoundingClientRect().x + kk);
+                        }
                     }
 
                     renderQueue = [];
@@ -51246,13 +51331,19 @@ var Tuplet = VF.Tuplet;
             if (descriptor.role == "minimap") {
 
                 descriptor.context.rect(this.info.lastMinimapBubbleX, 0, this.info.lastMinimapBubbleW, this.info.barHeight, {
-                    class: descriptor.bubble_class,
+                    class: this.info.bubble_class,
                     fill: "red",
                     opacity: 0.5
                 });
             }
 
-            this._cursor_rendered(descriptor, cursorNote);
+            descriptor.context.rect(150, 0, 2, this.info.barHeight, {
+                class: this.info.cursorBarClass,
+                fill: "green",
+                opacity: 0.5
+            });
+
+            this._cursor_rendered(cursorNote, descriptor);
         },
         render: function render(notes, cursor) {
             for (var i = 0; i < this.VF.el_ids.length; i++) {
@@ -51263,6 +51354,34 @@ var Tuplet = VF.Tuplet;
     mounted: function mounted() {
 
         // INIT
+        var sR = document.getElementById("second-row").parentElement;
+        var vue = this;
+        sR.onscroll = function (e) {
+            vue.scrolled(sR.scrollLeft, true);
+            //e.preventDefault();
+            return false;
+        };
+
+        sR.onclick = function (e) {
+            vue.note_clicked(e.clientX);
+        };
+
+        var fR = document.getElementById("first-row").parentElement;
+
+        fR.ontouchmove = function (e) {
+            vue._minimap_clicked(e.touches[0].clientX);
+        };
+
+        fR.onmousedown = function (e) {
+            vue.info.minimap_in_click = true;
+            vue._minimap_clicked(e.clientX);
+        };
+        fR.onmouseup = function (e) {
+            vue.info.minimap_in_click = false;
+        };
+        fR.onmousemove = function (e) {
+            if (vue.info.minimap_in_click) vue._minimap_clicked(e.clientX);
+        };
 
         // VexFlow Magic
         var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
@@ -75535,26 +75654,21 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "rhythm-game__staff" }, [
-    _c(
-      "div",
-      {
-        staticClass: "rhythm-game__staff__first-row",
-        on: { click: _vm._minimap_clicked }
-      },
-      [_c("div", { attrs: { id: "first-row" } })]
-    ),
-    _vm._v(" "),
-    _vm._m(0)
-  ])
+  return _vm._m(0)
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "rhythm-game__staff__second-row" }, [
-      _c("div", { attrs: { id: "second-row" } })
+    return _c("div", { staticClass: "rhythm-game__staff" }, [
+      _c("div", { staticClass: "rhythm-game__staff__first-row" }, [
+        _c("div", { attrs: { id: "first-row" } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "rhythm-game__staff__second-row" }, [
+        _c("div", { attrs: { id: "second-row" } })
+      ])
     ])
   }
 ]

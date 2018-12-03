@@ -2,7 +2,7 @@
 
     <div class="rhythm-game__staff">
         
-        <div class="rhythm-game__staff__first-row" @click="_minimap_clicked">
+        <div class="rhythm-game__staff__first-row">
             <div id="first-row" ></div>
         </div>
         
@@ -70,8 +70,21 @@ export default {
 
                 maxStaveWidth: 320,
 
+                bubble_class: "minimap-bubble",
                 lastMinimapBubbleX: 0,
-                lastMinimapBubbleW: 0
+                lastMinimapBubbleW: 0,
+
+                minimap_in_click: false,
+
+                note_x_positions: [],
+
+                scrollBuffer: {
+                    minimapX: 0,
+                    scrollX: 0
+                },
+
+                cursorBarClass: "cursor-bar"
+
             },
 
             VF: {
@@ -79,7 +92,6 @@ export default {
                     {
                         id: "first-row",
                         role: "minimap",
-                        bubble_class: "minimap-bubble"
                     }, 
                     {
                         id: "second-row",
@@ -90,6 +102,99 @@ export default {
         }
     },
     methods: {
+
+        note_clicked: function(Xoffset){
+
+            console.log("ALERT!")
+
+
+            let zoomView = document.getElementById("second-row").parentNode;
+            let screenWidth = window.innerWidth;
+            let zoomScrollWidth = zoomView.scrollWidth;
+            
+            let zoomScrollLeft = zoomView.scrollLeft;
+
+            let x = zoomScrollLeft + Xoffset;
+
+            let minIndex = 999;
+            let minDiff = 9999;
+            let poss = this.info.note_x_positions
+            for(let i = 0; i < poss.length; i++){
+                if(Math.abs(poss[i] - x) < minDiff){
+                    minDiff = Math.abs(poss[i] - x);
+                    minIndex = i;
+                }
+            }
+
+            if(minDiff < 50){
+                //alert("Cursor now on X("+minIndex+"), distance:"+minDiff)
+                this.cursor.position = minIndex;
+                this._save_scroll();
+                this.$parent.notes._call_render()
+                this._restore_scroll();
+            }
+
+
+        },
+
+        _get_scroll_data: function(){
+
+            // Vrni: 
+            // - Screen Width
+            // - Zoom Width
+            // ...
+
+        },
+
+        _save_scroll: function(){
+
+            let zoomView = document.getElementById("second-row").parentNode;
+            this.info.scrollBuffer.scrollX = zoomView.scrollLeft;
+
+            let bubble = document.querySelector("."+this.info.bubble_class);
+            this.info.scrollBuffer.minimapX = bubble.getAttribute('x');
+
+        },
+
+        _restore_scroll: function() {
+            let zoomView = document.getElementById("second-row").parentNode;
+            zoomView.scroll(this.info.scrollBuffer.scrollX, 0);
+
+            let bubble = document.querySelector("."+this.info.bubble_class);
+            bubble.setAttribute('x', this.info.scrollBuffer.minimapX);
+        },
+
+        scrolled: function(x, hasScrolled){
+
+            // Sprejme x koordinato začetka odmika ali balončka
+            let minimap = document.getElementById("first-row");
+            let bubble = document.querySelector("."+this.info.bubble_class);
+            let zoomView = document.getElementById("second-row").parentNode;
+            if(!hasScrolled)
+                zoomView.scroll(x, 0);
+
+            let zoomScrollWidth = zoomView.scrollWidth;
+            let bubbleScrollWidth = minimap.scrollWidth;
+            let bubbleWidth = bubble.getAttribute("width");
+
+            let bubbleX = (x/zoomScrollWidth)*bubbleScrollWidth;
+
+            bubbleX = Math.max(0, bubbleX);
+            bubbleX = Math.min(bubbleScrollWidth - bubbleWidth, bubbleX)
+
+            bubble.setAttribute("x", bubbleX);
+            this.info.lastMinimapBubbleX = bubbleX;
+
+
+        },
+
+        _set_bubble_width: function(w){
+            let rect = document.querySelector("."+this.info.bubble_class);
+            if(rect)
+                rect.setAttribute("width", w);
+            
+            this.info.lastMinimapBubbleW = w;
+        },
 
         _vex_draw_voice: function(context, stave, renderQueue, optionals){
 
@@ -165,7 +270,7 @@ export default {
 
         },
 
-        _minimap_clicked(event) {
+        _minimap_clicked(x) {
 
             let v = document.getElementById("second-row").parentNode;
 
@@ -176,63 +281,42 @@ export default {
             let screenWidth = window.innerWidth;
 
             // Touch X
-            let touchX = event.clientX;
+            let touchX = x;
 
             let sDoSomeMath = (touchX / screenWidth) * contentWidth - screenWidth / 2;
 
-            v.scroll(sDoSomeMath, 0);
-
-            // Animate bubble
-            let x =  (touchX / screenWidth) * minimapWidth;
-            x = x - screenWidth*3/8;
-            x = Math.min(Math.max(0, x), minimapWidth - this.info.lastMinimapBubbleW);
-            let bubble_class = this.VF.el_ids[0].bubble_class;
-            let rect = document.querySelector("."+bubble_class);
-            rect.setAttribute("x", x);
+            this.scrolled(sDoSomeMath);
 
         },
 
-        _cursor_rendered(descriptor, cursorNode){
+        _cursor_rendered(cursorNode, descriptor){
 
             if(!cursorNode)
                 return;
 
-            let zoomViewScroll = document.getElementById("second-row").parentNode;
-
-            let scrollWidth = zoomViewScroll.scrollWidth;            
             let screenWidth = window.innerWidth;
         
             let bbox = cursorNode.attrs.el.getBoundingClientRect();
             let startX = bbox.left + bbox.width / 2;
 
-            zoomViewScroll.scroll({
-                left: startX - screenWidth*3/4,
-                top: 0,
-                behavior: 'smooth'
-            });
+            let sR = document.getElementById("second-row").parentElement;
+            var scrollWidth = sR.scrollWidth;
+            var minimapWidth = screenWidth * 2;
+            this._set_bubble_width((screenWidth/scrollWidth) * minimapWidth);
+
+            //this.scrolled(startX - screenWidth*3/4);    
+
+            if(descriptor.role == "zoomview"){
+                alert("At "+startX);
+                let cE = document.getElementsByClassName(this.info.cursorBarClass);
+                for(var idx_cursor = 0; idx_cursor < cE.length; idx_cursor++){
+                    cE[idx_cursor].setAttribute('x', startX);
+                    // TU SEM OSTAL
+                }
+            }
             
-            if(descriptor.role == "minimap") {
 
-                // GET THAT RECT
-                let rect = document.querySelector("."+descriptor.bubble_class);
-                
-                let svg = descriptor.context;
-                let minimapWidth = svg.width;
-
-                let width = (screenWidth / scrollWidth) * minimapWidth;
-
-                let x =  (startX / screenWidth) * minimapWidth;
-                x = x - screenWidth*3/8;
-                x = Math.min(Math.max(0, x), minimapWidth - width);
-                
-                this.info.lastMinimapBubbleX = x;
-                this.info.lastMinimapBubbleW = width;
-
-                rect.setAttribute("x", x);
-                rect.setAttribute("width", width);
-
-
-            }            
+            this.scrolled(startX - screenWidth*0.5);    
 
         },
 
@@ -256,6 +340,8 @@ export default {
 
             // Clear all notes from svg
             context.clear();
+
+            this.info.note_x_positions = [];
 
             // Redraw staves
             let staves = this._vex_draw_staves(context);
@@ -305,7 +391,6 @@ export default {
                     });
 
                     cursorNote = newNote;
-                    console.log(cursorNote);
                 }
 
                 renderQueue.push(newNote);
@@ -318,9 +403,21 @@ export default {
                         ties: ties
                     });
 
-                    for(let ff = 0; ff < renderQueue.length; ff++){
-                        renderQueue[ff].attrs.el.setAttribute("onclick", "noteClicked("+i+")");
+                    if(descriptor.role == 'zoomview'){
+
+                        var kk = document.getElementById("second-row").parentElement.scrollLeft;
+
+                        for(var ff = 0; ff < renderQueue.length; ff++){
+                            this.info.note_x_positions.push(
+                                // Unsupported in iOS Safari
+                                //renderQueue[ff].attrs.el.getClientRects()[0].x
+                                renderQueue[ff].attrs.el.getBoundingClientRect().x + kk
+                            
+                            );
+
+                        }
                     }
+                    
 
                     renderQueue = [];
                     ties = [];
@@ -346,14 +443,23 @@ export default {
                     0, 
                     this.info.lastMinimapBubbleW, 
                     this.info.barHeight, {
-                    class: descriptor.bubble_class,
+                    class: this.info.bubble_class,
                     fill: "red",
                     opacity: 0.5
                 });
             }
 
+            descriptor.context.rect(
+                150, 
+                0, 
+                2, 
+                this.info.barHeight, {
+                class: this.info.cursorBarClass,
+                fill: "green",
+                opacity: 0.5
+            });
             
-            this._cursor_rendered(descriptor, cursorNote);
+            this._cursor_rendered(cursorNote, descriptor);
 
         },
 
@@ -367,7 +473,42 @@ export default {
     },
     mounted(){
 
+
+        
+
         // INIT
+        var sR = document.getElementById("second-row").parentElement;
+        var vue = this;
+        sR.onscroll = function(e){
+            vue.scrolled(sR.scrollLeft, true);
+            //e.preventDefault();
+            return false;
+        }
+
+        sR.onclick = function(e){
+            vue.note_clicked(e.clientX);
+        }
+
+        var fR = document.getElementById("first-row").parentElement;
+
+        fR.ontouchmove = function(e){
+            vue._minimap_clicked(e.touches[0].clientX)
+        }
+
+        fR.onmousedown = function(e){
+            vue.info.minimap_in_click = true;
+            vue._minimap_clicked(e.clientX);
+        }
+        fR.onmouseup = function(e){
+            vue.info.minimap_in_click = false;
+        }
+        fR.onmousemove = function(e){
+            if(vue.info.minimap_in_click)
+                vue._minimap_clicked(e.clientX);
+        }
+
+        
+
 
         // VexFlow Magic
         let VF = Vex.Flow;
