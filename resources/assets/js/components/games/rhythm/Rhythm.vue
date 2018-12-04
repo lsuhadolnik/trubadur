@@ -21,6 +21,10 @@
     .rythm-game__wrap {
         touch-action: manipulation;
     }
+
+    .header {
+
+    }
     
 
 </style>

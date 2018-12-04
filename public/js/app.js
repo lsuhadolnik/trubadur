@@ -50275,6 +50275,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -50916,7 +50920,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*background:red;*/\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  height: 145px;\n  /*scroll-behavior: smooth;\n    -webkit-scroll-behavior: smooth;*/\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n", ""]);
+exports.push([module.i, "\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*scroll-behavior: smooth;\n    -webkit-scroll-behavior: smooth;*/\n}\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*background:red;*/\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 145px;\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n", ""]);
 
 // exports
 
@@ -50929,6 +50933,8 @@ exports.push([module.i, "\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: s
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow__ = __webpack_require__(128);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vexflow__);
+//
+//
 //
 //
 //
@@ -51012,7 +51018,10 @@ var Tuplet = VF.Tuplet;
                     scrollX: 0
                 },
 
-                cursorBarClass: "cursor-bar"
+                cursor: {
+                    cursorBarClass: "cursor-bar",
+                    cursorMargin: 15
+                }
 
             },
 
@@ -51031,8 +51040,6 @@ var Tuplet = VF.Tuplet;
     methods: {
 
         note_clicked: function note_clicked(Xoffset) {
-
-            console.log("ALERT!");
 
             var zoomView = document.getElementById("second-row").parentNode;
             var screenWidth = window.innerWidth;
@@ -51068,6 +51075,21 @@ var Tuplet = VF.Tuplet;
             // - Zoom Width
             // ...
 
+            var zoomView = document.getElementById("second-row").parentNode;
+            var bubble = document.querySelector("." + this.info.bubble_class);
+
+            return {
+
+                screenWidth: window.innerWidth,
+
+                zoomView: zoomView,
+                zoomScrollWidth: zoomView.scrollWidth,
+                zoomScrollLeft: zoomView.scrollLeft,
+
+                bubble: bubble,
+                bubbleWidth: bubble.getAttribute("width"),
+                bubbleX: bubble.getAttribute("x")
+            };
         },
 
         _save_scroll: function _save_scroll() {
@@ -51113,6 +51135,13 @@ var Tuplet = VF.Tuplet;
             if (rect) rect.setAttribute("width", w);
 
             this.info.lastMinimapBubbleW = w;
+        },
+
+        _set_cursor_position: function _set_cursor_position(x) {
+            var cE = document.getElementsByClassName(this.info.cursor.cursorBarClass);
+            for (var idx_cursor = 0; idx_cursor < cE.length; idx_cursor++) {
+                cE[idx_cursor].setAttribute('x', x);
+            }
         },
 
         _vex_draw_voice: function _vex_draw_voice(context, stave, renderQueue, optionals) {
@@ -51196,28 +51225,46 @@ var Tuplet = VF.Tuplet;
         },
         _cursor_rendered: function _cursor_rendered(cursorNode, descriptor) {
 
-            if (!cursorNode) return;
-
             var screenWidth = window.innerWidth;
+            var sR = document.getElementById("second-row").parentElement;
+            var scrollWidth = sR.scrollWidth;
+
+            // ZOOM-BREAK
+            var minimapWidth = screenWidth * 2;
+
+            var bubbleW = screenWidth / scrollWidth * minimapWidth;
+
+            // No cursor note
+            // Cursor is right at the end
+            // after the last note
+            if (!cursorNode) {
+                // Please fix me! :( :(
+                // That stink is unbearable
+                this._set_cursor_position(this.info.lastMinimapBubbleX + bubbleW - 20);
+                return;
+            }
 
             var bbox = cursorNode.attrs.el.getBoundingClientRect();
             var startX = bbox.left + bbox.width / 2;
 
-            var sR = document.getElementById("second-row").parentElement;
-            var scrollWidth = sR.scrollWidth;
-            var minimapWidth = screenWidth * 2;
-            this._set_bubble_width(screenWidth / scrollWidth * minimapWidth);
+            // ZOOM-BREAK
+            this._set_bubble_width(bubbleW);
 
             //this.scrolled(startX - screenWidth*3/4);    
 
             if (descriptor.role == "zoomview") {
-                alert("At " + startX);
-                var cE = document.getElementsByClassName(this.info.cursorBarClass);
-                for (var idx_cursor = 0; idx_cursor < cE.length; idx_cursor++) {
-                    cE[idx_cursor].setAttribute('x', startX);
-                }
+
+                var zoomScrollWidth = scrollWidth;
+                var bubbleScrollWidth = minimapWidth;
+
+                var v = (startX + sR.scrollLeft) / zoomScrollWidth * bubbleScrollWidth - this.info.cursor.cursorMargin;
+
+                this._set_cursor_position(v);
             }
 
+            // Cancel unnecessary scrolls if the cursor is still visible...
+            //alert("startX: "+bbox.left+" screenWidth/2: "+(screenWidth/2)+" ");
+            //if(startX > screenWidth)
             this.scrolled(startX - screenWidth * 0.5);
         },
         _render_context: function _render_context(descriptor, notes, cursor) {
@@ -51283,10 +51330,10 @@ var Tuplet = VF.Tuplet;
                 }
 
                 if (i == cursor.position) {
-                    newNote.setStyle({
-                        fillStyle: "blue",
+                    /*newNote.setStyle({
+                        fillStyle: "blue", 
                         strokeStyle: "blue"
-                    });
+                    });*/
 
                     cursorNote = newNote;
                 }
@@ -51320,6 +51367,11 @@ var Tuplet = VF.Tuplet;
                 }
             }
 
+            // If there are still some notes left 
+            // Happens if the bar is incomplete
+            // sum(durations) != 1
+            // Not only if less than 1 (incomplete bar)
+            // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
             if (renderQueue.length > 0) {
                 // Draw the rest
                 this._vex_draw_voice(context, staves[staveIndex + 1], renderQueue, {
@@ -51337,8 +51389,9 @@ var Tuplet = VF.Tuplet;
                 });
             }
 
+            // RENDER CURSOR BAR
             descriptor.context.rect(150, 0, 2, this.info.barHeight, {
-                class: this.info.cursorBarClass,
+                class: this.info.cursor.cursorBarClass,
                 fill: "green",
                 opacity: 0.5
             });
@@ -51352,6 +51405,11 @@ var Tuplet = VF.Tuplet;
         }
     },
     mounted: function mounted() {
+
+        /*window.onresize = function(ev) {
+            console.log(ev);
+            alert("Prosim osveži stran.")
+        }*/
 
         // INIT
         var sR = document.getElementById("second-row").parentElement;

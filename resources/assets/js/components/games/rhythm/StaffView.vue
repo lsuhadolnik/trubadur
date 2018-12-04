@@ -16,8 +16,9 @@
 
 <style lang="scss" scoped>
 
-    .rhythm-game__staff__first-row {
-        
+    .rhythm-game__staff__second-row {
+        /*scroll-behavior: smooth;
+        -webkit-scroll-behavior: smooth;*/
     }
 
     #first-row {
@@ -28,7 +29,8 @@
         /*background:red;*/
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
-        height: 145px;
+        overflow-scrolling: touch;
+        height: 145px
         /*scroll-behavior: smooth;
         -webkit-scroll-behavior: smooth;*/
     }
@@ -83,7 +85,10 @@ export default {
                     scrollX: 0
                 },
 
-                cursorBarClass: "cursor-bar"
+                cursor: {
+                    cursorBarClass: "cursor-bar",
+                    cursorMargin: 15
+                }
 
             },
 
@@ -104,8 +109,6 @@ export default {
     methods: {
 
         note_clicked: function(Xoffset){
-
-            console.log("ALERT!")
 
 
             let zoomView = document.getElementById("second-row").parentNode;
@@ -144,6 +147,22 @@ export default {
             // - Zoom Width
             // ...
 
+            let zoomView = document.getElementById("second-row").parentNode;
+            let bubble = document.querySelector("."+this.info.bubble_class);
+
+            return {
+
+                screenWidth: window.innerWidth,
+
+                zoomView: zoomView,
+                zoomScrollWidth: zoomView.scrollWidth,
+                zoomScrollLeft: zoomView.scrollLeft,
+
+                bubble: bubble,
+                bubbleWidth: bubble.getAttribute("width"),
+                bubbleX: bubble.getAttribute("x")
+            }
+
         },
 
         _save_scroll: function(){
@@ -171,7 +190,7 @@ export default {
             let bubble = document.querySelector("."+this.info.bubble_class);
             let zoomView = document.getElementById("second-row").parentNode;
             if(!hasScrolled)
-                zoomView.scroll(x, 0);
+                zoomView.scroll(x,0);
 
             let zoomScrollWidth = zoomView.scrollWidth;
             let bubbleScrollWidth = minimap.scrollWidth;
@@ -194,6 +213,13 @@ export default {
                 rect.setAttribute("width", w);
             
             this.info.lastMinimapBubbleW = w;
+        },
+
+        _set_cursor_position: function(x){
+            let cE = document.getElementsByClassName(this.info.cursor.cursorBarClass);
+                for(var idx_cursor = 0; idx_cursor < cE.length; idx_cursor++){
+                    cE[idx_cursor].setAttribute('x', x);
+            }
         },
 
         _vex_draw_voice: function(context, stave, renderQueue, optionals){
@@ -291,32 +317,50 @@ export default {
 
         _cursor_rendered(cursorNode, descriptor){
 
-            if(!cursorNode)
-                return;
+            
+                
 
             let screenWidth = window.innerWidth;
-        
+            let sR = document.getElementById("second-row").parentElement;
+            var scrollWidth = sR.scrollWidth;
+
+            // ZOOM-BREAK
+            var minimapWidth = screenWidth * 2;
+
+            let bubbleW = (screenWidth/scrollWidth) * minimapWidth;
+
+            // No cursor note
+            // Cursor is right at the end
+            // after the last note
+            if(!cursorNode){
+                // Please fix me! :( :(
+                // That stink is unbearable
+                this._set_cursor_position(this.info.lastMinimapBubbleX + bubbleW - 20)
+                return;
+            }
+
             let bbox = cursorNode.attrs.el.getBoundingClientRect();
             let startX = bbox.left + bbox.width / 2;
 
-            let sR = document.getElementById("second-row").parentElement;
-            var scrollWidth = sR.scrollWidth;
-            var minimapWidth = screenWidth * 2;
-            this._set_bubble_width((screenWidth/scrollWidth) * minimapWidth);
+            // ZOOM-BREAK
+            this._set_bubble_width(bubbleW);
 
             //this.scrolled(startX - screenWidth*3/4);    
 
             if(descriptor.role == "zoomview"){
-                alert("At "+startX);
-                let cE = document.getElementsByClassName(this.info.cursorBarClass);
-                for(var idx_cursor = 0; idx_cursor < cE.length; idx_cursor++){
-                    cE[idx_cursor].setAttribute('x', startX);
-                    // TU SEM OSTAL
-                }
+                
+                let zoomScrollWidth = scrollWidth;
+                let bubbleScrollWidth = minimapWidth;
+
+                let v = ((startX + sR.scrollLeft)/zoomScrollWidth)*bubbleScrollWidth - this.info.cursor.cursorMargin;
+
+                this._set_cursor_position(v);
             }
             
-
-            this.scrolled(startX - screenWidth*0.5);    
+            // Cancel unnecessary scrolls if the cursor is still visible...
+            //alert("startX: "+bbox.left+" screenWidth/2: "+(screenWidth/2)+" ");
+            //if(startX > screenWidth)
+            this.scrolled(startX - screenWidth*0.5);
 
         },
 
@@ -385,10 +429,10 @@ export default {
                 }
 
                 if(i == cursor.position){
-                    newNote.setStyle({
+                    /*newNote.setStyle({
                         fillStyle: "blue", 
                         strokeStyle: "blue"
-                    });
+                    });*/
 
                     cursorNote = newNote;
                 }
@@ -427,6 +471,11 @@ export default {
 
             }
 
+            // If there are still some notes left 
+            // Happens if the bar is incomplete
+            // sum(durations) != 1
+            // Not only if less than 1 (incomplete bar)
+            // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
             if(renderQueue.length > 0){
                 // Draw the rest
                 this._vex_draw_voice(context, staves[staveIndex + 1], renderQueue, {
@@ -449,12 +498,13 @@ export default {
                 });
             }
 
+            // RENDER CURSOR BAR
             descriptor.context.rect(
                 150, 
                 0, 
                 2, 
                 this.info.barHeight, {
-                class: this.info.cursorBarClass,
+                class: this.info.cursor.cursorBarClass,
                 fill: "green",
                 opacity: 0.5
             });
@@ -473,8 +523,10 @@ export default {
     },
     mounted(){
 
-
-        
+        /*window.onresize = function(ev) {
+            console.log(ev);
+            alert("Prosim osveži stran.")
+        }*/
 
         // INIT
         var sR = document.getElementById("second-row").parentElement;
@@ -488,6 +540,7 @@ export default {
         sR.onclick = function(e){
             vue.note_clicked(e.clientX);
         }
+
 
         var fR = document.getElementById("first-row").parentElement;
 
