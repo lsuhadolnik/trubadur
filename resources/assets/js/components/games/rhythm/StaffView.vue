@@ -92,17 +92,15 @@ export default {
 
             },
 
-            VF: {
-                el_ids : [
-                    {
-                        id: "first-row",
-                        role: "minimap",
-                    }, 
-                    {
-                        id: "second-row",
-                        role: "zoomview"
-                    }
-                ]
+            CTX: {
+                minimap: {
+                    id: "first-row",
+                    role: "minimap",
+                }, 
+                zoomview: {
+                    id: "second-row",
+                    role: "zoomview"
+                }
             }
         }
     },
@@ -248,7 +246,7 @@ export default {
                 .format([voice], maxNotesWidth);
 
             // Render voice
-            //beams.forEach(function(b) {b.setContext(context).draw()})
+            // beams.forEach(function(b) {b.setContext(context).draw()})
 
             voice.draw(context, stave);
             
@@ -256,9 +254,7 @@ export default {
             if(optionals) {
 
                 if(optionals.ties) {
-
                     optionals.ties.forEach(function(t) {t.setContext(context).draw()})
-
                 }
 
             }
@@ -378,7 +374,13 @@ export default {
             //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3, tie:true},
             //  ];
 
-            // element from el_ids array
+            // Size our svg:
+            descriptor.renderer.resize(
+                this.info.width,
+                this.info.height,
+            );
+
+            // element from CTX object
             // We created the context in mounted()
             let context = descriptor.context;
 
@@ -391,7 +393,6 @@ export default {
             let staves = this._vex_draw_staves(context);
 
             let staveIndex = 0;
-
             let cursorNote = null;
 
             var ties = [];
@@ -516,20 +517,46 @@ export default {
         
 
         render(notes, cursor) {
-            for(var i = 0; i < this.VF.el_ids.length; i++){
-                this._render_context(this.VF.el_ids[i], notes, cursor);
+            for(var key in this.CTX){
+                this._render_context(this.CTX[key], notes, cursor);
             }
+        },
+
+        rerender_notes() {
+            this.$parent.notes._call_render()
+        },
+
+
+        viewportResized() {
+
+            this.info.width = 2*(window.innerWidth);
+            this.info.barWidth   = window.innerWidth;
+            
+            this.rerender_notes()
+
         }
+
     },
     mounted(){
 
-        /*window.onresize = function(ev) {
-            console.log(ev);
-            alert("Prosim osveži stran.")
-        }*/
+        // VexFlow Magic
+        let VF = Vex.Flow;
+        for(let ctx_key in this.CTX)
+        {
+            var div = document.getElementById(this.CTX[ctx_key].id)
+            var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
+
+            this.CTX[ctx_key].el = div;
+            this.CTX[ctx_key].parentElement = div.parentElement;
+            this.CTX[ctx_key].scrollElement = div.parentElement;
+            this.CTX[ctx_key].renderer = renderer;
+            this.CTX[ctx_key].context  = renderer.getContext();
+        }
+
+
 
         // INIT
-        var sR = document.getElementById("second-row").parentElement;
+        var sR = this.CTX.zoomview.parentElement;
         var vue = this;
         sR.onscroll = function(e){
             vue.scrolled(sR.scrollLeft, true);
@@ -541,8 +568,7 @@ export default {
             vue.note_clicked(e.clientX);
         }
 
-
-        var fR = document.getElementById("first-row").parentElement;
+        var fR = this.CTX.minimap.parentElement;
 
         fR.ontouchmove = function(e){
             vue._minimap_clicked(e.touches[0].clientX)
@@ -560,25 +586,11 @@ export default {
                 vue._minimap_clicked(e.clientX);
         }
 
-        
-
-
-        // VexFlow Magic
-        let VF = Vex.Flow;
-
-        for(let idx_context = 0; idx_context < this.VF.el_ids.length; idx_context++)
-        {
-            var div = document.getElementById(this.VF.el_ids[idx_context].id)
-            let renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
-
-            // Size our svg:
-            renderer.resize(
-                this.info.width,
-                this.info.height,
-            );
-
-            this.VF.el_ids[idx_context].context = renderer.getContext();
+        window.onresize = function(event) {
+            vue.viewportResized();
         }
+
+        
 
     },
 

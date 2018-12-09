@@ -51025,14 +51025,15 @@ var Tuplet = VF.Tuplet;
 
             },
 
-            VF: {
-                el_ids: [{
+            CTX: {
+                minimap: {
                     id: "first-row",
                     role: "minimap"
-                }, {
+                },
+                zoomview: {
                     id: "second-row",
                     role: "zoomview"
-                }]
+                }
             }
         };
     },
@@ -51166,7 +51167,7 @@ var Tuplet = VF.Tuplet;
             var formatter = new VF.Formatter().format([voice], maxNotesWidth);
 
             // Render voice
-            //beams.forEach(function(b) {b.setContext(context).draw()})
+            // beams.forEach(function(b) {b.setContext(context).draw()})
 
             voice.draw(context, stave);
 
@@ -51174,7 +51175,6 @@ var Tuplet = VF.Tuplet;
             if (optionals) {
 
                 if (optionals.ties) {
-
                     optionals.ties.forEach(function (t) {
                         t.setContext(context).draw();
                     });
@@ -51281,7 +51281,10 @@ var Tuplet = VF.Tuplet;
             //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3, tie:true},
             //  ];
 
-            // element from el_ids array
+            // Size our svg:
+            descriptor.renderer.resize(this.info.width, this.info.height);
+
+            // element from CTX object
             // We created the context in mounted()
             var context = descriptor.context;
 
@@ -51294,7 +51297,6 @@ var Tuplet = VF.Tuplet;
             var staves = this._vex_draw_staves(context);
 
             var staveIndex = 0;
-
             var cursorNote = null;
 
             var ties = [];
@@ -51399,20 +51401,38 @@ var Tuplet = VF.Tuplet;
             this._cursor_rendered(cursorNote, descriptor);
         },
         render: function render(notes, cursor) {
-            for (var i = 0; i < this.VF.el_ids.length; i++) {
-                this._render_context(this.VF.el_ids[i], notes, cursor);
+            for (var key in this.CTX) {
+                this._render_context(this.CTX[key], notes, cursor);
             }
+        },
+        rerender_notes: function rerender_notes() {
+            this.$parent.notes._call_render();
+        },
+        viewportResized: function viewportResized() {
+
+            this.info.width = 2 * window.innerWidth;
+            this.info.barWidth = window.innerWidth;
+
+            this.rerender_notes();
         }
     },
     mounted: function mounted() {
 
-        /*window.onresize = function(ev) {
-            console.log(ev);
-            alert("Prosim osveži stran.")
-        }*/
+        // VexFlow Magic
+        var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
+        for (var ctx_key in this.CTX) {
+            var div = document.getElementById(this.CTX[ctx_key].id);
+            var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
+
+            this.CTX[ctx_key].el = div;
+            this.CTX[ctx_key].parentElement = div.parentElement;
+            this.CTX[ctx_key].scrollElement = div.parentElement;
+            this.CTX[ctx_key].renderer = renderer;
+            this.CTX[ctx_key].context = renderer.getContext();
+        }
 
         // INIT
-        var sR = document.getElementById("second-row").parentElement;
+        var sR = this.CTX.zoomview.parentElement;
         var vue = this;
         sR.onscroll = function (e) {
             vue.scrolled(sR.scrollLeft, true);
@@ -51424,7 +51444,7 @@ var Tuplet = VF.Tuplet;
             vue.note_clicked(e.clientX);
         };
 
-        var fR = document.getElementById("first-row").parentElement;
+        var fR = this.CTX.minimap.parentElement;
 
         fR.ontouchmove = function (e) {
             vue._minimap_clicked(e.touches[0].clientX);
@@ -51441,18 +51461,9 @@ var Tuplet = VF.Tuplet;
             if (vue.info.minimap_in_click) vue._minimap_clicked(e.clientX);
         };
 
-        // VexFlow Magic
-        var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
-
-        for (var idx_context = 0; idx_context < this.VF.el_ids.length; idx_context++) {
-            var div = document.getElementById(this.VF.el_ids[idx_context].id);
-            var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
-
-            // Size our svg:
-            renderer.resize(this.info.width, this.info.height);
-
-            this.VF.el_ids[idx_context].context = renderer.getContext();
-        }
+        window.onresize = function (event) {
+            vue.viewportResized();
+        };
     }
 });
 
