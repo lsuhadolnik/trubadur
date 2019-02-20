@@ -50247,6 +50247,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RhythmKeyboard_vue__ = __webpack_require__(130);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RhythmKeyboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__RhythmKeyboard_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__noteStore__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuex__ = __webpack_require__(4);
 //
 //
 //
@@ -50279,6 +50280,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 
 
@@ -50319,6 +50322,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     mounted: function mounted() {
         this.notes = new __WEBPACK_IMPORTED_MODULE_5__noteStore__["a" /* default */](this.bar, this.cursor, this.$refs.staff_view.render);
+
+        var instruments = {
+            piano: {
+                channel: 0,
+                soundfont: 'acoustic_grand_piano'
+            }
+        };
+
+        MIDI.loadPlugin({
+            soundfontUrl: '/soundfonts/',
+            instruments: ['acoustic_grand_piano'],
+            targetFormat: 'mp3',
+            onsuccess: function onsuccess() {
+                for (var name in instruments) {
+                    var instrument = instruments[name];
+                    MIDI.setVolume(instrument.channel, 127);
+                    MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
+                }
+            }
+        });
     }
 });
 
@@ -51011,8 +51034,6 @@ var Tuplet = VF.Tuplet;
 
                 minimap_in_click: false,
 
-                note_x_positions: [],
-
                 scrollBuffer: {
                     minimapX: 0,
                     scrollX: 0
@@ -51042,6 +51063,21 @@ var Tuplet = VF.Tuplet;
 
         note_clicked: function note_clicked(Xoffset) {
 
+            var closest = this._get_closest_note(Xoffset);
+            if (closest == -1) {
+                // No scroll..
+            } else {
+                this.cursor.position = closest;
+                this._save_scroll();
+                this.$parent.notes._call_render();
+                this._restore_scroll();
+            }
+
+            console.log("Clicked at " + Xoffset);
+        },
+
+        _get_closest_note: function _get_closest_note(Xoffset) {
+
             var zoomView = document.getElementById("second-row").parentNode;
             var screenWidth = window.innerWidth;
             var zoomScrollWidth = zoomView.scrollWidth;
@@ -51050,9 +51086,14 @@ var Tuplet = VF.Tuplet;
 
             var x = zoomScrollLeft + Xoffset;
 
+            var x_coords = [];
+            zoomView.querySelectorAll(".vf-note").forEach(function (e) {
+                x_coords.push(e.getClientRects()[0].x);
+            });
+
             var minIndex = 999;
-            var minDiff = 9999;
-            var poss = this.info.note_x_positions;
+            var minDiff = 99999;
+            var poss = x_coords;
             for (var i = 0; i < poss.length; i++) {
                 if (Math.abs(poss[i] - x) < minDiff) {
                     minDiff = Math.abs(poss[i] - x);
@@ -51062,11 +51103,10 @@ var Tuplet = VF.Tuplet;
 
             if (minDiff < 50) {
                 //alert("Cursor now on X("+minIndex+"), distance:"+minDiff)
-                this.cursor.position = minIndex;
-                this._save_scroll();
-                this.$parent.notes._call_render();
-                this._restore_scroll();
+                return closest;
             }
+
+            return -1;
         },
 
         _get_scroll_data: function _get_scroll_data() {
@@ -51291,8 +51331,6 @@ var Tuplet = VF.Tuplet;
             // Clear all notes from svg
             context.clear();
 
-            this.info.note_x_positions = [];
-
             // Redraw staves
             var staves = this._vex_draw_staves(context);
 
@@ -51350,17 +51388,26 @@ var Tuplet = VF.Tuplet;
                         ties: ties
                     });
 
-                    if (descriptor.role == 'zoomview') {
-
-                        var kk = document.getElementById("second-row").parentElement.scrollLeft;
-
-                        for (var ff = 0; ff < renderQueue.length; ff++) {
+                    /*if(descriptor.role == 'zoomview'){
+                          var kk = document.getElementById("second-row").parentElement.scrollLeft;
+                        
+                        for(var ff = 0; ff < renderQueue.length; ff++){
+                            
                             this.info.note_x_positions.push(
-                            // Unsupported in iOS Safari
-                            //renderQueue[ff].attrs.el.getClientRects()[0].x
-                            renderQueue[ff].attrs.el.getBoundingClientRect().x + kk);
-                        }
-                    }
+                                
+                                // Unsupported in iOS Safari
+                                //renderQueue[ff].attrs.el.getClientRects()[0].x
+                                
+                                // Problems with dots - bounding box gets too wide, works otherwise
+                                renderQueue[ff].attrs.el.getBoundingClientRect().x + kk
+                                  // Something is wrong with this thing...
+                                //renderQueue[ff].attrs.el.getElementsByClassName("vf-note")[0].getBoundingClientRect().x + kk
+                                
+                                // This doesn't work either
+                                //renderQueue[ff].note_heads[0].x
+                              );
+                          }
+                    }*/
 
                     renderQueue = [];
                     ties = [];
@@ -51462,6 +51509,10 @@ var Tuplet = VF.Tuplet;
         };
 
         window.onresize = function (event) {
+            vue.viewportResized();
+        };
+
+        window.onorientationchange = function (event) {
             vue.viewportResized();
         };
     }
@@ -75949,6 +76000,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -76044,10 +76102,22 @@ var Fraction = __webpack_require__(10);
                 keyboardClick: function keyboardClick(key) {
 
                         this.key_callback();
+                },
+                playback: function playback() {
+
+                        this.key_callback({
+                                type: 'play_user',
+                                throttle: this.playback_throttle
+                        });
                 }
         },
         components: {
                 SexyButton: __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default.a, TwoRowsButton: __WEBPACK_IMPORTED_MODULE_1__elements_TwoRowsButton_vue___default.a
+        },
+        data: function data() {
+                return {
+                        playback_throttle: 2
+                };
         },
         props: ['key_callback']
 
@@ -76340,6 +76410,40 @@ var render = function() {
       "div",
       { staticClass: "row rhythm-game__control-keys" },
       [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.playback_throttle,
+              expression: "playback_throttle"
+            }
+          ],
+          attrs: { type: "range", min: "1", value: "2", max: "3", step: "0.2" },
+          domProps: { value: _vm.playback_throttle },
+          on: {
+            __r: function($event) {
+              _vm.playback_throttle = $event.target.value
+            }
+          }
+        }),
+        _vm._v("\n        " + _vm._s(_vm.playback_throttle) + " \n        "),
+        _c("sexy-button", {
+          attrs: { text: "PREDVAJAJ", color: "green", w: "175px" },
+          nativeOn: {
+            click: function($event) {
+              _vm.playback()
+            }
+          }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row rhythm-game__control-keys" },
+      [
         _c("sexy-button", {
           attrs: { text: "BRIŠI", color: "green", w: "175px" },
           nativeOn: {
@@ -76416,6 +76520,8 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
         } else if (event.type == '<') {
             this._move_cursor_backwards();
             this._call_render();
+        } else if (event.type == 'play_user') {
+            this.playback(event);
         }
     };
 
@@ -76436,7 +76542,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
     this.add_dot = function () {
 
         this._move_cursor_backwards();
-        var note = this.notes[this.cursor.position];
+        var note = _.clone(this.notes[this.cursor.position]);
 
         this._move_cursor_forward();
         this.delete_note();
@@ -76582,7 +76688,11 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
 
     this._move_cursor_forward = function () {
 
-        if (this.notes.length <= this.cursor.position) this.cursor.position = this.notes.length - 1;else this.cursor.position++;
+        if (this.cursor.position < this.notes.length) {
+            this.cursor.position++;
+        } else {
+            this.cursor.position = this.notes.length;
+        }
     };
 
     this._move_cursor_backwards = function () {
@@ -76665,6 +76775,48 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
     };
 
     this.check_sum_fit = function (event) {};
+
+    this.playback = function (event) {
+
+        var currentTime = 0;
+        var throttle = event.throttle;
+
+        var allDurations = [];var ssum = 0;
+        for (var noteIndex = 0; noteIndex < this.notes.length; noteIndex++) {
+            allDurations.push(this.notes[noteIndex].duration.valueOf());
+            ssum += this.notes[noteIndex].duration.valueOf();
+        }
+        console.log(allDurations);
+        console.log(ssum);
+
+        var outside = this;
+
+        var nextNoteExists = function nextNoteExists(number) {
+            return outside.notes.length < number;
+        };
+        var nextHasTie = function nextHasTie(number) {
+            return outside.notes.length < number + 1 && outside.notes[number + 1].tie;
+        };
+
+        for (var noteIndex = 0; noteIndex < this.notes.length; noteIndex++) {
+
+            var note = this.notes[noteIndex];
+            var noteValue = note.duration.valueOf() * throttle;
+
+            var intensity = 127;
+            if (nextHasTie()) {
+                intensity = 256;
+            }
+
+            if (note.type != "r" && !note.tie) {
+                MIDI.noteOn(0, 60, intensity, currentTime);
+            }
+
+            if (!nextHasTie(noteIndex)) MIDI.noteOff(0, 60, currentTime + noteValue);
+
+            currentTime += noteValue;
+        }
+    };
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (NoteStore);

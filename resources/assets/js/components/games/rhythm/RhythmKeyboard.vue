@@ -30,6 +30,13 @@
         </div>
         <div class="row rhythm-game__control-keys">
 
+            <input type="range" min="1"  value="2" max="3" step="0.2" v-model="playback_throttle">
+            {{playback_throttle}} 
+            <sexy-button text="PREDVAJAJ" color="green" w="175px" @click.native="playback()"/>
+                
+        </div>
+        <div class="row rhythm-game__control-keys">
+
             <sexy-button text="BRIŠI" color="green" w="175px" @click.native="delete_note()"/>
             <sexy-button text="PONOVI" color="green" w="175px" />
             <sexy-button text="NADALJUJ" color="orange" w="175px" />
@@ -216,10 +223,24 @@ export default {
 
             this.key_callback();
 
+        },
+
+        playback(){
+
+            this.key_callback({
+                type: 'play_user',
+                throttle: this.playback_throttle
+            });
+
         }
     },
     components: {
         SexyButton, TwoRowsButton
+    },
+    data: function() {
+        return {
+            playback_throttle: 2
+        };
     },
     props: [
         'key_callback'

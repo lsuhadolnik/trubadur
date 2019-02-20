@@ -1,7 +1,5 @@
 var Fraction = require("fraction.js");
 
-
-
 var NoteStore = function(bar, cursor, render_function) {
 
     // The supported note durations.
@@ -56,6 +54,10 @@ var NoteStore = function(bar, cursor, render_function) {
             this._move_cursor_backwards();
             this._call_render();
         }
+        else if(event.type == 'play_user')
+        {
+            this.playback(event);
+        }
     }
 
     this.add_tie = function(){
@@ -76,12 +78,13 @@ var NoteStore = function(bar, cursor, render_function) {
     this.add_dot = function() {
 
         this._move_cursor_backwards()
-        let note = this.notes[this.cursor.position];
+        let note = _.clone(this.notes[this.cursor.position]);
 
         this._move_cursor_forward()
         this.delete_note();
-        
-        if(note.dot){
+
+        if(note.dot)
+        {
             note.duration = note.duration.div(1.5);
             note.dot = false; 
         } 
@@ -233,10 +236,12 @@ var NoteStore = function(bar, cursor, render_function) {
 
     this._move_cursor_forward = function(){
 
-        if(this.notes.length <= this.cursor.position)
-            this.cursor.position = this.notes.length - 1;
-        else
+        if(this.cursor.position < this.notes.length){
             this.cursor.position ++;
+        }
+        else{
+            this.cursor.position = this.notes.length;
+        }
 
     }
 
@@ -326,6 +331,54 @@ var NoteStore = function(bar, cursor, render_function) {
     }
 
     this.check_sum_fit = function(event) {
+
+    }
+
+
+    this.playback = function(event){
+        
+        var currentTime = 0;
+        var throttle = event.throttle;
+
+        var allDurations = []; var ssum = 0;
+        for(var noteIndex = 0; noteIndex < this.notes.length; noteIndex++){
+            allDurations.push(this.notes[noteIndex].duration.valueOf());
+            ssum += this.notes[noteIndex].duration.valueOf();
+        }
+        console.log(allDurations);
+        console.log(ssum);
+
+        var outside = this;
+
+        let nextNoteExists = function(number){
+            return outside.notes.length < number;
+        }
+        let nextHasTie = function(number){
+            return outside.notes.length < number + 1 
+            && outside.notes[number + 1].tie;
+        }
+
+        for(var noteIndex = 0; noteIndex < this.notes.length; noteIndex++){
+            
+            let note = this.notes[noteIndex];
+            let noteValue = note.duration.valueOf() * throttle;
+
+            var intensity = 127;
+            if(nextHasTie()){
+                intensity = 256;
+            }
+
+            if(note.type != "r" && !note.tie)
+            {
+                MIDI.noteOn(0, 60, intensity, currentTime);
+            }
+            
+            if(!nextHasTie(noteIndex))             
+                MIDI.noteOff(0, 60, currentTime + noteValue);
+            
+
+            currentTime += noteValue;
+        }
 
     }
 

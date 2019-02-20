@@ -78,8 +78,6 @@ export default {
 
                 minimap_in_click: false,
 
-                note_x_positions: [],
-
                 scrollBuffer: {
                     minimapX: 0,
                     scrollX: 0
@@ -108,6 +106,22 @@ export default {
 
         note_clicked: function(Xoffset){
 
+            let closest = this._get_closest_note(Xoffset);
+            if(closest == -1){
+                // No scroll..
+            }else {
+                this.cursor.position = closest;
+                this._save_scroll();
+                this.$parent.notes._call_render()
+                this._restore_scroll();
+            }
+
+            console.log("Clicked at "+Xoffset);
+
+
+        },
+
+        _get_closest_note: function(Xoffset){
 
             let zoomView = document.getElementById("second-row").parentNode;
             let screenWidth = window.innerWidth;
@@ -117,9 +131,14 @@ export default {
 
             let x = zoomScrollLeft + Xoffset;
 
+            var x_coords = [];
+            zoomView.querySelectorAll(".vf-note").forEach(function(e) {x_coords.push(e.getClientRects()[0].x)});
+
+
+
             let minIndex = 999;
-            let minDiff = 9999;
-            let poss = this.info.note_x_positions
+            let minDiff  = 99999;
+            let poss = x_coords;
             for(let i = 0; i < poss.length; i++){
                 if(Math.abs(poss[i] - x) < minDiff){
                     minDiff = Math.abs(poss[i] - x);
@@ -129,12 +148,10 @@ export default {
 
             if(minDiff < 50){
                 //alert("Cursor now on X("+minIndex+"), distance:"+minDiff)
-                this.cursor.position = minIndex;
-                this._save_scroll();
-                this.$parent.notes._call_render()
-                this._restore_scroll();
+                return closest;
             }
 
+            return -1;
 
         },
 
@@ -387,8 +404,6 @@ export default {
             // Clear all notes from svg
             context.clear();
 
-            this.info.note_x_positions = [];
-
             // Redraw staves
             let staves = this._vex_draw_staves(context);
 
@@ -448,20 +463,30 @@ export default {
                         ties: ties
                     });
 
-                    if(descriptor.role == 'zoomview'){
+                    /*if(descriptor.role == 'zoomview'){
 
                         var kk = document.getElementById("second-row").parentElement.scrollLeft;
-
+                        
                         for(var ff = 0; ff < renderQueue.length; ff++){
+                            
                             this.info.note_x_positions.push(
+                                
                                 // Unsupported in iOS Safari
                                 //renderQueue[ff].attrs.el.getClientRects()[0].x
+                                
+                                // Problems with dots - bounding box gets too wide, works otherwise
                                 renderQueue[ff].attrs.el.getBoundingClientRect().x + kk
-                            
+
+                                // Something is wrong with this thing...
+                                //renderQueue[ff].attrs.el.getElementsByClassName("vf-note")[0].getBoundingClientRect().x + kk
+                                
+                                // This doesn't work either
+                                //renderQueue[ff].note_heads[0].x
+
                             );
 
                         }
-                    }
+                    }*/
                     
 
                     renderQueue = [];
@@ -553,8 +578,6 @@ export default {
             this.CTX[ctx_key].context  = renderer.getContext();
         }
 
-
-
         // INIT
         var sR = this.CTX.zoomview.parentElement;
         var vue = this;
@@ -587,6 +610,10 @@ export default {
         }
 
         window.onresize = function(event) {
+            vue.viewportResized();
+        }
+
+        window.onorientationchange = function(event) {
             vue.viewportResized();
         }
 

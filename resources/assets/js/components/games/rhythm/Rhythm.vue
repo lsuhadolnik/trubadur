@@ -42,6 +42,8 @@ import Keyboard from "./RhythmKeyboard.vue"
 
 import NoteStore from "./noteStore"
 
+import { mapState, mapGetters, mapActions } from 'vuex'
+
 export default {
     
     components: {
@@ -75,7 +77,29 @@ export default {
             this.$refs.staff_view.render
         );
 
-    }
+        let instruments = {
+            piano: {
+                channel: 0,
+                soundfont: 'acoustic_grand_piano'
+            }   
+        };
+
+        MIDI.loadPlugin({
+            soundfontUrl: '/soundfonts/',
+            instruments: ['acoustic_grand_piano'],
+            targetFormat: 'mp3',
+            onsuccess: () => {
+                for (var name in instruments) {
+                    let instrument = instruments[name];
+                    MIDI.setVolume(instrument.channel, 127);
+                    MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
+                }
+            }
+        });
+        
+
+    },
+    
 }
     
 
