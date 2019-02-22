@@ -50293,6 +50293,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+var Fraction = __webpack_require__(10);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
 
     components: {
@@ -50309,14 +50311,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             cursor: {
                 position: 0,
                 x: 0
-            }
+            },
+
+            naloga: [{ type: "n", symbol: "4", duration: new Fraction(1, 12), tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), tuplet_type: 3 }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }]
         };
     },
 
 
     methods: {
         keyboard_click: function keyboard_click(event) {
-            this.notes.handle_button(event);
+
+            if (event.type == "check") {
+                this.check();
+            } else {
+                this.notes.handle_button(event);
+            }
+        },
+        check: function check() {
+
+            if (_.isEqual(this.naloga, this.notes.notes)) {
+                alert("PRAVILNO!");
+            } else {
+                alert("Ni še čisto v redu.");
+            }
         }
     },
 
@@ -50943,7 +50960,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*scroll-behavior: smooth;\n    -webkit-scroll-behavior: smooth;*/\n}\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*background:red;*/\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 145px;\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n", ""]);
+exports.push([module.i, "\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*scroll-behavior: smooth;\n    -webkit-scroll-behavior: smooth;*/\n}\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*background:red;*/\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 200px;\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n", ""]);
 
 // exports
 
@@ -51020,11 +51037,11 @@ var Tuplet = VF.Tuplet;
 
             info: {
                 width: 2 * window.innerWidth,
-                height: 60,
+                height: 80,
                 staveCount: 2,
                 barWidth: window.innerWidth,
-                barHeight: 60,
-                barOffsetY: 30,
+                barHeight: 80,
+                barOffsetY: 10,
 
                 maxStaveWidth: 320,
 
@@ -51072,8 +51089,6 @@ var Tuplet = VF.Tuplet;
                 this.$parent.notes._call_render();
                 this._restore_scroll();
             }
-
-            console.log("Clicked at " + Xoffset);
         },
 
         _get_closest_note: function _get_closest_note(Xoffset) {
@@ -51084,12 +51099,16 @@ var Tuplet = VF.Tuplet;
 
             var zoomScrollLeft = zoomView.scrollLeft;
 
-            var x = zoomScrollLeft + Xoffset;
+            var x = Xoffset + zoomScrollLeft;
+
+            console.log("screenWidth: " + screenWidth + ", zoomScrollWidth: " + zoomScrollWidth + ", zoomScrollLeft: " + zoomScrollLeft + ", x: " + x);
 
             var x_coords = [];
             zoomView.querySelectorAll(".vf-note").forEach(function (e) {
-                x_coords.push(e.getClientRects()[0].x);
+                x_coords.push(Math.round(e.getClientRects()[0].x + zoomScrollLeft));
             });
+
+            console.log(x_coords);
 
             var minIndex = 999;
             var minDiff = 99999;
@@ -51102,8 +51121,7 @@ var Tuplet = VF.Tuplet;
             }
 
             if (minDiff < 50) {
-                //alert("Cursor now on X("+minIndex+"), distance:"+minDiff)
-                return closest;
+                return minIndex;
             }
 
             return -1;
@@ -51188,7 +51206,6 @@ var Tuplet = VF.Tuplet;
         _vex_draw_voice: function _vex_draw_voice(context, stave, renderQueue, optionals) {
 
             // Create a new voice everytime
-
             var voice = new VF.Voice({
                 num_beats: this.bar.num_beats,
                 beat_value: this.bar.base_note
@@ -51211,12 +51228,30 @@ var Tuplet = VF.Tuplet;
 
             voice.draw(context, stave);
 
+            // Generate beams
+            /*var beams = VF.Beam.generateBeams(renderQueue,  {
+                beam_rests: true,
+                show_stemlets: true
+            });
+            // Draw the beams:
+            beams.forEach(function(beam){
+                beam.setContext(context).draw();
+            });*/
+
             // Draw optionals...
             if (optionals) {
 
                 if (optionals.ties) {
+                    // Draw the ties
                     optionals.ties.forEach(function (t) {
                         t.setContext(context).draw();
+                    });
+                }
+
+                if (optionals.tuplets) {
+                    // Draw the tuplets:
+                    optionals.tuplets.forEach(function (tuplet) {
+                        tuplet.setContext(context).draw();
                     });
                 }
             }
@@ -51285,7 +51320,16 @@ var Tuplet = VF.Tuplet;
             }
 
             var bbox = cursorNode.attrs.el.getBoundingClientRect();
+            //let bbox = cursorNode.attrs.el.getClientRects()[0];
+            //let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getClientRects()[0];
+
             var startX = bbox.left + bbox.width / 2;
+            //let startX = bbox.x;
+
+            // To sicer dela, ampak ne na iPhonu
+            // let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getClientRects()[0];
+            // let startX = bbox.x;
+
 
             // ZOOM-BREAK
             this._set_bubble_width(bubbleW);
@@ -51337,7 +51381,10 @@ var Tuplet = VF.Tuplet;
             var staveIndex = 0;
             var cursorNote = null;
 
+            var currentStaveNoteIdx = 0;
+
             var ties = [];
+            var tuplets = [];
             var renderQueue = [];
             var currentDuration = new Fraction(0);
             for (var i = 0; i < notes.length; i++) {
@@ -51345,6 +51392,10 @@ var Tuplet = VF.Tuplet;
                 // Bye bye, false note
                 if (!notes[i]) {
                     continue;
+                }
+
+                if (notes[i].symbol == 12) {
+                    debugger;
                 }
 
                 // Handle notes and rests
@@ -51379,13 +51430,26 @@ var Tuplet = VF.Tuplet;
                 }
 
                 renderQueue.push(newNote);
+                currentStaveNoteIdx++;
 
                 currentDuration = currentDuration.add(notes[i].duration);
 
                 if (currentDuration.compare(new Fraction(1)) == 0) {
 
-                    this._vex_draw_voice(context, staves[staveIndex], renderQueue, {
-                        ties: ties
+                    // Tuplets
+                    for (var j = 0; j < renderQueue.length; j++) {
+                        var notesIDX = currentStaveNoteIdx - renderQueue.length + j;
+                        if (notes[notesIDX].tuplet_type) {
+                            tuplets.push(new __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Tuplet(renderQueue.slice(j, j + notes[notesIDX].tuplet_type), {
+                                bracketed: true, rationed: false
+                            }));
+                            j += notes[notesIDX].tuplet_type - 1;
+                        }
+                    }
+
+                    this._vex_draw_voice(context, staves[staveIndex++], renderQueue, {
+                        ties: ties,
+                        tuplets: tuplets
                     });
 
                     /*if(descriptor.role == 'zoomview'){
@@ -51399,9 +51463,9 @@ var Tuplet = VF.Tuplet;
                                 //renderQueue[ff].attrs.el.getClientRects()[0].x
                                 
                                 // Problems with dots - bounding box gets too wide, works otherwise
-                                renderQueue[ff].attrs.el.getBoundingClientRect().x + kk
+                                //renderQueue[ff].attrs.el.getBoundingClientRect().x + kk
                                   // Something is wrong with this thing...
-                                //renderQueue[ff].attrs.el.getElementsByClassName("vf-note")[0].getBoundingClientRect().x + kk
+                                renderQueue[ff].attrs.el.getElementsByClassName("vf-note")[0].getBoundingClientRect().x + kk
                                 
                                 // This doesn't work either
                                 //renderQueue[ff].note_heads[0].x
@@ -51411,7 +51475,7 @@ var Tuplet = VF.Tuplet;
 
                     renderQueue = [];
                     ties = [];
-                    staveIndex++;
+                    tuplets = [];
                     currentDuration = new Fraction(0);
                 }
             }
@@ -51424,7 +51488,8 @@ var Tuplet = VF.Tuplet;
             if (renderQueue.length > 0) {
                 // Draw the rest
                 this._vex_draw_voice(context, staves[staveIndex + 1], renderQueue, {
-                    ties: ties
+                    ties: ties,
+                    tuplets: tuplets
                 });
             }
 
@@ -76089,15 +76154,13 @@ var Fraction = __webpack_require__(10);
                 },
                 tuplet: function tuplet() {
 
-                        /*this.key_callback({
-                            type: 'n',
-                            duration: new Fraction(1,4),
-                            symbol: 'tuplet',
-                            tuplet_type: 3,
-                            notes: {
-                              }
-                        });*/
-                        alert("Work in progress...");
+                        this.key_callback({
+                                type: 'n',
+                                duration: new Fraction(1, 12),
+                                symbol: '4',
+                                tuplet_type: 3
+                        });
+                        //alert("Work in progress...");
                 },
                 keyboardClick: function keyboardClick(key) {
 
@@ -76108,6 +76171,12 @@ var Fraction = __webpack_require__(10);
                         this.key_callback({
                                 type: 'play_user',
                                 throttle: this.playback_throttle
+                        });
+                },
+                check: function check() {
+
+                        this.key_callback({
+                                type: 'check'
                         });
                 }
         },
@@ -76458,7 +76527,12 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("sexy-button", {
-          attrs: { text: "NADALJUJ", color: "orange", w: "175px" }
+          attrs: { text: "PREVERI", color: "orange", w: "175px" },
+          nativeOn: {
+            click: function($event) {
+              _vm.check()
+            }
+          }
         })
       ],
       1
@@ -76487,12 +76561,32 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
     // The supported note durations.
     // Currently supports up to a sixteenth note with a dot.
     this.supportedLengths = [1, 2, 4, 8, 16, 32];
-    this.supportedRests = [4, 8, 16, 32];
+    this.supportedRests = [4, 8, 12, 16, 32];
 
     this.bar = bar;
     this.cursor = cursor;
     this.notes = [// TODO!!!
-    { type: "r", symbol: "wr", duration: new Fraction(1) }, { type: "r", symbol: "wr", duration: new Fraction(1) }];
+
+    { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4)
+
+        /*{type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
+        {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
+        {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
+          {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        
+        {type:"r", symbol:"wr", duration:new Fraction(1)}*/
+
+        /*{type:"n", symbol:"8", duration:new Fraction(1,8)},
+        {type:"n", symbol:"8", duration:new Fraction(1,8)},
+        {type:"n", symbol:"8", duration:new Fraction(1,8)},
+        {type:"n", symbol:"8", duration:new Fraction(1,8)},
+          {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+          {type:"r", symbol:"2r", duration:new Fraction(1,2)},*/
+
+    }];
 
     this._call_render = function () {
 
@@ -76558,14 +76652,20 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
         this.add_note(note);
     };
 
-    this.add_note = function (event) {
+    this._is_supported_length = function (event) {
+
+        if (event.tuplet_type == 3) {
+            return true;
+        }
 
         // Check if the note is in supported range...
-        var supported = false;
-        for (var i = 0; i < this.supportedLengths.length && !supported; i++) {
-            if (event.duration.d == this.supportedLengths[i]) supported = true;
-        }if (!supported) {
-            console.error("Note length not supported... (" + event.duration.d + ")");
+        for (var i = 0; i < this.supportedLengths.length; i++) {
+            if (event.duration.d == this.supportedLengths[i]) return true;
+        }console.error("Note length not supported... (" + event.duration.d + ")");
+        return false;
+    }, this.add_note = function (event) {
+
+        if (!this._is_supported_length(event)) {
             return;
         }
 
@@ -76585,8 +76685,9 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
         //
         if (!this.check_sum_fit(event)) {
             // Notify user
+            alert("Takt je predolg.");
 
-            // break
+            return;
         }
 
         var rests_info = this.sum_silence_until_edited();
@@ -76596,6 +76697,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
 
         // If the event duration exceeds the duration of summed notes
         if (rests_info.duration < event.duration) {
+
             // Notify user
             alert("Nota je predolga.");
             // and Quit
@@ -76635,6 +76737,14 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
         //  | (new note) (new rest) ... (new rest) (ostanek_note) ... (ostanek_note)
         // 
         this.notes = this.notes.concat(new_rests).concat(ostanek);
+
+        var str = "";
+        str = this.notes[0].duration.toFraction();
+        for (var i = 1; i < this.notes.length; i++) {
+            str += ", " + this.notes[i].duration.toFraction();
+        }
+        console.log(str);
+
         // Move cursor forward
         this._move_cursor_forward();
 
@@ -76731,13 +76841,20 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
 
     this.generate_rests_for_duration = function (remaining) {
 
+        var iterations = 0;
+
         // OMG!
         // Please don't look at it.
         // I will improve it once, I promise.
 
         var rests = [];
         // While there is some space left to fill
-        while (remaining > 0) {
+        while (remaining > new Fraction(1, this.supportedLengths[this.supportedLengths.length - 1])) {
+
+            /*if(iterations > 50){
+                return;
+            }*/
+            iterations++;
 
             // Try different durations...
             // Try the longer durations first, and add them to back...
@@ -76770,11 +76887,37 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
                     break; // Break the first loop
                 }
             }
+
+            // Triplets then
+            if (remaining.mul(12).d == 1 && remaining.mul(12).valueOf() % 3 > 0) {
+
+                var _duration = 12;
+                var symbol = 4;
+
+                // If it fits...
+                if (remaining.compare(new Fraction(1, _duration)) >= 0) {
+
+                    var num = remaining.mul(12).mod(3);
+                    for (var i = 0; i < num; i++) {
+                        rests.unshift({
+                            type: "r",
+                            symbol: symbol + "r",
+                            duration: new Fraction(1, _duration),
+                            tuplet_type: 3
+                        });
+                        remaining = remaining.add(new Fraction(-1, _duration));
+                    }
+                }
+            }
         }
         return rests;
     };
 
-    this.check_sum_fit = function (event) {};
+    this.check_sum_fit = function (event) {
+
+        // TODO
+        return true;
+    };
 
     this.playback = function (event) {
 

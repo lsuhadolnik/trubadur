@@ -5,13 +5,43 @@ var NoteStore = function(bar, cursor, render_function) {
     // The supported note durations.
     // Currently supports up to a sixteenth note with a dot.
     this.supportedLengths = [1, 2, 4, 8, 16, 32];
-    this.supportedRests   = [4, 8, 16, 32];
+    this.supportedRests   = [4, 8, 12, 16, 32];
 
     this.bar = bar;
     this.cursor = cursor;
     this.notes = [ // TODO!!!
-        {type:"r", symbol:"wr", duration:new Fraction(1)},
-        {type:"r", symbol:"wr", duration:new Fraction(1)}
+
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)}
+
+        /*{type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
+        {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
+        {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
+
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        
+        {type:"r", symbol:"wr", duration:new Fraction(1)}*/
+
+        /*{type:"n", symbol:"8", duration:new Fraction(1,8)},
+        {type:"n", symbol:"8", duration:new Fraction(1,8)},
+        {type:"n", symbol:"8", duration:new Fraction(1,8)},
+        {type:"n", symbol:"8", duration:new Fraction(1,8)},
+
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+
+        {type:"r", symbol:"2r", duration:new Fraction(1,2)},*/
+
+
     ];
 
     this._call_render = function(){
@@ -98,17 +128,25 @@ var NoteStore = function(bar, cursor, render_function) {
 
     }
 
-    this.add_note = function(event) {
+    this._is_supported_length = function(event){
+
+        if(event.tuplet_type == 3){
+            return true;
+        }
 
         // Check if the note is in supported range...
-        let supported = false;
-        for(let i = 0; i < this.supportedLengths.length && !supported; i++)
+        for(let i = 0; i < this.supportedLengths.length; i++)
             if (event.duration.d == this.supportedLengths[i])
-                supported = true; 
+                return true
+
+        console.error("Note length not supported... ("+event.duration.d+")");
+        return false;
         
-        if(!supported)
-        {
-            console.error("Note length not supported... ("+event.duration.d+")");
+    },
+
+    this.add_note = function(event) {
+
+        if(!this._is_supported_length(event)){
             return;
         }
            
@@ -130,8 +168,9 @@ var NoteStore = function(bar, cursor, render_function) {
         //
         if(!this.check_sum_fit(event)){
             // Notify user
+            alert("Takt je predolg.");
             
-            // break
+            return;
         }
 
         var rests_info = this.sum_silence_until_edited();
@@ -140,11 +179,13 @@ var NoteStore = function(bar, cursor, render_function) {
         //      rests_info.duration -> Fraction - duration of summed rests
 
         // If the event duration exceeds the duration of summed notes
-        if(rests_info.duration < event.duration){
+        if((rests_info.duration < event.duration)){
+            
             // Notify user
             alert("Nota je predolga.");
             // and Quit
             return;
+
         }
         // Get the remaining silence duration - will be filled with new rests
         let remaining = rests_info.duration.sub(event.duration); // prostor - trajanje
@@ -180,6 +221,14 @@ var NoteStore = function(bar, cursor, render_function) {
         //  | (new note) (new rest) ... (new rest) (ostanek_note) ... (ostanek_note)
         // 
         this.notes = this.notes.concat(new_rests).concat(ostanek);
+        
+        let str = "";
+        str = this.notes[0].duration.toFraction();
+        for(var i = 1; i < this.notes.length; i++){
+            str += ", " + this.notes[i].duration.toFraction();
+        }
+        console.log(str);
+
         // Move cursor forward
         this._move_cursor_forward();
 
@@ -286,13 +335,22 @@ var NoteStore = function(bar, cursor, render_function) {
 
     this.generate_rests_for_duration = function(remaining) {
         
+        let iterations = 0;
+
         // OMG!
         // Please don't look at it.
         // I will improve it once, I promise.
 
         let rests = [];
         // While there is some space left to fill
-        while(remaining > 0){
+        while(remaining > new Fraction(1, this.supportedLengths[this.supportedLengths.length - 1])){
+
+            
+            /*if(iterations > 50){
+                return;
+            }*/
+            iterations ++;
+
 
             // Try different durations...
             // Try the longer durations first, and add them to back...
@@ -316,7 +374,7 @@ var NoteStore = function(bar, cursor, render_function) {
                         rests.unshift({
                             type:"r", 
                             symbol: duration.toString()+"r", 
-                            duration: new Fraction(1,duration)
+                            duration: new Fraction(1,duration),
                         });
                         remaining = remaining.add(new Fraction(-1, duration));
                     }
@@ -326,11 +384,36 @@ var NoteStore = function(bar, cursor, render_function) {
                 }    
             }
 
+            // Triplets then
+            if(remaining.mul(12).d == 1 && remaining.mul(12).valueOf() % 3 > 0){
+
+                let duration = 12;
+                let symbol = 4;
+
+                // If it fits...
+                if(remaining.compare(new Fraction(1,duration)) >= 0){
+                    
+                    var num = remaining.mul(12).mod(3);
+                    for(var i = 0; i < num; i++){
+                        rests.unshift({
+                            type:"r", 
+                            symbol: symbol+"r", 
+                            duration: new Fraction(1,duration),
+                            tuplet_type: 3
+                        });
+                        remaining = remaining.add(new Fraction(-1, duration));
+                    }
+                }    
+            }
+
         }
         return rests;
     }
 
     this.check_sum_fit = function(event) {
+
+        // TODO
+        return true;
 
     }
 

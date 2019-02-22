@@ -44,6 +44,8 @@ import NoteStore from "./noteStore"
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
+var Fraction = require('fraction.js');
+
 export default {
     
     components: {
@@ -60,13 +62,47 @@ export default {
             cursor: {
                 position: 0,
                 x: 0
-            }
+            },
+
+            naloga: [
+                {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
+                {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
+                {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
+
+                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+                
+                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
+                
+            ]
         }
     },
     
     methods: {
+
         keyboard_click(event) {
-            this.notes.handle_button(event)
+
+            if(event.type == "check"){
+                this.check();
+            }
+            else{
+                this.notes.handle_button(event)
+            }
+    
+        },
+
+        check(){
+
+            if(_.isEqual(this.naloga, this.notes.notes)){
+                alert("PRAVILNO!");
+            }else{
+                alert("Ni še čisto v redu.");
+            }
+
         }
     },
 

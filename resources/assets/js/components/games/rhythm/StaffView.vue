@@ -30,7 +30,7 @@
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
-        height: 145px
+        height: 200px
         /*scroll-behavior: smooth;
         -webkit-scroll-behavior: smooth;*/
     }
@@ -64,11 +64,11 @@ export default {
 
             info: {
                 width: 2*(window.innerWidth),
-                height: 60,
+                height: 80,
                 staveCount: 2,
                 barWidth: window.innerWidth,
-                barHeight: 60,
-                barOffsetY: 30,
+                barHeight: 80,
+                barOffsetY: 10,
 
                 maxStaveWidth: 320,
 
@@ -116,9 +116,6 @@ export default {
                 this._restore_scroll();
             }
 
-            console.log("Clicked at "+Xoffset);
-
-
         },
 
         _get_closest_note: function(Xoffset){
@@ -129,12 +126,16 @@ export default {
             
             let zoomScrollLeft = zoomView.scrollLeft;
 
-            let x = zoomScrollLeft + Xoffset;
+            let x = Xoffset + zoomScrollLeft;
+
+            console.log("screenWidth: "+screenWidth+", zoomScrollWidth: "+zoomScrollWidth+", zoomScrollLeft: "+zoomScrollLeft+", x: "+x);
 
             var x_coords = [];
-            zoomView.querySelectorAll(".vf-note").forEach(function(e) {x_coords.push(e.getClientRects()[0].x)});
+            zoomView.querySelectorAll(".vf-note").forEach(function(e) {
+                    x_coords.push(Math.round((e.getClientRects()[0].x + zoomScrollLeft)));
+            });
 
-
+            console.log(x_coords)
 
             let minIndex = 999;
             let minDiff  = 99999;
@@ -147,8 +148,7 @@ export default {
             }
 
             if(minDiff < 50){
-                //alert("Cursor now on X("+minIndex+"), distance:"+minDiff)
-                return closest;
+                return minIndex;
             }
 
             return -1;
@@ -239,8 +239,8 @@ export default {
 
         _vex_draw_voice: function(context, stave, renderQueue, optionals){
 
-            // Create a new voice everytime
 
+            // Create a new voice everytime
             let voice = new VF.Voice(
                 {
                     num_beats: this.bar.num_beats,  
@@ -259,19 +259,36 @@ export default {
             // If you change this, make sure, that 16 sixteenth notes fit onto the screen.
             var maxNotesWidth = this.info.width * 0.8 * 0.5;
 
-            var formatter = new VF.Formatter()
-                .format([voice], maxNotesWidth);
+            var formatter = new VF.Formatter().format([voice], maxNotesWidth);
 
             // Render voice
             // beams.forEach(function(b) {b.setContext(context).draw()})
 
             voice.draw(context, stave);
             
+            // Generate beams
+            /*var beams = VF.Beam.generateBeams(renderQueue,  {
+                beam_rests: true,
+                show_stemlets: true
+            });
+            // Draw the beams:
+            beams.forEach(function(beam){
+                beam.setContext(context).draw();
+            });*/
+
             // Draw optionals...
             if(optionals) {
 
                 if(optionals.ties) {
+                    // Draw the ties
                     optionals.ties.forEach(function(t) {t.setContext(context).draw()})
+                }
+
+                if(optionals.tuplets) {
+                    // Draw the tuplets:
+                    optionals.tuplets.forEach(function(tuplet){
+                        tuplet.setContext(context).draw();
+                    });
                 }
 
             }
@@ -330,9 +347,6 @@ export default {
 
         _cursor_rendered(cursorNode, descriptor){
 
-            
-                
-
             let screenWidth = window.innerWidth;
             let sR = document.getElementById("second-row").parentElement;
             var scrollWidth = sR.scrollWidth;
@@ -353,7 +367,16 @@ export default {
             }
 
             let bbox = cursorNode.attrs.el.getBoundingClientRect();
+            //let bbox = cursorNode.attrs.el.getClientRects()[0];
+            //let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getClientRects()[0];
+            
             let startX = bbox.left + bbox.width / 2;
+            //let startX = bbox.x;
+
+            // To sicer dela, ampak ne na iPhonu
+            // let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getClientRects()[0];
+            // let startX = bbox.x;
+
 
             // ZOOM-BREAK
             this._set_bubble_width(bubbleW);
@@ -410,7 +433,10 @@ export default {
             let staveIndex = 0;
             let cursorNote = null;
 
+            let currentStaveNoteIdx = 0;
+
             var ties = [];
+            var tuplets = [];
             var renderQueue = [];
             var currentDuration = new Fraction(0);
             for(var i = 0; i < notes.length; i++){
@@ -418,6 +444,10 @@ export default {
                 // Bye bye, false note
                 if(!notes[i]) { continue; }
                     
+                if(notes[i].symbol == 12){
+                    debugger;
+                }
+
                 // Handle notes and rests
                 let newNote = new StaveNote(
                     {
@@ -454,13 +484,26 @@ export default {
                 }
 
                 renderQueue.push(newNote);
+                currentStaveNoteIdx ++;
 
                 currentDuration = currentDuration.add(notes[i].duration);
                 
                 if(currentDuration.compare(new Fraction(1)) == 0){
                     
-                    this._vex_draw_voice(context, staves[staveIndex], renderQueue, {
-                        ties: ties
+                    // Tuplets
+                    for(var j = 0; j < renderQueue.length; j++){
+                        let notesIDX = currentStaveNoteIdx - renderQueue.length + j;
+                        if(notes[notesIDX].tuplet_type){
+                            tuplets.push(new Vex.Flow.Tuplet(renderQueue.slice(j, j+notes[notesIDX].tuplet_type), {
+                                bracketed: true, rationed: false
+                            }));
+                            j += notes[notesIDX].tuplet_type - 1;
+                        }
+                    }
+
+                    this._vex_draw_voice(context, staves[staveIndex++], renderQueue, {
+                        ties: ties, 
+                        tuplets: tuplets
                     });
 
                     /*if(descriptor.role == 'zoomview'){
@@ -475,10 +518,10 @@ export default {
                                 //renderQueue[ff].attrs.el.getClientRects()[0].x
                                 
                                 // Problems with dots - bounding box gets too wide, works otherwise
-                                renderQueue[ff].attrs.el.getBoundingClientRect().x + kk
+                                //renderQueue[ff].attrs.el.getBoundingClientRect().x + kk
 
                                 // Something is wrong with this thing...
-                                //renderQueue[ff].attrs.el.getElementsByClassName("vf-note")[0].getBoundingClientRect().x + kk
+                                renderQueue[ff].attrs.el.getElementsByClassName("vf-note")[0].getBoundingClientRect().x + kk
                                 
                                 // This doesn't work either
                                 //renderQueue[ff].note_heads[0].x
@@ -491,7 +534,7 @@ export default {
 
                     renderQueue = [];
                     ties = [];
-                    staveIndex ++;
+                    tuplets = [];
                     currentDuration = new Fraction(0);
                 }
 
@@ -505,7 +548,8 @@ export default {
             if(renderQueue.length > 0){
                 // Draw the rest
                 this._vex_draw_voice(context, staves[staveIndex + 1], renderQueue, {
-                    ties: ties
+                    ties: ties,
+                    tuplets: tuplets
                 });
             }
 
@@ -539,8 +583,6 @@ export default {
 
         },
 
-        
-
         render(notes, cursor) {
             for(var key in this.CTX){
                 this._render_context(this.CTX[key], notes, cursor);
@@ -550,7 +592,6 @@ export default {
         rerender_notes() {
             this.$parent.notes._call_render()
         },
-
 
         viewportResized() {
 

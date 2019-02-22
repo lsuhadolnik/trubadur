@@ -39,7 +39,7 @@
 
             <sexy-button text="BRIŠI" color="green" w="175px" @click.native="delete_note()"/>
             <sexy-button text="PONOVI" color="green" w="175px" />
-            <sexy-button text="NADALJUJ" color="orange" w="175px" />
+            <sexy-button text="PREVERI" color="orange" w="175px" @click.native="check()" />
                 
         </div>
             
@@ -206,17 +206,13 @@ export default {
 
         tuplet() {
 
-            /*this.key_callback({
+            this.key_callback({
                 type: 'n',
-                duration: new Fraction(1,4),
-                symbol: 'tuplet',
-                tuplet_type: 3,
-                notes: {
-
-                }
-            });*/
-            alert("Work in progress...");
-
+                duration: new Fraction(1,12),
+                symbol: '4',
+                tuplet_type: 3
+            });
+            //alert("Work in progress...");
         },
 
         keyboardClick(key) {
@@ -231,6 +227,14 @@ export default {
                 type: 'play_user',
                 throttle: this.playback_throttle
             });
+
+        },
+
+        check(){
+
+            this.key_callback({
+                type: 'check'
+            })
 
         }
     },
