@@ -6,15 +6,17 @@
             <ProgressBar></ProgressBar>
         </div>-->
         
-        <StaffView ref="staff_view" :bar="bar" :cursor="cursor" />
+        <StaffView ref="staff_view" :bar="bar" :cursor="cursor" :staveCount="info.staveCount" />
         
-        <Keyboard v-bind="{key_callback: keyboard_click}" />
+        <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" />
+
+        <div class="error" v-show="errorMessage">{{errorMessage}}</div>
 
 
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
     @import '../../../../sass/variables/index';
 
@@ -22,8 +24,15 @@
         touch-action: manipulation;
     }
 
-    .header {
+    .error{
+        text-align: center;
+        text-transform: uppercase;
+        color: $neon-red;
+        background: black;
+    }
 
+    .header {
+        
     }
     
 
@@ -41,10 +50,12 @@ import StaffView from "./StaffView.vue"
 import Keyboard from "./RhythmKeyboard.vue"
 
 import NoteStore from "./noteStore"
+import ExerciseGenerator from './exerciseGenerator'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 var Fraction = require('fraction.js');
+
 
 export default {
     
@@ -53,6 +64,7 @@ export default {
     },
 
     data() {
+
         return {
             notes: null,
             bar: {
@@ -61,24 +73,16 @@ export default {
             },
             cursor: {
                 position: 0,
-                x: 0
+                x: 0,
+                in_tuplet: false,
+            },
+            info: {
+                staveCount: 2,
             },
 
-            naloga: [
-                {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
-                {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
-                {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
+            errorMessage: "",
 
-                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-                
-                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-                {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-                
-            ]
+            generator: new ExerciseGenerator()
         }
     },
     
@@ -87,7 +91,13 @@ export default {
         keyboard_click(event) {
 
             if(event.type == "check"){
-                this.check();
+                this.generator.check(this.notes.notes);
+            }
+            else if(event.type == "play_user"){
+                this.play_user(event);
+            }
+            else if(event.type == "play_exercise"){
+                this.play_exercise(event);
             }
             else{
                 this.notes.handle_button(event)
@@ -95,22 +105,72 @@ export default {
     
         },
 
-        check(){
+        play_exercise(event) {
+            let throttle = 2.6;
+            if(event && event.throttle){
+                throttle = event.throttle;
+            }
+            this.playback(this.generator.currentExercise, throttle);
+        },
 
-            if(_.isEqual(this.naloga, this.notes.notes)){
-                alert("PRAVILNO!");
-            }else{
-                alert("Ni še čisto v redu.");
+        play_user(event) {
+            this.playback(this.notes.notes, event.throttle);
+        },
+
+        playback(values, throttle) {
+            
+            var currentTime = 0;
+
+            var allDurations = []; var ssum = 0;
+            for(var noteIndex = 0; noteIndex < values.length; noteIndex++){
+                allDurations.push(values[noteIndex].duration.valueOf());
+                ssum += values[noteIndex].duration.valueOf();
+            }
+            //console.log(allDurations);
+            //console.log(ssum);
+
+            let nextNoteExists = function(number){
+                return values.length < number;
+            }
+            let nextHasTie = function(number){
+                return values.length < number + 1 
+                && values[number + 1].tie;
             }
 
+            for(var noteIndex = 0; noteIndex < values.length; noteIndex++){
+                
+                let note = values[noteIndex];
+                let noteValue = note.duration.valueOf() * throttle;
+
+                var intensity = 127;
+                if(nextHasTie()){
+                    intensity = 256;
+                }
+
+                if(note.type != "r" && !note.tie)
+                {
+                    MIDI.noteOn(0, 60, intensity, currentTime);
+                }
+                
+                if(!nextHasTie(noteIndex))             
+                    MIDI.noteOff(0, 60, currentTime + noteValue);
+                
+
+                currentTime += noteValue;
+            }
+
+        
+        
         }
     },
 
     mounted() {
+
         this.notes = new NoteStore(
             this.bar,
             this.cursor,
-            this.$refs.staff_view.render
+            this.$refs.staff_view.render,
+            this.info
         );
 
         let instruments = {
@@ -130,6 +190,9 @@ export default {
                     MIDI.setVolume(instrument.channel, 127);
                     MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
                 }
+
+                // Play initial exercise
+                this.play_exercise();
             }
         });
         

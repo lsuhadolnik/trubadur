@@ -1818,215 +1818,6 @@ function functionProp() {
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-window._ = __webpack_require__(20);
-window.$ = window.jQuery = __webpack_require__(22);
-window.Vue = __webpack_require__(23);
-window.axios = __webpack_require__(26);
-
-window.axios.defaults.headers.common = {
-  'Accept': 'application/json',
-  'X-CSRF-TOKEN': window.Laravel.csrfToken,
-  'X-Requested-With': 'XMLHttpRequest'
-
-  /**
-   * Echo exposes an expressive API for subscribing to channels and listening
-   * for events that are broadcast by Laravel. Echo and event broadcasting
-   * allows your team to easily build robust real-time web applications.
-   */
-
-  // import Echo from 'laravel-echo'
-
-  // window.Pusher = require('pusher-js')
-
-  // window.Echo = new Echo({
-  //     broadcaster: 'pusher',
-  //     key: 'your-pusher-key'
-  // })
-
-};
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(3);
-var normalizeHeaderName = __webpack_require__(30);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(13);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(13);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(48)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(51)
-/* template */
-var __vue_template__ = __webpack_require__(52)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "node_modules/vue-awesome/components/Icon.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-afaabd70", Component.options)
-  } else {
-    hotAPI.reload("data-v-afaabd70", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -2867,6 +2658,215 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+window._ = __webpack_require__(20);
+window.$ = window.jQuery = __webpack_require__(22);
+window.Vue = __webpack_require__(23);
+window.axios = __webpack_require__(26);
+
+window.axios.defaults.headers.common = {
+  'Accept': 'application/json',
+  'X-CSRF-TOKEN': window.Laravel.csrfToken,
+  'X-Requested-With': 'XMLHttpRequest'
+
+  /**
+   * Echo exposes an expressive API for subscribing to channels and listening
+   * for events that are broadcast by Laravel. Echo and event broadcasting
+   * allows your team to easily build robust real-time web applications.
+   */
+
+  // import Echo from 'laravel-echo'
+
+  // window.Pusher = require('pusher-js')
+
+  // window.Echo = new Echo({
+  //     broadcaster: 'pusher',
+  //     key: 'your-pusher-key'
+  // })
+
+};
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(3);
+var normalizeHeaderName = __webpack_require__(30);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(13);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(13);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(48)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(51)
+/* template */
+var __vue_template__ = __webpack_require__(52)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "node_modules/vue-awesome/components/Icon.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-afaabd70", Component.options)
+  } else {
+    hotAPI.reload("data-v-afaabd70", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
 /* 11 */
 /***/ (function(module, exports) {
 
@@ -3380,7 +3380,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(19);
-module.exports = __webpack_require__(199);
+module.exports = __webpack_require__(200);
 
 
 /***/ }),
@@ -3389,12 +3389,12 @@ module.exports = __webpack_require__(199);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(199);
 
 
 
@@ -20520,7 +20520,7 @@ new Vue({ // eslint-disable-line no-new
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(21)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(21)(module)))
 
 /***/ }),
 /* 21 */
@@ -41885,7 +41885,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(24).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(24).setImmediate))
 
 /***/ }),
 /* 24 */
@@ -41955,7 +41955,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
 /* 25 */
@@ -42148,7 +42148,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(11)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(11)))
 
 /***/ }),
 /* 26 */
@@ -42166,7 +42166,7 @@ module.exports = __webpack_require__(27);
 var utils = __webpack_require__(3);
 var bind = __webpack_require__(12);
 var Axios = __webpack_require__(29);
-var defaults = __webpack_require__(8);
+var defaults = __webpack_require__(9);
 
 /**
  * Create an instance of Axios
@@ -42249,7 +42249,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(8);
+var defaults = __webpack_require__(9);
 var utils = __webpack_require__(3);
 var InterceptorManager = __webpack_require__(38);
 var dispatchRequest = __webpack_require__(39);
@@ -42781,7 +42781,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(3);
 var transformData = __webpack_require__(40);
 var isCancel = __webpack_require__(15);
-var defaults = __webpack_require__(8);
+var defaults = __webpack_require__(9);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -43073,10 +43073,10 @@ Vue.directive('touch-outside', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_awesome_components_Icon__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_awesome_components_Icon__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_awesome_components_Icon___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_awesome_components_Icon__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_App_vue__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_App_vue__);
@@ -43098,25 +43098,25 @@ Vue.directive('touch-outside', {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_Intervals_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_Intervals_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_games_rhythm_Rhythm_vue__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_games_rhythm_Rhythm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_games_rhythm_Rhythm_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_music_Keyboard_vue__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_music_Keyboard_vue__ = __webpack_require__(143);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_music_Keyboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_music_Keyboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Leaderboard_vue__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Leaderboard_vue__ = __webpack_require__(148);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_Leaderboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_Leaderboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_profile_Levels_vue__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_profile_Levels_vue__ = __webpack_require__(155);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_profile_Levels_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_profile_Levels_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_elements_Loader_vue__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_elements_Loader_vue__ = __webpack_require__(160);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_elements_Loader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_elements_Loader_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_profile_Me_vue__ = __webpack_require__(164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_profile_Me_vue__ = __webpack_require__(165);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_profile_Me_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_profile_Me_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_music_Note_vue__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_music_Note_vue__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_music_Note_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_music_Note_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_Profile_vue__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_Profile_vue__ = __webpack_require__(177);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_Profile_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Settings_vue__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Settings_vue__ = __webpack_require__(182);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Settings_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__components_Settings_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_music_Stave_vue__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_music_Stave_vue__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_music_Stave_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__components_music_Stave_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_elements_Title_vue__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_elements_Title_vue__ = __webpack_require__(194);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_elements_Title_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__components_elements_Title_vue__);
 
 
@@ -48904,7 +48904,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__);
 
 
@@ -48916,7 +48916,7 @@ __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"bars":{"
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__);
 
 
@@ -50152,13 +50152,13 @@ var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(109)
 /* template */
-var __vue_template__ = __webpack_require__(141)
+var __vue_template__ = __webpack_require__(142)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-5e41cbba"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -50201,13 +50201,13 @@ var content = __webpack_require__(108);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("cc002334", content, false, {});
+var update = __webpack_require__(1)("c8344d22", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5e41cbba\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Rhythm.vue", function() {
-     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5e41cbba\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Rhythm.vue");
+   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5e41cbba\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Rhythm.vue", function() {
+     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5e41cbba\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Rhythm.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -50225,7 +50225,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rythm-game__wrap {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n", ""]);
+exports.push([module.i, "\n.rythm-game__wrap[data-v-5e41cbba] {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.error[data-v-5e41cbba] {\n  text-align: center;\n  text-transform: uppercase;\n  color: #fe664e;\n  background: black;\n}\n", ""]);
 
 // exports
 
@@ -50247,7 +50247,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RhythmKeyboard_vue__ = __webpack_require__(130);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RhythmKeyboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__RhythmKeyboard_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__noteStore__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuex__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__exerciseGenerator__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vuex__ = __webpack_require__(4);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -50293,7 +50303,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var Fraction = __webpack_require__(10);
+
+var Fraction = __webpack_require__(6);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -50302,6 +50313,7 @@ var Fraction = __webpack_require__(10);
     },
 
     data: function data() {
+
         return {
             notes: null,
             bar: {
@@ -50310,10 +50322,16 @@ var Fraction = __webpack_require__(10);
             },
             cursor: {
                 position: 0,
-                x: 0
+                x: 0,
+                in_tuplet: false
+            },
+            info: {
+                staveCount: 2
             },
 
-            naloga: [{ type: "n", symbol: "4", duration: new Fraction(1, 12), tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), tuplet_type: 3 }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }]
+            errorMessage: "",
+
+            generator: new __WEBPACK_IMPORTED_MODULE_6__exerciseGenerator__["a" /* default */]()
         };
     },
 
@@ -50322,23 +50340,69 @@ var Fraction = __webpack_require__(10);
         keyboard_click: function keyboard_click(event) {
 
             if (event.type == "check") {
-                this.check();
+                this.generator.check(this.notes.notes);
+            } else if (event.type == "play_user") {
+                this.play_user(event);
+            } else if (event.type == "play_exercise") {
+                this.play_exercise(event);
             } else {
                 this.notes.handle_button(event);
             }
         },
-        check: function check() {
+        play_exercise: function play_exercise(event) {
+            var throttle = 2.6;
+            if (event && event.throttle) {
+                throttle = event.throttle;
+            }
+            this.playback(this.generator.currentExercise, throttle);
+        },
+        play_user: function play_user(event) {
+            this.playback(this.notes.notes, event.throttle);
+        },
+        playback: function playback(values, throttle) {
 
-            if (_.isEqual(this.naloga, this.notes.notes)) {
-                alert("PRAVILNO!");
-            } else {
-                alert("Ni še čisto v redu.");
+            var currentTime = 0;
+
+            var allDurations = [];var ssum = 0;
+            for (var noteIndex = 0; noteIndex < values.length; noteIndex++) {
+                allDurations.push(values[noteIndex].duration.valueOf());
+                ssum += values[noteIndex].duration.valueOf();
+            }
+            //console.log(allDurations);
+            //console.log(ssum);
+
+            var nextNoteExists = function nextNoteExists(number) {
+                return values.length < number;
+            };
+            var nextHasTie = function nextHasTie(number) {
+                return values.length < number + 1 && values[number + 1].tie;
+            };
+
+            for (var noteIndex = 0; noteIndex < values.length; noteIndex++) {
+
+                var note = values[noteIndex];
+                var noteValue = note.duration.valueOf() * throttle;
+
+                var intensity = 127;
+                if (nextHasTie()) {
+                    intensity = 256;
+                }
+
+                if (note.type != "r" && !note.tie) {
+                    MIDI.noteOn(0, 60, intensity, currentTime);
+                }
+
+                if (!nextHasTie(noteIndex)) MIDI.noteOff(0, 60, currentTime + noteValue);
+
+                currentTime += noteValue;
             }
         }
     },
 
     mounted: function mounted() {
-        this.notes = new __WEBPACK_IMPORTED_MODULE_5__noteStore__["a" /* default */](this.bar, this.cursor, this.$refs.staff_view.render);
+        var _this = this;
+
+        this.notes = new __WEBPACK_IMPORTED_MODULE_5__noteStore__["a" /* default */](this.bar, this.cursor, this.$refs.staff_view.render, this.info);
 
         var instruments = {
             piano: {
@@ -50357,6 +50421,9 @@ var Fraction = __webpack_require__(10);
                     MIDI.setVolume(instrument.channel, 127);
                     MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
                 }
+
+                // Play initial exercise
+                _this.play_exercise();
             }
         });
     }
@@ -50397,7 +50464,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 6px;\n  left: 6px;\n  width: 100%;\n  height: 100%;\n  border-radius: 6px;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n", ""]);
+exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 6px;\n  left: 6px;\n  width: 100%;\n  height: 100%;\n  border-radius: 6px;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n", ""]);
 
 // exports
 
@@ -50502,6 +50569,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -50512,7 +50587,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         text: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["e" /* stringProp */])(false),
         disable: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["a" /* booleanProp */])(false),
         customClass: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["e" /* stringProp */])(false),
-        color: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["e" /* stringProp */])(false)
+        color: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["e" /* stringProp */])(false),
+        hidden: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["a" /* booleanProp */])(false)
     }
 });
 
@@ -50526,7 +50602,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "button", class: { "button--disabled": _vm.disable } },
+    {
+      staticClass: "button",
+      class: { "button--disabled": _vm.disable, button__hidden: _vm.hidden }
+    },
     [
       _c(
         "div",
@@ -50542,7 +50621,8 @@ var render = function() {
         staticClass: "button__full",
         class: {
           button__green: _vm.color == "green",
-          button__orange: _vm.color == "orange"
+          button__orange: _vm.color == "orange",
+          button__red: _vm.color == "red"
         }
       })
     ]
@@ -51022,7 +51102,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var Fraction = __webpack_require__(10);
+var Fraction = __webpack_require__(6);
 
 var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
 var StaveNote = VF.StaveNote;
@@ -51030,557 +51110,559 @@ var Tuplet = VF.Tuplet;
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['bar', 'cursor'],
+            props: ['bar', 'cursor', 'staveCount'],
 
-    data: function data() {
-        return {
+            data: function data() {
+                        return {
 
-            info: {
-                width: 2 * window.innerWidth,
-                height: 80,
-                staveCount: 2,
-                barWidth: window.innerWidth,
-                barHeight: 80,
-                barOffsetY: 10,
+                                    info: {
+                                                width: 2 * window.innerWidth,
+                                                height: 80,
+                                                barWidth: window.innerWidth,
+                                                barHeight: 80,
+                                                barOffsetY: 10,
 
-                maxStaveWidth: 320,
+                                                // Determines how much pixels 
+                                                // an average note occupies.
+                                                // Used to space notes evenly
+                                                meanNoteWidth: 60,
 
-                bubble_class: "minimap-bubble",
-                lastMinimapBubbleX: 0,
-                lastMinimapBubbleW: 0,
+                                                maxStaveWidth: 320,
 
-                minimap_in_click: false,
+                                                bubble_class: "minimap-bubble",
+                                                lastMinimapBubbleX: 0,
+                                                lastMinimapBubbleW: 0,
 
-                scrollBuffer: {
-                    minimapX: 0,
-                    scrollX: 0
-                },
+                                                minimap_in_click: false,
 
-                cursor: {
-                    cursorBarClass: "cursor-bar",
-                    cursorMargin: 15
-                }
+                                                scrollBuffer: {
+                                                            minimapX: 0,
+                                                            scrollX: 0
+                                                },
 
+                                                cursor: {
+                                                            cursorBarClass: "cursor-bar",
+                                                            cursorMargin: 22
+                                                }
+
+                                    },
+
+                                    CTX: {
+                                                minimap: {
+                                                            id: "first-row",
+                                                            role: "minimap"
+                                                },
+                                                zoomview: {
+                                                            id: "second-row",
+                                                            role: "zoomview"
+                                                }
+                                    }
+                        };
             },
 
-            CTX: {
-                minimap: {
-                    id: "first-row",
-                    role: "minimap"
-                },
-                zoomview: {
-                    id: "second-row",
-                    role: "zoomview"
-                }
-            }
-        };
-    },
-
-    methods: {
-
-        note_clicked: function note_clicked(Xoffset) {
-
-            var closest = this._get_closest_note(Xoffset);
-            if (closest == -1) {
-                // No scroll..
-            } else {
-                this.cursor.position = closest;
-                this._save_scroll();
-                this.$parent.notes._call_render();
-                this._restore_scroll();
-            }
-        },
+            methods: {
 
-        _get_closest_note: function _get_closest_note(Xoffset) {
-
-            var zoomView = document.getElementById("second-row").parentNode;
-            var screenWidth = window.innerWidth;
-            var zoomScrollWidth = zoomView.scrollWidth;
+                        note_clicked: function note_clicked(Xoffset) {
 
-            var zoomScrollLeft = zoomView.scrollLeft;
+                                    var closest = this._get_closest_note(Xoffset);
+                                    if (closest.idx >= 0) {
+                                                this.cursor.position = closest.idx + 1;
+                                                this._save_scroll();
+                                                this.$parent.notes._call_render();
+                                                this._restore_scroll();
+                                    }
+                        },
 
-            var x = Xoffset + zoomScrollLeft;
-
-            console.log("screenWidth: " + screenWidth + ", zoomScrollWidth: " + zoomScrollWidth + ", zoomScrollLeft: " + zoomScrollLeft + ", x: " + x);
-
-            var x_coords = [];
-            zoomView.querySelectorAll(".vf-note").forEach(function (e) {
-                x_coords.push(Math.round(e.getClientRects()[0].x + zoomScrollLeft));
-            });
+                        _get_closest_note: function _get_closest_note(Xoffset) {
 
-            console.log(x_coords);
-
-            var minIndex = 999;
-            var minDiff = 99999;
-            var poss = x_coords;
-            for (var i = 0; i < poss.length; i++) {
-                if (Math.abs(poss[i] - x) < minDiff) {
-                    minDiff = Math.abs(poss[i] - x);
-                    minIndex = i;
-                }
-            }
-
-            if (minDiff < 50) {
-                return minIndex;
-            }
+                                    var zoomView = document.getElementById("second-row").parentNode;
+                                    var screenWidth = window.innerWidth;
+                                    var zoomScrollWidth = zoomView.scrollWidth;
 
-            return -1;
-        },
+                                    var zoomScrollLeft = zoomView.scrollLeft;
 
-        _get_scroll_data: function _get_scroll_data() {
+                                    var x = Xoffset + zoomScrollLeft;
 
-            // Vrni: 
-            // - Screen Width
-            // - Zoom Width
-            // ...
-
-            var zoomView = document.getElementById("second-row").parentNode;
-            var bubble = document.querySelector("." + this.info.bubble_class);
-
-            return {
-
-                screenWidth: window.innerWidth,
-
-                zoomView: zoomView,
-                zoomScrollWidth: zoomView.scrollWidth,
-                zoomScrollLeft: zoomView.scrollLeft,
-
-                bubble: bubble,
-                bubbleWidth: bubble.getAttribute("width"),
-                bubbleX: bubble.getAttribute("x")
-            };
-        },
-
-        _save_scroll: function _save_scroll() {
-
-            var zoomView = document.getElementById("second-row").parentNode;
-            this.info.scrollBuffer.scrollX = zoomView.scrollLeft;
-
-            var bubble = document.querySelector("." + this.info.bubble_class);
-            this.info.scrollBuffer.minimapX = bubble.getAttribute('x');
-        },
-
-        _restore_scroll: function _restore_scroll() {
-            var zoomView = document.getElementById("second-row").parentNode;
-            zoomView.scroll(this.info.scrollBuffer.scrollX, 0);
-
-            var bubble = document.querySelector("." + this.info.bubble_class);
-            bubble.setAttribute('x', this.info.scrollBuffer.minimapX);
-        },
+                                    console.log("screenWidth: " + screenWidth + ", zoomScrollWidth: " + zoomScrollWidth + ", zoomScrollLeft: " + zoomScrollLeft + ", x: " + x);
 
-        scrolled: function scrolled(x, hasScrolled) {
+                                    var x_coords = [];
+                                    zoomView.querySelectorAll(".vf-note").forEach(function (e) {
+                                                x_coords.push(Math.round(e.getClientRects()[0].x + zoomScrollLeft));
+                                    });
 
-            // Sprejme x koordinato začetka odmika ali balončka
-            var minimap = document.getElementById("first-row");
-            var bubble = document.querySelector("." + this.info.bubble_class);
-            var zoomView = document.getElementById("second-row").parentNode;
-            if (!hasScrolled) zoomView.scroll(x, 0);
+                                    console.log(x_coords);
 
-            var zoomScrollWidth = zoomView.scrollWidth;
-            var bubbleScrollWidth = minimap.scrollWidth;
-            var bubbleWidth = bubble.getAttribute("width");
+                                    var minIndex = 999;
+                                    var minDiff = 99999;
+                                    var poss = x_coords;
+                                    for (var i = 0; i < poss.length; i++) {
+                                                if (Math.abs(poss[i] - x) < minDiff) {
+                                                            minDiff = Math.abs(poss[i] - x);
+                                                            minIndex = i;
+                                                }
+                                    }
 
-            var bubbleX = x / zoomScrollWidth * bubbleScrollWidth;
+                                    if (minDiff < 50) {
+                                                return { idx: minIndex, xpos: x_coords[minIndex], userx: x };
+                                    }
 
-            bubbleX = Math.max(0, bubbleX);
-            bubbleX = Math.min(bubbleScrollWidth - bubbleWidth, bubbleX);
+                                    return { idx: -1, userx: x };
+                        },
 
-            bubble.setAttribute("x", bubbleX);
-            this.info.lastMinimapBubbleX = bubbleX;
-        },
+                        _get_scroll_data: function _get_scroll_data() {
 
-        _set_bubble_width: function _set_bubble_width(w) {
-            var rect = document.querySelector("." + this.info.bubble_class);
-            if (rect) rect.setAttribute("width", w);
+                                    // Vrni: 
+                                    // - Screen Width
+                                    // - Zoom Width
+                                    // ...
 
-            this.info.lastMinimapBubbleW = w;
-        },
+                                    var zoomView = document.getElementById("second-row").parentNode;
+                                    var bubble = document.querySelector("." + this.info.bubble_class);
 
-        _set_cursor_position: function _set_cursor_position(x) {
-            var cE = document.getElementsByClassName(this.info.cursor.cursorBarClass);
-            for (var idx_cursor = 0; idx_cursor < cE.length; idx_cursor++) {
-                cE[idx_cursor].setAttribute('x', x);
-            }
-        },
+                                    return {
 
-        _vex_draw_voice: function _vex_draw_voice(context, stave, renderQueue, optionals) {
+                                                screenWidth: window.innerWidth,
 
-            // Create a new voice everytime
-            var voice = new VF.Voice({
-                num_beats: this.bar.num_beats,
-                beat_value: this.bar.base_note
-            });
-            // DISABLE strict timing
-            voice.setMode(__WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Voice.Mode.SOFT);
-            voice.setStrict(false);
+                                                zoomView: zoomView,
+                                                zoomScrollWidth: zoomView.scrollWidth,
+                                                zoomScrollLeft: zoomView.scrollLeft,
 
-            // Add render queue
-            voice.addTickables(renderQueue);
+                                                bubble: bubble,
+                                                bubbleWidth: bubble.getAttribute("width"),
+                                                bubbleX: bubble.getAttribute("x")
+                                    };
+                        },
 
-            // Been trying different factors.
-            // If you change this, make sure, that 16 sixteenth notes fit onto the screen.
-            var maxNotesWidth = this.info.width * 0.8 * 0.5;
+                        _save_scroll: function _save_scroll() {
+
+                                    var zoomView = document.getElementById("second-row").parentNode;
+                                    this.info.scrollBuffer.scrollX = zoomView.scrollLeft;
+
+                                    var bubble = document.querySelector("." + this.info.bubble_class);
+                                    this.info.scrollBuffer.minimapX = bubble.getAttribute('x');
+                        },
+
+                        _restore_scroll: function _restore_scroll() {
+                                    var zoomView = document.getElementById("second-row").parentNode;
+                                    zoomView.scroll(this.info.scrollBuffer.scrollX, 0);
+
+                                    var bubble = document.querySelector("." + this.info.bubble_class);
+                                    bubble.setAttribute('x', this.info.scrollBuffer.minimapX);
+                        },
+
+                        scrolled: function scrolled(x, hasScrolled) {
+
+                                    // Sprejme x koordinato začetka odmika ali balončka
+                                    var minimap = document.getElementById("first-row");
+                                    var bubble = document.querySelector("." + this.info.bubble_class);
+                                    var zoomView = document.getElementById("second-row").parentNode;
+                                    if (!hasScrolled) zoomView.scroll(x, 0);
+
+                                    var zoomScrollWidth = zoomView.scrollWidth;
+                                    var bubbleScrollWidth = minimap.scrollWidth;
+                                    var bubbleWidth = bubble.getAttribute("width");
+
+                                    var bubbleX = x / zoomScrollWidth * bubbleScrollWidth;
+
+                                    bubbleX = Math.max(0, bubbleX);
+                                    bubbleX = Math.min(bubbleScrollWidth - bubbleWidth, bubbleX);
+
+                                    bubble.setAttribute("x", bubbleX);
+                                    this.info.lastMinimapBubbleX = bubbleX;
+                        },
+
+                        _set_bubble_width: function _set_bubble_width(w) {
+                                    var rect = document.querySelector("." + this.info.bubble_class);
+                                    if (rect) rect.setAttribute("width", w);
+
+                                    this.info.lastMinimapBubbleW = w;
+                        },
+
+                        _set_cursor_position: function _set_cursor_position(x) {
+                                    var cE = document.getElementsByClassName(this.info.cursor.cursorBarClass);
+                                    for (var idx_cursor = 0; idx_cursor < cE.length; idx_cursor++) {
+                                                cE[idx_cursor].setAttribute('x', x);
+                                    }
+                        },
+
+                        _vex_draw_voice: function _vex_draw_voice(context, stave, renderQueue, optionals) {
+
+                                    // Create a new voice everytime
+                                    var voice = new VF.Voice({
+                                                num_beats: this.bar.num_beats,
+                                                beat_value: this.bar.base_note
+                                    });
+                                    // DISABLE strict timing
+                                    voice.setMode(__WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Voice.Mode.SOFT);
+                                    voice.setStrict(false);
+
+                                    // Add render queue
+                                    voice.addTickables(renderQueue);
+
+                                    // Been trying different factors.
+                                    // If you change this, make sure, that 16 sixteenth notes fit onto the screen.
+                                    var maxNotesWidth = Math.min(
+                                    // Give equal space to each note
+                                    renderQueue.length * this.info.meanNoteWidth,
+                                    // Until there are too many notes to fit. 
+                                    // Then use maximum width and leave some space at the end
+                                    this.info.barWidth - this.info.meanNoteWidth);
 
-            var formatter = new VF.Formatter().format([voice], maxNotesWidth);
+                                    var formatter = new VF.Formatter().format([voice], maxNotesWidth);
 
-            // Render voice
-            // beams.forEach(function(b) {b.setContext(context).draw()})
+                                    // Render voice
+                                    // beams.forEach(function(b) {b.setContext(context).draw()})
 
-            voice.draw(context, stave);
+                                    voice.draw(context, stave);
 
-            // Generate beams
-            /*var beams = VF.Beam.generateBeams(renderQueue,  {
-                beam_rests: true,
-                show_stemlets: true
-            });
-            // Draw the beams:
-            beams.forEach(function(beam){
-                beam.setContext(context).draw();
-            });*/
+                                    // Generate beams
+                                    /*var beams = VF.Beam.generateBeams(renderQueue,  {
+                                        beam_rests: true,
+                                        show_stemlets: true
+                                    });
+                                    // Draw the beams:
+                                    beams.forEach(function(beam){
+                                        beam.setContext(context).draw();
+                                    });*/
 
-            // Draw optionals...
-            if (optionals) {
+                                    // Draw optionals...
+                                    if (optionals) {
 
-                if (optionals.ties) {
-                    // Draw the ties
-                    optionals.ties.forEach(function (t) {
-                        t.setContext(context).draw();
-                    });
-                }
+                                                if (optionals.ties) {
+                                                            // Draw the ties
+                                                            optionals.ties.forEach(function (t) {
+                                                                        t.setContext(context).draw();
+                                                            });
+                                                }
 
-                if (optionals.tuplets) {
-                    // Draw the tuplets:
-                    optionals.tuplets.forEach(function (tuplet) {
-                        tuplet.setContext(context).draw();
-                    });
-                }
-            }
-        },
+                                                if (optionals.tuplets) {
+                                                            // Draw the tuplets:
+                                                            optionals.tuplets.forEach(function (tuplet) {
+                                                                        tuplet.setContext(context).draw();
+                                                            });
+                                                }
+                                    }
+                        },
 
-        _vex_draw_staves: function _vex_draw_staves(context) {
+                        _vex_draw_optionals: function _vex_draw_optionals(context, events) {
 
-            var staves = [];
+                                    if (!events) {
+                                                return;
+                                    }
 
-            for (var idx_stave = 0; idx_stave < this.info.staveCount; idx_stave++) {
+                                    events.forEach(function (opt) {
+                                                opt.setContext(context).draw();
+                                    });
+                        },
 
-                var stave = new VF.Stave(this.info.barWidth * idx_stave, -this.info.barOffsetY, // staveHeight * idx_stave
-                this.info.width);
+                        _vex_draw_staves: function _vex_draw_staves(context) {
 
-                staves.push(stave);
+                                    var staves = [];
 
-                // If this is the first stave
-                if (idx_stave == 0) {
-                    // Add a clef and time signature.
-                    stave.addTimeSignature(this.bar.num_beats + "/" + this.bar.base_note);
-                }
+                                    for (var idx_stave = 0; idx_stave < this.staveCount; idx_stave++) {
 
-                // Connect it to the rendering context and draw!
-                stave.setContext(context).draw();
-            }
+                                                var stave = new VF.Stave(this.info.barWidth * idx_stave, -this.info.barOffsetY, // staveHeight * idx_stave
+                                                this.info.width);
 
-            return staves;
-        },
+                                                staves.push(stave);
 
-        _minimap_clicked: function _minimap_clicked(x) {
+                                                // If this is the first stave
+                                                if (idx_stave == 0) {
+                                                            // Add a clef and time signature.
+                                                            stave.addTimeSignature(this.bar.num_beats + "/" + this.bar.base_note);
+                                                }
 
-            var v = document.getElementById("second-row").parentNode;
+                                                // Connect it to the rendering context
+                                                stave.setContext(context);
+                                    }
 
-            // Content width
-            var contentWidth = v.scrollWidth;
+                                    var connectors = [];
 
-            // Screen width
-            var screenWidth = window.innerWidth;
+                                    for (var _idx_stave = 1; _idx_stave < this.staveCount; _idx_stave++) {
+                                                var connector = new VF.StaveConnector(staves[_idx_stave - 1], staves[_idx_stave]);
+                                                connector.setType(VF.StaveConnector.type.SINGLE);
+                                                connector.setContext(context);
+                                                connectors.push(connector);
+                                    }
 
-            // Touch X
-            var touchX = x;
+                                    // Draw the first stave
+                                    staves[0].draw();
 
-            var sDoSomeMath = touchX / screenWidth * contentWidth - screenWidth / 2;
+                                    for (var _idx_stave2 = 1; _idx_stave2 < this.staveCount; _idx_stave2++) {
+                                                staves[_idx_stave2].draw();
+                                                connectors[_idx_stave2 - 1].draw();
+                                    }
 
-            this.scrolled(sDoSomeMath);
-        },
-        _cursor_rendered: function _cursor_rendered(cursorNode, descriptor) {
+                                    return staves;
+                        },
 
-            var screenWidth = window.innerWidth;
-            var sR = document.getElementById("second-row").parentElement;
-            var scrollWidth = sR.scrollWidth;
+                        _minimap_clicked: function _minimap_clicked(x) {
 
-            // ZOOM-BREAK
-            var minimapWidth = screenWidth * 2;
+                                    var v = document.getElementById("second-row").parentNode;
 
-            var bubbleW = screenWidth / scrollWidth * minimapWidth;
+                                    // Content width
+                                    var contentWidth = v.scrollWidth;
 
-            // No cursor note
-            // Cursor is right at the end
-            // after the last note
-            if (!cursorNode) {
-                // Please fix me! :( :(
-                // That stink is unbearable
-                this._set_cursor_position(this.info.lastMinimapBubbleX + bubbleW - 20);
-                return;
-            }
+                                    // Screen width
+                                    var screenWidth = window.innerWidth;
 
-            var bbox = cursorNode.attrs.el.getBoundingClientRect();
-            //let bbox = cursorNode.attrs.el.getClientRects()[0];
-            //let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getClientRects()[0];
+                                    // Touch X
+                                    var touchX = x;
 
-            var startX = bbox.left + bbox.width / 2;
-            //let startX = bbox.x;
+                                    var sDoSomeMath = touchX / screenWidth * contentWidth - screenWidth / 2;
 
-            // To sicer dela, ampak ne na iPhonu
-            // let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getClientRects()[0];
-            // let startX = bbox.x;
+                                    this.scrolled(sDoSomeMath);
+                        },
+                        _cursor_rendered: function _cursor_rendered(cursorNode, descriptor) {
 
+                                    var screenWidth = window.innerWidth;
+                                    var sR = document.getElementById("second-row").parentElement;
+                                    var scrollWidth = sR.scrollWidth;
 
-            // ZOOM-BREAK
-            this._set_bubble_width(bubbleW);
+                                    // ZOOM-BREAK
+                                    var minimapWidth = screenWidth * 2;
 
-            //this.scrolled(startX - screenWidth*3/4);    
+                                    var bubbleW = screenWidth / scrollWidth * minimapWidth;
 
-            if (descriptor.role == "zoomview") {
+                                    // No cursor note
+                                    // Cursor is right at the start
+                                    if (!cursorNode) {
 
-                var zoomScrollWidth = scrollWidth;
-                var bubbleScrollWidth = minimapWidth;
+                                                this._set_cursor_position(20);
+                                                return;
+                                    }
 
-                var v = (startX + sR.scrollLeft) / zoomScrollWidth * bubbleScrollWidth - this.info.cursor.cursorMargin;
+                                    var bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getBoundingClientRect();
+                                    //let bbox = cursorNode.attrs.el.getClientRects()[0];
+                                    //let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getClientRects()[0];
 
-                this._set_cursor_position(v);
-            }
+                                    var startX = bbox.left + bbox.width / 2;
+                                    //let startX = bbox.x;
 
-            // Cancel unnecessary scrolls if the cursor is still visible...
-            //alert("startX: "+bbox.left+" screenWidth/2: "+(screenWidth/2)+" ");
-            //if(startX > screenWidth)
-            this.scrolled(startX - screenWidth * 0.5);
-        },
-        _render_context: function _render_context(descriptor, notes, cursor) {
+                                    // To sicer dela, ampak ne na iPhonu
+                                    // let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getClientRects()[0];
+                                    // let startX = bbox.x;
 
-            // Render onto n bars. Assumes no bar overlapping...
 
-            // notes = [
-            //      {type: "n", symbol: "4",  duration: new Fraction(3).div(8), dot: true},
-            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(8), tie: true}, // Last 2 notes are tied
-            //      {type: "n", symbol: "8",  duration: new Fraction(3).div(8), dot: true},
-            //      {type: "n", symbol: "16", duration: new Fraction(1).div(16)},
-            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3, tie:true},
-            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3, tie:true},
-            //  ];
+                                    // ZOOM-BREAK
+                                    this._set_bubble_width(bubbleW);
 
-            // Size our svg:
-            descriptor.renderer.resize(this.info.width, this.info.height);
+                                    if (descriptor.role == "zoomview") {
 
-            // element from CTX object
-            // We created the context in mounted()
-            var context = descriptor.context;
+                                                var zoomScrollWidth = scrollWidth;
+                                                var bubbleScrollWidth = minimapWidth;
 
-            // Clear all notes from svg
-            context.clear();
+                                                var v = (startX + sR.scrollLeft) / zoomScrollWidth * bubbleScrollWidth + this.info.cursor.cursorMargin;
 
-            // Redraw staves
-            var staves = this._vex_draw_staves(context);
+                                                this._set_cursor_position(v);
+                                    }
 
-            var staveIndex = 0;
-            var cursorNote = null;
+                                    // Here I could cancel unnecessary scroll if the cursor was still visible
+                                    // But I disabled that
 
-            var currentStaveNoteIdx = 0;
 
-            var ties = [];
-            var tuplets = [];
-            var renderQueue = [];
-            var currentDuration = new Fraction(0);
-            for (var i = 0; i < notes.length; i++) {
+                                    this.scrolled(startX - screenWidth * 0.5);
+                        },
+                        _render_context: function _render_context(descriptor, notes, cursor) {
 
-                // Bye bye, false note
-                if (!notes[i]) {
-                    continue;
-                }
+                                    // Render onto n bars. Assumes no bar overlapping...
 
-                if (notes[i].symbol == 12) {
-                    debugger;
-                }
+                                    // Size our svg:
+                                    descriptor.renderer.resize(this.info.width, this.info.height);
 
-                // Handle notes and rests
-                var newNote = new StaveNote({
-                    clef: "treble",
-                    keys: ["g/4"],
-                    duration: notes[i].symbol
-                });
+                                    // element from CTX object
+                                    // We created the context in mounted()
+                                    var context = descriptor.context;
 
-                // Handle dots
-                if (notes[i].dot) newNote.addDot(0); // enako je tudi newNote.addDotToAll()
+                                    // Clear all notes from svg
+                                    context.clear();
 
-                if (notes[i].tie && i > 0) {
+                                    // Redraw staves
+                                    var staves = this._vex_draw_staves(context);
 
-                    // tie is:
-                    //  - this note + last note
-                    ties.push(new VF.StaveTie({
-                        first_note: renderQueue[i - 1],
-                        last_note: newNote,
-                        first_indices: [0],
-                        last_indices: [0]
-                    }));
-                }
+                                    var staveIndex = 0;
+                                    var cursorNote = null;
 
-                if (i == cursor.position) {
-                    /*newNote.setStyle({
-                        fillStyle: "blue", 
-                        strokeStyle: "blue"
-                    });*/
+                                    var currentStaveNoteIdx = 0;
 
-                    cursorNote = newNote;
-                }
+                                    var ties = [];
+                                    var tuplets = [];
+                                    var renderQueue = [];
+                                    var currentDuration = new Fraction(0);
 
-                renderQueue.push(newNote);
-                currentStaveNoteIdx++;
+                                    var allStaveNotes = [];
 
-                currentDuration = currentDuration.add(notes[i].duration);
+                                    for (var i = 0; i < notes.length; i++) {
 
-                if (currentDuration.compare(new Fraction(1)) == 0) {
+                                                // Bye bye, false note
+                                                if (!notes[i]) {
+                                                            continue;
+                                                }
 
-                    // Tuplets
-                    for (var j = 0; j < renderQueue.length; j++) {
-                        var notesIDX = currentStaveNoteIdx - renderQueue.length + j;
-                        if (notes[notesIDX].tuplet_type) {
-                            tuplets.push(new __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Tuplet(renderQueue.slice(j, j + notes[notesIDX].tuplet_type), {
-                                bracketed: true, rationed: false
-                            }));
-                            j += notes[notesIDX].tuplet_type - 1;
+                                                // Handle notes and rests
+                                                var newNote = new StaveNote({
+                                                            clef: "treble",
+                                                            keys: ["g/4"],
+                                                            duration: notes[i].symbol
+                                                });
+
+                                                // Handle dots
+                                                if (notes[i].dot) newNote.addDot(0); // enako je tudi newNote.addDotToAll()
+
+
+                                                // Get the note the cursor will stick to
+                                                if (i + 1 == cursor.position) {
+                                                            cursorNote = newNote;
+                                                }
+
+                                                allStaveNotes.push(newNote);
+                                                renderQueue.push(newNote);
+                                                currentStaveNoteIdx++;
+
+                                                if (notes[i].tie && i > 0) {
+
+                                                            // tie is:
+                                                            //  - this note + last note
+                                                            ties.push(new VF.StaveTie({
+                                                                        first_note: allStaveNotes[i - 1],
+                                                                        last_note: allStaveNotes[i],
+                                                                        first_indices: [0],
+                                                                        last_indices: [0]
+                                                            }));
+                                                }
+
+                                                if (notes[i].tuplet_from >= 0) {
+                                                            tuplets.push(new __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Tuplet(allStaveNotes.slice(notes[i].tuplet_from, notes[i].tuplet_to), {
+                                                                        bracketed: true, rationed: false, num_notes: notes[i].tuplet_type
+                                                            }));
+                                                }
+
+                                                currentDuration = currentDuration.add(notes[i].duration);
+
+                                                if (currentDuration.compare(new Fraction(1)) == 0) {
+
+                                                            this._vex_draw_voice(context, staves[staveIndex++], renderQueue);
+
+                                                            renderQueue = [];
+                                                            currentDuration = new Fraction(0);
+                                                }
+                                    }
+
+                                    // If there are still some notes left 
+                                    // Happens if the bar is incomplete
+                                    // sum(durations) != 1
+                                    // Not only if less than 1 (incomplete bar)
+                                    // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
+                                    if (renderQueue.length > 0) {
+                                                // Draw the rest
+                                                this._vex_draw_voice(context, staves[staveIndex++], renderQueue);
+                                    }
+
+                                    this._vex_draw_optionals(context, ties);
+                                    this._vex_draw_optionals(context, tuplets);
+
+                                    // Render the minimap rectangle
+                                    if (descriptor.role == "minimap") {
+
+                                                descriptor.context.rect(this.info.lastMinimapBubbleX, 0, this.info.lastMinimapBubbleW, this.info.barHeight, {
+                                                            class: this.info.bubble_class,
+                                                            fill: "red",
+                                                            opacity: 0.5
+                                                });
+                                    }
+
+                                    // RENDER CURSOR BAR
+                                    descriptor.context.rect(150, 0, 2, this.info.barHeight, {
+                                                class: this.info.cursor.cursorBarClass,
+                                                fill: "green",
+                                                opacity: 0.5
+                                    });
+
+                                    this._cursor_rendered(cursorNote, descriptor);
+
+                                    // Nastavi lastnost cursor.in_tuplet
+                                    // S tem skrijem gumbe takrat, ko sem v trioli, 
+                                    /// zato da se ne dogajajo čudne stvari
+                                    if (this.cursor.position - 1 >= 0 && notes.length > this.cursor.position - 1) {
+                                                var ccNote = notes[this.cursor.position - 1];
+                                                if (ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_from")) {
+                                                            this.cursor.in_tuplet = true;
+                                                } else {
+                                                            this.cursor.in_tuplet = false;
+                                                }
+                                    } else {
+                                                this.cursor.in_tuplet = false;
+                                    }
+                        },
+                        render: function render(notes, cursor) {
+                                    for (var key in this.CTX) {
+                                                this._render_context(this.CTX[key], notes, cursor);
+                                    }
+                        },
+                        rerender_notes: function rerender_notes() {
+                                    this.$parent.notes._call_render();
+                        },
+                        viewportResized: function viewportResized() {
+
+                                    this.info.width = 2 * window.innerWidth;
+                                    this.info.barWidth = window.innerWidth;
+
+                                    this.rerender_notes();
                         }
-                    }
+            },
+            mounted: function mounted() {
 
-                    this._vex_draw_voice(context, staves[staveIndex++], renderQueue, {
-                        ties: ties,
-                        tuplets: tuplets
-                    });
+                        // VexFlow Magic
+                        var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
+                        for (var ctx_key in this.CTX) {
+                                    var div = document.getElementById(this.CTX[ctx_key].id);
+                                    var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
 
-                    /*if(descriptor.role == 'zoomview'){
-                          var kk = document.getElementById("second-row").parentElement.scrollLeft;
-                        
-                        for(var ff = 0; ff < renderQueue.length; ff++){
-                            
-                            this.info.note_x_positions.push(
-                                
-                                // Unsupported in iOS Safari
-                                //renderQueue[ff].attrs.el.getClientRects()[0].x
-                                
-                                // Problems with dots - bounding box gets too wide, works otherwise
-                                //renderQueue[ff].attrs.el.getBoundingClientRect().x + kk
-                                  // Something is wrong with this thing...
-                                renderQueue[ff].attrs.el.getElementsByClassName("vf-note")[0].getBoundingClientRect().x + kk
-                                
-                                // This doesn't work either
-                                //renderQueue[ff].note_heads[0].x
-                              );
-                          }
-                    }*/
+                                    this.CTX[ctx_key].el = div;
+                                    this.CTX[ctx_key].parentElement = div.parentElement;
+                                    this.CTX[ctx_key].scrollElement = div.parentElement;
+                                    this.CTX[ctx_key].renderer = renderer;
+                                    this.CTX[ctx_key].context = renderer.getContext();
+                        }
 
-                    renderQueue = [];
-                    ties = [];
-                    tuplets = [];
-                    currentDuration = new Fraction(0);
-                }
+                        // INIT
+                        var sR = this.CTX.zoomview.parentElement;
+                        var vue = this;
+                        sR.onscroll = function (e) {
+                                    vue.scrolled(sR.scrollLeft, true);
+                                    //e.preventDefault();
+                                    return false;
+                        };
+
+                        sR.onclick = function (e) {
+                                    vue.note_clicked(e.clientX);
+                        };
+
+                        var fR = this.CTX.minimap.parentElement;
+
+                        fR.ontouchmove = function (e) {
+                                    vue._minimap_clicked(e.touches[0].clientX);
+                        };
+
+                        fR.onmousedown = function (e) {
+                                    vue.info.minimap_in_click = true;
+                                    vue._minimap_clicked(e.clientX);
+                        };
+                        fR.onmouseup = function (e) {
+                                    vue.info.minimap_in_click = false;
+                        };
+                        fR.onmousemove = function (e) {
+                                    if (vue.info.minimap_in_click) vue._minimap_clicked(e.clientX);
+                        };
+
+                        window.onresize = function (event) {
+                                    vue.viewportResized();
+                        };
+
+                        window.onorientationchange = function (event) {
+                                    vue.viewportResized();
+                        };
             }
-
-            // If there are still some notes left 
-            // Happens if the bar is incomplete
-            // sum(durations) != 1
-            // Not only if less than 1 (incomplete bar)
-            // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
-            if (renderQueue.length > 0) {
-                // Draw the rest
-                this._vex_draw_voice(context, staves[staveIndex + 1], renderQueue, {
-                    ties: ties,
-                    tuplets: tuplets
-                });
-            }
-
-            // Render the minimap rectangle
-            if (descriptor.role == "minimap") {
-
-                descriptor.context.rect(this.info.lastMinimapBubbleX, 0, this.info.lastMinimapBubbleW, this.info.barHeight, {
-                    class: this.info.bubble_class,
-                    fill: "red",
-                    opacity: 0.5
-                });
-            }
-
-            // RENDER CURSOR BAR
-            descriptor.context.rect(150, 0, 2, this.info.barHeight, {
-                class: this.info.cursor.cursorBarClass,
-                fill: "green",
-                opacity: 0.5
-            });
-
-            this._cursor_rendered(cursorNote, descriptor);
-        },
-        render: function render(notes, cursor) {
-            for (var key in this.CTX) {
-                this._render_context(this.CTX[key], notes, cursor);
-            }
-        },
-        rerender_notes: function rerender_notes() {
-            this.$parent.notes._call_render();
-        },
-        viewportResized: function viewportResized() {
-
-            this.info.width = 2 * window.innerWidth;
-            this.info.barWidth = window.innerWidth;
-
-            this.rerender_notes();
-        }
-    },
-    mounted: function mounted() {
-
-        // VexFlow Magic
-        var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
-        for (var ctx_key in this.CTX) {
-            var div = document.getElementById(this.CTX[ctx_key].id);
-            var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
-
-            this.CTX[ctx_key].el = div;
-            this.CTX[ctx_key].parentElement = div.parentElement;
-            this.CTX[ctx_key].scrollElement = div.parentElement;
-            this.CTX[ctx_key].renderer = renderer;
-            this.CTX[ctx_key].context = renderer.getContext();
-        }
-
-        // INIT
-        var sR = this.CTX.zoomview.parentElement;
-        var vue = this;
-        sR.onscroll = function (e) {
-            vue.scrolled(sR.scrollLeft, true);
-            //e.preventDefault();
-            return false;
-        };
-
-        sR.onclick = function (e) {
-            vue.note_clicked(e.clientX);
-        };
-
-        var fR = this.CTX.minimap.parentElement;
-
-        fR.ontouchmove = function (e) {
-            vue._minimap_clicked(e.touches[0].clientX);
-        };
-
-        fR.onmousedown = function (e) {
-            vue.info.minimap_in_click = true;
-            vue._minimap_clicked(e.clientX);
-        };
-        fR.onmouseup = function (e) {
-            vue.info.minimap_in_click = false;
-        };
-        fR.onmousemove = function (e) {
-            if (vue.info.minimap_in_click) vue._minimap_clicked(e.clientX);
-        };
-
-        window.onresize = function (event) {
-            vue.viewportResized();
-        };
-
-        window.onorientationchange = function (event) {
-            vue.viewportResized();
-        };
-    }
 });
 
 /***/ }),
@@ -76072,123 +76154,156 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
 
 
-var Fraction = __webpack_require__(10);
+var Fraction = __webpack_require__(6);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-        methods: {
-                whole_note: function whole_note() {
+    methods: {
+        whole_note: function whole_note() {
 
-                        this.key_callback({
-                                type: 'n',
-                                symbol: 'w',
-                                duration: new Fraction(1)
-                        });
-                },
-                half_note: function half_note() {
-
-                        this.key_callback({
-                                type: 'n',
-                                symbol: '2',
-                                duration: new Fraction(1).div(2)
-                        });
-                },
-                quarter_note: function quarter_note() {
-
-                        this.key_callback({
-                                type: 'n',
-                                symbol: '4',
-                                duration: new Fraction(1).div(4)
-                        });
-                },
-                eight_note: function eight_note() {
-
-                        this.key_callback({
-                                type: 'n',
-                                symbol: '8',
-                                duration: new Fraction(1).div(8)
-                        });
-                },
-                sixteenth_note: function sixteenth_note() {
-
-                        this.key_callback({
-                                type: 'n',
-                                symbol: '16',
-                                duration: new Fraction(1).div(16)
-                        });
-                },
-                move_cursor_forward: function move_cursor_forward() {
-
-                        this.key_callback({
-                                type: '>'
-                        });
-                },
-                move_cursor_backwards: function move_cursor_backwards() {
-
-                        this.key_callback({
-                                type: '<'
-                        });
-                },
-                dot: function dot() {
-
-                        this.key_callback({
-                                type: 'dot'
-                        });
-                },
-                tie: function tie() {
-
-                        this.key_callback({
-                                type: 'tie'
-                        });
-                },
-                delete_note: function delete_note() {
-
-                        this.key_callback({
-                                type: 'delete'
-                        });
-                },
-                tuplet: function tuplet() {
-
-                        this.key_callback({
-                                type: 'n',
-                                duration: new Fraction(1, 12),
-                                symbol: '4',
-                                tuplet_type: 3
-                        });
-                        //alert("Work in progress...");
-                },
-                keyboardClick: function keyboardClick(key) {
-
-                        this.key_callback();
-                },
-                playback: function playback() {
-
-                        this.key_callback({
-                                type: 'play_user',
-                                throttle: this.playback_throttle
-                        });
-                },
-                check: function check() {
-
-                        this.key_callback({
-                                type: 'check'
-                        });
-                }
+            this.key_callback({
+                type: 'n',
+                symbol: this.rest_mode ? 'wr' : 'w',
+                duration: new Fraction(1)
+            });
         },
-        components: {
-                SexyButton: __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default.a, TwoRowsButton: __WEBPACK_IMPORTED_MODULE_1__elements_TwoRowsButton_vue___default.a
+        half_note: function half_note() {
+
+            this.key_callback({
+                type: 'n',
+                symbol: this.rest_mode ? '2r' : '2',
+                duration: new Fraction(1).div(2)
+            });
         },
-        data: function data() {
-                return {
-                        playback_throttle: 2
-                };
+        quarter_note: function quarter_note() {
+
+            this.key_callback({
+                type: 'n',
+                symbol: this.rest_mode ? '4r' : '4',
+                duration: new Fraction(1).div(4)
+            });
         },
-        props: ['key_callback']
+        eight_note: function eight_note() {
+
+            this.key_callback({
+                type: 'n',
+                symbol: this.rest_mode ? '8r' : '8',
+                duration: new Fraction(1).div(8)
+            });
+        },
+        sixteenth_note: function sixteenth_note() {
+
+            this.key_callback({
+                type: 'n',
+                symbol: this.rest_mode ? '16r' : '16',
+                duration: new Fraction(1).div(16)
+            });
+        },
+        move_cursor_forward: function move_cursor_forward() {
+
+            this.key_callback({
+                type: '>'
+            });
+        },
+        move_cursor_backwards: function move_cursor_backwards() {
+
+            this.key_callback({
+                type: '<'
+            });
+        },
+        dot: function dot() {
+
+            this.key_callback({
+                type: 'dot'
+            });
+        },
+        tie: function tie() {
+
+            this.key_callback({
+                type: 'tie'
+            });
+        },
+        delete_note: function delete_note() {
+
+            this.key_callback({
+                type: 'delete'
+            });
+        },
+        tuplet: function tuplet() {
+
+            this.key_callback({
+                type: 'tuplet',
+                tuplet_type: 3
+            });
+        },
+        keyboardClick: function keyboardClick(key) {
+
+            this.key_callback();
+        },
+        playback: function playback() {
+
+            this.key_callback({
+                type: 'play_user',
+                throttle: this.playback_throttle
+            });
+        },
+        repeat_exercise: function repeat_exercise() {
+
+            this.key_callback({
+                type: 'play_exercise',
+                throttle: this.playback_throttle
+            });
+        },
+        check: function check() {
+
+            this.key_callback({
+                type: 'check'
+            });
+        },
+        toggle_rest_mode: function toggle_rest_mode() {
+
+            this.rest_mode = !this.rest_mode;
+        }
+    },
+    components: {
+        SexyButton: __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default.a, TwoRowsButton: __WEBPACK_IMPORTED_MODULE_1__elements_TwoRowsButton_vue___default.a
+    },
+    data: function data() {
+        return {
+            playback_throttle: 2,
+            rest_mode: false
+        };
+    },
+    props: ['key_callback', 'cursor'],
+    computed: {
+        note_color: function note_color() {
+            if (this.rest_mode) return "red";else return "green";
+        },
+        half_text: function half_text() {
+            if (this.rest_mode) return "H";else return "h";
+        },
+        quarter_text: function quarter_text() {
+            if (this.rest_mode) return "Q";else return "q";
+        },
+        eight_text: function eight_text() {
+            if (this.rest_mode) return "E";else return "e";
+        },
+        sixteenth_text: function sixteenth_text() {
+            if (this.rest_mode) return "S";else return "s";
+        },
+        rest_mode_button_color: function rest_mode_button_color() {
+            if (this.rest_mode) return "green";else return "red";
+        },
+        rest_mode_button_text: function rest_mode_button_text() {
+            if (this.rest_mode) return "es";else return "ES";
+        }
+    }
 
 });
 
@@ -76384,7 +76499,11 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: { text: "h", color: "green" },
+              attrs: {
+                hidden: _vm.cursor.in_tuplet,
+                text: _vm.half_text,
+                color: _vm.note_color
+              },
               nativeOn: {
                 click: function($event) {
                   _vm.half_note()
@@ -76393,7 +76512,11 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: { text: "q", color: "green" },
+              attrs: {
+                hidden: _vm.cursor.in_tuplet,
+                text: _vm.quarter_text,
+                color: _vm.note_color
+              },
               nativeOn: {
                 click: function($event) {
                   _vm.quarter_note()
@@ -76402,7 +76525,11 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: { text: "e", color: "green" },
+              attrs: {
+                hidden: _vm.cursor.in_tuplet,
+                text: _vm.eight_text,
+                color: _vm.note_color
+              },
               nativeOn: {
                 click: function($event) {
                   _vm.eight_note()
@@ -76411,7 +76538,11 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: { text: "s", color: "green" },
+              attrs: {
+                hidden: _vm.cursor.in_tuplet,
+                text: _vm.sixteenth_text,
+                color: _vm.note_color
+              },
               nativeOn: {
                 click: function($event) {
                   _vm.sixteenth_note()
@@ -76444,7 +76575,24 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: { text: ".", color: "green" },
+              attrs: {
+                hidden: _vm.cursor.in_tuplet,
+                text: _vm.rest_mode_button_text,
+                color: _vm.rest_mode_button_color
+              },
+              nativeOn: {
+                click: function($event) {
+                  _vm.toggle_rest_mode()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("sexy-button", {
+              attrs: {
+                hidden: _vm.cursor.in_tuplet,
+                text: ".",
+                color: "green"
+              },
               nativeOn: {
                 click: function($event) {
                   _vm.dot()
@@ -76496,7 +76644,7 @@ var render = function() {
             }
           }
         }),
-        _vm._v("\n        " + _vm._s(_vm.playback_throttle) + " \n        "),
+        _vm._v("\n        " + _vm._s(_vm.playback_throttle) + "\n        "),
         _c("sexy-button", {
           attrs: { text: "PREDVAJAJ", color: "green", w: "175px" },
           nativeOn: {
@@ -76523,7 +76671,12 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("sexy-button", {
-          attrs: { text: "PONOVI", color: "green", w: "175px" }
+          attrs: { text: "PONOVI", color: "green", w: "175px" },
+          nativeOn: {
+            click: function($event) {
+              _vm.repeat_exercise()
+            }
+          }
         }),
         _vm._v(" "),
         _c("sexy-button", {
@@ -76554,39 +76707,20 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var Fraction = __webpack_require__(10);
+var Fraction = __webpack_require__(6);
 
-var NoteStore = function NoteStore(bar, cursor, render_function) {
+var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
     // The supported note durations.
     // Currently supports up to a sixteenth note with a dot.
     this.supportedLengths = [1, 2, 4, 8, 16, 32];
     this.supportedRests = [4, 8, 12, 16, 32];
 
+    //alert(staff_view.info.staveCount);
+
     this.bar = bar;
     this.cursor = cursor;
-    this.notes = [// TODO!!!
-
-    { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4)
-
-        /*{type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
-        {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
-        {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
-          {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        
-        {type:"r", symbol:"wr", duration:new Fraction(1)}*/
-
-        /*{type:"n", symbol:"8", duration:new Fraction(1,8)},
-        {type:"n", symbol:"8", duration:new Fraction(1,8)},
-        {type:"n", symbol:"8", duration:new Fraction(1,8)},
-        {type:"n", symbol:"8", duration:new Fraction(1,8)},
-          {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-          {type:"r", symbol:"2r", duration:new Fraction(1,2)},*/
-
-    }];
+    this.notes = [];
 
     this._call_render = function () {
 
@@ -76614,14 +76748,14 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
         } else if (event.type == '<') {
             this._move_cursor_backwards();
             this._call_render();
-        } else if (event.type == 'play_user') {
-            this.playback(event);
+        } else if (event.type == 'tuplet') {
+            this.tuplet(event);
         }
     };
 
     this.add_tie = function () {
 
-        var n = this.cursor.position;
+        var n = this.cursor.position - 1;
 
         // Don't do anything if this is the first note...
         if (n <= 0) {
@@ -76652,6 +76786,93 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
         this.add_note(note);
     };
 
+    this.tuplet = function (event) {
+
+        var i = cursor.position - 1;
+
+        if (!this.notes[i]) {
+            return;
+        }
+
+        if (this.notes[i].in_tuplet) {
+            this.remove_tuplet(event);
+        } else {
+            this.add_tuplet(event);
+        }
+    }, this.remove_tuplet = function (event) {
+
+        // Remove tuplet in current position
+        // Removes the tuplet even if the cursor is inside
+
+        var i = cursor.position - 1;
+        var tuplet_type = this.notes[i].tuplet_type;
+
+        while (this.notes[i] && !this.notes[i].hasOwnProperty('tuplet_from')) {
+            i++;
+        }
+        if (!this.notes[i]) {
+            alert("Nekaj je narobe. Nisem našel zaključka triole... To je napaka v kodi.");
+        }
+
+        this.notes.slice(this.notes[i].tuplet_from, this.notes[i].tuplet_to).forEach(function (note) {
+            delete note.in_tuplet;
+            delete note.tuplet_type;
+            note.duration = note.duration.mul(tuplet_type);
+        });
+
+        delete this.notes[i].tuplet_from;
+        delete this.notes[i].tuplet_to;
+
+        // And render the result
+        this._call_render();
+    }, this.add_tuplet = function (event) {
+
+        // Add tuplet to notes behind the cursor
+
+        if (this.notes[cursor.position - 1].in_tuplet) {
+            alert("Ne morem dodati triole v triolo");
+            return;
+        }
+
+        // Check if there are enough notes
+        // - Check if the duration sums up to (1/baseNote)
+        // - Notes must fit exactly (watch out for the dots)
+        var currentDuration = new Fraction(0);
+        var toIndex = -1;
+        for (var i = cursor.position - 1; i >= 0; i--) {
+            currentDuration = currentDuration.add(this.notes[i].duration);
+            var value = currentDuration.compare(new Fraction(event.tuplet_type, bar.base_note));
+            if (value == 0) {
+                // Enough notes for a tuplet
+                toIndex = i;
+                break;
+            } else if (value > 0) {
+                // Tuplet would not fit
+                alert("Tu ne morem narediti triole, ker se notne vrednosti ne seštejejo ustrezno.");
+                return;
+            }
+        }
+        if (toIndex < 0) {
+            // Not enough notes for a tuplet
+            alert("Tu ne morem narediti triole, ker ni dovolj not");
+            return;
+        }
+
+        // For those notes in the tuplet
+        // - Change duration to (duration / tuplet_type)
+        // - Add tuplet_from, tuplet_to
+        for (var _i = toIndex; _i < cursor.position; _i++) {
+            this.notes[_i].duration = this.notes[_i].duration.div(event.tuplet_type);
+            this.notes[_i].in_tuplet = true;
+            this.notes[_i].tuplet_type = event.tuplet_type;
+        }
+        this.notes[cursor.position - 1].tuplet_from = toIndex;
+        this.notes[cursor.position - 1].tuplet_to = cursor.position;
+
+        // And render the result
+        this._call_render();
+    };
+
     this._is_supported_length = function (event) {
 
         if (event.tuplet_type == 3) {
@@ -76665,6 +76886,8 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
         return false;
     }, this.add_note = function (event) {
 
+        var MAX_DURATION = info.staveCount;
+
         if (!this._is_supported_length(event)) {
             return;
         }
@@ -76674,82 +76897,41 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
             event.tie = true;
         }
 
-        // Check if the new composition fits in bars correctly
-        // If it can be put onto 2 full bars without overlapping
-        // 
-        // Example:
-        //  4/4 time
-        // (1/4) (1/4) (1/4) (1/4) [BARLINE] (1/4) ... <- this fits
-        //
-        // (1/2) (1/4) (1/2) <- This does not fit - the bar is too long
-        //
-        if (!this.check_sum_fit(event)) {
-            // Notify user
-            alert("Takt je predolg.");
-
+        if (this._sum_durations().add(event.duration) > MAX_DURATION) {
+            alert("Nota je predolga");
             return;
         }
-
-        var rests_info = this.sum_silence_until_edited();
-        // RETURNS: object
-        //      rests_info.rests -> array    -    indices of summed rests
-        //      rests_info.duration -> Fraction - duration of summed rests
-
-        // If the event duration exceeds the duration of summed notes
-        if (rests_info.duration < event.duration) {
-
-            // Notify user
-            alert("Nota je predolga.");
-            // and Quit
-            return;
-        }
-        // Get the remaining silence duration - will be filled with new rests
-        var remaining = rests_info.duration.sub(event.duration); // prostor - trajanje
-
-        // --- Delete rests ---
-        // What this splice does:  splice(from_idx, num_elements_to_delete, [el1, el2, ...])
-        // *** IT ALTERS THE ORIGINAL ARRAY (this.notes) ***
-        //      -   from the position of the first rest
-        //      -   delete all rests (number to delete = length of all rests)
-        //      -   discard the remainder (deleted rests)
-        this.notes.splice(rests_info.rests[0], rests_info.rests.length);
-        // What this splice does:
-        // *** IT ALTERS THE ORIGINAl ARRAY (this.notes) ***
-        //      -   from current position (at the cursor)
-        //      -   delete all notes
-        //      -   store the deleted notes in ostanek
-        //  All non-rests are collected here.
-        //  example: 
-        //  
-        //         | rest  rest  rest  note note note ...
-        // cursor--^   ---deleted---    ----ostanek-----
-        var ostanek = this.notes.splice(this.cursor.position);
 
         // Add the note
         // Add the new note to the current position (at the cursor)
         this.notes.splice(this.cursor.position, 0, event);
 
-        // Now generate new rests to fill the remaining space
-        // Returns an array of event objects - rests
-        var new_rests = this.generate_rests_for_duration(remaining);
-        // Add all up: 
-        // 
-        //  | (new note) (new rest) ... (new rest) (ostanek_note) ... (ostanek_note)
-        // 
-        this.notes = this.notes.concat(new_rests).concat(ostanek);
+        if (!this.check_sum_fit()) {
+            alert("Takt je predolg");
 
-        var str = "";
-        str = this.notes[0].duration.toFraction();
-        for (var i = 1; i < this.notes.length; i++) {
-            str += ", " + this.notes[i].duration.toFraction();
+            this.notes.splice(this.cursor.position - 1, 1);
+            return;
         }
-        console.log(str);
 
         // Move cursor forward
         this._move_cursor_forward();
 
         // And render the result
         this._call_render();
+    }, this._sum_durations = function () {
+
+        var sum = new Fraction();
+        for (var i = 0; i < this.notes.length; i++) {
+            sum = sum.add(this.notes[i].duration);
+        }
+        return sum;
+    }, this._print_all_durations = function () {
+        var str = "";
+        str = this.notes[0].duration.toFraction();
+        for (var i = 1; i < this.notes.length; i++) {
+            str += ", " + this.notes[i].duration.toFraction();
+        }
+        console.log(str);
     };
 
     this.delete_note = function () {
@@ -76760,37 +76942,18 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
             return;
         }
 
+        if (this.notes[this.cursor.position - 1].in_tuplet) {
+            this.remove_tuplet();
+        }
+
         // Move one note back - so the situation is as follows
         //
         //         |  (note to delete) (rest/note) ... (rest/note)
         // cursor--^
         this._move_cursor_backwards();
-        // Change current note to a rest
-        this.notes[this.cursor.position].type = "r";
 
-        // Sum up all rests from current position
-        // If there are any more rests, they will get added too
-        //
-        //      | (rest) ... (rest) (note)
-        //
-        var rests_info = this.sum_silence_until_edited();
-        // RETURNS: object
-        //      rests_info.rests -> array    -    indices of summed rests
-        //      rests_info.duration -> Fraction - duration of summed rests
-        var remaining = rests_info.duration;
-
-        // Delete rests
-        this.notes.splice(rests_info.rests[0], rests_info.rests.length);
-        var ostanek = this.notes.splice(this.cursor.position);
-
-        // Now generate new rests to fill the remaining space
-        // Returns an array of event objects - rests
-        var new_rests = this.generate_rests_for_duration(remaining);
-        // Add all up: 
-        // 
-        //  | (new note) (new rest) ... (new rest) (ostanek_note) ... (ostanek_note)
-        // 
-        this.notes = this.notes.concat(new_rests).concat(ostanek);
+        // Delete this note
+        this.notes.splice(this.cursor.position, 1);
 
         // And render the result
         this._call_render();
@@ -76839,126 +77002,22 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
         };
     };
 
-    this.generate_rests_for_duration = function (remaining) {
+    this.check_sum_fit = function () {
 
-        var iterations = 0;
+        var currentDuration = new Fraction(0);
+        for (var i = 0; i < this.notes.length; i++) {
 
-        // OMG!
-        // Please don't look at it.
-        // I will improve it once, I promise.
-
-        var rests = [];
-        // While there is some space left to fill
-        while (remaining > new Fraction(1, this.supportedLengths[this.supportedLengths.length - 1])) {
-
-            /*if(iterations > 50){
-                return;
-            }*/
-            iterations++;
-
-            // Try different durations...
-            // Try the longer durations first, and add them to back...
-            // This will keep smaller duarions together
-            //  Example:
-            //      (16) (16r) (8r) (4r) (4r) (4r)
-            //
-            var durations = this.supportedRests;
-            for (var idx_duration = 0; idx_duration < durations.length; idx_duration++) {
-
-                var duration = durations[idx_duration];
-
-                // If it fits...
-                if (remaining.compare(new Fraction(1, duration)) >= 0) {
-                    // Divide the remaining duration with duration...
-                    // This yields the number of notes of this duration that can be filled
-                    // Get the whole part
-                    var num = remaining.mul(duration).floor();
-                    // Keep subtracting for as long as the note fits...
-                    for (var i = 0; i < num; i++) {
-                        rests.unshift({
-                            type: "r",
-                            symbol: duration.toString() + "r",
-                            duration: new Fraction(1, duration)
-                        });
-                        remaining = remaining.add(new Fraction(-1, duration));
-                    }
-
-                    // Else if... 
-                    break; // Break the first loop
-                }
-            }
-
-            // Triplets then
-            if (remaining.mul(12).d == 1 && remaining.mul(12).valueOf() % 3 > 0) {
-
-                var _duration = 12;
-                var symbol = 4;
-
-                // If it fits...
-                if (remaining.compare(new Fraction(1, _duration)) >= 0) {
-
-                    var num = remaining.mul(12).mod(3);
-                    for (var i = 0; i < num; i++) {
-                        rests.unshift({
-                            type: "r",
-                            symbol: symbol + "r",
-                            duration: new Fraction(1, _duration),
-                            tuplet_type: 3
-                        });
-                        remaining = remaining.add(new Fraction(-1, _duration));
-                    }
-                }
+            currentDuration = currentDuration.add(this.notes[i].duration);
+            var value = currentDuration.compare(1);
+            if (value == 0) {
+                currentDuration = new Fraction(0);
+                continue;
+            } else if (value > 0) {
+                return false;
             }
         }
-        return rests;
-    };
 
-    this.check_sum_fit = function (event) {
-
-        // TODO
         return true;
-    };
-
-    this.playback = function (event) {
-
-        var currentTime = 0;
-        var throttle = event.throttle;
-
-        var allDurations = [];var ssum = 0;
-        for (var noteIndex = 0; noteIndex < this.notes.length; noteIndex++) {
-            allDurations.push(this.notes[noteIndex].duration.valueOf());
-            ssum += this.notes[noteIndex].duration.valueOf();
-        }
-        console.log(allDurations);
-        console.log(ssum);
-
-        var outside = this;
-
-        var nextNoteExists = function nextNoteExists(number) {
-            return outside.notes.length < number;
-        };
-        var nextHasTie = function nextHasTie(number) {
-            return outside.notes.length < number + 1 && outside.notes[number + 1].tie;
-        };
-
-        for (var noteIndex = 0; noteIndex < this.notes.length; noteIndex++) {
-
-            var note = this.notes[noteIndex];
-            var noteValue = note.duration.valueOf() * throttle;
-
-            var intensity = 127;
-            if (nextHasTie()) {
-                intensity = 256;
-            }
-
-            if (note.type != "r" && !note.tie) {
-                MIDI.noteOn(0, 60, intensity, currentTime);
-            }
-
-            if (!nextHasTie(noteIndex)) MIDI.noteOff(0, 60, currentTime + noteValue);
-
-            currentTime += noteValue;
-        }
     };
 };
 
@@ -76966,6 +77025,41 @@ var NoteStore = function NoteStore(bar, cursor, render_function) {
 
 /***/ }),
 /* 141 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var Fraction = __webpack_require__(6);
+
+var ExerciseGenerator = function ExerciseGenerator() {
+
+    var examples = [[{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 7, tuplet_to: 10 }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(3, 16), dot: true }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }], [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }]];
+
+    this.currentExercise = null;
+
+    this.generate = function () {
+        var number = Math.round(Math.random() * (examples.length - 1));
+
+        this.currentExercise = examples[number];
+
+        return examples[number];
+    };
+
+    this.generate();
+
+    this.check = function (value) {
+
+        if (_.isEqual(this.currentExercise, value)) {
+            alert("PRAVILNO!");
+        } else {
+            alert("Ni še čisto v redu.");
+        }
+    };
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (ExerciseGenerator);
+
+/***/ }),
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -76978,12 +77072,37 @@ var render = function() {
     [
       _c("StaffView", {
         ref: "staff_view",
-        attrs: { bar: _vm.bar, cursor: _vm.cursor }
+        attrs: {
+          bar: _vm.bar,
+          cursor: _vm.cursor,
+          staveCount: _vm.info.staveCount
+        }
       }),
       _vm._v(" "),
       _c(
         "Keyboard",
-        _vm._b({}, "Keyboard", { key_callback: _vm.keyboard_click }, false)
+        _vm._b(
+          { attrs: { cursor: _vm.cursor } },
+          "Keyboard",
+          { key_callback: _vm.keyboard_click },
+          false
+        )
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.errorMessage,
+              expression: "errorMessage"
+            }
+          ],
+          staticClass: "error"
+        },
+        [_vm._v(_vm._s(_vm.errorMessage))]
       )
     ],
     1
@@ -77000,19 +77119,19 @@ if (false) {
 }
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(143)
+  __webpack_require__(144)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(145)
+var __vue_script__ = __webpack_require__(146)
 /* template */
-var __vue_template__ = __webpack_require__(146)
+var __vue_template__ = __webpack_require__(147)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -77051,13 +77170,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(144);
+var content = __webpack_require__(145);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -77077,7 +77196,7 @@ if(false) {
 }
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -77091,7 +77210,7 @@ exports.push([module.i, "\n.keyboard[data-v-1d2aae08] {\n  width: 45vw;\n  heigh
 
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -77300,7 +77419,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 });
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -77437,20 +77556,20 @@ if (false) {
 }
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(148)
-  __webpack_require__(150)
+  __webpack_require__(149)
+  __webpack_require__(151)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(152)
+var __vue_script__ = __webpack_require__(153)
 /* template */
-var __vue_template__ = __webpack_require__(153)
+var __vue_template__ = __webpack_require__(154)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -77489,13 +77608,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(149);
+var content = __webpack_require__(150);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -77515,7 +77634,7 @@ if(false) {
 }
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -77529,13 +77648,13 @@ exports.push([module.i, "\n.leaderboard[data-v-19d0d496] {\n  width: 100%;\n}\n.
 
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(151);
+var content = __webpack_require__(152);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -77555,7 +77674,7 @@ if(false) {
 }
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -77569,7 +77688,7 @@ exports.push([module.i, "\n.leaderboard__instructions .title {\n  font-size: 25p
 
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -77850,7 +77969,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -78076,19 +78195,19 @@ if (false) {
 }
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(155)
+  __webpack_require__(156)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(157)
+var __vue_script__ = __webpack_require__(158)
 /* template */
-var __vue_template__ = __webpack_require__(158)
+var __vue_template__ = __webpack_require__(159)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -78127,13 +78246,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(156);
+var content = __webpack_require__(157);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -78153,7 +78272,7 @@ if(false) {
 }
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -78167,7 +78286,7 @@ exports.push([module.i, "\n.levels[data-v-5b057fe8] {\n  width: 100%;\n}\n.level
 
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78348,7 +78467,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -78450,19 +78569,19 @@ if (false) {
 }
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(160)
+  __webpack_require__(161)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(162)
+var __vue_script__ = __webpack_require__(163)
 /* template */
-var __vue_template__ = __webpack_require__(163)
+var __vue_template__ = __webpack_require__(164)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -78501,13 +78620,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(161);
+var content = __webpack_require__(162);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -78527,7 +78646,7 @@ if(false) {
 }
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -78541,7 +78660,7 @@ exports.push([module.i, "\n.loader[data-v-4f02ae04] {\n  position: absolute;\n  
 
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78572,7 +78691,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -78595,20 +78714,20 @@ if (false) {
 }
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(165)
-  __webpack_require__(167)
+  __webpack_require__(166)
+  __webpack_require__(168)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(169)
+var __vue_script__ = __webpack_require__(170)
 /* template */
-var __vue_template__ = __webpack_require__(170)
+var __vue_template__ = __webpack_require__(171)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -78647,13 +78766,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(166);
+var content = __webpack_require__(167);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -78673,7 +78792,7 @@ if(false) {
 }
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -78687,13 +78806,13 @@ exports.push([module.i, "\n.me[data-v-7cb87396] {\n  width: 100%;\n}\n.me__conte
 
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(168);
+var content = __webpack_require__(169);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -78713,7 +78832,7 @@ if(false) {
 }
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -78727,7 +78846,7 @@ exports.push([module.i, "\n.me__commands .me__command--edit .button .button__ful
 
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -79274,7 +79393,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -79755,19 +79874,19 @@ if (false) {
 }
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(172)
+  __webpack_require__(173)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(174)
+var __vue_script__ = __webpack_require__(175)
 /* template */
-var __vue_template__ = __webpack_require__(175)
+var __vue_template__ = __webpack_require__(176)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -79806,13 +79925,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(173);
+var content = __webpack_require__(174);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -79832,7 +79951,7 @@ if(false) {
 }
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -79846,7 +79965,7 @@ exports.push([module.i, "\n.note__hidden[data-v-443c4dda] {\n  display: none;\n}
 
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -80082,7 +80201,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -80629,19 +80748,19 @@ if (false) {
 }
 
 /***/ }),
-/* 176 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(177)
+  __webpack_require__(178)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(179)
+var __vue_script__ = __webpack_require__(180)
 /* template */
-var __vue_template__ = __webpack_require__(180)
+var __vue_template__ = __webpack_require__(181)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -80680,13 +80799,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 177 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(178);
+var content = __webpack_require__(179);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -80706,7 +80825,7 @@ if(false) {
 }
 
 /***/ }),
-/* 178 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -80720,7 +80839,7 @@ exports.push([module.i, "\n.profile[data-v-4bdda942] {\n  width: 100%;\n}\n.prof
 
 
 /***/ }),
-/* 179 */
+/* 180 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -80795,7 +80914,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 180 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -80878,20 +80997,20 @@ if (false) {
 }
 
 /***/ }),
-/* 181 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(182)
-  __webpack_require__(184)
+  __webpack_require__(183)
+  __webpack_require__(185)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(186)
+var __vue_script__ = __webpack_require__(187)
 /* template */
-var __vue_template__ = __webpack_require__(187)
+var __vue_template__ = __webpack_require__(188)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -80930,13 +81049,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 182 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(183);
+var content = __webpack_require__(184);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -80956,7 +81075,7 @@ if(false) {
 }
 
 /***/ }),
-/* 183 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -80970,13 +81089,13 @@ exports.push([module.i, "\n.settings[data-v-095e6bda] {\n  width: 100%;\n}\n.set
 
 
 /***/ }),
-/* 184 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(185);
+var content = __webpack_require__(186);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -80996,7 +81115,7 @@ if(false) {
 }
 
 /***/ }),
-/* 185 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -81010,7 +81129,7 @@ exports.push([module.i, "\n.settings__elements .button {\n  margin-top: 50px;\n}
 
 
 /***/ }),
-/* 186 */
+/* 187 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -81329,7 +81448,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 187 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -81605,19 +81724,19 @@ if (false) {
 }
 
 /***/ }),
-/* 188 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(189)
+  __webpack_require__(190)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(191)
+var __vue_script__ = __webpack_require__(192)
 /* template */
-var __vue_template__ = __webpack_require__(192)
+var __vue_template__ = __webpack_require__(193)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -81656,13 +81775,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 189 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(190);
+var content = __webpack_require__(191);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -81682,7 +81801,7 @@ if(false) {
 }
 
 /***/ }),
-/* 190 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -81696,7 +81815,7 @@ exports.push([module.i, "\n.stave__svg[data-v-0430ad04] {\n  width: 45vw;\n  hei
 
 
 /***/ }),
-/* 191 */
+/* 192 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -81834,7 +81953,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 192 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -81968,19 +82087,19 @@ if (false) {
 }
 
 /***/ }),
-/* 193 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(194)
+  __webpack_require__(195)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(196)
+var __vue_script__ = __webpack_require__(197)
 /* template */
-var __vue_template__ = __webpack_require__(197)
+var __vue_template__ = __webpack_require__(198)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -82019,13 +82138,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 194 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(195);
+var content = __webpack_require__(196);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -82045,7 +82164,7 @@ if(false) {
 }
 
 /***/ }),
-/* 195 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -82059,7 +82178,7 @@ exports.push([module.i, "\n.title[data-v-76a54612] {\n  padding: 10px 20px;\n  b
 
 
 /***/ }),
-/* 196 */
+/* 197 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -82090,7 +82209,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 197 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -82112,11 +82231,11 @@ if (false) {
 }
 
 /***/ }),
-/* 198 */
+/* 199 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -82498,7 +82617,7 @@ function handleError(error) {
 }));
 
 /***/ }),
-/* 199 */
+/* 200 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -1,48 +1,17 @@
 var Fraction = require("fraction.js");
 
-var NoteStore = function(bar, cursor, render_function) {
+var NoteStore = function(bar, cursor, render_function, info) {
 
     // The supported note durations.
     // Currently supports up to a sixteenth note with a dot.
     this.supportedLengths = [1, 2, 4, 8, 16, 32];
     this.supportedRests   = [4, 8, 12, 16, 32];
 
+    //alert(staff_view.info.staveCount);
+
     this.bar = bar;
     this.cursor = cursor;
-    this.notes = [ // TODO!!!
-
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)}
-
-        /*{type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
-        {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
-        {type:"n", symbol:"4", duration:new Fraction(1,12), tuplet_type: 3},
-
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        
-        {type:"r", symbol:"wr", duration:new Fraction(1)}*/
-
-        /*{type:"n", symbol:"8", duration:new Fraction(1,8)},
-        {type:"n", symbol:"8", duration:new Fraction(1,8)},
-        {type:"n", symbol:"8", duration:new Fraction(1,8)},
-        {type:"n", symbol:"8", duration:new Fraction(1,8)},
-
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-        {type:"r", symbol:"4r", duration:new Fraction(1,4)},
-
-        {type:"r", symbol:"2r", duration:new Fraction(1,2)},*/
-
-
-    ];
+    this.notes = [];
 
     this._call_render = function(){
 
@@ -84,15 +53,15 @@ var NoteStore = function(bar, cursor, render_function) {
             this._move_cursor_backwards();
             this._call_render();
         }
-        else if(event.type == 'play_user')
-        {
-            this.playback(event);
+        else if(event.type == 'tuplet'){
+            this.tuplet(event);
         }
+
     }
 
     this.add_tie = function(){
         
-        let n = this.cursor.position;
+        let n = this.cursor.position - 1;
 
         // Don't do anything if this is the first note...
         if(n <= 0) {
@@ -128,6 +97,101 @@ var NoteStore = function(bar, cursor, render_function) {
 
     }
 
+    this.tuplet = function(event){
+
+        let i = cursor.position - 1;
+
+        if(!this.notes[i]){
+            return;
+        }
+
+        if(this.notes[i].in_tuplet){
+            this.remove_tuplet(event);
+        }else{
+            this.add_tuplet(event);
+        }
+
+    },
+
+    this.remove_tuplet = function(event){
+
+        // Remove tuplet in current position
+        // Removes the tuplet even if the cursor is inside
+
+        let i = cursor.position - 1;
+        let tuplet_type = this.notes[i].tuplet_type
+
+        while(this.notes[i] && !this.notes[i].hasOwnProperty('tuplet_from')){
+            i++;
+        }
+        if(!this.notes[i]){
+            alert("Nekaj je narobe. Nisem našel zaključka triole... To je napaka v kodi.");
+        }
+
+        this.notes.slice(this.notes[i].tuplet_from, this.notes[i].tuplet_to).forEach(note => {
+            delete note.in_tuplet;
+            delete note.tuplet_type;
+            note.duration = note.duration.mul(tuplet_type);
+        });
+
+        delete this.notes[i].tuplet_from;
+        delete this.notes[i].tuplet_to;
+
+        // And render the result
+        this._call_render()
+
+    },
+
+    this.add_tuplet = function(event){
+
+        // Add tuplet to notes behind the cursor
+
+        if(this.notes[cursor.position - 1].in_tuplet){
+            alert("Ne morem dodati triole v triolo");
+            return;
+        }
+
+        // Check if there are enough notes
+        // - Check if the duration sums up to (1/baseNote)
+        // - Notes must fit exactly (watch out for the dots)
+        let currentDuration = new Fraction(0);
+        let toIndex = -1;
+        for(let i = cursor.position - 1; i >= 0; i--){
+            currentDuration = currentDuration.add(this.notes[i].duration);
+            let value = currentDuration.compare(new Fraction(event.tuplet_type, bar.base_note))
+            if(value == 0){
+                // Enough notes for a tuplet
+                toIndex = i;
+                break;
+            }
+            else if(value > 0){
+                // Tuplet would not fit
+                alert("Tu ne morem narediti triole, ker se notne vrednosti ne seštejejo ustrezno.");
+                return;
+            }
+        }
+        if(toIndex < 0){
+            // Not enough notes for a tuplet
+            alert("Tu ne morem narediti triole, ker ni dovolj not");
+            return;
+        }
+
+        // For those notes in the tuplet
+        // - Change duration to (duration / tuplet_type)
+        // - Add tuplet_from, tuplet_to
+        for(let i = toIndex; i < cursor.position; i++){
+            this.notes[i].duration = this.notes[i].duration.div(event.tuplet_type);
+            this.notes[i].in_tuplet = true;
+            this.notes[i].tuplet_type = event.tuplet_type;
+        }
+        this.notes[cursor.position - 1].tuplet_from = toIndex;
+        this.notes[cursor.position - 1].tuplet_to = cursor.position;
+
+        // And render the result
+        this._call_render()
+
+    }
+
     this._is_supported_length = function(event){
 
         if(event.tuplet_type == 3){
@@ -146,6 +210,8 @@ var NoteStore = function(bar, cursor, render_function) {
 
     this.add_note = function(event) {
 
+        let MAX_DURATION = info.staveCount;
+        
         if(!this._is_supported_length(event)){
             return;
         }
@@ -156,84 +222,47 @@ var NoteStore = function(bar, cursor, render_function) {
             && this.notes[this.cursor.position].tie){
                 event.tie = true;
         }
-            
-        // Check if the new composition fits in bars correctly
-        // If it can be put onto 2 full bars without overlapping
-        // 
-        // Example:
-        //  4/4 time
-        // (1/4) (1/4) (1/4) (1/4) [BARLINE] (1/4) ... <- this fits
-        //
-        // (1/2) (1/4) (1/2) <- This does not fit - the bar is too long
-        //
-        if(!this.check_sum_fit(event)){
-            // Notify user
-            alert("Takt je predolg.");
-            
+
+        if(this._sum_durations().add(event.duration) > MAX_DURATION){
+            alert("Nota je predolga");
             return;
         }
-
-        var rests_info = this.sum_silence_until_edited();
-        // RETURNS: object
-        //      rests_info.rests -> array    -    indices of summed rests
-        //      rests_info.duration -> Fraction - duration of summed rests
-
-        // If the event duration exceeds the duration of summed notes
-        if((rests_info.duration < event.duration)){
-            
-            // Notify user
-            alert("Nota je predolga.");
-            // and Quit
-            return;
-
-        }
-        // Get the remaining silence duration - will be filled with new rests
-        let remaining = rests_info.duration.sub(event.duration); // prostor - trajanje
-        
-        // --- Delete rests ---
-        // What this splice does:  splice(from_idx, num_elements_to_delete, [el1, el2, ...])
-        // *** IT ALTERS THE ORIGINAL ARRAY (this.notes) ***
-        //      -   from the position of the first rest
-        //      -   delete all rests (number to delete = length of all rests)
-        //      -   discard the remainder (deleted rests)
-        this.notes.splice(rests_info.rests[0], rests_info.rests.length);
-        // What this splice does:
-        // *** IT ALTERS THE ORIGINAl ARRAY (this.notes) ***
-        //      -   from current position (at the cursor)
-        //      -   delete all notes
-        //      -   store the deleted notes in ostanek
-        //  All non-rests are collected here.
-        //  example: 
-        //  
-        //         | rest  rest  rest  note note note ...
-        // cursor--^   ---deleted---    ----ostanek-----
-        let ostanek = this.notes.splice(this.cursor.position);
 
         // Add the note
         // Add the new note to the current position (at the cursor)
         this.notes.splice(this.cursor.position, 0, event);
         
-        // Now generate new rests to fill the remaining space
-        // Returns an array of event objects - rests
-        let new_rests = this.generate_rests_for_duration(remaining);
-        // Add all up: 
-        // 
-        //  | (new note) (new rest) ... (new rest) (ostanek_note) ... (ostanek_note)
-        // 
-        this.notes = this.notes.concat(new_rests).concat(ostanek);
-        
-        let str = "";
-        str = this.notes[0].duration.toFraction();
-        for(var i = 1; i < this.notes.length; i++){
-            str += ", " + this.notes[i].duration.toFraction();
+        if(!this.check_sum_fit()){
+            alert("Takt je predolg");
+
+            this.notes.splice(this.cursor.position - 1, 1);
+            return;
         }
-        console.log(str);
 
         // Move cursor forward
         this._move_cursor_forward();
 
         // And render the result
         this._call_render()
+    },
+
+    this._sum_durations = function(){
+
+        let sum = new Fraction();
+        for(var i = 0; i < this.notes.length; i++){
+            sum = sum.add(this.notes[i].duration);
+        }
+        return sum;
+
+    },
+
+    this._print_all_durations = function() {
+        let str = "";
+        str = this.notes[0].duration.toFraction();
+        for(var i = 1; i < this.notes.length; i++){
+            str += ", " + this.notes[i].duration.toFraction();
+        }
+        console.log(str);
     }
 
     this.delete_note = function() {
@@ -245,37 +274,18 @@ var NoteStore = function(bar, cursor, render_function) {
             return;
         }
 
+        if(this.notes[this.cursor.position - 1].in_tuplet){
+            this.remove_tuplet();
+        }
+
         // Move one note back - so the situation is as follows
         //
         //         |  (note to delete) (rest/note) ... (rest/note)
         // cursor--^
         this._move_cursor_backwards();
-        // Change current note to a rest
-        this.notes[this.cursor.position].type = "r";
-
-        // Sum up all rests from current position
-        // If there are any more rests, they will get added too
-        //
-        //      | (rest) ... (rest) (note)
-        //
-        var rests_info = this.sum_silence_until_edited();
-        // RETURNS: object
-        //      rests_info.rests -> array    -    indices of summed rests
-        //      rests_info.duration -> Fraction - duration of summed rests
-        let remaining = rests_info.duration;
         
-        // Delete rests
-        this.notes.splice(rests_info.rests[0], rests_info.rests.length);
-        let ostanek = this.notes.splice(this.cursor.position);
-        
-        // Now generate new rests to fill the remaining space
-        // Returns an array of event objects - rests
-        let new_rests = this.generate_rests_for_duration(remaining);
-        // Add all up: 
-        // 
-        //  | (new note) (new rest) ... (new rest) (ostanek_note) ... (ostanek_note)
-        // 
-        this.notes = this.notes.concat(new_rests).concat(ostanek);
+        // Delete this note
+        this.notes.splice(this.cursor.position, 1);
 
         
         // And render the result
@@ -333,137 +343,29 @@ var NoteStore = function(bar, cursor, render_function) {
         };
     }
 
-    this.generate_rests_for_duration = function(remaining) {
-        
-        let iterations = 0;
 
-        // OMG!
-        // Please don't look at it.
-        // I will improve it once, I promise.
+    this.check_sum_fit = function() {
 
-        let rests = [];
-        // While there is some space left to fill
-        while(remaining > new Fraction(1, this.supportedLengths[this.supportedLengths.length - 1])){
 
+        let currentDuration = new Fraction(0);
+        for(let i = 0; i < this.notes.length; i++){
             
-            /*if(iterations > 50){
-                return;
-            }*/
-            iterations ++;
-
-
-            // Try different durations...
-            // Try the longer durations first, and add them to back...
-            // This will keep smaller duarions together
-            //  Example:
-            //      (16) (16r) (8r) (4r) (4r) (4r)
-            //
-            let durations = this.supportedRests;
-            for(var idx_duration = 0; idx_duration < durations.length; idx_duration++){
-
-                let duration = durations[idx_duration];
-
-                // If it fits...
-                if(remaining.compare(new Fraction(1,duration)) >= 0){
-                    // Divide the remaining duration with duration...
-                    // This yields the number of notes of this duration that can be filled
-                    // Get the whole part
-                    var num = remaining.mul(duration).floor();
-                    // Keep subtracting for as long as the note fits...
-                    for(var i = 0; i < num; i++){
-                        rests.unshift({
-                            type:"r", 
-                            symbol: duration.toString()+"r", 
-                            duration: new Fraction(1,duration),
-                        });
-                        remaining = remaining.add(new Fraction(-1, duration));
-                    }
-
-                    // Else if... 
-                    break; // Break the first loop
-                }    
+            currentDuration = currentDuration.add(this.notes[i].duration);
+            let value = currentDuration.compare(1);
+            if(value == 0){
+                currentDuration = new Fraction(0);
+                continue;
             }
-
-            // Triplets then
-            if(remaining.mul(12).d == 1 && remaining.mul(12).valueOf() % 3 > 0){
-
-                let duration = 12;
-                let symbol = 4;
-
-                // If it fits...
-                if(remaining.compare(new Fraction(1,duration)) >= 0){
-                    
-                    var num = remaining.mul(12).mod(3);
-                    for(var i = 0; i < num; i++){
-                        rests.unshift({
-                            type:"r", 
-                            symbol: symbol+"r", 
-                            duration: new Fraction(1,duration),
-                            tuplet_type: 3
-                        });
-                        remaining = remaining.add(new Fraction(-1, duration));
-                    }
-                }    
+            else if(value > 0){
+                return false;
             }
 
         }
-        return rests;
-    }
 
-    this.check_sum_fit = function(event) {
-
-        // TODO
         return true;
 
     }
 
-
-    this.playback = function(event){
-        
-        var currentTime = 0;
-        var throttle = event.throttle;
-
-        var allDurations = []; var ssum = 0;
-        for(var noteIndex = 0; noteIndex < this.notes.length; noteIndex++){
-            allDurations.push(this.notes[noteIndex].duration.valueOf());
-            ssum += this.notes[noteIndex].duration.valueOf();
-        }
-        console.log(allDurations);
-        console.log(ssum);
-
-        var outside = this;
-
-        let nextNoteExists = function(number){
-            return outside.notes.length < number;
-        }
-        let nextHasTie = function(number){
-            return outside.notes.length < number + 1 
-            && outside.notes[number + 1].tie;
-        }
-
-        for(var noteIndex = 0; noteIndex < this.notes.length; noteIndex++){
-            
-            let note = this.notes[noteIndex];
-            let noteValue = note.duration.valueOf() * throttle;
-
-            var intensity = 127;
-            if(nextHasTie()){
-                intensity = 256;
-            }
-
-            if(note.type != "r" && !note.tie)
-            {
-                MIDI.noteOn(0, 60, intensity, currentTime);
-            }
-            
-            if(!nextHasTie(noteIndex))             
-                MIDI.noteOff(0, 60, currentTime + noteValue);
-            
-
-            currentTime += noteValue;
-        }
-
-    }
 
 
     

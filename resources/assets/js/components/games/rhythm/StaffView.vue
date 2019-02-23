@@ -56,7 +56,7 @@ let Tuplet = VF.Tuplet;
 export default {
 
     props: [
-        'bar', 'cursor'
+        'bar', 'cursor', 'staveCount'
     ],
 
     data () {
@@ -65,10 +65,14 @@ export default {
             info: {
                 width: 2*(window.innerWidth),
                 height: 80,
-                staveCount: 2,
                 barWidth: window.innerWidth,
                 barHeight: 80,
                 barOffsetY: 10,
+
+                // Determines how much pixels 
+                // an average note occupies.
+                // Used to space notes evenly
+                meanNoteWidth: 60,
 
                 maxStaveWidth: 320,
 
@@ -85,7 +89,7 @@ export default {
 
                 cursor: {
                     cursorBarClass: "cursor-bar",
-                    cursorMargin: 15
+                    cursorMargin: 22
                 }
 
             },
@@ -107,10 +111,8 @@ export default {
         note_clicked: function(Xoffset){
 
             let closest = this._get_closest_note(Xoffset);
-            if(closest == -1){
-                // No scroll..
-            }else {
-                this.cursor.position = closest;
+            if(closest.idx >= 0){
+                this.cursor.position = closest.idx + 1;
                 this._save_scroll();
                 this.$parent.notes._call_render()
                 this._restore_scroll();
@@ -132,7 +134,7 @@ export default {
 
             var x_coords = [];
             zoomView.querySelectorAll(".vf-note").forEach(function(e) {
-                    x_coords.push(Math.round((e.getClientRects()[0].x + zoomScrollLeft)));
+                x_coords.push(Math.round((e.getClientRects()[0].x + zoomScrollLeft)));
             });
 
             console.log(x_coords)
@@ -148,10 +150,10 @@ export default {
             }
 
             if(minDiff < 50){
-                return minIndex;
+                return {idx:minIndex, xpos: x_coords[minIndex], userx:x};
             }
 
-            return -1;
+            return {idx: -1, userx: x};
 
         },
 
@@ -232,8 +234,8 @@ export default {
 
         _set_cursor_position: function(x){
             let cE = document.getElementsByClassName(this.info.cursor.cursorBarClass);
-                for(var idx_cursor = 0; idx_cursor < cE.length; idx_cursor++){
-                    cE[idx_cursor].setAttribute('x', x);
+            for(var idx_cursor = 0; idx_cursor < cE.length; idx_cursor++){
+                cE[idx_cursor].setAttribute('x', x);
             }
         },
 
@@ -257,7 +259,13 @@ export default {
 
             // Been trying different factors.
             // If you change this, make sure, that 16 sixteenth notes fit onto the screen.
-            var maxNotesWidth = this.info.width * 0.8 * 0.5;
+            var maxNotesWidth = Math.min(
+                // Give equal space to each note
+                renderQueue.length * this.info.meanNoteWidth, 
+                // Until there are too many notes to fit. 
+                // Then use maximum width and leave some space at the end
+                this.info.barWidth - this.info.meanNoteWidth
+            );
 
             var formatter = new VF.Formatter().format([voice], maxNotesWidth);
 
@@ -294,11 +302,23 @@ export default {
             }
         },
 
+        _vex_draw_optionals: function(context, events){
+
+            if(!events){
+                return;
+            }
+
+            events.forEach(function(opt){
+                opt.setContext(context).draw();
+            });
+
+        },
+
         _vex_draw_staves: function(context){
             
             let staves = [];
 
-            for(let idx_stave = 0; idx_stave < this.info.staveCount; idx_stave++){
+            for(let idx_stave = 0; idx_stave < this.staveCount; idx_stave++){
 
                 let stave = new VF.Stave(
                     this.info.barWidth * idx_stave,
@@ -317,13 +337,29 @@ export default {
                     );
                 }
                 
-                // Connect it to the rendering context and draw!
-                stave.setContext(context).draw();
+                // Connect it to the rendering context
+                stave.setContext(context);
 
             }
 
-            return staves;
+            let connectors = [];
 
+            for(let idx_stave = 1; idx_stave < this.staveCount; idx_stave++){
+                var connector = new VF.StaveConnector(staves[idx_stave - 1], staves[idx_stave]);
+                connector.setType(VF.StaveConnector.type.SINGLE);
+                connector.setContext(context);
+                connectors.push(connector);
+            }
+
+            // Draw the first stave
+            staves[0].draw();
+
+            for(let idx_stave = 1; idx_stave < this.staveCount; idx_stave++){
+                staves[idx_stave].draw();
+                connectors[idx_stave - 1].draw();
+            }
+
+            return staves;
         },
 
         _minimap_clicked(x) {
@@ -346,6 +382,7 @@ export default {
         },
 
         _cursor_rendered(cursorNode, descriptor){
+            
 
             let screenWidth = window.innerWidth;
             let sR = document.getElementById("second-row").parentElement;
@@ -357,16 +394,15 @@ export default {
             let bubbleW = (screenWidth/scrollWidth) * minimapWidth;
 
             // No cursor note
-            // Cursor is right at the end
-            // after the last note
+            // Cursor is right at the start
             if(!cursorNode){
-                // Please fix me! :( :(
-                // That stink is unbearable
-                this._set_cursor_position(this.info.lastMinimapBubbleX + bubbleW - 20)
+                
+                this._set_cursor_position(20)
                 return;
             }
 
-            let bbox = cursorNode.attrs.el.getBoundingClientRect();
+
+            let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getBoundingClientRect();
             //let bbox = cursorNode.attrs.el.getClientRects()[0];
             //let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getClientRects()[0];
             
@@ -381,38 +417,28 @@ export default {
             // ZOOM-BREAK
             this._set_bubble_width(bubbleW);
 
-            //this.scrolled(startX - screenWidth*3/4);    
-
             if(descriptor.role == "zoomview"){
                 
                 let zoomScrollWidth = scrollWidth;
                 let bubbleScrollWidth = minimapWidth;
 
-                let v = ((startX + sR.scrollLeft)/zoomScrollWidth)*bubbleScrollWidth - this.info.cursor.cursorMargin;
+                let v = ((startX + sR.scrollLeft)/zoomScrollWidth)*bubbleScrollWidth + this.info.cursor.cursorMargin;
 
                 this._set_cursor_position(v);
             }
             
-            // Cancel unnecessary scrolls if the cursor is still visible...
-            //alert("startX: "+bbox.left+" screenWidth/2: "+(screenWidth/2)+" ");
-            //if(startX > screenWidth)
+            // Here I could cancel unnecessary scroll if the cursor was still visible
+            // But I disabled that
+
+
             this.scrolled(startX - screenWidth*0.5);
 
         },
 
         _render_context(descriptor, notes, cursor){
 
-            // Render onto n bars. Assumes no bar overlapping...
 
-            // notes = [
-            //      {type: "n", symbol: "4",  duration: new Fraction(3).div(8), dot: true},
-            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(8), tie: true}, // Last 2 notes are tied
-            //      {type: "n", symbol: "8",  duration: new Fraction(3).div(8), dot: true},
-            //      {type: "n", symbol: "16", duration: new Fraction(1).div(16)},
-            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3},
-            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3, tie:true},
-            //      {type: "n", symbol: "8",  duration: new Fraction(1).div(12), tuple_type: 3, tie:true},
-            //  ];
+            // Render onto n bars. Assumes no bar overlapping...
 
             // Size our svg:
             descriptor.renderer.resize(
@@ -439,14 +465,13 @@ export default {
             var tuplets = [];
             var renderQueue = [];
             var currentDuration = new Fraction(0);
+
+            let allStaveNotes = [];
+
             for(var i = 0; i < notes.length; i++){
 
                 // Bye bye, false note
                 if(!notes[i]) { continue; }
-                    
-                if(notes[i].symbol == 12){
-                    debugger;
-                }
 
                 // Handle notes and rests
                 let newNote = new StaveNote(
@@ -461,80 +486,42 @@ export default {
                 if(notes[i].dot)
                     newNote.addDot(0); // enako je tudi newNote.addDotToAll()
 
+
+                // Get the note the cursor will stick to
+                if(i + 1 == cursor.position){
+                    cursorNote = newNote;
+                }
+
+                allStaveNotes.push(newNote);
+                renderQueue.push(newNote);
+                currentStaveNoteIdx ++;
+
                 if(notes[i].tie && i > 0){
                 
                     // tie is:
                     //  - this note + last note
                     ties.push(new VF.StaveTie({
-                        first_note: renderQueue[i - 1],
-                        last_note:  newNote,
+                        first_note: allStaveNotes[i - 1],
+                        last_note:  allStaveNotes[i],
                         first_indices: [0],
                         last_indices:  [0]
                     }));
 
                 }
 
-                if(i == cursor.position){
-                    /*newNote.setStyle({
-                        fillStyle: "blue", 
-                        strokeStyle: "blue"
-                    });*/
-
-                    cursorNote = newNote;
+                if(notes[i].tuplet_from >= 0){
+                    tuplets.push(new Vex.Flow.Tuplet(allStaveNotes.slice(notes[i].tuplet_from, notes[i].tuplet_to), {
+                        bracketed: true, rationed: false, num_notes: notes[i].tuplet_type
+                    }));
                 }
-
-                renderQueue.push(newNote);
-                currentStaveNoteIdx ++;
 
                 currentDuration = currentDuration.add(notes[i].duration);
                 
                 if(currentDuration.compare(new Fraction(1)) == 0){
-                    
-                    // Tuplets
-                    for(var j = 0; j < renderQueue.length; j++){
-                        let notesIDX = currentStaveNoteIdx - renderQueue.length + j;
-                        if(notes[notesIDX].tuplet_type){
-                            tuplets.push(new Vex.Flow.Tuplet(renderQueue.slice(j, j+notes[notesIDX].tuplet_type), {
-                                bracketed: true, rationed: false
-                            }));
-                            j += notes[notesIDX].tuplet_type - 1;
-                        }
-                    }
 
-                    this._vex_draw_voice(context, staves[staveIndex++], renderQueue, {
-                        ties: ties, 
-                        tuplets: tuplets
-                    });
-
-                    /*if(descriptor.role == 'zoomview'){
-
-                        var kk = document.getElementById("second-row").parentElement.scrollLeft;
-                        
-                        for(var ff = 0; ff < renderQueue.length; ff++){
-                            
-                            this.info.note_x_positions.push(
-                                
-                                // Unsupported in iOS Safari
-                                //renderQueue[ff].attrs.el.getClientRects()[0].x
-                                
-                                // Problems with dots - bounding box gets too wide, works otherwise
-                                //renderQueue[ff].attrs.el.getBoundingClientRect().x + kk
-
-                                // Something is wrong with this thing...
-                                renderQueue[ff].attrs.el.getElementsByClassName("vf-note")[0].getBoundingClientRect().x + kk
-                                
-                                // This doesn't work either
-                                //renderQueue[ff].note_heads[0].x
-
-                            );
-
-                        }
-                    }*/
-                    
+                    this._vex_draw_voice(context, staves[staveIndex++], renderQueue);
 
                     renderQueue = [];
-                    ties = [];
-                    tuplets = [];
                     currentDuration = new Fraction(0);
                 }
 
@@ -547,11 +534,11 @@ export default {
             // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
             if(renderQueue.length > 0){
                 // Draw the rest
-                this._vex_draw_voice(context, staves[staveIndex + 1], renderQueue, {
-                    ties: ties,
-                    tuplets: tuplets
-                });
+                this._vex_draw_voice(context, staves[staveIndex ++], renderQueue);
             }
+
+            this._vex_draw_optionals(context, ties);
+            this._vex_draw_optionals(context, tuplets);
 
         
             // Render the minimap rectangle
@@ -580,6 +567,21 @@ export default {
             });
             
             this._cursor_rendered(cursorNote, descriptor);
+
+            // Nastavi lastnost cursor.in_tuplet
+            // S tem skrijem gumbe takrat, ko sem v trioli, 
+            /// zato da se ne dogajajo čudne stvari
+            if(this.cursor.position - 1 >= 0 && notes.length > this.cursor.position - 1){
+                let ccNote = notes[this.cursor.position - 1];
+                if(ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_from")){
+                    this.cursor.in_tuplet = true;
+                }
+                else{
+                    this.cursor.in_tuplet = false;
+                }
+            }else{
+                this.cursor.in_tuplet = false;
+            }
 
         },
 

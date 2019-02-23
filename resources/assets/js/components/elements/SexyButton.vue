@@ -1,10 +1,10 @@
 <template>
-    <div class="button" :class="{ 'button--disabled': disable }">
+    <div class="button" :class="{ 'button--disabled': disable, 'button__hidden':hidden}">
         <div :class="['button__hollow', customClass]">
             {{text}}
             <slot></slot>
         </div>
-        <div class="button__full" :class="{'button__green':color=='green', 'button__orange':color=='orange'}"></div>
+        <div class="button__full" :class="{'button__green':color=='green', 'button__orange':color=='orange', 'button__red':color=='red'}"></div>
     </div>
 </template>
 
@@ -59,6 +59,10 @@
     pointer-events : none;
 }
 
+.button__hidden{
+    visibility: hidden;
+}
+
 .button__hollow {
     position        : absolute;
     width           : 100%;
@@ -89,6 +93,10 @@
     background-color: $jaffa;
 }
 
+.button__red{
+    background-color: $neon-red;
+}
+
 </style>
 
 <script>
@@ -101,7 +109,8 @@ export default {
         text: stringProp(false),
         disable: booleanProp(false),
         customClass: stringProp(false),
-        color: stringProp(false)
+        color: stringProp(false),
+        hidden: booleanProp(false)
     }
 }
 

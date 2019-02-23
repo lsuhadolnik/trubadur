@@ -10,10 +10,10 @@
                             &gt;
                         </span>
                     </sexy-button>
-                    <sexy-button text="h" color="green" @click.native="half_note()" />
-                    <sexy-button text="q" color="green" @click.native="quarter_note()" />
-                    <sexy-button text="e" color="green" @click.native="eight_note()" />
-                    <sexy-button text="s" color="green" @click.native="sixteenth_note()" />
+                    <sexy-button :hidden="cursor.in_tuplet" :text="half_text" :color="note_color" @click.native="half_note()" />
+                    <sexy-button :hidden="cursor.in_tuplet" :text="quarter_text" :color="note_color" @click.native="quarter_note()" />
+                    <sexy-button :hidden="cursor.in_tuplet" :text="eight_text" :color="note_color" @click.native="eight_note()" />
+                    <sexy-button :hidden="cursor.in_tuplet" :text="sixteenth_text" :color="note_color" @click.native="sixteenth_note()" />
                 </div>
                 <div class="row rhythm-game__keyboard-row">
                     <sexy-button color="orange" @click.native="move_cursor_backwards()" >
@@ -21,7 +21,8 @@
                             &lt;
                         </span>
                     </sexy-button>
-                    <sexy-button text="." color="green" @click.native="dot()" />
+                    <sexy-button :hidden="cursor.in_tuplet" :text="rest_mode_button_text" :color="rest_mode_button_color" @click.native="toggle_rest_mode()" />
+                    <sexy-button :hidden="cursor.in_tuplet" text="." color="green" @click.native="dot()" />
                     <sexy-button text="u" color="green" @click.native="tie()" />
                     <sexy-button text="T" color="green" @click.native="tuplet()" />
                 </div>
@@ -31,14 +32,14 @@
         <div class="row rhythm-game__control-keys">
 
             <input type="range" min="1"  value="2" max="3" step="0.2" v-model="playback_throttle">
-            {{playback_throttle}} 
+            {{playback_throttle}}
             <sexy-button text="PREDVAJAJ" color="green" w="175px" @click.native="playback()"/>
                 
         </div>
         <div class="row rhythm-game__control-keys">
 
             <sexy-button text="BRIŠI" color="green" w="175px" @click.native="delete_note()"/>
-            <sexy-button text="PONOVI" color="green" w="175px" />
+            <sexy-button text="PONOVI" color="green" w="175px" @click.native="repeat_exercise()" />
             <sexy-button text="PREVERI" color="orange" w="175px" @click.native="check()" />
                 
         </div>
@@ -118,7 +119,7 @@ export default {
 
             this.key_callback({
                 type: 'n',
-                symbol: 'w',
+                symbol: this.rest_mode ? 'wr' : 'w',
                 duration: new Fraction(1)
             });
 
@@ -128,7 +129,7 @@ export default {
 
             this.key_callback({
                 type: 'n',
-                symbol: '2',
+                symbol: this.rest_mode ? '2r' : '2',
                 duration: new Fraction(1).div(2)
             });
 
@@ -138,7 +139,7 @@ export default {
 
             this.key_callback({
                 type: 'n',
-                symbol: '4',
+                symbol: this.rest_mode ? '4r' : '4',
                 duration: new Fraction(1).div(4)
             });
 
@@ -148,7 +149,7 @@ export default {
 
             this.key_callback({
                 type: 'n',
-                symbol: '8',
+                symbol: this.rest_mode ? '8r' : '8',
                 duration: new Fraction(1).div(8)
             });
             
@@ -158,7 +159,7 @@ export default {
 
             this.key_callback({
                 type: 'n',
-                symbol: '16',
+                symbol: this.rest_mode ? '16r' : '16',
                 duration: new Fraction(1).div(16)
             });
             
@@ -207,12 +208,10 @@ export default {
         tuplet() {
 
             this.key_callback({
-                type: 'n',
-                duration: new Fraction(1,12),
-                symbol: '4',
+                type: 'tuplet',
                 tuplet_type: 3
             });
-            //alert("Work in progress...");
+
         },
 
         keyboardClick(key) {
@@ -230,11 +229,25 @@ export default {
 
         },
 
+        repeat_exercise() {
+
+            this.key_callback({
+                type: 'play_exercise',
+                throttle: this.playback_throttle
+            });
+        },
+
         check(){
 
             this.key_callback({
                 type: 'check'
             })
+
+        },
+
+        toggle_rest_mode(){
+
+            this.rest_mode = !this.rest_mode;
 
         }
     },
@@ -243,12 +256,43 @@ export default {
     },
     data: function() {
         return {
-            playback_throttle: 2
+            playback_throttle: 2,
+            rest_mode: false,
         };
     },
     props: [
-        'key_callback'
-    ]
+        'key_callback', 'cursor'
+    ],
+    computed: {
+        note_color: function(){
+            if(this.rest_mode) return "red";
+            else return "green";
+        },
+        half_text: function(){
+            if(this.rest_mode) return "H";
+            else return "h";
+        },
+        quarter_text: function(){
+            if(this.rest_mode) return "Q";
+            else return "q";
+        },
+        eight_text: function(){
+            if(this.rest_mode) return "E";
+            else return "e";
+        },
+        sixteenth_text: function(){
+            if(this.rest_mode) return "S";
+            else return "s";
+        },
+        rest_mode_button_color: function(){
+            if(this.rest_mode) return "green";
+            else return "red";
+        },
+        rest_mode_button_text: function(){
+            if(this.rest_mode) return "es";
+            else return "ES"
+        }
+    }
 
 }
 </script>
