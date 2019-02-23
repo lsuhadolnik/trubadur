@@ -68,8 +68,8 @@ export default {
         return {
             notes: null,
             bar: {
-                num_beats: 4,
-                base_note: 4
+                num_beats: 6,
+                base_note: 8
             },
             cursor: {
                 position: 0,
@@ -82,7 +82,7 @@ export default {
 
             errorMessage: "",
 
-            generator: new ExerciseGenerator()
+            generator: new ExerciseGenerator(this.generate_playback_durations)
         }
     },
     
@@ -117,50 +117,104 @@ export default {
             this.playback(this.notes.notes, event.throttle);
         },
 
+        get_duration_values(durations){
+            
+            // DEBUG
+            let durationValues = [];
+            durations.forEach((f) => { durationValues.push(f.toFraction()) });
+            console.log(durationValues);
+
+        },
+
+        generate_playback_durations(values, get_val){
+
+            // Negativna trajanja pomenijo pavze
+
+            let nextHasTie = function(position){
+                return values.length > position + 1 
+                && values[position + 1].tie;
+            }
+            let nextIsRest = function(position){
+                return values.length > position + 1 
+                && values[position + 1].type == 'r';
+            }
+            let sumTiedDurations = function(cursorPosition){
+                
+                let duration = values[cursorPosition].duration;
+                let numTies = 0;
+                let pos = cursorPosition;
+                
+                while(nextHasTie(pos) && !nextIsRest(pos)){
+                    duration = duration.add(values[pos + 1].duration);
+                    numTies++; pos ++;
+                }
+                return {duration: duration, skips: numTies};
+
+            }
+
+            let realDurations = [];
+
+            let skipN = 0;
+            for(var noteIndex = 0; noteIndex < values.length; noteIndex++){
+                
+                if(skipN > 0){ skipN --; continue; }
+
+                let note = values[noteIndex];
+
+                if(note.type != "r")
+                {
+                    let vals = sumTiedDurations(noteIndex);   
+                    skipN = vals.skips;
+                    
+                    if(!get_val)
+                        realDurations.push(vals.duration);
+                    else
+                        realDurations.push(vals.duration.toFraction());
+
+                }else {
+
+                    if(!get_val)
+                        realDurations.push(note.duration.mul(-1));
+                    else
+                        realDurations.push(note.duration.mul(-1).toFraction());
+                }
+            }
+
+            // if(get_val){
+            //     console.log(realDurations);
+            // }else{
+            //     console.log(this.get_duration_values(realDurations));
+            // }
+
+            return realDurations;
+
+        },
+
         playback(values, throttle) {
             
             var currentTime = 0;
+            let durations = this.generate_playback_durations(values);
 
-            var allDurations = []; var ssum = 0;
-            for(var noteIndex = 0; noteIndex < values.length; noteIndex++){
-                allDurations.push(values[noteIndex].duration.valueOf());
-                ssum += values[noteIndex].duration.valueOf();
-            }
-            //console.log(allDurations);
-            //console.log(ssum);
+            // this.get_duration_values(durations);
 
-            let nextNoteExists = function(number){
-                return values.length < number;
-            }
-            let nextHasTie = function(number){
-                return values.length < number + 1 
-                && values[number + 1].tie;
-            }
+            let intensity = 127;
 
-            for(var noteIndex = 0; noteIndex < values.length; noteIndex++){
-                
-                let note = values[noteIndex];
-                let noteValue = note.duration.valueOf() * throttle;
+            for(var idx_duration = 0; idx_duration < durations.length; idx_duration++){
 
-                var intensity = 127;
-                if(nextHasTie()){
-                    intensity = 256;
-                }
+                let dur = durations[idx_duration];
 
-                if(note.type != "r" && !note.tie)
+                if(dur > 0)
                 {
                     MIDI.noteOn(0, 60, intensity, currentTime);
-                }
-                
-                if(!nextHasTie(noteIndex))             
-                    MIDI.noteOff(0, 60, currentTime + noteValue);
-                
+                    
+                    currentTime += dur.valueOf() * throttle;
+                    MIDI.noteOff(0, 60, currentTime);
 
-                currentTime += noteValue;
+                }else {
+                    currentTime += -dur.valueOf() * throttle;
+                }
             }
 
-        
-        
         }
     },
 

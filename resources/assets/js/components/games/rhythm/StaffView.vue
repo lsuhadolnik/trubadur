@@ -30,7 +30,7 @@
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
-        height: 200px
+        height: 130px
         /*scroll-behavior: smooth;
         -webkit-scroll-behavior: smooth;*/
     }
@@ -64,10 +64,10 @@ export default {
 
             info: {
                 width: 2*(window.innerWidth),
-                height: 80,
+                height: 50,
                 barWidth: window.innerWidth,
-                barHeight: 80,
-                barOffsetY: 10,
+                barHeight: 50,
+                barOffsetY: 20,
 
                 // Determines how much pixels 
                 // an average note occupies.
@@ -267,7 +267,14 @@ export default {
                 this.info.barWidth - this.info.meanNoteWidth
             );
 
-            var formatter = new VF.Formatter().format([voice], maxNotesWidth);
+            var beams = VF.Beam.applyAndGetBeams(voice);
+
+            var formatter = new VF.Formatter();
+            formatter.joinVoices([voice]);
+            formatter.format([voice], maxNotesWidth);
+            //formatter.
+
+            //voice.setContext(context).draw();
 
             // Render voice
             // beams.forEach(function(b) {b.setContext(context).draw()})
@@ -278,11 +285,11 @@ export default {
             /*var beams = VF.Beam.generateBeams(renderQueue,  {
                 beam_rests: true,
                 show_stemlets: true
-            });
+            });*/
             // Draw the beams:
             beams.forEach(function(beam){
                 beam.setContext(context).draw();
-            });*/
+            });
 
             // Draw optionals...
             if(optionals) {
@@ -517,8 +524,14 @@ export default {
 
                 currentDuration = currentDuration.add(notes[i].duration);
                 
-                if(currentDuration.compare(new Fraction(1)) == 0){
+                // Kaj naredi:
+                // => currentDuration.compare(new Fraction(1)) == 0 
+                //    Ko je dovolj not za en takt, ga izrišem.
+                // => !(staveIndex + 1 == staves.length && i + 1 < notes.length)
+                //    V primeru da je not preveč, takta ne izrišem, ampak prihranim za zadnjega.
 
+
+                if(currentDuration.compare(new Fraction(this.bar.num_beats, this.bar.base_note)) >= 0 && !(staveIndex + 1 == staves.length && i + 1 < notes.length)){                  
                     this._vex_draw_voice(context, staves[staveIndex++], renderQueue);
 
                     renderQueue = [];
@@ -534,7 +547,7 @@ export default {
             // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
             if(renderQueue.length > 0){
                 // Draw the rest
-                this._vex_draw_voice(context, staves[staveIndex ++], renderQueue);
+                this._vex_draw_voice(context, staves[staveIndex], renderQueue);
             }
 
             this._vex_draw_optionals(context, ties);

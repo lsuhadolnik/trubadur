@@ -27,7 +27,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     this.handle_button = function(event) {
 
-        if(event.type == 'n')
+        if(event.type == 'n' || event.type == 'r')
         {   // This is a note
             this.add_note(event);
         } 
@@ -208,6 +208,15 @@ var NoteStore = function(bar, cursor, render_function, info) {
         
     },
 
+    this._fix_tuplet_indices_forward = function(num){
+        for(let i = this.cursor.position; i < this.notes.length; i++){
+            if(this.notes[i].hasOwnProperty('tuplet_from')){
+                this.notes[i].tuplet_from += num;
+                this.notes[i].tuplet_to += num;
+            }
+        }
+    },
+
     this.add_note = function(event) {
 
         let MAX_DURATION = info.staveCount;
@@ -215,32 +224,29 @@ var NoteStore = function(bar, cursor, render_function, info) {
         if(!this._is_supported_length(event)){
             return;
         }
-           
-        //console.log("Checking for tie..")
-        if(this.cursor.position > 0 
-            && this.cursor.position < this.notes.length
-            && this.notes[this.cursor.position].tie){
-                event.tie = true;
-        }
 
-        if(this._sum_durations().add(event.duration) > MAX_DURATION){
+        /*if(this._sum_durations().add(event.duration) > MAX_DURATION){
             alert("Nota je predolga");
             return;
-        }
+        }*/
 
         // Add the note
         // Add the new note to the current position (at the cursor)
         this.notes.splice(this.cursor.position, 0, event);
         
-        if(!this.check_sum_fit()){
+        /*if(!this.check_sum_fit()){
             alert("Takt je predolg");
 
             this.notes.splice(this.cursor.position - 1, 1);
             return;
-        }
-
+        }*/
+        
         // Move cursor forward
         this._move_cursor_forward();
+
+        // Popravi tuplet_from, tuplet_to na koncih triol
+        // Povečaj za ena. Vedno se dodaja samo en element ob enkrat
+        this._fix_tuplet_indices_forward(+1);
 
         // And render the result
         this._call_render()
@@ -256,15 +262,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     },
 
-    this._print_all_durations = function() {
-        let str = "";
-        str = this.notes[0].duration.toFraction();
-        for(var i = 1; i < this.notes.length; i++){
-            str += ", " + this.notes[i].duration.toFraction();
-        }
-        console.log(str);
-    }
-
     this.delete_note = function() {
         
         // If you are at the beginning, you can't delete anything else
@@ -272,6 +269,10 @@ var NoteStore = function(bar, cursor, render_function, info) {
         {
             // So you quit
             return;
+        }
+
+        if(this.notes.length > this.cursor.position && this.notes[this.cursor.position].tie){
+            delete this.notes[this.cursor.position].tie;
         }
 
         if(this.notes[this.cursor.position - 1].in_tuplet){
@@ -283,6 +284,8 @@ var NoteStore = function(bar, cursor, render_function, info) {
         //         |  (note to delete) (rest/note) ... (rest/note)
         // cursor--^
         this._move_cursor_backwards();
+
+        this._fix_tuplet_indices_forward(-1);
         
         // Delete this note
         this.notes.splice(this.cursor.position, 1);
@@ -311,36 +314,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
         else
             this.cursor.position --;
 
-    }
-
-    this.sum_silence_until_edited = function(){
-
-        // Instantiate the duration and rests array
-        let duration = new Fraction(0);
-        let rests = [];
-
-        // Start at the cursor position
-        let i = this.cursor.position;
-        // Visit all following notes
-        while(i < this.notes.length){
-            // First, check the condition
-            // Until a note or a user-edited rest is met...
-            if(this.notes[i].user_edited || this.notes[i].type != "r")
-            {
-                // Then exit the loop
-                break;
-            }
-
-            duration = duration.add(this.notes[i].duration);
-            // Add the index of the rest
-            rests.push(i);
-            // Move forward
-            i++;
-        }
-
-        return {
-            duration, rests
-        };
     }
 
 

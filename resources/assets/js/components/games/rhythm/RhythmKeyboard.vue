@@ -118,7 +118,7 @@ export default {
         whole_note(){
 
             this.key_callback({
-                type: 'n',
+                type: this.rest_mode ? 'r' : 'n',
                 symbol: this.rest_mode ? 'wr' : 'w',
                 duration: new Fraction(1)
             });
@@ -128,7 +128,7 @@ export default {
         half_note(){
 
             this.key_callback({
-                type: 'n',
+                type: this.rest_mode ? 'r' : 'n',
                 symbol: this.rest_mode ? '2r' : '2',
                 duration: new Fraction(1).div(2)
             });
@@ -138,7 +138,7 @@ export default {
         quarter_note(){
 
             this.key_callback({
-                type: 'n',
+                type: this.rest_mode ? 'r' : 'n',
                 symbol: this.rest_mode ? '4r' : '4',
                 duration: new Fraction(1).div(4)
             });
@@ -148,7 +148,7 @@ export default {
         eight_note(){
 
             this.key_callback({
-                type: 'n',
+                type: this.rest_mode ? 'r' : 'n',
                 symbol: this.rest_mode ? '8r' : '8',
                 duration: new Fraction(1).div(8)
             });
@@ -158,7 +158,7 @@ export default {
         sixteenth_note(){
 
             this.key_callback({
-                type: 'n',
+                type: this.rest_mode ? 'r' : 'n',
                 symbol: this.rest_mode ? '16r' : '16',
                 duration: new Fraction(1).div(16)
             });

@@ -1,6 +1,6 @@
 var Fraction = require("fraction.js");
 
-var ExerciseGenerator = function(){
+var ExerciseGenerator = function(soundsLikeFunc){
 
     let examples = [
         [
@@ -31,6 +31,27 @@ var ExerciseGenerator = function(){
             {type:"n", symbol:"4", duration: new Fraction(1,4)},
             {type:"n", symbol:"4", duration: new Fraction(1,4)},
             
+        ],
+        [
+            {type:"n", symbol:"4", duration: new Fraction(1,4)},
+            {type:"n", symbol:"4", duration: new Fraction(1,4)},
+            {type:"n", symbol:"8", duration: new Fraction(1,8)},
+            {type:"n", symbol:"8", duration: new Fraction(1,8)},
+            {type:"n", symbol:"8", duration: new Fraction(1,8)},
+            {type:"n", symbol:"8", duration: new Fraction(1,8)},
+            
+            {type:"n", symbol:"16", duration: new Fraction(1,16)},
+            {type:"n", symbol:"16", duration: new Fraction(1,16)},
+            {type:"n", symbol:"16", duration: new Fraction(1,16)},
+            {type:"n", symbol:"16", duration: new Fraction(1,16)},
+
+            {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet:true, tuplet_type:3},
+            {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet:true, tuplet_type:3},
+            {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet:true, tuplet_type:3, tuplet_from:10, tuplet_to: 13},
+            
+            {type:"n", symbol:"4", duration: new Fraction(1,4)},
+            {type:"n", symbol:"8", duration: new Fraction(1,8)},
+            {type:"n", symbol:"8", duration: new Fraction(1,8)},
         ]
     ];
 
@@ -48,7 +69,11 @@ var ExerciseGenerator = function(){
 
     this.check = function(value){
 
-        if(_.isEqual(this.currentExercise, value)){
+        // Return string fractions
+        let ex = soundsLikeFunc(this.currentExercise, true);
+        let us = soundsLikeFunc(value, true);
+
+        if(_.isEqual(ex, us)){
             alert("PRAVILNO!");
         }else{
             alert("Ni še čisto v redu.");
