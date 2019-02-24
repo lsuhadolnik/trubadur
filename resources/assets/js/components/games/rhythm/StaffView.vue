@@ -30,7 +30,7 @@
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
-        height: 130px
+        height: 160px
         /*scroll-behavior: smooth;
         -webkit-scroll-behavior: smooth;*/
     }
@@ -64,10 +64,10 @@ export default {
 
             info: {
                 width: 2*(window.innerWidth),
-                height: 50,
+                height: 67,
                 barWidth: window.innerWidth,
-                barHeight: 50,
-                barOffsetY: 20,
+                barHeight: 67,
+                barOffsetY: 19,
 
                 // Determines how much pixels 
                 // an average note occupies.

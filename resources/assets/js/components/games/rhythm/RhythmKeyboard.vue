@@ -4,7 +4,7 @@
         <div class="rhythm-game__event-keys">
             <div class="rhythm-game__keyboard">
 
-                <div class="row rhythm-game__keyboard-row">
+                <div class="row rhythm-game__keyboard-row" >
                     <sexy-button color="orange" @click.native="move_cursor_forward()" >
                         <span style="font-family: Gotham round;">
                             &gt;
@@ -14,6 +14,16 @@
                     <sexy-button :hidden="cursor.in_tuplet" :text="quarter_text" :color="note_color" @click.native="quarter_note()" />
                     <sexy-button :hidden="cursor.in_tuplet" :text="eight_text" :color="note_color" @click.native="eight_note()" />
                     <sexy-button :hidden="cursor.in_tuplet" :text="sixteenth_text" :color="note_color" @click.native="sixteenth_note()" />
+                    <div class="hide-normal"><!-- Will show only on small wide screens (landscape phones) -->
+                        <sexy-button     color="sunglow" @click.native="repeat_exercise()" class="hide-normal">
+                            <icon name="repeat" />
+                        </sexy-button>
+                        <sexy-button color="sunglow" @click.native="playback()" class="hide-normal">
+                            <icon label="user-check">
+                                <icon name="play" />
+                            </icon>
+                        </sexy-button>
+                    </div>
                 </div>
                 <div class="row rhythm-game__keyboard-row">
                     <sexy-button color="orange" @click.native="move_cursor_backwards()" >
@@ -25,30 +35,75 @@
                     <sexy-button :hidden="cursor.in_tuplet" text="." color="green" @click.native="dot()" />
                     <sexy-button text="u" color="green" @click.native="tie()" />
                     <sexy-button text="T" color="green" @click.native="tuplet()" />
+                    <div class="hide-normal"> <!-- Will show only on small wide screens (landscape phones) -->
+                        <sexy-button color="cabaret"   @click.native="delete_note()" >
+                            <img src="/images/backspace.svg" width="30" />
+                        </sexy-button>
+                        <sexy-button color="cabaret" @click.native="check()">
+                            <icon name="question-circle" />
+                        </sexy-button>
+                    </div>
+                </div>
+                <div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_fourth show-normal">
+                    <sexy-button     color="sunglow" @click.native="repeat_exercise()">
+                        <icon name="repeat" />
+                    </sexy-button>
+                    <sexy-button color="sunglow" @click.native="playback()">
+                        <icon label="user-check">
+                            <icon name="play" />
+                        </icon>
+                    </sexy-button>
+                    <sexy-button color="sunglow" >
+                        <input type="range" min="1"  value="2" max="3" step="0.2" v-model="playback_throttle">
+                    </sexy-button>
+                </div>
+                <div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal">
+                    <sexy-button color="cabaret"   @click.native="delete_note()"  >
+                        <img src="/images/backspace.svg" width="30" />
+                    </sexy-button>
+                    <sexy-button :hidden="true" />
+                    <sexy-button :hidden="true" />
+                    <sexy-button color="cabaret" @click.native="check()" >
+                        <icon name="question-circle" />
+                    </sexy-button>
                 </div>
 
             </div>
         </div>
         <div class="row rhythm-game__control-keys">
 
-            <input type="range" min="1"  value="2" max="3" step="0.2" v-model="playback_throttle">
-            {{playback_throttle}}
+            
+            <!--
+                {{playback_throttle}}
             <sexy-button text="PREDVAJAJ" color="green" w="175px" @click.native="playback()"/>
+            -->
                 
         </div>
-        <div class="row rhythm-game__control-keys">
+        <!--<div class="row rhythm-game__control-keys">
 
             <sexy-button text="BRIŠI" color="green" w="175px" @click.native="delete_note()"/>
             <sexy-button text="PONOVI" color="green" w="175px" @click.native="repeat_exercise()" />
             <sexy-button text="PREVERI" color="orange" w="175px" @click.native="check()" />
                 
-        </div>
+        </div>-->
             
     </div>
 
 </template>
 
 <style lang="scss" scoped>
+
+    .hide-normal{
+        display:none;
+    }
+
+    .white-text{
+        color: white;
+    }
+
+    .down-a-bit{
+        padding-top: 10px;
+    }
 
     .clearfix {
         clear: both;
@@ -68,6 +123,7 @@
     .rhythm-game__keyboard {
         font-size: 20px;
         margin-bottom: 20px;
+        touch-action: manipulation;
     }
 
     .rhythm-game__keyboard-row{
@@ -101,6 +157,41 @@
         margin-left: 0px;
     }
 
+    .rhythm-game__keyboard-row_third .button{
+        width: 64.5px;
+    }
+
+    .rhythm-game__keyboard-row_fourth .button{
+        width: 50px;
+    }
+
+    .rhythm-game__keyboard-row_fourth .button:last-child{
+        width: 170px;
+    }
+    
+    @media only screen 
+  and (max-device-height: 600px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+
+        .hide-normal{
+            display: inline-block;
+        }
+
+        .show-normal{
+          display: none;
+        }
+
+        .rhythm-game__keyboard-row{
+            margin-bottom: 0px;
+        }
+
+        .rhythm-game__staff__second-row{
+            margin-bottom: -27px !important;
+        }
+
+    }
+
 </style>
 
 
@@ -108,6 +199,11 @@
 
 import SexyButton from "../../elements/SexyButton.vue"
 import TwoRowsButton from "../../elements/TwoRowsButton.vue"
+
+import 'vue-awesome/icons/repeat'
+import 'vue-awesome/icons/play'
+import 'vue-awesome/icons/question-circle'
+import 'vue-awesome/icons/user-o'
 
 var Fraction = require('fraction.js');
 
@@ -258,6 +354,8 @@ export default {
         return {
             playback_throttle: 2,
             rest_mode: false,
+
+            buttons: false,
         };
     },
     props: [

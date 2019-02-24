@@ -16,7 +16,7 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
     @import '../../../../sass/variables/index';
 
@@ -30,11 +30,15 @@
         color: $neon-red;
         background: black;
     }
-
-    .header {
-        
-    }
     
+
+    @media only screen and (max-height: 600px) {
+        
+        .header-menu{
+            display: none !important;
+        }
+
+    }
 
 </style>
 

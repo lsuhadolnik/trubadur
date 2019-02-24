@@ -4,7 +4,12 @@
             {{text}}
             <slot></slot>
         </div>
-        <div class="button__full" :class="{'button__green':color=='green', 'button__orange':color=='orange', 'button__red':color=='red'}"></div>
+        <div class="button__full" :class="{
+            'button__green':color=='green', 
+            'button__orange':color=='orange', 
+            'button__red':color=='red',
+            'button__cabaret':color=='cabaret',
+            'button__sunglow':color=='sunglow'}"></div>
     </div>
 </template>
 
@@ -97,6 +102,14 @@
     background-color: $neon-red;
 }
 
+.button__cabaret{
+    background-color: $cabaret;
+}
+
+.button__sunglow{
+    background-color: $sunglow;
+}
+
 </style>
 
 <script>
@@ -110,7 +123,12 @@ export default {
         disable: booleanProp(false),
         customClass: stringProp(false),
         color: stringProp(false),
-        hidden: booleanProp(false)
+        hidden: booleanProp(false),
+        cols: {
+            type: Number,
+            required: false,
+            default: 1
+        }
     }
 }
 
