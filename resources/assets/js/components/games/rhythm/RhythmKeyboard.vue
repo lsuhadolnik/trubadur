@@ -49,9 +49,8 @@
                         <icon name="repeat" />
                     </sexy-button>
                     <sexy-button color="sunglow" @click.native="playback()">
-                        <icon label="user-check">
-                            <icon name="play" />
-                        </icon>
+                        <icon name="play"  v-if="!playbackStatus.playing" />
+                        <icon name="pause" v-else />
                     </sexy-button>
                     <sexy-button color="sunglow" >
                         <input type="range" min="1"  value="2" max="3" step="0.2" v-model="playback_throttle">
@@ -204,6 +203,7 @@ import 'vue-awesome/icons/repeat'
 import 'vue-awesome/icons/play'
 import 'vue-awesome/icons/question-circle'
 import 'vue-awesome/icons/user-o'
+import 'vue-awesome/icons/pause'
 
 var Fraction = require('fraction.js');
 
@@ -359,7 +359,7 @@ export default {
         };
     },
     props: [
-        'key_callback', 'cursor'
+        'key_callback', 'cursor', 'playbackStatus'
     ],
     computed: {
         note_color: function(){

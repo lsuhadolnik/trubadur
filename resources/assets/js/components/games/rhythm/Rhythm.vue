@@ -8,7 +8,7 @@
         
         <StaffView ref="staff_view" :bar="bar" :cursor="cursor" :staveCount="info.staveCount" />
         
-        <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" />
+        <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" />
 
         <div class="error" v-show="errorMessage">{{errorMessage}}</div>
 
@@ -55,6 +55,7 @@ import Keyboard from "./RhythmKeyboard.vue"
 
 import NoteStore from "./noteStore"
 import ExerciseGenerator from './exerciseGenerator'
+import RhythmPlaybackEngine from './rhythmPlaybackEngine'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -72,8 +73,8 @@ export default {
         return {
             notes: null,
             bar: {
-                num_beats: 6,
-                base_note: 8
+                num_beats: 4,
+                base_note: 4
             },
             cursor: {
                 position: 0,
@@ -86,7 +87,8 @@ export default {
 
             errorMessage: "",
 
-            generator: new ExerciseGenerator(this.generate_playback_durations)
+            generator: new ExerciseGenerator(this.generate_playback_durations),
+            playback: new RhythmPlaybackEngine()
         }
     },
     
@@ -114,11 +116,16 @@ export default {
             if(event && event.throttle){
                 throttle = event.throttle;
             }
-            this.playback(this.generator.currentExercise, throttle);
+            //this.playback(this.generator.currentExercise, throttle);
+
+            this.playback.load(this.generator.currentExercise);
+            this.playback.play(); 
         },
 
         play_user(event) {
-            this.playback(this.notes.notes, event.throttle);
+            //this.playback(this.notes.notes, event.throttle);
+            this.playback.load(this.notes.notes);
+            this.playback.play(); 
         },
 
         get_duration_values(durations){
@@ -130,97 +137,7 @@ export default {
 
         },
 
-        generate_playback_durations(values, get_val){
-
-            // Negativna trajanja pomenijo pavze
-
-            let nextHasTie = function(position){
-                return values.length > position + 1 
-                && values[position + 1].tie;
-            }
-            let nextIsRest = function(position){
-                return values.length > position + 1 
-                && values[position + 1].type == 'r';
-            }
-            let sumTiedDurations = function(cursorPosition){
-                
-                let duration = values[cursorPosition].duration;
-                let numTies = 0;
-                let pos = cursorPosition;
-                
-                while(nextHasTie(pos) && !nextIsRest(pos)){
-                    duration = duration.add(values[pos + 1].duration);
-                    numTies++; pos ++;
-                }
-                return {duration: duration, skips: numTies};
-
-            }
-
-            let realDurations = [];
-
-            let skipN = 0;
-            for(var noteIndex = 0; noteIndex < values.length; noteIndex++){
-                
-                if(skipN > 0){ skipN --; continue; }
-
-                let note = values[noteIndex];
-
-                if(note.type != "r")
-                {
-                    let vals = sumTiedDurations(noteIndex);   
-                    skipN = vals.skips;
-                    
-                    if(!get_val)
-                        realDurations.push(vals.duration);
-                    else
-                        realDurations.push(vals.duration.toFraction());
-
-                }else {
-
-                    if(!get_val)
-                        realDurations.push(note.duration.mul(-1));
-                    else
-                        realDurations.push(note.duration.mul(-1).toFraction());
-                }
-            }
-
-            // if(get_val){
-            //     console.log(realDurations);
-            // }else{
-            //     console.log(this.get_duration_values(realDurations));
-            // }
-
-            return realDurations;
-
-        },
-
-        playback(values, throttle) {
-            
-            var currentTime = 0;
-            let durations = this.generate_playback_durations(values);
-
-            // this.get_duration_values(durations);
-
-            let intensity = 127;
-
-            for(var idx_duration = 0; idx_duration < durations.length; idx_duration++){
-
-                let dur = durations[idx_duration];
-
-                if(dur > 0)
-                {
-                    MIDI.noteOn(0, 60, intensity, currentTime);
-                    
-                    currentTime += dur.valueOf() * throttle;
-                    MIDI.noteOff(0, 60, currentTime);
-
-                }else {
-                    currentTime += -dur.valueOf() * throttle;
-                }
-            }
-
-        }
-    },
+},
 
     mounted() {
 
@@ -240,7 +157,7 @@ export default {
 
         MIDI.loadPlugin({
             soundfontUrl: '/soundfonts/',
-            instruments: ['acoustic_grand_piano'],
+            instruments: ['acoustic_grand_piano', 'xylophone'],
             targetFormat: 'mp3',
             onsuccess: () => {
                 for (var name in instruments) {
