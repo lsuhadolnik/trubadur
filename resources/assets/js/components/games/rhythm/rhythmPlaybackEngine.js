@@ -66,6 +66,8 @@ var RhythmPlaybackEngine = function(){
 
     };
 
+    this.BPM = 60;
+
     this.channel = 0;
 
     var outside = this;
@@ -88,7 +90,6 @@ var RhythmPlaybackEngine = function(){
     this.countIn = false;
 
     this.countInPlayback = null;
-    
     
     // This is an object, so the changes of property values can be tracked.
     this.throttleInfo = {
@@ -122,14 +123,19 @@ var RhythmPlaybackEngine = function(){
         if(dur > 0)
         {
 
-            actualDuration = dur.valueOf();
+            // BPM logic
+            // Brez spreminjanja trajanja velja, da je celinka dolga 1s
+            // torej je vsaka četrtinka dolga 0,25s, kar je 4 BPS, kar je 240 BPM
+
+            actualDuration = dur.valueOf() / (this.BPM / 60) * this.bar_info.num_beats;
 
             // WTF?! Hahaha :D
             // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
-            // Za ostale primere je približno neuporabno
+            // Za ostale primere je približno neuporabno (no, lahko bi kdaj v prihodnosti dodal melodično-ritmični narek...)
             // S tem sem hotel povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
             let sPitch = this.pitch[Math.min(this.pitch.length - 1, this.currentNoteID - 1)];
 
+            // Zaigraj, ustavi se samodejno.
             MIDI.noteOn(this.channel, sPitch, this.intensity, 0);
             MIDI.noteOff(this.channel, sPitch, actualDuration);
 
@@ -143,7 +149,6 @@ var RhythmPlaybackEngine = function(){
         let outside = this;
         if(this.playing) {
             this.currentTimeout = setTimeout(function() {
-                console.log("I'm playing right now and you cant stop me.");
                 
                 if(noteCallback){
                     noteCallback();
@@ -159,10 +164,13 @@ var RhythmPlaybackEngine = function(){
 
         if(!this.countInPlayback){
             this.countInPlayback = new RhythmPlaybackEngine();
+            this.countInPlayback.bar_info = this.bar_info;
             this.countInPlayback.channel = 1;
             this.countInPlayback.pitch = [93, 86];
             this.countInPlayback.load(this.getCountInNotes());
         }
+
+        this.countInPlayback.BPM = this.BPM;
 
         this.countInPlayback.resume(function(){
             //Done
@@ -180,7 +188,6 @@ var RhythmPlaybackEngine = function(){
             o2.resume();
         });
 
-        
     }
 
     this.saveState = function(){

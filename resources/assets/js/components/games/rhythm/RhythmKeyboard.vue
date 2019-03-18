@@ -62,7 +62,7 @@
                     </sexy-button>
                     <!--<sexy-button :hidden="true" />
                     <sexy-button :hidden="true" />-->
-                    <sexy-button color="cabaret" @click.native="resume()" v-if="!playbackStatus.playing && !playbackStatus.loaded">
+                    <!--<sexy-button color="cabaret" @click.native="resume()" v-if="!playbackStatus.playing && !playbackStatus.loaded">
                         <icon name="play" />
                     </sexy-button>
 
@@ -72,9 +72,15 @@
 
                     <sexy-button v-else color="sunglow" @click.native="pause()">
                         <icon name="pause" />
+                    </sexy-button>-->
+                    <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="1">
+                        <div class="BPM-indicator normal-font">
+                            <div class="BPM-value">{{playbackStatus.BPM}}</div>
+                            <div class="BPM-prompt">BPM</div>
+                        </div>
                     </sexy-button>
-                    <sexy-button color="cabaret" customClass="wideButton" :cols="2">
-                        <input type="range" min="1"  value="2" max="3" step="0.2" v-model="playback_throttle">
+                    <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="2">
+                        <input class="BPM-slider" type="range" min="60"  value="120" max="180" step="10" v-model="playbackStatus.BPM">
                     </sexy-button>
                     <sexy-button color="cabaret" @click.native="check()" >
                         <icon name="question-circle" />
@@ -127,6 +133,9 @@
         width: 1px;
     }
 
+    .normal-font{
+        font-family: inherit !important;
+    }
     
     .rythm-game__keyboard_wrap {
         
@@ -184,7 +193,10 @@
         font-size: 15px;
     }
 
-    .rhythm-game__keyboard-row_third input{
+    .BPM-indicator{
+        font-size: 16px;
+    }
+    .BPM-slider {
         width: 80px;
     }
 

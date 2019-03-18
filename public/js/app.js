@@ -50459,7 +50459,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 6px;\n  left: 6px;\n  width: 100%;\n  height: 100%;\n  border-radius: 6px;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n", ""]);
+exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 6px;\n  left: 6px;\n  width: 100%;\n  height: 100%;\n  border-radius: 6px;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n.button_3_col[data-v-be802b54] {\n  width: 170px;\n}\n", ""]);
 
 // exports
 
@@ -50471,6 +50471,10 @@ exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    positi
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(6);
+//
+//
+//
+//
 //
 //
 //
@@ -50624,6 +50628,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                     case 2:
                         k += " button_2_col";
+                        break;
+
+                    case 3:
+                        k += " button_3_col";
                         break;
 
                 }
@@ -76098,7 +76106,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  margin-bottom: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_fourth .button[data-v-79470641] {\n  width: 140px;\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.rhythm-game__keyboard-row_third input[data-v-79470641] {\n  width: 80px;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n.rhythm-game__staff__second-row[data-v-79470641] {\n    margin-bottom: -27px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  margin-bottom: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_fourth .button[data-v-79470641] {\n  width: 140px;\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n.rhythm-game__staff__second-row[data-v-79470641] {\n    margin-bottom: -27px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -76118,6 +76126,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_awesome_icons_question_circle__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_awesome_icons_user_o__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_awesome_icons_pause__ = __webpack_require__(143);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -77037,54 +77057,34 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            !_vm.playbackStatus.playing && !_vm.playbackStatus.loaded
-              ? _c(
-                  "sexy-button",
-                  {
-                    attrs: { color: "cabaret" },
-                    nativeOn: {
-                      click: function($event) {
-                        _vm.resume()
-                      }
-                    }
-                  },
-                  [_c("icon", { attrs: { name: "play" } })],
-                  1
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.playbackStatus.playing && _vm.playbackStatus.loaded
-              ? _c(
-                  "sexy-button",
-                  {
-                    attrs: { color: "cabaret" },
-                    nativeOn: {
-                      click: function($event) {
-                        _vm.resume()
-                      }
-                    }
-                  },
-                  [_c("icon", { attrs: { name: "repeat" } })],
-                  1
-                )
-              : _c(
-                  "sexy-button",
-                  {
-                    attrs: { color: "sunglow" },
-                    nativeOn: {
-                      click: function($event) {
-                        _vm.pause()
-                      }
-                    }
-                  },
-                  [_c("icon", { attrs: { name: "pause" } })],
-                  1
-                ),
+            _c(
+              "sexy-button",
+              {
+                attrs: {
+                  color: "cabaret",
+                  customClass: "wideButton normal-font",
+                  cols: 1
+                }
+              },
+              [
+                _c("div", { staticClass: "BPM-indicator normal-font" }, [
+                  _c("div", { staticClass: "BPM-value" }, [
+                    _vm._v(_vm._s(_vm.playbackStatus.BPM))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "BPM-prompt" }, [_vm._v("BPM")])
+                ])
+              ]
+            ),
             _vm._v(" "),
             _c(
               "sexy-button",
               {
-                attrs: { color: "cabaret", customClass: "wideButton", cols: 2 }
+                attrs: {
+                  color: "cabaret",
+                  customClass: "wideButton normal-font",
+                  cols: 2
+                }
               },
               [
                 _c("input", {
@@ -77092,21 +77092,22 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.playback_throttle,
-                      expression: "playback_throttle"
+                      value: _vm.playbackStatus.BPM,
+                      expression: "playbackStatus.BPM"
                     }
                   ],
+                  staticClass: "BPM-slider",
                   attrs: {
                     type: "range",
-                    min: "1",
-                    value: "2",
-                    max: "3",
-                    step: "0.2"
+                    min: "60",
+                    value: "120",
+                    max: "180",
+                    step: "10"
                   },
-                  domProps: { value: _vm.playback_throttle },
+                  domProps: { value: _vm.playbackStatus.BPM },
                   on: {
                     __r: function($event) {
-                      _vm.playback_throttle = $event.target.value
+                      _vm.$set(_vm.playbackStatus, "BPM", $event.target.value)
                     }
                   }
                 })
@@ -77541,6 +77542,8 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
         return realDurations;
     };
 
+    this.BPM = 60;
+
     this.channel = 0;
 
     var outside = this;
@@ -77590,14 +77593,19 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
 
         if (dur > 0) {
 
-            actualDuration = dur.valueOf();
+            // BPM logic
+            // Brez spreminjanja trajanja velja, da je celinka dolga 1s
+            // torej je vsaka četrtinka dolga 0,25s, kar je 4 BPS, kar je 240 BPM
+
+            actualDuration = dur.valueOf() / (this.BPM / 60) * this.bar_info.num_beats;
 
             // WTF?! Hahaha :D
             // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
-            // Za ostale primere je približno neuporabno
+            // Za ostale primere je približno neuporabno (no, lahko bi kdaj v prihodnosti dodal melodično-ritmični narek...)
             // S tem sem hotel povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
             var sPitch = this.pitch[Math.min(this.pitch.length - 1, this.currentNoteID - 1)];
 
+            // Zaigraj, ustavi se samodejno.
             MIDI.noteOn(this.channel, sPitch, this.intensity, 0);
             MIDI.noteOff(this.channel, sPitch, actualDuration);
         } else {
@@ -77610,7 +77618,6 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
         var outside = this;
         if (this.playing) {
             this.currentTimeout = setTimeout(function () {
-                console.log("I'm playing right now and you cant stop me.");
 
                 if (noteCallback) {
                     noteCallback();
@@ -77625,10 +77632,13 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
 
         if (!this.countInPlayback) {
             this.countInPlayback = new RhythmPlaybackEngine();
+            this.countInPlayback.bar_info = this.bar_info;
             this.countInPlayback.channel = 1;
             this.countInPlayback.pitch = [93, 86];
             this.countInPlayback.load(this.getCountInNotes());
         }
+
+        this.countInPlayback.BPM = this.BPM;
 
         this.countInPlayback.resume(function () {
             //Done

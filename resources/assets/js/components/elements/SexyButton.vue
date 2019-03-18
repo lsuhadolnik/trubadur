@@ -118,6 +118,10 @@
     width: 110px;
 }
 
+.button_3_col{
+    width: 170px;
+}
+
 </style>
 
 <script>
@@ -151,6 +155,10 @@ export default {
 
                     case 2:
                         k += " button_2_col";
+                    break;
+
+                    case 3:
+                        k += " button_3_col";
                     break;
 
                 }
