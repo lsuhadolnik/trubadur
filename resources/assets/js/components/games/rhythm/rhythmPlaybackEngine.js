@@ -1,83 +1,16 @@
 var Fraction = require("fraction.js");
 
+import RhythmUtilities from './rhythmUtilities'
+
 var RhythmPlaybackEngine = function(){
 
-    this.generate_playback_durations = function(values, get_val){
-
-        // Negativna trajanja pomenijo pavze
-
-        let nextHasTie = function(position){
-            return values.length > position + 1 
-            && values[position + 1].tie;
-        }
-        let nextIsRest = function(position){
-            return values.length > position + 1 
-            && values[position + 1].type == 'r';
-        }
-        let sumTiedDurations = function(cursorPosition){
-            
-            let duration = values[cursorPosition].duration;
-            let numTies = 0;
-            let pos = cursorPosition;
-            
-            while(nextHasTie(pos) && !nextIsRest(pos)){
-                duration = duration.add(values[pos + 1].duration);
-                numTies++; pos ++;
-            }
-            return {duration: duration, skips: numTies};
-
-        }
-
-        let realDurations = [];
-
-        let skipN = 0;
-        for(var noteIndex = 0; noteIndex < values.length; noteIndex++){
-            
-            if(skipN > 0){ skipN --; continue; }
-
-            let note = values[noteIndex];
-
-            if(note.type != "r")
-            {
-                let vals = sumTiedDurations(noteIndex);   
-                skipN = vals.skips;
-                
-                if(!get_val)
-                    realDurations.push(vals.duration);
-                else
-                    realDurations.push(vals.duration.toFraction());
-
-            }else {
-
-                if(!get_val)
-                    realDurations.push(note.duration.mul(-1));
-                else
-                    realDurations.push(note.duration.mul(-1).toFraction());
-            }
-        }
-
-        // if(get_val){
-        //     console.log(realDurations);
-        // }else{
-        //     console.log(this.get_duration_values(realDurations));
-        // }
-
-        return realDurations;
-
-    };
-
-    this.BPM = 60;
+    this.BPM = 120;
 
     this.channel = 0;
-
-    var outside = this;
-
     this.intensity = 127;
     this.pitch = [60];
 
     this.currentlyLoaded = "";
-    this.percentPlayed = 0;
-
     this.playing = false;
     this.playbackQueue = [];
     this.loaded = false;
@@ -87,14 +20,11 @@ var RhythmPlaybackEngine = function(){
 
     this.bar_info = null;
 
-    this.countIn = false;
-
     this.countInPlayback = null;
-    
-    // This is an object, so the changes of property values can be tracked.
-    this.throttleInfo = {
-        throttle: 2
-    };
+
+    this.percentPlayed = function(){
+        return this.currentNoteID*100/(this.playbackQueue.length);
+    }
 
     this.playNote = function(endCallback, noteCallback){
 
@@ -190,37 +120,6 @@ var RhythmPlaybackEngine = function(){
 
     }
 
-    this.saveState = function(){
-
-        var m = {
-            currentlyLoaded: _.clone(outside.currentlyLoaded),
-            percentPlayed: _.clone(outside.percentPlayed),
-            playing: _.clone(outside.playing),
-            playbackQueue: _.cloneDeep(outside.playbackQueue),
-            loaded: _.clone(outside.loaded),
-            currentNoteID: _.clone(outside.currentNoteID),
-            currentTimeout: _.clone(outside.currentTimeout),
-            currentPlaybackTime: _.clone(outside.currentPlaybackTime),
-            countIn: _.clone(outside.countIn)
-        };
-        return m;
-
-    }
-
-    this.restoreState = function(m){
-
-        outside.currentlyLoaded = m.currentlyLoaded;
-        outside.percentPlayed = m.percentPlayed;
-        outside.playing = m.playing;
-        outside.playbackQueue = m.playbackQueue;
-        outside.loaded = m.loaded;
-        outside.currentNoteID = m.currentNoteID;
-        outside.currentTimeout = m.currentTimeout;
-        outside.currentPlaybackTime = m.currentPlaybackTime;
-        outside.countIn = m.countIn;
-
-    }
-
     this.resume = function(endCallback, noteCallback){
 
         if(!this.loaded){
@@ -268,7 +167,7 @@ var RhythmPlaybackEngine = function(){
             
         }
 
-        this.playbackQueue = this.generate_playback_durations(values);
+        this.playbackQueue = RhythmUtilities.generate_playback_durations(values);
         this.loaded = true;
     }
 
@@ -295,10 +194,18 @@ var RhythmPlaybackEngine = function(){
 
     this.stop = function() {
 
+        this.currentlyLoaded = "";
         this.playing = false;
-        this.loaded = false;
         this.playbackQueue = [];
+        this.loaded = false;
+        this.currentNoteID = null;
+        this.currentPlaybackTime = 0;
 
+        if(this.currentTimeout){
+            clearTimeout(this.currentTimeout);
+        }
+        this.currentTimeout = null;
+        
     }
 
 }

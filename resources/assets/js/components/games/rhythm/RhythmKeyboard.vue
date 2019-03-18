@@ -46,12 +46,14 @@
                 </div>
                 <div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_fourth show-normal">
                     
-                    <sexy-button color="sunglow" @click.native="play_exercise()">
-                        <div class="small-font-button">Ponovi vajo</div>
+                    <sexy-button color="sunglow" @click.native="play_exercise()" :percents="percentsExercise">
+                        <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'"/>
+                        <div v-else class="small-font-button">Ponovi vajo</div>
                     </sexy-button>
                     
-                    <sexy-button color="sunglow" @click.native="play_user()">
-                        <div class="small-font-button">Zaigraj vpisano</div>
+                    <sexy-button color="sunglow" @click.native="play_user()" :percents="percentsUser">
+                        <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'user'"/>
+                        <div v-else class="small-font-button">Zaigraj vpisano</div>
                     </sexy-button>
 
                     
@@ -80,7 +82,7 @@
                         </div>
                     </sexy-button>
                     <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="2">
-                        <input class="BPM-slider" type="range" min="60"  value="120" max="180" step="10" v-model="playbackStatus.BPM">
+                        <input class="BPM-slider" type="range" min="60"  value="120" max="240" step="10" v-model="playbackStatus.BPM">
                     </sexy-button>
                     <sexy-button color="cabaret" @click.native="check()" >
                         <icon name="question-circle" />
@@ -348,28 +350,51 @@ export default {
 
         },
 
+
         keyboardClick(key) {
 
             this.key_callback();
 
         },
 
+        play_button_click(type){
+
+            if(this.playbackStatus.currentlyLoaded == type){
+    
+                if(this.playbackStatus.playing){
+                
+                    this.key_callback({
+                        type: 'playback',
+                        action: 'pause',
+                    });
+                }
+                else{
+                    this.key_callback({
+                        type: 'playback',
+                        action: 'resume',
+                    });
+                }
+
+            }
+            else {
+
+                this.key_callback({
+                    type: 'playback',
+                    action: 'replay',
+                    what: type
+                });
+
+            }
+        },
+
         play_user(){
 
-            this.key_callback({
-                type: 'playback',
-                action: 'replay',
-                what: 'user'
-            });
-
+          this.play_button_click("user");  
         },
 
         play_exercise() {
-            this.key_callback({
-                type: 'playback',
-                action: 'replay',
-                what: 'exercise'
-            });
+
+            this.play_button_click("exercise");
         },
 
         pause() {
@@ -395,9 +420,7 @@ export default {
         },
 
         toggle_rest_mode(){
-
             this.rest_mode = !this.rest_mode;
-
         }
     },
     components: {
@@ -442,7 +465,27 @@ export default {
         rest_mode_button_text: function(){
             if(this.rest_mode) return "es";
             else return "ES"
-        }
+        },
+
+        percentsUser(){
+            if(this.playbackStatus.currentlyLoaded == "user"){
+                
+                return this.playbackStatus.percentPlayed();
+
+            } else{
+                return 0;
+            }
+        },
+
+        percentsExercise(){
+            if(this.playbackStatus.currentlyLoaded == "exercise"){
+                
+                return this.playbackStatus.percentPlayed();
+
+            } else{
+                return 0;
+            }
+        },
     }
 
 }

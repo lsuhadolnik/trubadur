@@ -50339,7 +50339,7 @@ var Fraction = __webpack_require__(7);
 
             errorMessage: "",
 
-            generator: new __WEBPACK_IMPORTED_MODULE_6__exerciseGenerator__["a" /* default */](this.generate_playback_durations),
+            generator: new __WEBPACK_IMPORTED_MODULE_6__exerciseGenerator__["a" /* default */](),
             playback: new __WEBPACK_IMPORTED_MODULE_7__rhythmPlaybackEngine__["a" /* default */](this.bar)
         };
     },
@@ -50353,6 +50353,11 @@ var Fraction = __webpack_require__(7);
             } else if (event.type == "playback") {
                 this.play(event);
             } else {
+
+                // Invalidate playback cache
+                // Pismo, dobr se sliši :D
+                this.playback.stop();
+
                 this.notes.handle_button(event);
             }
         },
@@ -50376,11 +50381,11 @@ var Fraction = __webpack_require__(7);
 
                 if (event.what == "user") {
 
-                    this.playback.load(this.notes.notes);
+                    this.playback.load(this.notes.notes, "user");
                     this.playback.play();
                 } else if (event.what == "exercise") {
 
-                    this.playback.load(this.generator.currentExercise);
+                    this.playback.load(this.generator.currentExercise, "exercise");
                     this.playback.play();
                 }
             }
@@ -50459,7 +50464,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 6px;\n  left: 6px;\n  width: 100%;\n  height: 100%;\n  border-radius: 6px;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n.button_3_col[data-v-be802b54] {\n  width: 170px;\n}\n", ""]);
+exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 6px;\n  left: 6px;\n  width: 100%;\n  height: 100%;\n  border-radius: 6px;\n}\n.button__percentIndicator[data-v-be802b54] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n.button_3_col[data-v-be802b54] {\n  width: 170px;\n}\n", ""]);
 
 // exports
 
@@ -50471,6 +50476,13 @@ exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    positi
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(6);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -50648,6 +50660,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         customClass: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["e" /* stringProp */])(false),
         color: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["e" /* stringProp */])(false),
         hidden: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["a" /* booleanProp */])(false),
+        percents: {
+            type: Number,
+            required: false,
+            default: 0
+        },
         cols: {
             type: Number,
             required: false,
@@ -50673,6 +50690,15 @@ var render = function() {
         _vm._t("default")
       ],
       2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "button__hollow button__percentIndicator",
+        style: { width: _vm.percents + "%" }
+      },
+      [_vm._v(" ")]
     ),
     _vm._v(" "),
     _c("div", {
@@ -76360,6 +76386,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -76457,20 +76485,38 @@ var Fraction = __webpack_require__(7);
 
             this.key_callback();
         },
+        play_button_click: function play_button_click(type) {
+
+            if (this.playbackStatus.currentlyLoaded == type) {
+
+                if (this.playbackStatus.playing) {
+
+                    this.key_callback({
+                        type: 'playback',
+                        action: 'pause'
+                    });
+                } else {
+                    this.key_callback({
+                        type: 'playback',
+                        action: 'resume'
+                    });
+                }
+            } else {
+
+                this.key_callback({
+                    type: 'playback',
+                    action: 'replay',
+                    what: type
+                });
+            }
+        },
         play_user: function play_user() {
 
-            this.key_callback({
-                type: 'playback',
-                action: 'replay',
-                what: 'user'
-            });
+            this.play_button_click("user");
         },
         play_exercise: function play_exercise() {
-            this.key_callback({
-                type: 'playback',
-                action: 'replay',
-                what: 'exercise'
-            });
+
+            this.play_button_click("exercise");
         },
         pause: function pause() {
             this.key_callback({
@@ -76491,7 +76537,6 @@ var Fraction = __webpack_require__(7);
             });
         },
         toggle_rest_mode: function toggle_rest_mode() {
-
             this.rest_mode = !this.rest_mode;
         }
     },
@@ -76528,6 +76573,23 @@ var Fraction = __webpack_require__(7);
         },
         rest_mode_button_text: function rest_mode_button_text() {
             if (this.rest_mode) return "es";else return "ES";
+        },
+
+        percentsUser: function percentsUser() {
+            if (this.playbackStatus.currentlyLoaded == "user") {
+
+                return this.playbackStatus.percentPlayed();
+            } else {
+                return 0;
+            }
+        },
+        percentsExercise: function percentsExercise() {
+            if (this.playbackStatus.currentlyLoaded == "exercise") {
+
+                return this.playbackStatus.percentPlayed();
+            } else {
+                return 0;
+            }
         }
     }
 
@@ -76999,7 +77061,7 @@ var render = function() {
             _c(
               "sexy-button",
               {
-                attrs: { color: "sunglow" },
+                attrs: { color: "sunglow", percents: _vm.percentsExercise },
                 nativeOn: {
                   click: function($event) {
                     _vm.play_exercise()
@@ -77007,16 +77069,20 @@ var render = function() {
                 }
               },
               [
-                _c("div", { staticClass: "small-font-button" }, [
-                  _vm._v("Ponovi vajo")
-                ])
-              ]
+                _vm.playbackStatus.playing &&
+                _vm.playbackStatus.currentlyLoaded == "exercise"
+                  ? _c("icon", { attrs: { name: "pause" } })
+                  : _c("div", { staticClass: "small-font-button" }, [
+                      _vm._v("Ponovi vajo")
+                    ])
+              ],
+              1
             ),
             _vm._v(" "),
             _c(
               "sexy-button",
               {
-                attrs: { color: "sunglow" },
+                attrs: { color: "sunglow", percents: _vm.percentsUser },
                 nativeOn: {
                   click: function($event) {
                     _vm.play_user()
@@ -77024,10 +77090,14 @@ var render = function() {
                 }
               },
               [
-                _c("div", { staticClass: "small-font-button" }, [
-                  _vm._v("Zaigraj vpisano")
-                ])
-              ]
+                _vm.playbackStatus.playing &&
+                _vm.playbackStatus.currentlyLoaded == "user"
+                  ? _c("icon", { attrs: { name: "pause" } })
+                  : _c("div", { staticClass: "small-font-button" }, [
+                      _vm._v("Zaigraj vpisano")
+                    ])
+              ],
+              1
             )
           ],
           1
@@ -77101,7 +77171,7 @@ var render = function() {
                     type: "range",
                     min: "60",
                     value: "120",
-                    max: "180",
+                    max: "240",
                     step: "10"
                   },
                   domProps: { value: _vm.playbackStatus.BPM },
@@ -77445,9 +77515,12 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rhythmUtilities__ = __webpack_require__(210);
 var Fraction = __webpack_require__(7);
 
-var ExerciseGenerator = function ExerciseGenerator(soundsLikeFunc) {
+
+
+var ExerciseGenerator = function ExerciseGenerator() {
 
     var examples = [[{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 7, tuplet_to: 10 }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(3, 16), dot: true }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }], [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }], [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 10, tuplet_to: 13 }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }]];
 
@@ -77464,6 +77537,8 @@ var ExerciseGenerator = function ExerciseGenerator(soundsLikeFunc) {
     this.generate();
 
     this.check = function (value) {
+
+        var soundsLikeFunc = __WEBPACK_IMPORTED_MODULE_0__rhythmUtilities__["a" /* default */].generate_playback_durations;
 
         // Return string fractions
         var ex = soundsLikeFunc(this.currentExercise, true);
@@ -77484,76 +77559,20 @@ var ExerciseGenerator = function ExerciseGenerator(soundsLikeFunc) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rhythmUtilities__ = __webpack_require__(210);
 var Fraction = __webpack_require__(7);
+
+
 
 var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
 
-    this.generate_playback_durations = function (values, get_val) {
-
-        // Negativna trajanja pomenijo pavze
-
-        var nextHasTie = function nextHasTie(position) {
-            return values.length > position + 1 && values[position + 1].tie;
-        };
-        var nextIsRest = function nextIsRest(position) {
-            return values.length > position + 1 && values[position + 1].type == 'r';
-        };
-        var sumTiedDurations = function sumTiedDurations(cursorPosition) {
-
-            var duration = values[cursorPosition].duration;
-            var numTies = 0;
-            var pos = cursorPosition;
-
-            while (nextHasTie(pos) && !nextIsRest(pos)) {
-                duration = duration.add(values[pos + 1].duration);
-                numTies++;pos++;
-            }
-            return { duration: duration, skips: numTies };
-        };
-
-        var realDurations = [];
-
-        var skipN = 0;
-        for (var noteIndex = 0; noteIndex < values.length; noteIndex++) {
-
-            if (skipN > 0) {
-                skipN--;continue;
-            }
-
-            var note = values[noteIndex];
-
-            if (note.type != "r") {
-                var vals = sumTiedDurations(noteIndex);
-                skipN = vals.skips;
-
-                if (!get_val) realDurations.push(vals.duration);else realDurations.push(vals.duration.toFraction());
-            } else {
-
-                if (!get_val) realDurations.push(note.duration.mul(-1));else realDurations.push(note.duration.mul(-1).toFraction());
-            }
-        }
-
-        // if(get_val){
-        //     console.log(realDurations);
-        // }else{
-        //     console.log(this.get_duration_values(realDurations));
-        // }
-
-        return realDurations;
-    };
-
-    this.BPM = 60;
+    this.BPM = 120;
 
     this.channel = 0;
-
-    var outside = this;
-
     this.intensity = 127;
     this.pitch = [60];
 
     this.currentlyLoaded = "";
-    this.percentPlayed = 0;
-
     this.playing = false;
     this.playbackQueue = [];
     this.loaded = false;
@@ -77563,13 +77582,10 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
 
     this.bar_info = null;
 
-    this.countIn = false;
-
     this.countInPlayback = null;
 
-    // This is an object, so the changes of property values can be tracked.
-    this.throttleInfo = {
-        throttle: 2
+    this.percentPlayed = function () {
+        return this.currentNoteID * 100 / this.playbackQueue.length;
     };
 
     this.playNote = function (endCallback, noteCallback) {
@@ -77656,35 +77672,6 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
         });
     };
 
-    this.saveState = function () {
-
-        var m = {
-            currentlyLoaded: _.clone(outside.currentlyLoaded),
-            percentPlayed: _.clone(outside.percentPlayed),
-            playing: _.clone(outside.playing),
-            playbackQueue: _.cloneDeep(outside.playbackQueue),
-            loaded: _.clone(outside.loaded),
-            currentNoteID: _.clone(outside.currentNoteID),
-            currentTimeout: _.clone(outside.currentTimeout),
-            currentPlaybackTime: _.clone(outside.currentPlaybackTime),
-            countIn: _.clone(outside.countIn)
-        };
-        return m;
-    };
-
-    this.restoreState = function (m) {
-
-        outside.currentlyLoaded = m.currentlyLoaded;
-        outside.percentPlayed = m.percentPlayed;
-        outside.playing = m.playing;
-        outside.playbackQueue = m.playbackQueue;
-        outside.loaded = m.loaded;
-        outside.currentNoteID = m.currentNoteID;
-        outside.currentTimeout = m.currentTimeout;
-        outside.currentPlaybackTime = m.currentPlaybackTime;
-        outside.countIn = m.countIn;
-    };
-
     this.resume = function (endCallback, noteCallback) {
 
         if (!this.loaded) {
@@ -77729,7 +77716,7 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
             }
         }
 
-        this.playbackQueue = this.generate_playback_durations(values);
+        this.playbackQueue = __WEBPACK_IMPORTED_MODULE_0__rhythmUtilities__["a" /* default */].generate_playback_durations(values);
         this.loaded = true;
     };
 
@@ -77755,9 +77742,17 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
 
     this.stop = function () {
 
+        this.currentlyLoaded = "";
         this.playing = false;
-        this.loaded = false;
         this.playbackQueue = [];
+        this.loaded = false;
+        this.currentNoteID = null;
+        this.currentPlaybackTime = 0;
+
+        if (this.currentTimeout) {
+            clearTimeout(this.currentTimeout);
+        }
+        this.currentTimeout = null;
     };
 };
 
@@ -83326,6 +83321,69 @@ function handleError(error) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+var utilities = {
+
+    generate_playback_durations: function generate_playback_durations(values, get_val) {
+
+        // Negativna trajanja pomenijo pavze
+
+        var nextHasTie = function nextHasTie(position) {
+            return values.length > position + 1 && values[position + 1].tie;
+        };
+        var nextIsRest = function nextIsRest(position) {
+            return values.length > position + 1 && values[position + 1].type == 'r';
+        };
+        var sumTiedDurations = function sumTiedDurations(cursorPosition) {
+
+            var duration = values[cursorPosition].duration;
+            var numTies = 0;
+            var pos = cursorPosition;
+
+            while (nextHasTie(pos) && !nextIsRest(pos)) {
+                duration = duration.add(values[pos + 1].duration);
+                numTies++;pos++;
+            }
+            return { duration: duration, skips: numTies };
+        };
+
+        var realDurations = [];
+
+        var skipN = 0;
+        for (var noteIndex = 0; noteIndex < values.length; noteIndex++) {
+
+            if (skipN > 0) {
+                skipN--;continue;
+            }
+
+            var note = values[noteIndex];
+
+            if (note.type != "r") {
+                var vals = sumTiedDurations(noteIndex);
+                skipN = vals.skips;
+
+                if (!get_val) realDurations.push(vals.duration);else realDurations.push(vals.duration.toFraction());
+            } else {
+
+                if (!get_val) realDurations.push(note.duration.mul(-1));else realDurations.push(note.duration.mul(-1).toFraction());
+            }
+        }
+
+        return realDurations;
+    }
+
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (utilities);
 
 /***/ })
 /******/ ]);

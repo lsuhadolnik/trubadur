@@ -1,6 +1,8 @@
 var Fraction = require("fraction.js");
 
-var ExerciseGenerator = function(soundsLikeFunc){
+import RhythmUtilities from './rhythmUtilities';
+
+var ExerciseGenerator = function(){
 
     let examples = [
         [
@@ -68,6 +70,8 @@ var ExerciseGenerator = function(soundsLikeFunc){
     this.generate();
 
     this.check = function(value){
+
+        var soundsLikeFunc = RhythmUtilities.generate_playback_durations;
 
         // Return string fractions
         let ex = soundsLikeFunc(this.currentExercise, true);

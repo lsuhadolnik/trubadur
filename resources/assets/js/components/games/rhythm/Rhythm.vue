@@ -87,7 +87,7 @@ export default {
 
             errorMessage: "",
 
-            generator: new ExerciseGenerator(this.generate_playback_durations),
+            generator: new ExerciseGenerator(),
             playback: new RhythmPlaybackEngine(this.bar),
         }
     },
@@ -103,6 +103,11 @@ export default {
                 this.play(event);
             }
             else{
+
+                // Invalidate playback cache
+                // Pismo, dobr se sliši :D
+                this.playback.stop();
+
                 this.notes.handle_button(event)
             }
     
@@ -130,13 +135,13 @@ export default {
 
                 if(event.what == "user"){
 
-                    this.playback.load(this.notes.notes);
+                    this.playback.load(this.notes.notes, "user");
                     this.playback.play();
 
                 }
                 else if(event.what == "exercise"){
 
-                    this.playback.load(this.generator.currentExercise);
+                    this.playback.load(this.generator.currentExercise, "exercise");
                     this.playback.play(); 
                 }
 

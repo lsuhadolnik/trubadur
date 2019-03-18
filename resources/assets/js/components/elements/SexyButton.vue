@@ -4,6 +4,7 @@
             {{text}}
             <slot></slot>
         </div>
+        <div class="button__hollow button__percentIndicator" v-bind:style="{ width: percents + '%' }">&nbsp;</div>
         <div class="button__full" :class="{
             'button__green':color=='green', 
             'button__orange':color=='orange', 
@@ -88,6 +89,12 @@
     width         : 100%;
     height        : 100%;
     border-radius : 6px;
+}
+
+.button__percentIndicator{
+    background: rgba(0,0,0,0.2);
+    width: 0;
+    border: transparent;
 }
 
 .button__green{
@@ -175,6 +182,11 @@ export default {
         customClass: stringProp(false),
         color: stringProp(false),
         hidden: booleanProp(false),
+        percents: {
+            type: Number,
+            required: false,
+            default: 0
+        },
         cols: {
             type: Number,
             required: false,
