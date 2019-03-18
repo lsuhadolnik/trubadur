@@ -50250,6 +50250,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__exerciseGenerator__ = __webpack_require__(146);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__rhythmPlaybackEngine__ = __webpack_require__(147);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vuex__ = __webpack_require__(4);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -50338,7 +50340,7 @@ var Fraction = __webpack_require__(7);
             errorMessage: "",
 
             generator: new __WEBPACK_IMPORTED_MODULE_6__exerciseGenerator__["a" /* default */](this.generate_playback_durations),
-            playback: new __WEBPACK_IMPORTED_MODULE_7__rhythmPlaybackEngine__["a" /* default */]()
+            playback: new __WEBPACK_IMPORTED_MODULE_7__rhythmPlaybackEngine__["a" /* default */](this.bar)
         };
     },
 
@@ -50348,37 +50350,40 @@ var Fraction = __webpack_require__(7);
 
             if (event.type == "check") {
                 this.generator.check(this.notes.notes);
-            } else if (event.type == "play_user") {
-                this.play_user(event);
-            } else if (event.type == "play_exercise") {
-                this.play_exercise(event);
+            } else if (event.type == "playback") {
+                this.play(event);
             } else {
                 this.notes.handle_button(event);
             }
         },
-        play_exercise: function play_exercise(event) {
-            var throttle = 2.6;
-            if (event && event.throttle) {
-                throttle = event.throttle;
+        play: function play(event) {
+
+            console.log("GOT EVENT: " + JSON.stringify(event));
+
+            if (event.action == "resume") {
+
+                //alert("Called resume");
+
+                this.playback.play();
             }
-            //this.playback(this.generator.currentExercise, throttle);
 
-            this.playback.load(this.generator.currentExercise);
-            this.playback.play();
-        },
-        play_user: function play_user(event) {
-            //this.playback(this.notes.notes, event.throttle);
-            this.playback.load(this.notes.notes);
-            this.playback.play();
-        },
-        get_duration_values: function get_duration_values(durations) {
+            if (event.action == "pause") {
 
-            // DEBUG
-            var durationValues = [];
-            durations.forEach(function (f) {
-                durationValues.push(f.toFraction());
-            });
-            console.log(durationValues);
+                this.playback.pause();
+            }
+
+            if (event.action == "replay") {
+
+                if (event.what == "user") {
+
+                    this.playback.load(this.notes.notes);
+                    this.playback.play();
+                } else if (event.what == "exercise") {
+
+                    this.playback.load(this.generator.currentExercise);
+                    this.playback.play();
+                }
+            }
         }
     },
 
@@ -50387,12 +50392,17 @@ var Fraction = __webpack_require__(7);
 
         this.notes = new __WEBPACK_IMPORTED_MODULE_5__noteStore__["a" /* default */](this.bar, this.cursor, this.$refs.staff_view.render, this.info);
 
-        var instruments = {
+        var instruments = _defineProperty({
             piano: {
                 channel: 0,
-                soundfont: 'acoustic_grand_piano'
+                soundfont: 'acoustic_grand_piano',
+                colume: 127
             }
-        };
+        }, "piano", {
+            channel: 1,
+            soundfont: 'xylophone',
+            volume: 200
+        });
 
         MIDI.loadPlugin({
             soundfontUrl: '/soundfonts/',
@@ -50401,14 +50411,16 @@ var Fraction = __webpack_require__(7);
             onsuccess: function onsuccess() {
                 for (var name in instruments) {
                     var instrument = instruments[name];
-                    MIDI.setVolume(instrument.channel, 127);
+                    MIDI.setVolume(instrument.channel, instrument.volume);
                     MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
                 }
 
                 // Play initial exercise
-                _this.play_exercise();
+                _this.play({ type: "playback", action: "replay", what: "exercise" });
             }
         });
+
+        this.playback.bar_info = this.bar;
     }
 });
 
@@ -50447,7 +50459,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 6px;\n  left: 6px;\n  width: 100%;\n  height: 100%;\n  border-radius: 6px;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n", ""]);
+exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 6px;\n  left: 6px;\n  width: 100%;\n  height: 100%;\n  border-radius: 6px;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n", ""]);
 
 // exports
 
@@ -50573,11 +50585,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+
+    computed: {
+
+        theClass: function theClass() {
+            var k = "";
+
+            if (this.disable) {
+                k += 'button--disabled ';
+            }
+
+            if (this.hidden) {
+                k += 'button__hidden';
+            }
+
+            if (this.customClass != null) {
+                k += ' ' + this.customClass;
+            }
+
+            if (this.cols) {
+                switch (this.cols) {
+                    case 1:
+                        k += " button_1_col";
+                        break;
+
+                    case 2:
+                        k += " button_2_col";
+                        break;
+
+                }
+            }
+
+            return k;
+        }
+
+    },
 
     props: {
         text: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["e" /* stringProp */])(false),
@@ -50601,35 +50656,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "button",
-      class: { "button--disabled": _vm.disable, button__hidden: _vm.hidden }
-    },
-    [
-      _c(
-        "div",
-        { class: ["button__hollow", _vm.customClass] },
-        [
-          _vm._v("\n        " + _vm._s(_vm.text) + "\n        "),
-          _vm._t("default")
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("div", {
-        staticClass: "button__full",
-        class: {
-          button__green: _vm.color == "green",
-          button__orange: _vm.color == "orange",
-          button__red: _vm.color == "red",
-          button__cabaret: _vm.color == "cabaret",
-          button__sunglow: _vm.color == "sunglow"
-        }
-      })
-    ]
-  )
+  return _c("div", { staticClass: "button", class: _vm.theClass }, [
+    _c(
+      "div",
+      { class: ["button__hollow", _vm.customClass] },
+      [
+        _vm._v("\n        " + _vm._s(_vm.text) + "\n        "),
+        _vm._t("default")
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("div", {
+      staticClass: "button__full",
+      class: {
+        button__green: _vm.color == "green",
+        button__orange: _vm.color == "orange",
+        button__red: _vm.color == "red",
+        button__cabaret: _vm.color == "cabaret",
+        button__sunglow: _vm.color == "sunglow"
+      }
+    })
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -76050,7 +76098,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  margin-bottom: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  width: 50px;\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_third .button[data-v-79470641] {\n  width: 64.5px;\n}\n.rhythm-game__keyboard-row_fourth .button[data-v-79470641] {\n  width: 50px;\n}\n.rhythm-game__keyboard-row_fourth .button[data-v-79470641]:last-child {\n  width: 170px;\n}\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n.rhythm-game__staff__second-row[data-v-79470641] {\n    margin-bottom: -27px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  margin-bottom: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_fourth .button[data-v-79470641] {\n  width: 140px;\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.rhythm-game__keyboard-row_third input[data-v-79470641] {\n  width: 80px;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n.rhythm-game__staff__second-row[data-v-79470641] {\n    margin-bottom: -27px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -76070,6 +76118,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_awesome_icons_question_circle__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_awesome_icons_user_o__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_awesome_icons_pause__ = __webpack_require__(143);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -76363,18 +76437,31 @@ var Fraction = __webpack_require__(7);
 
             this.key_callback();
         },
-        playback: function playback() {
+        play_user: function play_user() {
 
             this.key_callback({
-                type: 'play_user',
-                throttle: this.playback_throttle
+                type: 'playback',
+                action: 'replay',
+                what: 'user'
             });
         },
-        repeat_exercise: function repeat_exercise() {
-
+        play_exercise: function play_exercise() {
             this.key_callback({
-                type: 'play_exercise',
-                throttle: this.playback_throttle
+                type: 'playback',
+                action: 'replay',
+                what: 'exercise'
+            });
+        },
+        pause: function pause() {
+            this.key_callback({
+                type: 'playback',
+                action: 'pause'
+            });
+        },
+        resume: function resume() {
+            this.key_callback({
+                type: 'playback',
+                action: 'resume'
             });
         },
         check: function check() {
@@ -76895,12 +76982,15 @@ var render = function() {
                 attrs: { color: "sunglow" },
                 nativeOn: {
                   click: function($event) {
-                    _vm.repeat_exercise()
+                    _vm.play_exercise()
                   }
                 }
               },
-              [_c("icon", { attrs: { name: "repeat" } })],
-              1
+              [
+                _c("div", { staticClass: "small-font-button" }, [
+                  _vm._v("Ponovi vajo")
+                ])
+              ]
             ),
             _vm._v(" "),
             _c(
@@ -76909,43 +76999,16 @@ var render = function() {
                 attrs: { color: "sunglow" },
                 nativeOn: {
                   click: function($event) {
-                    _vm.playback()
+                    _vm.play_user()
                   }
                 }
               },
               [
-                !_vm.playbackStatus.playing
-                  ? _c("icon", { attrs: { name: "play" } })
-                  : _c("icon", { attrs: { name: "pause" } })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("sexy-button", { attrs: { color: "sunglow" } }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.playback_throttle,
-                    expression: "playback_throttle"
-                  }
-                ],
-                attrs: {
-                  type: "range",
-                  min: "1",
-                  value: "2",
-                  max: "3",
-                  step: "0.2"
-                },
-                domProps: { value: _vm.playback_throttle },
-                on: {
-                  __r: function($event) {
-                    _vm.playback_throttle = $event.target.value
-                  }
-                }
-              })
-            ])
+                _c("div", { staticClass: "small-font-button" }, [
+                  _vm._v("Zaigraj vpisano")
+                ])
+              ]
+            )
           ],
           1
         ),
@@ -76974,9 +77037,81 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c("sexy-button", { attrs: { hidden: true } }),
+            !_vm.playbackStatus.playing && !_vm.playbackStatus.loaded
+              ? _c(
+                  "sexy-button",
+                  {
+                    attrs: { color: "cabaret" },
+                    nativeOn: {
+                      click: function($event) {
+                        _vm.resume()
+                      }
+                    }
+                  },
+                  [_c("icon", { attrs: { name: "play" } })],
+                  1
+                )
+              : _vm._e(),
             _vm._v(" "),
-            _c("sexy-button", { attrs: { hidden: true } }),
+            !_vm.playbackStatus.playing && _vm.playbackStatus.loaded
+              ? _c(
+                  "sexy-button",
+                  {
+                    attrs: { color: "cabaret" },
+                    nativeOn: {
+                      click: function($event) {
+                        _vm.resume()
+                      }
+                    }
+                  },
+                  [_c("icon", { attrs: { name: "repeat" } })],
+                  1
+                )
+              : _c(
+                  "sexy-button",
+                  {
+                    attrs: { color: "sunglow" },
+                    nativeOn: {
+                      click: function($event) {
+                        _vm.pause()
+                      }
+                    }
+                  },
+                  [_c("icon", { attrs: { name: "pause" } })],
+                  1
+                ),
+            _vm._v(" "),
+            _c(
+              "sexy-button",
+              {
+                attrs: { color: "cabaret", customClass: "wideButton", cols: 2 }
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.playback_throttle,
+                      expression: "playback_throttle"
+                    }
+                  ],
+                  attrs: {
+                    type: "range",
+                    min: "1",
+                    value: "2",
+                    max: "3",
+                    step: "0.2"
+                  },
+                  domProps: { value: _vm.playback_throttle },
+                  on: {
+                    __r: function($event) {
+                      _vm.playback_throttle = $event.target.value
+                    }
+                  }
+                })
+              ]
+            ),
             _vm._v(" "),
             _c(
               "sexy-button",
@@ -77406,8 +77541,15 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
         return realDurations;
     };
 
+    this.channel = 0;
+
+    var outside = this;
+
     this.intensity = 127;
-    this.pitch = 60;
+    this.pitch = [60];
+
+    this.currentlyLoaded = "";
+    this.percentPlayed = 0;
 
     this.playing = false;
     this.playbackQueue = [];
@@ -77416,16 +77558,26 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
     this.currentTimeout = null;
     this.currentPlaybackTime = 0;
 
+    this.bar_info = null;
+
+    this.countIn = false;
+
+    this.countInPlayback = null;
+
     // This is an object, so the changes of property values can be tracked.
     this.throttleInfo = {
         throttle: 2
     };
 
-    this.playNote = function () {
+    this.playNote = function (endCallback, noteCallback) {
 
         var sustain = 1 / 32;
 
         if (!this.playing || this.playbackQueue == null || this.playbackQueue.length == 0 || this.loaded == false || this.currentNoteID == null || this.currentNoteID >= this.playbackQueue.length) {
+
+            if (endCallback) {
+                endCallback();
+            }
 
             this.playing = false;
             this.currentNoteID = 0;
@@ -77440,8 +77592,14 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
 
             actualDuration = dur.valueOf();
 
-            MIDI.noteOn(0, this.pitch, this.intensity, 0);
-            MIDI.noteOff(0, this.pitch, actualDuration);
+            // WTF?! Hahaha :D
+            // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
+            // Za ostale primere je približno neuporabno
+            // S tem sem hotel povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
+            var sPitch = this.pitch[Math.min(this.pitch.length - 1, this.currentNoteID - 1)];
+
+            MIDI.noteOn(this.channel, sPitch, this.intensity, 0);
+            MIDI.noteOff(this.channel, sPitch, actualDuration);
         } else {
             actualDuration = -dur.valueOf();
         }
@@ -77453,12 +77611,71 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
         if (this.playing) {
             this.currentTimeout = setTimeout(function () {
                 console.log("I'm playing right now and you cant stop me.");
-                outside.playNote();
+
+                if (noteCallback) {
+                    noteCallback();
+                }
+
+                outside.playNote(endCallback, noteCallback);
             }, milliseconds);
         }
     };
 
+    this.playCountIn = function (then) {
+
+        if (!this.countInPlayback) {
+            this.countInPlayback = new RhythmPlaybackEngine();
+            this.countInPlayback.channel = 1;
+            this.countInPlayback.pitch = [93, 86];
+            this.countInPlayback.load(this.getCountInNotes());
+        }
+
+        this.countInPlayback.resume(function () {
+            //Done
+            if (then) {
+                then();
+            }
+        });
+    };
+
     this.play = function () {
+
+        var o2 = this;
+        this.playCountIn(function () {
+            o2.resume();
+        });
+    };
+
+    this.saveState = function () {
+
+        var m = {
+            currentlyLoaded: _.clone(outside.currentlyLoaded),
+            percentPlayed: _.clone(outside.percentPlayed),
+            playing: _.clone(outside.playing),
+            playbackQueue: _.cloneDeep(outside.playbackQueue),
+            loaded: _.clone(outside.loaded),
+            currentNoteID: _.clone(outside.currentNoteID),
+            currentTimeout: _.clone(outside.currentTimeout),
+            currentPlaybackTime: _.clone(outside.currentPlaybackTime),
+            countIn: _.clone(outside.countIn)
+        };
+        return m;
+    };
+
+    this.restoreState = function (m) {
+
+        outside.currentlyLoaded = m.currentlyLoaded;
+        outside.percentPlayed = m.percentPlayed;
+        outside.playing = m.playing;
+        outside.playbackQueue = m.playbackQueue;
+        outside.loaded = m.loaded;
+        outside.currentNoteID = m.currentNoteID;
+        outside.currentTimeout = m.currentTimeout;
+        outside.currentPlaybackTime = m.currentPlaybackTime;
+        outside.countIn = m.countIn;
+    };
+
+    this.resume = function (endCallback, noteCallback) {
 
         if (!this.loaded) {
             alert("No notes to play. Before the playback, you must call the load() method.");
@@ -77470,7 +77687,7 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
         }
 
         this.playing = true;
-        this.playNote();
+        this.playNote(endCallback, noteCallback);
 
         /**
          * Note so naložene v polju playbackQueue
@@ -77482,7 +77699,7 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
          */
     };
 
-    this.load = function (values) {
+    this.load = function (values, playbackName) {
 
         if (this.playing) {
             this.playing = false;
@@ -77490,17 +77707,38 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
         }
 
         this.playing = false;
-        this.currentNoteID = 0;
         this.currentTimeout = null;
         this.currentNoteID = 0;
         this.currentPlaybackTime = 0;
+
+        if (playbackName) {
+            if (playbackName == "countin") {
+                this.countIn = true;
+            } else {
+                this.currentlyLoaded = playbackName;
+            }
+        }
 
         this.playbackQueue = this.generate_playback_durations(values);
         this.loaded = true;
     };
 
+    this.getCountInNotes = function () {
+
+        var countInNotes = [];
+        for (var i = 0; i < this.bar_info.num_beats; i++) {
+            countInNotes.push({
+                type: 'n',
+                duration: new Fraction(1, this.bar_info.base_note)
+            });
+        }
+
+        return countInNotes;
+    };
+
     this.pause = function () {
 
+        //this.currentNoteID += 1;
         clearTimeout(this.currentTimeout);
         this.playing = false;
     };
@@ -77510,28 +77748,6 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
         this.playing = false;
         this.loaded = false;
         this.playbackQueue = [];
-    };
-
-    this.playback = function (values, throttle) {
-
-        var currentTime = 0;
-        var durations = this.generate_playback_durations(values);
-
-        var intensity = 127;
-
-        for (var idx_duration = 0; idx_duration < durations.length; idx_duration++) {
-
-            var dur = durations[idx_duration];
-
-            if (dur > 0) {
-                MIDI.noteOn(0, 60, intensity, currentTime);
-
-                currentTime += dur.valueOf() * throttle;
-                MIDI.noteOff(0, 60, currentTime);
-            } else {
-                currentTime += -dur.valueOf() * throttle;
-            }
-        }
     };
 };
 

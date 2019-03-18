@@ -88,7 +88,7 @@ export default {
             errorMessage: "",
 
             generator: new ExerciseGenerator(this.generate_playback_durations),
-            playback: new RhythmPlaybackEngine()
+            playback: new RhythmPlaybackEngine(this.bar),
         }
     },
     
@@ -99,11 +99,8 @@ export default {
             if(event.type == "check"){
                 this.generator.check(this.notes.notes);
             }
-            else if(event.type == "play_user"){
-                this.play_user(event);
-            }
-            else if(event.type == "play_exercise"){
-                this.play_exercise(event);
+            else if(event.type == "playback"){
+                this.play(event);
             }
             else{
                 this.notes.handle_button(event)
@@ -111,29 +108,39 @@ export default {
     
         },
 
-        play_exercise(event) {
-            let throttle = 2.6;
-            if(event && event.throttle){
-                throttle = event.throttle;
-            }
-            //this.playback(this.generator.currentExercise, throttle);
-
-            this.playback.load(this.generator.currentExercise);
-            this.playback.play(); 
-        },
-
-        play_user(event) {
-            //this.playback(this.notes.notes, event.throttle);
-            this.playback.load(this.notes.notes);
-            this.playback.play(); 
-        },
-
-        get_duration_values(durations){
+        play(event){
             
-            // DEBUG
-            let durationValues = [];
-            durations.forEach((f) => { durationValues.push(f.toFraction()) });
-            console.log(durationValues);
+            console.log("GOT EVENT: "+JSON.stringify(event));
+
+            if(event.action == "resume"){
+
+                //alert("Called resume");
+
+                this.playback.play();
+
+            }
+
+            if(event.action == "pause"){
+
+                this.playback.pause();
+
+            }
+
+            if(event.action == "replay"){
+
+                if(event.what == "user"){
+
+                    this.playback.load(this.notes.notes);
+                    this.playback.play();
+
+                }
+                else if(event.what == "exercise"){
+
+                    this.playback.load(this.generator.currentExercise);
+                    this.playback.play(); 
+                }
+
+            }
 
         },
 
@@ -151,7 +158,13 @@ export default {
         let instruments = {
             piano: {
                 channel: 0,
-                soundfont: 'acoustic_grand_piano'
+                soundfont: 'acoustic_grand_piano',
+                colume: 127
+            },
+            piano: {
+                channel: 1,
+                soundfont: 'xylophone',
+                volume: 200
             }   
         };
 
@@ -162,14 +175,16 @@ export default {
             onsuccess: () => {
                 for (var name in instruments) {
                     let instrument = instruments[name];
-                    MIDI.setVolume(instrument.channel, 127);
+                    MIDI.setVolume(instrument.channel, instrument.volume);
                     MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
                 }
 
                 // Play initial exercise
-                this.play_exercise();
+                this.play({type:"playback", action: "replay", what: "exercise"});
             }
         });
+
+        this.playback.bar_info = this.bar;
         
 
     },

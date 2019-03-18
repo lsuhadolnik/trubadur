@@ -45,23 +45,37 @@
                     </div>
                 </div>
                 <div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_fourth show-normal">
-                    <sexy-button     color="sunglow" @click.native="repeat_exercise()">
-                        <icon name="repeat" />
+                    
+                    <sexy-button color="sunglow" @click.native="play_exercise()">
+                        <div class="small-font-button">Ponovi vajo</div>
                     </sexy-button>
-                    <sexy-button color="sunglow" @click.native="playback()">
-                        <icon name="play"  v-if="!playbackStatus.playing" />
-                        <icon name="pause" v-else />
+                    
+                    <sexy-button color="sunglow" @click.native="play_user()">
+                        <div class="small-font-button">Zaigraj vpisano</div>
                     </sexy-button>
-                    <sexy-button color="sunglow" >
-                        <input type="range" min="1"  value="2" max="3" step="0.2" v-model="playback_throttle">
-                    </sexy-button>
+
+                    
                 </div>
                 <div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal">
                     <sexy-button color="cabaret"   @click.native="delete_note()"  >
                         <img src="/images/backspace.svg" width="30" />
                     </sexy-button>
-                    <sexy-button :hidden="true" />
-                    <sexy-button :hidden="true" />
+                    <!--<sexy-button :hidden="true" />
+                    <sexy-button :hidden="true" />-->
+                    <sexy-button color="cabaret" @click.native="resume()" v-if="!playbackStatus.playing && !playbackStatus.loaded">
+                        <icon name="play" />
+                    </sexy-button>
+
+                    <sexy-button color="cabaret" @click.native="resume()" v-if="!playbackStatus.playing && playbackStatus.loaded">
+                        <icon name="repeat" />
+                    </sexy-button>
+
+                    <sexy-button v-else color="sunglow" @click.native="pause()">
+                        <icon name="pause" />
+                    </sexy-button>
+                    <sexy-button color="cabaret" customClass="wideButton" :cols="2">
+                        <input type="range" min="1"  value="2" max="3" step="0.2" v-model="playback_throttle">
+                    </sexy-button>
                     <sexy-button color="cabaret" @click.native="check()" >
                         <icon name="question-circle" />
                     </sexy-button>
@@ -131,7 +145,7 @@
     }
 
     .rhythm-game__keyboard-row .button{
-        width: 50px;
+        //width: 50px;
         font-family: MusiSync;
         margin-left: 4px;
         font-size: 40px;
@@ -157,16 +171,28 @@
     }
 
     .rhythm-game__keyboard-row_third .button{
-        width: 64.5px;
+        //width: 64.5px; // A little wider buttons
+
     }
 
     .rhythm-game__keyboard-row_fourth .button{
-        width: 50px;
+        width: 140px;
+        font-family: inherit;
     }
 
-    .rhythm-game__keyboard-row_fourth .button:last-child{
-        width: 170px;
+    .rhythm-game__keyboard-row_fourth .small-font-button{
+        font-size: 15px;
     }
+
+    .rhythm-game__keyboard-row_third input{
+        width: 80px;
+    }
+
+
+    // Wide last button
+    /*.rhythm-game__keyboard-row_fourth .button:last-child{
+        width: 170px;
+    }*/
     
     @media only screen 
   and (max-device-height: 600px)
@@ -316,20 +342,35 @@ export default {
 
         },
 
-        playback(){
+        play_user(){
 
             this.key_callback({
-                type: 'play_user',
-                throttle: this.playback_throttle
+                type: 'playback',
+                action: 'replay',
+                what: 'user'
             });
 
         },
 
-        repeat_exercise() {
-
+        play_exercise() {
             this.key_callback({
-                type: 'play_exercise',
-                throttle: this.playback_throttle
+                type: 'playback',
+                action: 'replay',
+                what: 'exercise'
+            });
+        },
+
+        pause() {
+            this.key_callback({
+                type: 'playback',
+                action: 'pause',
+            });
+        },
+
+        resume() {
+            this.key_callback({
+                type: 'playback',
+                action: 'resume'
             });
         },
 

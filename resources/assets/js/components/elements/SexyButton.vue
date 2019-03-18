@@ -1,5 +1,5 @@
 <template>
-    <div class="button" :class="{ 'button--disabled': disable, 'button__hidden':hidden}">
+    <div class="button" :class="theClass">
         <div :class="['button__hollow', customClass]">
             {{text}}
             <slot></slot>
@@ -110,6 +110,14 @@
     background-color: $sunglow;
 }
 
+.button_1_col{
+    width: 50px;
+}
+
+.button_2_col{
+    width: 110px;
+}
+
 </style>
 
 <script>
@@ -117,6 +125,41 @@
 import { stringProp, booleanProp } from '../../utils/propValidators'
 
 export default {
+
+    computed:{
+
+        theClass: function(){
+            var k = "";
+
+            if(this.disable){
+                k += 'button--disabled ';
+            }
+
+            if(this.hidden){
+                k += 'button__hidden';
+            }
+
+            if(this.customClass != null){
+                k+= ' '+ this.customClass;
+            }
+
+            if(this.cols){
+                switch(this.cols){
+                    case 1:
+                        k += " button_1_col";
+                    break;
+
+                    case 2:
+                        k += " button_2_col";
+                    break;
+
+                }
+            }
+
+            return k;
+        }
+
+    },
 
     props: {
         text: stringProp(false),

@@ -66,9 +66,15 @@ var RhythmPlaybackEngine = function(){
 
     };
 
-    this.intensity = 127;
-    this.pitch = 60;
+    this.channel = 0;
 
+    var outside = this;
+
+    this.intensity = 127;
+    this.pitch = [60];
+
+    this.currentlyLoaded = "";
+    this.percentPlayed = 0;
 
     this.playing = false;
     this.playbackQueue = [];
@@ -76,6 +82,12 @@ var RhythmPlaybackEngine = function(){
     this.currentNoteID = null;
     this.currentTimeout = null;
     this.currentPlaybackTime = 0;
+
+    this.bar_info = null;
+
+    this.countIn = false;
+
+    this.countInPlayback = null;
     
     
     // This is an object, so the changes of property values can be tracked.
@@ -83,7 +95,7 @@ var RhythmPlaybackEngine = function(){
         throttle: 2
     };
 
-    this.playNote = function(){
+    this.playNote = function(endCallback, noteCallback){
 
         let sustain = 1/32;
 
@@ -94,6 +106,10 @@ var RhythmPlaybackEngine = function(){
             || this.currentNoteID == null
             || this.currentNoteID >= this.playbackQueue.length){
             
+                if(endCallback){
+                    endCallback();
+                }
+                    
                 this.playing = false;
                 this.currentNoteID = 0;
                 return;
@@ -108,8 +124,14 @@ var RhythmPlaybackEngine = function(){
 
             actualDuration = dur.valueOf();
 
-            MIDI.noteOn(0, this.pitch, this.intensity, 0);
-            MIDI.noteOff(0, this.pitch, actualDuration);
+            // WTF?! Hahaha :D
+            // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
+            // Za ostale primere je približno neuporabno
+            // S tem sem hotel povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
+            let sPitch = this.pitch[Math.min(this.pitch.length - 1, this.currentNoteID - 1)];
+
+            MIDI.noteOn(this.channel, sPitch, this.intensity, 0);
+            MIDI.noteOff(this.channel, sPitch, actualDuration);
 
         }else {
             actualDuration = -dur.valueOf();
@@ -122,13 +144,77 @@ var RhythmPlaybackEngine = function(){
         if(this.playing) {
             this.currentTimeout = setTimeout(function() {
                 console.log("I'm playing right now and you cant stop me.");
-                outside.playNote();
+                
+                if(noteCallback){
+                    noteCallback();
+                }
+                
+                outside.playNote(endCallback, noteCallback);
             }, milliseconds);
         }
             
     }
 
+    this.playCountIn = function(then){
+
+        if(!this.countInPlayback){
+            this.countInPlayback = new RhythmPlaybackEngine();
+            this.countInPlayback.channel = 1;
+            this.countInPlayback.pitch = [93, 86];
+            this.countInPlayback.load(this.getCountInNotes());
+        }
+
+        this.countInPlayback.resume(function(){
+            //Done
+            if(then){
+                then();
+            }
+        });
+
+    }
+
     this.play = function(){
+
+        var o2 = this;
+        this.playCountIn(function() {
+            o2.resume();
+        });
+
+        
+    }
+
+    this.saveState = function(){
+
+        var m = {
+            currentlyLoaded: _.clone(outside.currentlyLoaded),
+            percentPlayed: _.clone(outside.percentPlayed),
+            playing: _.clone(outside.playing),
+            playbackQueue: _.cloneDeep(outside.playbackQueue),
+            loaded: _.clone(outside.loaded),
+            currentNoteID: _.clone(outside.currentNoteID),
+            currentTimeout: _.clone(outside.currentTimeout),
+            currentPlaybackTime: _.clone(outside.currentPlaybackTime),
+            countIn: _.clone(outside.countIn)
+        };
+        return m;
+
+    }
+
+    this.restoreState = function(m){
+
+        outside.currentlyLoaded = m.currentlyLoaded;
+        outside.percentPlayed = m.percentPlayed;
+        outside.playing = m.playing;
+        outside.playbackQueue = m.playbackQueue;
+        outside.loaded = m.loaded;
+        outside.currentNoteID = m.currentNoteID;
+        outside.currentTimeout = m.currentTimeout;
+        outside.currentPlaybackTime = m.currentPlaybackTime;
+        outside.countIn = m.countIn;
+
+    }
+
+    this.resume = function(endCallback, noteCallback){
 
         if(!this.loaded){
             alert("No notes to play. Before the playback, you must call the load() method.");
@@ -139,8 +225,9 @@ var RhythmPlaybackEngine = function(){
             return;
         }
 
+
         this.playing = true;
-        this.playNote();
+        this.playNote(endCallback, noteCallback);
 
         /**
          * Note so naložene v polju playbackQueue
@@ -153,7 +240,7 @@ var RhythmPlaybackEngine = function(){
 
     }
 
-    this.load = function(values){
+    this.load = function(values, playbackName){
 
         if(this.playing){
             this.playing = false;
@@ -161,20 +248,42 @@ var RhythmPlaybackEngine = function(){
         }
 
         this.playing = false;
-        this.currentNoteID = 0;
         this.currentTimeout = null;
         this.currentNoteID = 0;
         this.currentPlaybackTime = 0;
+
+        if(playbackName){
+            if(playbackName == "countin"){
+                this.countIn = true
+            }else{
+                this.currentlyLoaded = playbackName;
+            }
+            
+        }
 
         this.playbackQueue = this.generate_playback_durations(values);
         this.loaded = true;
     }
 
+    this.getCountInNotes = function(){
+
+        var countInNotes = [];
+        for(var i = 0; i < this.bar_info.num_beats; i++){
+            countInNotes.push({
+                type: 'n',
+                duration: new Fraction(1, this.bar_info.base_note)
+            });
+        }
+
+        return countInNotes;
+    }
+
     this.pause = function(){
 
+        //this.currentNoteID += 1;
         clearTimeout(this.currentTimeout);
         this.playing = false;
-
+        
     }
 
     this.stop = function() {
@@ -182,31 +291,6 @@ var RhythmPlaybackEngine = function(){
         this.playing = false;
         this.loaded = false;
         this.playbackQueue = [];
-
-    }
-
-    this.playback = function(values, throttle) {
-        
-        var currentTime = 0;
-        let durations = this.generate_playback_durations(values);
-
-        let intensity = 127;
-
-        for(var idx_duration = 0; idx_duration < durations.length; idx_duration++){
-
-            let dur = durations[idx_duration];
-
-            if(dur > 0)
-            {
-                MIDI.noteOn(0, 60, intensity, currentTime);
-                
-                currentTime += dur.valueOf() * throttle;
-                MIDI.noteOff(0, 60, currentTime);
-
-            }else {
-                currentTime += -dur.valueOf() * throttle;
-            }
-        }
 
     }
 
