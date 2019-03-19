@@ -82,7 +82,7 @@
                         </div>
                     </sexy-button>
                     <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="2">
-                        <input class="BPM-slider" type="range" min="60"  value="120" max="240" step="10" v-model="playbackStatus.BPM">
+                        <input class="BPM-slider" type="range" min="50" max="240" step="10" v-model="playbackStatus.BPM">
                     </sexy-button>
                     <sexy-button color="cabaret" @click.native="check()" >
                         <icon name="question-circle" />

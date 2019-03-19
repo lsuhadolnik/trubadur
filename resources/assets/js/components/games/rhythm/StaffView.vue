@@ -272,20 +272,10 @@ export default {
             var formatter = new VF.Formatter();
             formatter.joinVoices([voice]);
             formatter.format([voice], maxNotesWidth);
-            //formatter.
-
-            //voice.setContext(context).draw();
-
-            // Render voice
-            // beams.forEach(function(b) {b.setContext(context).draw()})
+            
 
             voice.draw(context, stave);
             
-            // Generate beams
-            /*var beams = VF.Beam.generateBeams(renderQueue,  {
-                beam_rests: true,
-                show_stemlets: true
-            });*/
             // Draw the beams:
             beams.forEach(function(beam){
                 beam.setContext(context).draw();
@@ -489,10 +479,17 @@ export default {
                     }
                 );
 
-    	        // Handle dots
-                if(notes[i].dot)
-                    newNote.addDot(0); // enako je tudi newNote.addDotToAll()
+                // Omogoči stiliziranje not
+                // V zapis lahko zdaj daš objekt style in noter recimo informacije o barvi...
+                if(notes[i].style){
+                    newNote.setStyle(notes[i].style);
+                }
 
+    	        // Handle dots
+                if(notes[i].dot){
+                    newNote.addDot(0); // enako je tudi newNote.addDotToAll()
+                }
+                
 
                 // Get the note the cursor will stick to
                 if(i + 1 == cursor.position){

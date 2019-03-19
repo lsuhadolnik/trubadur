@@ -137,16 +137,64 @@ var NoteStore = function(bar, cursor, render_function, info) {
         delete this.notes[i].tuplet_from;
         delete this.notes[i].tuplet_to;
 
+        // Add styling
+        this.notes[i].was_tuplet_end = true;
+        this.notes[i].style = {fillStyle: "blue", strokeStyle: "blue"};
+
         // And render the result
         this._call_render()
 
     },
 
+    this.clear_other_tuplet_snap_notes = function(pos){
+        for(var i = 0; i < this.notes.length; i++){
+            if(i != pos && this.notes[i].was_tuplet_end){
+                delete this.notes[i].style;
+                delete this.notes[i].was_tuplet_end;
+            }
+        }
+    }
+
+    this.check_if_there_were_any_tuplets_before = function(current_idx, max_dist){
+
+        var potentialTupletEnd = -99999999;
+        var potentialDist = Math.abs(potentialTupletEnd - current_idx) 
+
+        for(var i = 0; i < this.notes.length; i++){
+
+            var thisDist = Math.abs(i - current_idx)
+
+            if(this.notes[i].was_tuplet_end && thisDist <= max_dist && thisDist < potentialDist){
+                potentialTupletEnd = i;
+            }
+        }
+
+        if(potentialTupletEnd >= 0){
+            return potentialTupletEnd;
+        }
+
+        return -1;
+
+    }
+
     this.add_tuplet = function(event){
 
+        // Original cursor position
+        var thePosition = cursor.position;
+
+        // Stick to notes that were already tuplets
+        var newPosition = this.check_if_there_were_any_tuplets_before(cursor.position, 2);
+        if(newPosition >= 0){
+            this.clear_other_tuplet_snap_notes(newPosition);
+            thePosition = newPosition + 1;
+            delete this.notes[newPosition].style;
+            delete this.notes[newPosition].was_tuplet_end;
+        }
+
+        
         // Add tuplet to notes behind the cursor
 
-        if(this.notes[cursor.position - 1].in_tuplet){
+        if(this.notes[thePosition - 1].in_tuplet){
             alert("Ne morem dodati triole v triolo");
             return;
         }
@@ -156,7 +204,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
         // - Notes must fit exactly (watch out for the dots)
         let currentDuration = new Fraction(0);
         let toIndex = -1;
-        for(let i = cursor.position - 1; i >= 0; i--){
+        for(let i = thePosition - 1; i >= 0; i--){
             currentDuration = currentDuration.add(this.notes[i].duration);
             let value = currentDuration.compare(new Fraction(event.tuplet_type, bar.base_note))
             if(value == 0){
@@ -179,13 +227,13 @@ var NoteStore = function(bar, cursor, render_function, info) {
         // For those notes in the tuplet
         // - Change duration to (duration / tuplet_type)
         // - Add tuplet_from, tuplet_to
-        for(let i = toIndex; i < cursor.position; i++){
+        for(let i = toIndex; i < thePosition; i++){
             this.notes[i].duration = this.notes[i].duration.div(event.tuplet_type);
             this.notes[i].in_tuplet = true;
             this.notes[i].tuplet_type = event.tuplet_type;
         }
-        this.notes[cursor.position - 1].tuplet_from = toIndex;
-        this.notes[cursor.position - 1].tuplet_to = cursor.position;
+        this.notes[thePosition - 1].tuplet_from = toIndex;
+        this.notes[thePosition - 1].tuplet_to = thePosition;
 
         // And render the result
         this._call_render()
@@ -219,7 +267,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     this.add_note = function(event) {
 
-        let MAX_DURATION = info.staveCount;
+        //let MAX_DURATION = info.staveCount;
         
         if(!this._is_supported_length(event)){
             return;
@@ -264,10 +312,10 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     this.delete_note = function() {
         
-        // If you are at the beginning, you can't delete anything else
+        // If I'm are at the beginning, I can't delete anything else
         if(this.cursor.position == 0)
         {
-            // So you quit
+            // So I quit
             return;
         }
 
