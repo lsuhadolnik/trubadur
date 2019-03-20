@@ -5,6 +5,8 @@ import RhythmUtilities from './rhythmUtilities'
 var RhythmPlaybackEngine = function(){
 
     this.BPM = 120;
+    this.BPM_from = 50;
+    this.BPM_to = 240;
 
     this.channel = 0;
     this.intensity = 127;
@@ -69,7 +71,9 @@ var RhythmPlaybackEngine = function(){
             MIDI.noteOff(this.channel, sPitch, actualDuration);
 
         }else {
-            actualDuration = -dur.valueOf();
+            
+            // Copied code from up
+            actualDuration = -dur.valueOf() / (this.BPM / 60) * this.bar_info.num_beats;
         }
 
         let milliseconds = actualDuration * 1000;

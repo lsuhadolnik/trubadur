@@ -40,8 +40,8 @@
                         <sexy-button color="cabaret"   @click.native="delete_note()" >
                             <img src="/images/backspace.svg" width="30" />
                         </sexy-button>
-                        <sexy-button color="cabaret" @click.native="check()">
-                            <icon name="question-circle" />
+                        <sexy-button :color="checkButtonColor" @click.native="check()" >
+                            <icon :name="checkButtonIcon" />
                         </sexy-button>
                     </div>
                 </div>
@@ -70,11 +70,15 @@
                         </div>
                     </sexy-button>
                     <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="2">
-                        <input class="BPM-slider" type="range" min="50" max="240" step="10" v-model="playbackStatus.BPM">
+                        <input class="BPM-slider" type="range" :min="playbackStatus.BPM_from" :max="playbackStatus.BPM_to" step="10" v-model="playbackStatus.BPM">
                     </sexy-button>
-                    <sexy-button color="cabaret" @click.native="check()" >
-                        <icon name="question-circle" />
+                    
+                    <!-- check button -->
+                    <sexy-button :color="checkButtonColor" @click.native="check()" >
+                        <icon :name="checkButtonIcon" />
                     </sexy-button>
+
+
                 </div>
 
             </div>
@@ -236,6 +240,9 @@ import 'vue-awesome/icons/play'
 import 'vue-awesome/icons/question-circle'
 import 'vue-awesome/icons/user-o'
 import 'vue-awesome/icons/pause'
+import 'vue-awesome/icons/check'
+import 'vue-awesome/icons/angle-double-right'
+import 'vue-awesome/icons/times'
 
 var Fraction = require('fraction.js');
 
@@ -427,7 +434,7 @@ export default {
         };
     },
     props: [
-        'key_callback', 'cursor', 'playbackStatus'
+        'key_callback', 'cursor', 'playbackStatus', 'question'
     ],
     computed: {
         note_color: function(){
@@ -478,6 +485,22 @@ export default {
                 return 0;
             }
         },
+
+        checkButtonColor(){
+            if(this.question.check == "no") return "cabaret";
+            else if(this.question.check == "wrong") return "red";
+            else if(this.question.check == "correct") return "green";
+            else if(this.question.check == "next") return "sunglow";
+            return "cabaret";
+        },
+
+        checkButtonIcon(){
+            if(this.question.check == "no") return "question-circle";
+            else if(this.question.check == "wrong") return "times";
+            else if(this.question.check == "correct") return "check";
+            else if(this.question.check == "next") return "angle-double-right";
+            return "question-circle";
+        }
     }
 
 }

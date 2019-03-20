@@ -66,6 +66,15 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     }
 
+    this.clear = function(){
+        
+        this.notes = [];
+        this.cursor.position = 0;
+        
+        this._call_render();
+
+    }
+
     this.add_tie = function(){
         
         let n = this.cursor.position - 1;

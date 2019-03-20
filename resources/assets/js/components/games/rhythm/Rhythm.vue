@@ -19,7 +19,7 @@
 
             <StaffView ref="staff_view" :bar="bar" :cursor="cursor" />
             
-            <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" />
+            <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" :question="questionState" />
 
             <div class="error" v-show="errorMessage">{{errorMessage}}</div>
 
@@ -99,6 +99,11 @@ export default {
             isPractice: false,
             displayState: 'loading',
 
+            questionState: {
+                check: "no", // "no", "correct", "wrong", "next"
+                numChecks: 0,
+            },
+
             notes: null,
             bar: {
                 num_beats: 4,
@@ -122,7 +127,7 @@ export default {
         keyboard_click(event) {
 
             if(event.type == "check"){
-                this.generator.check(this.notes.notes);
+                this.check();
             }
             else if(event.type == "playback"){
                 this.play(event);
@@ -136,6 +141,67 @@ export default {
                 this.notes.handle_button(event)
             }
     
+        },
+
+        startGame() {
+
+            this.displayState = "ready";
+            this.nextQuestion();
+        },
+
+        nextQuestion(){
+
+            // Generate exercise
+            this.generator.generate();
+            this.bar.num_beats = this.generator.currentExerciseInfo.bar.num_beats;
+            this.bar.base_note = this.generator.currentExerciseInfo.bar.base_note;
+            
+            let BPM_scale = 4 / this.bar.base_note;
+            this.playback.BPM = 120 * BPM_scale;
+            this.playback.BPM_from = 50 * BPM_scale;
+            this.playback.BPM_to = 240 * BPM_scale;
+
+            // Initialize note store
+            this.notes = new NoteStore(
+                this.bar,
+                this.cursor,
+                this.$refs.staff_view.render
+            );
+
+            this.questionState.check = "no";
+            this.playback.bar_info = this.bar;
+
+            this.play({action: "replay", what: "exercise"});
+
+        },
+
+        check(){
+
+            if(this.questionState.check == "next"){
+                this.nextQuestion();
+                return;
+            }
+
+            let status = this.generator.check(this.notes.notes);
+
+            let changeTimeout = 1000;
+            let outside = this;
+
+            if(status){
+                
+                this.questionState.check = "correct";
+                setTimeout(function() {
+                    // Watch out, could happen when next question is already loaded
+                    outside.questionState.check = "next";
+                }, changeTimeout);
+            }else{
+                this.questionState.check = "wrong";
+                setTimeout(function() {
+                    // Watch out, could happen when next question is already loaded
+                    outside.questionState.check = "no";
+                }, changeTimeout);
+            }
+
         },
 
         play(event){
@@ -165,31 +231,17 @@ export default {
             }
         },
 
-        startGame() {
-
-            this.displayState = "ready";
-
-            // Play initial exercise
-            this.play({type:"playback", action: "replay", what: "exercise"});
-
-        }
-
 },
 
     mounted() {
 
         // Če do sem nisi prišel preko vmesnika, 
         // greš lahko kar lepo nazaj
-        if (!this.game || !this.difficulty) {
+        /*if (!this.game || !this.difficulty) {
             this.$router.push({ name: 'dashboard' })
-        }
+        }*/
 
-        // Initialize note store
-        this.notes = new NoteStore(
-            this.bar,
-            this.cursor,
-            this.$refs.staff_view.render
-        );
+        
 
         // Init MIDI
         let instruments = {
@@ -222,8 +274,6 @@ export default {
         });
 
 
-        this.playback.bar_info = this.bar;
-        
 
     },
     

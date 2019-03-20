@@ -5,69 +5,177 @@ import RhythmUtilities from './rhythmUtilities';
 var ExerciseGenerator = function(){
 
     let examples = [
-        [
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
-            {type:"n", symbol:"8", duration: new Fraction(1,8)},
-            {type:"n", symbol:"8", duration: new Fraction(1,8)},
-            {type:"n", symbol:"16", duration: new Fraction(1,16)},
-            {type:"n", symbol:"16", duration: new Fraction(1,16)},
-            {type:"n", symbol:"8", duration: new Fraction(1,8)},
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
-            
-            {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3},
-            {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3},
-            {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3, tuplet_from:7, tuplet_to:10},
-            {type:"n", symbol:"16", duration: new Fraction(1,16)},
-            {type:"n", symbol:"16", duration: new Fraction(1,16)},
-            {type:"n", symbol:"8", duration: new Fraction(3,16), dot: true},
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
-        ],
-        [
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
+        {
+            bar: {
+                num_beats: 4,
+                base_note: 4
+            }, 
+            exercise: [
+                    {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                    {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                    {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                    {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                    {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                    {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                    {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                    
+                    {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3},
+                    {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3},
+                    {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3, tuplet_from:7, tuplet_to:10},
+                    {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                    {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                    {type:"n", symbol:"8", duration: new Fraction(3,16), dot: true},
+                    {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                ],
+        },
+        {
+            bar: {
+                num_beats: 4,
+                base_note: 4
+            }, 
+            exercise: [
+                {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                {type:"n", symbol:"4", duration: new Fraction(1,4)},
 
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
-            
-        ],
-        [
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
-            {type:"n", symbol:"8", duration: new Fraction(1,8)},
-            {type:"n", symbol:"8", duration: new Fraction(1,8)},
-            {type:"n", symbol:"8", duration: new Fraction(1,8)},
-            {type:"n", symbol:"8", duration: new Fraction(1,8)},
-            
-            {type:"n", symbol:"16", duration: new Fraction(1,16)},
-            {type:"n", symbol:"16", duration: new Fraction(1,16)},
-            {type:"n", symbol:"16", duration: new Fraction(1,16)},
-            {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                {type:"n", symbol:"4", duration: new Fraction(1,4)},
+            ],
+        },
+        {
+            bar: {
+                num_beats: 4,
+                base_note: 4
+            }, 
+            exercise: [
+                {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3},
+                {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3},
+                {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3, tuplet_from:0, tuplet_to: 3},
+                {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                {type:"r", symbol:"4r", duration: new Fraction(1,4)},
+                {type:"r", symbol:"4r", duration: new Fraction(1,4)},
+                
+                {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3},
+                {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3},
+                {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3, tuplet_from:0, tuplet_to: 3},
+                {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                {type:"r", symbol:"4r", duration: new Fraction(1,4)},
+                {type:"r", symbol:"4r", duration: new Fraction(1,4)},
+            ],
+        },
+        {
+            bar: {
+                num_beats: 4,
+                base_note: 4
+            }, 
+            exercise: [
+                {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
 
-            {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet:true, tuplet_type:3},
-            {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet:true, tuplet_type:3},
-            {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet:true, tuplet_type:3, tuplet_from:10, tuplet_to: 13},
-            
-            {type:"n", symbol:"4", duration: new Fraction(1,4)},
-            {type:"n", symbol:"8", duration: new Fraction(1,8)},
-            {type:"n", symbol:"8", duration: new Fraction(1,8)},
-        ]
+                {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet:true, tuplet_type:3},
+                {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet:true, tuplet_type:3},
+                {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet:true, tuplet_type:3, tuplet_from:10, tuplet_to: 13},
+                
+                {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                {type:"n", symbol:"8", duration: new Fraction(1,8)},
+            ]
+        },
+        {
+            bar:{
+                num_beats: 3,
+                base_note: 8
+            },
+            exercise: [
+                {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"8", duration: new Fraction(1,8)},
+
+                {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
+                {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
+                {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
+                {type:"r", symbol:"8r", duration: new Fraction(1,8)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+
+
+            ]
+        },
+        {
+            BPM: 50,
+            bar:{
+                num_beats: 3,
+                base_note: 8
+            },
+            exercise: [
+                {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"8", duration: new Fraction(1,8)},
+
+                {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
+                {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
+                {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
+                {type:"r", symbol:"8r", duration: new Fraction(1,8)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+
+
+            ]
+        },
+        {
+            bar:{
+                num_beats: 3,
+                base_note: 8
+            },
+            exercise: [
+                {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"8", duration: new Fraction(1,8)},
+
+                {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
+                {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
+                {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
+                {type:"r", symbol:"8r", duration: new Fraction(1,8)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+
+
+            ]
+        }
     ];
 
     this.currentExercise = null;
+    this.currentExerciseInfo = null;
 
-    this.generate = function(){
-        let number = Math.round(Math.random() * (examples.length - 1));
+    this.currentExampleNumber = -1;
+    this.generatorSequence = [];
+
+    this.generate = function(numGen){
         
-        this.currentExercise = examples[number];
+
+        
+        let number = Math.floor(Math.random() * (examples.length - 1));
+
+        this.currentExerciseInfo = examples[number];
+        this.currentExercise = examples[number].exercise;
 
         return examples[number];
     }
-
-    this.generate();
 
     this.check = function(value){
 
@@ -77,11 +185,7 @@ var ExerciseGenerator = function(){
         let ex = soundsLikeFunc(this.currentExercise, true);
         let us = soundsLikeFunc(value, true);
 
-        if(_.isEqual(ex, us)){
-            alert("PRAVILNO!");
-        }else{
-            alert("Ni še čisto v redu.");
-        }
+        return _.isEqual(ex, us);
 
     }
 

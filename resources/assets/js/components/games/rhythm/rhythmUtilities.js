@@ -55,6 +55,8 @@ var utilities = {
             }
         }
 
+        console.log(realDurations);
+
         return realDurations;
 
     }
