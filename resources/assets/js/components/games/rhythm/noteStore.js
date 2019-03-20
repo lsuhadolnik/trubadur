@@ -7,7 +7,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
     this.supportedLengths = [1, 2, 4, 8, 16, 32];
     this.supportedRests   = [4, 8, 12, 16, 32];
 
-    //alert(staff_view.info.staveCount);
 
     this.bar = bar;
     this.cursor = cursor;
@@ -23,12 +22,20 @@ var NoteStore = function(bar, cursor, render_function, info) {
     }
 
     // Init notes with default
+    // Initially the view is empty
+    // This line is also responsible for rendering the empty bars on load
     this._call_render();
 
     this.handle_button = function(event) {
 
         if(event.type == 'n' || event.type == 'r')
         {   // This is a note
+
+            /*if(this._sum_durations() > 2){
+                alert("Trenutno je možno dodati največ dva takta");
+                return;
+            }*/
+
             this.add_note(event);
         } 
         else if(event.type == 'dot')

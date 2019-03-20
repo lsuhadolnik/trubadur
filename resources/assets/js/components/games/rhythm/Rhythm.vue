@@ -6,7 +6,7 @@
             <ProgressBar></ProgressBar>
         </div>-->
         
-        <StaffView ref="staff_view" :bar="bar" :cursor="cursor" :staveCount="info.staveCount" />
+        <StaffView ref="staff_view" :bar="bar" :cursor="cursor" />
         
         <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" />
 
@@ -81,9 +81,6 @@ export default {
                 x: 0,
                 in_tuplet: false,
             },
-            info: {
-                staveCount: 2,
-            },
 
             errorMessage: "",
 
@@ -153,13 +150,14 @@ export default {
 
     mounted() {
 
+        // Initialize note store
         this.notes = new NoteStore(
             this.bar,
             this.cursor,
-            this.$refs.staff_view.render,
-            this.info
+            this.$refs.staff_view.render
         );
 
+        // Init MIDI
         let instruments = {
             piano: {
                 channel: 0,
@@ -188,6 +186,7 @@ export default {
                 this.play({type:"playback", action: "replay", what: "exercise"});
             }
         });
+
 
         this.playback.bar_info = this.bar;
         

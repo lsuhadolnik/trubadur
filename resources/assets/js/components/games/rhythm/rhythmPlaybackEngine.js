@@ -56,7 +56,6 @@ var RhythmPlaybackEngine = function(){
             // BPM logic
             // Brez spreminjanja trajanja velja, da je celinka dolga 1s
             // torej je vsaka četrtinka dolga 0,25s, kar je 4 BPS, kar je 240 BPM
-
             actualDuration = dur.valueOf() / (this.BPM / 60) * this.bar_info.num_beats;
 
             // WTF?! Hahaha :D
@@ -74,7 +73,7 @@ var RhythmPlaybackEngine = function(){
         }
 
         let milliseconds = actualDuration * 1000;
-        console.log("Will last for "+milliseconds);
+        //console.log("Will last for "+milliseconds);
 
         let outside = this;
         if(this.playing) {
@@ -123,7 +122,8 @@ var RhythmPlaybackEngine = function(){
     this.resume = function(endCallback, noteCallback){
 
         if(!this.loaded){
-            alert("No notes to play. Before the playback, you must call the load() method.");
+            //alert("No notes to play. Before the playback, you must call the load() method.");
+            console.log("No notes to play. Before the playback, you must call the load() method.");
             return;
         }
 

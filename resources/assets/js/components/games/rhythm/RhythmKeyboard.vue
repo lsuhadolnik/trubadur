@@ -15,13 +15,14 @@
                     <sexy-button :hidden="cursor.in_tuplet" :text="eight_text" :color="note_color" @click.native="eight_note()" />
                     <sexy-button :hidden="cursor.in_tuplet" :text="sixteenth_text" :color="note_color" @click.native="sixteenth_note()" />
                     <div class="hide-normal"><!-- Will show only on small wide screens (landscape phones) -->
-                        <sexy-button     color="sunglow" @click.native="repeat_exercise()" class="hide-normal">
-                            <icon name="repeat" />
+                        <sexy-button color="sunglow" @click.native="play_exercise()" :percents="percentsExercise" customClass="normal-font tiny-tajni-pici-mici-font">
+                            <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'"/>
+                            <div v-else class="small-font-button">Ponovi vajo</div>
                         </sexy-button>
-                        <sexy-button color="sunglow" @click.native="playback()" class="hide-normal">
-                            <icon label="user-check">
-                                <icon name="play" />
-                            </icon>
+                        
+                        <sexy-button color="sunglow" @click.native="play_user()" :percents="percentsUser" customClass="normal-font tiny-tajni-pici-mici-font">
+                            <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'user'"/>
+                            <div v-else class="small-font-button">Zaigraj vpisano</div>
                         </sexy-button>
                     </div>
                 </div>
@@ -137,6 +138,10 @@
 
     .normal-font{
         font-family: inherit !important;
+    }
+
+    .tiny-tajni-pici-mici-font{
+        font-size: 8pt !important;
     }
     
     .rythm-game__keyboard_wrap {

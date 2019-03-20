@@ -40,7 +40,9 @@ export default new Vuex.Store({
             }
         },
         currentInstruments: new Set([]),
-        midi: null
+        midi: null,
+
+        headerMenuDisabled: false
     },
     getters: {
         getInstrumentChannel: (state) => (name) => {

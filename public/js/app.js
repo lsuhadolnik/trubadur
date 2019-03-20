@@ -48859,6 +48859,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+            isDisabled: false,
             csrfToken: window.Laravel.csrfToken,
             backgroundImage: "url('/images/backgrounds/sparse.png')",
             uncoloredRoutes: ['gameModes', 'intervals', 'gameStatistics'],
@@ -48898,6 +48899,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             $('body').css('background-image', this.uncoloredRoutes.indexOf(route) >= 0 ? 'none' : this.backgroundImage);
         },
         scroll: function scroll() {
+
+            if (isDisabled) {
+                return;
+            }
+
             this.isHeaderSticky = this.isMenuOpened ? true : window.pageYOffset > 0;
             this.$emit('sticky-header', this.isHeaderSticky);
         },
@@ -48991,110 +48997,118 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "header-menu" }, [
-    _c(
-      "div",
-      {
-        staticClass: "header",
-        class: {
-          "header--sticky": _vm.isHeaderSticky,
-          "header--colored": _vm.isHeaderColored
-        }
-      },
-      [
+  return !_vm.isDisabled
+    ? _c("div", { staticClass: "header-menu" }, [
         _c(
           "div",
-          { staticClass: "header__menu-button", on: { click: _vm.toggleMenu } },
+          {
+            staticClass: "header",
+            class: {
+              "header--sticky": _vm.isHeaderSticky,
+              "header--colored": _vm.isHeaderColored
+            }
+          },
           [
-            _c("icon", { staticClass: "header__icon", attrs: { name: "bars" } })
-          ],
-          1
+            _c(
+              "div",
+              {
+                staticClass: "header__menu-button",
+                on: { click: _vm.toggleMenu }
+              },
+              [
+                _c("icon", {
+                  staticClass: "header__icon",
+                  attrs: { name: "bars" }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "header__title",
+                on: {
+                  click: function($event) {
+                    _vm.dashboard()
+                  }
+                }
+              },
+              [_vm._v("TRUBADUR")]
+            )
+          ]
         ),
         _vm._v(" "),
         _c(
           "div",
           {
-            staticClass: "header__title",
-            on: {
-              click: function($event) {
-                _vm.dashboard()
+            directives: [
+              {
+                name: "click-outside",
+                rawName: "v-click-outside",
+                value: _vm.clickedOutsideMenu,
+                expression: "clickedOutsideMenu"
+              },
+              {
+                name: "touch-outside",
+                rawName: "v-touch-outside",
+                value: _vm.clickedOutsideMenu,
+                expression: "clickedOutsideMenu"
               }
-            }
-          },
-          [_vm._v("TRUBADUR")]
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "click-outside",
-            rawName: "v-click-outside",
-            value: _vm.clickedOutsideMenu,
-            expression: "clickedOutsideMenu"
-          },
-          {
-            name: "touch-outside",
-            rawName: "v-touch-outside",
-            value: _vm.clickedOutsideMenu,
-            expression: "clickedOutsideMenu"
-          }
-        ],
-        staticClass: "menu",
-        class: {
-          "menu--open": _vm.isMenuInitialized && _vm.isMenuOpened,
-          "menu--close": _vm.isMenuInitialized && !_vm.isMenuOpened
-        }
-      },
-      [
-        _vm._l(_vm.menuItems, function(item) {
-          return _c(
-            "div",
-            {
-              staticClass: "menu__item",
-              class: { "menu-item--active": _vm.isItemActive(item) },
-              on: {
-                click: function($event) {
-                  _vm.open($event, item)
-                }
-              }
-            },
-            [
-              _c("img", {
-                staticClass: "menu__image",
-                attrs: { src: "/images/menu/" + item.image + ".svg" }
-              }),
-              _vm._v(" "),
-              _c("label", { staticClass: "menu__label" }, [
-                _vm._v(_vm._s(_vm._f("uppercase")(item.name)))
-              ])
-            ]
-          )
-        }),
-        _vm._v(" "),
-        _c(
-          "form",
-          {
-            attrs: {
-              id: "menu__logout-form",
-              action: "/logout",
-              method: "POST"
+            ],
+            staticClass: "menu",
+            class: {
+              "menu--open": _vm.isMenuInitialized && _vm.isMenuOpened,
+              "menu--close": _vm.isMenuInitialized && !_vm.isMenuOpened
             }
           },
           [
-            _c("input", {
-              attrs: { type: "hidden", name: "_token" },
-              domProps: { value: _vm.csrfToken }
-            })
-          ]
+            _vm._l(_vm.menuItems, function(item) {
+              return _c(
+                "div",
+                {
+                  staticClass: "menu__item",
+                  class: { "menu-item--active": _vm.isItemActive(item) },
+                  on: {
+                    click: function($event) {
+                      _vm.open($event, item)
+                    }
+                  }
+                },
+                [
+                  _c("img", {
+                    staticClass: "menu__image",
+                    attrs: { src: "/images/menu/" + item.image + ".svg" }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { staticClass: "menu__label" }, [
+                    _vm._v(_vm._s(_vm._f("uppercase")(item.name)))
+                  ])
+                ]
+              )
+            }),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                attrs: {
+                  id: "menu__logout-form",
+                  action: "/logout",
+                  method: "POST"
+                }
+              },
+              [
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrfToken }
+                })
+              ]
+            )
+          ],
+          2
         )
-      ],
-      2
-    )
-  ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50393,9 +50407,6 @@ var Fraction = __webpack_require__(7);
                 x: 0,
                 in_tuplet: false
             },
-            info: {
-                staveCount: 2
-            },
 
             errorMessage: "",
 
@@ -50455,8 +50466,10 @@ var Fraction = __webpack_require__(7);
     mounted: function mounted() {
         var _this = this;
 
-        this.notes = new __WEBPACK_IMPORTED_MODULE_5__noteStore__["a" /* default */](this.bar, this.cursor, this.$refs.staff_view.render, this.info);
+        // Initialize note store
+        this.notes = new __WEBPACK_IMPORTED_MODULE_5__noteStore__["a" /* default */](this.bar, this.cursor, this.$refs.staff_view.render);
 
+        // Init MIDI
         var instruments = _defineProperty({
             piano: {
                 channel: 0,
@@ -51332,7 +51345,8 @@ var Tuplet = VF.Tuplet;
 
                                     var x_coords = [];
                                     zoomView.querySelectorAll(".vf-note").forEach(function (e) {
-                                                x_coords.push(Math.round(e.getClientRects()[0].x + zoomScrollLeft));
+                                                x_coords.push(Math.round(e.getClientRects()[0].x + zoomScrollLeft)); // Does not work on iOS, works elsewhere
+                                                //x_coords.push(Math.round((e.getBBox().x + zoomScrollLeft))); // DOES NOT work
                                     });
 
                                     console.log(x_coords);
@@ -51496,19 +51510,34 @@ var Tuplet = VF.Tuplet;
                                     });
                         },
 
-                        _vex_draw_staves: function _vex_draw_staves(context) {
+                        // Nova logika
+                        // Najprej naj bo na sceni en stave
+                        // Potem ko se note dodajajo, naj se dodajajo tudi črte
+
+
+                        _vex_draw_staves: function _vex_draw_staves(context, barInfo) {
+
+                                    var staveCount = barInfo.length;
 
                                     var staves = [];
 
-                                    for (var idx_stave = 0; idx_stave < this.staveCount; idx_stave++) {
+                                    var startAtX = 0;
 
-                                                var stave = new VF.Stave(this.info.barWidth * idx_stave, -this.info.barOffsetY, // staveHeight * idx_stave
-                                                this.info.width);
+                                    for (var idx_bar = 0; idx_bar < barInfo.length; idx_bar++) {
+
+                                                var thisBar = barInfo[idx_bar];
+
+                                                var stave = new VF.Stave(startAtX, // X
+                                                -this.info.barOffsetY, // Y
+                                                thisBar.width // Width
+                                                );
+
+                                                startAtX += thisBar.width;
 
                                                 staves.push(stave);
 
                                                 // If this is the first stave
-                                                if (idx_stave == 0) {
+                                                if (idx_bar == 0) {
                                                             // Add a clef and time signature.
                                                             stave.addTimeSignature(this.bar.num_beats + "/" + this.bar.base_note);
                                                 }
@@ -51519,8 +51548,8 @@ var Tuplet = VF.Tuplet;
 
                                     var connectors = [];
 
-                                    for (var _idx_stave = 1; _idx_stave < this.staveCount; _idx_stave++) {
-                                                var connector = new VF.StaveConnector(staves[_idx_stave - 1], staves[_idx_stave]);
+                                    for (var idx_stave = 1; idx_stave < staveCount; idx_stave++) {
+                                                var connector = new VF.StaveConnector(staves[idx_stave - 1], staves[idx_stave]);
                                                 connector.setType(VF.StaveConnector.type.SINGLE);
                                                 connector.setContext(context);
                                                 connectors.push(connector);
@@ -51529,9 +51558,9 @@ var Tuplet = VF.Tuplet;
                                     // Draw the first stave
                                     staves[0].draw();
 
-                                    for (var _idx_stave2 = 1; _idx_stave2 < this.staveCount; _idx_stave2++) {
-                                                staves[_idx_stave2].draw();
-                                                connectors[_idx_stave2 - 1].draw();
+                                    for (var _idx_stave = 1; _idx_stave < staveCount; _idx_stave++) {
+                                                staves[_idx_stave].draw();
+                                                connectors[_idx_stave - 1].draw();
                                     }
 
                                     return staves;
@@ -51618,16 +51647,17 @@ var Tuplet = VF.Tuplet;
                                     // Clear all notes from svg
                                     context.clear();
 
-                                    // Redraw staves
-                                    var staves = this._vex_draw_staves(context);
-
-                                    var staveIndex = 0;
+                                    //let staveIndex = 0;
                                     var cursorNote = null;
 
                                     var currentStaveNoteIdx = 0;
 
+                                    var batches = [];
+                                    var barInfo = [];
+
                                     var ties = [];
                                     var tuplets = [];
+
                                     var renderQueue = [];
                                     var currentDuration = new Fraction(0);
 
@@ -51693,9 +51723,13 @@ var Tuplet = VF.Tuplet;
                                                 // => !(staveIndex + 1 == staves.length && i + 1 < notes.length)
                                                 //    V primeru da je not preveč, takta ne izrišem, ampak prihranim za zadnjega.
 
+                                                //if(currentDuration.compare(new Fraction(this.bar.num_beats, this.bar.base_note)) >= 0 && !(staveIndex + 1 == staves.length && i + 1 < notes.length)){                  
+                                                if (currentDuration.compare(new Fraction(this.bar.num_beats, this.bar.base_note)) >= 0) {
 
-                                                if (currentDuration.compare(new Fraction(this.bar.num_beats, this.bar.base_note)) >= 0 && !(staveIndex + 1 == staves.length && i + 1 < notes.length)) {
-                                                            this._vex_draw_voice(context, staves[staveIndex++], renderQueue);
+                                                            // Not yet
+                                                            // this._vex_draw_voice(context, staves[staveIndex++], renderQueue);
+                                                            batches.push(renderQueue);
+                                                            //staveIndex++;
 
                                                             renderQueue = [];
                                                             currentDuration = new Fraction(0);
@@ -51709,11 +51743,11 @@ var Tuplet = VF.Tuplet;
                                     // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
                                     if (renderQueue.length > 0) {
                                                 // Draw the rest
-                                                this._vex_draw_voice(context, staves[staveIndex], renderQueue);
+                                                //this._vex_draw_voice(context, staves[staveIndex], renderQueue);
+                                                batches.push(renderQueue);
                                     }
 
-                                    this._vex_draw_optionals(context, ties);
-                                    this._vex_draw_optionals(context, tuplets);
+                                    this._vex_render_batches(context, batches, [ties, tuplets]);
 
                                     // Render the minimap rectangle
                                     if (descriptor.role == "minimap") {
@@ -51747,6 +51781,48 @@ var Tuplet = VF.Tuplet;
                                     } else {
                                                 this.cursor.in_tuplet = false;
                                     }
+                        },
+                        _vex_render_batches: function _vex_render_batches(context, batches, optionals) {
+                                    var _this = this;
+
+                                    //debugger;
+                                    // Redraw staves
+                                    var barInfo = [];
+
+                                    var widthLeft = this.info.width;
+
+                                    batches.forEach(function (batch) {
+                                                var maxNotesWidth = Math.min(
+                                                // Give equal space to each note
+                                                batch.length * _this.info.meanNoteWidth + 5,
+                                                // Until there are too many notes to fit. 
+                                                // Then use maximum width and leave some space at the end
+                                                _this.info.barWidth - _this.info.meanNoteWidth);
+
+                                                widthLeft -= maxNotesWidth;
+
+                                                barInfo.push({
+                                                            width: maxNotesWidth
+                                                });
+                                    });
+
+                                    // Initial empty bar
+                                    if (widthLeft > 0) {
+                                                barInfo.push({
+                                                            width: widthLeft
+                                                });
+                                    }
+
+                                    var staves = this._vex_draw_staves(context, barInfo);
+
+                                    for (var i = 0; i < batches.length; i++) {
+                                                this._vex_draw_voice(context, staves[i], batches[i]);
+                                    }
+
+                                    // Draw ties and tuplets
+                                    optionals.forEach(function (opt) {
+                                                _this._vex_draw_optionals(context, opt);
+                                    });
                         },
                         render: function render(notes, cursor) {
                                     for (var key in this.CTX) {
@@ -76188,7 +76264,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  margin-bottom: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_fourth .button[data-v-79470641] {\n  width: 140px;\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n.rhythm-game__staff__second-row[data-v-79470641] {\n    margin-bottom: -27px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-79470641] {\n  font-size: 8pt !important;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  margin-bottom: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_fourth .button[data-v-79470641] {\n  width: 140px;\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n.rhythm-game__staff__second-row[data-v-79470641] {\n    margin-bottom: -27px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -76208,6 +76284,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_awesome_icons_question_circle__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_awesome_icons_user_o__ = __webpack_require__(143);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_awesome_icons_pause__ = __webpack_require__(144);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -76961,36 +77042,49 @@ var render = function() {
                 _c(
                   "sexy-button",
                   {
-                    staticClass: "hide-normal",
-                    attrs: { color: "sunglow" },
+                    attrs: {
+                      color: "sunglow",
+                      percents: _vm.percentsExercise,
+                      customClass: "normal-font tiny-tajni-pici-mici-font"
+                    },
                     nativeOn: {
                       click: function($event) {
-                        _vm.repeat_exercise()
+                        _vm.play_exercise()
                       }
                     }
                   },
-                  [_c("icon", { attrs: { name: "repeat" } })],
+                  [
+                    _vm.playbackStatus.playing &&
+                    _vm.playbackStatus.currentlyLoaded == "exercise"
+                      ? _c("icon", { attrs: { name: "pause" } })
+                      : _c("div", { staticClass: "small-font-button" }, [
+                          _vm._v("Ponovi vajo")
+                        ])
+                  ],
                   1
                 ),
                 _vm._v(" "),
                 _c(
                   "sexy-button",
                   {
-                    staticClass: "hide-normal",
-                    attrs: { color: "sunglow" },
+                    attrs: {
+                      color: "sunglow",
+                      percents: _vm.percentsUser,
+                      customClass: "normal-font tiny-tajni-pici-mici-font"
+                    },
                     nativeOn: {
                       click: function($event) {
-                        _vm.playback()
+                        _vm.play_user()
                       }
                     }
                   },
                   [
-                    _c(
-                      "icon",
-                      { attrs: { label: "user-check" } },
-                      [_c("icon", { attrs: { name: "play" } })],
-                      1
-                    )
+                    _vm.playbackStatus.playing &&
+                    _vm.playbackStatus.currentlyLoaded == "user"
+                      ? _c("icon", { attrs: { name: "pause" } })
+                      : _c("div", { staticClass: "small-font-button" }, [
+                          _vm._v("Zaigraj vpisano")
+                        ])
                   ],
                   1
                 )
@@ -77280,8 +77374,6 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     this.supportedLengths = [1, 2, 4, 8, 16, 32];
     this.supportedRests = [4, 8, 12, 16, 32];
 
-    //alert(staff_view.info.staveCount);
-
     this.bar = bar;
     this.cursor = cursor;
     this.notes = [];
@@ -77292,12 +77384,20 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     };
 
     // Init notes with default
+    // Initially the view is empty
+    // This line is also responsible for rendering the empty bars on load
     this._call_render();
 
     this.handle_button = function (event) {
 
         if (event.type == 'n' || event.type == 'r') {
             // This is a note
+
+            /*if(this._sum_durations() > 2){
+                alert("Trenutno je možno dodati največ dva takta");
+                return;
+            }*/
+
             this.add_note(event);
         } else if (event.type == 'dot') {
             this.add_dot();
@@ -77708,7 +77808,6 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
             // BPM logic
             // Brez spreminjanja trajanja velja, da je celinka dolga 1s
             // torej je vsaka četrtinka dolga 0,25s, kar je 4 BPS, kar je 240 BPM
-
             actualDuration = dur.valueOf() / (this.BPM / 60) * this.bar_info.num_beats;
 
             // WTF?! Hahaha :D
@@ -77725,7 +77824,7 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
         }
 
         var milliseconds = actualDuration * 1000;
-        console.log("Will last for " + milliseconds);
+        //console.log("Will last for "+milliseconds);
 
         var outside = this;
         if (this.playing) {
@@ -77771,7 +77870,8 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
     this.resume = function (endCallback, noteCallback) {
 
         if (!this.loaded) {
-            alert("No notes to play. Before the playback, you must call the load() method.");
+            //alert("No notes to play. Before the playback, you must call the load() method.");
+            console.log("No notes to play. Before the playback, you must call the load() method.");
             return;
         }
 
@@ -77868,11 +77968,7 @@ var render = function() {
     [
       _c("StaffView", {
         ref: "staff_view",
-        attrs: {
-          bar: _vm.bar,
-          cursor: _vm.cursor,
-          staveCount: _vm.info.staveCount
-        }
+        attrs: { bar: _vm.bar, cursor: _vm.cursor }
       }),
       _vm._v(" "),
       _c(
@@ -83078,7 +83174,9 @@ function handleError(error) {
             }
         },
         currentInstruments: new Set([]),
-        midi: null
+        midi: null,
+
+        headerMenuDisabled: false
     },
     getters: {
         getInstrumentChannel: function getInstrumentChannel(state) {

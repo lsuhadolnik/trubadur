@@ -134,7 +134,8 @@ export default {
 
             var x_coords = [];
             zoomView.querySelectorAll(".vf-note").forEach(function(e) {
-                x_coords.push(Math.round((e.getClientRects()[0].x + zoomScrollLeft)));
+                x_coords.push(Math.round((e.getClientRects()[0].x + zoomScrollLeft))); // Does not work on iOS, works elsewhere
+                //x_coords.push(Math.round((e.getBBox().x + zoomScrollLeft))); // DOES NOT work
             });
 
             console.log(x_coords)
@@ -311,21 +312,36 @@ export default {
 
         },
 
-        _vex_draw_staves: function(context){
-            
-            let staves = [];
 
-            for(let idx_stave = 0; idx_stave < this.staveCount; idx_stave++){
+        // Nova logika
+        // Najprej naj bo na sceni en stave
+        // Potem ko se note dodajajo, naj se dodajajo tudi črte
+
+
+        _vex_draw_staves: function(context, barInfo){
+            
+            var staveCount = barInfo.length;
+
+            let staves = [];
+            
+            let startAtX = 0;
+
+            for(let idx_bar = 0; idx_bar < barInfo.length; idx_bar++){
+
+                let thisBar = barInfo[idx_bar];
 
                 let stave = new VF.Stave(
-                    this.info.barWidth * idx_stave,
-                    -this.info.barOffsetY, // staveHeight * idx_stave
-                    this.info.width);
+                    startAtX,   // X
+                    -this.info.barOffsetY,           // Y
+                    thisBar.width              // Width
+                );
+
+                startAtX += thisBar.width;
 
                 staves.push(stave);
 
                 // If this is the first stave
-                if(idx_stave == 0){
+                if(idx_bar == 0){
                     // Add a clef and time signature.
                     stave.addTimeSignature(
                         this.bar.num_beats
@@ -341,7 +357,7 @@ export default {
 
             let connectors = [];
 
-            for(let idx_stave = 1; idx_stave < this.staveCount; idx_stave++){
+            for(let idx_stave = 1; idx_stave < staveCount; idx_stave++){
                 var connector = new VF.StaveConnector(staves[idx_stave - 1], staves[idx_stave]);
                 connector.setType(VF.StaveConnector.type.SINGLE);
                 connector.setContext(context);
@@ -351,7 +367,7 @@ export default {
             // Draw the first stave
             staves[0].draw();
 
-            for(let idx_stave = 1; idx_stave < this.staveCount; idx_stave++){
+            for(let idx_stave = 1; idx_stave < staveCount; idx_stave++){
                 staves[idx_stave].draw();
                 connectors[idx_stave - 1].draw();
             }
@@ -450,16 +466,18 @@ export default {
             // Clear all notes from svg
             context.clear();
 
-            // Redraw staves
-            let staves = this._vex_draw_staves(context);
-
-            let staveIndex = 0;
+            //let staveIndex = 0;
             let cursorNote = null;
 
             let currentStaveNoteIdx = 0;
 
+            let batches = [];
+            let barInfo = [];
+
             var ties = [];
             var tuplets = [];
+
+
             var renderQueue = [];
             var currentDuration = new Fraction(0);
 
@@ -490,7 +508,6 @@ export default {
                     newNote.addDot(0); // enako je tudi newNote.addDotToAll()
                 }
                 
-
                 // Get the note the cursor will stick to
                 if(i + 1 == cursor.position){
                     cursorNote = newNote;
@@ -527,9 +544,13 @@ export default {
                 // => !(staveIndex + 1 == staves.length && i + 1 < notes.length)
                 //    V primeru da je not preveč, takta ne izrišem, ampak prihranim za zadnjega.
 
-
-                if(currentDuration.compare(new Fraction(this.bar.num_beats, this.bar.base_note)) >= 0 && !(staveIndex + 1 == staves.length && i + 1 < notes.length)){                  
-                    this._vex_draw_voice(context, staves[staveIndex++], renderQueue);
+                //if(currentDuration.compare(new Fraction(this.bar.num_beats, this.bar.base_note)) >= 0 && !(staveIndex + 1 == staves.length && i + 1 < notes.length)){                  
+                if(currentDuration.compare(new Fraction(this.bar.num_beats, this.bar.base_note)) >= 0){                      
+                  
+                    // Not yet
+                    // this._vex_draw_voice(context, staves[staveIndex++], renderQueue);
+                    batches.push(renderQueue);
+                    //staveIndex++;
 
                     renderQueue = [];
                     currentDuration = new Fraction(0);
@@ -544,12 +565,12 @@ export default {
             // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
             if(renderQueue.length > 0){
                 // Draw the rest
-                this._vex_draw_voice(context, staves[staveIndex], renderQueue);
+                //this._vex_draw_voice(context, staves[staveIndex], renderQueue);
+                batches.push(renderQueue);
             }
 
-            this._vex_draw_optionals(context, ties);
-            this._vex_draw_optionals(context, tuplets);
-
+            this._vex_render_batches(context, batches, [ties, tuplets]);
+            
         
             // Render the minimap rectangle
             if(descriptor.role == "minimap"){
@@ -592,6 +613,50 @@ export default {
             }else{
                 this.cursor.in_tuplet = false;
             }
+
+        },
+
+        _vex_render_batches(context, batches, optionals){
+
+            //debugger;
+            // Redraw staves
+            var barInfo = [];
+
+            var widthLeft = this.info.width;
+
+            batches.forEach(batch => {
+                var maxNotesWidth = Math.min(
+                    // Give equal space to each note
+                    batch.length * this.info.meanNoteWidth + 5, 
+                    // Until there are too many notes to fit. 
+                    // Then use maximum width and leave some space at the end
+                    this.info.barWidth - this.info.meanNoteWidth
+                );
+
+                widthLeft -= maxNotesWidth;
+                
+                barInfo.push({
+                    width: maxNotesWidth
+                });    
+            });
+
+            // Initial empty bar
+            if(widthLeft > 0){
+                barInfo.push({
+                    width: widthLeft
+                });
+            }
+
+            let staves = this._vex_draw_staves(context, barInfo);
+
+            for(var i = 0; i < batches.length; i++){
+                this._vex_draw_voice(context, staves[i], batches[i]);
+            }
+            
+            // Draw ties and tuplets
+            optionals.forEach(opt => {
+                this._vex_draw_optionals(context, opt);    
+            });
 
         },
 

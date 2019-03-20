@@ -198,7 +198,7 @@
 </style>
 
 <template>
-    <div class="header-menu">
+    <div class="header-menu" v-if="!isDisabled">
         <div class="header" :class="{ 'header--sticky': isHeaderSticky, 'header--colored': isHeaderColored }">
             <div class="header__menu-button" @click="toggleMenu">
                 <icon class="header__icon" name="bars"></icon>
@@ -225,6 +225,7 @@ import { mapState } from 'vuex'
 export default {
     data () {
         return {
+            isDisabled: false,
             csrfToken: window.Laravel.csrfToken,
             backgroundImage: "url('/images/backgrounds/sparse.png')",
             uncoloredRoutes: ['gameModes', 'intervals', 'gameStatistics'],
@@ -270,6 +271,11 @@ export default {
             $('body').css('background-image', this.uncoloredRoutes.indexOf(route) >= 0 ? 'none' : this.backgroundImage)
         },
         scroll () {
+
+            if(isDisabled){
+                return;
+            }
+
             this.isHeaderSticky = this.isMenuOpened ? true : window.pageYOffset > 0
             this.$emit('sticky-header', this.isHeaderSticky)
         },
