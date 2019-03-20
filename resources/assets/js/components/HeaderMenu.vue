@@ -228,7 +228,7 @@ export default {
             isDisabled: false,
             csrfToken: window.Laravel.csrfToken,
             backgroundImage: "url('/images/backgrounds/sparse.png')",
-            uncoloredRoutes: ['gameModes', 'intervals', 'gameStatistics'],
+            uncoloredRoutes: ['gameModes', 'intervals', 'gameStatistics', 'rhythm'],
             isHeaderSticky: false,
             isHeaderColored: false,
             isMenuInitialized: false,
@@ -272,7 +272,7 @@ export default {
         },
         scroll () {
 
-            if(isDisabled){
+            if(this.isDisabled){
                 return;
             }
 

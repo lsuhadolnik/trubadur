@@ -1,17 +1,29 @@
 <template>
     <div class="rhythm-game__wrap">
+        
+        <loader v-show="displayState == 'loading'"></loader>
+        <div class="rhythm__instructions" v-show="displayState == 'instructions'">
+            <SexyButton @click.native="startGame()" color="green" :cols="3">Začni</SexyButton>
+            <ul class="rhythm__instructions-list">
+                <li class="rhythm__instructions-list-item">Preizkusil se boš v ritmičnem nareku.</li>
+                <li class="rhythm__instructions-list-item">Program je v preizkusni fazi, zanekrat lahko preizkusiš par vpisanih vaj.</li>
+            </ul>
+        </div>
 
-        <!--<div class="rhythm-game__progress">
+        <div class="ready-rhythm-game-view" v-show="displayState == 'ready'">
+
+            <!--<div class="rhythm-game__progress">
             <CircleTimer></CircleTimer>
             <ProgressBar></ProgressBar>
         </div>-->
-        
-        <StaffView ref="staff_view" :bar="bar" :cursor="cursor" />
-        
-        <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" />
 
-        <div class="error" v-show="errorMessage">{{errorMessage}}</div>
+            <StaffView ref="staff_view" :bar="bar" :cursor="cursor" />
+            
+            <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" />
 
+            <div class="error" v-show="errorMessage">{{errorMessage}}</div>
+
+        </div>
 
     </div>
 </template>
@@ -19,6 +31,17 @@
 <style lang="scss">
 
     @import '../../../../sass/variables/index';
+
+    .rhythm__instructions {
+        padding        : 20px 0;
+        display        : flex;
+        align-items    : center;
+        flex-direction : column;
+    }
+
+    .rhythm__instructions-list-item { 
+        padding: 8px 20px 8px 3px; 
+    }
 
     .rythm-game__wrap {
         touch-action: manipulation;
@@ -45,7 +68,6 @@
 
 <script>
 
-
 import SexyButton from "../../elements/SexyButton.vue"
 import CircleTimer from "../../elements/CircleTimer.vue"
 import ProgressBar from "../../elements/ProgressBar.vue"
@@ -68,9 +90,15 @@ export default {
         SexyButton, CircleTimer, ProgressBar, StaffView, Keyboard
     },
 
+    props: ["game", "difficulty"],
+
     data() {
 
         return {
+
+            isPractice: false,
+            displayState: 'loading',
+
             notes: null,
             bar: {
                 num_beats: 4,
@@ -115,21 +143,14 @@ export default {
             console.log("GOT EVENT: "+JSON.stringify(event));
 
             if(event.action == "resume"){
-
-                //alert("Called resume");
-
                 this.playback.play();
-
             }
 
             if(event.action == "pause"){
-
                 this.playback.pause();
-
             }
 
             if(event.action == "replay"){
-
                 if(event.what == "user"){
 
                     this.playback.load(this.notes.notes, "user");
@@ -141,14 +162,27 @@ export default {
                     this.playback.load(this.generator.currentExercise, "exercise");
                     this.playback.play(); 
                 }
-
             }
-
         },
+
+        startGame() {
+
+            this.displayState = "ready";
+
+            // Play initial exercise
+            this.play({type:"playback", action: "replay", what: "exercise"});
+
+        }
 
 },
 
     mounted() {
+
+        // Če do sem nisi prišel preko vmesnika, 
+        // greš lahko kar lepo nazaj
+        if (!this.game || !this.difficulty) {
+            this.$router.push({ name: 'dashboard' })
+        }
 
         // Initialize note store
         this.notes = new NoteStore(
@@ -182,8 +216,8 @@ export default {
                     MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
                 }
 
-                // Play initial exercise
-                this.play({type:"playback", action: "replay", what: "exercise"});
+                this.displayState = "instructions";
+        
             }
         });
 

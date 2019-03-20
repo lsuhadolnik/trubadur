@@ -46,7 +46,7 @@ class GameController extends Controller
         $data = [
             'difficulty_id' => 'required|numeric',
             'mode'          => 'required|string|in:practice,single,multi',
-            'type'          => 'required|string|in:intervals,rythm',
+            'type'          => 'required|string|in:intervals,rhythm',
             'users'         => 'array'
         ];
 

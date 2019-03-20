@@ -151,7 +151,8 @@ export default {
                 this.storeGame({ difficulty_id: difficulty.id, mode: mode, type: this.type, users: users }).then((game) => {
                     this.updateGameUser({ gameId: game.id, userId: this.me.id, data: { instrument: this.me.instrument } }).then(() => {
                         this.loading = false
-                        this.reroute('intervals', { game: game, difficulty: difficulty })
+                        //this.reroute('intervals', { game: game, difficulty: difficulty })
+                        this.reroute(this.type, { game: game, difficulty: difficulty })
                     })
                 })
             })

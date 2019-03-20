@@ -63,19 +63,6 @@
                     <sexy-button color="cabaret"   @click.native="delete_note()"  >
                         <img src="/images/backspace.svg" width="30" />
                     </sexy-button>
-                    <!--<sexy-button :hidden="true" />
-                    <sexy-button :hidden="true" />-->
-                    <!--<sexy-button color="cabaret" @click.native="resume()" v-if="!playbackStatus.playing && !playbackStatus.loaded">
-                        <icon name="play" />
-                    </sexy-button>
-
-                    <sexy-button color="cabaret" @click.native="resume()" v-if="!playbackStatus.playing && playbackStatus.loaded">
-                        <icon name="repeat" />
-                    </sexy-button>
-
-                    <sexy-button v-else color="sunglow" @click.native="pause()">
-                        <icon name="pause" />
-                    </sexy-button>-->
                     <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="1">
                         <div class="BPM-indicator normal-font">
                             <div class="BPM-value">{{playbackStatus.BPM}}</div>

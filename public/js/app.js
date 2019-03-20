@@ -47543,7 +47543,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 _this2.storeGame({ difficulty_id: difficulty.id, mode: mode, type: _this2.type, users: users }).then(function (game) {
                     _this2.updateGameUser({ gameId: game.id, userId: _this2.me.id, data: { instrument: _this2.me.instrument } }).then(function () {
                         _this2.loading = false;
-                        _this2.reroute('intervals', { game: game, difficulty: difficulty });
+                        //this.reroute('intervals', { game: game, difficulty: difficulty })
+                        _this2.reroute(_this2.type, { game: game, difficulty: difficulty });
                     });
                 });
             });
@@ -48862,7 +48863,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             isDisabled: false,
             csrfToken: window.Laravel.csrfToken,
             backgroundImage: "url('/images/backgrounds/sparse.png')",
-            uncoloredRoutes: ['gameModes', 'intervals', 'gameStatistics'],
+            uncoloredRoutes: ['gameModes', 'intervals', 'gameStatistics', 'rhythm'],
             isHeaderSticky: false,
             isHeaderColored: false,
             isMenuInitialized: false,
@@ -48900,7 +48901,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         scroll: function scroll() {
 
-            if (isDisabled) {
+            if (this.isDisabled) {
                 return;
             }
 
@@ -50299,7 +50300,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rythm-game__wrap {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.error {\n  text-align: center;\n  text-transform: uppercase;\n  color: #fe664e;\n  background: black;\n}\n@media only screen and (max-height: 600px) {\n.header-menu {\n    display: none !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.rhythm__instructions {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.rhythm__instructions-list-item {\n  padding: 8px 20px 8px 3px;\n}\n.rythm-game__wrap {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.error {\n  text-align: center;\n  text-transform: uppercase;\n  color: #fe664e;\n  background: black;\n}\n@media only screen and (max-height: 600px) {\n.header-menu {\n    display: none !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -50371,6 +50372,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -50394,9 +50418,15 @@ var Fraction = __webpack_require__(7);
         SexyButton: __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default.a, CircleTimer: __WEBPACK_IMPORTED_MODULE_1__elements_CircleTimer_vue___default.a, ProgressBar: __WEBPACK_IMPORTED_MODULE_2__elements_ProgressBar_vue___default.a, StaffView: __WEBPACK_IMPORTED_MODULE_3__StaffView_vue___default.a, Keyboard: __WEBPACK_IMPORTED_MODULE_4__RhythmKeyboard_vue___default.a
     },
 
+    props: ["game", "difficulty"],
+
     data: function data() {
 
         return {
+
+            isPractice: false,
+            displayState: 'loading',
+
             notes: null,
             bar: {
                 num_beats: 4,
@@ -50437,19 +50467,14 @@ var Fraction = __webpack_require__(7);
             console.log("GOT EVENT: " + JSON.stringify(event));
 
             if (event.action == "resume") {
-
-                //alert("Called resume");
-
                 this.playback.play();
             }
 
             if (event.action == "pause") {
-
                 this.playback.pause();
             }
 
             if (event.action == "replay") {
-
                 if (event.what == "user") {
 
                     this.playback.load(this.notes.notes, "user");
@@ -50460,11 +50485,24 @@ var Fraction = __webpack_require__(7);
                     this.playback.play();
                 }
             }
+        },
+        startGame: function startGame() {
+
+            this.displayState = "ready";
+
+            // Play initial exercise
+            this.play({ type: "playback", action: "replay", what: "exercise" });
         }
     },
 
     mounted: function mounted() {
         var _this = this;
+
+        // Če do sem nisi prišel preko vmesnika, 
+        // greš lahko kar lepo nazaj
+        if (!this.game || !this.difficulty) {
+            this.$router.push({ name: 'dashboard' });
+        }
 
         // Initialize note store
         this.notes = new __WEBPACK_IMPORTED_MODULE_5__noteStore__["a" /* default */](this.bar, this.cursor, this.$refs.staff_view.render);
@@ -50493,8 +50531,7 @@ var Fraction = __webpack_require__(7);
                     MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
                 }
 
-                // Play initial exercise
-                _this.play({ type: "playback", action: "replay", what: "exercise" });
+                _this.displayState = "instructions";
             }
         });
 
@@ -76512,19 +76549,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -77966,19 +77990,47 @@ var render = function() {
     "div",
     { staticClass: "rhythm-game__wrap" },
     [
-      _c("StaffView", {
-        ref: "staff_view",
-        attrs: { bar: _vm.bar, cursor: _vm.cursor }
+      _c("loader", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.displayState == "loading",
+            expression: "displayState == 'loading'"
+          }
+        ]
       }),
       _vm._v(" "),
       _c(
-        "Keyboard",
-        _vm._b(
-          { attrs: { cursor: _vm.cursor, playbackStatus: _vm.playback } },
-          "Keyboard",
-          { key_callback: _vm.keyboard_click },
-          false
-        )
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.displayState == "instructions",
+              expression: "displayState == 'instructions'"
+            }
+          ],
+          staticClass: "rhythm__instructions"
+        },
+        [
+          _c(
+            "SexyButton",
+            {
+              attrs: { color: "green", cols: 3 },
+              nativeOn: {
+                click: function($event) {
+                  _vm.startGame()
+                }
+              }
+            },
+            [_vm._v("Začni")]
+          ),
+          _vm._v(" "),
+          _vm._m(0)
+        ],
+        1
       ),
       _vm._v(" "),
       _c(
@@ -77988,19 +78040,68 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm.errorMessage,
-              expression: "errorMessage"
+              value: _vm.displayState == "ready",
+              expression: "displayState == 'ready'"
             }
           ],
-          staticClass: "error"
+          staticClass: "ready-rhythm-game-view"
         },
-        [_vm._v(_vm._s(_vm.errorMessage))]
+        [
+          _c("StaffView", {
+            ref: "staff_view",
+            attrs: { bar: _vm.bar, cursor: _vm.cursor }
+          }),
+          _vm._v(" "),
+          _c(
+            "Keyboard",
+            _vm._b(
+              { attrs: { cursor: _vm.cursor, playbackStatus: _vm.playback } },
+              "Keyboard",
+              { key_callback: _vm.keyboard_click },
+              false
+            )
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errorMessage,
+                  expression: "errorMessage"
+                }
+              ],
+              staticClass: "error"
+            },
+            [_vm._v(_vm._s(_vm.errorMessage))]
+          )
+        ],
+        1
       )
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "rhythm__instructions-list" }, [
+      _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+        _vm._v("Preizkusil se boš v ritmičnem nareku.")
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+        _vm._v(
+          "Program je v preizkusni fazi, zanekrat lahko preizkusiš par vpisanih vaj."
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
