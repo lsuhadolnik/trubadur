@@ -59,6 +59,19 @@ var utilities = {
 
         return realDurations;
 
+    },
+
+    get_bar_count: function(notes){
+
+        var count = 1;
+        for(var i = 0; i < notes.length; i++){
+            if(notes[i].type == "bar"){
+                count++;
+            }
+        }
+
+        return count;
+
     }
 
 }

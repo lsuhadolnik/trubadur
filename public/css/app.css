@@ -19,7 +19,13 @@
 @font-face {
   font-family: 'MusiSync';
   src: url("/fonts/MusiSync.eot");
-  src: url("/fonts/MusiSync.eot?#iefix") format("embedded-opentype"), url("/fonts/MusiSync.woff2") format("woff2"), url("/fonts/MusiSync.woff") format("woff"), url("/fonts/MusiSync.ttf") format("truetype"), url("/fonts/MusiSync.svg#Gotham-Light") format("svg");
+  src: url("/fonts/MusiSync.eot?#iefix") format("embedded-opentype"), url("/fonts/MusiSync.woff2") format("woff2"), url("/fonts/MusiSync.woff") format("woff"), url("/fonts/MusiSync.ttf") format("truetype"), url("/fonts/MusiSync.svg#MusiSync") format("svg");
+}
+
+@font-face {
+  font-family: 'Norfolk';
+  src: url("/fonts/NorfolkStd.eot");
+  src: url("/fonts/NorfolkStd.eot?#iefix") format("embedded-opentype"), url("/fonts/NorfolkStd.woff2") format("woff2"), url("/fonts/NorfolkStd.woff") format("woff"), url("/fonts/NorfolkStd.ttf") format("truetype"), url("/fonts/NorfolkStd.svg#NorfolkStd") format("svg");
 }
 
 .auth {

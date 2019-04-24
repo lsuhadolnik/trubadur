@@ -3431,6 +3431,18 @@ var utilities = {
         console.log(realDurations);
 
         return realDurations;
+    },
+
+    get_bar_count: function get_bar_count(notes) {
+
+        var count = 1;
+        for (var i = 0; i < notes.length; i++) {
+            if (notes[i].type == "bar") {
+                count++;
+            }
+        }
+
+        return count;
     }
 
 };
@@ -50397,6 +50409,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -50431,7 +50446,8 @@ var Fraction = __webpack_require__(7);
 
             questionState: {
                 check: "no", // "no", "correct", "wrong", "next"
-                numChecks: 0
+                numChecks: 0,
+                num_beats: "x"
             },
 
             notes: null,
@@ -50453,6 +50469,23 @@ var Fraction = __webpack_require__(7);
     },
 
 
+    computed: {
+        num_beats_text: function num_beats_text() {
+            switch (this.questionState.num_beats) {
+                case 1:
+                    return "en takt";
+                case 2:
+                    return "dva takta";
+                case 3:
+                    return "tri takte";
+                case 4:
+                    return "štiri takte";
+                default:
+                    return this.questionState.num_beats + " taktov";
+            }
+        }
+    },
+
     methods: {
         keyboard_click: function keyboard_click(event) {
 
@@ -50472,9 +50505,9 @@ var Fraction = __webpack_require__(7);
         startGame: function startGame() {
 
             this.displayState = "ready";
-            this.nextQuestion();
+            this.play({ action: "replay", what: "exercise" });
         },
-        nextQuestion: function nextQuestion() {
+        nextQuestion: function nextQuestion(play) {
 
             // Generate exercise
             this.generator.generate();
@@ -50492,12 +50525,14 @@ var Fraction = __webpack_require__(7);
             this.questionState.check = "no";
             this.playback.bar_info = this.bar;
 
-            this.play({ action: "replay", what: "exercise" });
+            if (play) {
+                this.play({ action: "replay", what: "exercise" });
+            }
         },
         check: function check() {
 
             if (this.questionState.check == "next") {
-                this.nextQuestion();
+                this.nextQuestion(true);
                 return;
             }
 
@@ -50544,6 +50579,9 @@ var Fraction = __webpack_require__(7);
                     this.playback.play();
                 }
             }
+        },
+        showError: function showError(err) {
+            this.errorMessage = err;
         }
     },
 
@@ -50579,6 +50617,9 @@ var Fraction = __webpack_require__(7);
                     MIDI.setVolume(instrument.channel, instrument.volume);
                     MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
                 }
+
+                _this.nextQuestion();
+                _this.questionState.num_beats = _this.generator.get_bar_count();
 
                 _this.displayState = "instructions";
             }
@@ -50621,7 +50662,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 6px;\n  left: 6px;\n  width: 100%;\n  height: 100%;\n  border-radius: 6px;\n}\n.button__percentIndicator[data-v-be802b54] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n.button_3_col[data-v-be802b54] {\n  width: 170px;\n}\n", ""]);
+exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n}\n.button__percentIndicator[data-v-be802b54] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n.button_3_col[data-v-be802b54] {\n  width: 170px;\n}\n", ""]);
 
 // exports
 
@@ -51352,631 +51393,649 @@ var Tuplet = VF.Tuplet;
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-            props: ['bar', 'cursor', 'staveCount'],
+    props: ['bar', 'cursor', 'staveCount'],
 
-            data: function data() {
-                        return {
+    data: function data() {
+        return {
 
-                                    info: {
-                                                width: 2 * window.innerWidth,
-                                                height: 67,
-                                                barWidth: window.innerWidth,
-                                                barHeight: 67,
-                                                barOffsetY: 19,
+            info: {
+                width: 2 * window.innerWidth,
+                height: 67,
+                barWidth: window.innerWidth,
+                barHeight: 67,
+                barOffsetY: 19,
 
-                                                // Determines how much pixels 
-                                                // an average note occupies.
-                                                // Used to space notes evenly
-                                                meanNoteWidth: 60,
+                // Determines how much pixels 
+                // an average note occupies.
+                // Used to space notes evenly
+                meanNoteWidth: 60,
 
-                                                maxStaveWidth: 320,
+                maxStaveWidth: 320,
 
-                                                bubble_class: "minimap-bubble",
-                                                lastMinimapBubbleX: 0,
-                                                lastMinimapBubbleW: 0,
+                bubble_class: "minimap-bubble",
+                lastMinimapBubbleX: 0,
+                lastMinimapBubbleW: 0,
 
-                                                minimap_in_click: false,
+                minimap_in_click: false,
 
-                                                scrollBuffer: {
-                                                            minimapX: 0,
-                                                            scrollX: 0
-                                                },
+                scrollBuffer: {
+                    minimapX: 0,
+                    scrollX: 0
+                },
 
-                                                cursor: {
-                                                            cursorBarClass: "cursor-bar",
-                                                            cursorMargin: 22
-                                                }
+                cursor: {
+                    cursorBarClass: "cursor-bar",
+                    cursorMargin: 22
+                }
 
-                                    },
-
-                                    CTX: {
-                                                minimap: {
-                                                            id: "first-row",
-                                                            role: "minimap"
-                                                },
-                                                zoomview: {
-                                                            id: "second-row",
-                                                            role: "zoomview"
-                                                }
-                                    }
-                        };
             },
 
-            methods: {
-
-                        note_clicked: function note_clicked(Xoffset) {
-
-                                    var closest = this._get_closest_note(Xoffset);
-                                    if (closest.idx >= 0) {
-                                                this.cursor.position = closest.idx + 1;
-                                                this._save_scroll();
-                                                this.$parent.notes._call_render();
-                                                this._restore_scroll();
-                                    }
-                        },
-
-                        _get_closest_note: function _get_closest_note(Xoffset) {
-
-                                    var zoomView = document.getElementById("second-row").parentNode;
-                                    var screenWidth = window.innerWidth;
-                                    var zoomScrollWidth = zoomView.scrollWidth;
-
-                                    var zoomScrollLeft = zoomView.scrollLeft;
-
-                                    var x = Xoffset + zoomScrollLeft;
-
-                                    console.log("screenWidth: " + screenWidth + ", zoomScrollWidth: " + zoomScrollWidth + ", zoomScrollLeft: " + zoomScrollLeft + ", x: " + x);
-
-                                    var x_coords = [];
-                                    zoomView.querySelectorAll(".vf-note").forEach(function (e) {
-                                                x_coords.push(Math.round(e.getClientRects()[0].x + zoomScrollLeft)); // Does not work on iOS, works elsewhere
-                                                //x_coords.push(Math.round((e.getBBox().x + zoomScrollLeft))); // DOES NOT work
-                                    });
-
-                                    console.log(x_coords);
-
-                                    var minIndex = 999;
-                                    var minDiff = 99999;
-                                    var poss = x_coords;
-                                    for (var i = 0; i < poss.length; i++) {
-                                                if (Math.abs(poss[i] - x) < minDiff) {
-                                                            minDiff = Math.abs(poss[i] - x);
-                                                            minIndex = i;
-                                                }
-                                    }
-
-                                    if (minDiff < 50) {
-                                                return { idx: minIndex, xpos: x_coords[minIndex], userx: x };
-                                    }
-
-                                    return { idx: -1, userx: x };
-                        },
-
-                        _get_scroll_data: function _get_scroll_data() {
-
-                                    // Vrni: 
-                                    // - Screen Width
-                                    // - Zoom Width
-                                    // ...
-
-                                    var zoomView = document.getElementById("second-row").parentNode;
-                                    var bubble = document.querySelector("." + this.info.bubble_class);
-
-                                    return {
-
-                                                screenWidth: window.innerWidth,
-
-                                                zoomView: zoomView,
-                                                zoomScrollWidth: zoomView.scrollWidth,
-                                                zoomScrollLeft: zoomView.scrollLeft,
-
-                                                bubble: bubble,
-                                                bubbleWidth: bubble.getAttribute("width"),
-                                                bubbleX: bubble.getAttribute("x")
-                                    };
-                        },
-
-                        _save_scroll: function _save_scroll() {
-
-                                    var zoomView = document.getElementById("second-row").parentNode;
-                                    this.info.scrollBuffer.scrollX = zoomView.scrollLeft;
-
-                                    var bubble = document.querySelector("." + this.info.bubble_class);
-                                    this.info.scrollBuffer.minimapX = bubble.getAttribute('x');
-                        },
-
-                        _restore_scroll: function _restore_scroll() {
-                                    var zoomView = document.getElementById("second-row").parentNode;
-                                    zoomView.scroll(this.info.scrollBuffer.scrollX, 0);
-
-                                    var bubble = document.querySelector("." + this.info.bubble_class);
-                                    bubble.setAttribute('x', this.info.scrollBuffer.minimapX);
-                        },
-
-                        scrolled: function scrolled(x, hasScrolled) {
-
-                                    // Sprejme x koordinato začetka odmika ali balončka
-                                    var minimap = document.getElementById("first-row");
-                                    var bubble = document.querySelector("." + this.info.bubble_class);
-                                    var zoomView = document.getElementById("second-row").parentNode;
-                                    if (!hasScrolled) zoomView.scroll(x, 0);
-
-                                    var zoomScrollWidth = zoomView.scrollWidth;
-                                    var bubbleScrollWidth = minimap.scrollWidth;
-                                    var bubbleWidth = bubble.getAttribute("width");
-
-                                    var bubbleX = x / zoomScrollWidth * bubbleScrollWidth;
-
-                                    bubbleX = Math.max(0, bubbleX);
-                                    bubbleX = Math.min(bubbleScrollWidth - bubbleWidth, bubbleX);
-
-                                    bubble.setAttribute("x", bubbleX);
-                                    this.info.lastMinimapBubbleX = bubbleX;
-                        },
-
-                        _set_bubble_width: function _set_bubble_width(w) {
-                                    var rect = document.querySelector("." + this.info.bubble_class);
-                                    if (rect) rect.setAttribute("width", w);
-
-                                    this.info.lastMinimapBubbleW = w;
-                        },
-
-                        _set_cursor_position: function _set_cursor_position(x) {
-                                    var cE = document.getElementsByClassName(this.info.cursor.cursorBarClass);
-                                    for (var idx_cursor = 0; idx_cursor < cE.length; idx_cursor++) {
-                                                cE[idx_cursor].setAttribute('x', x);
-                                    }
-                        },
-
-                        _vex_draw_voice: function _vex_draw_voice(context, stave, renderQueue, optionals) {
-
-                                    // Create a new voice everytime
-                                    var voice = new VF.Voice({
-                                                num_beats: this.bar.num_beats,
-                                                beat_value: this.bar.base_note
-                                    });
-                                    // DISABLE strict timing
-                                    voice.setMode(__WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Voice.Mode.SOFT);
-                                    voice.setStrict(false);
-
-                                    // Add render queue
-                                    voice.addTickables(renderQueue);
-
-                                    // Been trying different factors.
-                                    // If you change this, make sure, that 16 sixteenth notes fit onto the screen.
-                                    var maxNotesWidth = Math.min(
-                                    // Give equal space to each note
-                                    renderQueue.length * this.info.meanNoteWidth,
-                                    // Until there are too many notes to fit. 
-                                    // Then use maximum width and leave some space at the end
-                                    this.info.barWidth - this.info.meanNoteWidth);
-
-                                    var beams = VF.Beam.applyAndGetBeams(voice);
-
-                                    var formatter = new VF.Formatter();
-                                    formatter.joinVoices([voice]);
-                                    formatter.format([voice], maxNotesWidth);
-
-                                    voice.draw(context, stave);
-
-                                    // Draw the beams:
-                                    beams.forEach(function (beam) {
-                                                beam.setContext(context).draw();
-                                    });
-
-                                    // Draw optionals...
-                                    if (optionals) {
-
-                                                if (optionals.ties) {
-                                                            // Draw the ties
-                                                            optionals.ties.forEach(function (t) {
-                                                                        t.setContext(context).draw();
-                                                            });
-                                                }
-
-                                                if (optionals.tuplets) {
-                                                            // Draw the tuplets:
-                                                            optionals.tuplets.forEach(function (tuplet) {
-                                                                        tuplet.setContext(context).draw();
-                                                            });
-                                                }
-                                    }
-                        },
-
-                        _vex_draw_optionals: function _vex_draw_optionals(context, events) {
-
-                                    if (!events) {
-                                                return;
-                                    }
-
-                                    events.forEach(function (opt) {
-                                                opt.setContext(context).draw();
-                                    });
-                        },
-
-                        // Nova logika
-                        // Najprej naj bo na sceni en stave
-                        // Potem ko se note dodajajo, naj se dodajajo tudi črte
-
-
-                        _vex_draw_staves: function _vex_draw_staves(context, barInfo) {
-
-                                    var staveCount = barInfo.length;
-
-                                    var staves = [];
-
-                                    var startAtX = 0;
-
-                                    for (var idx_bar = 0; idx_bar < barInfo.length; idx_bar++) {
-
-                                                var thisBar = barInfo[idx_bar];
-
-                                                var stave = new VF.Stave(startAtX, // X
-                                                -this.info.barOffsetY, // Y
-                                                thisBar.width // Width
-                                                );
-
-                                                startAtX += thisBar.width;
-
-                                                staves.push(stave);
-
-                                                // If this is the first stave
-                                                if (idx_bar == 0) {
-                                                            // Add a clef and time signature.
-                                                            stave.addTimeSignature(this.bar.num_beats + "/" + this.bar.base_note);
-                                                }
-
-                                                // Connect it to the rendering context
-                                                stave.setContext(context);
-                                    }
-
-                                    var connectors = [];
-
-                                    for (var idx_stave = 1; idx_stave < staveCount; idx_stave++) {
-                                                var connector = new VF.StaveConnector(staves[idx_stave - 1], staves[idx_stave]);
-                                                connector.setType(VF.StaveConnector.type.SINGLE);
-                                                connector.setContext(context);
-                                                connectors.push(connector);
-                                    }
-
-                                    // Draw the first stave
-                                    staves[0].draw();
-
-                                    for (var _idx_stave = 1; _idx_stave < staveCount; _idx_stave++) {
-                                                staves[_idx_stave].draw();
-                                                connectors[_idx_stave - 1].draw();
-                                    }
-
-                                    return staves;
-                        },
-
-                        _minimap_clicked: function _minimap_clicked(x) {
-
-                                    var v = document.getElementById("second-row").parentNode;
-
-                                    // Content width
-                                    var contentWidth = v.scrollWidth;
-
-                                    // Screen width
-                                    var screenWidth = window.innerWidth;
-
-                                    // Touch X
-                                    var touchX = x;
-
-                                    var sDoSomeMath = touchX / screenWidth * contentWidth - screenWidth / 2;
-
-                                    this.scrolled(sDoSomeMath);
-                        },
-                        _cursor_rendered: function _cursor_rendered(cursorNode, descriptor) {
-
-                                    var screenWidth = window.innerWidth;
-                                    var sR = document.getElementById("second-row").parentElement;
-                                    var scrollWidth = sR.scrollWidth;
-
-                                    // ZOOM-BREAK
-                                    var minimapWidth = screenWidth * 2;
-
-                                    var bubbleW = screenWidth / scrollWidth * minimapWidth;
-
-                                    // No cursor note
-                                    // Cursor is right at the start
-                                    if (!cursorNode) {
-
-                                                this._set_cursor_position(20);
-                                                return;
-                                    }
-
-                                    var bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getBoundingClientRect();
-                                    //let bbox = cursorNode.attrs.el.getClientRects()[0];
-                                    //let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getClientRects()[0];
-
-                                    var startX = bbox.left + bbox.width / 2;
-                                    //let startX = bbox.x;
-
-                                    // To sicer dela, ampak ne na iPhonu
-                                    // let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getClientRects()[0];
-                                    // let startX = bbox.x;
-
-
-                                    // ZOOM-BREAK
-                                    this._set_bubble_width(bubbleW);
-
-                                    if (descriptor.role == "zoomview") {
-
-                                                var zoomScrollWidth = scrollWidth;
-                                                var bubbleScrollWidth = minimapWidth;
-
-                                                var v = (startX + sR.scrollLeft) / zoomScrollWidth * bubbleScrollWidth + this.info.cursor.cursorMargin;
-
-                                                this._set_cursor_position(v);
-                                    }
-
-                                    // Here I could cancel unnecessary scroll if the cursor was still visible
-                                    // But I disabled that
-
-
-                                    this.scrolled(startX - screenWidth * 0.5);
-                        },
-                        _render_context: function _render_context(descriptor, notes, cursor) {
-
-                                    // Render onto n bars. Assumes no bar overlapping...
-
-                                    // Size our svg:
-                                    descriptor.renderer.resize(this.info.width, this.info.height);
-
-                                    // element from CTX object
-                                    // We created the context in mounted()
-                                    var context = descriptor.context;
-
-                                    // Clear all notes from svg
-                                    context.clear();
-
-                                    //let staveIndex = 0;
-                                    var cursorNote = null;
-
-                                    var currentStaveNoteIdx = 0;
-
-                                    var batches = [];
-                                    var barInfo = [];
-
-                                    var ties = [];
-                                    var tuplets = [];
-
-                                    var renderQueue = [];
-                                    var currentDuration = new Fraction(0);
-
-                                    var allStaveNotes = [];
-
-                                    for (var i = 0; i < notes.length; i++) {
-
-                                                // Bye bye, false note
-                                                if (!notes[i]) {
-                                                            continue;
-                                                }
-
-                                                // Handle notes and rests
-                                                var newNote = new StaveNote({
-                                                            clef: "treble",
-                                                            keys: ["g/4"],
-                                                            duration: notes[i].symbol
-                                                });
-
-                                                // Omogoči stiliziranje not
-                                                // V zapis lahko zdaj daš objekt style in noter recimo informacije o barvi...
-                                                if (notes[i].style) {
-                                                            newNote.setStyle(notes[i].style);
-                                                }
-
-                                                // Handle dots
-                                                if (notes[i].dot) {
-                                                            newNote.addDot(0); // enako je tudi newNote.addDotToAll()
-                                                }
-
-                                                // Get the note the cursor will stick to
-                                                if (i + 1 == cursor.position) {
-                                                            cursorNote = newNote;
-                                                }
-
-                                                allStaveNotes.push(newNote);
-                                                renderQueue.push(newNote);
-                                                currentStaveNoteIdx++;
-
-                                                if (notes[i].tie && i > 0) {
-
-                                                            // tie is:
-                                                            //  - this note + last note
-                                                            ties.push(new VF.StaveTie({
-                                                                        first_note: allStaveNotes[i - 1],
-                                                                        last_note: allStaveNotes[i],
-                                                                        first_indices: [0],
-                                                                        last_indices: [0]
-                                                            }));
-                                                }
-
-                                                if (notes[i].tuplet_from >= 0) {
-                                                            tuplets.push(new __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Tuplet(allStaveNotes.slice(notes[i].tuplet_from, notes[i].tuplet_to), {
-                                                                        bracketed: true, rationed: false, num_notes: notes[i].tuplet_type
-                                                            }));
-                                                }
-
-                                                currentDuration = currentDuration.add(notes[i].duration);
-
-                                                // Kaj naredi:
-                                                // => currentDuration.compare(new Fraction(1)) == 0 
-                                                //    Ko je dovolj not za en takt, ga izrišem.
-                                                // => !(staveIndex + 1 == staves.length && i + 1 < notes.length)
-                                                //    V primeru da je not preveč, takta ne izrišem, ampak prihranim za zadnjega.
-
-                                                //if(currentDuration.compare(new Fraction(this.bar.num_beats, this.bar.base_note)) >= 0 && !(staveIndex + 1 == staves.length && i + 1 < notes.length)){                  
-                                                if (currentDuration.compare(new Fraction(this.bar.num_beats, this.bar.base_note)) >= 0) {
-
-                                                            // Not yet
-                                                            // this._vex_draw_voice(context, staves[staveIndex++], renderQueue);
-                                                            batches.push(renderQueue);
-                                                            //staveIndex++;
-
-                                                            renderQueue = [];
-                                                            currentDuration = new Fraction(0);
-                                                }
-                                    }
-
-                                    // If there are still some notes left 
-                                    // Happens if the bar is incomplete
-                                    // sum(durations) != 1
-                                    // Not only if less than 1 (incomplete bar)
-                                    // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
-                                    if (renderQueue.length > 0) {
-                                                // Draw the rest
-                                                //this._vex_draw_voice(context, staves[staveIndex], renderQueue);
-                                                batches.push(renderQueue);
-                                    }
-
-                                    this._vex_render_batches(context, batches, [ties, tuplets]);
-
-                                    // Render the minimap rectangle
-                                    if (descriptor.role == "minimap") {
-
-                                                descriptor.context.rect(this.info.lastMinimapBubbleX, 0, this.info.lastMinimapBubbleW, this.info.barHeight, {
-                                                            class: this.info.bubble_class,
-                                                            fill: "red",
-                                                            opacity: 0.5
-                                                });
-                                    }
-
-                                    // RENDER CURSOR BAR
-                                    descriptor.context.rect(150, 0, 2, this.info.barHeight, {
-                                                class: this.info.cursor.cursorBarClass,
-                                                fill: "green",
-                                                opacity: 0.5
-                                    });
-
-                                    this._cursor_rendered(cursorNote, descriptor);
-
-                                    // Nastavi lastnost cursor.in_tuplet
-                                    // S tem skrijem gumbe takrat, ko sem v trioli, 
-                                    /// zato da se ne dogajajo čudne stvari
-                                    if (this.cursor.position - 1 >= 0 && notes.length > this.cursor.position - 1) {
-                                                var ccNote = notes[this.cursor.position - 1];
-                                                if (ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_from")) {
-                                                            this.cursor.in_tuplet = true;
-                                                } else {
-                                                            this.cursor.in_tuplet = false;
-                                                }
-                                    } else {
-                                                this.cursor.in_tuplet = false;
-                                    }
-                        },
-                        _vex_render_batches: function _vex_render_batches(context, batches, optionals) {
-                                    var _this = this;
-
-                                    //debugger;
-                                    // Redraw staves
-                                    var barInfo = [];
-
-                                    var widthLeft = this.info.width;
-
-                                    batches.forEach(function (batch) {
-                                                var maxNotesWidth = Math.min(
-                                                // Give equal space to each note
-                                                batch.length * _this.info.meanNoteWidth + 5,
-                                                // Until there are too many notes to fit. 
-                                                // Then use maximum width and leave some space at the end
-                                                _this.info.barWidth - _this.info.meanNoteWidth);
-
-                                                widthLeft -= maxNotesWidth;
-
-                                                barInfo.push({
-                                                            width: maxNotesWidth
-                                                });
-                                    });
-
-                                    // Initial empty bar
-                                    if (widthLeft > 0) {
-                                                barInfo.push({
-                                                            width: widthLeft
-                                                });
-                                    }
-
-                                    var staves = this._vex_draw_staves(context, barInfo);
-
-                                    for (var i = 0; i < batches.length; i++) {
-                                                this._vex_draw_voice(context, staves[i], batches[i]);
-                                    }
-
-                                    // Draw ties and tuplets
-                                    optionals.forEach(function (opt) {
-                                                _this._vex_draw_optionals(context, opt);
-                                    });
-                        },
-                        render: function render(notes, cursor) {
-                                    for (var key in this.CTX) {
-                                                this._render_context(this.CTX[key], notes, cursor);
-                                    }
-                        },
-                        rerender_notes: function rerender_notes() {
-                                    this.$parent.notes._call_render();
-                        },
-                        viewportResized: function viewportResized() {
-
-                                    this.info.width = 2 * window.innerWidth;
-                                    this.info.barWidth = window.innerWidth;
-
-                                    this.rerender_notes();
-                        }
-            },
-            mounted: function mounted() {
-
-                        // VexFlow Magic
-                        var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
-                        for (var ctx_key in this.CTX) {
-                                    var div = document.getElementById(this.CTX[ctx_key].id);
-                                    var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
-
-                                    this.CTX[ctx_key].el = div;
-                                    this.CTX[ctx_key].parentElement = div.parentElement;
-                                    this.CTX[ctx_key].scrollElement = div.parentElement;
-                                    this.CTX[ctx_key].renderer = renderer;
-                                    this.CTX[ctx_key].context = renderer.getContext();
-                        }
-
-                        // INIT
-                        var sR = this.CTX.zoomview.parentElement;
-                        var vue = this;
-                        sR.onscroll = function (e) {
-                                    vue.scrolled(sR.scrollLeft, true);
-                                    //e.preventDefault();
-                                    return false;
-                        };
-
-                        sR.onclick = function (e) {
-                                    vue.note_clicked(e.clientX);
-                        };
-
-                        var fR = this.CTX.minimap.parentElement;
-
-                        fR.ontouchmove = function (e) {
-                                    vue._minimap_clicked(e.touches[0].clientX);
-                        };
-
-                        fR.onmousedown = function (e) {
-                                    vue.info.minimap_in_click = true;
-                                    vue._minimap_clicked(e.clientX);
-                        };
-                        fR.onmouseup = function (e) {
-                                    vue.info.minimap_in_click = false;
-                        };
-                        fR.onmousemove = function (e) {
-                                    if (vue.info.minimap_in_click) vue._minimap_clicked(e.clientX);
-                        };
-
-                        window.onresize = function (event) {
-                                    vue.viewportResized();
-                        };
-
-                        window.onorientationchange = function (event) {
-                                    vue.viewportResized();
-                        };
+            CTX: {
+                minimap: {
+                    id: "first-row",
+                    role: "minimap"
+                },
+                zoomview: {
+                    id: "second-row",
+                    role: "zoomview"
+                }
             }
+        };
+    },
+
+    methods: {
+
+        note_clicked: function note_clicked(Xoffset) {
+
+            var closest = this._get_closest_note(Xoffset);
+            if (closest.idx >= 0) {
+                this.cursor.position = closest.idx + 1;
+                this._save_scroll();
+                this.$parent.notes._call_render();
+                this._restore_scroll();
+            }
+        },
+
+        _get_closest_note: function _get_closest_note(Xoffset) {
+
+            var zoomView = document.getElementById("second-row").parentNode;
+            var screenWidth = window.innerWidth;
+            var zoomScrollWidth = zoomView.scrollWidth;
+
+            var zoomScrollLeft = zoomView.scrollLeft;
+
+            var x = Xoffset + zoomScrollLeft;
+
+            console.log("screenWidth: " + screenWidth + ", zoomScrollWidth: " + zoomScrollWidth + ", zoomScrollLeft: " + zoomScrollLeft + ", x: " + x);
+
+            var x_coords = [];
+            zoomView.querySelectorAll(".vf-note").forEach(function (e) {
+                x_coords.push(Math.round(e.getClientRects()[0].x + zoomScrollLeft)); // Does not work on iOS, works elsewhere
+                //x_coords.push(Math.round((e.getBBox().x + zoomScrollLeft))); // DOES NOT work
+            });
+
+            console.log(x_coords);
+
+            var minIndex = 999;
+            var minDiff = 99999;
+            var poss = x_coords;
+            for (var i = 0; i < poss.length; i++) {
+                if (Math.abs(poss[i] - x) < minDiff) {
+                    minDiff = Math.abs(poss[i] - x);
+                    minIndex = i;
+                }
+            }
+
+            if (minDiff < 50) {
+                return { idx: minIndex, xpos: x_coords[minIndex], userx: x };
+            }
+
+            return { idx: -1, userx: x };
+        },
+
+        _get_scroll_data: function _get_scroll_data() {
+
+            // Vrni: 
+            // - Screen Width
+            // - Zoom Width
+            // ...
+
+            var zoomView = document.getElementById("second-row").parentNode;
+            var bubble = document.querySelector("." + this.info.bubble_class);
+
+            return {
+
+                screenWidth: window.innerWidth,
+
+                zoomView: zoomView,
+                zoomScrollWidth: zoomView.scrollWidth,
+                zoomScrollLeft: zoomView.scrollLeft,
+
+                bubble: bubble,
+                bubbleWidth: bubble.getAttribute("width"),
+                bubbleX: bubble.getAttribute("x")
+            };
+        },
+
+        _save_scroll: function _save_scroll() {
+
+            var zoomView = document.getElementById("second-row").parentNode;
+            this.info.scrollBuffer.scrollX = zoomView.scrollLeft;
+
+            var bubble = document.querySelector("." + this.info.bubble_class);
+            this.info.scrollBuffer.minimapX = bubble.getAttribute('x');
+        },
+
+        _restore_scroll: function _restore_scroll() {
+            var zoomView = document.getElementById("second-row").parentNode;
+            zoomView.scroll(this.info.scrollBuffer.scrollX, 0);
+
+            var bubble = document.querySelector("." + this.info.bubble_class);
+            bubble.setAttribute('x', this.info.scrollBuffer.minimapX);
+        },
+
+        scrolled: function scrolled(x, hasScrolled) {
+
+            // Sprejme x koordinato začetka odmika ali balončka
+            var minimap = document.getElementById("first-row");
+            var bubble = document.querySelector("." + this.info.bubble_class);
+            var zoomView = document.getElementById("second-row").parentNode;
+            if (!hasScrolled) zoomView.scroll(x, 0);
+
+            var zoomScrollWidth = zoomView.scrollWidth;
+            var bubbleScrollWidth = minimap.scrollWidth;
+            var bubbleWidth = bubble.getAttribute("width");
+
+            var bubbleX = x / zoomScrollWidth * bubbleScrollWidth;
+
+            bubbleX = Math.max(0, bubbleX);
+            bubbleX = Math.min(bubbleScrollWidth - bubbleWidth, bubbleX);
+
+            bubble.setAttribute("x", bubbleX);
+            this.info.lastMinimapBubbleX = bubbleX;
+        },
+
+        _set_bubble_width: function _set_bubble_width(w) {
+            var rect = document.querySelector("." + this.info.bubble_class);
+            if (rect) rect.setAttribute("width", w);
+
+            this.info.lastMinimapBubbleW = w;
+        },
+
+        _set_cursor_position: function _set_cursor_position(x) {
+            var cE = document.getElementsByClassName(this.info.cursor.cursorBarClass);
+            for (var idx_cursor = 0; idx_cursor < cE.length; idx_cursor++) {
+                cE[idx_cursor].setAttribute('x', x);
+            }
+        },
+
+        _vex_draw_voice: function _vex_draw_voice(context, stave, renderQueue, optionals) {
+
+            // Create a new voice everytime
+            var voice = new VF.Voice({
+                num_beats: this.bar.num_beats,
+                beat_value: this.bar.base_note
+            });
+            // DISABLE strict timing
+            voice.setMode(__WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Voice.Mode.SOFT);
+            voice.setStrict(false);
+
+            // Add render queue
+            voice.addTickables(renderQueue);
+
+            // Been trying different factors.
+            // If you change this, make sure, that 16 sixteenth notes fit onto the screen.
+            var maxNotesWidth = Math.min(
+            // Give equal space to each note
+            renderQueue.length * this.info.meanNoteWidth,
+            // Until there are too many notes to fit. 
+            // Then use maximum width and leave some space at the end
+            this.info.barWidth - this.info.meanNoteWidth);
+
+            var beams = VF.Beam.applyAndGetBeams(voice);
+
+            var formatter = new VF.Formatter();
+            formatter.joinVoices([voice]);
+            formatter.format([voice], maxNotesWidth);
+
+            voice.draw(context, stave);
+
+            // Draw the beams:
+            beams.forEach(function (beam) {
+                beam.setContext(context).draw();
+            });
+
+            // Draw optionals...
+            if (optionals) {
+
+                if (optionals.ties) {
+                    // Draw the ties
+                    optionals.ties.forEach(function (t) {
+                        t.setContext(context).draw();
+                    });
+                }
+
+                if (optionals.tuplets) {
+                    // Draw the tuplets:
+                    optionals.tuplets.forEach(function (tuplet) {
+                        tuplet.setContext(context).draw();
+                    });
+                }
+            }
+        },
+
+        _vex_draw_optionals: function _vex_draw_optionals(context, events) {
+
+            if (!events) {
+                return;
+            }
+
+            events.forEach(function (opt) {
+                opt.setContext(context).draw();
+            });
+        },
+
+        // Nova logika
+        // Najprej naj bo na sceni en stave
+        // Potem ko se note dodajajo, naj se dodajajo tudi črte
+
+
+        _vex_draw_staves: function _vex_draw_staves(context, barInfo) {
+
+            var staveCount = barInfo.length;
+
+            var staves = [];
+
+            var startAtX = 0;
+
+            for (var idx_bar = 0; idx_bar < barInfo.length; idx_bar++) {
+
+                var thisBar = barInfo[idx_bar];
+
+                var stave = new VF.Stave(startAtX, // X
+                -this.info.barOffsetY, // Y
+                thisBar.width // Width
+                );
+
+                startAtX += thisBar.width;
+
+                staves.push(stave);
+
+                // If this is the first stave
+                if (idx_bar == 0) {
+                    // Add a clef and time signature.
+                    stave.addTimeSignature(this.bar.num_beats + "/" + this.bar.base_note);
+                }
+
+                // Connect it to the rendering context
+                stave.setContext(context);
+            }
+
+            var connectors = [];
+
+            for (var idx_stave = 1; idx_stave < staveCount; idx_stave++) {
+                var connector = new VF.StaveConnector(staves[idx_stave - 1], staves[idx_stave]);
+                connector.setType(VF.StaveConnector.type.SINGLE);
+                connector.setContext(context);
+                connectors.push(connector);
+            }
+
+            // Draw the first stave
+            staves[0].draw();
+
+            for (var _idx_stave = 1; _idx_stave < staveCount; _idx_stave++) {
+                staves[_idx_stave].draw();
+                connectors[_idx_stave - 1].draw();
+            }
+
+            return staves;
+        },
+
+        _minimap_clicked: function _minimap_clicked(x) {
+
+            var v = document.getElementById("second-row").parentNode;
+
+            // Content width
+            var contentWidth = v.scrollWidth;
+
+            // Screen width
+            var screenWidth = window.innerWidth;
+
+            // Touch X
+            var touchX = x;
+
+            var sDoSomeMath = touchX / screenWidth * contentWidth - screenWidth / 2;
+
+            this.scrolled(sDoSomeMath);
+        },
+        _cursor_rendered: function _cursor_rendered(cursorNode, descriptor) {
+
+            var screenWidth = window.innerWidth;
+            var sR = document.getElementById("second-row").parentElement;
+            var scrollWidth = sR.scrollWidth;
+
+            // ZOOM-BREAK
+            var minimapWidth = screenWidth * 2;
+
+            var bubbleW = screenWidth / scrollWidth * minimapWidth;
+
+            // No cursor note
+            // Cursor is right at the start
+            if (!cursorNode) {
+
+                this._set_cursor_position(20);
+                return;
+            }
+
+            var bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getBoundingClientRect();
+            //let bbox = cursorNode.attrs.el.getClientRects()[0];
+            //let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getClientRects()[0];
+
+            var startX = bbox.left + bbox.width / 2;
+            //let startX = bbox.x;
+
+            // To sicer dela, ampak ne na iPhonu
+            // let bbox = cursorNode.attrs.el.getElementsByClassName("vf-note")[0].getClientRects()[0];
+            // let startX = bbox.x;
+
+
+            // ZOOM-BREAK
+            this._set_bubble_width(bubbleW);
+
+            if (descriptor.role == "zoomview") {
+
+                var zoomScrollWidth = scrollWidth;
+                var bubbleScrollWidth = minimapWidth;
+
+                var v = (startX + sR.scrollLeft) / zoomScrollWidth * bubbleScrollWidth + this.info.cursor.cursorMargin;
+
+                this._set_cursor_position(v);
+            }
+
+            // Here I could cancel unnecessary scroll if the cursor was still visible
+            // But I disabled that
+
+
+            this.scrolled(startX - screenWidth * 0.5);
+        },
+        _render_context: function _render_context(descriptor, notes, cursor) {
+
+            // Render onto n bars. Assumes no bar overlapping...
+
+            // Size our svg:
+            descriptor.renderer.resize(this.info.width, this.info.height);
+
+            // element from CTX object
+            // We created the context in mounted()
+            var context = descriptor.context;
+
+            // Clear all notes from svg
+            context.clear();
+
+            //let staveIndex = 0;
+            var cursorNote = null;
+
+            var batches = [];
+            var barInfo = [];
+
+            var ties = [];
+            var tuplets = [];
+            var renderQueue = [];
+            //var currentDuration = new Fraction(0);
+
+            var allStaveNotes = [];
+
+            var latestNoteIndex = 0;
+            var lastNoteIndex = -1;
+
+            for (var i = 0; i < notes.length; i++) {
+
+                var thisNote = notes[i];
+
+                if (thisNote.type != "bar") {
+                    lastNoteIndex = latestNoteIndex;
+                    latestNoteIndex = i;
+                }
+
+                // Bye bye, false note
+                if (!thisNote) {
+                    continue;
+                }
+
+                // Handle notes and rests
+                var newNote = new StaveNote({
+                    clef: "treble",
+                    keys: ["g/4"],
+                    duration: thisNote.symbol
+                });
+
+                // Omogoči stiliziranje not
+                // V zapis lahko zdaj daš objekt style in noter recimo informacije o barvi...
+                if (thisNote.style) {
+                    newNote.setStyle(thisNote.style);
+                }
+
+                // Handle dots
+                if (thisNote.dot) {
+                    newNote.addDot(0); // enako je tudi newNote.addDotToAll()
+                }
+
+                // Get the note the cursor will stick to
+                if (i + 1 == cursor.position) {
+                    cursorNote = newNote;
+                }
+
+                allStaveNotes.push(newNote);
+
+                if (thisNote.type != "bar") renderQueue.push(newNote);
+
+                if (thisNote.type == "bar") {
+                    newNote.setStyle({ fillStyle: "transparent", strokeStyle: "transparent" });
+                }
+
+                if (thisNote.tie && i > 0) {
+
+                    // tie is:
+                    //  - this note + last note
+                    ties.push(new VF.StaveTie({
+                        first_note: allStaveNotes[lastNoteIndex],
+                        last_note: allStaveNotes[latestNoteIndex],
+                        first_indices: [0],
+                        last_indices: [0]
+                    }));
+                }
+
+                if (thisNote.tuplet_from >= 0) {
+                    tuplets.push(new __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Tuplet(allStaveNotes.slice(thisNote.tuplet_from, thisNote.tuplet_to), {
+                        bracketed: true, rationed: false, num_notes: thisNote.tuplet_type
+                    }));
+                }
+
+                /* The old auto-bar logic 
+                currentDuration = currentDuration.add(notes[i].duration);
+                
+                // Kaj naredi:
+                // => currentDuration.compare(new Fraction(1)) == 0 
+                //    Ko je dovolj not za en takt, ga izrišem.
+                // => !(staveIndex + 1 == staves.length && i + 1 < notes.length)
+                //    V primeru da je not preveč, takta ne izrišem, ampak prihranim za zadnjega.
+                  //if(currentDuration.compare(new Fraction(this.bar.num_beats, this.bar.base_note)) >= 0 && !(staveIndex + 1 == staves.length && i + 1 < notes.length)){                  
+                if(currentDuration.compare(new Fraction(this.bar.num_beats, this.bar.base_note)) >= 0){                      
+                  
+                    // Not yet
+                    // this._vex_draw_voice(context, staves[staveIndex++], renderQueue);
+                    batches.push(renderQueue);
+                    //staveIndex++;
+                      renderQueue = [];
+                    currentDuration = new Fraction(0);
+                }
+                */
+
+                /* the new manual bar logic */
+                if (notes[i].type == "bar") {
+
+                    batches.push(renderQueue);
+                    renderQueue = [newNote];
+                }
+            }
+
+            // If there are still some notes left 
+            // Happens if the bar is incomplete
+            // sum(durations) != 1
+            // Not only if less than 1 (incomplete bar)
+            // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
+            if (renderQueue.length > 0) {
+                // Draw the rest
+                //this._vex_draw_voice(context, staves[staveIndex], renderQueue);
+                batches.push(renderQueue);
+            }
+
+            this._vex_render_batches(context, batches, [ties, tuplets]);
+
+            // Render the minimap rectangle
+            if (descriptor.role == "minimap") {
+
+                descriptor.context.rect(this.info.lastMinimapBubbleX, 0, this.info.lastMinimapBubbleW, this.info.barHeight, {
+                    class: this.info.bubble_class,
+                    fill: "red",
+                    opacity: 0.5
+                });
+            }
+
+            // RENDER CURSOR BAR
+            descriptor.context.rect(150, 0, 2, this.info.barHeight, {
+                class: this.info.cursor.cursorBarClass,
+                fill: "green",
+                opacity: 0.5
+            });
+
+            this._cursor_rendered(cursorNote, descriptor);
+
+            // Nastavi lastnost cursor.in_tuplet
+            // S tem skrijem gumbe takrat, ko sem v trioli, 
+            /// zato da se ne dogajajo čudne stvari
+            if (this.cursor.position - 1 >= 0 && notes.length > this.cursor.position - 1) {
+                var ccNote = notes[this.cursor.position - 1];
+                if (ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_from")) {
+                    this.cursor.in_tuplet = true;
+                } else {
+                    this.cursor.in_tuplet = false;
+                }
+            } else {
+                this.cursor.in_tuplet = false;
+            }
+        },
+        _vex_render_batches: function _vex_render_batches(context, batches, optionals) {
+            var _this = this;
+
+            //debugger;
+            // Redraw staves
+            var barInfo = [];
+
+            var widthLeft = this.info.width;
+
+            batches.forEach(function (batch) {
+                var maxNotesWidth = Math.min(
+                // Give equal space to each note
+                batch.length * _this.info.meanNoteWidth + 5,
+                // Until there are too many notes to fit. 
+                // Then use maximum width and leave some space at the end
+                _this.info.barWidth - _this.info.meanNoteWidth);
+
+                widthLeft -= maxNotesWidth;
+
+                barInfo.push({
+                    width: maxNotesWidth
+                });
+            });
+
+            // Initial empty bar
+            if (widthLeft > 0) {
+                barInfo.push({
+                    width: widthLeft
+                });
+            }
+
+            var staves = this._vex_draw_staves(context, barInfo);
+
+            for (var i = 0; i < batches.length; i++) {
+                this._vex_draw_voice(context, staves[i], batches[i]);
+            }
+
+            // Draw ties and tuplets
+            optionals.forEach(function (opt) {
+                _this._vex_draw_optionals(context, opt);
+            });
+        },
+        render: function render(notes, cursor) {
+            for (var key in this.CTX) {
+                this._render_context(this.CTX[key], notes, cursor);
+            }
+        },
+        rerender_notes: function rerender_notes() {
+            this.$parent.notes._call_render();
+        },
+        viewportResized: function viewportResized() {
+
+            this.info.width = 2 * window.innerWidth;
+            this.info.barWidth = window.innerWidth;
+
+            this.rerender_notes();
+        }
+    },
+    mounted: function mounted() {
+
+        // VexFlow Magic
+        var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
+        for (var ctx_key in this.CTX) {
+            var div = document.getElementById(this.CTX[ctx_key].id);
+            var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
+
+            this.CTX[ctx_key].el = div;
+            this.CTX[ctx_key].parentElement = div.parentElement;
+            this.CTX[ctx_key].scrollElement = div.parentElement;
+            this.CTX[ctx_key].renderer = renderer;
+            this.CTX[ctx_key].context = renderer.getContext();
+        }
+
+        // INIT
+        var sR = this.CTX.zoomview.parentElement;
+        var vue = this;
+        sR.onscroll = function (e) {
+            vue.scrolled(sR.scrollLeft, true);
+            //e.preventDefault();
+            return false;
+        };
+
+        sR.onclick = function (e) {
+            vue.note_clicked(e.clientX);
+        };
+
+        var fR = this.CTX.minimap.parentElement;
+
+        fR.ontouchmove = function (e) {
+            vue._minimap_clicked(e.touches[0].clientX);
+        };
+
+        fR.onmousedown = function (e) {
+            vue.info.minimap_in_click = true;
+            vue._minimap_clicked(e.clientX);
+        };
+        fR.onmouseup = function (e) {
+            vue.info.minimap_in_click = false;
+        };
+        fR.onmousemove = function (e) {
+            if (vue.info.minimap_in_click) vue._minimap_clicked(e.clientX);
+        };
+
+        window.onresize = function (event) {
+            vue.viewportResized();
+        };
+
+        window.onorientationchange = function (event) {
+            vue.viewportResized();
+        };
+    }
 });
 
 /***/ }),
@@ -76348,7 +76407,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-79470641] {\n  font-size: 8pt !important;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  margin-bottom: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_fourth .button[data-v-79470641] {\n  width: 140px;\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n.rhythm-game__staff__second-row[data-v-79470641] {\n    margin-bottom: -27px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-79470641] {\n  font-size: 8pt !important;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  margin-bottom: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_third .button[data-v-79470641] {\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n.rhythm-game__staff__second-row[data-v-79470641] {\n    margin-bottom: -27px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -76603,6 +76662,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -76622,44 +76724,28 @@ var Fraction = __webpack_require__(7);
 /* harmony default export */ __webpack_exports__["default"] = ({
 
     methods: {
-        whole_note: function whole_note() {
+        note: function note(num) {
 
             this.key_callback({
                 type: this.rest_mode ? 'r' : 'n',
-                symbol: this.rest_mode ? 'wr' : 'w',
-                duration: new Fraction(1)
+                symbol: this.rest_mode ? num + 'r' : "" + num,
+                duration: new Fraction(1).div(num)
             });
         },
-        half_note: function half_note() {
+        rest: function rest(num) {
 
             this.key_callback({
-                type: this.rest_mode ? 'r' : 'n',
-                symbol: this.rest_mode ? '2r' : '2',
-                duration: new Fraction(1).div(2)
+                type: 'r',
+                symbol: num + 'r',
+                duration: new Fraction(1).div(num)
             });
         },
-        quarter_note: function quarter_note() {
+        add_bar: function add_bar() {
 
             this.key_callback({
-                type: this.rest_mode ? 'r' : 'n',
-                symbol: this.rest_mode ? '4r' : '4',
-                duration: new Fraction(1).div(4)
-            });
-        },
-        eight_note: function eight_note() {
-
-            this.key_callback({
-                type: this.rest_mode ? 'r' : 'n',
-                symbol: this.rest_mode ? '8r' : '8',
-                duration: new Fraction(1).div(8)
-            });
-        },
-        sixteenth_note: function sixteenth_note() {
-
-            this.key_callback({
-                type: this.rest_mode ? 'r' : 'n',
-                symbol: this.rest_mode ? '16r' : '16',
-                duration: new Fraction(1).div(16)
+                type: 'bar',
+                symbol: '4',
+                duration: new Fraction(0)
             });
         },
         move_cursor_forward: function move_cursor_forward() {
@@ -76756,6 +76842,47 @@ var Fraction = __webpack_require__(7);
         },
         toggle_rest_mode: function toggle_rest_mode() {
             this.rest_mode = !this.rest_mode;
+        },
+        note_text: function note_text(type) {
+            switch (type) {
+                case 2:
+                    return "h";
+                case 4:
+                    return "q";
+                case 8:
+                    return "e";
+                case 16:
+                    return "s";
+                case 32:
+                    return "32";
+            }
+        },
+        rest_text: function rest_text(type) {
+            switch (type) {
+                case 2:
+                    return "H";
+                case 4:
+                    return "Q";
+                case 8:
+                    return "E";
+                case 16:
+                    return "S";
+                case 32:
+                    return "32R";
+            }
+        },
+        note_color: function note_color() {
+            return "green";
+        },
+        rest_color: function rest_color() {
+            return "red";
+        },
+        touchStarted: function touchStarted() {
+            alert("HEEY!");
+        },
+        touchEnded: function touchEnded() {
+
+            alert("OOON");
         }
     },
     components: {
@@ -76769,30 +76896,8 @@ var Fraction = __webpack_require__(7);
             buttons: false
         };
     },
-    props: ['key_callback', 'cursor', 'playbackStatus', 'question'],
+    props: ['key_callback', 'cursor', 'playbackStatus', 'question', 'reportError'],
     computed: {
-        note_color: function note_color() {
-            if (this.rest_mode) return "red";else return "green";
-        },
-        half_text: function half_text() {
-            if (this.rest_mode) return "H";else return "h";
-        },
-        quarter_text: function quarter_text() {
-            if (this.rest_mode) return "Q";else return "q";
-        },
-        eight_text: function eight_text() {
-            if (this.rest_mode) return "E";else return "e";
-        },
-        sixteenth_text: function sixteenth_text() {
-            if (this.rest_mode) return "S";else return "s";
-        },
-        rest_mode_button_color: function rest_mode_button_color() {
-            if (this.rest_mode) return "green";else return "red";
-        },
-        rest_mode_button_text: function rest_mode_button_text() {
-            if (this.rest_mode) return "es";else return "ES";
-        },
-
         percentsUser: function percentsUser() {
             if (this.playbackStatus.currentlyLoaded == "user") {
 
@@ -77089,34 +77194,17 @@ var render = function() {
       _c("div", { staticClass: "rhythm-game__keyboard" }, [
         _c(
           "div",
-          { staticClass: "row rhythm-game__keyboard-row" },
+          { staticClass: "row rhythm-game__keyboard-row " },
           [
-            _c(
-              "sexy-button",
-              {
-                attrs: { color: "orange" },
-                nativeOn: {
-                  click: function($event) {
-                    _vm.move_cursor_forward()
-                  }
-                }
-              },
-              [
-                _c("span", { staticStyle: { "font-family": "Gotham round" } }, [
-                  _vm._v("\n                        >\n                    ")
-                ])
-              ]
-            ),
-            _vm._v(" "),
             _c("sexy-button", {
               attrs: {
                 hidden: _vm.cursor.in_tuplet,
-                text: _vm.half_text,
-                color: _vm.note_color
+                text: _vm.note_text(2),
+                color: _vm.note_color()
               },
               nativeOn: {
                 click: function($event) {
-                  _vm.half_note()
+                  _vm.note(2)
                 }
               }
             }),
@@ -77124,12 +77212,12 @@ var render = function() {
             _c("sexy-button", {
               attrs: {
                 hidden: _vm.cursor.in_tuplet,
-                text: _vm.quarter_text,
-                color: _vm.note_color
+                text: _vm.note_text(4),
+                color: _vm.note_color()
               },
               nativeOn: {
                 click: function($event) {
-                  _vm.quarter_note()
+                  _vm.note(4)
                 }
               }
             }),
@@ -77137,12 +77225,12 @@ var render = function() {
             _c("sexy-button", {
               attrs: {
                 hidden: _vm.cursor.in_tuplet,
-                text: _vm.eight_text,
-                color: _vm.note_color
+                text: _vm.note_text(8),
+                color: _vm.note_color()
               },
               nativeOn: {
                 click: function($event) {
-                  _vm.eight_note()
+                  _vm.note(8)
                 }
               }
             }),
@@ -77150,12 +77238,25 @@ var render = function() {
             _c("sexy-button", {
               attrs: {
                 hidden: _vm.cursor.in_tuplet,
-                text: _vm.sixteenth_text,
-                color: _vm.note_color
+                text: _vm.note_text(16),
+                color: _vm.note_color()
               },
               nativeOn: {
                 click: function($event) {
-                  _vm.sixteenth_note()
+                  _vm.note(16)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("sexy-button", {
+              attrs: {
+                hidden: _vm.cursor.in_tuplet,
+                text: _vm.note_text(32),
+                color: _vm.note_color()
+              },
+              nativeOn: {
+                click: function($event) {
+                  _vm.note(32)
                 }
               }
             }),
@@ -77224,32 +77325,15 @@ var render = function() {
           "div",
           { staticClass: "row rhythm-game__keyboard-row" },
           [
-            _c(
-              "sexy-button",
-              {
-                attrs: { color: "orange" },
-                nativeOn: {
-                  click: function($event) {
-                    _vm.move_cursor_backwards()
-                  }
-                }
-              },
-              [
-                _c("span", { staticStyle: { "font-family": "Gotham round" } }, [
-                  _vm._v("\n                        <\n                    ")
-                ])
-              ]
-            ),
-            _vm._v(" "),
             _c("sexy-button", {
               attrs: {
                 hidden: _vm.cursor.in_tuplet,
-                text: _vm.rest_mode_button_text,
-                color: _vm.rest_mode_button_color
+                text: _vm.rest_text(2),
+                color: _vm.rest_color()
               },
               nativeOn: {
                 click: function($event) {
-                  _vm.toggle_rest_mode()
+                  _vm.rest(2)
                 }
               }
             }),
@@ -77257,30 +77341,51 @@ var render = function() {
             _c("sexy-button", {
               attrs: {
                 hidden: _vm.cursor.in_tuplet,
-                text: ".",
-                color: "green"
+                text: _vm.rest_text(4),
+                color: _vm.rest_color()
               },
               nativeOn: {
                 click: function($event) {
-                  _vm.dot()
+                  _vm.rest(4)
                 }
               }
             }),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: { text: "u", color: "green" },
+              attrs: {
+                hidden: _vm.cursor.in_tuplet,
+                text: _vm.rest_text(8),
+                color: _vm.rest_color()
+              },
               nativeOn: {
                 click: function($event) {
-                  _vm.tie()
+                  _vm.rest(8)
                 }
               }
             }),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: { text: "T", color: "green" },
+              attrs: {
+                hidden: _vm.cursor.in_tuplet,
+                text: _vm.rest_text(16),
+                color: _vm.rest_color()
+              },
               nativeOn: {
                 click: function($event) {
-                  _vm.tuplet()
+                  _vm.rest(16)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("sexy-button", {
+              attrs: {
+                hidden: _vm.cursor.in_tuplet,
+                text: _vm.rest_text(32),
+                color: _vm.rest_color()
+              },
+              nativeOn: {
+                click: function($event) {
+                  _vm.rest(32)
                 }
               }
             }),
@@ -77333,47 +77438,62 @@ var render = function() {
               "row rhythm-game__keyboard-row rhythm-game__keyboard-row_fourth show-normal"
           },
           [
-            _c(
-              "sexy-button",
-              {
-                attrs: { color: "sunglow", percents: _vm.percentsExercise },
-                nativeOn: {
-                  click: function($event) {
-                    _vm.play_exercise()
-                  }
-                }
+            _c("sexy-button", {
+              attrs: {
+                hidden: _vm.cursor.in_tuplet,
+                text: "\\",
+                color: "green"
               },
-              [
-                _vm.playbackStatus.playing &&
-                _vm.playbackStatus.currentlyLoaded == "exercise"
-                  ? _c("icon", { attrs: { name: "pause" } })
-                  : _c("div", { staticClass: "small-font-button" }, [
-                      _vm._v("Ponovi vajo")
-                    ])
-              ],
-              1
-            ),
+              nativeOn: {
+                click: function($event) {
+                  _vm.add_bar()
+                }
+              }
+            }),
             _vm._v(" "),
-            _c(
-              "sexy-button",
-              {
-                attrs: { color: "sunglow", percents: _vm.percentsUser },
-                nativeOn: {
-                  click: function($event) {
-                    _vm.play_user()
-                  }
-                }
+            _c("sexy-button", {
+              attrs: {
+                hidden: _vm.cursor.in_tuplet,
+                text: ".",
+                color: "green"
               },
-              [
-                _vm.playbackStatus.playing &&
-                _vm.playbackStatus.currentlyLoaded == "user"
-                  ? _c("icon", { attrs: { name: "pause" } })
-                  : _c("div", { staticClass: "small-font-button" }, [
-                      _vm._v("Zaigraj vpisano")
-                    ])
-              ],
-              1
-            )
+              nativeOn: {
+                click: function($event) {
+                  _vm.dot()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("sexy-button", {
+              attrs: {
+                hidden: _vm.cursor.in_tuplet,
+                text: "",
+                color: "orange"
+              },
+              nativeOn: {
+                click: function($event) {
+                  _vm.alert("hello!")
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("sexy-button", {
+              attrs: { text: "u", color: "green" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.tie()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("sexy-button", {
+              attrs: { text: "T", color: "green" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.tuplet()
+                }
+              }
+            })
           ],
           1
         ),
@@ -77405,10 +77525,39 @@ var render = function() {
             _c(
               "sexy-button",
               {
+                attrs: { color: "sunglow", percents: _vm.percentsExercise },
+                nativeOn: {
+                  click: function($event) {
+                    _vm.play_exercise()
+                  }
+                }
+              },
+              [
+                _vm.playbackStatus.playing &&
+                _vm.playbackStatus.currentlyLoaded == "exercise"
+                  ? _c("icon", { attrs: { name: "pause" } })
+                  : _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                      _vm._v("Ponovi vajo")
+                    ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "sexy-button",
+              {
                 attrs: {
                   color: "cabaret",
                   customClass: "wideButton normal-font",
                   cols: 1
+                },
+                on: {
+                  touchstart: function($event) {
+                    _vm.touchStarted()
+                  },
+                  touchend: function($event) {
+                    _vm.touchEnded()
+                  }
                 }
               },
               [
@@ -77425,42 +77574,6 @@ var render = function() {
             _c(
               "sexy-button",
               {
-                attrs: {
-                  color: "cabaret",
-                  customClass: "wideButton normal-font",
-                  cols: 2
-                }
-              },
-              [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.playbackStatus.BPM,
-                      expression: "playbackStatus.BPM"
-                    }
-                  ],
-                  staticClass: "BPM-slider",
-                  attrs: {
-                    type: "range",
-                    min: _vm.playbackStatus.BPM_from,
-                    max: _vm.playbackStatus.BPM_to,
-                    step: "10"
-                  },
-                  domProps: { value: _vm.playbackStatus.BPM },
-                  on: {
-                    __r: function($event) {
-                      _vm.$set(_vm.playbackStatus, "BPM", $event.target.value)
-                    }
-                  }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "sexy-button",
-              {
                 attrs: { color: _vm.checkButtonColor },
                 nativeOn: {
                   click: function($event) {
@@ -77468,8 +77581,28 @@ var render = function() {
                   }
                 }
               },
-              [_c("icon", { attrs: { name: _vm.checkButtonIcon } })],
-              1
+              [
+                _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                  _vm._v("Preveri")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "sexy-button",
+              {
+                attrs: { color: "cabaret" },
+                nativeOn: {
+                  click: function($event) {
+                    _vm.submit()
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                  _vm._v("Oddaj")
+                ])
+              ]
             )
           ],
           1
@@ -77520,7 +77653,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
     this.handle_button = function (event) {
 
-        if (event.type == 'n' || event.type == 'r') {
+        if (event.type == 'n' || event.type == 'r' || event.type == 'bar') {
             // This is a note
 
             /*if(this._sum_durations() > 2){
@@ -77564,6 +77697,10 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
             return;
         }
 
+        if (this.notes[n].type == "bar") {
+            return;
+        }
+
         this.notes[n].tie = !this.notes[n].tie;
 
         this._call_render();
@@ -77571,12 +77708,18 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
     this.add_dot = function () {
 
-        this._move_cursor_backwards();
-        var note = _.clone(this.notes[this.cursor.position]);
+        var n = this.cursor.position - 1;
 
-        this._move_cursor_forward();
-        this.delete_note();
+        // Don't do anything if this is the first note...
+        if (n <= 0) {
+            return;
+        }
 
+        if (this.notes[n].type == "bar") {
+            return;
+        }
+
+        var note = this.notes[n];
         if (note.dot) {
             note.duration = note.duration.div(1.5);
             note.dot = false;
@@ -77585,7 +77728,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
             note.dot = true;
         }
 
-        this.add_note(note);
+        this._call_render();
     };
 
     this.tuplet = function (event) {
@@ -77661,65 +77804,60 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         return -1;
     };
 
-    this.add_tuplet = function (event) {
-
-        // Original cursor position
+    /*this.add_tuplet = function(event){
+          // Original cursor position
         var thePosition = cursor.position;
-
-        // Stick to notes that were already tuplets
+          // Stick to notes that were already tuplets
         var newPosition = this.check_if_there_were_any_tuplets_before(cursor.position, 2);
-        if (newPosition >= 0) {
+        if(newPosition >= 0){
             this.clear_other_tuplet_snap_notes(newPosition);
             thePosition = newPosition + 1;
             delete this.notes[newPosition].style;
             delete this.notes[newPosition].was_tuplet_end;
         }
-
+          
         // Add tuplet to notes behind the cursor
-
-        if (this.notes[thePosition - 1].in_tuplet) {
+          if(this.notes[thePosition - 1].in_tuplet){
             alert("Ne morem dodati triole v triolo");
             return;
         }
-
-        // Check if there are enough notes
+          // Check if there are enough notes
         // - Check if the duration sums up to (1/baseNote)
         // - Notes must fit exactly (watch out for the dots)
-        var currentDuration = new Fraction(0);
-        var toIndex = -1;
-        for (var i = thePosition - 1; i >= 0; i--) {
+        let currentDuration = new Fraction(0);
+        let toIndex = -1;
+        for(let i = thePosition - 1; i >= 0; i--){
             currentDuration = currentDuration.add(this.notes[i].duration);
-            var value = currentDuration.compare(new Fraction(event.tuplet_type, bar.base_note));
-            if (value == 0) {
+            let value = currentDuration.compare(new Fraction(event.tuplet_type, bar.base_note))
+            if(value == 0){
                 // Enough notes for a tuplet
                 toIndex = i;
                 break;
-            } else if (value > 0) {
+            }
+            else if(value > 0){
                 // Tuplet would not fit
                 alert("Tu ne morem narediti triole, ker se notne vrednosti ne seštejejo ustrezno.");
                 return;
             }
         }
-        if (toIndex < 0) {
+        if(toIndex < 0){
             // Not enough notes for a tuplet
             alert("Tu ne morem narediti triole, ker ni dovolj not");
             return;
         }
-
-        // For those notes in the tuplet
+          // For those notes in the tuplet
         // - Change duration to (duration / tuplet_type)
         // - Add tuplet_from, tuplet_to
-        for (var _i = toIndex; _i < thePosition; _i++) {
-            this.notes[_i].duration = this.notes[_i].duration.div(event.tuplet_type);
-            this.notes[_i].in_tuplet = true;
-            this.notes[_i].tuplet_type = event.tuplet_type;
+        for(let i = toIndex; i < thePosition; i++){
+            this.notes[i].duration = this.notes[i].duration.div(event.tuplet_type);
+            this.notes[i].in_tuplet = true;
+            this.notes[i].tuplet_type = event.tuplet_type;
         }
         this.notes[thePosition - 1].tuplet_from = toIndex;
         this.notes[thePosition - 1].tuplet_to = thePosition;
-
-        // And render the result
-        this._call_render();
-    };
+          // And render the result
+        this._call_render()
+      }*/
 
     this._is_supported_length = function (event) {
 
@@ -77741,26 +77879,13 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         }
     }, this.add_note = function (event) {
 
-        //let MAX_DURATION = info.staveCount;
-
-        if (!this._is_supported_length(event)) {
+        if (event.type != "bar" && !this._is_supported_length(event)) {
             return;
         }
-
-        /*if(this._sum_durations().add(event.duration) > MAX_DURATION){
-            alert("Nota je predolga");
-            return;
-        }*/
 
         // Add the note
         // Add the new note to the current position (at the cursor)
         this.notes.splice(this.cursor.position, 0, event);
-
-        /*if(!this.check_sum_fit()){
-            alert("Takt je predolg");
-              this.notes.splice(this.cursor.position - 1, 1);
-            return;
-        }*/
 
         // Move cursor forward
         this._move_cursor_forward();
@@ -77788,6 +77913,10 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         if (this.notes.length > this.cursor.position && this.notes[this.cursor.position].tie) {
             delete this.notes[this.cursor.position].tie;
+        }
+
+        if (this.notes.length > this.cursor.position + 1 && this.notes[this.cursor.position + 1].tie) {
+            delete this.notes[this.cursor.position + 1].tie;
         }
 
         if (this.notes[this.cursor.position - 1].in_tuplet) {
@@ -77861,44 +77990,44 @@ var ExerciseGenerator = function ExerciseGenerator() {
             num_beats: 4,
             base_note: 4
         },
-        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 7, tuplet_to: 10 }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(3, 16), dot: true }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }]
+        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 7, tuplet_to: 10 }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(3, 16), dot: true }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }]
     }, {
         bar: {
             num_beats: 4,
             base_note: 4
         },
-        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }]
+        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }]
     }, {
         bar: {
             num_beats: 4,
             base_note: 4
         },
-        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 0, tuplet_to: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 0, tuplet_to: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }]
+        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 0, tuplet_to: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 8, tuplet_to: 11 }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }]
     }, {
         bar: {
             num_beats: 4,
             base_note: 4
         },
-        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 10, tuplet_to: 13 }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }]
+        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 10, tuplet_to: 13 }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }]
     }, {
         bar: {
             num_beats: 3,
             base_note: 8
         },
-        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
+        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
     }, {
         BPM: 50,
         bar: {
             num_beats: 3,
             base_note: 8
         },
-        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
+        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
     }, {
         bar: {
             num_beats: 3,
             base_note: 8
         },
-        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
+        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
     }];
 
     this.currentExercise = null;
@@ -77926,6 +78055,11 @@ var ExerciseGenerator = function ExerciseGenerator() {
         var us = soundsLikeFunc(value, true);
 
         return _.isEqual(ex, us);
+    };
+
+    this.get_bar_count = function () {
+
+        return __WEBPACK_IMPORTED_MODULE_0__rhythmUtilities__["a" /* default */].get_bar_count(this.currentExercise);
     };
 };
 
@@ -78189,7 +78323,39 @@ var render = function() {
             [_vm._v("Začni")]
           ),
           _vm._v(" "),
-          _vm._m(0)
+          _c("ul", { staticClass: "rhythm__instructions-list" }, [
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v("Preizkusil se boš v ritmičnem nareku.")
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v(
+                "Vaja bo v " +
+                  _vm._s(_vm.bar.num_beats) +
+                  "/" +
+                  _vm._s(_vm.bar.base_note) +
+                  " taktu."
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v("Slišal boš " + _vm._s(_vm.num_beats_text) + ".")
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v(
+                "Predvajalo se bo s hitrostjo " +
+                  _vm._s(_vm.playback.BPM) +
+                  " udarcev na minuto."
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v(
+                "Program je v preizkusni fazi, zanekrat lahko preizkusiš par vpisanih vaj."
+              )
+            ])
+          ])
         ],
         1
       ),
@@ -78220,7 +78386,8 @@ var render = function() {
                 attrs: {
                   cursor: _vm.cursor,
                   playbackStatus: _vm.playback,
-                  question: _vm.questionState
+                  question: _vm.questionState,
+                  reportError: _vm.showError
                 }
               },
               "Keyboard",
@@ -78251,24 +78418,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "rhythm__instructions-list" }, [
-      _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-        _vm._v("Preizkusil se boš v ritmičnem nareku.")
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-        _vm._v(
-          "Program je v preizkusni fazi, zanekrat lahko preizkusiš par vpisanih vaj."
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

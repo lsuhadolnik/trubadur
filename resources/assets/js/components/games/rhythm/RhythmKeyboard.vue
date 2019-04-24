@@ -4,39 +4,57 @@
         <div class="rhythm-game__event-keys">
             <div class="rhythm-game__keyboard">
 
-                <div class="row rhythm-game__keyboard-row" >
-                    <sexy-button color="orange" @click.native="move_cursor_forward()" >
+                <div class="row rhythm-game__keyboard-row " >
+                    <!--<sexy-button color="orange" @click.native="move_cursor_forward()" >
                         <span style="font-family: Gotham round;">
                             &gt;
                         </span>
-                    </sexy-button>
-                    <sexy-button :hidden="cursor.in_tuplet" :text="half_text" :color="note_color" @click.native="half_note()" />
-                    <sexy-button :hidden="cursor.in_tuplet" :text="quarter_text" :color="note_color" @click.native="quarter_note()" />
-                    <sexy-button :hidden="cursor.in_tuplet" :text="eight_text" :color="note_color" @click.native="eight_note()" />
-                    <sexy-button :hidden="cursor.in_tuplet" :text="sixteenth_text" :color="note_color" @click.native="sixteenth_note()" />
-                    <div class="hide-normal"><!-- Will show only on small wide screens (landscape phones) -->
+                    </sexy-button>-->
+
+                    <sexy-button :hidden="cursor.in_tuplet" :text="note_text(2)"  :color="note_color()" @click.native="note(2)" />
+                    <sexy-button :hidden="cursor.in_tuplet" :text="note_text(4)"  :color="note_color()" @click.native="note(4)" />
+                    <sexy-button :hidden="cursor.in_tuplet" :text="note_text(8)"  :color="note_color()" @click.native="note(8)" />
+                    <sexy-button :hidden="cursor.in_tuplet" :text="note_text(16)" :color="note_color()" @click.native="note(16)" />
+                    <sexy-button :hidden="cursor.in_tuplet" :text="note_text(32)" :color="note_color()" @click.native="note(32)" />
+                    
+                    
+                    <!-- Will show only on small wide screens (landscape phones) -->
+                    <div class="hide-normal">
                         <sexy-button color="sunglow" @click.native="play_exercise()" :percents="percentsExercise" customClass="normal-font tiny-tajni-pici-mici-font">
                             <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'"/>
                             <div v-else class="small-font-button">Ponovi vajo</div>
                         </sexy-button>
+
                         
                         <sexy-button color="sunglow" @click.native="play_user()" :percents="percentsUser" customClass="normal-font tiny-tajni-pici-mici-font">
                             <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'user'"/>
                             <div v-else class="small-font-button">Zaigraj vpisano</div>
                         </sexy-button>
                     </div>
+
+
                 </div>
                 <div class="row rhythm-game__keyboard-row">
-                    <sexy-button color="orange" @click.native="move_cursor_backwards()" >
+                    <!--<sexy-button color="orange" @click.native="move_cursor_backwards()" >
                         <span style="font-family: Gotham round;">
                             &lt;
                         </span>
-                    </sexy-button>
-                    <sexy-button :hidden="cursor.in_tuplet" :text="rest_mode_button_text" :color="rest_mode_button_color" @click.native="toggle_rest_mode()" />
-                    <sexy-button :hidden="cursor.in_tuplet" text="." color="green" @click.native="dot()" />
-                    <sexy-button text="u" color="green" @click.native="tie()" />
-                    <sexy-button text="T" color="green" @click.native="tuplet()" />
-                    <div class="hide-normal"> <!-- Will show only on small wide screens (landscape phones) -->
+                    </sexy-button>-->
+                    
+                    <sexy-button :hidden="cursor.in_tuplet" :text="rest_text(2)"  :color="rest_color()" @click.native="rest(2)"  />
+                    <sexy-button :hidden="cursor.in_tuplet" :text="rest_text(4)"  :color="rest_color()" @click.native="rest(4)"  />
+                    <sexy-button :hidden="cursor.in_tuplet" :text="rest_text(8)"  :color="rest_color()" @click.native="rest(8)"  />
+                    <sexy-button :hidden="cursor.in_tuplet" :text="rest_text(16)" :color="rest_color()" @click.native="rest(16)" />
+                    <sexy-button :hidden="cursor.in_tuplet" :text="rest_text(32)" :color="rest_color()" @click.native="rest(32)" />
+                    
+
+                    <!--<sexy-button :hidden="cursor.in_tuplet" :text="rest_mode_button_text" :color="rest_mode_button_color" @click.native="toggle_rest_mode()" />
+                    
+                    
+                    
+
+                    <!-- Will show only on small wide screens (landscape phones) -->
+                    <div class="hide-normal">
                         <sexy-button color="cabaret"   @click.native="delete_note()" >
                             <img src="/images/backspace.svg" width="30" />
                         </sexy-button>
@@ -44,10 +62,16 @@
                             <icon :name="checkButtonIcon" />
                         </sexy-button>
                     </div>
+
+
+
+
                 </div>
                 <div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_fourth show-normal">
                     
-                    <sexy-button color="sunglow" @click.native="play_exercise()" :percents="percentsExercise">
+
+
+                    <!--<sexy-button color="sunglow" @click.native="play_exercise()" :percents="percentsExercise">
                         <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'"/>
                         <div v-else class="small-font-button">Ponovi vajo</div>
                     </sexy-button>
@@ -55,27 +79,46 @@
                     <sexy-button color="sunglow" @click.native="play_user()" :percents="percentsUser">
                         <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'user'"/>
                         <div v-else class="small-font-button">Zaigraj vpisano</div>
-                    </sexy-button>
+                    </sexy-button>-->
 
-                    
+                    <sexy-button :hidden="cursor.in_tuplet" text="\" color="green" @click.native="add_bar()" />
+                    <sexy-button :hidden="cursor.in_tuplet" text="." color="green" @click.native="dot()" />
+                    <sexy-button :hidden="cursor.in_tuplet" text=""  color="orange" @click.native="alert('hello!')"  />
+                    <sexy-button text="u" color="green" @click.native="tie()" />
+                    <sexy-button text="T" color="green" @click.native="tuplet()" />
+
                 </div>
+
+
                 <div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal">
                     <sexy-button color="cabaret"   @click.native="delete_note()"  >
                         <img src="/images/backspace.svg" width="30" />
                     </sexy-button>
-                    <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="1">
+                    
+                    <sexy-button color="sunglow" @click.native="play_exercise()" :percents="percentsExercise">
+                        <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'"/>
+                        <div v-else class="tiny-tajni-pici-mici-font">Ponovi vajo</div>
+                    </sexy-button>
+
+                    <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="1" v-on:touchstart="touchStarted()" v-on:touchend="touchEnded()">
                         <div class="BPM-indicator normal-font">
                             <div class="BPM-value">{{playbackStatus.BPM}}</div>
                             <div class="BPM-prompt">BPM</div>
                         </div>
                     </sexy-button>
-                    <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="2">
+                    
+                    <!--<sexy-button color="cabaret" customClass="wideButton normal-font" :cols="2">
                         <input class="BPM-slider" type="range" :min="playbackStatus.BPM_from" :max="playbackStatus.BPM_to" step="10" v-model="playbackStatus.BPM">
-                    </sexy-button>
+                    </sexy-button>-->
                     
                     <!-- check button -->
                     <sexy-button :color="checkButtonColor" @click.native="check()" >
-                        <icon :name="checkButtonIcon" />
+                        <!--<icon :name="checkButtonIcon" />-->
+                        <div class="tiny-tajni-pici-mici-font">Preveri</div>
+                    </sexy-button>
+
+                    <sexy-button color="cabaret" @click.native="submit()">
+                        <div class="tiny-tajni-pici-mici-font">Oddaj</div>
                     </sexy-button>
 
 
@@ -153,6 +196,7 @@
 
     .rhythm-game__keyboard-row .button{
         //width: 50px;
+        //font-family: Norfolk;
         font-family: MusiSync;
         margin-left: 4px;
         font-size: 40px;
@@ -178,13 +222,12 @@
     }
 
     .rhythm-game__keyboard-row_third .button{
-        //width: 64.5px; // A little wider buttons
-
+        font-family: inherit;
     }
 
     .rhythm-game__keyboard-row_fourth .button{
-        width: 140px;
-        font-family: inherit;
+        //width: 140px;
+        //font-family: inherit;
     }
 
     .rhythm-game__keyboard-row_fourth .small-font-button{
@@ -250,55 +293,36 @@ export default {
     
     methods: {
 
-        whole_note(){
+        note(num) {
 
             this.key_callback({
                 type: this.rest_mode ? 'r' : 'n',
-                symbol: this.rest_mode ? 'wr' : 'w',
-                duration: new Fraction(1)
+                symbol: this.rest_mode ? num + 'r' : "" + num,
+                duration: new Fraction(1).div(num)
             });
 
         },
 
-        half_note(){
+        rest(num) {
 
             this.key_callback({
-                type: this.rest_mode ? 'r' : 'n',
-                symbol: this.rest_mode ? '2r' : '2',
-                duration: new Fraction(1).div(2)
+                type: 'r',
+                symbol: num + 'r',
+                duration: new Fraction(1).div(num)
             });
 
         },
 
-        quarter_note(){
+        add_bar(){
 
             this.key_callback({
-                type: this.rest_mode ? 'r' : 'n',
-                symbol: this.rest_mode ? '4r' : '4',
-                duration: new Fraction(1).div(4)
+                type: 'bar',
+                symbol: '4',
+                duration: new Fraction(0)
             });
 
         },
-        
-        eight_note(){
 
-            this.key_callback({
-                type: this.rest_mode ? 'r' : 'n',
-                symbol: this.rest_mode ? '8r' : '8',
-                duration: new Fraction(1).div(8)
-            });
-            
-        },
-
-        sixteenth_note(){
-
-            this.key_callback({
-                type: this.rest_mode ? 'r' : 'n',
-                symbol: this.rest_mode ? '16r' : '16',
-                duration: new Fraction(1).div(16)
-            });
-            
-        },
 
         move_cursor_forward(){
 
@@ -420,7 +444,45 @@ export default {
 
         toggle_rest_mode(){
             this.rest_mode = !this.rest_mode;
+        },
+
+        note_text(type) {
+            switch(type){
+                case 2: return "h";
+                case 4: return "q";
+                case 8: return "e";
+                case 16: return "s";
+                case 32: return "32";
+            }
+        },
+
+        rest_text(type) {
+            switch(type){
+                case 2: return "H";
+                case 4: return "Q";
+                case 8: return "E";
+                case 16: return "S";
+                case 32: return "32R";
+            }
+        },
+
+        note_color() {
+            return "green";
+        },
+
+        rest_color() {
+            return "red";
+        },
+
+        touchStarted() {
+            alert("HEEY!");
+        },
+
+        touchEnded() {
+
+            alert("OOON");
         }
+
     },
     components: {
         SexyButton, TwoRowsButton
@@ -434,37 +496,10 @@ export default {
         };
     },
     props: [
-        'key_callback', 'cursor', 'playbackStatus', 'question'
+        'key_callback', 'cursor', 'playbackStatus', 'question', 'reportError'
     ],
     computed: {
-        note_color: function(){
-            if(this.rest_mode) return "red";
-            else return "green";
-        },
-        half_text: function(){
-            if(this.rest_mode) return "H";
-            else return "h";
-        },
-        quarter_text: function(){
-            if(this.rest_mode) return "Q";
-            else return "q";
-        },
-        eight_text: function(){
-            if(this.rest_mode) return "E";
-            else return "e";
-        },
-        sixteenth_text: function(){
-            if(this.rest_mode) return "S";
-            else return "s";
-        },
-        rest_mode_button_color: function(){
-            if(this.rest_mode) return "green";
-            else return "red";
-        },
-        rest_mode_button_text: function(){
-            if(this.rest_mode) return "es";
-            else return "ES"
-        },
+
 
         percentsUser(){
             if(this.playbackStatus.currentlyLoaded == "user"){

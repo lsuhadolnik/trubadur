@@ -84,10 +84,10 @@
 
 .button__full {
     position      : absolute;
-    top           : 6px;
-    left          : 6px;
-    width         : 100%;
-    height        : 100%;
+    top           : 3px;
+    left          : 3px;
+    width         : 95%;
+    height        : 96%;
     border-radius : 6px;
 }
 

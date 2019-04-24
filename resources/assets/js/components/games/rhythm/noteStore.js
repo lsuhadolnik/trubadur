@@ -28,7 +28,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     this.handle_button = function(event) {
 
-        if(event.type == 'n' || event.type == 'r')
+        if(event.type == 'n' || event.type == 'r' || event.type == 'bar')
         {   // This is a note
 
             /*if(this._sum_durations() > 2){
@@ -76,11 +76,15 @@ var NoteStore = function(bar, cursor, render_function, info) {
     }
 
     this.add_tie = function(){
-        
+
         let n = this.cursor.position - 1;
 
         // Don't do anything if this is the first note...
         if(n <= 0) {
+            return;
+        }
+
+        if(this.notes[n].type == "bar"){
             return;
         }
 
@@ -92,12 +96,18 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     this.add_dot = function() {
 
-        this._move_cursor_backwards()
-        let note = _.clone(this.notes[this.cursor.position]);
+        let n = this.cursor.position - 1;
 
-        this._move_cursor_forward()
-        this.delete_note();
+        // Don't do anything if this is the first note...
+        if(n <= 0) {
+            return;
+        }
 
+        if(this.notes[n].type == "bar"){
+            return;
+        }
+
+        let note = this.notes[n];
         if(note.dot)
         {
             note.duration = note.duration.div(1.5);
@@ -109,7 +119,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
             note.dot = true;    
         }
         
-        this.add_note(note);
+        this._call_render();
 
     }
 
@@ -193,7 +203,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     }
 
-    this.add_tuplet = function(event){
+    /*this.add_tuplet = function(event){
 
         // Original cursor position
         var thePosition = cursor.position;
@@ -254,7 +264,8 @@ var NoteStore = function(bar, cursor, render_function, info) {
         // And render the result
         this._call_render()
 
-    }
+    }*/
+    
 
     this._is_supported_length = function(event){
 
@@ -282,28 +293,14 @@ var NoteStore = function(bar, cursor, render_function, info) {
     },
 
     this.add_note = function(event) {
-
-        //let MAX_DURATION = info.staveCount;
         
-        if(!this._is_supported_length(event)){
+        if(event.type != "bar" && !this._is_supported_length(event)){
             return;
         }
-
-        /*if(this._sum_durations().add(event.duration) > MAX_DURATION){
-            alert("Nota je predolga");
-            return;
-        }*/
 
         // Add the note
         // Add the new note to the current position (at the cursor)
         this.notes.splice(this.cursor.position, 0, event);
-        
-        /*if(!this.check_sum_fit()){
-            alert("Takt je predolg");
-
-            this.notes.splice(this.cursor.position - 1, 1);
-            return;
-        }*/
         
         // Move cursor forward
         this._move_cursor_forward();
@@ -337,6 +334,10 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
         if(this.notes.length > this.cursor.position && this.notes[this.cursor.position].tie){
             delete this.notes[this.cursor.position].tie;
+        }
+
+        if(this.notes.length > this.cursor.position + 1 && this.notes[this.cursor.position + 1].tie){
+            delete this.notes[this.cursor.position + 1].tie;
         }
 
         if(this.notes[this.cursor.position - 1].in_tuplet){

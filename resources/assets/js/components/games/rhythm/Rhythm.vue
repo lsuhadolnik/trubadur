@@ -6,6 +6,9 @@
             <SexyButton @click.native="startGame()" color="green" :cols="3">Začni</SexyButton>
             <ul class="rhythm__instructions-list">
                 <li class="rhythm__instructions-list-item">Preizkusil se boš v ritmičnem nareku.</li>
+                <li class="rhythm__instructions-list-item">Vaja bo v {{bar.num_beats}}/{{bar.base_note}} taktu.</li>
+                <li class="rhythm__instructions-list-item">Slišal boš {{num_beats_text}}.</li>
+                <li class="rhythm__instructions-list-item">Predvajalo se bo s hitrostjo {{playback.BPM}} udarcev na minuto.</li>
                 <li class="rhythm__instructions-list-item">Program je v preizkusni fazi, zanekrat lahko preizkusiš par vpisanih vaj.</li>
             </ul>
         </div>
@@ -19,7 +22,7 @@
 
             <StaffView ref="staff_view" :bar="bar" :cursor="cursor" />
             
-            <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" :question="questionState" />
+            <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" :question="questionState" :reportError="showError" />
 
             <div class="error" v-show="errorMessage">{{errorMessage}}</div>
 
@@ -102,6 +105,7 @@ export default {
             questionState: {
                 check: "no", // "no", "correct", "wrong", "next"
                 numChecks: 0,
+                num_beats: "x"
             },
 
             notes: null,
@@ -119,6 +123,23 @@ export default {
 
             generator: new ExerciseGenerator(),
             playback: new RhythmPlaybackEngine(this.bar),
+        }
+    },
+
+    computed: {
+        num_beats_text() {
+            switch(this.questionState.num_beats){
+                case 1:
+                    return "en takt";
+                case 2:
+                    return "dva takta";
+                case 3:
+                    return "tri takte";
+                case 4:
+                    return "štiri takte";
+                default:
+                    return this.questionState.num_beats+ " taktov";
+            }
         }
     },
     
@@ -146,10 +167,10 @@ export default {
         startGame() {
 
             this.displayState = "ready";
-            this.nextQuestion();
+            this.play({action: "replay", what: "exercise"});
         },
 
-        nextQuestion(){
+        nextQuestion(play){
 
             // Generate exercise
             this.generator.generate();
@@ -171,14 +192,17 @@ export default {
             this.questionState.check = "no";
             this.playback.bar_info = this.bar;
 
-            this.play({action: "replay", what: "exercise"});
+            if(play){
+                this.play({action: "replay", what: "exercise"});
+            }
+            
 
         },
 
         check(){
 
             if(this.questionState.check == "next"){
-                this.nextQuestion();
+                this.nextQuestion(true);
                 return;
             }
 
@@ -231,6 +255,10 @@ export default {
             }
         },
 
+        showError(err){
+            this.errorMessage = err;
+        }
+
 },
 
     mounted() {
@@ -267,6 +295,9 @@ export default {
                     MIDI.setVolume(instrument.channel, instrument.volume);
                     MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
                 }
+
+                this.nextQuestion();
+                this.questionState.num_beats = this.generator.get_bar_count();
 
                 this.displayState = "instructions";
         

@@ -18,6 +18,7 @@ var ExerciseGenerator = function(){
                     {type:"n", symbol:"16", duration: new Fraction(1,16)},
                     {type:"n", symbol:"8", duration: new Fraction(1,8)},
                     {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                    {type:"bar", symbol:"4", duration: new Fraction(0)},
                     
                     {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3},
                     {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3},
@@ -25,6 +26,12 @@ var ExerciseGenerator = function(){
                     {type:"n", symbol:"16", duration: new Fraction(1,16)},
                     {type:"n", symbol:"16", duration: new Fraction(1,16)},
                     {type:"n", symbol:"8", duration: new Fraction(3,16), dot: true},
+                    {type:"bar", symbol:"4", duration: new Fraction(0)},
+
+
+                    {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                    {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                    {type:"n", symbol:"4", duration: new Fraction(1,4)},
                     {type:"n", symbol:"4", duration: new Fraction(1,4)},
                 ],
         },
@@ -38,6 +45,7 @@ var ExerciseGenerator = function(){
                 {type:"n", symbol:"4", duration: new Fraction(1,4)},
                 {type:"n", symbol:"4", duration: new Fraction(1,4)},
                 {type:"n", symbol:"4", duration: new Fraction(1,4)},
+                {type:"bar", symbol:"4", duration: new Fraction(0)},
 
                 {type:"n", symbol:"4", duration: new Fraction(1,4)},
                 {type:"n", symbol:"4", duration: new Fraction(1,4)},
@@ -57,10 +65,11 @@ var ExerciseGenerator = function(){
                 {type:"n", symbol:"4", duration: new Fraction(1,4)},
                 {type:"r", symbol:"4r", duration: new Fraction(1,4)},
                 {type:"r", symbol:"4r", duration: new Fraction(1,4)},
-                
+                {type:"bar", symbol:"4", duration: new Fraction(0)},
+
                 {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3},
-                {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3},
-                {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3, tuplet_from:0, tuplet_to: 3},
+                {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3},                
+                {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet: true, tuplet_type: 3, tuplet_from:8, tuplet_to: 11},
                 {type:"n", symbol:"4", duration: new Fraction(1,4)},
                 {type:"r", symbol:"4r", duration: new Fraction(1,4)},
                 {type:"r", symbol:"4r", duration: new Fraction(1,4)},
@@ -78,16 +87,17 @@ var ExerciseGenerator = function(){
                 {type:"n", symbol:"8", duration: new Fraction(1,8)},
                 {type:"n", symbol:"8", duration: new Fraction(1,8)},
                 {type:"n", symbol:"8", duration: new Fraction(1,8)},
-                
-                {type:"n", symbol:"16", duration: new Fraction(1,16)},
-                {type:"n", symbol:"16", duration: new Fraction(1,16)},
-                {type:"n", symbol:"16", duration: new Fraction(1,16)},
-                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"bar", symbol:"4", duration: new Fraction(0)},
 
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
+                {type:"n", symbol:"16", duration: new Fraction(1,16)},
                 {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet:true, tuplet_type:3},
                 {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet:true, tuplet_type:3},
                 {type:"n", symbol:"4", duration: new Fraction(1,12), in_tuplet:true, tuplet_type:3, tuplet_from:10, tuplet_to: 13},
-                
+                {type:"bar", symbol:"4", duration: new Fraction(0)},
+
                 {type:"n", symbol:"4", duration: new Fraction(1,4)},
                 {type:"n", symbol:"8", duration: new Fraction(1,8)},
                 {type:"n", symbol:"8", duration: new Fraction(1,8)},
@@ -103,6 +113,7 @@ var ExerciseGenerator = function(){
                 {type:"n", symbol:"16", duration: new Fraction(1,16)},
                 {type:"n", symbol:"16", duration: new Fraction(1,16)},
                 {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                {type:"bar", symbol:"4", duration: new Fraction(0)},
 
                 {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
                 {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
@@ -125,6 +136,7 @@ var ExerciseGenerator = function(){
                 {type:"n", symbol:"16", duration: new Fraction(1,16)},
                 {type:"n", symbol:"16", duration: new Fraction(1,16)},
                 {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                {type:"bar", symbol:"4", duration: new Fraction(0)},
 
                 {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
                 {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
@@ -146,6 +158,7 @@ var ExerciseGenerator = function(){
                 {type:"n", symbol:"16", duration: new Fraction(1,16)},
                 {type:"n", symbol:"16", duration: new Fraction(1,16)},
                 {type:"n", symbol:"8", duration: new Fraction(1,8)},
+                {type:"bar", symbol:"4", duration: new Fraction(0)},
 
                 {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
                 {type:"n", symbol:"8", duration: new Fraction(1,24), in_tuplet: true, tuplet_type: 3},
@@ -187,6 +200,12 @@ var ExerciseGenerator = function(){
 
         return _.isEqual(ex, us);
 
+    }
+
+    this.get_bar_count = function(){
+
+        return RhythmUtilities.get_bar_count(this.currentExercise);
+        
     }
 
 }

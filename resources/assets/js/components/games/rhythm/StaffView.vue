@@ -469,42 +469,49 @@ export default {
             //let staveIndex = 0;
             let cursorNote = null;
 
-            let currentStaveNoteIdx = 0;
-
             let batches = [];
             let barInfo = [];
 
             var ties = [];
             var tuplets = [];
-
-
             var renderQueue = [];
-            var currentDuration = new Fraction(0);
+            //var currentDuration = new Fraction(0);
 
             let allStaveNotes = [];
 
+            let latestNoteIndex = 0;
+            let lastNoteIndex = -1;
+
             for(var i = 0; i < notes.length; i++){
 
+
+                var thisNote = notes[i];
+
+                if(thisNote.type != "bar"){
+                    lastNoteIndex = latestNoteIndex;
+                    latestNoteIndex = i;
+                }
+
                 // Bye bye, false note
-                if(!notes[i]) { continue; }
+                if(!thisNote) { continue; }
 
                 // Handle notes and rests
                 let newNote = new StaveNote(
                     {
                         clef: "treble", 
                         keys: ["g/4"], 
-                        duration: notes[i].symbol
+                        duration: thisNote.symbol
                     }
                 );
 
                 // Omogoči stiliziranje not
                 // V zapis lahko zdaj daš objekt style in noter recimo informacije o barvi...
-                if(notes[i].style){
-                    newNote.setStyle(notes[i].style);
+                if(thisNote.style){
+                    newNote.setStyle(thisNote.style);
                 }
 
-    	        // Handle dots
-                if(notes[i].dot){
+                // Handle dots
+                if(thisNote.dot){
                     newNote.addDot(0); // enako je tudi newNote.addDotToAll()
                 }
                 
@@ -514,28 +521,36 @@ export default {
                 }
 
                 allStaveNotes.push(newNote);
-                renderQueue.push(newNote);
-                currentStaveNoteIdx ++;
-
-                if(notes[i].tie && i > 0){
                 
+                if(thisNote.type != "bar")
+                    renderQueue.push(newNote);
+
+                if(thisNote.type == "bar"){
+                    newNote.setStyle({fillStyle: "transparent", strokeStyle: "transparent"});
+                }
+
+                if(thisNote.tie && i > 0){
+
                     // tie is:
                     //  - this note + last note
                     ties.push(new VF.StaveTie({
-                        first_note: allStaveNotes[i - 1],
-                        last_note:  allStaveNotes[i],
+                        first_note: allStaveNotes[lastNoteIndex],
+                        last_note:  allStaveNotes[latestNoteIndex],
                         first_indices: [0],
                         last_indices:  [0]
                     }));
 
                 }
 
-                if(notes[i].tuplet_from >= 0){
-                    tuplets.push(new Vex.Flow.Tuplet(allStaveNotes.slice(notes[i].tuplet_from, notes[i].tuplet_to), {
-                        bracketed: true, rationed: false, num_notes: notes[i].tuplet_type
+                if(thisNote.tuplet_from >= 0){
+                    tuplets.push(new Vex.Flow.Tuplet(allStaveNotes.slice(thisNote.tuplet_from, thisNote.tuplet_to), {
+                        bracketed: true, rationed: false, num_notes: thisNote.tuplet_type
                     }));
                 }
 
+                
+
+                /* The old auto-bar logic 
                 currentDuration = currentDuration.add(notes[i].duration);
                 
                 // Kaj naredi:
@@ -554,6 +569,15 @@ export default {
 
                     renderQueue = [];
                     currentDuration = new Fraction(0);
+                }
+                */
+
+               /* the new manual bar logic */
+               if(notes[i].type == "bar"){
+                  
+                    batches.push(renderQueue);
+                    renderQueue = [newNote];
+
                 }
 
             }
