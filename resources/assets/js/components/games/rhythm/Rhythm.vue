@@ -56,15 +56,19 @@
         color: $neon-red;
         background: black;
     }
-    
 
-    @media only screen and (max-height: 600px) {
-        
-        .header-menu{
+    .app {
+        @include breakpoint-landscape {
+            padding-bottom: 0px !important;
+        }
+    }
+
+    .header-menu{
+        @include breakpoint-landscape {
             display: none !important;
         }
-
     }
+    
 
 </style>
 
@@ -269,6 +273,8 @@ export default {
             this.$router.push({ name: 'dashboard' })
         }*/
 
+        //hide bar on page load
+        setTimeout(function () {alert("scrollling");  window.scrollTo(0, 1);}, 500);
         
 
         // Init MIDI

@@ -56,6 +56,8 @@
     height     : 50px;
     cursor     : pointer;
     transition : filter $button-transition-time linear;
+    touch-action: manipulation;
+    -webkit-touch-action: manipulation;
 
     &:hover { filter: brightness(0.85); }
 }
@@ -136,6 +138,10 @@
 import { stringProp, booleanProp } from '../../utils/propValidators'
 
 export default {
+
+    methods: {
+
+    },
 
     computed:{
 

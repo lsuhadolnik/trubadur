@@ -11,17 +11,19 @@
         </div>
         
 
-        <!--
-        height: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.height" v-on:mousemove="force_redraw()"> {{info.height}}
+        
+        <!--height: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.height" v-on:mousemove="force_redraw()"> {{info.height}}
         barHeight: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barHeight" v-on:mousemove="force_redraw()"> {{info.barHeight}}
         barOffsetY: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barOffsetY" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
         zoomViewHeight: <input class="BPM-slider" type="range" :min="10" :max="200" step="1" v-model="CTX.zoomview.containerHeight" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
-            -->        
+           --> 
     </div>
 
 </template>
 
 <style lang="scss" scoped>
+
+    @import '../../../../sass/variables/index';
 
     .rhythm-game__staff__second-row {
         /*scroll-behavior: smooth;
@@ -37,14 +39,18 @@
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
+        height: 176px;
         /*scroll-behavior: smooth;
         -webkit-scroll-behavior: smooth;*/
+
+        @include breakpoint-landscape { height: 150px; }
     }
 
     #second-row {
         -webkit-transform: scale(2) translate(25%, 25%);
         transform: scale(2) translate(25%, 25%);
     }
+
 
 </style>
 
@@ -109,7 +115,7 @@ export default {
                 zoomview: {
                     id: "second-row",
                     role: "zoomview",
-                    containerHeight: 176,
+                    //containerHeight: 176,
                     
                 }
             }
@@ -152,7 +158,7 @@ export default {
                 //x_coords.push(Math.round((e.getBBox().x + zoomScrollLeft))); // DOES NOT work
             });
 
-            console.log(x_coords)
+            //console.log(x_coords)
 
             let minIndex = 999;
             let minDiff  = 99999;
@@ -457,11 +463,21 @@ export default {
 
             // Render onto n bars. Assumes no bar overlapping...
 
-            // Size our svg:
-            descriptor.renderer.resize(
-                this.info.width,
-                this.info.height,
-            );
+            if(window.innerHeight <= 600){
+                // Size our svg:
+                descriptor.renderer.resize(
+                    this.info.width,
+                    65,
+                );
+            }else {
+                // Size our svg:
+                descriptor.renderer.resize(
+                    this.info.width,
+                    this.info.height,
+                );
+            }
+
+            
 
             // element from CTX object
             // We created the context in mounted()

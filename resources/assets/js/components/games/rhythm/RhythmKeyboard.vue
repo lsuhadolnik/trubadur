@@ -20,16 +20,27 @@
                     
                     <!-- Will show only on small wide screens (landscape phones) -->
                     <div class="hide-normal">
+                        <sexy-button :hidden="cursor.in_tuplet" text="\" color="green" @click.native="add_bar()" />
+                        
+                        <sexy-button :hidden="cursor.in_tuplet" text="." color="green" @click.native="dot()" />
+                        
                         <sexy-button color="sunglow" @click.native="play_exercise()" :percents="percentsExercise" customClass="normal-font tiny-tajni-pici-mici-font">
                             <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'"/>
                             <div v-else class="small-font-button">Ponovi vajo</div>
                         </sexy-button>
 
+                        <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="1" v-on:touchstart="touchStarted()" v-on:touchend="touchEnded()">
+                            <div class="BPM-indicator normal-font">
+                                <div class="BPM-value">{{playbackStatus.BPM}}</div>
+                                <div class="BPM-prompt">BPM</div>
+                            </div>
+                        </sexy-button>
+
                         
-                        <sexy-button color="sunglow" @click.native="play_user()" :percents="percentsUser" customClass="normal-font tiny-tajni-pici-mici-font">
+                        <!--<sexy-button color="sunglow" @click.native="play_user()" :percents="percentsUser" customClass="normal-font tiny-tajni-pici-mici-font">
                             <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'user'"/>
                             <div v-else class="small-font-button">Zaigraj vpisano</div>
-                        </sexy-button>
+                        </sexy-button>-->
                     </div>
 
 
@@ -55,12 +66,20 @@
 
                     <!-- Will show only on small wide screens (landscape phones) -->
                     <div class="hide-normal">
+                        
+                        <sexy-button text="u" color="green" @click.native="tie()" />
+                        
+                        <sexy-button text="T" color="green" @click.native="tuplet()" />
+                        
                         <sexy-button color="cabaret"   @click.native="delete_note()" >
                             <img src="/images/backspace.svg" width="30" />
                         </sexy-button>
-                        <sexy-button :color="checkButtonColor" @click.native="check()" >
-                            <icon :name="checkButtonIcon" />
+                        
+                        <sexy-button :color="checkButtonColor" @click.native="check()" customClass="normal-font tiny-tajni-pici-mici-font">
+                            <!--<icon :name="checkButtonIcon" />-->
+                            <div class="small-font-button">Preveri</div>
                         </sexy-button>
+
                     </div>
 
 
@@ -276,10 +295,6 @@
 
         .rhythm-game__keyboard-row{
             margin-bottom: 0px;
-        }
-
-        .rhythm-game__staff__second-row{
-            margin-bottom: -27px !important;
         }
 
     }
