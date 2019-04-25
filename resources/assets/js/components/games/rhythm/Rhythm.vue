@@ -66,6 +66,13 @@
     .header-menu{
         @include breakpoint-landscape {
             display: none !important;
+            position: static !important;
+        }
+    }
+
+    .app--sticky{
+        @include breakpoint-landscape {
+            padding: 0px !important;
         }
     }
     

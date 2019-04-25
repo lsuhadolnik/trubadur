@@ -50314,7 +50314,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm__instructions {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.rhythm__instructions-list-item {\n  padding: 8px 20px 8px 3px;\n}\n.rythm-game__wrap {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.error {\n  text-align: center;\n  text-transform: uppercase;\n  color: #fe664e;\n  background: black;\n}\n@media only screen and (orientation: landscape) {\n.app {\n    padding-bottom: 0px !important;\n}\n}\n@media only screen and (orientation: landscape) {\n.header-menu {\n    display: none !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.rhythm__instructions {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.rhythm__instructions-list-item {\n  padding: 8px 20px 8px 3px;\n}\n.rythm-game__wrap {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.error {\n  text-align: center;\n  text-transform: uppercase;\n  color: #fe664e;\n  background: black;\n}\n@media only screen and (orientation: landscape) {\n.app {\n    padding-bottom: 0px !important;\n}\n}\n@media only screen and (orientation: landscape) {\n.header-menu {\n    display: none !important;\n    position: static !important;\n}\n}\n@media only screen and (orientation: landscape) {\n.app--sticky {\n    padding: 0px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -50341,6 +50341,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vuex__ = __webpack_require__(4);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -76521,7 +76528,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-79470641] {\n  font-size: 8pt !important;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  margin-bottom: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_third .button[data-v-79470641] {\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-79470641] {\n  font-size: 8pt !important;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_third .button[data-v-79470641] {\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n}\n", ""]);
 
 // exports
 
@@ -76544,15 +76551,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_awesome_icons_check__ = __webpack_require__(145);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_awesome_icons_angle_double_right__ = __webpack_require__(146);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue_awesome_icons_times__ = __webpack_require__(147);
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -77339,491 +77337,475 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "rythm-game__keyboard_wrap" }, [
-    _c("div", { staticClass: "rhythm-game__event-keys" }, [
-      _c("div", { staticClass: "rhythm-game__keyboard" }, [
-        _c(
-          "div",
-          { staticClass: "row rhythm-game__keyboard-row " },
-          [
-            _c("sexy-button", {
-              attrs: { text: _vm.note_text(2), color: _vm.note_color() },
-              nativeOn: {
-                click: function($event) {
-                  _vm.note(2)
-                }
+    _c("div", { staticClass: "rhythm-game__keyboard" }, [
+      _c(
+        "div",
+        { staticClass: "row rhythm-game__keyboard-row " },
+        [
+          _c("sexy-button", {
+            attrs: { text: _vm.note_text(2), color: _vm.note_color() },
+            nativeOn: {
+              click: function($event) {
+                _vm.note(2)
               }
-            }),
-            _vm._v(" "),
-            _c("sexy-button", {
-              attrs: { text: _vm.note_text(4), color: _vm.note_color() },
-              nativeOn: {
-                click: function($event) {
-                  _vm.note(4)
-                }
+            }
+          }),
+          _vm._v(" "),
+          _c("sexy-button", {
+            attrs: { text: _vm.note_text(4), color: _vm.note_color() },
+            nativeOn: {
+              click: function($event) {
+                _vm.note(4)
               }
-            }),
-            _vm._v(" "),
-            _c("sexy-button", {
-              attrs: { text: _vm.note_text(8), color: _vm.note_color() },
-              nativeOn: {
-                click: function($event) {
-                  _vm.note(8)
-                }
+            }
+          }),
+          _vm._v(" "),
+          _c("sexy-button", {
+            attrs: { text: _vm.note_text(8), color: _vm.note_color() },
+            nativeOn: {
+              click: function($event) {
+                _vm.note(8)
               }
-            }),
-            _vm._v(" "),
-            _c("sexy-button", {
-              attrs: { text: _vm.note_text(16), color: _vm.note_color() },
-              nativeOn: {
-                click: function($event) {
-                  _vm.note(16)
-                }
+            }
+          }),
+          _vm._v(" "),
+          _c("sexy-button", {
+            attrs: { text: _vm.note_text(16), color: _vm.note_color() },
+            nativeOn: {
+              click: function($event) {
+                _vm.note(16)
               }
-            }),
-            _vm._v(" "),
-            _c("sexy-button", {
-              attrs: { text: _vm.note_text(32), color: _vm.note_color() },
-              nativeOn: {
-                click: function($event) {
-                  _vm.note(32)
-                }
+            }
+          }),
+          _vm._v(" "),
+          _c("sexy-button", {
+            attrs: { text: _vm.note_text(32), color: _vm.note_color() },
+            nativeOn: {
+              click: function($event) {
+                _vm.note(32)
               }
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "hide-normal" },
-              [
-                _c("sexy-button", {
-                  attrs: {
-                    hidden: _vm.cursor.in_tuplet,
-                    text: "\\",
-                    color: "green"
-                  },
-                  nativeOn: {
-                    click: function($event) {
-                      _vm.add_bar()
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("sexy-button", {
-                  attrs: {
-                    hidden: _vm.cursor.in_tuplet,
-                    text: ".",
-                    color: "green"
-                  },
-                  nativeOn: {
-                    click: function($event) {
-                      _vm.dot()
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "sexy-button",
-                  {
-                    attrs: {
-                      color: "sunglow",
-                      percents: _vm.percentsExercise,
-                      customClass: "normal-font tiny-tajni-pici-mici-font"
-                    },
-                    nativeOn: {
-                      click: function($event) {
-                        _vm.play_exercise()
-                      }
-                    }
-                  },
-                  [
-                    _vm.playbackStatus.playing &&
-                    _vm.playbackStatus.currentlyLoaded == "exercise"
-                      ? _c("icon", { attrs: { name: "pause" } })
-                      : _c("div", { staticClass: "small-font-button" }, [
-                          _vm._v("Ponovi vajo")
-                        ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "sexy-button",
-                  {
-                    attrs: {
-                      color: "cabaret",
-                      customClass: "wideButton normal-font",
-                      cols: 1
-                    },
-                    on: {
-                      touchstart: function($event) {
-                        _vm.touchStarted()
-                      },
-                      touchend: function($event) {
-                        _vm.touchEnded()
-                      }
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "BPM-indicator normal-font" }, [
-                      _c("div", { staticClass: "BPM-value" }, [
-                        _vm._v(_vm._s(_vm.playbackStatus.BPM))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "BPM-prompt" }, [_vm._v("BPM")])
-                    ])
-                  ]
-                )
-              ],
-              1
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "row rhythm-game__keyboard-row" },
-          [
-            _c("sexy-button", {
-              attrs: { text: _vm.rest_text(2), color: _vm.rest_color() },
-              nativeOn: {
-                click: function($event) {
-                  _vm.rest(2)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("sexy-button", {
-              attrs: { text: _vm.rest_text(4), color: _vm.rest_color() },
-              nativeOn: {
-                click: function($event) {
-                  _vm.rest(4)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("sexy-button", {
-              attrs: { text: _vm.rest_text(8), color: _vm.rest_color() },
-              nativeOn: {
-                click: function($event) {
-                  _vm.rest(8)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("sexy-button", {
-              attrs: { text: _vm.rest_text(16), color: _vm.rest_color() },
-              nativeOn: {
-                click: function($event) {
-                  _vm.rest(16)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("sexy-button", {
-              attrs: { text: _vm.rest_text(32), color: _vm.rest_color() },
-              nativeOn: {
-                click: function($event) {
-                  _vm.rest(32)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "hide-normal" },
-              [
-                _c("sexy-button", {
-                  attrs: { text: "u", color: "green" },
-                  nativeOn: {
-                    click: function($event) {
-                      _vm.tie()
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("sexy-button", {
-                  attrs: { text: "T", color: "green" },
-                  nativeOn: {
-                    click: function($event) {
-                      _vm.tuplet()
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "sexy-button",
-                  {
-                    attrs: { color: "cabaret" },
-                    nativeOn: {
-                      click: function($event) {
-                        _vm.delete_note()
-                      }
-                    }
-                  },
-                  [
-                    _c("img", {
-                      attrs: { src: "/images/backspace.svg", width: "30" }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "sexy-button",
-                  {
-                    attrs: {
-                      color: _vm.checkButtonColor,
-                      customClass: "normal-font tiny-tajni-pici-mici-font"
-                    },
-                    nativeOn: {
-                      click: function($event) {
-                        _vm.check()
-                      }
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "small-font-button" }, [
-                      _vm._v("Preveri")
-                    ])
-                  ]
-                )
-              ],
-              1
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "row rhythm-game__keyboard-row rhythm-game__keyboard-row_fourth show-normal"
-          },
-          [
-            _c("sexy-button", {
-              attrs: {
-                hidden: _vm.cursor.in_tuplet,
-                text: "\\",
-                color: "green"
-              },
-              nativeOn: {
-                click: function($event) {
-                  _vm.add_bar()
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("sexy-button", {
-              attrs: {
-                hidden: _vm.cursor.in_tuplet,
-                text: ".",
-                color: "green"
-              },
-              nativeOn: {
-                click: function($event) {
-                  _vm.dot()
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("sexy-button", {
-              attrs: {
-                hidden: _vm.cursor.in_tuplet,
-                text: "",
-                color: "orange"
-              },
-              nativeOn: {
-                click: function($event) {
-                  _vm.alert("hello!")
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("sexy-button", {
-              attrs: { text: "u", color: "green" },
-              nativeOn: {
-                click: function($event) {
-                  _vm.tie()
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("sexy-button", {
-              attrs: { text: "T", color: "green" },
-              nativeOn: {
-                click: function($event) {
-                  _vm.tuplet()
-                }
-              }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal"
-          },
-          [
-            _c(
-              "sexy-button",
-              {
-                attrs: { color: "cabaret" },
-                nativeOn: {
-                  click: function($event) {
-                    _vm.delete_note()
-                  }
-                }
-              },
-              [
-                _c("img", {
-                  attrs: { src: "/images/backspace.svg", width: "30" }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "sexy-button",
-              {
-                attrs: { color: "sunglow", percents: _vm.percentsExercise },
-                nativeOn: {
-                  click: function($event) {
-                    _vm.play_exercise()
-                  }
-                }
-              },
-              [
-                _vm.playbackStatus.playing &&
-                _vm.playbackStatus.currentlyLoaded == "exercise"
-                  ? _c("icon", { attrs: { name: "pause" } })
-                  : _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
-                      _vm._v("Ponovi vajo")
-                    ])
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "sexy-button",
-              {
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "hide-normal" },
+            [
+              _c("sexy-button", {
                 attrs: {
-                  color: "cabaret",
-                  customClass: "wideButton normal-font",
-                  cols: 1
+                  hidden: _vm.cursor.in_tuplet,
+                  text: "\\",
+                  color: "green"
                 },
-                on: {
-                  touchstart: function($event) {
-                    _vm.touchStarted()
-                  },
-                  touchend: function($event) {
-                    _vm.touchEnded()
-                  }
-                }
-              },
-              [
-                _c("div", { staticClass: "BPM-indicator normal-font" }, [
-                  _c("div", { staticClass: "BPM-value" }, [
-                    _vm._v(_vm._s(_vm.playbackStatus.BPM))
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "BPM-prompt" }, [_vm._v("BPM")])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "sexy-button",
-              {
-                attrs: { color: _vm.checkButtonColor },
                 nativeOn: {
                   click: function($event) {
-                    _vm.check()
+                    _vm.add_bar()
                   }
                 }
-              },
-              [
-                _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
-                  _vm._v("Preveri")
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "sexy-button",
-              {
-                attrs: { color: "cabaret" },
-                nativeOn: {
-                  click: function($event) {
-                    _vm.submit()
-                  }
-                }
-              },
-              [
-                _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
-                  _vm._v("Oddaj")
-                ])
-              ]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal"
-          },
-          [
-            _c(
-              "sexy-button",
-              {
+              }),
+              _vm._v(" "),
+              _c("sexy-button", {
                 attrs: {
-                  color: "cabaret",
-                  customClass: "wideButton normal-font",
-                  cols: 2
+                  hidden: _vm.cursor.in_tuplet,
+                  text: ".",
+                  color: "green"
+                },
+                nativeOn: {
+                  click: function($event) {
+                    _vm.dot()
+                  }
                 }
-              },
-              [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.playbackStatus.BPM,
-                      expression: "playbackStatus.BPM"
-                    }
-                  ],
-                  staticClass: "BPM-slider",
+              }),
+              _vm._v(" "),
+              _c(
+                "sexy-button",
+                {
                   attrs: {
-                    type: "range",
-                    min: _vm.playbackStatus.BPM_from,
-                    max: _vm.playbackStatus.BPM_to,
-                    step: "10"
+                    color: "sunglow",
+                    percents: _vm.percentsExercise,
+                    customClass: "normal-font tiny-tajni-pici-mici-font"
                   },
-                  domProps: { value: _vm.playbackStatus.BPM },
-                  on: {
-                    __r: function($event) {
-                      _vm.$set(_vm.playbackStatus, "BPM", $event.target.value)
+                  nativeOn: {
+                    click: function($event) {
+                      _vm.play_exercise()
                     }
                   }
-                })
-              ]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", {
+                },
+                [
+                  _vm.playbackStatus.playing &&
+                  _vm.playbackStatus.currentlyLoaded == "exercise"
+                    ? _c("icon", { attrs: { name: "pause" } })
+                    : _c("div", { staticClass: "small-font-button" }, [
+                        _vm._v("Ponovi vajo")
+                      ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "sexy-button",
+                {
+                  attrs: {
+                    color: "cabaret",
+                    customClass: "wideButton normal-font",
+                    cols: 1
+                  },
+                  on: {
+                    touchstart: function($event) {
+                      _vm.touchStarted()
+                    },
+                    touchend: function($event) {
+                      _vm.touchEnded()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "BPM-indicator normal-font" }, [
+                    _c("div", { staticClass: "BPM-value" }, [
+                      _vm._v(_vm._s(_vm.playbackStatus.BPM))
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "BPM-prompt" }, [_vm._v("BPM")])
+                  ])
+                ]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "row rhythm-game__keyboard-row" },
+        [
+          _c("sexy-button", {
+            attrs: { text: _vm.rest_text(2), color: _vm.rest_color() },
+            nativeOn: {
+              click: function($event) {
+                _vm.rest(2)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("sexy-button", {
+            attrs: { text: _vm.rest_text(4), color: _vm.rest_color() },
+            nativeOn: {
+              click: function($event) {
+                _vm.rest(4)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("sexy-button", {
+            attrs: { text: _vm.rest_text(8), color: _vm.rest_color() },
+            nativeOn: {
+              click: function($event) {
+                _vm.rest(8)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("sexy-button", {
+            attrs: { text: _vm.rest_text(16), color: _vm.rest_color() },
+            nativeOn: {
+              click: function($event) {
+                _vm.rest(16)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("sexy-button", {
+            attrs: { text: _vm.rest_text(32), color: _vm.rest_color() },
+            nativeOn: {
+              click: function($event) {
+                _vm.rest(32)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "hide-normal" },
+            [
+              _c("sexy-button", {
+                attrs: { text: "u", color: "green" },
+                nativeOn: {
+                  click: function($event) {
+                    _vm.tie()
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("sexy-button", {
+                attrs: { text: "T", color: "green" },
+                nativeOn: {
+                  click: function($event) {
+                    _vm.tuplet()
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "sexy-button",
+                {
+                  attrs: { color: "cabaret" },
+                  nativeOn: {
+                    click: function($event) {
+                      _vm.delete_note()
+                    }
+                  }
+                },
+                [
+                  _c("img", {
+                    attrs: { src: "/images/backspace.svg", width: "30" }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "sexy-button",
+                {
+                  attrs: {
+                    color: _vm.checkButtonColor,
+                    customClass: "normal-font tiny-tajni-pici-mici-font"
+                  },
+                  nativeOn: {
+                    click: function($event) {
+                      _vm.check()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "small-font-button" }, [
+                    _vm._v("Preveri")
+                  ])
+                ]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "row rhythm-game__keyboard-row rhythm-game__keyboard-row_fourth show-normal"
+        },
+        [
+          _c("sexy-button", {
+            attrs: { hidden: _vm.cursor.in_tuplet, text: "\\", color: "green" },
+            nativeOn: {
+              click: function($event) {
+                _vm.add_bar()
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("sexy-button", {
+            attrs: { hidden: _vm.cursor.in_tuplet, text: ".", color: "green" },
+            nativeOn: {
+              click: function($event) {
+                _vm.dot()
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("sexy-button", {
+            attrs: { hidden: _vm.cursor.in_tuplet, text: "", color: "orange" },
+            nativeOn: {
+              click: function($event) {
+                _vm.alert("hello!")
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("sexy-button", {
+            attrs: { text: "u", color: "green" },
+            nativeOn: {
+              click: function($event) {
+                _vm.tie()
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("sexy-button", {
+            attrs: { text: "T", color: "green" },
+            nativeOn: {
+              click: function($event) {
+                _vm.tuplet()
+              }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
           staticClass:
             "row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal"
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row rhythm-game__control-keys" })
+        },
+        [
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: "cabaret" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.delete_note()
+                }
+              }
+            },
+            [
+              _c("img", {
+                attrs: { src: "/images/backspace.svg", width: "30" }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: "sunglow", percents: _vm.percentsExercise },
+              nativeOn: {
+                click: function($event) {
+                  _vm.play_exercise()
+                }
+              }
+            },
+            [
+              _vm.playbackStatus.playing &&
+              _vm.playbackStatus.currentlyLoaded == "exercise"
+                ? _c("icon", { attrs: { name: "pause" } })
+                : _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                    _vm._v("Ponovi vajo")
+                  ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "sexy-button",
+            {
+              attrs: {
+                color: "cabaret",
+                customClass: "wideButton normal-font",
+                cols: 1
+              },
+              on: {
+                touchstart: function($event) {
+                  _vm.touchStarted()
+                },
+                touchend: function($event) {
+                  _vm.touchEnded()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "BPM-indicator normal-font" }, [
+                _c("div", { staticClass: "BPM-value" }, [
+                  _vm._v(_vm._s(_vm.playbackStatus.BPM))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "BPM-prompt" }, [_vm._v("BPM")])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: _vm.checkButtonColor },
+              nativeOn: {
+                click: function($event) {
+                  _vm.check()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                _vm._v("Preveri")
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: "cabaret" },
+              nativeOn: {
+                click: function($event) {
+                  _vm.submit()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                _vm._v("Oddaj")
+              ])
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal"
+        },
+        [
+          _c(
+            "sexy-button",
+            {
+              attrs: {
+                color: "cabaret",
+                customClass: "wideButton normal-font",
+                cols: 2
+              }
+            },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.playbackStatus.BPM,
+                    expression: "playbackStatus.BPM"
+                  }
+                ],
+                staticClass: "BPM-slider",
+                attrs: {
+                  type: "range",
+                  min: _vm.playbackStatus.BPM_from,
+                  max: _vm.playbackStatus.BPM_to,
+                  step: "10"
+                },
+                domProps: { value: _vm.playbackStatus.BPM },
+                on: {
+                  __r: function($event) {
+                    _vm.$set(_vm.playbackStatus, "BPM", $event.target.value)
+                  }
+                }
+              })
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", {
+        staticClass:
+          "row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal"
+      })
+    ])
   ])
 }
 var staticRenderFns = []
