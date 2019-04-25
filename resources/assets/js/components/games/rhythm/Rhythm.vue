@@ -273,9 +273,6 @@ export default {
             this.$router.push({ name: 'dashboard' })
         }*/
 
-        //hide bar on page load
-        setTimeout(function () {alert("scrollling");  window.scrollTo(0, 1);}, 500);
-        
 
         // Init MIDI
         let instruments = {

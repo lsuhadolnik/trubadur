@@ -86,7 +86,8 @@ export default {
                 // Determines how much pixels 
                 // an average note occupies.
                 // Used to space notes evenly
-                meanNoteWidth: 60,
+                //meanNoteWidth: 60,
+                meanNoteWidth: 30,
 
                 bubble_class: "minimap-bubble",
                 lastMinimapBubbleX: 0,
@@ -278,6 +279,7 @@ export default {
             voice.addTickables(renderQueue);
             
 
+            /*
             // Been trying different factors.
             // If you change this, make sure, that 16 sixteenth notes fit onto the screen.
             var maxNotesWidth = Math.min(
@@ -287,8 +289,10 @@ export default {
                 // Then use maximum width and leave some space at the end
                 this.info.barWidth - this.info.meanNoteWidth
             );
+            */
+            var maxNotesWidth = renderQueue.length * this.info.meanNoteWidth;
 
-            //var beams = VF.Beam.applyAndGetBeams(voice);
+            var beams = VF.Beam.applyAndGetBeams(voice);
 
             var formatter = new VF.Formatter();
             formatter.joinVoices([voice]);
@@ -298,9 +302,9 @@ export default {
             voice.draw(context, stave);
             
             // Draw the beams:
-            /*beams.forEach(function(beam){
+            beams.forEach(function(beam){
                 beam.setContext(context).draw();
-            });*/
+            });
 
             
         },
@@ -316,11 +320,6 @@ export default {
             });
 
         },
-
-
-        // Nova logika
-        // Najprej naj bo na sceni en stave
-        // Potem ko se note dodajajo, naj se dodajajo tudi črte
 
 
         _vex_draw_staves: function(context, barInfo){
@@ -461,10 +460,9 @@ export default {
         _render_context(descriptor, notes, cursor){
 
 
-            // Render onto n bars. Assumes no bar overlapping...
 
             if(window.innerHeight <= 600){
-                // Size our svg:
+                // Size the svg: - PLEASE MOVE THIS LOGIC SOMEWHERE ELSE! THANKS!
                 descriptor.renderer.resize(
                     this.info.width,
                     65,
@@ -663,6 +661,7 @@ export default {
             
             this._cursor_rendered(cursorNote, descriptor);
 
+            // Move this logic somewhere else
             // Nastavi lastnost cursor.in_tuplet
             // S tem skrijem gumbe takrat, ko sem v trioli, 
             /// zato da se ne dogajajo čudne stvari
@@ -682,6 +681,7 @@ export default {
             }
 
 
+            // UNUSED! Refactor and delete ASAP!
             let n = this.cursor.position;
             if(notes.length > n && notes[n].in_tuplet && notes[n].type != "bar"){
                 this.cursor.tuplet_type = notes[n].duration.d / notes[n].tuplet_type;
@@ -700,16 +700,20 @@ export default {
             var widthLeft = this.info.width;
 
             batches.forEach(batch => {
-                var maxNotesWidth = Math.min(
+                
+                /*var maxNotesWidth = Math.min(
                     // Give equal space to each note
                     batch.length * this.info.meanNoteWidth + 5, 
                     // Until there are too many notes to fit. 
                     // Then use maximum width and leave some space at the end
                     this.info.barWidth - this.info.meanNoteWidth
-                );
+                );*/
+                var maxNotesWidth = batch.length * this.info.meanNoteWidth + 40;
 
                 widthLeft -= maxNotesWidth;
                 
+                console.log(maxNotesWidth);
+
                 barInfo.push({
                     width: maxNotesWidth
                 });    

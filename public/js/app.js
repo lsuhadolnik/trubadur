@@ -50598,11 +50598,6 @@ var Fraction = __webpack_require__(7);
             this.$router.push({ name: 'dashboard' })
         }*/
 
-        //hide bar on page load
-        setTimeout(function () {
-            alert("scrollling");window.scrollTo(0, 1);
-        }, 500);
-
         // Init MIDI
         var instruments = _defineProperty({
             piano: {
@@ -51435,7 +51430,8 @@ var Tuplet = VF.Tuplet;
                 // Determines how much pixels 
                 // an average note occupies.
                 // Used to space notes evenly
-                meanNoteWidth: 60,
+                //meanNoteWidth: 60,
+                meanNoteWidth: 30,
 
                 bubble_class: "minimap-bubble",
                 lastMinimapBubbleX: 0,
@@ -51616,16 +51612,20 @@ var Tuplet = VF.Tuplet;
             // Add render queue
             voice.addTickables(renderQueue);
 
+            /*
             // Been trying different factors.
             // If you change this, make sure, that 16 sixteenth notes fit onto the screen.
             var maxNotesWidth = Math.min(
-            // Give equal space to each note
-            renderQueue.length * this.info.meanNoteWidth,
-            // Until there are too many notes to fit. 
-            // Then use maximum width and leave some space at the end
-            this.info.barWidth - this.info.meanNoteWidth);
+                // Give equal space to each note
+                renderQueue.length * this.info.meanNoteWidth, 
+                // Until there are too many notes to fit. 
+                // Then use maximum width and leave some space at the end
+                this.info.barWidth - this.info.meanNoteWidth
+            );
+            */
+            var maxNotesWidth = renderQueue.length * this.info.meanNoteWidth;
 
-            //var beams = VF.Beam.applyAndGetBeams(voice);
+            var beams = VF.Beam.applyAndGetBeams(voice);
 
             var formatter = new VF.Formatter();
             formatter.joinVoices([voice]);
@@ -51634,9 +51634,9 @@ var Tuplet = VF.Tuplet;
             voice.draw(context, stave);
 
             // Draw the beams:
-            /*beams.forEach(function(beam){
+            beams.forEach(function (beam) {
                 beam.setContext(context).draw();
-            });*/
+            });
         },
 
         _vex_draw_optionals: function _vex_draw_optionals(context, events) {
@@ -51649,11 +51649,6 @@ var Tuplet = VF.Tuplet;
                 opt.setContext(context).draw();
             });
         },
-
-        // Nova logika
-        // Najprej naj bo na sceni en stave
-        // Potem ko se note dodajajo, naj se dodajajo tudi črte
-
 
         _vex_draw_staves: function _vex_draw_staves(context, barInfo) {
 
@@ -51777,10 +51772,8 @@ var Tuplet = VF.Tuplet;
         },
         _render_context: function _render_context(descriptor, notes, cursor) {
 
-            // Render onto n bars. Assumes no bar overlapping...
-
             if (window.innerHeight <= 600) {
-                // Size our svg:
+                // Size the svg: - PLEASE MOVE THIS LOGIC SOMEWHERE ELSE! THANKS!
                 descriptor.renderer.resize(this.info.width, 65);
             } else {
                 // Size our svg:
@@ -51953,6 +51946,7 @@ var Tuplet = VF.Tuplet;
 
             this._cursor_rendered(cursorNote, descriptor);
 
+            // Move this logic somewhere else
             // Nastavi lastnost cursor.in_tuplet
             // S tem skrijem gumbe takrat, ko sem v trioli, 
             /// zato da se ne dogajajo čudne stvari
@@ -51969,6 +51963,7 @@ var Tuplet = VF.Tuplet;
                 this.cursor.in_tuplet = false;
             }
 
+            // UNUSED! Refactor and delete ASAP!
             var n = this.cursor.position;
             if (notes.length > n && notes[n].in_tuplet && notes[n].type != "bar") {
                 this.cursor.tuplet_type = notes[n].duration.d / notes[n].tuplet_type;
@@ -51985,14 +51980,19 @@ var Tuplet = VF.Tuplet;
             var widthLeft = this.info.width;
 
             batches.forEach(function (batch) {
-                var maxNotesWidth = Math.min(
-                // Give equal space to each note
-                batch.length * _this.info.meanNoteWidth + 5,
-                // Until there are too many notes to fit. 
-                // Then use maximum width and leave some space at the end
-                _this.info.barWidth - _this.info.meanNoteWidth);
+
+                /*var maxNotesWidth = Math.min(
+                    // Give equal space to each note
+                    batch.length * this.info.meanNoteWidth + 5, 
+                    // Until there are too many notes to fit. 
+                    // Then use maximum width and leave some space at the end
+                    this.info.barWidth - this.info.meanNoteWidth
+                );*/
+                var maxNotesWidth = batch.length * _this.info.meanNoteWidth + 40;
 
                 widthLeft -= maxNotesWidth;
+
+                console.log(maxNotesWidth);
 
                 barInfo.push({
                     width: maxNotesWidth
