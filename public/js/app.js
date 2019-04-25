@@ -51431,7 +51431,7 @@ var Tuplet = VF.Tuplet;
                 // an average note occupies.
                 // Used to space notes evenly
                 //meanNoteWidth: 60,
-                meanNoteWidth: 30,
+                //meanNoteWidth: 30,
 
                 bubble_class: "minimap-bubble",
                 lastMinimapBubbleX: 0,
@@ -51598,7 +51598,12 @@ var Tuplet = VF.Tuplet;
             }
         },
 
-        _vex_draw_voice: function _vex_draw_voice(context, stave, renderQueue, optionals) {
+        _vex_draw_voice: function _vex_draw_voice(context, stave, batchInfo, optionals) {
+
+            //debugger;
+
+            var renderQueue = batchInfo.notes;
+            var width = batchInfo.width;
 
             // Create a new voice everytime
             var voice = new VF.Voice({
@@ -51623,13 +51628,14 @@ var Tuplet = VF.Tuplet;
                 this.info.barWidth - this.info.meanNoteWidth
             );
             */
-            var maxNotesWidth = renderQueue.length * this.info.meanNoteWidth;
+            //var maxNotesWidth = renderQueue.length * this.info.meanNoteWidth;
 
             var beams = VF.Beam.applyAndGetBeams(voice);
 
             var formatter = new VF.Formatter();
             formatter.joinVoices([voice]);
-            formatter.format([voice], maxNotesWidth);
+            //formatter.format([voice], maxNotesWidth);
+            formatter.format([voice], width);
 
             voice.draw(context, stave);
 
@@ -51720,7 +51726,7 @@ var Tuplet = VF.Tuplet;
 
             this.scrolled(sDoSomeMath);
         },
-        _cursor_rendered: function _cursor_rendered(cursorNode, descriptor) {
+        _cursor_rendered: function _cursor_rendered(cursorNode, descriptor, notes, cursorNoteIndex) {
 
             var screenWidth = window.innerWidth;
             var sR = document.getElementById("second-row").parentElement;
@@ -51759,7 +51765,29 @@ var Tuplet = VF.Tuplet;
                 var zoomScrollWidth = scrollWidth;
                 var bubbleScrollWidth = minimapWidth;
 
-                var v = (startX + sR.scrollLeft) / zoomScrollWidth * bubbleScrollWidth + this.info.cursor.cursorMargin;
+                var cursorOffset = 0;
+                var currentNoteValue = parseInt(notes[this.cursor.position - 1].symbol);
+                switch (currentNoteValue) {
+                    case 1:
+                        cursorOffset = 22;break;
+                    case 2:
+                        cursorOffset = 22;break;
+                    case 4:
+                        cursorOffset = 22;break;
+                    case 8:
+                        cursorOffset = 15;break;
+                    case 16:
+                        cursorOffset = 10;break;
+                    case 32:
+                        cursorOffset = 8;break;
+                    default:
+                        cursorOffset = 5;break;
+                }
+
+                //alert(this.info.cursor.cursorMargin+" : "+cursorOffset);
+
+                //let v = ((startX + sR.scrollLeft)/zoomScrollWidth)*bubbleScrollWidth + this.info.cursor.cursorMargin;
+                var v = (startX + sR.scrollLeft) / zoomScrollWidth * bubbleScrollWidth + cursorOffset;
 
                 this._set_cursor_position(v);
             }
@@ -51805,6 +51833,8 @@ var Tuplet = VF.Tuplet;
 
             var firstTupletNoteIdx = -1;
 
+            var currentBatchWidth = 0;
+
             for (var i = 0; i < notes.length; i++) {
 
                 var thisNote = notes[i];
@@ -51825,6 +51855,23 @@ var Tuplet = VF.Tuplet;
                     keys: ["g/4"],
                     duration: thisNote.symbol
                 });
+
+                switch (parseInt(thisNote.symbol)) {
+                    case 1:
+                        currentBatchWidth += 100;break;
+                    case 2:
+                        currentBatchWidth += 70;break;
+                    case 4:
+                        currentBatchWidth += 40;break;
+                    case 8:
+                        currentBatchWidth += 40;break;
+                    case 16:
+                        currentBatchWidth += 30;break;
+                    case 32:
+                        currentBatchWidth += 30;break;
+                    default:
+                        currentBatchWidth += 20;break;
+                }
 
                 // Omogoči stiliziranje not
                 // V zapis lahko zdaj daš objekt style in noter recimo informacije o barvi...
@@ -51909,8 +51956,9 @@ var Tuplet = VF.Tuplet;
                 /* the new manual bar logic */
                 if (notes[i].type == "bar") {
 
-                    batches.push(renderQueue);
+                    batches.push({ notes: renderQueue, width: currentBatchWidth });
                     renderQueue = [newNote];
+                    currentBatchWidth = 0;
                 }
             }
 
@@ -51922,7 +51970,7 @@ var Tuplet = VF.Tuplet;
             if (renderQueue.length > 0) {
                 // Draw the rest
                 //this._vex_draw_voice(context, staves[staveIndex], renderQueue);
-                batches.push(renderQueue);
+                batches.push({ notes: renderQueue, width: currentBatchWidth });
             }
 
             this._vex_render_batches(context, batches, [ties, tuplets]);
@@ -51944,7 +51992,7 @@ var Tuplet = VF.Tuplet;
                 opacity: 0.5
             });
 
-            this._cursor_rendered(cursorNote, descriptor);
+            this._cursor_rendered(cursorNote, descriptor, notes);
 
             // Move this logic somewhere else
             // Nastavi lastnost cursor.in_tuplet
@@ -51977,9 +52025,14 @@ var Tuplet = VF.Tuplet;
             // Redraw staves
             var barInfo = [];
 
-            var widthLeft = this.info.width;
+            //var widthLeft = this.info.width;
 
-            batches.forEach(function (batch) {
+            //debugger;
+
+            batches.forEach(function (batchInfo) {
+
+                var batch = batchInfo.notes;
+                var width = batchInfo.width;
 
                 /*var maxNotesWidth = Math.min(
                     // Give equal space to each note
@@ -51988,23 +52041,21 @@ var Tuplet = VF.Tuplet;
                     // Then use maximum width and leave some space at the end
                     this.info.barWidth - this.info.meanNoteWidth
                 );*/
-                var maxNotesWidth = batch.length * _this.info.meanNoteWidth + 40;
+                //var maxNotesWidth = batch.length * this.info.meanNoteWidth + 40;
 
-                widthLeft -= maxNotesWidth;
-
-                console.log(maxNotesWidth);
+                //widthLeft -= maxNotesWidth;
 
                 barInfo.push({
-                    width: maxNotesWidth
+                    width: width + 60 // Fixed offset
                 });
             });
 
             // Initial empty bar
-            if (widthLeft > 0) {
-                barInfo.push({
-                    width: widthLeft
-                });
-            }
+            //if(widthLeft > 0){
+            barInfo.push({
+                width: this.info.width
+            });
+            //}
 
             var staves = this._vex_draw_staves(context, barInfo);
 

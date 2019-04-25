@@ -87,7 +87,7 @@ export default {
                 // an average note occupies.
                 // Used to space notes evenly
                 //meanNoteWidth: 60,
-                meanNoteWidth: 30,
+                //meanNoteWidth: 30,
 
                 bubble_class: "minimap-bubble",
                 lastMinimapBubbleX: 0,
@@ -261,8 +261,12 @@ export default {
             }
         },
 
-        _vex_draw_voice: function(context, stave, renderQueue, optionals){
+        _vex_draw_voice: function(context, stave, batchInfo, optionals){
 
+            //debugger;
+
+            let renderQueue = batchInfo.notes;
+            let width = batchInfo.width;
 
             // Create a new voice everytime
             let voice = new VF.Voice(
@@ -290,13 +294,14 @@ export default {
                 this.info.barWidth - this.info.meanNoteWidth
             );
             */
-            var maxNotesWidth = renderQueue.length * this.info.meanNoteWidth;
+            //var maxNotesWidth = renderQueue.length * this.info.meanNoteWidth;
 
             var beams = VF.Beam.applyAndGetBeams(voice);
 
             var formatter = new VF.Formatter();
             formatter.joinVoices([voice]);
-            formatter.format([voice], maxNotesWidth);
+            //formatter.format([voice], maxNotesWidth);
+            formatter.format([voice], width);
             
 
             voice.draw(context, stave);
@@ -403,7 +408,7 @@ export default {
 
         },
 
-        _cursor_rendered(cursorNode, descriptor){
+        _cursor_rendered(cursorNode, descriptor, notes, cursorNoteIndex){
             
 
             let screenWidth = window.innerWidth;
@@ -444,7 +449,22 @@ export default {
                 let zoomScrollWidth = scrollWidth;
                 let bubbleScrollWidth = minimapWidth;
 
-                let v = ((startX + sR.scrollLeft)/zoomScrollWidth)*bubbleScrollWidth + this.info.cursor.cursorMargin;
+                let cursorOffset = 0;
+                let currentNoteValue = parseInt(notes[this.cursor.position - 1].symbol);
+                switch (currentNoteValue) {
+                    case 1:  cursorOffset = 22; break;
+                    case 2:  cursorOffset = 22;  break;
+                    case 4:  cursorOffset = 22;  break;
+                    case 8:  cursorOffset = 15;  break;
+                    case 16: cursorOffset = 10;  break;
+                    case 32: cursorOffset = 8;  break;
+                    default: cursorOffset = 5;  break;
+                }
+
+                //alert(this.info.cursor.cursorMargin+" : "+cursorOffset);
+
+                //let v = ((startX + sR.scrollLeft)/zoomScrollWidth)*bubbleScrollWidth + this.info.cursor.cursorMargin;
+                let v = ((startX + sR.scrollLeft)/zoomScrollWidth)*bubbleScrollWidth + cursorOffset;
 
                 this._set_cursor_position(v);
             }
@@ -502,6 +522,8 @@ export default {
 
             let firstTupletNoteIdx = -1;
 
+            let currentBatchWidth = 0;
+
             for(var i = 0; i < notes.length; i++){
 
 
@@ -523,6 +545,16 @@ export default {
                         duration: thisNote.symbol
                     }
                 );
+
+                switch (parseInt(thisNote.symbol)) {
+                    case 1:  currentBatchWidth += 100; break;
+                    case 2:  currentBatchWidth += 70;  break;
+                    case 4:  currentBatchWidth += 40;  break;
+                    case 8:  currentBatchWidth += 40;  break;
+                    case 16: currentBatchWidth += 30;  break;
+                    case 32: currentBatchWidth += 30;  break;
+                    default: currentBatchWidth += 20;  break;
+                }
 
                 // Omogoči stiliziranje not
                 // V zapis lahko zdaj daš objekt style in noter recimo informacije o barvi...
@@ -613,8 +645,9 @@ export default {
                /* the new manual bar logic */
                if(notes[i].type == "bar"){
                   
-                    batches.push(renderQueue);
+                    batches.push({notes:renderQueue, width:currentBatchWidth});
                     renderQueue = [newNote];
+                    currentBatchWidth = 0;
 
                 }
 
@@ -628,7 +661,7 @@ export default {
             if(renderQueue.length > 0){
                 // Draw the rest
                 //this._vex_draw_voice(context, staves[staveIndex], renderQueue);
-                batches.push(renderQueue);
+                batches.push({notes:renderQueue, width:currentBatchWidth});
             }
 
             this._vex_render_batches(context, batches, [ties, tuplets]);
@@ -659,7 +692,7 @@ export default {
                 opacity: 0.5
             });
             
-            this._cursor_rendered(cursorNote, descriptor);
+            this._cursor_rendered(cursorNote, descriptor, notes);
 
             // Move this logic somewhere else
             // Nastavi lastnost cursor.in_tuplet
@@ -697,10 +730,15 @@ export default {
             // Redraw staves
             var barInfo = [];
 
-            var widthLeft = this.info.width;
+            //var widthLeft = this.info.width;
 
-            batches.forEach(batch => {
+            //debugger;
+
+            batches.forEach(batchInfo => {
                 
+                let batch = batchInfo.notes;
+                let width = batchInfo.width;
+
                 /*var maxNotesWidth = Math.min(
                     // Give equal space to each note
                     batch.length * this.info.meanNoteWidth + 5, 
@@ -708,23 +746,21 @@ export default {
                     // Then use maximum width and leave some space at the end
                     this.info.barWidth - this.info.meanNoteWidth
                 );*/
-                var maxNotesWidth = batch.length * this.info.meanNoteWidth + 40;
+                //var maxNotesWidth = batch.length * this.info.meanNoteWidth + 40;
 
-                widthLeft -= maxNotesWidth;
-                
-                console.log(maxNotesWidth);
+                //widthLeft -= maxNotesWidth;
 
                 barInfo.push({
-                    width: maxNotesWidth
+                    width: width + 60 // Fixed offset
                 });    
             });
 
             // Initial empty bar
-            if(widthLeft > 0){
+            //if(widthLeft > 0){
                 barInfo.push({
-                    width: widthLeft
+                    width: this.info.width
                 });
-            }
+            //}
 
             let staves = this._vex_draw_staves(context, barInfo);
 
