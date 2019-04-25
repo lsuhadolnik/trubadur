@@ -466,6 +466,14 @@ export default {
 
         },
 
+        submit(){
+
+            this.key_callback({
+                type: 'submit'
+            })
+
+        },
+
         toggle_rest_mode(){
             this.rest_mode = !this.rest_mode;
         },

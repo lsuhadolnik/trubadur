@@ -28,6 +28,12 @@
 
         </div>
 
+        <div class="rhythm-diff-check-view" v-show="displayState == 'diff'">
+
+            <DiffView ref="diff_view" :dismiss="continueGame"></DiffView>
+
+        </div>
+
     </div>
 </template>
 
@@ -87,6 +93,7 @@ import CircleTimer from "../../elements/CircleTimer.vue"
 import ProgressBar from "../../elements/ProgressBar.vue"
 
 import StaffView from "./StaffView.vue"
+import DiffView from "./DiffView.vue"
 import Keyboard from "./RhythmKeyboard.vue"
 
 import NoteStore from "./noteStore"
@@ -101,7 +108,7 @@ var Fraction = require('fraction.js');
 export default {
     
     components: {
-        SexyButton, CircleTimer, ProgressBar, StaffView, Keyboard
+        SexyButton, CircleTimer, ProgressBar, StaffView, DiffView, Keyboard
     },
 
     props: ["game", "difficulty"],
@@ -161,6 +168,16 @@ export default {
             if(event.type == "check"){
                 this.check();
             }
+            if(event.type == "submit"){
+
+                this.$refs.diff_view.render(
+                    this.generator.currentExercise,
+                    this.notes.notes,
+                    this.bar
+                );
+
+                this.displayState = "diff";
+            }
             else if(event.type == "playback"){
                 this.play(event);
             }
@@ -207,6 +224,13 @@ export default {
                 this.play({action: "replay", what: "exercise"});
             }
             
+
+        },
+
+        continueGame(){
+
+            this.nextQuestion(true);
+            this.displayState = "ready";
 
         },
 
