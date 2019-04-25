@@ -51675,7 +51675,9 @@ var Tuplet = VF.Tuplet;
 
             for (var idx_stave = 1; idx_stave < staveCount; idx_stave++) {
                 var connector = new VF.StaveConnector(staves[idx_stave - 1], staves[idx_stave]);
-                connector.setType(VF.StaveConnector.type.SINGLE);
+
+                if (idx_stave + 1 == staveCount) connector.setType(VF.StaveConnector.type.BOLD_DOUBLE_RIGHT);else connector.setType(VF.StaveConnector.type.SINGLE);
+
                 connector.setContext(context);
                 connectors.push(connector);
             }
@@ -51814,6 +51816,9 @@ var Tuplet = VF.Tuplet;
                 if (thisNote.style) {
                     newNote.setStyle(thisNote.style);
                 }
+                if (thisNote.overwrite) {
+                    newNote.setStyle({ fillStyle: "blue", strokeStyle: "blue" });
+                }
 
                 // Handle dots
                 if (thisNote.dot) {
@@ -51845,8 +51850,21 @@ var Tuplet = VF.Tuplet;
                     }));
                 }
 
-                if (thisNote.tuplet_from >= 0) {
-                    tuplets.push(new __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Tuplet(allStaveNotes.slice(thisNote.tuplet_from, thisNote.tuplet_to), {
+                /*if(thisNote.tuplet_from >= 0){
+                    tuplets.push(new Vex.Flow.Tuplet(allStaveNotes.slice(thisNote.tuplet_from, thisNote.tuplet_to), {
+                        bracketed: true, rationed: false, num_notes: thisNote.tuplet_type
+                    }));
+                }*/
+
+                if (thisNote.tuplet_end) {
+                    var d = [newNote];
+                    var kk = i - 1;
+                    while (notes[kk].in_tuplet && !notes[kk].tuplet_end) {
+
+                        d.push(allStaveNotes[kk]);
+                        kk--;
+                    }
+                    tuplets.push(new __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Tuplet(d, {
                         bracketed: true, rationed: false, num_notes: thisNote.tuplet_type
                     }));
                 }
@@ -51916,7 +51934,7 @@ var Tuplet = VF.Tuplet;
             /// zato da se ne dogajajo čudne stvari
             if (this.cursor.position - 1 >= 0 && notes.length > this.cursor.position - 1) {
                 var ccNote = notes[this.cursor.position - 1];
-                if (ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_from")) {
+                if (ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_end")) {
                     this.cursor.in_tuplet = true;
                 } else {
                     this.cursor.in_tuplet = false;
@@ -52007,7 +52025,7 @@ var Tuplet = VF.Tuplet;
             return false;
         };
 
-        sR.onclick = function (e) {
+        sR.onmousedown = function (e) {
             vue.note_clicked(e.clientX);
         };
 
@@ -77197,11 +77215,7 @@ var render = function() {
           { staticClass: "row rhythm-game__keyboard-row " },
           [
             _c("sexy-button", {
-              attrs: {
-                hidden: _vm.cursor.in_tuplet,
-                text: _vm.note_text(2),
-                color: _vm.note_color()
-              },
+              attrs: { text: _vm.note_text(2), color: _vm.note_color() },
               nativeOn: {
                 click: function($event) {
                   _vm.note(2)
@@ -77210,11 +77224,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: {
-                hidden: _vm.cursor.in_tuplet,
-                text: _vm.note_text(4),
-                color: _vm.note_color()
-              },
+              attrs: { text: _vm.note_text(4), color: _vm.note_color() },
               nativeOn: {
                 click: function($event) {
                   _vm.note(4)
@@ -77223,11 +77233,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: {
-                hidden: _vm.cursor.in_tuplet,
-                text: _vm.note_text(8),
-                color: _vm.note_color()
-              },
+              attrs: { text: _vm.note_text(8), color: _vm.note_color() },
               nativeOn: {
                 click: function($event) {
                   _vm.note(8)
@@ -77236,11 +77242,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: {
-                hidden: _vm.cursor.in_tuplet,
-                text: _vm.note_text(16),
-                color: _vm.note_color()
-              },
+              attrs: { text: _vm.note_text(16), color: _vm.note_color() },
               nativeOn: {
                 click: function($event) {
                   _vm.note(16)
@@ -77249,11 +77251,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: {
-                hidden: _vm.cursor.in_tuplet,
-                text: _vm.note_text(32),
-                color: _vm.note_color()
-              },
+              attrs: { text: _vm.note_text(32), color: _vm.note_color() },
               nativeOn: {
                 click: function($event) {
                   _vm.note(32)
@@ -77326,11 +77324,7 @@ var render = function() {
           { staticClass: "row rhythm-game__keyboard-row" },
           [
             _c("sexy-button", {
-              attrs: {
-                hidden: _vm.cursor.in_tuplet,
-                text: _vm.rest_text(2),
-                color: _vm.rest_color()
-              },
+              attrs: { text: _vm.rest_text(2), color: _vm.rest_color() },
               nativeOn: {
                 click: function($event) {
                   _vm.rest(2)
@@ -77339,11 +77333,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: {
-                hidden: _vm.cursor.in_tuplet,
-                text: _vm.rest_text(4),
-                color: _vm.rest_color()
-              },
+              attrs: { text: _vm.rest_text(4), color: _vm.rest_color() },
               nativeOn: {
                 click: function($event) {
                   _vm.rest(4)
@@ -77352,11 +77342,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: {
-                hidden: _vm.cursor.in_tuplet,
-                text: _vm.rest_text(8),
-                color: _vm.rest_color()
-              },
+              attrs: { text: _vm.rest_text(8), color: _vm.rest_color() },
               nativeOn: {
                 click: function($event) {
                   _vm.rest(8)
@@ -77365,11 +77351,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: {
-                hidden: _vm.cursor.in_tuplet,
-                text: _vm.rest_text(16),
-                color: _vm.rest_color()
-              },
+              attrs: { text: _vm.rest_text(16), color: _vm.rest_color() },
               nativeOn: {
                 click: function($event) {
                   _vm.rest(16)
@@ -77378,11 +77360,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("sexy-button", {
-              attrs: {
-                hidden: _vm.cursor.in_tuplet,
-                text: _vm.rest_text(32),
-                color: _vm.rest_color()
-              },
+              attrs: { text: _vm.rest_text(32), color: _vm.rest_color() },
               nativeOn: {
                 click: function($event) {
                   _vm.rest(32)
@@ -77750,27 +77728,34 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         // Removes the tuplet even if the cursor is inside
 
         var i = cursor.position - 1;
-        var tuplet_type = this.notes[i].tuplet_type;
 
-        while (this.notes[i] && !this.notes[i].hasOwnProperty('tuplet_from')) {
+        while (this.notes[i] && !this.notes[i].hasOwnProperty('tuplet_end')) {
             i++;
         }
         if (!this.notes[i]) {
             alert("Nekaj je narobe. Nisem našel zaključka triole... To je napaka v kodi.");
         }
 
-        this.notes.slice(this.notes[i].tuplet_from, this.notes[i].tuplet_to).forEach(function (note) {
+        // i je na zaključku triole
+        // Sprehodi se
+        delete this.notes[i].tuplet_end;
+        do {
+
+            var note = this.notes[i];
+
+            if (note.type == "bar") {
+                return;
+            }
+
             delete note.in_tuplet;
+            note.duration = note.duration.mul(note.tuplet_type);
+
             delete note.tuplet_type;
-            note.duration = note.duration.mul(tuplet_type);
-        });
 
-        delete this.notes[i].tuplet_from;
-        delete this.notes[i].tuplet_to;
-
-        // Add styling
-        this.notes[i].was_tuplet_end = true;
-        this.notes[i].style = { fillStyle: "blue", strokeStyle: "blue" };
+            i--;
+        }
+        // Odstranjuj, dokler traja ta triola ali ne trčiš ob drugo triolo
+        while (!this.notes[i].tuplet_end && this.notes[i].in_tuplet);
 
         // And render the result
         this._call_render();
@@ -77802,6 +77787,54 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         }
 
         return -1;
+    };
+
+    this.add_tuplet = function (event) {
+        var _notes;
+
+        // Original cursor position
+        var n = cursor.position - 1;
+        if (n < 0 || this.notes.length < n) {
+            return;
+        }
+
+        var lastNote = this.notes[n];
+        if (lastNote.type == "bar" || lastNote.in_tuplet) {
+            return;
+        }
+
+        // Check if behind a valid note
+        if (["2", "2r", "4", "4r", "8", "8r", "16", "16r"].indexOf(lastNote.symbol) < 0) {
+            return;
+        }
+
+        // Delete this note
+        lastNote = _.clone(lastNote);
+        this.notes.splice(n, 1);
+
+        // New symbol
+        var newSymbol = lastNote.duration.d * 2 + (lastNote.type == "r" ? "r" : "");
+
+        // Add three half-shorter-lasting notes
+        var k = [];
+        for (var i = 0; i < event.tuplet_type; i++) {
+            var newNote = {
+                type: lastNote.type,
+                symbol: newSymbol,
+                duration: new Fraction(1, lastNote.duration.d * 2).div(event.tuplet_type),
+                in_tuplet: true,
+                tuplet_type: event.tuplet_type,
+                overwrite: true
+            };
+            if (i + 1 == event.tuplet_type) {
+                newNote.tuplet_end = true;
+            }
+            k.push(newNote);
+        }
+        (_notes = this.notes).splice.apply(_notes, [n, 0].concat(k));
+        this.cursor.position = n;
+
+        this._call_render();
     };
 
     /*this.add_tuplet = function(event){
@@ -77870,14 +77903,13 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
             if (event.duration.d == this.supportedLengths[i]) return true;
         }console.error("Note length not supported... (" + event.duration.d + ")");
         return false;
-    }, this._fix_tuplet_indices_forward = function (num) {
-        for (var i = this.cursor.position; i < this.notes.length; i++) {
-            if (this.notes[i].hasOwnProperty('tuplet_from')) {
-                this.notes[i].tuplet_from += num;
-                this.notes[i].tuplet_to += num;
-            }
-        }
     }, this.add_note = function (event) {
+
+        var i = this.cursor.position;
+        if (i >= 0 && i < this.notes.length && this.notes[i].overwrite && event.type != "bar") {
+            this.overwrite_next(event);
+            return;
+        }
 
         if (event.type != "bar" && !this._is_supported_length(event)) {
             return;
@@ -77890,11 +77922,57 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         // Move cursor forward
         this._move_cursor_forward();
 
-        // Popravi tuplet_from, tuplet_to na koncih triol
-        // Povečaj za ena. Vedno se dodaja samo en element ob enkrat
-        this._fix_tuplet_indices_forward(+1);
-
         // And render the result
+        this._call_render();
+    }, this.overwrite_next = function (event) {
+
+        debugger;
+        var i = this.cursor.position;
+        var overwriteNote = this.notes[i];
+        var oldDur = parseInt(overwriteNote.symbol);
+
+        // I can only fit an equal or smaller event here
+        var newDur = parseInt(event.symbol);
+        if (oldDur > newDur) {
+            return;
+            // Cannot fit bigger events here.
+        }
+
+        // Prepiši prvo noto v vseh primerih
+        delete overwriteNote.overwrite;
+        overwriteNote.symbol = event.symbol;
+        overwriteNote.type = event.type;
+        //
+
+        if (oldDur == newDur) {
+            // Je že vse narjeno
+
+        } else {
+
+            // Poglej, kolikokrat je manjša enota
+            var times = Math.floor(newDur / oldDur) - 1;
+
+            // Dodaj toliko - 1 pavzo
+            for (var a = 0; a < times; a++) {
+                var copy = _.clone(overwriteNote);
+                copy.symbol = parseInt(overwriteNote.symbol) + "r";
+                copy.type = "r";
+                copy.overwrite = true;
+
+                // Tole je slabo. Izboljšaj
+                delete copy.tuplet_end;
+
+                this.notes.splice(i + 1 + a, 0, copy);
+            }
+
+            // Pavze so kopije osnovnih objektov
+            // Odstrani tuplet_from in tuplet_to iz pavz
+
+            //alert("To pa še ne deluje.");
+
+        }
+
+        this.cursor.position = i + 1;
         this._call_render();
     }, this._sum_durations = function () {
 
@@ -77928,8 +78006,6 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         //         |  (note to delete) (rest/note) ... (rest/note)
         // cursor--^
         this._move_cursor_backwards();
-
-        this._fix_tuplet_indices_forward(-1);
 
         // Delete this note
         this.notes.splice(this.cursor.position, 1);
@@ -77990,7 +78066,7 @@ var ExerciseGenerator = function ExerciseGenerator() {
             num_beats: 4,
             base_note: 4
         },
-        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 7, tuplet_to: 10 }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(3, 16), dot: true }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }]
+        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(3, 16), dot: true }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }]
     }, {
         bar: {
             num_beats: 4,
@@ -78002,32 +78078,32 @@ var ExerciseGenerator = function ExerciseGenerator() {
             num_beats: 4,
             base_note: 4
         },
-        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 0, tuplet_to: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 8, tuplet_to: 11 }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }]
+        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }]
     }, {
         bar: {
             num_beats: 4,
             base_note: 4
         },
-        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_from: 10, tuplet_to: 13 }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }]
+        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }]
     }, {
         bar: {
             num_beats: 3,
             base_note: 8
         },
-        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
+        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
     }, {
         BPM: 50,
         bar: {
             num_beats: 3,
             base_note: 8
         },
-        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
+        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
     }, {
         bar: {
             num_beats: 3,
             base_note: 8
         },
-        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
+        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
     }];
 
     this.currentExercise = null;

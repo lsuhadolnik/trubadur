@@ -145,27 +145,35 @@ var NoteStore = function(bar, cursor, render_function, info) {
         // Removes the tuplet even if the cursor is inside
 
         let i = cursor.position - 1;
-        let tuplet_type = this.notes[i].tuplet_type
 
-        while(this.notes[i] && !this.notes[i].hasOwnProperty('tuplet_from')){
+        while(this.notes[i] && !this.notes[i].hasOwnProperty('tuplet_end')){
             i++;
         }
         if(!this.notes[i]){
             alert("Nekaj je narobe. Nisem našel zaključka triole... To je napaka v kodi.");
         }
 
-        this.notes.slice(this.notes[i].tuplet_from, this.notes[i].tuplet_to).forEach(note => {
+        // i je na zaključku triole
+        // Sprehodi se
+        delete this.notes[i].tuplet_end;
+        do {
+
+            let note = this.notes[i];
+
+            if(note.type == "bar"){
+                return;
+            }
+
             delete note.in_tuplet;
+            note.duration = note.duration.mul(note.tuplet_type);
+
             delete note.tuplet_type;
-            note.duration = note.duration.mul(tuplet_type);
-        });
+            
+            i--;
+        } 
+        // Odstranjuj, dokler traja ta triola ali ne trčiš ob drugo triolo
+        while(!this.notes[i].tuplet_end && this.notes[i].in_tuplet)
 
-        delete this.notes[i].tuplet_from;
-        delete this.notes[i].tuplet_to;
-
-        // Add styling
-        this.notes[i].was_tuplet_end = true;
-        this.notes[i].style = {fillStyle: "blue", strokeStyle: "blue"};
 
         // And render the result
         this._call_render()
@@ -200,6 +208,55 @@ var NoteStore = function(bar, cursor, render_function, info) {
         }
 
         return -1;
+
+    }
+
+    this.add_tuplet = function(event) {
+
+        // Original cursor position
+        var n = cursor.position - 1;
+        if(n < 0 || this.notes.length < n){
+            return;
+        }
+        
+        var lastNote = this.notes[n];
+        if(lastNote.type == "bar" || lastNote.in_tuplet){
+            return;
+        }
+
+        // Check if behind a valid note
+        if(["2","2r","4", "4r", "8", "8r", "16", "16r"].indexOf(lastNote.symbol) < 0){
+            return; 
+        }
+
+        // Delete this note
+        lastNote = _.clone(lastNote);
+        this.notes.splice(n, 1);
+
+        // New symbol
+        let newSymbol = (lastNote.duration.d * 2) + (lastNote.type == "r" ? "r" : "");
+
+
+        // Add three half-shorter-lasting notes
+        let k = [];
+        for(let i = 0; i < event.tuplet_type; i++){
+            let newNote = {
+                type: lastNote.type,
+                symbol: newSymbol,
+                duration: new Fraction(1, lastNote.duration.d * 2).div(event.tuplet_type),
+                in_tuplet: true,
+                tuplet_type: event.tuplet_type,
+                overwrite: true,
+            };
+            if(i+1 == event.tuplet_type){
+                newNote.tuplet_end = true;
+            }
+            k.push(newNote);
+        }
+        this.notes.splice(n, 0, ...k);
+        this.cursor.position = n;
+
+        this._call_render();
 
     }
 
@@ -265,7 +322,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
         this._call_render()
 
     }*/
-    
+
 
     this._is_supported_length = function(event){
 
@@ -283,17 +340,15 @@ var NoteStore = function(bar, cursor, render_function, info) {
         
     },
 
-    this._fix_tuplet_indices_forward = function(num){
-        for(let i = this.cursor.position; i < this.notes.length; i++){
-            if(this.notes[i].hasOwnProperty('tuplet_from')){
-                this.notes[i].tuplet_from += num;
-                this.notes[i].tuplet_to += num;
-            }
-        }
-    },
 
     this.add_note = function(event) {
         
+        let i = this.cursor.position;
+        if(i >= 0 && i < this.notes.length && this.notes[i].overwrite && event.type != "bar"){
+            this.overwrite_next(event);
+            return;
+        }
+
         if(event.type != "bar" && !this._is_supported_length(event)){
             return;
         }
@@ -305,12 +360,62 @@ var NoteStore = function(bar, cursor, render_function, info) {
         // Move cursor forward
         this._move_cursor_forward();
 
-        // Popravi tuplet_from, tuplet_to na koncih triol
-        // Povečaj za ena. Vedno se dodaja samo en element ob enkrat
-        this._fix_tuplet_indices_forward(+1);
-
         // And render the result
         this._call_render()
+    },
+
+    this.overwrite_next = function(event){
+
+        debugger;
+        let i = this.cursor.position;
+        let overwriteNote = this.notes[i];
+        let oldDur = parseInt(overwriteNote.symbol);
+
+        // I can only fit an equal or smaller event here
+        let newDur = parseInt(event.symbol);
+        if(oldDur > newDur){
+            return;
+            // Cannot fit bigger events here.
+        }
+
+        // Prepiši prvo noto v vseh primerih
+        delete overwriteNote.overwrite;
+        overwriteNote.symbol = event.symbol;
+        overwriteNote.type = event.type;
+        //
+
+        if(oldDur == newDur){
+            // Je že vse narjeno
+
+        }else {
+
+            // Poglej, kolikokrat je manjša enota
+            let times = Math.floor(newDur / oldDur) - 1;
+
+            // Dodaj toliko - 1 pavzo
+            for(let a = 0; a < times; a++){
+                let copy = _.clone(overwriteNote);
+                copy.symbol = parseInt(overwriteNote.symbol) + "r";
+                copy.type = "r";
+                copy.overwrite = true;
+
+                // Tole je slabo. Izboljšaj
+                delete copy.tuplet_end;
+
+                this.notes.splice(i + 1 + a, 0, copy);
+            }
+            
+            // Pavze so kopije osnovnih objektov
+            // Odstrani tuplet_from in tuplet_to iz pavz
+            
+            //alert("To pa še ne deluje.");
+
+
+        }
+
+        this.cursor.position = i + 1;
+        this._call_render();
+
     },
 
     this._sum_durations = function(){
@@ -349,8 +454,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
         //         |  (note to delete) (rest/note) ... (rest/note)
         // cursor--^
         this._move_cursor_backwards();
-
-        this._fix_tuplet_indices_forward(-1);
         
         // Delete this note
         this.notes.splice(this.cursor.position, 1);

@@ -359,7 +359,12 @@ export default {
 
             for(let idx_stave = 1; idx_stave < staveCount; idx_stave++){
                 var connector = new VF.StaveConnector(staves[idx_stave - 1], staves[idx_stave]);
-                connector.setType(VF.StaveConnector.type.SINGLE);
+                
+                if(idx_stave + 1 == staveCount)
+                    connector.setType(VF.StaveConnector.type.BOLD_DOUBLE_RIGHT);
+                else 
+                    connector.setType(VF.StaveConnector.type.SINGLE);
+                
                 connector.setContext(context);
                 connectors.push(connector);
             }
@@ -509,6 +514,9 @@ export default {
                 if(thisNote.style){
                     newNote.setStyle(thisNote.style);
                 }
+                if(thisNote.overwrite){
+                    newNote.setStyle({fillStyle:"blue", strokeStyle: "blue"});
+                }
 
                 // Handle dots
                 if(thisNote.dot){
@@ -542,8 +550,21 @@ export default {
 
                 }
 
-                if(thisNote.tuplet_from >= 0){
+                /*if(thisNote.tuplet_from >= 0){
                     tuplets.push(new Vex.Flow.Tuplet(allStaveNotes.slice(thisNote.tuplet_from, thisNote.tuplet_to), {
+                        bracketed: true, rationed: false, num_notes: thisNote.tuplet_type
+                    }));
+                }*/
+
+                if(thisNote.tuplet_end){
+                    let d = [newNote];
+                    let kk = i-1;
+                    while(notes[kk].in_tuplet && !notes[kk].tuplet_end){
+
+                        d.push(allStaveNotes[kk]);
+                        kk--
+                    }
+                    tuplets.push(new Vex.Flow.Tuplet(d, {
                         bracketed: true, rationed: false, num_notes: thisNote.tuplet_type
                     }));
                 }
@@ -628,7 +649,7 @@ export default {
             /// zato da se ne dogajajo čudne stvari
             if(this.cursor.position - 1 >= 0 && notes.length > this.cursor.position - 1){
                 let ccNote = notes[this.cursor.position - 1];
-                if(ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_from")){
+                if(ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_end")){
                     this.cursor.in_tuplet = true;
                 }
                 else{
@@ -637,6 +658,7 @@ export default {
             }else{
                 this.cursor.in_tuplet = false;
             }
+
 
         },
 
@@ -729,7 +751,7 @@ export default {
             return false;
         }
 
-        sR.onclick = function(e){
+        sR.onmousedown = function(e){
             vue.note_clicked(e.clientX);
         }
 

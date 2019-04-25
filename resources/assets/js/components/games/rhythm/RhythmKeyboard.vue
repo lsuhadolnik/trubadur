@@ -11,11 +11,11 @@
                         </span>
                     </sexy-button>-->
 
-                    <sexy-button :hidden="cursor.in_tuplet" :text="note_text(2)"  :color="note_color()" @click.native="note(2)" />
-                    <sexy-button :hidden="cursor.in_tuplet" :text="note_text(4)"  :color="note_color()" @click.native="note(4)" />
-                    <sexy-button :hidden="cursor.in_tuplet" :text="note_text(8)"  :color="note_color()" @click.native="note(8)" />
-                    <sexy-button :hidden="cursor.in_tuplet" :text="note_text(16)" :color="note_color()" @click.native="note(16)" />
-                    <sexy-button :hidden="cursor.in_tuplet" :text="note_text(32)" :color="note_color()" @click.native="note(32)" />
+                    <sexy-button :text="note_text(2)"  :color="note_color()" @click.native="note(2)" />
+                    <sexy-button :text="note_text(4)"  :color="note_color()" @click.native="note(4)" />
+                    <sexy-button :text="note_text(8)"  :color="note_color()" @click.native="note(8)" />
+                    <sexy-button :text="note_text(16)" :color="note_color()" @click.native="note(16)" />
+                    <sexy-button :text="note_text(32)" :color="note_color()" @click.native="note(32)" />
                     
                     
                     <!-- Will show only on small wide screens (landscape phones) -->
@@ -41,11 +41,11 @@
                         </span>
                     </sexy-button>-->
                     
-                    <sexy-button :hidden="cursor.in_tuplet" :text="rest_text(2)"  :color="rest_color()" @click.native="rest(2)"  />
-                    <sexy-button :hidden="cursor.in_tuplet" :text="rest_text(4)"  :color="rest_color()" @click.native="rest(4)"  />
-                    <sexy-button :hidden="cursor.in_tuplet" :text="rest_text(8)"  :color="rest_color()" @click.native="rest(8)"  />
-                    <sexy-button :hidden="cursor.in_tuplet" :text="rest_text(16)" :color="rest_color()" @click.native="rest(16)" />
-                    <sexy-button :hidden="cursor.in_tuplet" :text="rest_text(32)" :color="rest_color()" @click.native="rest(32)" />
+                    <sexy-button :text="rest_text(2)"  :color="rest_color()" @click.native="rest(2)"  />
+                    <sexy-button :text="rest_text(4)"  :color="rest_color()" @click.native="rest(4)"  />
+                    <sexy-button :text="rest_text(8)"  :color="rest_color()" @click.native="rest(8)"  />
+                    <sexy-button :text="rest_text(16)" :color="rest_color()" @click.native="rest(16)" />
+                    <sexy-button :text="rest_text(32)" :color="rest_color()" @click.native="rest(32)" />
                     
 
                     <!--<sexy-button :hidden="cursor.in_tuplet" :text="rest_mode_button_text" :color="rest_mode_button_color" @click.native="toggle_rest_mode()" />
@@ -536,6 +536,7 @@ export default {
             else if(this.question.check == "next") return "angle-double-right";
             return "question-circle";
         }
+
     }
 
 }
