@@ -243,7 +243,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
             let newNote = {
                 type: lastNote.type,
                 symbol: newSymbol,
-                duration: new Fraction(1, lastNote.duration.d * 2).div(event.tuplet_type),
+                duration: lastNote.duration.div(event.tuplet_type),
                 in_tuplet: true,
                 tuplet_type: event.tuplet_type,
                 overwrite: true,
