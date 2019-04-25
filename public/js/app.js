@@ -51592,7 +51592,7 @@ var Tuplet = VF.Tuplet;
             // Then use maximum width and leave some space at the end
             this.info.barWidth - this.info.meanNoteWidth);
 
-            var beams = VF.Beam.applyAndGetBeams(voice);
+            //var beams = VF.Beam.applyAndGetBeams(voice);
 
             var formatter = new VF.Formatter();
             formatter.joinVoices([voice]);
@@ -51601,27 +51601,9 @@ var Tuplet = VF.Tuplet;
             voice.draw(context, stave);
 
             // Draw the beams:
-            beams.forEach(function (beam) {
+            /*beams.forEach(function(beam){
                 beam.setContext(context).draw();
-            });
-
-            // Draw optionals...
-            if (optionals) {
-
-                if (optionals.ties) {
-                    // Draw the ties
-                    optionals.ties.forEach(function (t) {
-                        t.setContext(context).draw();
-                    });
-                }
-
-                if (optionals.tuplets) {
-                    // Draw the tuplets:
-                    optionals.tuplets.forEach(function (tuplet) {
-                        tuplet.setContext(context).draw();
-                    });
-                }
-            }
+            });*/
         },
 
         _vex_draw_optionals: function _vex_draw_optionals(context, events) {
@@ -51790,6 +51772,8 @@ var Tuplet = VF.Tuplet;
             var latestNoteIndex = 0;
             var lastNoteIndex = -1;
 
+            var firstTupletNoteIdx = -1;
+
             for (var i = 0; i < notes.length; i++) {
 
                 var thisNote = notes[i];
@@ -51856,17 +51840,19 @@ var Tuplet = VF.Tuplet;
                     }));
                 }*/
 
-                if (thisNote.tuplet_end) {
-                    var d = [newNote];
-                    var kk = i - 1;
-                    while (notes[kk].in_tuplet && !notes[kk].tuplet_end) {
-
-                        d.push(allStaveNotes[kk]);
-                        kk--;
+                if (thisNote.in_tuplet) {
+                    if (firstTupletNoteIdx == -1) {
+                        firstTupletNoteIdx = i;
                     }
-                    tuplets.push(new __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Tuplet(d, {
+                } else {
+                    firstTupletNoteIdx = -1;
+                }
+
+                if (thisNote.tuplet_end) {
+                    tuplets.push(new __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
                         bracketed: true, rationed: false, num_notes: thisNote.tuplet_type
                     }));
+                    firstTupletNoteIdx = -1;
                 }
 
                 /* The old auto-bar logic 
@@ -51935,12 +51921,20 @@ var Tuplet = VF.Tuplet;
             if (this.cursor.position - 1 >= 0 && notes.length > this.cursor.position - 1) {
                 var ccNote = notes[this.cursor.position - 1];
                 if (ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_end")) {
+                    // Ni na zadnji noti triole
                     this.cursor.in_tuplet = true;
                 } else {
+                    // Je na zadnji noti triole
                     this.cursor.in_tuplet = false;
                 }
             } else {
                 this.cursor.in_tuplet = false;
+            }
+
+            var n = this.cursor.position;
+            if (notes.length > n && notes[n].in_tuplet && notes[n].type != "bar") {
+                this.cursor.tuplet_type = notes[n].duration.d / notes[n].tuplet_type;
+                //alert("HELLO! IN TUPLET. "+this.cursor.tuplet_type);
             }
         },
         _vex_render_batches: function _vex_render_batches(context, batches, optionals) {
@@ -76723,6 +76717,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -76894,6 +76897,12 @@ var Fraction = __webpack_require__(7);
         },
         rest_color: function rest_color() {
             return "red";
+        },
+        hideNoteButtonWhenInTuplet: function hideNoteButtonWhenInTuplet(button_type) {
+            if (this.in_tuplet && button_type != this.cursor.tuplet_type) {
+                return true;
+            }
+            return false;
         },
         touchStarted: function touchStarted() {
             alert("HEEY!");
@@ -77755,7 +77764,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
             i--;
         }
         // Odstranjuj, dokler traja ta triola ali ne trčiš ob drugo triolo
-        while (!this.notes[i].tuplet_end && this.notes[i].in_tuplet);
+        while (i >= 0 && !this.notes[i].tuplet_end && this.notes[i].in_tuplet);
 
         // And render the result
         this._call_render();
@@ -77911,6 +77920,12 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
             return;
         }
 
+        this.remove_all_overwrites();
+
+        if (i - 1 >= 0 && i - 1 < this.notes.length && this.notes[i - 1].in_tuplet) {
+            return;
+        }
+
         if (event.type != "bar" && !this._is_supported_length(event)) {
             return;
         }
@@ -77926,7 +77941,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         this._call_render();
     }, this.overwrite_next = function (event) {
 
-        debugger;
+        //debugger;
         var i = this.cursor.position;
         var overwriteNote = this.notes[i];
         var oldDur = parseInt(overwriteNote.symbol);
@@ -77938,41 +77953,41 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
             // Cannot fit bigger events here.
         }
 
-        // Prepiši prvo noto v vseh primerih
-        delete overwriteNote.overwrite;
-        overwriteNote.symbol = event.symbol;
-        overwriteNote.type = event.type;
         //
 
         if (oldDur == newDur) {
-            // Je že vse narjeno
+            // Prepiši prvo noto v vseh primerih
+            delete overwriteNote.overwrite;
+            overwriteNote.symbol = event.symbol;
+            overwriteNote.type = event.type;
+            this.cursor.position = i + 1;
 
+            // Je že vse narjeno
         } else {
 
             // Poglej, kolikokrat je manjša enota
-            var times = Math.floor(newDur / oldDur) - 1;
-
-            // Dodaj toliko - 1 pavzo
-            for (var a = 0; a < times; a++) {
-                var copy = _.clone(overwriteNote);
+            /*let times = Math.floor(newDur / oldDur) - 1;
+              // Dodaj toliko - 1 pavzo
+            for(let a = 0; a < times; a++){
+                let copy = _.clone(overwriteNote);
                 copy.symbol = parseInt(overwriteNote.symbol) + "r";
                 copy.type = "r";
                 copy.overwrite = true;
-
-                // Tole je slabo. Izboljšaj
-                delete copy.tuplet_end;
-
-                this.notes.splice(i + 1 + a, 0, copy);
+                  // Tole je slabo. Izboljšaj
+                if(overwriteNote.tuplet_end && a+1 == times){
+                  }else{
+                    delete copy.tuplet_end;
+                }
+                
+                  this.notes.splice(i + 1 + a, 0, copy);
             }
-
+            
             // Pavze so kopije osnovnih objektov
             // Odstrani tuplet_from in tuplet_to iz pavz
-
-            //alert("To pa še ne deluje.");
-
+            */
+            alert("To pa še ne deluje.");
         }
 
-        this.cursor.position = i + 1;
         this._call_render();
     }, this._sum_durations = function () {
 
@@ -78010,8 +78025,18 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         // Delete this note
         this.notes.splice(this.cursor.position, 1);
 
+        this.remove_all_overwrites();
+
         // And render the result
         this._call_render();
+    };
+
+    this.remove_all_overwrites = function () {
+        for (var i = 0; i < this.notes.length; i++) {
+            if (this.notes[i].overwrite) {
+                delete this.notes[i].overwrite;
+            }
+        }
     };
 
     this._move_cursor_forward = function () {

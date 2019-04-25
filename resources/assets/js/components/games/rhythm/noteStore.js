@@ -172,7 +172,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
             i--;
         } 
         // Odstranjuj, dokler traja ta triola ali ne trčiš ob drugo triolo
-        while(!this.notes[i].tuplet_end && this.notes[i].in_tuplet)
+        while(i >= 0 && !this.notes[i].tuplet_end && this.notes[i].in_tuplet)
 
 
         // And render the result
@@ -349,6 +349,12 @@ var NoteStore = function(bar, cursor, render_function, info) {
             return;
         }
 
+        this.remove_all_overwrites();
+
+        if(i-1 >= 0 && i-1 < this.notes.length && this.notes[i-1].in_tuplet){
+            return;
+        }
+
         if(event.type != "bar" && !this._is_supported_length(event)){
             return;
         }
@@ -366,7 +372,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     this.overwrite_next = function(event){
 
-        debugger;
+        //debugger;
         let i = this.cursor.position;
         let overwriteNote = this.notes[i];
         let oldDur = parseInt(overwriteNote.symbol);
@@ -378,19 +384,22 @@ var NoteStore = function(bar, cursor, render_function, info) {
             // Cannot fit bigger events here.
         }
 
-        // Prepiši prvo noto v vseh primerih
-        delete overwriteNote.overwrite;
-        overwriteNote.symbol = event.symbol;
-        overwriteNote.type = event.type;
+        
         //
 
         if(oldDur == newDur){
+            // Prepiši prvo noto v vseh primerih
+            delete overwriteNote.overwrite;
+            overwriteNote.symbol = event.symbol;
+            overwriteNote.type = event.type;
+            this.cursor.position = i + 1;
+            
             // Je že vse narjeno
 
         }else {
 
             // Poglej, kolikokrat je manjša enota
-            let times = Math.floor(newDur / oldDur) - 1;
+            /*let times = Math.floor(newDur / oldDur) - 1;
 
             // Dodaj toliko - 1 pavzo
             for(let a = 0; a < times; a++){
@@ -400,20 +409,25 @@ var NoteStore = function(bar, cursor, render_function, info) {
                 copy.overwrite = true;
 
                 // Tole je slabo. Izboljšaj
-                delete copy.tuplet_end;
+                if(overwriteNote.tuplet_end && a+1 == times){
+
+                }else{
+                    delete copy.tuplet_end;
+                }
+                
 
                 this.notes.splice(i + 1 + a, 0, copy);
             }
             
             // Pavze so kopije osnovnih objektov
             // Odstrani tuplet_from in tuplet_to iz pavz
-            
-            //alert("To pa še ne deluje.");
+            */
+            alert("To pa še ne deluje.");
 
 
         }
 
-        this.cursor.position = i + 1;
+        
         this._call_render();
 
     },
@@ -458,10 +472,19 @@ var NoteStore = function(bar, cursor, render_function, info) {
         // Delete this note
         this.notes.splice(this.cursor.position, 1);
 
+        this.remove_all_overwrites();
         
         // And render the result
         this._call_render()
 
+    }
+
+    this.remove_all_overwrites = function() {
+        for(let i = 0; i < this.notes.length; i++){
+            if(this.notes[i].overwrite){
+                delete this.notes[i].overwrite;
+            }
+        }
     }
 
     this._move_cursor_forward = function(){

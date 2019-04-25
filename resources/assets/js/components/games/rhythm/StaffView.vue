@@ -268,7 +268,7 @@ export default {
                 this.info.barWidth - this.info.meanNoteWidth
             );
 
-            var beams = VF.Beam.applyAndGetBeams(voice);
+            //var beams = VF.Beam.applyAndGetBeams(voice);
 
             var formatter = new VF.Formatter();
             formatter.joinVoices([voice]);
@@ -278,26 +278,11 @@ export default {
             voice.draw(context, stave);
             
             // Draw the beams:
-            beams.forEach(function(beam){
+            /*beams.forEach(function(beam){
                 beam.setContext(context).draw();
-            });
+            });*/
 
-            // Draw optionals...
-            if(optionals) {
-
-                if(optionals.ties) {
-                    // Draw the ties
-                    optionals.ties.forEach(function(t) {t.setContext(context).draw()})
-                }
-
-                if(optionals.tuplets) {
-                    // Draw the tuplets:
-                    optionals.tuplets.forEach(function(tuplet){
-                        tuplet.setContext(context).draw();
-                    });
-                }
-
-            }
+            
         },
 
         _vex_draw_optionals: function(context, events){
@@ -487,6 +472,8 @@ export default {
             let latestNoteIndex = 0;
             let lastNoteIndex = -1;
 
+            let firstTupletNoteIdx = -1;
+
             for(var i = 0; i < notes.length; i++){
 
 
@@ -556,17 +543,19 @@ export default {
                     }));
                 }*/
 
-                if(thisNote.tuplet_end){
-                    let d = [newNote];
-                    let kk = i-1;
-                    while(notes[kk].in_tuplet && !notes[kk].tuplet_end){
-
-                        d.push(allStaveNotes[kk]);
-                        kk--
+                if(thisNote.in_tuplet){
+                    if(firstTupletNoteIdx == -1){
+                        firstTupletNoteIdx = i;
                     }
-                    tuplets.push(new Vex.Flow.Tuplet(d, {
+                }else{
+                    firstTupletNoteIdx = -1;
+                }
+
+                if(thisNote.tuplet_end){
+                    tuplets.push(new Vex.Flow.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
                         bracketed: true, rationed: false, num_notes: thisNote.tuplet_type
                     }));
+                    firstTupletNoteIdx = -1;
                 }
 
                 
@@ -650,13 +639,23 @@ export default {
             if(this.cursor.position - 1 >= 0 && notes.length > this.cursor.position - 1){
                 let ccNote = notes[this.cursor.position - 1];
                 if(ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_end")){
+                    // Ni na zadnji noti triole
                     this.cursor.in_tuplet = true;
+
                 }
                 else{
+                    // Je na zadnji noti triole
                     this.cursor.in_tuplet = false;
                 }
             }else{
                 this.cursor.in_tuplet = false;
+            }
+
+
+            let n = this.cursor.position;
+            if(notes.length > n && notes[n].in_tuplet && notes[n].type != "bar"){
+                this.cursor.tuplet_type = notes[n].duration.d / notes[n].tuplet_type;
+                //alert("HELLO! IN TUPLET. "+this.cursor.tuplet_type);
             }
 
 

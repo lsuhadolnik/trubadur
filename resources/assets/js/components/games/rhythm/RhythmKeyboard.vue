@@ -121,8 +121,17 @@
                         <div class="tiny-tajni-pici-mici-font">Oddaj</div>
                     </sexy-button>
 
+                    
+
 
                 </div>
+                <!--<div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal">
+
+                    <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="2">
+                        <input class="BPM-slider" type="range" :min="playbackStatus.BPM_from" :max="playbackStatus.BPM_to" step="10" v-model="playbackStatus.BPM">
+                    </sexy-button>
+
+                </div>-->
 
             </div>
         </div>
@@ -474,6 +483,13 @@ export default {
             return "red";
         },
 
+        hideNoteButtonWhenInTuplet(button_type){
+            if(this.in_tuplet && button_type != this.cursor.tuplet_type){
+                return true;
+            }
+            return false;
+        },
+
         touchStarted() {
             alert("HEEY!");
         },
@@ -499,7 +515,6 @@ export default {
         'key_callback', 'cursor', 'playbackStatus', 'question', 'reportError'
     ],
     computed: {
-
 
         percentsUser(){
             if(this.playbackStatus.currentlyLoaded == "user"){
