@@ -154,7 +154,8 @@ export default {
             console.log("screenWidth: "+screenWidth+", zoomScrollWidth: "+zoomScrollWidth+", zoomScrollLeft: "+zoomScrollLeft+", x: "+x);
 
             var x_coords = [];
-            zoomView.querySelectorAll(".vf-note").forEach(function(e) {
+            debugger;
+            zoomView.querySelectorAll(".vf-stem").forEach(function(e) {
                 x_coords.push(Math.round((e.getClientRects()[0].x + zoomScrollLeft))); // Does not work on iOS, works elsewhere
                 //x_coords.push(Math.round((e.getBBox().x + zoomScrollLeft))); // DOES NOT work
             });

@@ -25,6 +25,8 @@
 
 
 
+- iOS touch fix
+
 
 
 - FIX iOS fullpage webapp experience
@@ -68,7 +70,7 @@
     - ~~Če ima nota overwrite, ji daj moder stajl v StaveView in odstrani stajling v NoteStore~~
     - ~~Ne uporabi tuplet_from in tuplet_to ampak samo tuplet_end=true in potem sproti preštevaj...~~
 - ~~Poštimaj duration v triolah~~
-    
+  
 - ~~Ko si v trioli se more dat dodajat druge note v triolo,~~
     - IMPLEMENTIRAJ dodajanje različnih dob v triolo
     - FIX tuplet stems - če daš osminko pred triolo se napačno vežejo 
@@ -94,10 +96,10 @@
 
         
 
-- [SHOULD, HARD, LOTS OF WORK, FUNCTIONAL] Ko uporabnik stisne preglej, naj se prikaže DIFF med njegovim vpisanim in pravilnim odgovorom
+- ~~[SHOULD, HARD, LOTS OF WORK, FUNCTIONAL] Ko uporabnik stisne preglej, naj se prikaže DIFF med njegovim vpisanim in pravilnim odgovorom~~
 
-    - Naj se obe verziji tudi predvajata, naj bodo spodaj drugačni gumbi
-    - Ko se predvaja en del, naj se osvetlijo vsi takti
+    - Naj se obe verziji tudi predvajata, naj bodo spodaj drugačni gumbi MAYBE
+    - Ko se predvaja en del, naj se osvetlijo vsi takti MAYBE
 
 
 
