@@ -351,7 +351,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
         this.remove_all_overwrites();
 
-        if(i-1 >= 0 && i-1 < this.notes.length && this.notes[i-1].in_tuplet){
+        if(i >= 0 && i < this.notes.length && this.notes[i].in_tuplet){
             return;
         }
 

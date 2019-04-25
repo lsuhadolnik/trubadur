@@ -10,6 +10,13 @@
             <div id="second-row"></div>
         </div>
         
+
+        <!--
+        height: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.height" v-on:mousemove="force_redraw()"> {{info.height}}
+        barHeight: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barHeight" v-on:mousemove="force_redraw()"> {{info.barHeight}}
+        barOffsetY: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barOffsetY" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
+        zoomViewHeight: <input class="BPM-slider" type="range" :min="10" :max="200" step="1" v-model="CTX.zoomview.containerHeight" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
+            -->        
     </div>
 
 </template>
@@ -30,7 +37,6 @@
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
-        height: 160px
         /*scroll-behavior: smooth;
         -webkit-scroll-behavior: smooth;*/
     }
@@ -64,17 +70,17 @@ export default {
 
             info: {
                 width: 2*(window.innerWidth),
-                height: 67,
+                height: 75,
                 barWidth: window.innerWidth,
-                barHeight: 67,
-                barOffsetY: 19,
+                barHeight: 75,
+                barOffsetY: 16,
+
+                zoomViewContainerHeight: 176,
 
                 // Determines how much pixels 
                 // an average note occupies.
                 // Used to space notes evenly
                 meanNoteWidth: 60,
-
-                maxStaveWidth: 320,
 
                 bubble_class: "minimap-bubble",
                 lastMinimapBubbleX: 0,
@@ -98,15 +104,23 @@ export default {
                 minimap: {
                     id: "first-row",
                     role: "minimap",
+                    viewHeight: 60
                 }, 
                 zoomview: {
                     id: "second-row",
-                    role: "zoomview"
+                    role: "zoomview",
+                    containerHeight: 176,
+                    
                 }
             }
         }
     },
+
     methods: {
+
+        force_redraw: function(){
+            this.$parent.notes._call_render()
+        },
 
         note_clicked: function(Xoffset){
 
@@ -707,7 +721,20 @@ export default {
 
         render(notes, cursor) {
             for(var key in this.CTX){
-                this._render_context(this.CTX[key], notes, cursor);
+
+                let ctx = this.CTX[key];
+
+                if(ctx.containerHeight){
+                    let container = document.getElementById(ctx.id).parentElement;
+                    container.style.height = ctx.containerHeight+"px";
+                }
+
+                if(ctx.viewHeight){
+                    let view = document.getElementById(ctx.id);
+                    view.style.height = ctx.viewHeight+"px";
+                }
+
+                this._render_context(ctx, notes, cursor);
             }
         },
 

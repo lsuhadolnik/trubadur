@@ -125,13 +125,18 @@
 
 
                 </div>
-                <!--<div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal">
+                <div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal">
 
                     <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="2">
                         <input class="BPM-slider" type="range" :min="playbackStatus.BPM_from" :max="playbackStatus.BPM_to" step="10" v-model="playbackStatus.BPM">
                     </sexy-button>
 
-                </div>-->
+                </div>
+                <div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal">
+
+                    
+
+                </div>
 
             </div>
         </div>
@@ -512,7 +517,7 @@ export default {
         };
     },
     props: [
-        'key_callback', 'cursor', 'playbackStatus', 'question', 'reportError'
+        'key_callback', 'cursor', 'playbackStatus', 'question', 'reportError',
     ],
     computed: {
 

@@ -51323,7 +51323,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*scroll-behavior: smooth;\n    -webkit-scroll-behavior: smooth;*/\n}\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*background:red;*/\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 160px;\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n", ""]);
+exports.push([module.i, "\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*scroll-behavior: smooth;\n    -webkit-scroll-behavior: smooth;*/\n}\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*background:red;*/\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  /*scroll-behavior: smooth;\n    -webkit-scroll-behavior: smooth;*/\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n", ""]);
 
 // exports
 
@@ -51336,6 +51336,12 @@ exports.push([module.i, "\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n 
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow__ = __webpack_require__(129);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vexflow__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -51400,17 +51406,17 @@ var Tuplet = VF.Tuplet;
 
             info: {
                 width: 2 * window.innerWidth,
-                height: 67,
+                height: 75,
                 barWidth: window.innerWidth,
-                barHeight: 67,
-                barOffsetY: 19,
+                barHeight: 75,
+                barOffsetY: 16,
+
+                zoomViewContainerHeight: 176,
 
                 // Determines how much pixels 
                 // an average note occupies.
                 // Used to space notes evenly
                 meanNoteWidth: 60,
-
-                maxStaveWidth: 320,
 
                 bubble_class: "minimap-bubble",
                 lastMinimapBubbleX: 0,
@@ -51433,17 +51439,25 @@ var Tuplet = VF.Tuplet;
             CTX: {
                 minimap: {
                     id: "first-row",
-                    role: "minimap"
+                    role: "minimap",
+                    viewHeight: 60
                 },
                 zoomview: {
                     id: "second-row",
-                    role: "zoomview"
+                    role: "zoomview",
+                    containerHeight: 176
+
                 }
             }
         };
     },
 
+
     methods: {
+
+        force_redraw: function force_redraw() {
+            this.$parent.notes._call_render();
+        },
 
         note_clicked: function note_clicked(Xoffset) {
 
@@ -51981,7 +51995,20 @@ var Tuplet = VF.Tuplet;
         },
         render: function render(notes, cursor) {
             for (var key in this.CTX) {
-                this._render_context(this.CTX[key], notes, cursor);
+
+                var ctx = this.CTX[key];
+
+                if (ctx.containerHeight) {
+                    var container = document.getElementById(ctx.id).parentElement;
+                    container.style.height = ctx.containerHeight + "px";
+                }
+
+                if (ctx.viewHeight) {
+                    var view = document.getElementById(ctx.id);
+                    view.style.height = ctx.viewHeight + "px";
+                }
+
+                this._render_context(ctx, notes, cursor);
             }
         },
         rerender_notes: function rerender_notes() {
@@ -76726,6 +76753,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -77593,7 +77625,58 @@ var render = function() {
             )
           ],
           1
-        )
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal"
+          },
+          [
+            _c(
+              "sexy-button",
+              {
+                attrs: {
+                  color: "cabaret",
+                  customClass: "wideButton normal-font",
+                  cols: 2
+                }
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.playbackStatus.BPM,
+                      expression: "playbackStatus.BPM"
+                    }
+                  ],
+                  staticClass: "BPM-slider",
+                  attrs: {
+                    type: "range",
+                    min: _vm.playbackStatus.BPM_from,
+                    max: _vm.playbackStatus.BPM_to,
+                    step: "10"
+                  },
+                  domProps: { value: _vm.playbackStatus.BPM },
+                  on: {
+                    __r: function($event) {
+                      _vm.$set(_vm.playbackStatus, "BPM", $event.target.value)
+                    }
+                  }
+                })
+              ]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", {
+          staticClass:
+            "row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal"
+        })
       ])
     ]),
     _vm._v(" "),
@@ -77922,7 +78005,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         this.remove_all_overwrites();
 
-        if (i - 1 >= 0 && i - 1 < this.notes.length && this.notes[i - 1].in_tuplet) {
+        if (i >= 0 && i < this.notes.length && this.notes[i].in_tuplet) {
             return;
         }
 
