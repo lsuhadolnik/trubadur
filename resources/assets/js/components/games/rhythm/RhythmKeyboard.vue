@@ -29,11 +29,15 @@
                         <div v-else class="small-font-button">Ponovi vajo</div>
                     </sexy-button>
 
-                    <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="1" v-on:touchstart="touchStarted()" v-on:touchend="touchEnded()">
+                    <!--<sexy-button color="cabaret" customClass="wideButton normal-font" :cols="1" v-on:touchstart="touchStarted()" v-on:touchend="touchEnded()">
                         <div class="BPM-indicator normal-font">
                             <div class="BPM-value">{{playbackStatus.BPM}}</div>
                             <div class="BPM-prompt">BPM</div>
                         </div>
+                    </sexy-button>-->
+                    <sexy-button color="sunglow" @click.native="play_user()" :percents="percentsUser" customClass="normal-font tiny-tajni-pici-mici-font">
+                        <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'user'"/>
+                        <div v-else class="small-font-button">Ponovi vpisano</div>
                     </sexy-button>
 
                     

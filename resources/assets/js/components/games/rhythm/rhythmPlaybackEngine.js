@@ -10,7 +10,7 @@ var RhythmPlaybackEngine = function(){
 
     this.channel = 0;
     this.intensity = 127;
-    this.pitch = [60];
+    this.pitch = [65];
 
     this.currentlyLoaded = "";
     this.playing = false;

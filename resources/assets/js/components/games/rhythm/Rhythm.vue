@@ -282,26 +282,26 @@ export default {
 
 
         // Init MIDI
-        let instruments = {
-            piano: {
+        let instruments = [
+            {
                 channel: 0,
-                soundfont: 'acoustic_grand_piano',
+                soundfont: 'percussive_organ',
                 colume: 127
             },
-            piano: {
+            {
                 channel: 1,
                 soundfont: 'xylophone',
                 volume: 200
             }   
-        };
+        ];
 
         MIDI.loadPlugin({
             soundfontUrl: '/soundfonts/',
-            instruments: ['acoustic_grand_piano', 'xylophone'],
+            instruments: instruments.map(e => e.soundfont),
             targetFormat: 'mp3',
             onsuccess: () => {
-                for (var name in instruments) {
-                    let instrument = instruments[name];
+                for (let i = 0; i < instruments.length; i++) {
+                    let instrument = instruments[i];
                     MIDI.setVolume(instrument.channel, instrument.volume);
                     MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
                 }

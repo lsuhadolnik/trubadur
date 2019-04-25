@@ -50339,8 +50339,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__exerciseGenerator__ = __webpack_require__(150);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__rhythmPlaybackEngine__ = __webpack_require__(151);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vuex__ = __webpack_require__(4);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -50606,25 +50604,25 @@ var Fraction = __webpack_require__(7);
         }*/
 
         // Init MIDI
-        var instruments = _defineProperty({
-            piano: {
-                channel: 0,
-                soundfont: 'acoustic_grand_piano',
-                colume: 127
-            }
-        }, "piano", {
+        var instruments = [{
+            channel: 0,
+            soundfont: 'percussive_organ',
+            colume: 127
+        }, {
             channel: 1,
             soundfont: 'xylophone',
             volume: 200
-        });
+        }];
 
         MIDI.loadPlugin({
             soundfontUrl: '/soundfonts/',
-            instruments: ['acoustic_grand_piano', 'xylophone'],
+            instruments: instruments.map(function (e) {
+                return e.soundfont;
+            }),
             targetFormat: 'mp3',
             onsuccess: function onsuccess() {
-                for (var name in instruments) {
-                    var instrument = instruments[name];
+                for (var i = 0; i < instruments.length; i++) {
+                    var instrument = instruments[i];
                     MIDI.setVolume(instrument.channel, instrument.volume);
                     MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
                 }
@@ -76846,6 +76844,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -77446,28 +77448,25 @@ var render = function() {
                 "sexy-button",
                 {
                   attrs: {
-                    color: "cabaret",
-                    customClass: "wideButton normal-font",
-                    cols: 1
+                    color: "sunglow",
+                    percents: _vm.percentsUser,
+                    customClass: "normal-font tiny-tajni-pici-mici-font"
                   },
-                  on: {
-                    touchstart: function($event) {
-                      _vm.touchStarted()
-                    },
-                    touchend: function($event) {
-                      _vm.touchEnded()
+                  nativeOn: {
+                    click: function($event) {
+                      _vm.play_user()
                     }
                   }
                 },
                 [
-                  _c("div", { staticClass: "BPM-indicator normal-font" }, [
-                    _c("div", { staticClass: "BPM-value" }, [
-                      _vm._v(_vm._s(_vm.playbackStatus.BPM))
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "BPM-prompt" }, [_vm._v("BPM")])
-                  ])
-                ]
+                  _vm.playbackStatus.playing &&
+                  _vm.playbackStatus.currentlyLoaded == "user"
+                    ? _c("icon", { attrs: { name: "pause" } })
+                    : _c("div", { staticClass: "small-font-button" }, [
+                        _vm._v("Ponovi vpisano")
+                      ])
+                ],
+                1
               )
             ],
             1
@@ -78394,7 +78393,7 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
 
     this.channel = 0;
     this.intensity = 127;
-    this.pitch = [60];
+    this.pitch = [65];
 
     this.currentlyLoaded = "";
     this.playing = false;
