@@ -74562,7 +74562,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm__instructions {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.rhythm__instructions-list-item {\n  padding: 8px 20px 8px 3px;\n}\n.rythm-game__wrap {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.error {\n  text-align: center;\n  text-transform: uppercase;\n  color: #fe664e;\n  background: black;\n}\n@media only screen and (orientation: landscape) {\n.app {\n    padding-bottom: 0px !important;\n}\n}\n@media only screen and (orientation: landscape) {\n.header-menu {\n    display: none !important;\n    position: static !important;\n}\n}\n@media only screen and (orientation: landscape) {\n.app--sticky {\n    padding: 0px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.rhythm__instructions {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.rhythm__instructions-list-item {\n  padding: 8px 20px 8px 3px;\n}\n.rythm-game__wrap {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.error {\n  text-align: center;\n  text-transform: uppercase;\n  color: #fe664e;\n  background: black;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.app {\n    padding-bottom: 0px !important;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.header-menu {\n    display: none !important;\n    position: static !important;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.app--sticky {\n    padding: 0px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -75604,7 +75604,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*scroll-behavior: smooth;\n    -webkit-scroll-behavior: smooth;*/\n}\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*background:red;*/\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 176px;\n  /*scroll-behavior: smooth;\n    -webkit-scroll-behavior: smooth;*/\n}\n@media only screen and (orientation: landscape) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 150px;\n}\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n", ""]);
+exports.push([module.i, "\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*scroll-behavior: smooth;\n    -webkit-scroll-behavior: smooth;*/\n}\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  /*background:red;*/\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 176px;\n  /*scroll-behavior: smooth;\n    -webkit-scroll-behavior: smooth;*/\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 150px;\n}\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n", ""]);
 
 // exports
 
@@ -76547,7 +76547,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm-game__diff__first-row[data-v-0556eb24], .rhythm-game__diff__second-row[data-v-0556eb24] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 139px;\n}\n@media only screen and (orientation: landscape) {\n.rhythm-game__diff__first-row[data-v-0556eb24], .rhythm-game__diff__second-row[data-v-0556eb24] {\n      height: 150px;\n}\n}\n#diff-first-row[data-v-0556eb24], #diff-second-row[data-v-0556eb24] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n.diff-prompt[data-v-0556eb24] {\n  padding: 0px;\n  margin: 10px 0 0 0;\n  font-size: 26px;\n  text-align: center;\n}\n.button-holder[data-v-0556eb24] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  width: 100%;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.rhythm-game__diff__first-row[data-v-0556eb24], .rhythm-game__diff__second-row[data-v-0556eb24] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 139px;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.rhythm-game__diff__first-row[data-v-0556eb24], .rhythm-game__diff__second-row[data-v-0556eb24] {\n      height: 150px;\n}\n}\n#diff-first-row[data-v-0556eb24], #diff-second-row[data-v-0556eb24] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n.diff-prompt[data-v-0556eb24] {\n  padding: 0px;\n  margin: 10px 0 0 0;\n  font-size: 26px;\n  text-align: center;\n}\n.button-holder[data-v-0556eb24] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  width: 100%;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -89573,7 +89573,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-79470641] {\n  font-size: 8pt !important;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_third .button[data-v-79470641] {\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-79470641] {\n  font-size: 8pt !important;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_third .button[data-v-79470641] {\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.button_1_col[data-v-79470641] {\n    width: 60px;\n    height: 60px;\n}\n}\n\n/*@include breakpoint-large-phone{\n      .rhythm-game__keyboard-row .button {\n          margin-left: 12px;\n      }\n\n      .rhythm-game__keyboard-row {\n          margin-bottom: 15px;\n      }\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n}\n", ""]);
 
 // exports
 
@@ -89596,6 +89596,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_awesome_icons_check__ = __webpack_require__(152);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_awesome_icons_angle_double_right__ = __webpack_require__(153);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue_awesome_icons_times__ = __webpack_require__(154);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //

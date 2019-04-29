@@ -43,7 +43,7 @@
         /*scroll-behavior: smooth;
         -webkit-scroll-behavior: smooth;*/
 
-        @include breakpoint-landscape { height: 150px; }
+        @include breakpoint-phone-landscape { height: 150px; }
     }
 
     #second-row {

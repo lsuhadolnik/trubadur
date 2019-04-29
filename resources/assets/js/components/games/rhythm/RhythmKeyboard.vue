@@ -177,6 +177,8 @@
 
 <style lang="scss" scoped>
 
+    @import '../../../../sass/variables/index';
+
     .hide-normal{
         display:none;
     }
@@ -209,6 +211,8 @@
     .rythm-game__keyboard_wrap {
         
         padding: 0 10px 0 10px;
+        display: flex;
+        justify-content: center;
     }
 
     .rhythm-game__keyboard {
@@ -273,6 +277,24 @@
     // Wide last button
     /*.rhythm-game__keyboard-row_fourth .button:last-child{
         width: 170px;
+    }*/
+
+    // For iPhone 6,7,8 screens
+    @include breakpoint-phone{
+        .button_1_col{
+            width: 60px;
+            height: 60px;
+        }
+    }
+
+    /*@include breakpoint-large-phone{
+        .rhythm-game__keyboard-row .button {
+            margin-left: 12px;
+        }
+
+        .rhythm-game__keyboard-row {
+            margin-bottom: 15px;
+        }
     }*/
     
     @media only screen 

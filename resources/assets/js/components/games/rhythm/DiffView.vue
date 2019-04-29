@@ -31,7 +31,7 @@
         overflow-scrolling: touch;
         height: 139px;
 
-        @include breakpoint-landscape { height: 150px; }
+        @include breakpoint-phone-landscape { height: 150px; }
     }
 
     #diff-first-row, #diff-second-row {

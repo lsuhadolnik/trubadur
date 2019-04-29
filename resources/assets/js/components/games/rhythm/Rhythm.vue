@@ -64,20 +64,20 @@
     }
 
     .app {
-        @include breakpoint-landscape {
+        @include breakpoint-phone-landscape {
             padding-bottom: 0px !important;
         }
     }
 
     .header-menu{
-        @include breakpoint-landscape {
+        @include breakpoint-phone-landscape {
             display: none !important;
             position: static !important;
         }
     }
 
     .app--sticky{
-        @include breakpoint-landscape {
+        @include breakpoint-phone-landscape {
             padding: 0px !important;
         }
     }
