@@ -80,8 +80,6 @@
 
 - ~~IZKLOPIL SEM BEAMSE~~
 
-
-
 - ~~[MUST, FUNCTIONAL] Drugače razporedi tipkovnico~~
 
     - ~~Naj bodo tudi 32-tinke~~
@@ -90,11 +88,9 @@
 
     
 
-- [SHOULD, FUNCTIONAL] NAREDI SLIDING BUTTON! :D Tko da pritisneš in podrsaš al levo al desno in se spremeni neka vrednost
+- ~~[SHOULD, FUNCTIONAL] NAREDI SLIDING BUTTON! :D Tko da pritisneš in podrsaš al levo al desno in se spremeni neka vrednost~~
 
-    - Ko slajdaš naj se pokaže Flyover, ki naj kaže vrednost in enoto
-
-        
+      
 
 - ~~[SHOULD, HARD, LOTS OF WORK, FUNCTIONAL] Ko uporabnik stisne preglej, naj se prikaže DIFF med njegovim vpisanim in pravilnim odgovorom~~
 

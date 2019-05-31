@@ -11,11 +11,38 @@
                     </span>
                 </sexy-button>-->
 
-                <sexy-button :text="note_text(2)"  :color="note_color()" @click.native="note(2)" />
-                <sexy-button :text="note_text(4)"  :color="note_color()" @click.native="note(4)" />
-                <sexy-button :text="note_text(8)"  :color="note_color()" @click.native="note(8)" />
-                <sexy-button :text="note_text(16)" :color="note_color()" @click.native="note(16)" />
-                <sexy-button :text="note_text(32)" :color="note_color()" @click.native="note(32)" />
+                <sexy-button :color="note_color()" @click.native="note(2)" >
+                    <div class="norfolk-note-button-text">
+                        &#x0068;
+                    </div>
+                </sexy-button>
+
+                <sexy-button :color="note_color()" @click.native="note(4)" >
+                    <div class="norfolk-note-button-text">
+                        &#x0071;
+                    </div>
+                </sexy-button>
+
+                <sexy-button :color="note_color()" @click.native="note(8)" >
+                    <div class="norfolk-note-button-text">
+                        &#x0065;
+                    </div>
+                </sexy-button>
+
+                <sexy-button :color="note_color()" @click.native="note(16)"  >
+                    <div class="norfolk-note-button-text">
+                        &#x0078;
+                    </div>
+                </sexy-button>
+
+                <sexy-button :color="note_color()" @click.native="note(32)"  >
+                    <div class="norfolk-note-button-text thirtytwo-note">
+                        <div class="td-base"> &#x0071;</div>
+                        <div class="td-flag1">&#x006A;</div>
+                        <div class="td-flag2">&#x006A;</div>
+                        <div class="td-flag3">&#x006A;</div>
+                    </div>
+                </sexy-button>
                 
                 
                 <!-- Will show only on small wide screens (landscape phones) -->
@@ -56,11 +83,35 @@
                     </span>
                 </sexy-button>-->
                 
-                <sexy-button :text="rest_text(2)"  :color="rest_color()" @click.native="rest(2)"  />
-                <sexy-button :text="rest_text(4)"  :color="rest_color()" @click.native="rest(4)"  />
-                <sexy-button :text="rest_text(8)"  :color="rest_color()" @click.native="rest(8)"  />
-                <sexy-button :text="rest_text(16)" :color="rest_color()" @click.native="rest(16)" />
-                <sexy-button :text="rest_text(32)" :color="rest_color()" @click.native="rest(32)" />
+                <sexy-button :color="rest_color()" @click.native="rest(2)"  >
+                    <div class="norfolk">
+                        &#x00D3;
+                    </div>
+                </sexy-button>
+                
+                <sexy-button :color="rest_color()" @click.native="rest(4)" >
+                    <div class="norfolk">
+                        &#x0152;
+                    </div>
+                </sexy-button>
+                
+                <sexy-button :color="rest_color()" @click.native="rest(8)">
+                    <div class="norfolk">
+                        &#x2030;
+                    </div>
+                </sexy-button>
+
+                <sexy-button :color="rest_color()" @click.native="rest(16)">
+                    <div class="norfolk">
+                        &#x2248;
+                    </div>
+                </sexy-button>
+
+                <sexy-button :color="rest_color()" @click.native="rest(32)" >
+                    <div class="norfolk">
+                        &#x00AE;
+                    </div>
+                </sexy-button>
                 
 
                 <!--<sexy-button :hidden="cursor.in_tuplet" :text="rest_mode_button_text" :color="rest_mode_button_color" @click.native="toggle_rest_mode()" />
@@ -105,9 +156,17 @@
                 </sexy-button>-->
 
                 <sexy-button :hidden="cursor.in_tuplet" text="\" color="green" @click.native="add_bar()" />
-                <sexy-button :hidden="cursor.in_tuplet" text="." color="green" @click.native="dot()" />
-                <sexy-button :hidden="cursor.in_tuplet" text=""  color="orange" @click.native="alert('hello!')"  />
-                <sexy-button text="u" color="green" @click.native="tie()" />
+                
+                
+                <sexy-button v-if="moving_buttons" text="<" color="orange" @click.native="move_cursor_backwards" customClass="moveButtonsButton" />
+                <sexy-button v-else :hidden="cursor.in_tuplet" text="." color="green" @click.native="dot()" />
+                
+                <sexy-button v-if="moving_buttons" :hidden="cursor.in_tuplet" text=". u"  color="green" @click.native="moving_buttons = !moving_buttons" />
+                <sexy-button v-else :hidden="cursor.in_tuplet" text="< >"  color="orange" @click.native="moving_buttons = !moving_buttons" customClass="moveButtonsButton" />
+                
+                <sexy-button v-if="moving_buttons" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
+                <sexy-button v-else text="u" color="green" @click.native="tie()" />
+
                 <sexy-button text="T" color="green" @click.native="tuplet()" />
 
             </div>
@@ -123,43 +182,38 @@
                     <div v-else class="tiny-tajni-pici-mici-font">Ponovi vajo</div>
                 </sexy-button>
 
-                <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="1" v-on:touchstart="touchStarted()" v-on:touchend="touchEnded()">
+                <sexy-slider color="cabaret" :value="playbackStatus" valueKey="BPM" :from="20" :to="250">
                     <div class="BPM-indicator normal-font">
                         <div class="BPM-value">{{playbackStatus.BPM}}</div>
                         <div class="BPM-prompt">BPM</div>
                     </div>
-                </sexy-button>
-                
-                <!--<sexy-button color="cabaret" customClass="wideButton normal-font" :cols="2">
-                    <input class="BPM-slider" type="range" :min="playbackStatus.BPM_from" :max="playbackStatus.BPM_to" step="10" v-model="playbackStatus.BPM">
-                </sexy-button>-->
+                </sexy-slider>
                 
                 <!-- check button -->
                 <sexy-button :color="checkButtonColor" @click.native="check()" >
-                    <!--<icon :name="checkButtonIcon" />-->
-                    <div class="tiny-tajni-pici-mici-font">Preveri</div>
+                    <div v-if="question.check == 'no'" class="tiny-tajni-pici-mici-font">Preveri</div>
+                    <icon name="times" v-if="question.check == 'wrong'"/>
+                    <icon name="check" v-if="question.check == 'correct'"/>
+                    <div v-if="question.check == 'next'" class="tiny-tajni-pici-mici-font">Naprej</div>
                 </sexy-button>
 
-                <sexy-button color="cabaret" @click.native="submit()">
-                    <div class="tiny-tajni-pici-mici-font">Oddaj</div>
+                <sexy-button :color="checkButtonColor" @click.native="submit()" >
+                    <div class="tiny-tajni-pici-mici-font">Naprej</div>
                 </sexy-button>
-
-                
-
 
             </div>
             <div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal">
 
-                <sexy-button color="cabaret" customClass="wideButton normal-font" :cols="2">
+                <!--<sexy-button color="cabaret" customClass="wideButton normal-font" :cols="2">
                     <input class="BPM-slider" type="range" :min="playbackStatus.BPM_from" :max="playbackStatus.BPM_to" step="10" v-model="playbackStatus.BPM">
-                </sexy-button>
+                </sexy-button>-->
 
             </div>
-            <div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal">
+           <!--<div class="row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal">
 
                 
 
-            </div>
+            </div>-->
 
         </div>
 
@@ -273,6 +327,48 @@
         width: 80px;
     }
 
+    .norfolk{
+        font-family: Norfolk;
+    }
+
+    .norfolk-note-button-text{
+        font-family: Norfolk;
+
+        font-size: 33px;
+        margin-top: 19px;
+    }
+
+    .thirtytwo-note{
+
+        .td-flag1, .td-flag2, .td-flag3{
+            font-size: 30px;
+            margin-left: 17px;
+        }
+
+        .td-base{
+            margin-top: -16px;
+        }
+
+        .td-flag1{
+            margin-top: -89px;
+        }
+
+        .td-flag2{
+            margin-top: -53px;
+        }
+        
+        .td-flag3{
+            margin-top: -53px;
+        }
+
+    }
+
+    .moveButtonsButton {
+        font-family: initial !important;
+        font-size: 26px  !important;
+        font-weight: bold;
+    }
+
 
     // Wide last button
     /*.rhythm-game__keyboard-row_fourth .button:last-child{
@@ -282,8 +378,8 @@
     // For iPhone 6,7,8 screens
     @include breakpoint-phone{
         .button_1_col{
-            width: 60px;
-            height: 60px;
+            width: 60px !important;
+            height: 60px !important;
         }
     }
 
@@ -322,6 +418,7 @@
 <script>
 
 import SexyButton from "../../elements/SexyButton.vue"
+import SexySlider from "../../elements/SexySlider.vue"
 import TwoRowsButton from "../../elements/TwoRowsButton.vue"
 
 import 'vue-awesome/icons/repeat'
@@ -535,29 +632,25 @@ export default {
             return false;
         },
 
-        touchStarted() {
-            alert("HEEY!");
-        },
-
-        touchEnded() {
-
-            alert("OOON");
-        }
-
     },
     components: {
-        SexyButton, TwoRowsButton
+        SexyButton, TwoRowsButton, SexySlider
     },
     data: function() {
         return {
             playback_throttle: 2,
             rest_mode: false,
+            moving_buttons: false,
 
             buttons: false,
+
+            bpm_slider: {
+                value: 10
+            }
         };
     },
     props: [
-        'key_callback', 'cursor', 'playbackStatus', 'question', 'reportError',
+        'key_callback', 'cursor', 'playbackStatus', 'question', 'say',
     ],
     computed: {
 

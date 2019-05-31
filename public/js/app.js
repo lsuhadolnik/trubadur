@@ -74728,6 +74728,7 @@ var Fraction = __webpack_require__(6);
             },
 
             errorMessage: "",
+            errorTimeout: null,
 
             generator: new __WEBPACK_IMPORTED_MODULE_7__exerciseGenerator__["a" /* default */](),
             playback: new __WEBPACK_IMPORTED_MODULE_8__rhythmPlaybackEngine__["a" /* default */](this.bar)
@@ -74760,9 +74761,7 @@ var Fraction = __webpack_require__(6);
             }
             if (event.type == "submit") {
 
-                this.$refs.diff_view.render(this.generator.currentExercise, this.notes.notes, this.bar);
-
-                this.displayState = "diff";
+                this.submitQuestion();
             } else if (event.type == "playback") {
                 this.play(event);
             } else {
@@ -74770,9 +74769,14 @@ var Fraction = __webpack_require__(6);
                 // Invalidate playback cache
                 // Pismo, dobr se sliši :D
                 this.playback.stop();
-
                 this.notes.handle_button(event);
             }
+        },
+        submitQuestion: function submitQuestion() {
+
+            this.$refs.diff_view.render(this.generator.currentExercise, this.notes.notes, this.bar);
+
+            this.displayState = "diff";
         },
         startGame: function startGame() {
 
@@ -74859,6 +74863,16 @@ var Fraction = __webpack_require__(6);
         },
         showError: function showError(err) {
             this.errorMessage = err;
+
+            if (this.errorTimeout) {
+                clearTimeout(this.errorTimeout);
+                this.errorTimeout = null;
+            }
+
+            var outer = this;
+            this.errorTimeout = setTimeout(function () {
+                outer.showError("");
+            }, 3000);
         }
     },
 
@@ -76547,7 +76561,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm-game__diff__first-row[data-v-0556eb24], .rhythm-game__diff__second-row[data-v-0556eb24] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 139px;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.rhythm-game__diff__first-row[data-v-0556eb24], .rhythm-game__diff__second-row[data-v-0556eb24] {\n      height: 150px;\n}\n}\n#diff-first-row[data-v-0556eb24], #diff-second-row[data-v-0556eb24] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n.diff-prompt[data-v-0556eb24] {\n  padding: 0px;\n  margin: 10px 0 0 0;\n  font-size: 26px;\n  text-align: center;\n}\n.button-holder[data-v-0556eb24] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  width: 100%;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.rhythm-game__diff__first-row[data-v-0556eb24], .rhythm-game__diff__second-row[data-v-0556eb24] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 163px;\n  overflow-y: hidden;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.rhythm-game__diff__first-row[data-v-0556eb24], .rhythm-game__diff__second-row[data-v-0556eb24] {\n      height: 150px;\n}\n}\n#diff-first-row[data-v-0556eb24], #diff-second-row[data-v-0556eb24] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n.diff-prompt[data-v-0556eb24] {\n  padding: 0px;\n  margin: 10px 0 0 0;\n  font-size: 26px;\n  text-align: center;\n}\n.button-holder[data-v-0556eb24] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  width: 100%;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -76563,6 +76577,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__ = __webpack_require__(135);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_SexyButton_vue__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__elements_SexyButton_vue__);
+//
 //
 //
 //
@@ -89573,7 +89588,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-79470641] {\n  font-size: 8pt !important;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_third .button[data-v-79470641] {\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.button_1_col[data-v-79470641] {\n    width: 60px;\n    height: 60px;\n}\n}\n\n/*@include breakpoint-large-phone{\n      .rhythm-game__keyboard-row .button {\n          margin-left: 12px;\n      }\n\n      .rhythm-game__keyboard-row {\n          margin-bottom: 15px;\n      }\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-79470641] {\n  font-size: 8pt !important;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_third .button[data-v-79470641] {\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n.norfolk[data-v-79470641] {\n  font-family: Norfolk;\n}\n.norfolk-note-button-text[data-v-79470641] {\n  font-family: Norfolk;\n  font-size: 33px;\n  margin-top: 19px;\n}\n.thirtytwo-note .td-flag1[data-v-79470641], .thirtytwo-note .td-flag2[data-v-79470641], .thirtytwo-note .td-flag3[data-v-79470641] {\n  font-size: 30px;\n  margin-left: 17px;\n}\n.thirtytwo-note .td-base[data-v-79470641] {\n  margin-top: -16px;\n}\n.thirtytwo-note .td-flag1[data-v-79470641] {\n  margin-top: -89px;\n}\n.thirtytwo-note .td-flag2[data-v-79470641] {\n  margin-top: -53px;\n}\n.thirtytwo-note .td-flag3[data-v-79470641] {\n  margin-top: -53px;\n}\n.moveButtonsButton[data-v-79470641] {\n  font-family: initial !important;\n  font-size: 26px  !important;\n  font-weight: bold;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.button_1_col[data-v-79470641] {\n    width: 60px !important;\n    height: 60px !important;\n}\n}\n\n/*@include breakpoint-large-phone{\n      .rhythm-game__keyboard-row .button {\n          margin-left: 12px;\n      }\n\n      .rhythm-game__keyboard-row {\n          margin-bottom: 15px;\n      }\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n}\n", ""]);
 
 // exports
 
@@ -89586,16 +89601,18 @@ exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_TwoRowsButton_vue__ = __webpack_require__(142);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_TwoRowsButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_TwoRowsButton_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_awesome_icons_repeat__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_awesome_icons_play__ = __webpack_require__(148);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_awesome_icons_question_circle__ = __webpack_require__(149);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_awesome_icons_user_o__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_awesome_icons_pause__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_awesome_icons_check__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_awesome_icons_angle_double_right__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue_awesome_icons_times__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_TwoRowsButton_vue__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_TwoRowsButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__elements_TwoRowsButton_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_awesome_icons_repeat__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_awesome_icons_play__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_awesome_icons_question_circle__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_awesome_icons_user_o__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_awesome_icons_pause__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue_awesome_icons_check__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue_awesome_icons_angle_double_right__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_vue_awesome_icons_times__ = __webpack_require__(154);
 //
 //
 //
@@ -89917,6 +89934,103 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -90100,27 +90214,25 @@ var Fraction = __webpack_require__(6);
                 return true;
             }
             return false;
-        },
-        touchStarted: function touchStarted() {
-            alert("HEEY!");
-        },
-        touchEnded: function touchEnded() {
-
-            alert("OOON");
         }
     },
     components: {
-        SexyButton: __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default.a, TwoRowsButton: __WEBPACK_IMPORTED_MODULE_1__elements_TwoRowsButton_vue___default.a
+        SexyButton: __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default.a, TwoRowsButton: __WEBPACK_IMPORTED_MODULE_2__elements_TwoRowsButton_vue___default.a, SexySlider: __WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue___default.a
     },
     data: function data() {
         return {
             playback_throttle: 2,
             rest_mode: false,
+            moving_buttons: false,
 
-            buttons: false
+            buttons: false,
+
+            bpm_slider: {
+                value: 10
+            }
         };
     },
-    props: ['key_callback', 'cursor', 'playbackStatus', 'question', 'reportError'],
+    props: ['key_callback', 'cursor', 'playbackStatus', 'question', 'say'],
     computed: {
         percentsUser: function percentsUser() {
             if (this.playbackStatus.currentlyLoaded == "user") {
@@ -90419,50 +90531,100 @@ var render = function() {
         "div",
         { staticClass: "row rhythm-game__keyboard-row " },
         [
-          _c("sexy-button", {
-            attrs: { text: _vm.note_text(2), color: _vm.note_color() },
-            nativeOn: {
-              click: function($event) {
-                _vm.note(2)
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: _vm.note_color() },
+              nativeOn: {
+                click: function($event) {
+                  _vm.note(2)
+                }
               }
-            }
-          }),
+            },
+            [
+              _c("div", { staticClass: "norfolk-note-button-text" }, [
+                _vm._v("\n                    h\n                ")
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("sexy-button", {
-            attrs: { text: _vm.note_text(4), color: _vm.note_color() },
-            nativeOn: {
-              click: function($event) {
-                _vm.note(4)
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: _vm.note_color() },
+              nativeOn: {
+                click: function($event) {
+                  _vm.note(4)
+                }
               }
-            }
-          }),
+            },
+            [
+              _c("div", { staticClass: "norfolk-note-button-text" }, [
+                _vm._v("\n                    q\n                ")
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("sexy-button", {
-            attrs: { text: _vm.note_text(8), color: _vm.note_color() },
-            nativeOn: {
-              click: function($event) {
-                _vm.note(8)
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: _vm.note_color() },
+              nativeOn: {
+                click: function($event) {
+                  _vm.note(8)
+                }
               }
-            }
-          }),
+            },
+            [
+              _c("div", { staticClass: "norfolk-note-button-text" }, [
+                _vm._v("\n                    e\n                ")
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("sexy-button", {
-            attrs: { text: _vm.note_text(16), color: _vm.note_color() },
-            nativeOn: {
-              click: function($event) {
-                _vm.note(16)
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: _vm.note_color() },
+              nativeOn: {
+                click: function($event) {
+                  _vm.note(16)
+                }
               }
-            }
-          }),
+            },
+            [
+              _c("div", { staticClass: "norfolk-note-button-text" }, [
+                _vm._v("\n                    x\n                ")
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("sexy-button", {
-            attrs: { text: _vm.note_text(32), color: _vm.note_color() },
-            nativeOn: {
-              click: function($event) {
-                _vm.note(32)
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: _vm.note_color() },
+              nativeOn: {
+                click: function($event) {
+                  _vm.note(32)
+                }
               }
-            }
-          }),
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "norfolk-note-button-text thirtytwo-note" },
+                [
+                  _c("div", { staticClass: "td-base" }, [_vm._v(" q")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "td-flag1" }, [_vm._v("j")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "td-flag2" }, [_vm._v("j")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "td-flag3" }, [_vm._v("j")])
+                ]
+              )
+            ]
+          ),
           _vm._v(" "),
           _c(
             "div",
@@ -90554,50 +90716,90 @@ var render = function() {
         "div",
         { staticClass: "row rhythm-game__keyboard-row" },
         [
-          _c("sexy-button", {
-            attrs: { text: _vm.rest_text(2), color: _vm.rest_color() },
-            nativeOn: {
-              click: function($event) {
-                _vm.rest(2)
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: _vm.rest_color() },
+              nativeOn: {
+                click: function($event) {
+                  _vm.rest(2)
+                }
               }
-            }
-          }),
+            },
+            [
+              _c("div", { staticClass: "norfolk" }, [
+                _vm._v("\n                    Ó\n                ")
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("sexy-button", {
-            attrs: { text: _vm.rest_text(4), color: _vm.rest_color() },
-            nativeOn: {
-              click: function($event) {
-                _vm.rest(4)
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: _vm.rest_color() },
+              nativeOn: {
+                click: function($event) {
+                  _vm.rest(4)
+                }
               }
-            }
-          }),
+            },
+            [
+              _c("div", { staticClass: "norfolk" }, [
+                _vm._v("\n                    Œ\n                ")
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("sexy-button", {
-            attrs: { text: _vm.rest_text(8), color: _vm.rest_color() },
-            nativeOn: {
-              click: function($event) {
-                _vm.rest(8)
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: _vm.rest_color() },
+              nativeOn: {
+                click: function($event) {
+                  _vm.rest(8)
+                }
               }
-            }
-          }),
+            },
+            [
+              _c("div", { staticClass: "norfolk" }, [
+                _vm._v("\n                    ‰\n                ")
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("sexy-button", {
-            attrs: { text: _vm.rest_text(16), color: _vm.rest_color() },
-            nativeOn: {
-              click: function($event) {
-                _vm.rest(16)
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: _vm.rest_color() },
+              nativeOn: {
+                click: function($event) {
+                  _vm.rest(16)
+                }
               }
-            }
-          }),
+            },
+            [
+              _c("div", { staticClass: "norfolk" }, [
+                _vm._v("\n                    ≈\n                ")
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("sexy-button", {
-            attrs: { text: _vm.rest_text(32), color: _vm.rest_color() },
-            nativeOn: {
-              click: function($event) {
-                _vm.rest(32)
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: _vm.rest_color() },
+              nativeOn: {
+                click: function($event) {
+                  _vm.rest(32)
+                }
               }
-            }
-          }),
+            },
+            [
+              _c("div", { staticClass: "norfolk" }, [
+                _vm._v("\n                    ®\n                ")
+              ])
+            ]
+          ),
           _vm._v(" "),
           _c(
             "div",
@@ -90680,32 +90882,80 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("sexy-button", {
-            attrs: { hidden: _vm.cursor.in_tuplet, text: ".", color: "green" },
-            nativeOn: {
-              click: function($event) {
-                _vm.dot()
-              }
-            }
-          }),
+          _vm.moving_buttons
+            ? _c("sexy-button", {
+                attrs: {
+                  text: "<",
+                  color: "orange",
+                  customClass: "moveButtonsButton"
+                },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.move_cursor_backwards($event)
+                  }
+                }
+              })
+            : _c("sexy-button", {
+                attrs: {
+                  hidden: _vm.cursor.in_tuplet,
+                  text: ".",
+                  color: "green"
+                },
+                nativeOn: {
+                  click: function($event) {
+                    _vm.dot()
+                  }
+                }
+              }),
           _vm._v(" "),
-          _c("sexy-button", {
-            attrs: { hidden: _vm.cursor.in_tuplet, text: "", color: "orange" },
-            nativeOn: {
-              click: function($event) {
-                _vm.alert("hello!")
-              }
-            }
-          }),
+          _vm.moving_buttons
+            ? _c("sexy-button", {
+                attrs: {
+                  hidden: _vm.cursor.in_tuplet,
+                  text: ". u",
+                  color: "green"
+                },
+                nativeOn: {
+                  click: function($event) {
+                    _vm.moving_buttons = !_vm.moving_buttons
+                  }
+                }
+              })
+            : _c("sexy-button", {
+                attrs: {
+                  hidden: _vm.cursor.in_tuplet,
+                  text: "< >",
+                  color: "orange",
+                  customClass: "moveButtonsButton"
+                },
+                nativeOn: {
+                  click: function($event) {
+                    _vm.moving_buttons = !_vm.moving_buttons
+                  }
+                }
+              }),
           _vm._v(" "),
-          _c("sexy-button", {
-            attrs: { text: "u", color: "green" },
-            nativeOn: {
-              click: function($event) {
-                _vm.tie()
-              }
-            }
-          }),
+          _vm.moving_buttons
+            ? _c("sexy-button", {
+                attrs: {
+                  text: ">",
+                  color: "orange",
+                  customClass: "moveButtonsButton"
+                },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.move_cursor_forward($event)
+                  }
+                }
+              })
+            : _c("sexy-button", {
+                attrs: { text: "u", color: "green" },
+                nativeOn: {
+                  click: function($event) {
+                    _vm.tie()
+                  }
+                }
+              }),
           _vm._v(" "),
           _c("sexy-button", {
             attrs: { text: "T", color: "green" },
@@ -90765,20 +91015,14 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "sexy-button",
+            "sexy-slider",
             {
               attrs: {
                 color: "cabaret",
-                customClass: "wideButton normal-font",
-                cols: 1
-              },
-              on: {
-                touchstart: function($event) {
-                  _vm.touchStarted()
-                },
-                touchend: function($event) {
-                  _vm.touchEnded()
-                }
+                value: _vm.playbackStatus,
+                valueKey: "BPM",
+                from: 20,
+                to: 250
               }
             },
             [
@@ -90803,16 +91047,33 @@ var render = function() {
               }
             },
             [
-              _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
-                _vm._v("Preveri")
-              ])
-            ]
+              _vm.question.check == "no"
+                ? _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                    _vm._v("Preveri")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.question.check == "wrong"
+                ? _c("icon", { attrs: { name: "times" } })
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.question.check == "correct"
+                ? _c("icon", { attrs: { name: "check" } })
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.question.check == "next"
+                ? _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                    _vm._v("Naprej")
+                  ])
+                : _vm._e()
+            ],
+            1
           ),
           _vm._v(" "),
           _c(
             "sexy-button",
             {
-              attrs: { color: "cabaret" },
+              attrs: { color: _vm.checkButtonColor },
               nativeOn: {
                 click: function($event) {
                   _vm.submit()
@@ -90821,54 +91082,8 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
-                _vm._v("Oddaj")
+                _vm._v("Naprej")
               ])
-            ]
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal"
-        },
-        [
-          _c(
-            "sexy-button",
-            {
-              attrs: {
-                color: "cabaret",
-                customClass: "wideButton normal-font",
-                cols: 2
-              }
-            },
-            [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.playbackStatus.BPM,
-                    expression: "playbackStatus.BPM"
-                  }
-                ],
-                staticClass: "BPM-slider",
-                attrs: {
-                  type: "range",
-                  min: _vm.playbackStatus.BPM_from,
-                  max: _vm.playbackStatus.BPM_to,
-                  step: "10"
-                },
-                domProps: { value: _vm.playbackStatus.BPM },
-                on: {
-                  __r: function($event) {
-                    _vm.$set(_vm.playbackStatus, "BPM", $event.target.value)
-                  }
-                }
-              })
             ]
           )
         ],
@@ -91772,7 +91987,7 @@ var render = function() {
                   cursor: _vm.cursor,
                   playbackStatus: _vm.playback,
                   question: _vm.questionState,
-                  reportError: _vm.showError
+                  say: _vm.showError
                 }
               },
               "Keyboard",
@@ -97340,6 +97555,373 @@ function handleError(error) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(222)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(224)
+/* template */
+var __vue_template__ = __webpack_require__(225)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-656066f6"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/elements/SexySlider.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-656066f6", Component.options)
+  } else {
+    hotAPI.reload("data-v-656066f6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 222 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(223);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("699b8bc2", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-656066f6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SexySlider.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-656066f6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SexySlider.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 223 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.button[data-v-656066f6] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n  -webkit-touch-action: manipulation;\n}\n.button[data-v-656066f6]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-656066f6] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-656066f6] {\n  visibility: hidden;\n}\n.button__hollow[data-v-656066f6] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-656066f6] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n}\n.button__percentIndicator[data-v-656066f6] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-656066f6] {\n  background-color: #33966D;\n}\n.button__orange[data-v-656066f6] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-656066f6] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-656066f6] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-656066f6] {\n  background-color: #FDBB2F;\n}\n.button_1_col[data-v-656066f6] {\n  width: 50px;\n}\n.button_2_col[data-v-656066f6] {\n  width: 110px;\n}\n.button_3_col[data-v-656066f6] {\n  width: 170px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 224 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(7);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    methods: {},
+
+    computed: {
+
+        theClass: function theClass() {
+            var k = "";
+
+            if (this.disable) {
+                k += 'button--disabled ';
+            }
+
+            if (this.hidden) {
+                k += 'button__hidden';
+            }
+
+            if (this.customClass != null) {
+                k += ' ' + this.customClass;
+            }
+
+            if (this.cols) {
+                switch (this.cols) {
+                    case 1:
+                        k += " button_1_col";
+                        break;
+
+                    case 2:
+                        k += " button_2_col";
+                        break;
+
+                    case 3:
+                        k += " button_3_col";
+                        break;
+
+                }
+            }
+
+            return k;
+        }
+
+    },
+
+    props: {
+        text: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["e" /* stringProp */])(false),
+        disable: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["a" /* booleanProp */])(false),
+        customClass: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["e" /* stringProp */])(false),
+        color: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["e" /* stringProp */])(false),
+        hidden: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["a" /* booleanProp */])(false),
+        value: {
+            type: Object,
+            required: true,
+            default: null
+        },
+        valueKey: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["e" /* stringProp */])(true),
+        from: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["b" /* numberProp */])(true),
+        to: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["b" /* numberProp */])(true),
+        percents: {
+            type: Number,
+            required: false,
+            default: 0
+        },
+        cols: {
+            type: Number,
+            required: false,
+            default: 1
+        }
+    },
+
+    data: function data() {
+        return {
+            lastTouch: 0,
+            inTouch: false
+        };
+    },
+
+    mounted: function mounted() {
+
+        var out = this;
+
+        this.$refs.theSlider.addEventListener("touchstart", function (e) {
+
+            out.lastTouch = e.touches[0].screenX;
+            out.inTouch = true;
+        }, false);
+
+        this.$refs.theSlider.addEventListener("touchend", function (e) {
+
+            out.inTouch = false;
+        }, false);
+
+        this.$refs.theSlider.addEventListener("touchmove", function (e) {
+
+            var newValue = out.value[out.valueKey] + parseInt((e.touches[0].screenX - out.lastTouch) / 2);
+            newValue = Math.min(newValue, out.to);
+            newValue = Math.max(newValue, out.from);
+            out.value[out.valueKey] = newValue;
+
+            out.lastTouch = e.touches[0].screenX;
+        }, false);
+    }
+});
+
+/***/ }),
+/* 225 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { ref: "theSlider", staticClass: "button", class: _vm.theClass },
+    [
+      _c(
+        "div",
+        { class: ["button__hollow", _vm.customClass] },
+        [
+          _vm._v("\n        " + _vm._s(_vm.text) + "\n        "),
+          _vm._t("default")
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "button__hollow button__percentIndicator",
+          style: { width: _vm.percents + "%" }
+        },
+        [_vm._v(" ")]
+      ),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "button__full",
+        class: {
+          button__green: _vm.color == "green",
+          button__orange: _vm.color == "orange",
+          button__red: _vm.color == "red",
+          button__cabaret: _vm.color == "cabaret",
+          button__sunglow: _vm.color == "sunglow"
+        }
+      })
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-656066f6", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

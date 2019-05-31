@@ -22,7 +22,7 @@
 
             <StaffView ref="staff_view" :bar="bar" :cursor="cursor" />
             
-            <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" :question="questionState" :reportError="showError" />
+            <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" :question="questionState" :say="showError" />
 
             <div class="error" v-show="errorMessage">{{errorMessage}}</div>
 
@@ -138,6 +138,7 @@ export default {
             },
 
             errorMessage: "",
+            errorTimeout: null,
 
             generator: new ExerciseGenerator(),
             playback: new RhythmPlaybackEngine(this.bar),
@@ -170,13 +171,8 @@ export default {
             }
             if(event.type == "submit"){
 
-                this.$refs.diff_view.render(
-                    this.generator.currentExercise,
-                    this.notes.notes,
-                    this.bar
-                );
-
-                this.displayState = "diff";
+                this.submitQuestion();
+                
             }
             else if(event.type == "playback"){
                 this.play(event);
@@ -186,10 +182,21 @@ export default {
                 // Invalidate playback cache
                 // Pismo, dobr se sliši :D
                 this.playback.stop();
-
                 this.notes.handle_button(event)
             }
     
+        },
+
+        submitQuestion(){
+
+            this.$refs.diff_view.render(
+                    this.generator.currentExercise,
+                    this.notes.notes,
+                    this.bar
+                );
+
+            this.displayState = "diff";
+
         },
 
         startGame() {
@@ -292,6 +299,16 @@ export default {
 
         showError(err){
             this.errorMessage = err;
+
+            if(this.errorTimeout){
+                clearTimeout(this.errorTimeout);
+                this.errorTimeout = null;
+            }
+
+            let outer = this;
+            this.errorTimeout = setTimeout(function(){
+                outer.showError("");                    
+            }, 3000);
         }
 
 },

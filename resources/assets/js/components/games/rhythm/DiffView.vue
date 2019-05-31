@@ -29,7 +29,8 @@
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
-        height: 139px;
+        height: 163px;
+        overflow-y: hidden;
 
         @include breakpoint-phone-landscape { height: 150px; }
     }
