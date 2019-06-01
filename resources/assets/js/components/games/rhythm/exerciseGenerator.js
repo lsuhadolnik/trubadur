@@ -180,8 +180,6 @@ var ExerciseGenerator = function(){
 
     this.generate = function(numGen){
         
-
-        
         let number = Math.floor(Math.random() * (examples.length - 1));
 
         this.currentExerciseInfo = examples[number];

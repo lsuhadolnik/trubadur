@@ -99,6 +99,12 @@
 
 
 
+- Izkušnja prehoda med vajami je slaba
+    - Nastavi Scroll Left na začetku na 0
+    - Če je bil odgovor pravilen, se nastavi nek šit BPM in prehitro zaigra
+
+
+
 - Make infinite scroll?
 
 - ~~`MUST` `HARD` `FUNCTIONAL` Gumb za nov takt~~

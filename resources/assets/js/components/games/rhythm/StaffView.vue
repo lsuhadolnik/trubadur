@@ -125,8 +125,8 @@ export default {
 
     methods: {
 
-        force_redraw: function(){
-            this.$parent.notes._call_render()
+        reset() {
+            document.getElementById("second-row").parentElement.scrollTo(0,0)
         },
 
         note_clicked: function(Xoffset){

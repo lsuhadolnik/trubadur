@@ -198,7 +198,10 @@
                 </sexy-button>
 
                 <sexy-button :color="checkButtonColor" @click.native="submit()" >
-                    <div class="tiny-tajni-pici-mici-font">Naprej</div>
+                    <div class="tiny-tajni-pici-mici-font">Submit</div>
+                </sexy-button>
+                <sexy-button :color="checkButtonColor" @click.native="setCorrect()" >
+                    <div class="tiny-tajni-pici-mici-font">Set correct</div>
                 </sexy-button>
 
             </div>
@@ -454,6 +457,12 @@ export default {
                 duration: new Fraction(1).div(num)
             });
 
+        },
+
+        setCorrect(){
+            this.key_callback({
+                type: 'pass'
+            });
         },
 
         add_bar(){

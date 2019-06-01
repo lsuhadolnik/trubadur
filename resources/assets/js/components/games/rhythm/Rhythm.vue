@@ -70,14 +70,14 @@
     }
 
     .header-menu{
-        @include breakpoint-phone-landscape {
+        @include breakpoint-small-phone {
             display: none !important;
             position: static !important;
         }
     }
 
     .app--sticky{
-        @include breakpoint-phone-landscape {
+        @include breakpoint-small-phone {
             padding: 0px !important;
         }
     }
@@ -169,6 +169,9 @@ export default {
             if(event.type == "check"){
                 this.check();
             }
+            if(event.type == "pass"){
+                this.questionState.check = "next";
+            }
             if(event.type == "submit"){
 
                 this.submitQuestion();
@@ -180,7 +183,6 @@ export default {
             else{
 
                 // Invalidate playback cache
-                // Pismo, dobr se sliši :D
                 this.playback.stop();
                 this.notes.handle_button(event)
             }
@@ -200,7 +202,6 @@ export default {
         },
 
         startGame() {
-
             this.displayState = "ready";
             this.play({action: "replay", what: "exercise"});
         },
@@ -234,17 +235,26 @@ export default {
 
         },
 
+
+
         continueGame(){
+
+            debugger;
 
             this.nextQuestion(true);
             this.displayState = "ready";
+            
+            let out = this;
+            setTimeout(function() {
+                out.$refs.staff_view.reset();
+            }, 100);
 
         },
 
         check(){
 
             if(this.questionState.check == "next"){
-                this.nextQuestion(true);
+                this.submitQuestion();
                 return;
             }
 
@@ -271,8 +281,6 @@ export default {
         },
 
         play(event){
-            
-            console.log("GOT EVENT: "+JSON.stringify(event));
 
             if(event.action == "resume"){
                 this.playback.play();
