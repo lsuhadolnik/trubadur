@@ -89594,7 +89594,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n.white-text[data-v-79470641] {\n  color: white;\n}\n.down-a-bit[data-v-79470641] {\n  padding-top: 10px;\n}\n.clearfix[data-v-79470641] {\n  clear: both;\n}\n.button-spacer[data-v-79470641] {\n  display: inline-block;\n  width: 1px;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-79470641] {\n  font-size: 8pt !important;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  margin-left: 4px;\n  font-size: 40px;\n}\n.rhythm-game__event-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys[data-v-79470641] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__control-keys .button[data-v-79470641] {\n  margin: 10px;\n  width: 110px;\n}\n.rhythm-game__control-keys .button[data-v-79470641]:first {\n  margin-left: 0px;\n}\n.rhythm-game__keyboard-row_third .button[data-v-79470641] {\n  font-family: inherit;\n}\n.rhythm-game__keyboard-row_fourth .small-font-button[data-v-79470641] {\n  font-size: 15px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n.norfolk[data-v-79470641] {\n  font-family: Norfolk;\n}\n.norfolk-note-button-text[data-v-79470641] {\n  font-family: Norfolk;\n  font-size: 33px;\n  margin-top: 19px;\n}\n.thirtytwo-note .td-flag1[data-v-79470641], .thirtytwo-note .td-flag2[data-v-79470641], .thirtytwo-note .td-flag3[data-v-79470641] {\n  font-size: 30px;\n  margin-left: 17px;\n}\n.thirtytwo-note .td-base[data-v-79470641] {\n  margin-top: -16px;\n}\n.thirtytwo-note .td-flag1[data-v-79470641] {\n  margin-top: -89px;\n}\n.thirtytwo-note .td-flag2[data-v-79470641] {\n  margin-top: -53px;\n}\n.thirtytwo-note .td-flag3[data-v-79470641] {\n  margin-top: -53px;\n}\n.moveButtonsButton[data-v-79470641] {\n  font-family: initial !important;\n  font-size: 26px  !important;\n  font-weight: bold;\n}\n\n/*.rhythm-game__keyboard-row_fourth .button:last-child{\n      width: 170px;\n  }*/\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.button_1_col[data-v-79470641] {\n    width: 60px !important;\n    height: 60px !important;\n}\n}\n\n/*@include breakpoint-large-phone{\n      .rhythm-game__keyboard-row .button {\n          margin-left: 12px;\n      }\n\n      .rhythm-game__keyboard-row {\n          margin-bottom: 15px;\n      }\n  }*/\n@media only screen and (max-device-height: 600px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  margin-left: 4px;\n  font-size: 40px;\n}\n.norfolk-row .button[data-v-79470641] {\n  font-family: Norfolk;\n  font-size: 33px;\n}\n.musisync-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  font-size: 33px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n.thirtytwo-note .td-flag1[data-v-79470641], .thirtytwo-note .td-flag2[data-v-79470641], .thirtytwo-note .td-flag3[data-v-79470641] {\n  font-size: 30px;\n  margin-left: 17px;\n}\n.thirtytwo-note .td-base[data-v-79470641] {\n  margin-top: -16px;\n}\n.thirtytwo-note .td-flag1[data-v-79470641] {\n  margin-top: -89px;\n}\n.thirtytwo-note .td-flag2[data-v-79470641] {\n  margin-top: -53px;\n}\n.thirtytwo-note .td-flag3[data-v-79470641] {\n  margin-top: -53px;\n}\n.moveButtonsButton[data-v-79470641] {\n  font-family: initial !important;\n  font-size: 26px  !important;\n  font-weight: bold;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-79470641] {\n  font-size: 8pt !important;\n}\n.norfolk-note-padding[data-v-79470641] {\n  padding-top: 19px;\n}\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n@media only screen and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.button_1_col[data-v-79470641] {\n    width: 60px !important;\n    height: 60px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -89877,168 +89877,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -90062,8 +89900,8 @@ var Fraction = __webpack_require__(6);
         note: function note(num) {
 
             this.key_callback({
-                type: this.rest_mode ? 'r' : 'n',
-                symbol: this.rest_mode ? num + 'r' : "" + num,
+                type: 'n',
+                symbol: num,
                 duration: new Fraction(1).div(num)
             });
         },
@@ -90076,6 +89914,7 @@ var Fraction = __webpack_require__(6);
             });
         },
         setCorrect: function setCorrect() {
+
             this.key_callback({
                 type: 'pass'
             });
@@ -90125,10 +89964,6 @@ var Fraction = __webpack_require__(6);
                 tuplet_type: 3
             });
         },
-        keyboardClick: function keyboardClick(key) {
-
-            this.key_callback();
-        },
         play_button_click: function play_button_click(type) {
 
             if (this.playbackStatus.currentlyLoaded == type) {
@@ -90155,20 +89990,20 @@ var Fraction = __webpack_require__(6);
             }
         },
         play_user: function play_user() {
-
             this.play_button_click("user");
         },
         play_exercise: function play_exercise() {
-
             this.play_button_click("exercise");
         },
         pause: function pause() {
+
             this.key_callback({
                 type: 'playback',
                 action: 'pause'
             });
         },
         resume: function resume() {
+
             this.key_callback({
                 type: 'playback',
                 action: 'resume'
@@ -90185,37 +90020,6 @@ var Fraction = __webpack_require__(6);
             this.key_callback({
                 type: 'submit'
             });
-        },
-        toggle_rest_mode: function toggle_rest_mode() {
-            this.rest_mode = !this.rest_mode;
-        },
-        note_text: function note_text(type) {
-            switch (type) {
-                case 2:
-                    return "h";
-                case 4:
-                    return "q";
-                case 8:
-                    return "e";
-                case 16:
-                    return "s";
-                case 32:
-                    return "32";
-            }
-        },
-        rest_text: function rest_text(type) {
-            switch (type) {
-                case 2:
-                    return "H";
-                case 4:
-                    return "Q";
-                case 8:
-                    return "E";
-                case 16:
-                    return "S";
-                case 32:
-                    return "32R";
-            }
         },
         note_color: function note_color() {
             return "green";
@@ -90907,7 +90711,7 @@ var render = function() {
     _c("div", { staticClass: "rhythm-game__keyboard" }, [
       _c(
         "div",
-        { staticClass: "row rhythm-game__keyboard-row " },
+        { staticClass: "row rhythm-game__keyboard-row row-1 norfolk-row" },
         [
           _c(
             "sexy-button",
@@ -90919,11 +90723,7 @@ var render = function() {
                 }
               }
             },
-            [
-              _c("div", { staticClass: "norfolk-note-button-text" }, [
-                _vm._v("\n                    h\n                ")
-              ])
-            ]
+            [_c("div", { staticClass: "norfolk-note-padding" }, [_vm._v("h")])]
           ),
           _vm._v(" "),
           _c(
@@ -90936,11 +90736,7 @@ var render = function() {
                 }
               }
             },
-            [
-              _c("div", { staticClass: "norfolk-note-button-text" }, [
-                _vm._v("\n                    q\n                ")
-              ])
-            ]
+            [_c("div", { staticClass: "norfolk-note-padding" }, [_vm._v("q")])]
           ),
           _vm._v(" "),
           _c(
@@ -90953,11 +90749,7 @@ var render = function() {
                 }
               }
             },
-            [
-              _c("div", { staticClass: "norfolk-note-button-text" }, [
-                _vm._v("\n                    e\n                ")
-              ])
-            ]
+            [_c("div", { staticClass: "norfolk-note-padding" }, [_vm._v("e")])]
           ),
           _vm._v(" "),
           _c(
@@ -90970,11 +90762,7 @@ var render = function() {
                 }
               }
             },
-            [
-              _c("div", { staticClass: "norfolk-note-button-text" }, [
-                _vm._v("\n                    x\n                ")
-              ])
-            ]
+            [_c("div", { staticClass: "norfolk-note-padding" }, [_vm._v("x")])]
           ),
           _vm._v(" "),
           _c(
@@ -90990,7 +90778,7 @@ var render = function() {
             [
               _c(
                 "div",
-                { staticClass: "norfolk-note-button-text thirtytwo-note" },
+                { staticClass: "norfolk-note-padding thirtytwo-note" },
                 [
                   _c("div", { staticClass: "td-base" }, [_vm._v(" q")]),
                   _vm._v(" "),
@@ -91092,7 +90880,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "row rhythm-game__keyboard-row" },
+        { staticClass: "row rhythm-game__keyboard-row row-2 norfolk-row" },
         [
           _c(
             "sexy-button",
@@ -91104,11 +90892,7 @@ var render = function() {
                 }
               }
             },
-            [
-              _c("div", { staticClass: "norfolk" }, [
-                _vm._v("\n                    Ó\n                ")
-              ])
-            ]
+            [_vm._v("Ó")]
           ),
           _vm._v(" "),
           _c(
@@ -91121,11 +90905,7 @@ var render = function() {
                 }
               }
             },
-            [
-              _c("div", { staticClass: "norfolk" }, [
-                _vm._v("\n                    Œ\n                ")
-              ])
-            ]
+            [_vm._v("Œ")]
           ),
           _vm._v(" "),
           _c(
@@ -91138,11 +90918,7 @@ var render = function() {
                 }
               }
             },
-            [
-              _c("div", { staticClass: "norfolk" }, [
-                _vm._v("\n                    ‰\n                ")
-              ])
-            ]
+            [_vm._v("‰")]
           ),
           _vm._v(" "),
           _c(
@@ -91155,11 +90931,7 @@ var render = function() {
                 }
               }
             },
-            [
-              _c("div", { staticClass: "norfolk" }, [
-                _vm._v("\n                    ≈\n                ")
-              ])
-            ]
+            [_vm._v("≈")]
           ),
           _vm._v(" "),
           _c(
@@ -91172,11 +90944,7 @@ var render = function() {
                 }
               }
             },
-            [
-              _c("div", { staticClass: "norfolk" }, [
-                _vm._v("\n                    ®\n                ")
-              ])
-            ]
+            [_vm._v("®")]
           ),
           _vm._v(" "),
           _c(
@@ -91248,7 +91016,7 @@ var render = function() {
         "div",
         {
           staticClass:
-            "row rhythm-game__keyboard-row rhythm-game__keyboard-row_fourth show-normal"
+            "row rhythm-game__keyboard-row row-3 musisync-row show-normal"
         },
         [
           _c("sexy-button", {
@@ -91349,10 +91117,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass:
-            "row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal"
-        },
+        { staticClass: "row rhythm-game__keyboard-row row-4 show-normal" },
         [
           _c(
             "sexy-button",
@@ -91460,35 +91225,13 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
-                _vm._v("Submit")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "sexy-button",
-            {
-              attrs: { color: _vm.checkButtonColor },
-              nativeOn: {
-                click: function($event) {
-                  _vm.setCorrect()
-                }
-              }
-            },
-            [
-              _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
-                _vm._v("Set correct")
+                _vm._v("Oddaj")
               ])
             ]
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _c("div", {
-        staticClass:
-          "row rhythm-game__keyboard-row rhythm-game__keyboard-row_third show-normal"
-      })
+      )
     ])
   ])
 }
