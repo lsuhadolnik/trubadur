@@ -1,6 +1,6 @@
 var Fraction = require("fraction.js");
 
-import RhythmUtilities from './rhythmUtilities';
+let RhythmUtilities = require('./rhythmUtilities');
 
 var ExerciseGenerator = function(){
 

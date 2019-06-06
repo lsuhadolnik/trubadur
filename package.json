@@ -34,7 +34,8 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "test": "php vendor/phpunit/phpunit/phpunit",
         "lint": "eslint --ext .js,.vue resources/assets webpack.mix.js",
-        "postinstall": "npm run prod"
+        "postinstall": "npm run prod",
+        "testjs": "mocha --recursive --exit ./tests/js"
     },
     "pre-commit": [],
     "dependencies": {
@@ -59,6 +60,8 @@
     "devDependencies": {
         "browser-sync": "^2.18.13",
         "browser-sync-webpack-plugin": "^1.2.0",
+        "chai": "^4.2.0",
+        "mocha": "^6.1.4",
         "eslint-plugin-html": "^3.2.2",
         "eslint-plugin-import": "^2.8.0",
         "eslint-plugin-node": "^5.2.1",

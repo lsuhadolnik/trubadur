@@ -281,7 +281,7 @@ export default {
 
             this.key_callback({
                 type: 'n',
-                symbol: num,
+                symbol: ""+num,
                 duration: new Fraction(1).div(num)
             });
 

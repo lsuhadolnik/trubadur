@@ -1,12 +1,9 @@
 var Fraction = require("fraction.js");
-
-import RhythmUtilities from './rhythmUtilities'
+let RhythmUtilities = require('./rhythmUtilities');
 
 var RhythmPlaybackEngine = function(){
 
     this.BPM = 120;
-    this.BPM_from = 50;
-    this.BPM_to = 240;
 
     this.channel = 0;
     this.intensity = 127;
@@ -18,7 +15,6 @@ var RhythmPlaybackEngine = function(){
     this.loaded = false;
     this.currentNoteID = null;
     this.currentTimeout = null;
-    this.currentPlaybackTime = 0;
 
     this.bar_info = null;
 
@@ -126,7 +122,6 @@ var RhythmPlaybackEngine = function(){
     this.resume = function(endCallback, noteCallback){
 
         if(!this.loaded){
-            //alert("No notes to play. Before the playback, you must call the load() method.");
             console.log("No notes to play. Before the playback, you must call the load() method.");
             return;
         }
@@ -134,7 +129,6 @@ var RhythmPlaybackEngine = function(){
         if(this.playing){
             return;
         }
-
 
         this.playing = true;
         this.playNote(endCallback, noteCallback);
@@ -160,7 +154,6 @@ var RhythmPlaybackEngine = function(){
         this.playing = false;
         this.currentTimeout = null;
         this.currentNoteID = 0;
-        this.currentPlaybackTime = 0;
 
         if(playbackName){
             if(playbackName == "countin"){
@@ -203,7 +196,6 @@ var RhythmPlaybackEngine = function(){
         this.playbackQueue = [];
         this.loaded = false;
         this.currentNoteID = null;
-        this.currentPlaybackTime = 0;
 
         if(this.currentTimeout){
             clearTimeout(this.currentTimeout);

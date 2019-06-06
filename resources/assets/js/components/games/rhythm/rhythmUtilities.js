@@ -1,3 +1,7 @@
+//
+// REFACTOR ASAP!!!! 
+// 
+
 
 var utilities = {
 
@@ -72,8 +76,14 @@ var utilities = {
 
         return count;
 
+    },
+
+    generate_countin_durations: function(bar_info){
+
+
+
     }
 
 }
 
-export default utilities;
+module.exports = utilities;

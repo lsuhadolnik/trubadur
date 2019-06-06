@@ -27653,9 +27653,12 @@ module.exports = Cancel;
 
 /***/ }),
 /* 20 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
+//
+// REFACTOR ASAP!!!! 
+// 
+
 
 var utilities = {
 
@@ -27719,11 +27722,13 @@ var utilities = {
         }
 
         return count;
-    }
+    },
+
+    generate_countin_durations: function generate_countin_durations(bar_info) {}
 
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (utilities);
+module.exports = utilities;
 
 /***/ }),
 /* 21 */
@@ -89901,7 +89906,7 @@ var Fraction = __webpack_require__(6);
 
             this.key_callback({
                 type: 'n',
-                symbol: num,
+                symbol: "" + num,
                 duration: new Fraction(1).div(num)
             });
         },
@@ -91716,10 +91721,9 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rhythmUtilities__ = __webpack_require__(20);
 var Fraction = __webpack_require__(6);
 
-
+var RhythmUtilities = __webpack_require__(20);
 
 var ExerciseGenerator = function ExerciseGenerator() {
 
@@ -91786,7 +91790,7 @@ var ExerciseGenerator = function ExerciseGenerator() {
 
     this.check = function (value) {
 
-        var soundsLikeFunc = __WEBPACK_IMPORTED_MODULE_0__rhythmUtilities__["a" /* default */].generate_playback_durations;
+        var soundsLikeFunc = RhythmUtilities.generate_playback_durations;
 
         // Return string fractions
         var ex = soundsLikeFunc(this.currentExercise, true);
@@ -91797,7 +91801,7 @@ var ExerciseGenerator = function ExerciseGenerator() {
 
     this.get_bar_count = function () {
 
-        return __WEBPACK_IMPORTED_MODULE_0__rhythmUtilities__["a" /* default */].get_bar_count(this.currentExercise);
+        return RhythmUtilities.get_bar_count(this.currentExercise);
     };
 };
 
@@ -91808,16 +91812,12 @@ var ExerciseGenerator = function ExerciseGenerator() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rhythmUtilities__ = __webpack_require__(20);
 var Fraction = __webpack_require__(6);
-
-
+var RhythmUtilities = __webpack_require__(20);
 
 var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
 
     this.BPM = 120;
-    this.BPM_from = 50;
-    this.BPM_to = 240;
 
     this.channel = 0;
     this.intensity = 127;
@@ -91829,7 +91829,6 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
     this.loaded = false;
     this.currentNoteID = null;
     this.currentTimeout = null;
-    this.currentPlaybackTime = 0;
 
     this.bar_info = null;
 
@@ -91927,7 +91926,6 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
     this.resume = function (endCallback, noteCallback) {
 
         if (!this.loaded) {
-            //alert("No notes to play. Before the playback, you must call the load() method.");
             console.log("No notes to play. Before the playback, you must call the load() method.");
             return;
         }
@@ -91959,7 +91957,6 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
         this.playing = false;
         this.currentTimeout = null;
         this.currentNoteID = 0;
-        this.currentPlaybackTime = 0;
 
         if (playbackName) {
             if (playbackName == "countin") {
@@ -91969,7 +91966,7 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
             }
         }
 
-        this.playbackQueue = __WEBPACK_IMPORTED_MODULE_0__rhythmUtilities__["a" /* default */].generate_playback_durations(values);
+        this.playbackQueue = RhythmUtilities.generate_playback_durations(values);
         this.loaded = true;
     };
 
@@ -92000,7 +91997,6 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
         this.playbackQueue = [];
         this.loaded = false;
         this.currentNoteID = null;
-        this.currentPlaybackTime = 0;
 
         if (this.currentTimeout) {
             clearTimeout(this.currentTimeout);
