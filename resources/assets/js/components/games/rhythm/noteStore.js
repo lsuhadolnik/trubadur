@@ -8,9 +8,20 @@ var NoteStore = function(bar, cursor, render_function, info) {
     this.supportedRests   = [4, 8, 12, 16, 32];
 
 
+
+
     this.bar = bar;
     this.cursor = cursor;
     this.notes = [];
+
+    this.getClearTupletInfo = function(){
+        return {
+            length : 0,
+            type: 0
+        }
+    }
+    this.currentTupletInfo = this.getClearTupletInfo();
+    
 
     this._call_render = function(){
 
@@ -25,8 +36,15 @@ var NoteStore = function(bar, cursor, render_function, info) {
     // Initially the view is empty
     // This line is also responsible for rendering the empty bars on load
     this._call_render();
+    
 
     this.handle_button = function(event) {
+
+        if(this.cursor.editing_tuplet){
+            this.tuplet_editing_button_handler(event);
+            return;
+        }
+
 
         if(event.type == 'n' || event.type == 'r' || event.type == 'bar')
         {   // This is a note
@@ -61,7 +79,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
             this._call_render();
         }
         else if(event.type == 'tuplet'){
-            this.tuplet(event);
+            this.enable_tuplet_editing(event);
         }
 
     }
@@ -70,8 +88,89 @@ var NoteStore = function(bar, cursor, render_function, info) {
         
         this.notes = [];
         this.cursor.position = 0;
+        this.cursor.editing_tuplet = false;
+
+        this.currentTupletInfo = this.getClearTupletInfo();
         
         this._call_render();
+
+    }
+
+    this.tuplet_editing_button_handler = function(event) {
+
+
+        /**
+         * How does a tuplet look like:
+         * 
+         *  ... (n) (n) (n:t1) (n:t2) (n:t3) (n) ...
+         * 
+         * (n:t1), (n:t2)
+         * {
+         *      type: "n",
+         *      duration: new Fraction(1, duration / tupletType),
+         *      symbol: "4",
+         *      in_tuplet: true
+         * }
+         * 
+         * (n:t3)
+         * {
+         *      type: "n",
+         *      duration: new Fraction(1, duration / tupletType),
+         *      symbol: "4",
+         *      in_tuplet: true,
+         *      tuplet_end: true
+         * }
+         * 
+         */
+
+        if(event.type == "tuplet"){
+            this.cursor.editing_tuplet = false;
+        }
+        else if(event.type == "n" || event.type == "r"){
+            
+
+            if(this.currentTupletInfo.type == 0){
+
+                this.startNewTuplet(event)
+
+            }else {
+
+                this.addToExistingTuplet(event)
+
+            }
+
+            this._move_cursor_forward();
+            this._call_render();
+
+
+        }
+        else {
+            alert("This tuplet edit mode feature is not yet implemented");
+        }
+
+    }
+
+    this.startNewTuplet = function(event) {
+        
+        // set currentTupletType
+        this.currentTupletInfo.length = 1;
+        this.currentTupletInfo.type = event.duration.d;
+        // add tuplet note        
+        
+        event.in_tuplet = true;
+        event.tuplet_end = true;
+        this.addNote(event);
+
+    }
+
+    this.addToExistingTuplet = function(event) {
+
+        // add tuplet note and add tuplet_end
+        event.in_tuplet = true;
+        event.tuplet_end = true;
+        this.addNote(event);
+        // remove tuplet_end from previous note
+        delete this.previousNote().tuplet_end;
 
     }
 
@@ -123,19 +222,10 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     }
 
-    this.tuplet = function(event){
+    this.enable_tuplet_editing = function(event){
 
-        let i = cursor.position - 1;
-
-        if(!this.notes[i]){
-            return;
-        }
-
-        if(this.notes[i].in_tuplet){
-            this.remove_tuplet(event);
-        }else{
-            this.add_tuplet(event);
-        }
+        this.cursor.editing_tuplet = true;
+        this.currentTupletInfo = this.getClearTupletInfo();
 
     },
 
@@ -260,69 +350,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     }
 
-    /*this.add_tuplet = function(event){
-
-        // Original cursor position
-        var thePosition = cursor.position;
-
-        // Stick to notes that were already tuplets
-        var newPosition = this.check_if_there_were_any_tuplets_before(cursor.position, 2);
-        if(newPosition >= 0){
-            this.clear_other_tuplet_snap_notes(newPosition);
-            thePosition = newPosition + 1;
-            delete this.notes[newPosition].style;
-            delete this.notes[newPosition].was_tuplet_end;
-        }
-
-        
-        // Add tuplet to notes behind the cursor
-
-        if(this.notes[thePosition - 1].in_tuplet){
-            alert("Ne morem dodati triole v triolo");
-            return;
-        }
-
-        // Check if there are enough notes
-        // - Check if the duration sums up to (1/baseNote)
-        // - Notes must fit exactly (watch out for the dots)
-        let currentDuration = new Fraction(0);
-        let toIndex = -1;
-        for(let i = thePosition - 1; i >= 0; i--){
-            currentDuration = currentDuration.add(this.notes[i].duration);
-            let value = currentDuration.compare(new Fraction(event.tuplet_type, bar.base_note))
-            if(value == 0){
-                // Enough notes for a tuplet
-                toIndex = i;
-                break;
-            }
-            else if(value > 0){
-                // Tuplet would not fit
-                alert("Tu ne morem narediti triole, ker se notne vrednosti ne seštejejo ustrezno.");
-                return;
-            }
-        }
-        if(toIndex < 0){
-            // Not enough notes for a tuplet
-            alert("Tu ne morem narediti triole, ker ni dovolj not");
-            return;
-        }
-
-        // For those notes in the tuplet
-        // - Change duration to (duration / tuplet_type)
-        // - Add tuplet_from, tuplet_to
-        for(let i = toIndex; i < thePosition; i++){
-            this.notes[i].duration = this.notes[i].duration.div(event.tuplet_type);
-            this.notes[i].in_tuplet = true;
-            this.notes[i].tuplet_type = event.tuplet_type;
-        }
-        this.notes[thePosition - 1].tuplet_from = toIndex;
-        this.notes[thePosition - 1].tuplet_to = thePosition;
-
-        // And render the result
-        this._call_render()
-
-    }*/
-
 
     this._is_supported_length = function(event){
 
@@ -339,6 +366,31 @@ var NoteStore = function(bar, cursor, render_function, info) {
         return false;
         
     },
+
+    this.addNote = function(event){
+
+        let i = this.cursor.position;
+        this.notes.splice(i, 0, event);
+
+    }
+
+    this.currentNote = function(){
+
+        let i = this.cursor.position;
+        if(this.notes.length < i)
+            return this.notes[i];
+        return null;
+
+    }
+
+    this.previousNote = function(){
+
+        let i = this.cursor.position - 1;
+        if(i >= 0)
+            return this.notes[i];
+        return null;
+
+    }
 
 
     this.add_note = function(event) {

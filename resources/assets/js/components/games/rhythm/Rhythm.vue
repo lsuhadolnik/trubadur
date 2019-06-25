@@ -226,6 +226,8 @@ export default {
                 this.$refs.staff_view.render
             );
 
+            window.____notes = this.notes;
+
             this.questionState.check = "no";
             this.playback.bar_info = this.bar;
 
