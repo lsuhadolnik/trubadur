@@ -154,14 +154,23 @@ export default {
 
             //console.log("screenWidth: "+screenWidth+", zoomScrollWidth: "+zoomScrollWidth+", zoomScrollLeft: "+zoomScrollLeft+", x: "+x);
 
-            var x_coords = [];
+            /*var x_coords = [];
             debugger;
             zoomView.querySelectorAll(".vf-note").forEach(function(e) {
                 x_coords.push(Math.round((e.getClientRects()[0].x + zoomScrollLeft))); // Does not work on iOS, works elsewhere
                 //x_coords.push(Math.round((e.getBBox().x + zoomScrollLeft))); // DOES NOT work
-            });
+            });*/
 
-            //console.log(x_coords)
+            /// THIS FREAKING WORKS EVERYWHERE!!! 💪💪💪💪💪
+            let x_coords = [];
+            this.CTX["zoomview"].rendered.forEach(note => {
+                x_coords.push(Math.round(note.getAbsoluteX() * 2));
+            });
+            /*console.log("Provided:");
+            console.log(k);
+
+            console.log("Hacked:");
+            console.log(x_coords)*/
 
             let minIndex = 999;
             let minDiff  = 99999;
