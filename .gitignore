@@ -12,3 +12,4 @@ yarn-error.log
 .env
 .DS_Store
 yarn.lock
+rundocker.ps1

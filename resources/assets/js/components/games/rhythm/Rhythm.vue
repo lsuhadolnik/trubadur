@@ -135,6 +135,7 @@ export default {
                 position: 0,
                 x: 0,
                 in_tuplet: false,
+                editing_tuplet: false
             },
 
             errorMessage: "",

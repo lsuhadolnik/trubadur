@@ -74729,7 +74729,8 @@ var Fraction = __webpack_require__(6);
             cursor: {
                 position: 0,
                 x: 0,
-                in_tuplet: false
+                in_tuplet: false,
+                editing_tuplet: false
             },
 
             errorMessage: "",
@@ -89965,8 +89966,7 @@ var Fraction = __webpack_require__(6);
         tuplet: function tuplet() {
 
             this.key_callback({
-                type: 'tuplet',
-                tuplet_type: 3
+                type: 'tuplet'
             });
         },
         play_button_click: function play_button_click(type) {
@@ -90080,6 +90080,10 @@ var Fraction = __webpack_require__(6);
         checkButtonIcon: function checkButtonIcon() {
             if (this.question.check == "no") return "question-circle";else if (this.question.check == "wrong") return "times";else if (this.question.check == "correct") return "check";else if (this.question.check == "next") return "angle-double-right";
             return "question-circle";
+        },
+        tuplet_color: function tuplet_color() {
+            if (this.cursor.editing_tuplet) return "sunglow";
+            return "green";
         }
     }
 
@@ -90966,7 +90970,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("sexy-button", {
-                attrs: { text: "T", color: "green" },
+                attrs: { text: "T", color: _vm.tuplet_color },
                 nativeOn: {
                   click: function($event) {
                     _vm.tuplet()
@@ -91109,7 +91113,7 @@ var render = function() {
               }),
           _vm._v(" "),
           _c("sexy-button", {
-            attrs: { text: "T", color: "green" },
+            attrs: { text: "T", color: _vm.tuplet_color },
             nativeOn: {
               click: function($event) {
                 _vm.tuplet()
@@ -91268,6 +91272,10 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     this.cursor = cursor;
     this.notes = [];
 
+    this.current_tuplet = {
+        length: 0
+    };
+
     this._call_render = function () {
 
         render_function(this.notes, this.cursor);
@@ -91281,13 +91289,11 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     this.handle_button = function (event) {
 
         if (event.type == 'n' || event.type == 'r' || event.type == 'bar') {
-            // This is a note
-
-            /*if(this._sum_durations() > 2){
-                alert("Trenutno je možno dodati največ dva takta");
+            if (this.cursor.editing_tuplet) {
+                this.tuplet_note(event);
                 return;
-            }*/
-
+            }
+            // This is a note
             this.add_note(event);
         } else if (event.type == 'dot') {
             this.add_dot();
@@ -91303,9 +91309,23 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
             this._move_cursor_backwards();
             this._call_render();
         } else if (event.type == 'tuplet') {
-            this.tuplet(event);
+            //this.tuplet(event);
+
+            this.tuplet_pressed();
         }
     };
+
+    this.tuplet_pressed = function () {
+        this.cursor.editing_tuplet = true;
+
+        if (this.cursor.editing_tuplet) {
+            this.cursor.editing_tuplet = false;
+        } else {
+            this.cursor.editing_tuplet = true;
+        }
+    };
+
+    this.tuplet_note = function (event) {};
 
     this.clear = function () {
 
@@ -91486,102 +91506,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         this._call_render();
     };
 
-    /*this.add_tuplet = function(event){
-          // Original cursor position
-        var thePosition = cursor.position;
-          // Stick to notes that were already tuplets
-        var newPosition = this.check_if_there_were_any_tuplets_before(cursor.position, 2);
-        if(newPosition >= 0){
-            this.clear_other_tuplet_snap_notes(newPosition);
-            thePosition = newPosition + 1;
-            delete this.notes[newPosition].style;
-            delete this.notes[newPosition].was_tuplet_end;
-        }
-          
-        // Add tuplet to notes behind the cursor
-          if(this.notes[thePosition - 1].in_tuplet){
-            alert("Ne morem dodati triole v triolo");
-            return;
-        }
-          // Check if there are enough notes
-        // - Check if the duration sums up to (1/baseNote)
-        // - Notes must fit exactly (watch out for the dots)
-        let currentDuration = new Fraction(0);
-        let toIndex = -1;
-        for(let i = thePosition - 1; i >= 0; i--){
-            currentDuration = currentDuration.add(this.notes[i].duration);
-            let value = currentDuration.compare(new Fraction(event.tuplet_type, bar.base_note))
-            if(value == 0){
-                // Enough notes for a tuplet
-                toIndex = i;
-                break;
-            }
-            else if(value > 0){
-                // Tuplet would not fit
-                alert("Tu ne morem narediti triole, ker se notne vrednosti ne seštejejo ustrezno.");
-                return;
-            }
-        }
-        if(toIndex < 0){
-            // Not enough notes for a tuplet
-            alert("Tu ne morem narediti triole, ker ni dovolj not");
-            return;
-        }
-          // For those notes in the tuplet
-        // - Change duration to (duration / tuplet_type)
-        // - Add tuplet_from, tuplet_to
-        for(let i = toIndex; i < thePosition; i++){
-            this.notes[i].duration = this.notes[i].duration.div(event.tuplet_type);
-            this.notes[i].in_tuplet = true;
-            this.notes[i].tuplet_type = event.tuplet_type;
-        }
-        this.notes[thePosition - 1].tuplet_from = toIndex;
-        this.notes[thePosition - 1].tuplet_to = thePosition;
-          // And render the result
-        this._call_render()
-      }*/
-
-    this._is_supported_length = function (event) {
-
-        if (event.tuplet_type == 3) {
-            return true;
-        }
-
-        // Check if the note is in supported range...
-        for (var i = 0; i < this.supportedLengths.length; i++) {
-            if (event.duration.d == this.supportedLengths[i]) return true;
-        }console.error("Note length not supported... (" + event.duration.d + ")");
-        return false;
-    }, this.add_note = function (event) {
-
-        var i = this.cursor.position;
-        if (i >= 0 && i < this.notes.length && this.notes[i].overwrite && event.type != "bar") {
-            this.overwrite_next(event);
-            return;
-        }
-
-        this.remove_all_overwrites();
-
-        // Check if in tuplet
-        if (i >= 0 && i < this.notes.length && this.notes[i].in_tuplet && this.notes[i - 1].in_tuplet && !this.notes[i - 1].tuplet_end) {
-            alert("CANNOT! " + i);
-            return;
-        }
-
-        if (event.type != "bar" && !this._is_supported_length(event)) {
-            return;
-        }
-
-        // Add the note
-        // Add the new note to the current position (at the cursor)
-        this.notes.splice(this.cursor.position, 0, event);
-
-        // Move cursor forward
-        this._move_cursor_forward();
-
-        // And render the result
-        this._call_render();
-    }, this.overwrite_next = function (event) {
+    this.overwrite_next = function (event) {
 
         //debugger;
         var i = this.cursor.position;
@@ -91631,6 +91556,54 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         }
 
         this._call_render();
+    }, this.remove_all_overwrites = function () {
+        for (var i = 0; i < this.notes.length; i++) {
+            if (this.notes[i].overwrite) {
+                delete this.notes[i].overwrite;
+            }
+        }
+    };
+
+    this._is_supported_length = function (event) {
+
+        if (event.tuplet_type == 3) {
+            return true;
+        }
+
+        // Check if the note is in supported range...
+        for (var i = 0; i < this.supportedLengths.length; i++) {
+            if (event.duration.d == this.supportedLengths[i]) return true;
+        }console.error("Note length not supported... (" + event.duration.d + ")");
+        return false;
+    }, this.add_note = function (event) {
+
+        var i = this.cursor.position;
+        if (i >= 0 && i < this.notes.length && this.notes[i].overwrite && event.type != "bar") {
+            this.overwrite_next(event);
+            return;
+        }
+
+        this.remove_all_overwrites();
+
+        // Check if in tuplet
+        if (i >= 0 && i < this.notes.length && this.notes[i].in_tuplet && this.notes[i - 1].in_tuplet && !this.notes[i - 1].tuplet_end) {
+            alert("CANNOT! " + i);
+            return;
+        }
+
+        if (event.type != "bar" && !this._is_supported_length(event)) {
+            return;
+        }
+
+        // Add the note
+        // Add the new note to the current position (at the cursor)
+        this.notes.splice(this.cursor.position, 0, event);
+
+        // Move cursor forward
+        this._move_cursor_forward();
+
+        // And render the result
+        this._call_render();
     }, this._sum_durations = function () {
 
         var sum = new Fraction();
@@ -91671,14 +91644,6 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         // And render the result
         this._call_render();
-    };
-
-    this.remove_all_overwrites = function () {
-        for (var i = 0; i < this.notes.length; i++) {
-            if (this.notes[i].overwrite) {
-                delete this.notes[i].overwrite;
-            }
-        }
     };
 
     this._move_cursor_forward = function () {

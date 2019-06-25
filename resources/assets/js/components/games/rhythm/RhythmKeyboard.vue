@@ -52,8 +52,8 @@
                 <!-- Will show only on small wide screens (landscape phones) -->
                 <div class="hide-normal">
                     
-                    <sexy-button text="u" color="green" @click.native="tie()" />    
-                    <sexy-button text="T" color="green" @click.native="tuplet()" />
+                    <sexy-button text="u"  color="green" @click.native="tie()" />    
+                    <sexy-button text="T" :color="tuplet_color" @click.native="tuplet()" />
                     <sexy-button color="cabaret"   @click.native="delete_note()" >
                         <img src="/images/backspace.svg" width="30" />
                     </sexy-button>
@@ -81,7 +81,7 @@
                 <sexy-button v-else text="u" color="green" @click.native="tie()" />
 
                 <!-- TUPLET -->
-                <sexy-button text="T" color="green" @click.native="tuplet()" />
+                <sexy-button text="T" :color="tuplet_color" @click.native="tuplet()" />
 
             </div>
             <div class="row rhythm-game__keyboard-row row-4 show-normal">
@@ -359,8 +359,7 @@ export default {
         tuplet() {
 
             this.key_callback({
-                type: 'tuplet',
-                tuplet_type: 3
+                type: 'tuplet'
             });
 
         },
@@ -508,7 +507,14 @@ export default {
             else if(this.question.check == "correct") return "check";
             else if(this.question.check == "next") return "angle-double-right";
             return "question-circle";
+        },
+
+        tuplet_color() {
+            if(this.cursor.editing_tuplet) return "sunglow";
+            return "green";
         }
+
+       
 
     }
 
