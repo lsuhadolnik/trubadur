@@ -1,4 +1,7 @@
+//import { util } from "node-forge";
+
 var Fraction = require("fraction.js");
+let util = require('./rhythmUtilities');
 
 var NoteStore = function(bar, cursor, render_function, info) {
 
@@ -98,7 +101,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     this.tuplet_editing_button_handler = function(event) {
 
-
         /**
          * How does a tuplet look like:
          * 
@@ -128,14 +130,22 @@ var NoteStore = function(bar, cursor, render_function, info) {
         }
         else if(event.type == "n" || event.type == "r"){
             
+            let tuplet_type = this.currentTupletInfo.type;
 
-            if(this.currentTupletInfo.type == 0){
+            if(tuplet_type == 0){
 
                 this.startNewTuplet(event)
 
             }else {
 
-                this.addToExistingTuplet(event)
+                if(tuplet_type > util.getNoteType(event)){
+
+                    this.handleTupletEditingExit(event);
+                    return;
+
+                }else {
+                    this.addToExistingTuplet(event)
+                }
 
             }
 
@@ -149,6 +159,20 @@ var NoteStore = function(bar, cursor, render_function, info) {
         }
 
     }
+
+    this.handleTupletEditingExit = function(event){
+        
+        // Cancel if in the middle of a tuplet
+        if(this.inTheMiddleOfATuplet()){
+            alert("To se pa ne da.");
+            return;
+        }
+
+        // Exit tuplet editing mode and pass request to parent
+        this.cursor.editing_tuplet = false;
+        this.handle_button(event);
+
+    },
 
     this.startNewTuplet = function(event) {
         
@@ -165,13 +189,69 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     this.addToExistingTuplet = function(event) {
 
-        // add tuplet note and add tuplet_end
+        // Add tuplet sign
         event.in_tuplet = true;
-        event.tuplet_end = true;
-        this.addNote(event);
-        // remove tuplet_end from previous note
-        delete this.previousNote().tuplet_end;
 
+        // previousNote                currentNote              What to do
+        // (in_tuplet, tuplet_end)  |  xxx                       Add tuplet note to currentNote, remove tuplet_end from previousNote
+        // (in_tuplet, tuplet_end)  |  ()                        Add tuplet note to currentNote, remove tuplet_end from previousNote
+        // (in_tuplet, tuplet_end)  |  (in_tuplet, tuplet_end)   Add tuplet note to currentNote, remove tuplet_end from previousNote
+        
+        // (in_tuplet)              |  (in_tuplet)               Add tuplet note to currentNote
+        // (in_tuplet)              |  (in_tuplet, tuplet_end)   Add tuplet note to currentNote
+
+        // xxx                      |  xxx
+
+        if(this.previousNote()){
+            if(this.previousNote().hasOwnProperty("tuplet_end")){
+                // Set new tuplet end
+                event.tuplet_end = true;
+                delete this.previousNote().tuplet_end;
+            }
+        }else { // No previousNote
+            // Set new tuplet end
+            event.tuplet_end = true;
+        }
+
+        // Add new tuplet note
+        this.addNote(event);
+        
+    }
+
+    
+
+    this.atTheEndOfATuplet = function(){
+
+        //       previousNote          currentNote
+        // (in_tuplet, tuplet_end) | (note)
+        // (in_tuplet, tuplet_end) |  xxxx
+        // (in_tuplet, tuplet_end) | (in_tuplet)
+        // (in_tuplet, tuplet_end) | (in_tuplet, tuplet_end)
+        //          xxx            |  xxx
+
+        if(this.previousNote()){
+            let n = this.previousNote(); 
+            return n.hasOwnProperty("tuplet_end");
+        }else{
+            return true;
+        }
+        
+    }
+
+    this.inTheMiddleOfATuplet = function(){
+
+        // previousNote     currentNote
+        //  (in_tuplet)  | (in_tuplet)
+        //  NOO NOO NOO !! -> (in_tuplet, tuplet_end) | (in_tuplet, tuplet_end)
+
+        if(this.previousNote() && this.currentNote()){
+            if( this.previousNote().hasOwnProperty("in_tuplet") 
+            &&  this. currentNote().hasOwnProperty("in_tuplet")
+            && !this.previousNote().hasOwnProperty("tuplet_end")) 
+                return true;
+        }
+
+        return false;
     }
 
     this.add_tie = function(){
@@ -377,7 +457,16 @@ var NoteStore = function(bar, cursor, render_function, info) {
     this.currentNote = function(){
 
         let i = this.cursor.position;
-        if(this.notes.length < i)
+        if(this.notes.length > i)
+            return this.notes[i];
+        return null;
+
+    }
+
+    this.nextNote = function(){
+
+        let i = this.cursor.position + 1;
+        if(this.notes.length > i)
             return this.notes[i];
         return null;
 

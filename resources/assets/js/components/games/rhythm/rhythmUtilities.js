@@ -82,7 +82,27 @@ var utilities = {
 
 
 
-    }
+    },
+
+    getNoteType: function(note){
+        return parseInt(note.symbol);
+    },
+
+    sumTupletLength: function(notes, from, to) {
+        let type = 0;
+        let length = 0;
+        for (let i = from; i < to && i < notes.length; i++) {
+            const note = notes[i];
+            if(type == 0){
+                type = this.getNoteType(note);
+                length++;
+            }else{
+                length += 1 / (this.getNoteType(note) / type)
+            }
+        }
+
+        return parseInt(length);
+    },
 
 }
 

@@ -489,7 +489,7 @@ module.exports = function normalizeComponent (
 "use strict";
 
 
-var bind = __webpack_require__(15);
+var bind = __webpack_require__(16);
 var isBuffer = __webpack_require__(30);
 
 /*global toString:true*/
@@ -2737,6 +2737,105 @@ module.exports = g;
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports) {
+
+//
+// REFACTOR ASAP!!!! 
+// 
+
+
+var utilities = {
+
+    generate_playback_durations: function generate_playback_durations(values, get_val) {
+
+        // Negativna trajanja pomenijo pavze
+
+        var nextHasTie = function nextHasTie(position) {
+            return values.length > position + 1 && values[position + 1].tie;
+        };
+        var nextIsRest = function nextIsRest(position) {
+            return values.length > position + 1 && values[position + 1].type == 'r';
+        };
+        var sumTiedDurations = function sumTiedDurations(cursorPosition) {
+
+            var duration = values[cursorPosition].duration;
+            var numTies = 0;
+            var pos = cursorPosition;
+
+            while (nextHasTie(pos) && !nextIsRest(pos)) {
+                duration = duration.add(values[pos + 1].duration);
+                numTies++;pos++;
+            }
+            return { duration: duration, skips: numTies };
+        };
+
+        var realDurations = [];
+
+        var skipN = 0;
+        for (var noteIndex = 0; noteIndex < values.length; noteIndex++) {
+
+            if (skipN > 0) {
+                skipN--;continue;
+            }
+
+            var note = values[noteIndex];
+
+            if (note.type != "r") {
+                var vals = sumTiedDurations(noteIndex);
+                skipN = vals.skips;
+
+                if (!get_val) realDurations.push(vals.duration);else realDurations.push(vals.duration.toFraction());
+            } else {
+
+                if (!get_val) realDurations.push(note.duration.mul(-1));else realDurations.push(note.duration.mul(-1).toFraction());
+            }
+        }
+
+        console.log(realDurations);
+
+        return realDurations;
+    },
+
+    get_bar_count: function get_bar_count(notes) {
+
+        var count = 1;
+        for (var i = 0; i < notes.length; i++) {
+            if (notes[i].type == "bar") {
+                count++;
+            }
+        }
+
+        return count;
+    },
+
+    generate_countin_durations: function generate_countin_durations(bar_info) {},
+
+    getNoteType: function getNoteType(note) {
+        return parseInt(note.symbol);
+    },
+
+    sumTupletLength: function sumTupletLength(notes, from, to) {
+        var type = 0;
+        var length = 0;
+        for (var i = from; i < to && i < notes.length; i++) {
+            var note = notes[i];
+            if (type == 0) {
+                type = this.getNoteType(note);
+                length++;
+            } else {
+                length += 1 / (this.getNoteType(note) / type);
+            }
+        }
+
+        return parseInt(length);
+    }
+
+};
+
+module.exports = utilities;
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 window._ = __webpack_require__(23);
@@ -2767,7 +2866,7 @@ window.axios.defaults.headers.common = {
 };
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -2957,7 +3056,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2980,10 +3079,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(16);
+    adapter = __webpack_require__(17);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(16);
+    adapter = __webpack_require__(17);
   }
   return adapter;
 }
@@ -3054,10 +3153,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(11)))
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -3108,7 +3207,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -27356,7 +27455,7 @@ var Crescendo = exports.Crescendo = function (_Note) {
 //# sourceMappingURL=vexflow-debug.js.map
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -27384,7 +27483,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27402,7 +27501,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27413,7 +27512,7 @@ var settle = __webpack_require__(33);
 var buildURL = __webpack_require__(35);
 var parseHeaders = __webpack_require__(36);
 var isURLSameOrigin = __webpack_require__(37);
-var createError = __webpack_require__(17);
+var createError = __webpack_require__(18);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(38);
 
 module.exports = function xhrAdapter(config) {
@@ -27589,7 +27688,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27614,7 +27713,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27626,7 +27725,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27652,85 +27751,6 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-//
-// REFACTOR ASAP!!!! 
-// 
-
-
-var utilities = {
-
-    generate_playback_durations: function generate_playback_durations(values, get_val) {
-
-        // Negativna trajanja pomenijo pavze
-
-        var nextHasTie = function nextHasTie(position) {
-            return values.length > position + 1 && values[position + 1].tie;
-        };
-        var nextIsRest = function nextIsRest(position) {
-            return values.length > position + 1 && values[position + 1].type == 'r';
-        };
-        var sumTiedDurations = function sumTiedDurations(cursorPosition) {
-
-            var duration = values[cursorPosition].duration;
-            var numTies = 0;
-            var pos = cursorPosition;
-
-            while (nextHasTie(pos) && !nextIsRest(pos)) {
-                duration = duration.add(values[pos + 1].duration);
-                numTies++;pos++;
-            }
-            return { duration: duration, skips: numTies };
-        };
-
-        var realDurations = [];
-
-        var skipN = 0;
-        for (var noteIndex = 0; noteIndex < values.length; noteIndex++) {
-
-            if (skipN > 0) {
-                skipN--;continue;
-            }
-
-            var note = values[noteIndex];
-
-            if (note.type != "r") {
-                var vals = sumTiedDurations(noteIndex);
-                skipN = vals.skips;
-
-                if (!get_val) realDurations.push(vals.duration);else realDurations.push(vals.duration.toFraction());
-            } else {
-
-                if (!get_val) realDurations.push(note.duration.mul(-1));else realDurations.push(note.duration.mul(-1).toFraction());
-            }
-        }
-
-        console.log(realDurations);
-
-        return realDurations;
-    },
-
-    get_bar_count: function get_bar_count(notes) {
-
-        var count = 1;
-        for (var i = 0; i < notes.length; i++) {
-            if (notes[i].type == "bar") {
-                count++;
-            }
-        }
-
-        return count;
-    },
-
-    generate_countin_durations: function generate_countin_durations(bar_info) {}
-
-};
-
-module.exports = utilities;
-
-/***/ }),
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -27744,7 +27764,7 @@ module.exports = __webpack_require__(222);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__);
@@ -44875,7 +44895,7 @@ new Vue({ // eslint-disable-line no-new
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(14)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(15)(module)))
 
 /***/ }),
 /* 24 */
@@ -66475,7 +66495,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(11)))
 
 /***/ }),
 /* 28 */
@@ -66491,9 +66511,9 @@ module.exports = __webpack_require__(29);
 
 
 var utils = __webpack_require__(3);
-var bind = __webpack_require__(15);
+var bind = __webpack_require__(16);
 var Axios = __webpack_require__(31);
-var defaults = __webpack_require__(11);
+var defaults = __webpack_require__(12);
 
 /**
  * Create an instance of Axios
@@ -66526,9 +66546,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(19);
+axios.Cancel = __webpack_require__(20);
 axios.CancelToken = __webpack_require__(45);
-axios.isCancel = __webpack_require__(18);
+axios.isCancel = __webpack_require__(19);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -66576,7 +66596,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(11);
+var defaults = __webpack_require__(12);
 var utils = __webpack_require__(3);
 var InterceptorManager = __webpack_require__(40);
 var dispatchRequest = __webpack_require__(41);
@@ -66688,7 +66708,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(17);
+var createError = __webpack_require__(18);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -67107,8 +67127,8 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(3);
 var transformData = __webpack_require__(42);
-var isCancel = __webpack_require__(18);
-var defaults = __webpack_require__(11);
+var isCancel = __webpack_require__(19);
+var defaults = __webpack_require__(12);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -67260,7 +67280,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(19);
+var Cancel = __webpack_require__(20);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -67400,7 +67420,7 @@ Vue.directive('touch-outside', {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_awesome_components_Icon__ = __webpack_require__(5);
@@ -74578,7 +74598,7 @@ exports.push([module.i, "\n.rhythm__instructions {\n  padding: 20px 0;\n  displa
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_CircleTimer_vue__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_CircleTimer_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_CircleTimer_vue__);
@@ -75643,7 +75663,7 @@ exports.push([module.i, "\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n 
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vexflow__);
 //
 //
@@ -75707,6 +75727,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 var Fraction = __webpack_require__(6);
+var util = __webpack_require__(9);
 
 var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
 var StaveNote = VF.StaveNote;
@@ -75796,7 +75817,7 @@ var Tuplet = VF.Tuplet;
 
             var x = Xoffset + zoomScrollLeft;
 
-            console.log("screenWidth: " + screenWidth + ", zoomScrollWidth: " + zoomScrollWidth + ", zoomScrollLeft: " + zoomScrollLeft + ", x: " + x);
+            //console.log("screenWidth: "+screenWidth+", zoomScrollWidth: "+zoomScrollWidth+", zoomScrollLeft: "+zoomScrollLeft+", x: "+x);
 
             var x_coords = [];
             debugger;
@@ -76229,8 +76250,11 @@ var Tuplet = VF.Tuplet;
                 }
 
                 if (thisNote.tuplet_end) {
+
+                    var tuplet_type = util.sumTupletLength(notes, firstTupletNoteIdx, i + 1);
+
                     tuplets.push(new __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
-                        bracketed: true, rationed: false, num_notes: thisNote.tuplet_type
+                        bracketed: true, rationed: false, num_notes: tuplet_type
                     }));
                     firstTupletNoteIdx = -1;
                 }
@@ -76586,10 +76610,10 @@ exports.push([module.i, "\n.rhythm-game__diff__first-row[data-v-0556eb24], .rhyt
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vexflow__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__ = __webpack_require__(135);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_SexyButton_vue__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_SexyButton_vue__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__elements_SexyButton_vue__);
 //
 //
@@ -76913,7 +76937,7 @@ var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vexflow__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rx__ = __webpack_require__(136);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rx__);
@@ -89449,7 +89473,7 @@ var ReactiveTest = Rx.ReactiveTest = {
 
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)(module), __webpack_require__(8), __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)(module), __webpack_require__(8), __webpack_require__(11)))
 
 /***/ }),
 /* 137 */
@@ -89613,7 +89637,7 @@ exports.push([module.i, "\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padd
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue__);
@@ -91261,7 +91285,10 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+//import { util } from "node-forge";
+
 var Fraction = __webpack_require__(6);
+var util = __webpack_require__(9);
 
 var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
@@ -91367,12 +91394,20 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
             this.cursor.editing_tuplet = false;
         } else if (event.type == "n" || event.type == "r") {
 
-            if (this.currentTupletInfo.type == 0) {
+            var tuplet_type = this.currentTupletInfo.type;
+
+            if (tuplet_type == 0) {
 
                 this.startNewTuplet(event);
             } else {
 
-                this.addToExistingTuplet(event);
+                if (tuplet_type > util.getNoteType(event)) {
+
+                    this.handleTupletEditingExit(event);
+                    return;
+                } else {
+                    this.addToExistingTuplet(event);
+                }
             }
 
             this._move_cursor_forward();
@@ -91382,7 +91417,18 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         }
     };
 
-    this.startNewTuplet = function (event) {
+    this.handleTupletEditingExit = function (event) {
+
+        // Cancel if in the middle of a tuplet
+        if (this.inTheMiddleOfATuplet()) {
+            alert("To se pa ne da.");
+            return;
+        }
+
+        // Exit tuplet editing mode and pass request to parent
+        this.cursor.editing_tuplet = false;
+        this.handle_button(event);
+    }, this.startNewTuplet = function (event) {
 
         // set currentTupletType
         this.currentTupletInfo.length = 1;
@@ -91396,12 +91442,63 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
     this.addToExistingTuplet = function (event) {
 
-        // add tuplet note and add tuplet_end
+        // Add tuplet sign
         event.in_tuplet = true;
-        event.tuplet_end = true;
+
+        // previousNote                currentNote              What to do
+        // (in_tuplet, tuplet_end)  |  xxx                       Add tuplet note to currentNote, remove tuplet_end from previousNote
+        // (in_tuplet, tuplet_end)  |  ()                        Add tuplet note to currentNote, remove tuplet_end from previousNote
+        // (in_tuplet, tuplet_end)  |  (in_tuplet, tuplet_end)   Add tuplet note to currentNote, remove tuplet_end from previousNote
+
+        // (in_tuplet)              |  (in_tuplet)               Add tuplet note to currentNote
+        // (in_tuplet)              |  (in_tuplet, tuplet_end)   Add tuplet note to currentNote
+
+        // xxx                      |  xxx
+
+        if (this.previousNote()) {
+            if (this.previousNote().hasOwnProperty("tuplet_end")) {
+                // Set new tuplet end
+                event.tuplet_end = true;
+                delete this.previousNote().tuplet_end;
+            }
+        } else {
+            // No previousNote
+            // Set new tuplet end
+            event.tuplet_end = true;
+        }
+
+        // Add new tuplet note
         this.addNote(event);
-        // remove tuplet_end from previous note
-        delete this.previousNote().tuplet_end;
+    };
+
+    this.atTheEndOfATuplet = function () {
+
+        //       previousNote          currentNote
+        // (in_tuplet, tuplet_end) | (note)
+        // (in_tuplet, tuplet_end) |  xxxx
+        // (in_tuplet, tuplet_end) | (in_tuplet)
+        // (in_tuplet, tuplet_end) | (in_tuplet, tuplet_end)
+        //          xxx            |  xxx
+
+        if (this.previousNote()) {
+            var n = this.previousNote();
+            return n.hasOwnProperty("tuplet_end");
+        } else {
+            return true;
+        }
+    };
+
+    this.inTheMiddleOfATuplet = function () {
+
+        // previousNote     currentNote
+        //  (in_tuplet)  | (in_tuplet)
+        //  NOO NOO NOO !! -> (in_tuplet, tuplet_end) | (in_tuplet, tuplet_end)
+
+        if (this.previousNote() && this.currentNote()) {
+            if (this.previousNote().hasOwnProperty("in_tuplet") && this.currentNote().hasOwnProperty("in_tuplet") && !this.previousNote().hasOwnProperty("tuplet_end")) return true;
+        }
+
+        return false;
     };
 
     this.add_tie = function () {
@@ -91586,7 +91683,14 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     this.currentNote = function () {
 
         var i = this.cursor.position;
-        if (this.notes.length < i) return this.notes[i];
+        if (this.notes.length > i) return this.notes[i];
+        return null;
+    };
+
+    this.nextNote = function () {
+
+        var i = this.cursor.position + 1;
+        if (this.notes.length > i) return this.notes[i];
         return null;
     };
 
@@ -91768,7 +91872,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 "use strict";
 var Fraction = __webpack_require__(6);
 
-var RhythmUtilities = __webpack_require__(20);
+var RhythmUtilities = __webpack_require__(9);
 
 var ExerciseGenerator = function ExerciseGenerator() {
 
@@ -91858,7 +91962,7 @@ var ExerciseGenerator = function ExerciseGenerator() {
 
 "use strict";
 var Fraction = __webpack_require__(6);
-var RhythmUtilities = __webpack_require__(20);
+var RhythmUtilities = __webpack_require__(9);
 
 var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
 
@@ -97346,7 +97450,7 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }

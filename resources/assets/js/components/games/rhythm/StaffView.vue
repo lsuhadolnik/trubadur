@@ -60,6 +60,7 @@
 import Vex from 'vexflow'
 
 var Fraction = require('fraction.js');
+let util = require('./rhythmUtilities');
 
 let VF = Vex.Flow;
 let StaveNote = VF.StaveNote;
@@ -151,7 +152,7 @@ export default {
 
             let x = Xoffset + zoomScrollLeft;
 
-            console.log("screenWidth: "+screenWidth+", zoomScrollWidth: "+zoomScrollWidth+", zoomScrollLeft: "+zoomScrollLeft+", x: "+x);
+            //console.log("screenWidth: "+screenWidth+", zoomScrollWidth: "+zoomScrollWidth+", zoomScrollLeft: "+zoomScrollLeft+", x: "+x);
 
             var x_coords = [];
             debugger;
@@ -613,8 +614,11 @@ export default {
                 }
 
                 if(thisNote.tuplet_end){
+
+                    let tuplet_type = util.sumTupletLength(notes, firstTupletNoteIdx, i + 1);
+
                     tuplets.push(new Vex.Flow.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
-                        bracketed: true, rationed: false, num_notes: thisNote.tuplet_type
+                        bracketed: true, rationed: false, num_notes: tuplet_type
                     }));
                     firstTupletNoteIdx = -1;
                 }
