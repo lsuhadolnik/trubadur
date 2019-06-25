@@ -380,7 +380,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
         this.cursor.editing_tuplet = true;
         this.currentTupletInfo = this.getClearTupletInfo();
-        
+
     },
 
     this.remove_tuplet = function(event){

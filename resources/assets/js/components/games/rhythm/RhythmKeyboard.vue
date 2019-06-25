@@ -81,7 +81,11 @@
                 <sexy-button v-else text="u" color="green" @click.native="tie()" />
 
                 <!-- TUPLET -->
-                <sexy-button text="T" :color="tuplet_color" @click.native="tuplet()" />
+                <sexy-button text="T" :color="tuplet_color" @click.native="selection()" />
+                From
+                <input type="text" v-model="cursor.selection.from">
+                To
+                <input type="text" v-model="cursor.selection.to">
 
             </div>
             <div class="row rhythm-game__keyboard-row row-4 show-normal">

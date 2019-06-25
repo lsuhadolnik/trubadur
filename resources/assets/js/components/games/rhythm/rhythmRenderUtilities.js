@@ -1,7 +1,6 @@
 var Fraction = require("fraction.js");
 
 import Vex from 'vexflow'
-import { internals } from 'rx';
 
 let VF = Vex.Flow;
 
@@ -121,7 +120,6 @@ var RhythmRenderUtilities = function(){
 
         return staves;
     };
-
 
     this._vex_render_batches = function(context, batches, optionals, info){
 

@@ -136,6 +136,11 @@ export default {
                 x: 0,
                 in_tuplet: false,
 
+                selection: {
+                    from: -1,
+                    to: -1
+                },
+
                 editing_tuplet: false,
                 editing_tuplet_index: -1
             },
