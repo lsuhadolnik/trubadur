@@ -74750,7 +74750,9 @@ var Fraction = __webpack_require__(6);
                 position: 0,
                 x: 0,
                 in_tuplet: false,
-                editing_tuplet: false
+
+                editing_tuplet: false,
+                editing_tuplet_index: -1
             },
 
             errorMessage: "",
@@ -91322,7 +91324,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     this.handle_button = function (event) {
 
         if (this.cursor.editing_tuplet) {
-            this.tuplet_editing_button_handler(event);
+            this.tupletEditing_buttonHandler(event);
             return;
         }
 
@@ -91364,7 +91366,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         this._call_render();
     };
 
-    this.tuplet_editing_button_handler = function (event) {
+    this.tupletEditing_buttonHandler = function (event) {
 
         /**
          * How does a tuplet look like:
@@ -91393,31 +91395,95 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         if (event.type == "tuplet") {
             this.cursor.editing_tuplet = false;
         } else if (event.type == "n" || event.type == "r") {
-
-            var tuplet_type = this.currentTupletInfo.type;
-
-            if (tuplet_type == 0) {
-
-                this.startNewTuplet(event);
-            } else {
-
-                if (tuplet_type > util.getNoteType(event)) {
-
-                    this.handleTupletEditingExit(event);
-                    return;
-                } else {
-                    this.addToExistingTuplet(event);
-                }
-            }
-
-            this._move_cursor_forward();
-            this._call_render();
+            this.tupleEditing_handleNote(event);
+        } else if (event.type == "delete") {
+            this.tupletEditing_handleDelete(event);
         } else {
             alert("This tuplet edit mode feature is not yet implemented");
         }
     };
 
-    this.handleTupletEditingExit = function (event) {
+    this.tupletEditing_handleDelete = function (event) {
+
+        //    prePreviousNote               previousNote
+        // 1) ???                       |   xxx                     -> return
+        // 2) (in_tuplet)               |   (in_tuplet, tuplet_end) -> delete previousNote, add flag to prePrevious
+        // 3) (in_tuplet, tuplet_end)   |   (in_tuplet, tuplet_end) -> delete previousNote, return 
+        // 4) (in_tuplet, tuplet_end)   |   (in_tuplet)             -> delete previousNote, return
+        // 5) (in_tuplet)               |   (in_tuplet)             -> delete previousNote, return
+        // 6) xxx                       |   (in_tuplet, *)          -> delete previousNote, return
+
+
+        if (this.previousNote()) {
+
+            if (this.prePreviousNote() && this.prePreviousNote().in_tuplet && !this.prePreviousNote().tuplet_end && this.previousNote().tuplet_end) {
+                this.prePreviousNote().tuplet_end = true;
+            }
+
+            this.deletePreviousNote();
+
+            this._move_cursor_backwards();
+            this._call_render();
+        }
+        // else return; (1)
+    };
+
+    /**
+     * Tries to get info from the neatest tuplet
+     * If there are more tuplets around the cursor, the first is always selected
+     */
+    this.getCurrentTupletType = function () {
+
+        // previousNote            currentNote
+        // xxx                     xxx                     -> return null
+        // xxx                     ()                      -> return null
+        // xxx                     (in_tuplet)             -> get info forwards
+        // ()                      (in_tuplet)             -> Get info forwards
+        // (in_tuplet)             (in_tuplet)             -> Get info backwards
+        // (in_tuplet)             xxx                     -> ERROR
+        // (in_tuplet, tuplet_end) ()                      -> Get type from previousNote
+        // (in_tuplet, tuplet_end) (in_tuplet)             -> Get type from previousNote
+        // (in_tuplet, tuplet_end) (in_tuplet, tuplet_end) -> Get info backwards
+
+        for (var i = this.cursor.position; i >= 0; i--) {
+
+            var currentNote = null;
+            if (this.notes.length > i) currentNote = this.notes[i];
+
+            var previousNote = null;
+            if (this.notes.length > i - 1 && i - 1 >= 0) previousNote = this.notes[i - 1];
+
+            if (currentNote && currentNote.in_tuplet && (!previousNote || !previousNote.in_tuplet)) {
+                return util.getNoteType(currentNote);
+            }
+        }
+
+        return 0;
+    };
+
+    this.tupleEditing_handleNote = function (event) {
+
+        var tuplet_type = this.currentTupletInfo.type;
+
+        if (tuplet_type == 0) {
+
+            this.tupletEditing_startNewTuplet(event);
+        } else {
+
+            if (tuplet_type > util.getNoteType(event)) {
+
+                this.tupletEditing_handleExit(event);
+                return;
+            } else {
+                this.tupletEditing_addToExistingTuplet(event);
+            }
+        }
+
+        this._move_cursor_forward();
+        this._call_render();
+    };
+
+    this.tupletEditing_handleExit = function (event) {
 
         // Cancel if in the middle of a tuplet
         if (this.inTheMiddleOfATuplet()) {
@@ -91428,19 +91494,21 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         // Exit tuplet editing mode and pass request to parent
         this.cursor.editing_tuplet = false;
         this.handle_button(event);
-    }, this.startNewTuplet = function (event) {
+    };
+
+    this.tupletEditing_startNewTuplet = function (event) {
 
         // set currentTupletType
         this.currentTupletInfo.length = 1;
         this.currentTupletInfo.type = event.duration.d;
-        // add tuplet note        
+        // add tuplet note   
 
         event.in_tuplet = true;
         event.tuplet_end = true;
         this.addNote(event);
     };
 
-    this.addToExistingTuplet = function (event) {
+    this.tupletEditing_addToExistingTuplet = function (event) {
 
         // Add tuplet sign
         event.in_tuplet = true;
@@ -91456,7 +91524,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         // xxx                      |  xxx
 
         if (this.previousNote()) {
-            if (this.previousNote().hasOwnProperty("tuplet_end")) {
+            if (this.previousNote().tuplet_end) {
                 // Set new tuplet end
                 event.tuplet_end = true;
                 delete this.previousNote().tuplet_end;
@@ -91482,7 +91550,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         if (this.previousNote()) {
             var n = this.previousNote();
-            return n.hasOwnProperty("tuplet_end");
+            return n.tuplet_end;
         } else {
             return true;
         }
@@ -91495,7 +91563,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         //  NOO NOO NOO !! -> (in_tuplet, tuplet_end) | (in_tuplet, tuplet_end)
 
         if (this.previousNote() && this.currentNote()) {
-            if (this.previousNote().hasOwnProperty("in_tuplet") && this.currentNote().hasOwnProperty("in_tuplet") && !this.previousNote().hasOwnProperty("tuplet_end")) return true;
+            if (this.previousNote().in_tuplet && this.currentNote().in_tuplet && !this.previousNote().tuplet_end) return true;
         }
 
         return false;
@@ -91680,24 +91748,27 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         this.notes.splice(i, 0, event);
     };
 
-    this.currentNote = function () {
+    this.deletePreviousNote = function () {
 
-        var i = this.cursor.position;
-        if (this.notes.length > i) return this.notes[i];
-        return null;
+        var i = this.cursor.position - 1;
+        if (i >= 0 && this.notes.length > i) this.notes.splice(i, 1);
     };
 
-    this.nextNote = function () {
-
-        var i = this.cursor.position + 1;
-        if (this.notes.length > i) return this.notes[i];
-        return null;
+    this.currentNote = function () {
+        return this.getNote(0);
     };
 
     this.previousNote = function () {
+        return this.getNote(-1);
+    };
 
-        var i = this.cursor.position - 1;
-        if (i >= 0) return this.notes[i];
+    this.prePreviousNote = function () {
+        return this.getNote(-2);
+    };
+
+    this.getNote = function (d) {
+        var i = this.cursor.position + d;
+        if (i >= 0 && i < this.notes.length) return this.notes[i];
         return null;
     };
 
