@@ -136,10 +136,10 @@ export default {
                 x: 0,
                 in_tuplet: false,
 
-                selection: {
-                    from: -1,
-                    to: -1
-                },
+                selection: null, 
+
+                selectionMode: false,
+                selectionSelected: false,
 
                 editing_tuplet: false,
                 editing_tuplet_index: -1
@@ -185,13 +185,52 @@ export default {
                 this.submitQuestion();
                 
             }
+            if(event.type == "selectionMode"){
+
+                if(this.cursor.selectionMode){
+
+                    this.cursor.selection = null;
+                    this.cursor.selectionSelected = false;
+                    this.cursor.selectionMode = false;
+
+                }else{
+
+                    if(this.notes.notes.length == 0) {
+                        return;
+                    }
+
+                    this.cursor.selectionMode = true;
+                    this.cursor.selectionSelected = false;
+                    
+                    let pos = this.cursor.position - 1;
+                    if(pos < 0){
+                        pos = 0;
+                    }
+
+                    else if(pos > this.notes.notes.length){
+                        pos = this.notes.notes.length - 1;
+                    }
+
+                    this.cursor.selection = {
+                        base: pos,
+                        from: pos,
+                        to: pos
+                    }
+
+                }
+
+                this.notes._call_render();
+
+            }
             else if(event.type == "playback"){
                 this.play(event);
             }
             else{
 
                 // Invalidate playback cache
-                this.playback.stop();
+                if(this.playback.status != "playing")
+                    this.playback.stop();
+
                 this.notes.handle_button(event)
             }
     

@@ -6,19 +6,31 @@
 
             <div class="row rhythm-game__keyboard-row row-1 norfolk-row" >
 
-                <sexy-button :color="note_color()" @click.native="note(2)" ><div class="norfolk-note-padding">&#x0068;</div></sexy-button>
-                <sexy-button :color="note_color()" @click.native="note(4)" ><div class="norfolk-note-padding">&#x0071;</div></sexy-button>
-                <sexy-button :color="note_color()" @click.native="note(8)" ><div class="norfolk-note-padding">&#x0065;</div></sexy-button>
-                <sexy-button :color="note_color()" @click.native="note(16)"><div class="norfolk-note-padding">&#x0078;</div></sexy-button>
+                <!--<div v-bind:class="{ half_transparent: cursor.selectionMode }">-->
 
-                <sexy-button :color="note_color()" @click.native="note(32)">
-                    <div class="norfolk-note-padding thirtytwo-note">
-                        <div class="td-base"> &#x0071;</div>
-                        <div class="td-flag1">&#x006A;</div>
-                        <div class="td-flag2">&#x006A;</div>
-                        <div class="td-flag3">&#x006A;</div>
-                    </div>
-                </sexy-button>
+                    <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(2)" ><div class="norfolk-note-padding">&#x0068;</div></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet(3)"><TupletSign num="3" :bg="note_color()" /></sexy-button>
+                    
+                    <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(4)" ><div class="norfolk-note-padding">&#x0071;</div></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet(5)"><TupletSign num="5" :bg="note_color()" /></sexy-button>
+                    
+                    <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(8)" ><div class="norfolk-note-padding">&#x0065;</div></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet(6)"><TupletSign num="6" :bg="note_color()" /></sexy-button>
+                    
+                    <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(16)"><div class="norfolk-note-padding">&#x0078;</div></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet(9)"><TupletSign num="9" :bg="note_color()" /></sexy-button>
+
+                    <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(32)">
+                        <div class="norfolk-note-padding thirtytwo-note">
+                            <div class="td-base"> &#x0071;</div>
+                            <div class="td-flag1">&#x006A;</div>
+                            <div class="td-flag2">&#x006A;</div>
+                            <div class="td-flag3">&#x006A;</div>
+                        </div>
+                    </sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet()"><TupletSign num="X" :bg="note_color()" /></sexy-button>
+
+                <!--</div>-->
                 
                 <!-- RESPONSIVE DIRECTIVES -->
                 <!-- Will show only on small wide screens (landscape phones) -->
@@ -42,12 +54,16 @@
             </div>
             <div class="row rhythm-game__keyboard-row row-2 norfolk-row">
                 
-                <sexy-button :color="rest_color()" @click.native="rest(2)" >&#x00D3;</sexy-button>
-                <sexy-button :color="rest_color()" @click.native="rest(4)" >&#x0152;</sexy-button>
-                <sexy-button :color="rest_color()" @click.native="rest(8)" >&#x2030;</sexy-button>
-                <sexy-button :color="rest_color()" @click.native="rest(16)">&#x2248;</sexy-button>
-                <sexy-button :color="rest_color()" @click.native="rest(32)">&#x00AE;</sexy-button>
+                <div v-bind:class="{ half_transparent: cursor.selectionMode }">
+
+                    <sexy-button :color="rest_color()" @click.native="rest(2)" >&#x00D3;</sexy-button>
+                    <sexy-button :color="rest_color()" @click.native="rest(4)" >&#x0152;</sexy-button>
+                    <sexy-button :color="rest_color()" @click.native="rest(8)" >&#x2030;</sexy-button>
+                    <sexy-button :color="rest_color()" @click.native="rest(16)">&#x2248;</sexy-button>
+                    <sexy-button :color="rest_color()" @click.native="rest(32)">&#x00AE;</sexy-button>
                 
+                </div>
+
                 <!-- RESPONSIVE DIRECTIVES -->
                 <!-- Will show only on small wide screens (landscape phones) -->
                 <div class="hide-normal">
@@ -66,26 +82,33 @@
             </div>
             <div class="row rhythm-game__keyboard-row row-3 musisync-row show-normal">
                 
-                <sexy-button :hidden="cursor.in_tuplet" text="\" color="green" @click.native="add_bar()" />
-                
-                <!-- MOVE LEFT OR DOT -->
-                <sexy-button v-if="moving_buttons" text="<" color="orange" @click.native="move_cursor_backwards" customClass="moveButtonsButton" />
-                <sexy-button v-else :hidden="cursor.in_tuplet" text="." color="green" @click.native="dot()" />
-                
-                <!-- MOVE SWITCH -->
-                <sexy-button v-if="moving_buttons" :hidden="cursor.in_tuplet" text=". u"  color="green" @click.native="moving_buttons = !moving_buttons" />
-                <sexy-button v-else :hidden="cursor.in_tuplet" text="< >"  color="orange" @click.native="moving_buttons = !moving_buttons" customClass="moveButtonsButton" />
-                
-                <!-- MOVE RIGHT OR TIE -->
-                <sexy-button v-if="moving_buttons" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
-                <sexy-button v-else text="u" color="green" @click.native="tie()" />
+                <div v-bind:class="{ half_transparent: cursor.selectionMode }" style="display: inline-block;">
 
-                <!-- TUPLET -->
-                <sexy-button text="T" :color="tuplet_color" @click.native="selection()" />
-                From
-                <input type="text" v-model="cursor.selection.from">
-                To
-                <input type="text" v-model="cursor.selection.to">
+                    <sexy-button :hidden="cursor.in_tuplet" text="\" color="green" @click.native="add_bar()" />
+                
+                    <!-- MOVE LEFT OR DOT -->
+                    <sexy-button v-if="moving_buttons" text="<" color="orange" @click.native="move_cursor_backwards" customClass="moveButtonsButton" />
+                    <sexy-button v-else :hidden="cursor.in_tuplet" text="." color="green" @click.native="dot()" />
+                    
+                    <!-- MOVE SWITCH -->
+                    <sexy-button v-if="moving_buttons" :hidden="cursor.in_tuplet" text=". u"  color="green" @click.native="moving_buttons = !moving_buttons" />
+                    <sexy-button v-else :hidden="cursor.in_tuplet" text="< >"  color="orange" @click.native="moving_buttons = !moving_buttons" customClass="moveButtonsButton" />
+                    
+                    <!-- MOVE RIGHT OR TIE -->
+                    <sexy-button v-if="moving_buttons" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
+                    <sexy-button v-else text="u" color="green" @click.native="tie()" />
+
+                </div>
+
+                <!-- SELECTION -->
+                <sexy-button :color="select_button_color" @click.native="selection()" >
+                    <icon name="i-cursor" />
+                </sexy-button>
+                <div v-if="cursor.selection">
+                Base: {{cursor.selection.base}}
+                From: {{cursor.selection.from}}
+                To: {{cursor.selection.to}}
+                </div>
 
             </div>
             <div class="row rhythm-game__keyboard-row row-4 show-normal">
@@ -139,6 +162,10 @@
 
     @import '../../../../sass/variables/index';
     
+    .half_transparent{
+        opacity: 0.5;
+    }
+
     .rythm-game__keyboard_wrap {
         padding: 0 10px 0 10px;
         display: flex;
@@ -263,6 +290,7 @@
 <script>
 
 import SexyButton from "../../elements/SexyButton.vue"
+import TupletSign from "../../elements/TupletSign.vue"
 import SexySlider from "../../elements/SexySlider.vue"
 import TwoRowsButton from "../../elements/TwoRowsButton.vue"
 
@@ -274,6 +302,7 @@ import 'vue-awesome/icons/pause'
 import 'vue-awesome/icons/check'
 import 'vue-awesome/icons/angle-double-right'
 import 'vue-awesome/icons/times'
+import 'vue-awesome/icons/i-cursor'
 
 var Fraction = require('fraction.js');
 
@@ -360,10 +389,11 @@ export default {
 
         },
 
-        tuplet() {
+        tuplet(num) {
 
             this.key_callback({
-                type: 'tuplet'
+                type: 'tuplet',
+                tuplet_num: num
             });
 
         },
@@ -440,6 +470,14 @@ export default {
 
         },
 
+        selection(){
+
+            this.key_callback({
+                type: "selectionMode"
+            })
+
+        },
+
         note_color() {
             return "green";
         },
@@ -457,7 +495,7 @@ export default {
 
     },
     components: {
-        SexyButton, TwoRowsButton, SexySlider
+        SexyButton, TwoRowsButton, SexySlider, TupletSign
     },
     data: function() {
         return {
@@ -469,7 +507,8 @@ export default {
 
             bpm_slider: {
                 value: 10
-            }
+            },
+
         };
     },
     props: [
@@ -515,6 +554,11 @@ export default {
 
         tuplet_color() {
             if(this.cursor.editing_tuplet) return "sunglow";
+            return "green";
+        },
+
+        select_button_color() {
+            if(this.cursor.selectionMode) return "blue";
             return "green";
         }
 

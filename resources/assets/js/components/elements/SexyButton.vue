@@ -10,7 +10,8 @@
             'button__orange':color=='orange', 
             'button__red':color=='red',
             'button__cabaret':color=='cabaret',
-            'button__sunglow':color=='sunglow'}"></div>
+            'button__sunglow':color=='sunglow',
+            'button__blue':color=='blue'}"></div>
     </div>
 </template>
 
@@ -117,6 +118,10 @@
 
 .button__sunglow{
     background-color: $sunglow;
+}
+
+.button__blue{
+    background-color: rgba(0,0,255,0.4);
 }
 
 .button_1_col{

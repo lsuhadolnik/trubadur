@@ -16,7 +16,7 @@
         barHeight: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barHeight" v-on:mousemove="force_redraw()"> {{info.barHeight}}
         barOffsetY: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barOffsetY" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
         zoomViewHeight: <input class="BPM-slider" type="range" :min="10" :max="200" step="1" v-model="CTX.zoomview.containerHeight" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
-           --> 
+        --> 
     </div>
 
 </template>
@@ -59,6 +59,7 @@
 
 import Vex from 'vexflow'
 import RhythmRenderUtilities from './rhythmRenderUtilities'
+let RU = new RhythmRenderUtilities();
 
 var Fraction = require('fraction.js');
 let util = require('./rhythmUtilities');
@@ -135,6 +136,9 @@ export default {
             let closest = this._get_closest_note(Xoffset);
             if(closest.idx >= 0){
                 this.cursor.position = closest.idx + 1;
+
+                this._handle_second_selection_tap(closest.idx);
+
                 this._save_scroll();
                 this.$parent.notes._call_render()
                 this._restore_scroll();
@@ -142,51 +146,33 @@ export default {
 
         },
 
+        _handle_second_selection_tap: function(idx){
+            if(!this.cursor.selectionMode){ return; }
+
+            if(idx == this.cursor.selection.base){
+                this.cursor.selection.from = idx
+                this.cursor.selection.to = idx;
+            }
+
+            if(idx < this.cursor.selection.base){
+                this.cursor.selection.from = idx
+                this.cursor.selection.to = this.cursor.selection.base;
+            }
+
+            if(idx > this.cursor.selection.base){
+                this.cursor.selection.from = this.cursor.selection.base;
+                this.cursor.selection.to = idx;
+            }
+
+        },
+
         _get_closest_note: function(Xoffset){
 
             let zoomView = document.getElementById("second-row").parentNode;
-            let screenWidth = window.innerWidth;
-            let zoomScrollWidth = zoomView.scrollWidth;
-            
-            let zoomScrollLeft = zoomView.scrollLeft;
+            let x = Xoffset + zoomView.scrollLeft;
 
-            let x = Xoffset + zoomScrollLeft;
-
-            //console.log("screenWidth: "+screenWidth+", zoomScrollWidth: "+zoomScrollWidth+", zoomScrollLeft: "+zoomScrollLeft+", x: "+x);
-
-            /*var x_coords = [];
-            debugger;
-            zoomView.querySelectorAll(".vf-note").forEach(function(e) {
-                x_coords.push(Math.round((e.getClientRects()[0].x + zoomScrollLeft))); // Does not work on iOS, works elsewhere
-                //x_coords.push(Math.round((e.getBBox().x + zoomScrollLeft))); // DOES NOT work
-            });*/
-
-            /// THIS FREAKING WORKS EVERYWHERE!!! 💪💪💪💪💪
-            let x_coords = [];
-            this.CTX["zoomview"].rendered.forEach(note => {
-                x_coords.push(Math.round(note.getAbsoluteX() * 2));
-            });
-            /*console.log("Provided:");
-            console.log(k);
-
-            console.log("Hacked:");
-            console.log(x_coords)*/
-
-            let minIndex = 999;
-            let minDiff  = 99999;
-            let poss = x_coords;
-            for(let i = 0; i < poss.length; i++){
-                if(Math.abs(poss[i] - x) < minDiff){
-                    minDiff = Math.abs(poss[i] - x);
-                    minIndex = i;
-                }
-            }
-
-            if(minDiff < 50){
-                return {idx:minIndex, xpos: x_coords[minIndex], userx:x};
-            }
-
-            return {idx: -1, userx: x};
+            // xcoords are calculated after render
+            return RU._min_dist(this.CTX["zoomview"].x_coords, x);
 
         },
 
@@ -291,8 +277,20 @@ export default {
 
         },
 
+        // FIX THIS CRAP ASAP
         _cursor_rendered(cursorNode, descriptor, notes, cursorNoteIndex){
             
+
+            // RENDER CURSOR BAR
+            descriptor.context.rect(
+                150, 
+                0, 
+                2, 
+                this.info.barHeight, {
+                class: this.info.cursor.cursorBarClass,
+                fill: "green",
+                opacity: 0.5
+            });
 
             let screenWidth = window.innerWidth;
             let sR = document.getElementById("second-row").parentElement;
@@ -306,7 +304,6 @@ export default {
             // No cursor note
             // Cursor is right at the start
             if(!cursorNode){
-                
                 this._set_cursor_position(20)
                 return;
             }
@@ -378,8 +375,6 @@ export default {
                 );
             }
 
-            
-
             // element from CTX object
             // We created the context in mounted()
             let context = descriptor.context;
@@ -397,7 +392,6 @@ export default {
             var tuplets = [];
             var renderQueue = [];
             descriptor.rendered = [];
-            //var currentDuration = new Fraction(0);
 
             let allStaveNotes = [];
 
@@ -409,7 +403,6 @@ export default {
             let currentBatchWidth = 0;
 
             for(var i = 0; i < notes.length; i++){
-
 
                 var thisNote = notes[i];
 
@@ -484,11 +477,6 @@ export default {
 
                 }
 
-                /*if(thisNote.tuplet_from >= 0){
-                    tuplets.push(new Vex.Flow.Tuplet(allStaveNotes.slice(thisNote.tuplet_from, thisNote.tuplet_to), {
-                        bracketed: true, rationed: false, num_notes: thisNote.tuplet_type
-                    }));
-                }*/
 
                 if(thisNote.in_tuplet){
                     if(firstTupletNoteIdx == -1){
@@ -531,14 +519,17 @@ export default {
                 batches.push({notes:renderQueue, width:currentBatchWidth});
             }
 
-            let RU = new RhythmRenderUtilities();
+            // Finally render everything
             RU._vex_render_batches(context, batches, [ties, tuplets], {
                 bar: this.bar,
                 barOffsetY: this.info.barOffsetY,
                 width: this.info.width
             });
-            
-        
+
+            // set CTX.zoomview.x_coords property
+            this.retrieveXCoords(descriptor);
+
+
             // Render the minimap rectangle
             if(descriptor.role == "minimap"){
 
@@ -552,20 +543,16 @@ export default {
                     opacity: 0.5
                 });
             }
-
-            // RENDER CURSOR BAR
-            descriptor.context.rect(
-                150, 
-                0, 
-                2, 
-                this.info.barHeight, {
-                class: this.info.cursor.cursorBarClass,
-                fill: "green",
-                opacity: 0.5
-            });
             
-            this._cursor_rendered(cursorNote, descriptor, notes);
-            this.draw_selection_bubble(descriptor)
+
+            if(this.cursor.selectionMode){
+                this.draw_selection_bubble(descriptor)
+            }else{
+                this._cursor_rendered(cursorNote, descriptor, notes);
+            }
+
+            
+            
 
             // Move this logic somewhere else
             // Nastavi lastnost cursor.in_tuplet
@@ -597,6 +584,21 @@ export default {
 
         },
 
+        retrieveXCoords(ctx){
+
+            /// THIS FREAKING WORKS EVERYWHERE!!! 💪💪💪💪💪
+            ctx.x_coords = [];
+            ctx.render_widths = [];
+            
+            if(!ctx.rendered) return;
+
+            ctx.rendered.forEach(note => {
+                ctx.x_coords.push(Math.round(note.getAbsoluteX() * 2));
+                ctx.render_widths.push(note.width);
+            });
+
+        },
+
         render(notes, cursor) {
             for(var key in this.CTX){
 
@@ -616,22 +618,58 @@ export default {
             }
         },
 
-        draw_selection_bubble(descriptor){
+        draw_selection_bubble(ctx){
 
             if(!this.cursor.selection){
                 return;
             }
 
-            // RENDER CURSOR BAR
-            descriptor.context.rect(
-                150, 
-                0, 
-                100, 
-                this.info.barHeight, {
-                class: this.info.cursor.cursorBarClass,
-                fill: "yellow",
-                opacity: 0.5
-            });
+            debugger;
+            let fromX = ctx.x_coords[this.cursor.selection.from] / 2;
+            let toX = ctx.x_coords[this.cursor.selection.to] / 2;
+            let width = toX - fromX + ctx.render_widths[ctx.render_widths.length - 1];
+
+            let bodyColor = "blue";
+            let baseColor = "red";
+            let leftColor = bodyColor, rightColor = bodyColor;
+            if(this.cursor.selection.base > this.cursor.selection.from){
+                leftColor = baseColor; 
+            }
+            else{ rightColor = baseColor; }
+
+            let handlesWidth = 3;
+            let offset = 10;
+            let heightOffset = 10;
+
+            // RENDER SELECTION BUBBLE
+            ctx.context.rect(
+                fromX - offset,  heightOffset, 
+                width + 2 * offset,  this.info.barHeight - heightOffset, 
+                {
+                    class: "notesSelection_body",
+                    fill: bodyColor, opacity: 0.4
+                }
+            );
+
+            // RENDER LEFT HANDLE
+            ctx.context.rect(
+                fromX - offset,  heightOffset, 
+                handlesWidth,  this.info.barHeight - heightOffset, 
+                {
+                    class: "notesSelection_left_handle",
+                    fill: leftColor, opacity: 0.4
+                }
+            );
+
+            // RENDER RIGHT HANDLE
+            ctx.context.rect(
+                fromX + width + offset - handlesWidth,  heightOffset, 
+                handlesWidth,  this.info.barHeight - heightOffset, 
+                {
+                    class: "notesSelection_right_handle",
+                    fill: rightColor, opacity: 0.4
+                }
+            );
 
 
         },
@@ -704,8 +742,6 @@ export default {
         window.onorientationchange = function(event) {
             vue.viewportResized();
         }
-
-        
 
     },
 

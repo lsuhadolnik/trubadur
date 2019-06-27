@@ -152,6 +152,26 @@ var RhythmRenderUtilities = function(){
 
     };
 
+    this._min_dist = function(x_coords, x){
+
+        let minIndex = 999;
+        let minDiff  = 99999;
+        let poss = x_coords;
+        for(let i = 0; i < poss.length; i++){
+            if(Math.abs(poss[i] - x) < minDiff){
+                minDiff = Math.abs(poss[i] - x);
+                minIndex = i;
+            }
+        }
+
+        if(minDiff < 50){
+            return {idx:minIndex, xpos: x_coords[minIndex], userx:x};
+        }
+
+        return {idx: -1, userx: x};
+
+    }
+
 }
 
 export default RhythmRenderUtilities;
