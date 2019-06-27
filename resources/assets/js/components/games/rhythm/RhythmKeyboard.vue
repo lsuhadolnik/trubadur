@@ -28,7 +28,7 @@
                             <div class="td-flag3">&#x006A;</div>
                         </div>
                     </sexy-button>
-                    <sexy-button v-else :color="note_color()" @click.native="tuplet()"><TupletSign num="X" :bg="note_color()" /></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet()"><TupletSign num="?" :bg="note_color()" /></sexy-button>
 
                 <!--</div>-->
                 
@@ -54,9 +54,16 @@
             </div>
             <div class="row rhythm-game__keyboard-row row-2 norfolk-row">
                 
-                <div v-bind:class="{ half_transparent: cursor.selectionMode }">
+                
 
-                    <sexy-button :color="rest_color()" @click.native="rest(2)" >&#x00D3;</sexy-button>
+                <sexy-button v-if="!cursor.selectionMode" :color="rest_color()" @click.native="rest(2)" >&#x00D3;</sexy-button>
+                <sexy-button v-else :color="rest_color()" @click.native="remove_tuplets()" >
+                    <span class="musisync">T</span>
+                    <icon name="ban" scale="2" class="alert"></icon>
+                </sexy-button>
+                
+                <div v-bind:class="{ half_transparent: cursor.selectionMode }" style="display: inline-block;">
+                
                     <sexy-button :color="rest_color()" @click.native="rest(4)" >&#x0152;</sexy-button>
                     <sexy-button :color="rest_color()" @click.native="rest(8)" >&#x2030;</sexy-button>
                     <sexy-button :color="rest_color()" @click.native="rest(16)">&#x2248;</sexy-button>
@@ -104,11 +111,11 @@
                 <sexy-button :color="select_button_color" @click.native="selection()" >
                     <icon name="i-cursor" />
                 </sexy-button>
-                <div v-if="cursor.selection">
+                <!--<div v-if="cursor.selection">
                 Base: {{cursor.selection.base}}
                 From: {{cursor.selection.from}}
                 To: {{cursor.selection.to}}
-                </div>
+                </div>-->
 
             </div>
             <div class="row rhythm-game__keyboard-row row-4 show-normal">
@@ -186,12 +193,12 @@
         font-size: 40px;
     }
 
-    .norfolk-row .button {
+    .norfolk-row .button, .norfolk {
         font-family: Norfolk;
         font-size: 33px;
     }
 
-    .musisync-row .button {
+    .musisync-row .button, .musisync {
         font-family: MusiSync;
         font-size: 33px;
     }
@@ -303,6 +310,7 @@ import 'vue-awesome/icons/check'
 import 'vue-awesome/icons/angle-double-right'
 import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/i-cursor'
+import 'vue-awesome/icons/ban'
 
 var Fraction = require('fraction.js');
 
@@ -393,8 +401,16 @@ export default {
 
             this.key_callback({
                 type: 'tuplet',
-                tuplet_num: num
+                tuplet_type: num
             });
+
+        },
+
+        remove_tuplets(){
+
+            this.key_callback({
+                type: 'remove_tuplets'
+            })
 
         },
 

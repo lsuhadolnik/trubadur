@@ -488,10 +488,10 @@ export default {
 
                 if(thisNote.tuplet_end){
 
-                    let tuplet_type = util.sumTupletLength(notes, firstTupletNoteIdx, i + 1);
+                    let tuplet_type = thisNote.tuplet_type;
 
                     tuplets.push(new Vex.Flow.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
-                        bracketed: true, rationed: false, num_notes: tuplet_type
+                        bracketed: true, ratioed: false, num_notes: tuplet_type, notes_occupied: tuplet_type
                     }));
                     firstTupletNoteIdx = -1;
                 }
@@ -624,7 +624,6 @@ export default {
                 return;
             }
 
-            debugger;
             let fromX = ctx.x_coords[this.cursor.selection.from] / 2;
             let toX = ctx.x_coords[this.cursor.selection.to] / 2;
             let width = toX - fromX + ctx.render_widths[ctx.render_widths.length - 1];

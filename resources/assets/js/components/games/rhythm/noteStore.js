@@ -11,8 +11,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
     this.supportedRests   = [4, 8, 12, 16, 32];
 
 
-
-
     this.bar = bar;
     this.cursor = cursor;
     this.notes = [];
@@ -48,15 +46,8 @@ var NoteStore = function(bar, cursor, render_function, info) {
             return;
         }
 
-
         if(event.type == 'n' || event.type == 'r' || event.type == 'bar')
-        {   // This is a note
-
-            /*if(this._sum_durations() > 2){
-                alert("Trenutno je možno dodati največ dva takta");
-                return;
-            }*/
-
+        {   
             this.add_note(event);
         } 
         else if(event.type == 'dot')
@@ -68,22 +59,31 @@ var NoteStore = function(bar, cursor, render_function, info) {
             this.add_tie();
         }
         else if(event.type == 'delete')
-        {   // Delete (backspace)
+        {   
             this.delete_note();
         }
         else if(event.type == '>')
         {
             this._move_cursor_forward();
-            this._call_render();
         }
         else if(event.type == '<')
         {
             this._move_cursor_backwards();
-            this._call_render();
         }
-        else if(event.type == 'tuplet'){
-            this.enable_tuplet_editing(event);
+        else if(event.type == 'tuplet')
+        {
+            // this.enable_tuplet_editing(event);
+            this.tupletCreation_applyTupletToSelection(event);
+            this.cursor.clearSelection();
         }
+
+        else if(event.type == "remove_tuplets") 
+        {
+            this.tupletEditing_removeInSelection();
+            this.cursor.clearSelection();
+        }
+
+        this._call_render();
 
     }
 
@@ -96,6 +96,156 @@ var NoteStore = function(bar, cursor, render_function, info) {
         this.currentTupletInfo = this.getClearTupletInfo();
         
         this._call_render();
+
+    }
+
+    this.tupletEditing_removeInSelection = function(){
+
+        let sel = this.cursor.selection;
+
+        // If in the middle of a tuplet; Delete it...
+        this.clearTupletBackwards(sel.from);
+        this.clearTupletForwards(sel.to);
+
+        for (let i = sel.from; i < sel.to + 1 && i < this.notes.length; i++) {
+            const note = this.notes[i];
+            this.clearTupletNote(note);
+        }
+
+    }
+
+    this.selectionFunctions_iterate = function(f){
+
+        if(!f || typeof f !== "function") return;
+
+        let sel = this.cursor.selection;
+        for(let i = sel.from; i < sel.to + 1 && i < this.notes.length; i++){
+            const note = this.notes[i];
+            let res = f(note);
+            if(typeof res !== "undefined"){
+                // If the function returns something, break out of it
+                return res;
+            }
+        }
+
+        return false;
+
+    }
+
+    this.selectionFunctions_checkIfCrossBar = function(){
+
+        return this.selectionFunctions_iterate(note => {
+            if(note.type == "bar") return true;
+        });
+
+    }
+
+    this.selectionFunctions_delete = function(){
+
+        let sel = this.cursor.selection;
+        this.tupletEditing_removeInSelection();
+        this.notes.splice(sel.from, sel.to - sel.from + 1);
+
+        this.selectionFunctions_moveCursorLeftToSelection();
+        this.cursor.clearSelection();
+
+    }
+
+    this.selectionFunctions_moveCursorLeftToSelection = function() {
+
+        let sel = this.cursor.selection;
+
+        //
+        //  Move cursor
+        //
+        let pos = this.cursor.position;
+        let dif = 0;
+        // Inside
+        if(pos <= sel.to && pos >= sel.from){
+
+            // Move left for sel.from - pos (right the opposite)
+            dif = pos - sel.from;
+        }
+        // Selection if before the cursor
+        else if(pos > sel.to){
+            // Move left for selection length
+            dif = -(sel.to - sel.from + 1);
+        }
+        // Selection if after the cursor
+        else if (pos < sel.from){
+            // Stay where you are.
+        }
+        this.cursor.position += dif;
+
+    }
+
+    this.tupletCreation_applyTupletToSelection = function(event){
+
+        if(this.selectionFunctions_checkIfCrossBar()){
+            alert("Ne morem narediti triole čez takt.");
+            return;
+        }
+
+        if(!event.tuplet_type){
+            event.tuplet_type = parseInt(prompt("Vnesi vrednost triole"));
+            if(!event.tuplet_type){ return; }
+        }
+
+        this.tupletEditing_removeInSelection();
+
+        let sel = this.cursor.selection;
+
+        this.selectionFunctions_iterate(note => {
+            
+            note.in_tuplet = true;
+        });
+
+        this.notes[sel.to].tuplet_end = true;
+        this.notes[sel.to].tuplet_type = event.tuplet_type;
+
+    }
+
+    this.clearTupletNote = function(note){
+        delete note.in_tuplet;
+        delete note.tuplet_end;
+        delete note.tuplet_type;
+    }
+
+    this.clearTupletForwards = function(idx){
+
+        if(!this.notes[idx].in_tuplet) return;
+
+        for (let i = idx; i < this.notes.length; i++) {
+            const note = this.notes[i];
+            
+            if(note.tuplet_end){
+                this.clearTupletNote(note);
+                return;
+
+            }else if(note.in_tuplet){
+                this.clearTupletNote(note);
+            }
+
+        }
+
+    }
+
+    this.clearTupletBackwards = function(idx){
+
+        if(!this.notes[idx].in_tuplet) return;
+
+        for (let i = idx; i >= 0; i--) {
+            const note = this.notes[i];
+            
+            if(note.tuplet_end){
+                this.clearTupletNote(note);
+                return;
+
+            }else if(note.in_tuplet){
+                this.clearTupletNote(note);
+            }
+
+        }
 
     }
 
@@ -130,9 +280,11 @@ var NoteStore = function(bar, cursor, render_function, info) {
         }
         else if(event.type == "n" || event.type == "r"){
             this.tupleEditing_handleNote(event);
+            this._call_render();
         }
         else if(event.type == "delete"){
             this.tupletEditing_handleDelete(event);
+            this._call_render();
         }
         else {
             alert("This tuplet edit mode feature is not yet implemented");
@@ -164,7 +316,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
             this.deletePreviousNote();
 
             this._move_cursor_backwards();
-            this._call_render();
 
         }
         // else return; (1)
@@ -229,7 +380,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
         }
 
         this._move_cursor_forward();
-        this._call_render();
 
 
     }
@@ -343,8 +493,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
         this.notes[n].tie = !this.notes[n].tie;
         
-        this._call_render();
-        
     }
 
     this.add_dot = function() {
@@ -371,8 +519,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
             note.duration = note.duration.mul(1.5);
             note.dot = true;    
         }
-        
-        this._call_render();
+    
 
     }
 
@@ -418,9 +565,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
         // Odstranjuj, dokler traja ta triola ali ne trčiš ob drugo triolo
         while(i >= 0 && !this.notes[i].tuplet_end && this.notes[i].in_tuplet)
 
-
-        // And render the result
-        this._call_render()
 
     },
 
@@ -500,10 +644,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
         this.notes.splice(n, 0, ...k);
         this.cursor.position = n;
 
-        this._call_render();
-
     }
-
 
     this._is_supported_length = function(event){
 
@@ -585,9 +726,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
         
         // Move cursor forward
         this._move_cursor_forward();
-
-        // And render the result
-        this._call_render()
     },
 
     this.overwrite_next = function(event){
@@ -647,8 +785,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
         }
 
-        
-        this._call_render();
+    
 
     },
 
@@ -664,6 +801,11 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     this.delete_note = function() {
         
+        if(this.cursor.selectionMode){
+            this.selectionFunctions_delete();
+            return;
+        }
+
         // If I'm are at the beginning, I can't delete anything else
         if(this.cursor.position == 0)
         {
@@ -693,9 +835,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
         this.notes.splice(this.cursor.position, 1);
 
         this.remove_all_overwrites();
-        
-        // And render the result
-        this._call_render()
 
     }
 
