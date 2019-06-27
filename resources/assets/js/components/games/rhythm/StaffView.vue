@@ -135,9 +135,8 @@ export default {
 
             let closest = this._get_closest_note(Xoffset);
             if(closest.idx >= 0){
-                this.cursor.position = closest.idx + 1;
-
-                this._handle_second_selection_tap(closest.idx);
+                
+                this.cursor_moved(closest.idx);
 
                 this._save_scroll();
                 this.$parent.notes._call_render()
@@ -274,6 +273,25 @@ export default {
             let sDoSomeMath = (touchX / screenWidth) * contentWidth - screenWidth / 2;
 
             this.scrolled(sDoSomeMath);
+
+        },
+
+        cursor_moved(pos, from){
+
+            this.cursor.position = pos + 1;
+
+            this._handle_second_selection_tap(pos);
+
+        },
+
+        _handle_tuplet_editing_mode_change(pos){
+
+            let note = this.$parent.notes.currentNote();
+            if(note.in_tuplet){
+                this.$parent.notes.enable_tuplet_editing();
+            }else{
+                this.cursor.editing_tuplet = false;
+            }
 
         },
 

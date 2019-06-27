@@ -76020,9 +76020,8 @@ var Tuplet = VF.Tuplet;
 
             var closest = this._get_closest_note(Xoffset);
             if (closest.idx >= 0) {
-                this.cursor.position = closest.idx + 1;
 
-                this._handle_second_selection_tap(closest.idx);
+                this.cursor_moved(closest.idx);
 
                 this._save_scroll();
                 this.$parent.notes._call_render();
@@ -76152,6 +76151,21 @@ var Tuplet = VF.Tuplet;
             var sDoSomeMath = touchX / screenWidth * contentWidth - screenWidth / 2;
 
             this.scrolled(sDoSomeMath);
+        },
+        cursor_moved: function cursor_moved(pos, from) {
+
+            this.cursor.position = pos + 1;
+
+            this._handle_second_selection_tap(pos);
+        },
+        _handle_tuplet_editing_mode_change: function _handle_tuplet_editing_mode_change(pos) {
+
+            var note = this.$parent.notes.currentNote();
+            if (note.in_tuplet) {
+                this.$parent.notes.enable_tuplet_editing();
+            } else {
+                this.cursor.editing_tuplet = false;
+            }
         },
 
 
@@ -79073,7 +79087,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _vm.moving_buttons
+              _vm.moving_buttons || _vm.cursor.in_tuplet
                 ? _c("sexy-button", {
                     attrs: {
                       text: "<",
@@ -79126,7 +79140,7 @@ var render = function() {
                     }
                   }),
               _vm._v(" "),
-              _vm.moving_buttons
+              _vm.moving_buttons || _vm.cursor.in_tuplet
                 ? _c("sexy-button", {
                     attrs: {
                       text: ">",
@@ -79380,17 +79394,19 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     };
 
     this.tupletEditing_removeInSelection = function () {
+        var _this = this;
 
         var sel = this.cursor.selection;
+
+        debugger;
 
         // If in the middle of a tuplet; Delete it...
         this.clearTupletBackwards(sel.from);
         this.clearTupletForwards(sel.to);
 
-        for (var i = sel.from; i < sel.to + 1 && i < this.notes.length; i++) {
-            var note = this.notes[i];
-            this.clearTupletNote(note);
-        }
+        this.selectionFunctions_iterate(function (note) {
+            _this.clearTupletNote(note);
+        });
     };
 
     this.selectionFunctions_iterate = function (f) {
@@ -79511,7 +79527,6 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
             var note = this.notes[i];
 
             if (note.tuplet_end) {
-                this.clearTupletNote(note);
                 return;
             } else if (note.in_tuplet) {
                 this.clearTupletNote(note);
@@ -79919,15 +79934,9 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     this.add_note = function (event) {
 
         var i = this.cursor.position;
-        if (i >= 0 && i < this.notes.length && this.notes[i].overwrite && event.type != "bar") {
-            this.overwrite_next(event);
-            return;
-        }
-
-        this.remove_all_overwrites();
 
         // Check if in tuplet
-        if (i >= 0 && i < this.notes.length && this.notes[i].in_tuplet && this.notes[i - 1].in_tuplet && !this.notes[i - 1].tuplet_end) {
+        if (this.inTheMiddleOfATuplet()) {
             alert("CANNOT! " + i);
             return;
         }
@@ -79942,54 +79951,6 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         // Move cursor forward
         this._move_cursor_forward();
-    }, this.overwrite_next = function (event) {
-
-        //debugger;
-        var i = this.cursor.position;
-        var overwriteNote = this.notes[i];
-        var oldDur = parseInt(overwriteNote.symbol);
-
-        // I can only fit an equal or smaller event here
-        var newDur = parseInt(event.symbol);
-        if (oldDur > newDur) {
-            return;
-            // Cannot fit bigger events here.
-        }
-
-        //
-
-        if (oldDur == newDur) {
-            // Prepiši prvo noto v vseh primerih
-            delete overwriteNote.overwrite;
-            overwriteNote.symbol = event.symbol;
-            overwriteNote.type = event.type;
-            this.cursor.position = i + 1;
-
-            // Je že vse narjeno
-        } else {
-
-            // Poglej, kolikokrat je manjša enota
-            /*let times = Math.floor(newDur / oldDur) - 1;
-              // Dodaj toliko - 1 pavzo
-            for(let a = 0; a < times; a++){
-                let copy = _.clone(overwriteNote);
-                copy.symbol = parseInt(overwriteNote.symbol) + "r";
-                copy.type = "r";
-                copy.overwrite = true;
-                  // Tole je slabo. Izboljšaj
-                if(overwriteNote.tuplet_end && a+1 == times){
-                  }else{
-                    delete copy.tuplet_end;
-                }
-                
-                  this.notes.splice(i + 1 + a, 0, copy);
-            }
-            
-            // Pavze so kopije osnovnih objektov
-            // Odstrani tuplet_from in tuplet_to iz pavz
-            */
-            alert("To pa še ne deluje.");
-        }
     }, this._sum_durations = function () {
 
         var sum = new Fraction();
@@ -80030,16 +79991,6 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         // Delete this note
         this.notes.splice(this.cursor.position, 1);
-
-        this.remove_all_overwrites();
-    };
-
-    this.remove_all_overwrites = function () {
-        for (var i = 0; i < this.notes.length; i++) {
-            if (this.notes[i].overwrite) {
-                delete this.notes[i].overwrite;
-            }
-        }
     };
 
     this._move_cursor_forward = function () {

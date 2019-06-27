@@ -103,14 +103,15 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
         let sel = this.cursor.selection;
 
+        debugger;
+
         // If in the middle of a tuplet; Delete it...
         this.clearTupletBackwards(sel.from);
         this.clearTupletForwards(sel.to);
 
-        for (let i = sel.from; i < sel.to + 1 && i < this.notes.length; i++) {
-            const note = this.notes[i];
+        this.selectionFunctions_iterate((note) => {
             this.clearTupletNote(note);
-        }
+        });
 
     }
 
@@ -238,7 +239,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
             const note = this.notes[i];
             
             if(note.tuplet_end){
-                this.clearTupletNote(note);
                 return;
 
             }else if(note.in_tuplet){
@@ -700,18 +700,9 @@ var NoteStore = function(bar, cursor, render_function, info) {
     this.add_note = function(event) {
         
         let i = this.cursor.position;
-        if(i >= 0 && i < this.notes.length && this.notes[i].overwrite && event.type != "bar"){
-            this.overwrite_next(event);
-            return;
-        }
-
-        this.remove_all_overwrites();
 
         // Check if in tuplet
-        if(i >= 0 && i < this.notes.length 
-            && this.notes[i].in_tuplet
-            && this.notes[i - 1].in_tuplet
-            && !this.notes[i - 1].tuplet_end){
+        if(this.inTheMiddleOfATuplet()){
             alert("CANNOT! "+i);
             return;
         }
@@ -726,65 +717,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
         
         // Move cursor forward
         this._move_cursor_forward();
-    },
-
-    this.overwrite_next = function(event){
-
-        //debugger;
-        let i = this.cursor.position;
-        let overwriteNote = this.notes[i];
-        let oldDur = parseInt(overwriteNote.symbol);
-
-        // I can only fit an equal or smaller event here
-        let newDur = parseInt(event.symbol);
-        if(oldDur > newDur){
-            return;
-            // Cannot fit bigger events here.
-        }
-
-        
-        //
-
-        if(oldDur == newDur){
-            // Prepiši prvo noto v vseh primerih
-            delete overwriteNote.overwrite;
-            overwriteNote.symbol = event.symbol;
-            overwriteNote.type = event.type;
-            this.cursor.position = i + 1;
-            
-            // Je že vse narjeno
-
-        }else {
-
-            // Poglej, kolikokrat je manjša enota
-            /*let times = Math.floor(newDur / oldDur) - 1;
-
-            // Dodaj toliko - 1 pavzo
-            for(let a = 0; a < times; a++){
-                let copy = _.clone(overwriteNote);
-                copy.symbol = parseInt(overwriteNote.symbol) + "r";
-                copy.type = "r";
-                copy.overwrite = true;
-
-                // Tole je slabo. Izboljšaj
-                if(overwriteNote.tuplet_end && a+1 == times){
-
-                }else{
-                    delete copy.tuplet_end;
-                }
-                
-
-                this.notes.splice(i + 1 + a, 0, copy);
-            }
-            
-            // Pavze so kopije osnovnih objektov
-            // Odstrani tuplet_from in tuplet_to iz pavz
-            */
-            alert("To pa še ne deluje.");
-
-
-        }
-
     
 
     },
@@ -834,16 +766,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
         // Delete this note
         this.notes.splice(this.cursor.position, 1);
 
-        this.remove_all_overwrites();
-
-    }
-
-    this.remove_all_overwrites = function() {
-        for(let i = 0; i < this.notes.length; i++){
-            if(this.notes[i].overwrite){
-                delete this.notes[i].overwrite;
-            }
-        }
     }
 
     this._move_cursor_forward = function(){

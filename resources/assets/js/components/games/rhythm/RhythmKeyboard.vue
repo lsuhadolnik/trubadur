@@ -94,7 +94,7 @@
                     <sexy-button :hidden="cursor.in_tuplet" text="\" color="green" @click.native="add_bar()" />
                 
                     <!-- MOVE LEFT OR DOT -->
-                    <sexy-button v-if="moving_buttons" text="<" color="orange" @click.native="move_cursor_backwards" customClass="moveButtonsButton" />
+                    <sexy-button v-if="moving_buttons || cursor.in_tuplet" text="<" color="orange" @click.native="move_cursor_backwards" customClass="moveButtonsButton" />
                     <sexy-button v-else :hidden="cursor.in_tuplet" text="." color="green" @click.native="dot()" />
                     
                     <!-- MOVE SWITCH -->
@@ -102,7 +102,7 @@
                     <sexy-button v-else :hidden="cursor.in_tuplet" text="< >"  color="orange" @click.native="moving_buttons = !moving_buttons" customClass="moveButtonsButton" />
                     
                     <!-- MOVE RIGHT OR TIE -->
-                    <sexy-button v-if="moving_buttons" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
+                    <sexy-button v-if="moving_buttons || cursor.in_tuplet" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
                     <sexy-button v-else text="u" color="green" @click.native="tie()" />
 
                 </div>
