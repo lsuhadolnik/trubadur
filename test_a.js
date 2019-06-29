@@ -1,0 +1,3 @@
+let notes = [{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4,"tie":true},{"type":"n","value":4},{"type":"n","value":4,"tie":true},{"type":"n","value":16},{"type":"n","value":16},{"type":"n","value":4},{"type":"n","value":4,"tie":true},{"type":"n","value":4,"tie":true},{"type":"n","value":4,"tie":true}];
+let util = require('./resources/assets/js/components/games/rhythm/rhythmUtilities')
+console.log(util.generate_playback_durations(notes))

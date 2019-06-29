@@ -1,114 +1,143 @@
 //
 // REFACTOR ASAP!!!! 
 // 
-
+const Fraction = require('fraction.js');
 
 var utilities = {
 
-    generate_playback_durations: function(values, get_val){
+    _step_durations_from_notes: function(notes){
+
+        return notes.map(note => {
+            if(note.type == "r")
+                return new Fraction(-1, note.value);
+
+            else if(note.type == "n")
+                return new Fraction(1, note.value);
+
+            else // bar
+                return new Fraction(0);
+        });
+
+    },
+
+    _step_dots: function(notes, values){
+
+        return values.map((v, i) => {
+
+            if(notes[i].dot)
+                return v.mul(1.5);
+            
+            return v;
+        });
+
+    },
+
+    _getThisTupletType: function(notes, idx){
+        for(let i = idx; i < notes.length; i++){
+            let note = notes[i];
+            if(note.tuplet_end)
+                return note.tuplet_type;
+            
+        }
+
+        alert("Nekaj je narobe, nisem našel zaključka triole. Ne morem ugotoviti trajanja.")
+        throw "[rhythmUtilities] tuplet_end missing.";
+    },
+
+    _step_tuplets(notes, values){
+
+
+        let current_tuplet_type = -1;
+        return values.map((v,i) => {
+
+            let nV = v;
+
+            if(notes[i].in_tuplet){
+
+                if(current_tuplet_type == -1){
+                    current_tuplet_type = this._getThisTupletType(notes, i);
+                }
+
+                nV = nV.div(current_tuplet_type);
+
+            }
+            else {
+                current_tuplet_type = -1;
+            }
+
+            if(notes[i].tuplet_end){
+                current_tuplet_type = -1;
+            }
+
+            return nV;
+
+        });
+
+    },
+
+    _step_ties(notes, values){
+
+        let newValues = [];
+
+        let currentDuration = new Fraction(0), 
+            previousType = "bar";
+
+        for(let i = 0; i < notes.length; i++){
+            const note = notes[i], 
+                 value = values[i];
+
+            if(note.type == "bar") continue;
+
+            if(previousType == "bar"){
+                previousType = note.type;
+                currentDuration = currentDuration.add(value);
+                continue;
+            }
+
+            if(note.type != previousType || !note.tie){
+                newValues.push(currentDuration);
+                currentDuration = new Fraction(0);
+            }
+
+            // Add to currentDuration
+            currentDuration = currentDuration.add(value);
+            
+            previousType = note.type;
+
+        }
+
+        if(currentDuration.abs() != new Fraction(0)){
+            newValues.push(currentDuration);
+        }
+
+        return newValues;
+
+    },
+
+
+    generate_playback_durations: function(notes){
 
         // Negativna trajanja pomenijo pavze
         // Kaj pa če so triole?
         // Potem trajanje vsake note ustrezno deli
 
-        let nextHasTie = function(position){
-            return values.length > position + 1 
-            && values[position + 1].tie;
-        }
-        let nextIsRest = function(position){
-            return values.length > position + 1 
-            && values[position + 1].type == 'r';
-        }
-        let sumTiedDurations = function(cursorPosition, values){
-            
-            let duration = values[cursorPosition].duration;
-            let numTies = 0;
-            let pos = cursorPosition;
-            
-            while(nextHasTie(pos) && !nextIsRest(pos)){
-                duration = duration.add(values[pos + 1].duration);
-                numTies++; pos ++;
-            }
-            return {duration: duration, skips: numTies};
+        // FILTER PATTERN
+        // at the end, the function must return durations in fractions, 
+        // so there is no need for keeping the notes in sync
+        // 
+        // _step_durations_from_notes ->
+        // _step_dots ->
+        // _step_tuplets ->
+        // _step_ties
 
-        }
+        let v = [];
+        v = this._step_durations_from_notes(notes);
+        v = this._step_dots(notes, v);
+        v = this._step_tuplets(notes, v);
+        v = this._step_ties(notes, v); 
+        // From here, notes and durations are not in sync anymore
 
-        let getThisTupletType = function(values, idx){
-            for(let i = idx; i < values.length; i++){
-                let note = values[i];
-                if(note.tuplet_end){
-                    return note.tuplet_type;
-                }
-            }
-            return -1;
-        }
-
-        let getDividedDurations = function(values){
-
-            debugger;
-            let current_tuplet_type = -1;
-            let new_values = [];
-            for(let i = 0; i < values.length; i++){
-                if(values[i].in_tuplet){
-
-                    if(current_tuplet_type == -1){
-                        current_tuplet_type = getThisTupletType(values, i);
-                        if(current_tuplet_type == -1){
-                            alert("Nekaj je narobe, nisem našel zaključka triole. Ne morem ugotoviti trajanja.");
-                            return null;
-                        }
-                    }
-
-                    let nV = _.cloneDeep(values[i]);
-                    nV.duration = nV.duration.div(current_tuplet_type);
-                    if(nV.tuplet_end){
-                        current_tuplet_type = -1;
-                    }
-                    new_values.push(nV);
-                }
-                else {
-                    current_tuplet_type = -1;
-                    new_values.push(values[i]);
-                }
-            }
-            return new_values;
-
-        }
-
-        let realDurations = [];
-
-        let notes = getDividedDurations(values);
-
-        let skipN = 0;
-        for(var noteIndex = 0; noteIndex < notes.length; noteIndex++){
-            
-            if(skipN > 0){ skipN --; continue; }
-
-            let note = notes[noteIndex];
-
-            if(note.type != "r")
-            {
-                let vals = sumTiedDurations(noteIndex, notes);   
-                skipN = vals.skips;
-                
-                if(!get_val)
-                    realDurations.push(vals.duration);
-                else
-                    realDurations.push(vals.duration.toFraction());
-
-            }else {
-
-                if(!get_val)
-                    realDurations.push(note.duration.mul(-1));
-                else
-                    realDurations.push(note.duration.mul(-1).toFraction());
-            }
-        }
-
-        console.log("REAL DURATIONS:");
-        console.log(realDurations);
-
-        return realDurations;
+        return v;
 
     },
 
@@ -125,14 +154,8 @@ var utilities = {
 
     },
 
-    generate_countin_durations: function(bar_info){
-
-
-
-    },
-
     getNoteType: function(note){
-        return parseInt(note.symbol);
+        return note.value;
     },
 
     sumTupletLength: function(notes, from, to) {

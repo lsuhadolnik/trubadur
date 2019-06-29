@@ -117,8 +117,7 @@ export default {
 
         },
 
-        // Move ASAP
-        _render_context(descriptor, notes, bar){
+       _render_context(descriptor, notes, bar){
 
 
 
@@ -136,8 +135,6 @@ export default {
                 );
             }
 
-            
-
             // element from CTX object
             // We created the context in mounted()
             let context = descriptor.context;
@@ -154,6 +151,7 @@ export default {
             var ties = [];
             var tuplets = [];
             var renderQueue = [];
+            descriptor.rendered = [];
 
             let allStaveNotes = [];
 
@@ -177,15 +175,19 @@ export default {
                 if(!thisNote) { continue; }
 
                 // Handle notes and rests
-                let newNote = new VF.StaveNote(
+                let symbol = thisNote.value + "";;
+                if(thisNote.type == "r")
+                    symbol += "r";
+
+                let newNote = new StaveNote(
                     {
                         clef: "treble", 
                         keys: ["g/4"], 
-                        duration: thisNote.symbol
+                        duration: symbol
                     }
                 );
 
-                switch (parseInt(thisNote.symbol)) {
+                switch (thisNote.value) {
                     case 1:  currentBatchWidth += 100; break;
                     case 2:  currentBatchWidth += 70;  break;
                     case 4:  currentBatchWidth += 40;  break;
@@ -208,11 +210,15 @@ export default {
                 if(thisNote.dot){
                     newNote.addDot(0); // enako je tudi newNote.addDotToAll()
                 }
+            
 
                 allStaveNotes.push(newNote);
                 
-                if(thisNote.type != "bar")
+                if(thisNote.type != "bar"){
                     renderQueue.push(newNote);
+                    descriptor.rendered.push(newNote);
+                }
+                    
 
                 if(thisNote.type == "bar"){
                     newNote.setStyle({fillStyle: "transparent", strokeStyle: "transparent"});
@@ -241,11 +247,15 @@ export default {
                 }
 
                 if(thisNote.tuplet_end){
+
+                    let tuplet_type = thisNote.tuplet_type;
+
                     tuplets.push(new Vex.Flow.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
-                        bracketed: true, rationed: false, num_notes: thisNote.tuplet_type
+                        bracketed: true, ratioed: false, num_notes: tuplet_type, notes_occupied: tuplet_type
                     }));
                     firstTupletNoteIdx = -1;
                 }
+
 
                /* the new manual bar logic */
                if(notes[i].type == "bar"){
@@ -258,28 +268,24 @@ export default {
 
             }
 
-            // If there are still some notes left 
-            // Happens if the bar is incomplete
-            // sum(durations) != 1
-            // Not only if less than 1 (incomplete bar)
-            // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
             if(renderQueue.length > 0){
                 // Draw the rest
-                //this._vex_draw_voice(context, staves[staveIndex], renderQueue);
                 batches.push({notes:renderQueue, width:currentBatchWidth});
             }
 
-            let RU = new RhythmRenderUtilities();
+            // Finally render everything
             RU._vex_render_batches(context, batches, [ties, tuplets], {
                 bar: bar,
                 barOffsetY: this.info.barOffsetY,
-                width: this.width
+                width: this.info.width
             });
+
+            // set CTX.zoomview.x_coords property
+            this.retrieveXCoords(descriptor);
 
 
         },
 
-        
 
         render(exerciseNotes, userNotes, bar) {
             

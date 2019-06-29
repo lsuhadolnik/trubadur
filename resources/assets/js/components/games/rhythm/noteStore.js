@@ -20,7 +20,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
     // }
 
 
-    // The supported note durations.
+    // The supported note values.
     // Currently supports up to a sixteenth note with a dot.
     this.supportedLengths = [1, 2, 4, 8, 16, 32];
     this.supportedRests   = [4, 8, 12, 16, 32];
@@ -63,7 +63,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
         if(event.type == 'n' || event.type == 'r' || event.type == 'bar')
         {   
-            this.add_note(event);
+            this.handle_add_note_button(event);
         } 
         else if(event.type == 'dot')
         {
@@ -277,16 +277,14 @@ var NoteStore = function(bar, cursor, render_function, info) {
          * (n:t1), (n:t2)
          * {
          *      type: "n",
-         *      duration: new Fraction(1, duration / tupletType),
-         *      symbol: "4",
+         *      value: 4,
          *      in_tuplet: true
          * }
          * 
          * (n:t3)
          * {
          *      type: "n",
-         *      duration: new Fraction(1, duration / tupletType),
-         *      symbol: "4",
+         *      value: 4
          *      in_tuplet: true,
          *      tuplet_end: true
          * }
@@ -420,7 +418,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
         
         // set currentTupletType
         this.currentTupletInfo.length = 1;
-        this.currentTupletInfo.type = event.duration.d;
+        this.currentTupletInfo.type = event.value;
         // add tuplet note   
 
         event.in_tuplet = true;
@@ -515,28 +513,18 @@ var NoteStore = function(bar, cursor, render_function, info) {
     this.add_dot = function() {
 
         let n = this.cursor.position - 1;
+        let note = this.notes[n];
 
         // Don't do anything if this is the first note...
         if(n < 0) {
             return;
         }
 
-        if(this.notes[n].type == "bar"){
+        if(note.type == "bar"){
             return;
         }
 
-        let note = this.notes[n];
-        if(note.dot)
-        {
-            note.duration = note.duration.div(1.5);
-            note.dot = false; 
-        } 
-        else 
-        {
-            note.duration = note.duration.mul(1.5);
-            note.dot = true;    
-        }
-    
+        note.dot = !note.dot;
 
     }
 
@@ -573,8 +561,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
             }
 
             delete note.in_tuplet;
-            note.duration = note.duration.mul(note.tuplet_type);
-
             delete note.tuplet_type;
             
             i--;
@@ -585,96 +571,14 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     },
 
-    this.clear_other_tuplet_snap_notes = function(pos){
-        for(var i = 0; i < this.notes.length; i++){
-            if(i != pos && this.notes[i].was_tuplet_end){
-                delete this.notes[i].style;
-                delete this.notes[i].was_tuplet_end;
-            }
-        }
-    }
-
-    this.check_if_there_were_any_tuplets_before = function(current_idx, max_dist){
-
-        var potentialTupletEnd = -99999999;
-        var potentialDist = Math.abs(potentialTupletEnd - current_idx) 
-
-        for(var i = 0; i < this.notes.length; i++){
-
-            var thisDist = Math.abs(i - current_idx)
-
-            if(this.notes[i].was_tuplet_end && thisDist <= max_dist && thisDist < potentialDist){
-                potentialTupletEnd = i;
-            }
-        }
-
-        if(potentialTupletEnd >= 0){
-            return potentialTupletEnd;
-        }
-
-        return -1;
-
-    }
-
-    this.add_tuplet = function(event) {
-
-        // Original cursor position
-        var n = cursor.position - 1;
-        if(n < 0 || this.notes.length < n){
-            return;
-        }
-        
-        var lastNote = this.notes[n];
-        if(lastNote.type == "bar" || lastNote.in_tuplet){
-            return;
-        }
-
-        // Check if behind a valid note
-        if(["2","2r","4", "4r", "8", "8r", "16", "16r"].indexOf(lastNote.symbol) < 0){
-            return; 
-        }
-
-        // Delete this note
-        lastNote = _.clone(lastNote);
-        this.notes.splice(n, 1);
-
-        // New symbol
-        let newSymbol = (lastNote.duration.d * 2) + (lastNote.type == "r" ? "r" : "");
-
-
-        // Add three half-shorter-lasting notes
-        let k = [];
-        for(let i = 0; i < event.tuplet_type; i++){
-            let newNote = {
-                type: lastNote.type,
-                symbol: newSymbol,
-                duration: lastNote.duration.div(event.tuplet_type),
-                in_tuplet: true,
-                tuplet_type: event.tuplet_type,
-                overwrite: true,
-            };
-            if(i+1 == event.tuplet_type){
-                newNote.tuplet_end = true;
-            }
-            k.push(newNote);
-        }
-        this.notes.splice(n, 0, ...k);
-        this.cursor.position = n;
-
-    }
-
     this._is_supported_length = function(event){
 
-        if(event.tuplet_type == 3){
-            return true;
-        }
-
         // Check if the note is in supported range...
-        for(let i = 0; i < this.supportedLengths.length; i++)
-            if (event.duration.d == this.supportedLengths[i])
-                return true
-
-        console.error("Note length not supported... ("+event.duration.d+")");
+        if(this.supportedLengths.indexOf(event.value) >= 0){
+            return true
+        }
+        
+        console.error("Note value not supported... ("+event.value+")");
         return false;
         
     },
@@ -696,27 +600,25 @@ var NoteStore = function(bar, cursor, render_function, info) {
     }
 
     this.currentNote = function(){
-        return this.getNote(0);
+        return this._getNoteFromCurrentPositionDiff(0);
     }
 
     this.previousNote = function(){
-        return this.getNote(-1);
+        return this._getNoteFromCurrentPositionDiff(-1);
     }
 
     this.prePreviousNote = function(){
-        return this.getNote(-2);
+        return this._getNoteFromCurrentPositionDiff(-2);
     }
 
-    this.getNote = function(d){
+    this._getNoteFromCurrentPositionDiff = function(d){
         let i = this.cursor.position + d;
         if(i >= 0 && i < this.notes.length)
             return this.notes[i];
         return null;
     }
 
-    this.add_note = function(event) {
-        
-        let i = this.cursor.position;
+    this.handle_add_note_button = function(event) {
 
         // Check if in tuplet
         if(this.inTheMiddleOfATuplet()){
@@ -730,7 +632,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
         // Add the note
         // Add the new note to the current position (at the cursor)
-        this.notes.splice(this.cursor.position, 0, event);
+        this.addNote(event);
         
         // Move cursor forward
         this._move_cursor_forward();
@@ -738,13 +640,17 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     },
 
-    this._sum_durations = function(){
+    this._remove_tie_at_cursor = function() {
 
-        let sum = new Fraction();
-        for(var i = 0; i < this.notes.length; i++){
-            sum = sum.add(this.notes[i].duration);
+        let pos = this.cursor.position;
+
+        if(this.notes.length > pos && this.notes[pos].tie){
+            delete this.notes[pos].tie;
         }
-        return sum;
+
+        if(this.notes.length > pos + 1 && this.notes[pos + 1].tie){
+            delete this.notes[pos + 1].tie;
+        }
 
     },
 
@@ -756,19 +662,10 @@ var NoteStore = function(bar, cursor, render_function, info) {
         }
 
         // If I'm are at the beginning, I can't delete anything else
-        if(this.cursor.position == 0)
-        {
-            // So I quit
-            return;
-        }
+        if(this.cursor.position == 0) { return; }
 
-        if(this.notes.length > this.cursor.position && this.notes[this.cursor.position].tie){
-            delete this.notes[this.cursor.position].tie;
-        }
-
-        if(this.notes.length > this.cursor.position + 1 && this.notes[this.cursor.position + 1].tie){
-            delete this.notes[this.cursor.position + 1].tie;
-        }
+        // If there ate ties, remove them.
+        this._remove_tie_at_cursor()
 
         if(this.notes[this.cursor.position - 1].in_tuplet){
             this.remove_tuplet();
@@ -808,31 +705,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
         this.cursor.cursor_moved();
 
     }
-
-
-    this.check_sum_fit = function() {
-
-
-        let currentDuration = new Fraction(0);
-        for(let i = 0; i < this.notes.length; i++){
-            
-            currentDuration = currentDuration.add(this.notes[i].duration);
-            let value = currentDuration.compare(1);
-            if(value == 0){
-                currentDuration = new Fraction(0);
-                continue;
-            }
-            else if(value > 0){
-                return false;
-            }
-
-        }
-
-        return true;
-
-    }
-
-
 
     
 }

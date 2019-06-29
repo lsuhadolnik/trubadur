@@ -2737,108 +2737,130 @@ module.exports = g;
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 //
 // REFACTOR ASAP!!!! 
 // 
-
+var Fraction = __webpack_require__(6);
 
 var utilities = {
 
-    generate_playback_durations: function generate_playback_durations(values, get_val) {
+    _step_durations_from_notes: function _step_durations_from_notes(notes) {
+
+        return notes.map(function (note) {
+            if (note.type == "r") return new Fraction(-1, note.value);else if (note.type == "n") return new Fraction(1, note.value);else // bar
+                return new Fraction(0);
+        });
+    },
+
+    _step_dots: function _step_dots(notes, values) {
+
+        return values.map(function (v, i) {
+
+            if (notes[i].dot) return v.mul(1.5);
+
+            return v;
+        });
+    },
+
+    _getThisTupletType: function _getThisTupletType(notes, idx) {
+        for (var i = idx; i < notes.length; i++) {
+            var note = notes[i];
+            if (note.tuplet_end) return note.tuplet_type;
+        }
+
+        alert("Nekaj je narobe, nisem našel zaključka triole. Ne morem ugotoviti trajanja.");
+        throw "[rhythmUtilities] tuplet_end missing.";
+    },
+
+    _step_tuplets: function _step_tuplets(notes, values) {
+        var _this = this;
+
+        var current_tuplet_type = -1;
+        return values.map(function (v, i) {
+
+            var nV = v;
+
+            if (notes[i].in_tuplet) {
+
+                if (current_tuplet_type == -1) {
+                    current_tuplet_type = _this._getThisTupletType(notes, i);
+                }
+
+                nV = nV.div(current_tuplet_type);
+            } else {
+                current_tuplet_type = -1;
+            }
+
+            if (notes[i].tuplet_end) {
+                current_tuplet_type = -1;
+            }
+
+            return nV;
+        });
+    },
+    _step_ties: function _step_ties(notes, values) {
+
+        var newValues = [];
+
+        var currentDuration = new Fraction(0),
+            previousType = "bar";
+
+        for (var i = 0; i < notes.length; i++) {
+            var note = notes[i],
+                value = values[i];
+
+            if (note.type == "bar") continue;
+
+            if (previousType == "bar") {
+                previousType = note.type;
+                currentDuration = currentDuration.add(value);
+                continue;
+            }
+
+            if (note.type != previousType || !note.tie) {
+                newValues.push(currentDuration);
+                currentDuration = new Fraction(0);
+            }
+
+            // Add to currentDuration
+            currentDuration = currentDuration.add(value);
+
+            previousType = note.type;
+        }
+
+        if (currentDuration.abs() != new Fraction(0)) {
+            newValues.push(currentDuration);
+        }
+
+        return newValues;
+    },
+
+
+    generate_playback_durations: function generate_playback_durations(notes) {
 
         // Negativna trajanja pomenijo pavze
         // Kaj pa če so triole?
         // Potem trajanje vsake note ustrezno deli
 
-        var nextHasTie = function nextHasTie(position) {
-            return values.length > position + 1 && values[position + 1].tie;
-        };
-        var nextIsRest = function nextIsRest(position) {
-            return values.length > position + 1 && values[position + 1].type == 'r';
-        };
-        var sumTiedDurations = function sumTiedDurations(cursorPosition, values) {
+        // FILTER PATTERN
+        // at the end, the function must return durations in fractions, 
+        // so there is no need for keeping the notes in sync
+        // 
+        // _step_durations_from_notes ->
+        // _step_dots ->
+        // _step_tuplets ->
+        // _step_ties
 
-            var duration = values[cursorPosition].duration;
-            var numTies = 0;
-            var pos = cursorPosition;
+        var v = [];
+        v = this._step_durations_from_notes(notes);
+        v = this._step_dots(notes, v);
+        v = this._step_tuplets(notes, v);
+        v = this._step_ties(notes, v);
+        // From here, notes and durations are not in sync anymore
 
-            while (nextHasTie(pos) && !nextIsRest(pos)) {
-                duration = duration.add(values[pos + 1].duration);
-                numTies++;pos++;
-            }
-            return { duration: duration, skips: numTies };
-        };
-
-        var getThisTupletType = function getThisTupletType(values, idx) {
-            for (var i = idx; i < values.length; i++) {
-                var note = values[i];
-                if (note.tuplet_end) {
-                    return note.tuplet_type;
-                }
-            }
-            return -1;
-        };
-
-        var getDividedDurations = function getDividedDurations(values) {
-
-            debugger;
-            var current_tuplet_type = -1;
-            var new_values = [];
-            for (var i = 0; i < values.length; i++) {
-                if (values[i].in_tuplet) {
-
-                    if (current_tuplet_type == -1) {
-                        current_tuplet_type = getThisTupletType(values, i);
-                        if (current_tuplet_type == -1) {
-                            alert("Nekaj je narobe, nisem našel zaključka triole. Ne morem ugotoviti trajanja.");
-                            return null;
-                        }
-                    }
-
-                    var nV = _.cloneDeep(values[i]);
-                    nV.duration = nV.duration.div(current_tuplet_type);
-                    if (nV.tuplet_end) {
-                        current_tuplet_type = -1;
-                    }
-                    new_values.push(nV);
-                } else {
-                    current_tuplet_type = -1;
-                    new_values.push(values[i]);
-                }
-            }
-            return new_values;
-        };
-
-        var realDurations = [];
-
-        var notes = getDividedDurations(values);
-
-        var skipN = 0;
-        for (var noteIndex = 0; noteIndex < notes.length; noteIndex++) {
-
-            if (skipN > 0) {
-                skipN--;continue;
-            }
-
-            var note = notes[noteIndex];
-
-            if (note.type != "r") {
-                var vals = sumTiedDurations(noteIndex, notes);
-                skipN = vals.skips;
-
-                if (!get_val) realDurations.push(vals.duration);else realDurations.push(vals.duration.toFraction());
-            } else {
-
-                if (!get_val) realDurations.push(note.duration.mul(-1));else realDurations.push(note.duration.mul(-1).toFraction());
-            }
-        }
-
-        console.log("REAL DURATIONS:");
-        console.log(realDurations);
-
-        return realDurations;
+        return v;
     },
 
     get_bar_count: function get_bar_count(notes) {
@@ -2853,10 +2875,8 @@ var utilities = {
         return count;
     },
 
-    generate_countin_durations: function generate_countin_durations(bar_info) {},
-
     getNoteType: function getNoteType(note) {
-        return parseInt(note.symbol);
+        return note.value;
     },
 
     sumTupletLength: function sumTupletLength(notes, from, to) {
@@ -76112,30 +76132,6 @@ var Tuplet = VF.Tuplet;
             return RU._min_dist(this.CTX["zoomview"].x_coords, x);
         },
 
-        _get_scroll_data: function _get_scroll_data() {
-
-            // Vrni: 
-            // - Screen Width
-            // - Zoom Width
-            // ...
-
-            var zoomView = document.getElementById("second-row").parentNode;
-            var bubble = document.querySelector("." + this.info.bubble_class);
-
-            return {
-
-                screenWidth: window.innerWidth,
-
-                zoomView: zoomView,
-                zoomScrollWidth: zoomView.scrollWidth,
-                zoomScrollLeft: zoomView.scrollLeft,
-
-                bubble: bubble,
-                bubbleWidth: bubble.getAttribute("width"),
-                bubbleX: bubble.getAttribute("x")
-            };
-        },
-
         _save_scroll: function _save_scroll() {
 
             var zoomView = document.getElementById("second-row").parentNode;
@@ -76274,7 +76270,7 @@ var Tuplet = VF.Tuplet;
                 var bubbleScrollWidth = minimapWidth;
 
                 var cursorOffset = 0;
-                var currentNoteValue = parseInt(notes[this.cursor.position - 1].symbol);
+                var currentNoteValue = notes[this.cursor.position - 1].value;
                 switch (currentNoteValue) {
                     case 1:
                         cursorOffset = 22;break;
@@ -76358,13 +76354,16 @@ var Tuplet = VF.Tuplet;
                 }
 
                 // Handle notes and rests
+                var symbol = thisNote.value + "";
+                if (thisNote.type == "r") symbol += "r";
+
                 var newNote = new StaveNote({
                     clef: "treble",
                     keys: ["g/4"],
-                    duration: thisNote.symbol
+                    duration: symbol
                 });
 
-                switch (parseInt(thisNote.symbol)) {
+                switch (thisNote.value) {
                     case 1:
                         currentBatchWidth += 100;break;
                     case 2:
@@ -76502,13 +76501,6 @@ var Tuplet = VF.Tuplet;
                 }
             } else {
                 this.cursor.in_tuplet = false;
-            }
-
-            // UNUSED! Refactor and delete ASAP!
-            var n = this.cursor.position;
-            if (notes.length > n && notes[n].in_tuplet && notes[n].type != "bar") {
-                this.cursor.tuplet_type = notes[n].duration.d / notes[n].tuplet_type;
-                //alert("HELLO! IN TUPLET. "+this.cursor.tuplet_type);
             }
         },
         retrieveXCoords: function retrieveXCoords(ctx) {
@@ -76904,7 +76896,6 @@ var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
             }
         },
 
-        // Move ASAP
         _render_context: function _render_context(descriptor, notes, bar) {
 
             if (window.innerHeight <= 600) {
@@ -76931,6 +76922,7 @@ var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
             var ties = [];
             var tuplets = [];
             var renderQueue = [];
+            descriptor.rendered = [];
 
             var allStaveNotes = [];
 
@@ -76956,13 +76948,16 @@ var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
                 }
 
                 // Handle notes and rests
-                var newNote = new VF.StaveNote({
+                var symbol = thisNote.value + "";;
+                if (thisNote.type == "r") symbol += "r";
+
+                var newNote = new StaveNote({
                     clef: "treble",
                     keys: ["g/4"],
-                    duration: thisNote.symbol
+                    duration: symbol
                 });
 
-                switch (parseInt(thisNote.symbol)) {
+                switch (thisNote.value) {
                     case 1:
                         currentBatchWidth += 100;break;
                     case 2:
@@ -76995,7 +76990,10 @@ var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
 
                 allStaveNotes.push(newNote);
 
-                if (thisNote.type != "bar") renderQueue.push(newNote);
+                if (thisNote.type != "bar") {
+                    renderQueue.push(newNote);
+                    descriptor.rendered.push(newNote);
+                }
 
                 if (thisNote.type == "bar") {
                     newNote.setStyle({ fillStyle: "transparent", strokeStyle: "transparent" });
@@ -77022,8 +77020,11 @@ var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
                 }
 
                 if (thisNote.tuplet_end) {
+
+                    var tuplet_type = thisNote.tuplet_type;
+
                     tuplets.push(new __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
-                        bracketed: true, rationed: false, num_notes: thisNote.tuplet_type
+                        bracketed: true, ratioed: false, num_notes: tuplet_type, notes_occupied: tuplet_type
                     }));
                     firstTupletNoteIdx = -1;
                 }
@@ -77037,23 +77038,20 @@ var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
                 }
             }
 
-            // If there are still some notes left 
-            // Happens if the bar is incomplete
-            // sum(durations) != 1
-            // Not only if less than 1 (incomplete bar)
-            // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
             if (renderQueue.length > 0) {
                 // Draw the rest
-                //this._vex_draw_voice(context, staves[staveIndex], renderQueue);
                 batches.push({ notes: renderQueue, width: currentBatchWidth });
             }
 
-            var RU = new __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__["a" /* default */]();
+            // Finally render everything
             RU._vex_render_batches(context, batches, [ties, tuplets], {
                 bar: bar,
                 barOffsetY: this.info.barOffsetY,
-                width: this.width
+                width: this.info.width
             });
+
+            // set CTX.zoomview.x_coords property
+            this.retrieveXCoords(descriptor);
         },
         render: function render(exerciseNotes, userNotes, bar) {
 
@@ -77607,16 +77605,14 @@ var Fraction = __webpack_require__(6);
 
             this.key_callback({
                 type: 'n',
-                symbol: "" + num,
-                duration: new Fraction(1).div(num)
+                value: num
             });
         },
         rest: function rest(num) {
 
             this.key_callback({
                 type: 'r',
-                symbol: num + 'r',
-                duration: new Fraction(1).div(num)
+                value: num
             });
         },
         setCorrect: function setCorrect() {
@@ -77629,8 +77625,7 @@ var Fraction = __webpack_require__(6);
 
             this.key_callback({
                 type: 'bar',
-                symbol: '4',
-                duration: new Fraction(0)
+                value: 4
             });
         },
         move_cursor_forward: function move_cursor_forward() {
@@ -77746,7 +77741,7 @@ var Fraction = __webpack_require__(6);
             return "red";
         },
         hideNoteButtonWhenInTuplet: function hideNoteButtonWhenInTuplet(button_type) {
-            if (this.in_tuplet && button_type != this.cursor.tuplet_type) {
+            if (this.in_tuplet) {
                 return true;
             }
             return false;
@@ -79396,7 +79391,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     // }
 
 
-    // The supported note durations.
+    // The supported note values.
     // Currently supports up to a sixteenth note with a dot.
     this.supportedLengths = [1, 2, 4, 8, 16, 32];
     this.supportedRests = [4, 8, 12, 16, 32];
@@ -79431,7 +79426,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         }
 
         if (event.type == 'n' || event.type == 'r' || event.type == 'bar') {
-            this.add_note(event);
+            this.handle_add_note_button(event);
         } else if (event.type == 'dot') {
             this.add_dot();
         } else if (event.type == 'tie') {
@@ -79619,16 +79614,14 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
          * (n:t1), (n:t2)
          * {
          *      type: "n",
-         *      duration: new Fraction(1, duration / tupletType),
-         *      symbol: "4",
+         *      value: 4,
          *      in_tuplet: true
          * }
          * 
          * (n:t3)
          * {
          *      type: "n",
-         *      duration: new Fraction(1, duration / tupletType),
-         *      symbol: "4",
+         *      value: 4
          *      in_tuplet: true,
          *      tuplet_end: true
          * }
@@ -79743,7 +79736,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         // set currentTupletType
         this.currentTupletInfo.length = 1;
-        this.currentTupletInfo.type = event.duration.d;
+        this.currentTupletInfo.type = event.value;
         // add tuplet note   
 
         event.in_tuplet = true;
@@ -79831,24 +79824,18 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     this.add_dot = function () {
 
         var n = this.cursor.position - 1;
+        var note = this.notes[n];
 
         // Don't do anything if this is the first note...
         if (n < 0) {
             return;
         }
 
-        if (this.notes[n].type == "bar") {
+        if (note.type == "bar") {
             return;
         }
 
-        var note = this.notes[n];
-        if (note.dot) {
-            note.duration = note.duration.div(1.5);
-            note.dot = false;
-        } else {
-            note.duration = note.duration.mul(1.5);
-            note.dot = true;
-        }
+        note.dot = !note.dot;
     };
 
     this.enable_tuplet_editing = function (event) {
@@ -79881,100 +79868,20 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
             }
 
             delete note.in_tuplet;
-            note.duration = note.duration.mul(note.tuplet_type);
-
             delete note.tuplet_type;
 
             i--;
         }
         // Odstranjuj, dokler traja ta triola ali ne trčiš ob drugo triolo
         while (i >= 0 && !this.notes[i].tuplet_end && this.notes[i].in_tuplet);
-    }, this.clear_other_tuplet_snap_notes = function (pos) {
-        for (var i = 0; i < this.notes.length; i++) {
-            if (i != pos && this.notes[i].was_tuplet_end) {
-                delete this.notes[i].style;
-                delete this.notes[i].was_tuplet_end;
-            }
-        }
-    };
+    }, this._is_supported_length = function (event) {
 
-    this.check_if_there_were_any_tuplets_before = function (current_idx, max_dist) {
-
-        var potentialTupletEnd = -99999999;
-        var potentialDist = Math.abs(potentialTupletEnd - current_idx);
-
-        for (var i = 0; i < this.notes.length; i++) {
-
-            var thisDist = Math.abs(i - current_idx);
-
-            if (this.notes[i].was_tuplet_end && thisDist <= max_dist && thisDist < potentialDist) {
-                potentialTupletEnd = i;
-            }
-        }
-
-        if (potentialTupletEnd >= 0) {
-            return potentialTupletEnd;
-        }
-
-        return -1;
-    };
-
-    this.add_tuplet = function (event) {
-        var _notes;
-
-        // Original cursor position
-        var n = cursor.position - 1;
-        if (n < 0 || this.notes.length < n) {
-            return;
-        }
-
-        var lastNote = this.notes[n];
-        if (lastNote.type == "bar" || lastNote.in_tuplet) {
-            return;
-        }
-
-        // Check if behind a valid note
-        if (["2", "2r", "4", "4r", "8", "8r", "16", "16r"].indexOf(lastNote.symbol) < 0) {
-            return;
-        }
-
-        // Delete this note
-        lastNote = _.clone(lastNote);
-        this.notes.splice(n, 1);
-
-        // New symbol
-        var newSymbol = lastNote.duration.d * 2 + (lastNote.type == "r" ? "r" : "");
-
-        // Add three half-shorter-lasting notes
-        var k = [];
-        for (var i = 0; i < event.tuplet_type; i++) {
-            var newNote = {
-                type: lastNote.type,
-                symbol: newSymbol,
-                duration: lastNote.duration.div(event.tuplet_type),
-                in_tuplet: true,
-                tuplet_type: event.tuplet_type,
-                overwrite: true
-            };
-            if (i + 1 == event.tuplet_type) {
-                newNote.tuplet_end = true;
-            }
-            k.push(newNote);
-        }
-        (_notes = this.notes).splice.apply(_notes, [n, 0].concat(k));
-        this.cursor.position = n;
-    };
-
-    this._is_supported_length = function (event) {
-
-        if (event.tuplet_type == 3) {
+        // Check if the note is in supported range...
+        if (this.supportedLengths.indexOf(event.value) >= 0) {
             return true;
         }
 
-        // Check if the note is in supported range...
-        for (var i = 0; i < this.supportedLengths.length; i++) {
-            if (event.duration.d == this.supportedLengths[i]) return true;
-        }console.error("Note length not supported... (" + event.duration.d + ")");
+        console.error("Note value not supported... (" + event.value + ")");
         return false;
     },
 
@@ -79992,26 +79899,24 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     };
 
     this.currentNote = function () {
-        return this.getNote(0);
+        return this._getNoteFromCurrentPositionDiff(0);
     };
 
     this.previousNote = function () {
-        return this.getNote(-1);
+        return this._getNoteFromCurrentPositionDiff(-1);
     };
 
     this.prePreviousNote = function () {
-        return this.getNote(-2);
+        return this._getNoteFromCurrentPositionDiff(-2);
     };
 
-    this.getNote = function (d) {
+    this._getNoteFromCurrentPositionDiff = function (d) {
         var i = this.cursor.position + d;
         if (i >= 0 && i < this.notes.length) return this.notes[i];
         return null;
     };
 
-    this.add_note = function (event) {
-
-        var i = this.cursor.position;
+    this.handle_add_note_button = function (event) {
 
         // Check if in tuplet
         if (this.inTheMiddleOfATuplet()) {
@@ -80025,17 +79930,21 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         // Add the note
         // Add the new note to the current position (at the cursor)
-        this.notes.splice(this.cursor.position, 0, event);
+        this.addNote(event);
 
         // Move cursor forward
         this._move_cursor_forward();
-    }, this._sum_durations = function () {
+    }, this._remove_tie_at_cursor = function () {
 
-        var sum = new Fraction();
-        for (var i = 0; i < this.notes.length; i++) {
-            sum = sum.add(this.notes[i].duration);
+        var pos = this.cursor.position;
+
+        if (this.notes.length > pos && this.notes[pos].tie) {
+            delete this.notes[pos].tie;
         }
-        return sum;
+
+        if (this.notes.length > pos + 1 && this.notes[pos + 1].tie) {
+            delete this.notes[pos + 1].tie;
+        }
     }, this.delete_note = function () {
 
         if (this.cursor.selectionMode) {
@@ -80045,17 +79954,11 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         // If I'm are at the beginning, I can't delete anything else
         if (this.cursor.position == 0) {
-            // So I quit
             return;
         }
 
-        if (this.notes.length > this.cursor.position && this.notes[this.cursor.position].tie) {
-            delete this.notes[this.cursor.position].tie;
-        }
-
-        if (this.notes.length > this.cursor.position + 1 && this.notes[this.cursor.position + 1].tie) {
-            delete this.notes[this.cursor.position + 1].tie;
-        }
+        // If there ate ties, remove them.
+        this._remove_tie_at_cursor();
 
         if (this.notes[this.cursor.position - 1].in_tuplet) {
             this.remove_tuplet();
@@ -80088,24 +79991,6 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         this.cursor.cursor_moved();
     };
-
-    this.check_sum_fit = function () {
-
-        var currentDuration = new Fraction(0);
-        for (var i = 0; i < this.notes.length; i++) {
-
-            currentDuration = currentDuration.add(this.notes[i].duration);
-            var value = currentDuration.compare(1);
-            if (value == 0) {
-                currentDuration = new Fraction(0);
-                continue;
-            } else if (value > 0) {
-                return false;
-            }
-        }
-
-        return true;
-    };
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (NoteStore);
@@ -80126,44 +80011,44 @@ var ExerciseGenerator = function ExerciseGenerator() {
             num_beats: 4,
             base_note: 4
         },
-        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(3, 16), dot: true }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }]
+        exercise: [{ type: "n", value: "4" }, { type: "n", value: "8" }, { type: "n", value: "8" }, { type: "n", value: "16" }, { type: "n", value: "16" }, { type: "n", value: "8" }, { type: "n", value: "4" }, { type: "bar", value: "4" }, { type: "n", value: "4", in_tuplet: true }, { type: "n", value: "4", in_tuplet: true }, { type: "n", value: "4", in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "n", value: "16" }, { type: "n", value: "16" }, { type: "n", value: "8", dot: true }, { type: "bar", value: "4" }, { type: "n", value: "4" }, { type: "n", value: "4" }, { type: "n", value: "4" }, { type: "n", value: "4" }]
     }, {
         bar: {
             num_beats: 4,
             base_note: 4
         },
-        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }]
+        exercise: [{ type: "n", value: "4" }, { type: "n", value: "4" }, { type: "n", value: "4" }, { type: "n", value: "4" }, { type: "bar", value: "4" }, { type: "n", value: "4" }, { type: "n", value: "4" }, { type: "n", value: "4" }, { type: "n", value: "4" }]
     }, {
         bar: {
             num_beats: 4,
             base_note: 4
         },
-        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }, { type: "r", symbol: "4r", duration: new Fraction(1, 4) }]
+        exercise: [{ type: "n", value: "4", in_tuplet: true }, { type: "n", value: "4", in_tuplet: true }, { type: "n", value: "4", in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "n", value: "4" }, { type: "r", value: "4" }, { type: "r", value: "4" }, { type: "bar", value: "4" }, { type: "n", value: "4", in_tuplet: true }, { type: "n", value: "4", in_tuplet: true }, { type: "n", value: "4", in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "n", value: "4" }, { type: "r", value: "4" }, { type: "r", value: "4" }]
     }, {
         bar: {
             num_beats: 4,
             base_note: 4
         },
-        exercise: [{ type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "4", duration: new Fraction(1, 12), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "4", duration: new Fraction(1, 4) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }]
+        exercise: [{ type: "n", value: "4" }, { type: "n", value: "4" }, { type: "n", value: "8" }, { type: "n", value: "8" }, { type: "n", value: "8" }, { type: "n", value: "8" }, { type: "bar", value: "4" }, { type: "n", value: "16" }, { type: "n", value: "16" }, { type: "n", value: "16" }, { type: "n", value: "16" }, { type: "n", value: "4", in_tuplet: true }, { type: "n", value: "4", in_tuplet: true }, { type: "n", value: "4", in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "bar", value: "4" }, { type: "n", value: "4" }, { type: "n", value: "8" }, { type: "n", value: "8" }]
     }, {
         bar: {
             num_beats: 3,
             base_note: 8
         },
-        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
+        exercise: [{ type: "n", value: "8" }, { type: "n", value: "16" }, { type: "n", value: "16" }, { type: "n", value: "8" }, { type: "bar", value: "4" }, { type: "n", value: "8", in_tuplet: true }, { type: "n", value: "8", in_tuplet: true }, { type: "n", value: "8", in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "r", value: "8" }, { type: "n", value: "16" }, { type: "n", value: "16" }]
     }, {
         BPM: 50,
         bar: {
             num_beats: 3,
             base_note: 8
         },
-        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
+        exercise: [{ type: "n", value: "8" }, { type: "n", value: "16" }, { type: "n", value: "16" }, { type: "n", value: "8" }, { type: "bar", value: "4" }, { type: "n", value: "8", in_tuplet: true }, { type: "n", value: "8", in_tuplet: true }, { type: "n", value: "8", in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "r", value: "8" }, { type: "n", value: "16" }, { type: "n", value: "16" }]
     }, {
         bar: {
             num_beats: 3,
             base_note: 8
         },
-        exercise: [{ type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "8", duration: new Fraction(1, 8) }, { type: "bar", symbol: "4", duration: new Fraction(0) }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3 }, { type: "n", symbol: "8", duration: new Fraction(1, 24), in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "r", symbol: "8r", duration: new Fraction(1, 8) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }, { type: "n", symbol: "16", duration: new Fraction(1, 16) }]
+        exercise: [{ type: "n", value: "8" }, { type: "n", value: "16" }, { type: "n", value: "16" }, { type: "n", value: "8" }, { type: "bar", value: "4" }, { type: "n", value: "8", in_tuplet: true }, { type: "n", value: "8", in_tuplet: true }, { type: "n", value: "8", in_tuplet: true, tuplet_type: 3, tuplet_end: true }, { type: "r", value: "8" }, { type: "n", value: "16" }, { type: "n", value: "16" }]
     }];
 
     this.currentExercise = null;

@@ -322,8 +322,7 @@ export default {
 
             this.key_callback({
                 type: 'n',
-                symbol: ""+num,
-                duration: new Fraction(1).div(num)
+                value: num
             });
 
         },
@@ -332,8 +331,7 @@ export default {
 
             this.key_callback({
                 type: 'r',
-                symbol: num + 'r',
-                duration: new Fraction(1).div(num)
+                value: num
             });
 
         },
@@ -350,8 +348,7 @@ export default {
 
             this.key_callback({
                 type: 'bar',
-                symbol: '4',
-                duration: new Fraction(0)
+                value: 4
             });
 
         },
@@ -503,7 +500,7 @@ export default {
         },
 
         hideNoteButtonWhenInTuplet(button_type){
-            if(this.in_tuplet && button_type != this.cursor.tuplet_type){
+            if(this.in_tuplet){
                 return true;
             }
             return false;

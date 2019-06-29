@@ -177,31 +177,6 @@ export default {
 
         },
 
-        _get_scroll_data: function(){
-
-            // Vrni: 
-            // - Screen Width
-            // - Zoom Width
-            // ...
-
-            let zoomView = document.getElementById("second-row").parentNode;
-            let bubble = document.querySelector("."+this.info.bubble_class);
-
-            return {
-
-                screenWidth: window.innerWidth,
-
-                zoomView: zoomView,
-                zoomScrollWidth: zoomView.scrollWidth,
-                zoomScrollLeft: zoomView.scrollLeft,
-
-                bubble: bubble,
-                bubbleWidth: bubble.getAttribute("width"),
-                bubbleX: bubble.getAttribute("x")
-            }
-
-        },
-
         _save_scroll: function(){
 
             let zoomView = document.getElementById("second-row").parentNode;
@@ -355,7 +330,7 @@ export default {
                 let bubbleScrollWidth = minimapWidth;
 
                 let cursorOffset = 0;
-                let currentNoteValue = parseInt(notes[this.cursor.position - 1].symbol);
+                let currentNoteValue = notes[this.cursor.position - 1].value;
                 switch (currentNoteValue) {
                     case 1:  cursorOffset = 22; break;
                     case 2:  cursorOffset = 22;  break;
@@ -440,15 +415,19 @@ export default {
                 if(!thisNote) { continue; }
 
                 // Handle notes and rests
+                let symbol = thisNote.value + "";
+                if(thisNote.type == "r")
+                    symbol += "r";
+
                 let newNote = new StaveNote(
                     {
                         clef: "treble", 
                         keys: ["g/4"], 
-                        duration: thisNote.symbol
+                        duration: symbol
                     }
                 );
 
-                switch (parseInt(thisNote.symbol)) {
+                switch (thisNote.value) {
                     case 1:  currentBatchWidth += 100; break;
                     case 2:  currentBatchWidth += 70;  break;
                     case 4:  currentBatchWidth += 40;  break;
@@ -596,14 +575,6 @@ export default {
                 }
             }else{
                 this.cursor.in_tuplet = false;
-            }
-
-
-            // UNUSED! Refactor and delete ASAP!
-            let n = this.cursor.position;
-            if(notes.length > n && notes[n].in_tuplet && notes[n].type != "bar"){
-                this.cursor.tuplet_type = notes[n].duration.d / notes[n].tuplet_type;
-                //alert("HELLO! IN TUPLET. "+this.cursor.tuplet_type);
             }
 
 
