@@ -2749,6 +2749,8 @@ var utilities = {
     generate_playback_durations: function generate_playback_durations(values, get_val) {
 
         // Negativna trajanja pomenijo pavze
+        // Kaj pa če so triole?
+        // Potem trajanje vsake note ustrezno deli
 
         var nextHasTie = function nextHasTie(position) {
             return values.length > position + 1 && values[position + 1].tie;
@@ -2756,7 +2758,7 @@ var utilities = {
         var nextIsRest = function nextIsRest(position) {
             return values.length > position + 1 && values[position + 1].type == 'r';
         };
-        var sumTiedDurations = function sumTiedDurations(cursorPosition) {
+        var sumTiedDurations = function sumTiedDurations(cursorPosition, values) {
 
             var duration = values[cursorPosition].duration;
             var numTies = 0;
@@ -2769,19 +2771,61 @@ var utilities = {
             return { duration: duration, skips: numTies };
         };
 
+        var getThisTupletType = function getThisTupletType(values, idx) {
+            for (var i = idx; i < values.length; i++) {
+                var note = values[i];
+                if (note.tuplet_end) {
+                    return note.tuplet_type;
+                }
+            }
+            return -1;
+        };
+
+        var getDividedDurations = function getDividedDurations(values) {
+
+            debugger;
+            var current_tuplet_type = -1;
+            var new_values = [];
+            for (var i = 0; i < values.length; i++) {
+                if (values[i].in_tuplet) {
+
+                    if (current_tuplet_type == -1) {
+                        current_tuplet_type = getThisTupletType(values, i);
+                        if (current_tuplet_type == -1) {
+                            alert("Nekaj je narobe, nisem našel zaključka triole. Ne morem ugotoviti trajanja.");
+                            return null;
+                        }
+                    }
+
+                    var nV = _.cloneDeep(values[i]);
+                    nV.duration = nV.duration.div(current_tuplet_type);
+                    if (nV.tuplet_end) {
+                        current_tuplet_type = -1;
+                    }
+                    new_values.push(nV);
+                } else {
+                    current_tuplet_type = -1;
+                    new_values.push(values[i]);
+                }
+            }
+            return new_values;
+        };
+
         var realDurations = [];
 
+        var notes = getDividedDurations(values);
+
         var skipN = 0;
-        for (var noteIndex = 0; noteIndex < values.length; noteIndex++) {
+        for (var noteIndex = 0; noteIndex < notes.length; noteIndex++) {
 
             if (skipN > 0) {
                 skipN--;continue;
             }
 
-            var note = values[noteIndex];
+            var note = notes[noteIndex];
 
             if (note.type != "r") {
-                var vals = sumTiedDurations(noteIndex);
+                var vals = sumTiedDurations(noteIndex, notes);
                 skipN = vals.skips;
 
                 if (!get_val) realDurations.push(vals.duration);else realDurations.push(vals.duration.toFraction());
@@ -2791,6 +2835,7 @@ var utilities = {
             }
         }
 
+        console.log("REAL DURATIONS:");
         console.log(realDurations);
 
         return realDurations;
@@ -74914,6 +74959,8 @@ var Fraction = __webpack_require__(6);
                 x: 0,
                 in_tuplet: false,
 
+                cursor_moved: this.cursor_moved,
+
                 selection: null,
                 selectionMode: false,
                 selectionSelected: false,
@@ -74957,6 +75004,10 @@ var Fraction = __webpack_require__(6);
             this.cursor.selection = null;
             this.cursor.selectionSelected = false;
             this.cursor.selectionMode = false;
+        },
+        cursor_moved: function cursor_moved(pos, from) {
+
+            this.$refs.staff_view.cursor_moved(pos, from);
         },
         toggleSelectionMode: function toggleSelectionMode() {
 
@@ -76021,7 +76072,8 @@ var Tuplet = VF.Tuplet;
             var closest = this._get_closest_note(Xoffset);
             if (closest.idx >= 0) {
 
-                this.cursor_moved(closest.idx);
+                this.cursor.position = closest.idx + 1;
+                this.cursor_moved();
 
                 this._save_scroll();
                 this.$parent.notes._call_render();
@@ -76030,6 +76082,7 @@ var Tuplet = VF.Tuplet;
         },
 
         _handle_second_selection_tap: function _handle_second_selection_tap(idx) {
+
             if (!this.cursor.selectionMode) {
                 return;
             }
@@ -76152,10 +76205,15 @@ var Tuplet = VF.Tuplet;
 
             this.scrolled(sDoSomeMath);
         },
-        cursor_moved: function cursor_moved(pos, from) {
+        cursor_moved: function cursor_moved() {
 
-            this.cursor.position = pos + 1;
+            // Disable invalid selection
+            // If the cursor is at 0, the selection becomes just a purple bar - useless...
+            if (this.cursor.position == 0 && this.cursor.selectionMode) {
+                this.cursor.position = 1;
+            }
 
+            var pos = this.cursor.position - 1;
             this._handle_second_selection_tap(pos);
         },
         _handle_tuplet_editing_mode_change: function _handle_tuplet_editing_mode_change(pos) {
@@ -79324,6 +79382,20 @@ var util = __webpack_require__(9);
 
 var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
+    // INTERNAL NOTE FORMAT:
+    // <note> 
+    // {
+    //     type (string): "n" or ["r", "bar"],
+    //     value (number): 1  or [2,4,8,16,32,64,128,...] from supportedLengths
+    // 
+    //     dot (bool): false
+    //     tie (bool): false,
+    // 
+    //     in_tuplet (bool): false,
+    //     tuplet_type (bool): 3 or [2,3,4,5,6,7,8, ...] 
+    // }
+
+
     // The supported note durations.
     // Currently supports up to a sixteenth note with a dot.
     this.supportedLengths = [1, 2, 4, 8, 16, 32];
@@ -79495,6 +79567,9 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         this.notes[sel.to].tuplet_end = true;
         this.notes[sel.to].tuplet_type = event.tuplet_type;
+
+        // Move cursor to the end of the tuplet.
+        this.cursor.position = sel.to + 1;
     };
 
     this.clearTupletNote = function (note) {
@@ -79758,7 +79833,7 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         var n = this.cursor.position - 1;
 
         // Don't do anything if this is the first note...
-        if (n <= 0) {
+        if (n < 0) {
             return;
         }
 
@@ -79901,7 +79976,10 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
             if (event.duration.d == this.supportedLengths[i]) return true;
         }console.error("Note length not supported... (" + event.duration.d + ")");
         return false;
-    }, this.addNote = function (event) {
+    },
+
+    // Adds a note to the stave
+    this.addNote = function (event) {
 
         var i = this.cursor.position;
         this.notes.splice(i, 0, event);
@@ -79937,8 +80015,8 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         // Check if in tuplet
         if (this.inTheMiddleOfATuplet()) {
-            alert("CANNOT! " + i);
-            return;
+            this.remove_tuplet();
+            // And continue adding this event
         }
 
         if (event.type != "bar" && !this._is_supported_length(event)) {
@@ -80000,11 +80078,15 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         } else {
             this.cursor.position = this.notes.length;
         }
+
+        this.cursor.cursor_moved();
     };
 
     this._move_cursor_backwards = function () {
 
         if (0 >= this.cursor.position) this.cursor.position = 0;else this.cursor.position--;
+
+        this.cursor.cursor_moved();
     };
 
     this.check_sum_fit = function () {

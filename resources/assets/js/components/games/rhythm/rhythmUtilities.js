@@ -8,6 +8,8 @@ var utilities = {
     generate_playback_durations: function(values, get_val){
 
         // Negativna trajanja pomenijo pavze
+        // Kaj pa če so triole?
+        // Potem trajanje vsake note ustrezno deli
 
         let nextHasTie = function(position){
             return values.length > position + 1 
@@ -17,7 +19,7 @@ var utilities = {
             return values.length > position + 1 
             && values[position + 1].type == 'r';
         }
-        let sumTiedDurations = function(cursorPosition){
+        let sumTiedDurations = function(cursorPosition, values){
             
             let duration = values[cursorPosition].duration;
             let numTies = 0;
@@ -31,18 +33,62 @@ var utilities = {
 
         }
 
+        let getThisTupletType = function(values, idx){
+            for(let i = idx; i < values.length; i++){
+                let note = values[i];
+                if(note.tuplet_end){
+                    return note.tuplet_type;
+                }
+            }
+            return -1;
+        }
+
+        let getDividedDurations = function(values){
+
+            debugger;
+            let current_tuplet_type = -1;
+            let new_values = [];
+            for(let i = 0; i < values.length; i++){
+                if(values[i].in_tuplet){
+
+                    if(current_tuplet_type == -1){
+                        current_tuplet_type = getThisTupletType(values, i);
+                        if(current_tuplet_type == -1){
+                            alert("Nekaj je narobe, nisem našel zaključka triole. Ne morem ugotoviti trajanja.");
+                            return null;
+                        }
+                    }
+
+                    let nV = _.cloneDeep(values[i]);
+                    nV.duration = nV.duration.div(current_tuplet_type);
+                    if(nV.tuplet_end){
+                        current_tuplet_type = -1;
+                    }
+                    new_values.push(nV);
+                }
+                else {
+                    current_tuplet_type = -1;
+                    new_values.push(values[i]);
+                }
+            }
+            return new_values;
+
+        }
+
         let realDurations = [];
 
+        let notes = getDividedDurations(values);
+
         let skipN = 0;
-        for(var noteIndex = 0; noteIndex < values.length; noteIndex++){
+        for(var noteIndex = 0; noteIndex < notes.length; noteIndex++){
             
             if(skipN > 0){ skipN --; continue; }
 
-            let note = values[noteIndex];
+            let note = notes[noteIndex];
 
             if(note.type != "r")
             {
-                let vals = sumTiedDurations(noteIndex);   
+                let vals = sumTiedDurations(noteIndex, notes);   
                 skipN = vals.skips;
                 
                 if(!get_val)
@@ -59,6 +105,7 @@ var utilities = {
             }
         }
 
+        console.log("REAL DURATIONS:");
         console.log(realDurations);
 
         return realDurations;

@@ -136,6 +136,8 @@ export default {
                 x: 0,
                 in_tuplet: false,
 
+                cursor_moved: this.cursor_moved,
+
                 selection: null, 
                 selectionMode: false,
                 selectionSelected: false,
@@ -179,6 +181,12 @@ export default {
             this.cursor.selection = null;
             this.cursor.selectionSelected = false;
             this.cursor.selectionMode = false;
+
+        },
+
+        cursor_moved(pos, from){
+
+            this.$refs.staff_view.cursor_moved(pos, from);
 
         },
 

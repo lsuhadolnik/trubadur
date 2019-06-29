@@ -136,7 +136,8 @@ export default {
             let closest = this._get_closest_note(Xoffset);
             if(closest.idx >= 0){
                 
-                this.cursor_moved(closest.idx);
+                this.cursor.position = closest.idx + 1;
+                this.cursor_moved();
 
                 this._save_scroll();
                 this.$parent.notes._call_render()
@@ -146,6 +147,7 @@ export default {
         },
 
         _handle_second_selection_tap: function(idx){
+
             if(!this.cursor.selectionMode){ return; }
 
             if(idx == this.cursor.selection.base){
@@ -276,10 +278,15 @@ export default {
 
         },
 
-        cursor_moved(pos, from){
+        cursor_moved(){
 
-            this.cursor.position = pos + 1;
+            // Disable invalid selection
+            // If the cursor is at 0, the selection becomes just a purple bar - useless...
+            if(this.cursor.position == 0 && this.cursor.selectionMode){
+                this.cursor.position = 1;
+            }
 
+            let pos = this.cursor.position - 1;
             this._handle_second_selection_tap(pos);
 
         },

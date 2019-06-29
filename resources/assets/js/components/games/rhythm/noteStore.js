@@ -5,6 +5,21 @@ let util = require('./rhythmUtilities');
 
 var NoteStore = function(bar, cursor, render_function, info) {
 
+
+    // INTERNAL NOTE FORMAT:
+    // <note> 
+    // {
+    //     type (string): "n" or ["r", "bar"],
+    //     value (number): 1  or [2,4,8,16,32,64,128,...] from supportedLengths
+    // 
+    //     dot (bool): false
+    //     tie (bool): false,
+    // 
+    //     in_tuplet (bool): false,
+    //     tuplet_type (bool): 3 or [2,3,4,5,6,7,8, ...] 
+    // }
+
+
     // The supported note durations.
     // Currently supports up to a sixteenth note with a dot.
     this.supportedLengths = [1, 2, 4, 8, 16, 32];
@@ -203,6 +218,9 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
         this.notes[sel.to].tuplet_end = true;
         this.notes[sel.to].tuplet_type = event.tuplet_type;
+
+        // Move cursor to the end of the tuplet.
+        this.cursor.position = sel.to + 1;
 
     }
 
@@ -443,7 +461,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
     }
 
     
-    
     this.atTheEndOfATuplet = function(){
 
         //       previousNote          currentNote
@@ -500,7 +517,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
         let n = this.cursor.position - 1;
 
         // Don't do anything if this is the first note...
-        if(n <= 0) {
+        if(n < 0) {
             return;
         }
 
@@ -662,6 +679,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
         
     },
 
+    // Adds a note to the stave
     this.addNote = function(event){
 
         let i = this.cursor.position;
@@ -696,15 +714,14 @@ var NoteStore = function(bar, cursor, render_function, info) {
         return null;
     }
 
-
     this.add_note = function(event) {
         
         let i = this.cursor.position;
 
         // Check if in tuplet
         if(this.inTheMiddleOfATuplet()){
-            alert("CANNOT! "+i);
-            return;
+            this.remove_tuplet();
+            // And continue adding this event
         }
 
         if(event.type != "bar" && !this._is_supported_length(event)){
@@ -777,6 +794,8 @@ var NoteStore = function(bar, cursor, render_function, info) {
             this.cursor.position = this.notes.length;
         }
 
+        this.cursor.cursor_moved();
+
     }
 
     this._move_cursor_backwards = function(){
@@ -785,6 +804,8 @@ var NoteStore = function(bar, cursor, render_function, info) {
             this.cursor.position = 0;
         else
             this.cursor.position --;
+
+        this.cursor.cursor_moved();
 
     }
 
