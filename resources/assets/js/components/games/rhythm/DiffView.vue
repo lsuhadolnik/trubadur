@@ -67,6 +67,7 @@ import SexyButton from "../../elements/SexyButton.vue"
 var Fraction = require('fraction.js');
 
 var VF = Vex.Flow;
+let RU = new RhythmRenderUtilities();
 
 export default {
 
@@ -179,7 +180,7 @@ export default {
                 if(thisNote.type == "r")
                     symbol += "r";
 
-                let newNote = new StaveNote(
+                let newNote = new VF.StaveNote(
                     {
                         clef: "treble", 
                         keys: ["g/4"], 
@@ -278,11 +279,7 @@ export default {
                 bar: bar,
                 barOffsetY: this.info.barOffsetY,
                 width: this.info.width
-            });
-
-            // set CTX.zoomview.x_coords property
-            this.retrieveXCoords(descriptor);
-
+            }, notes);
 
         },
 

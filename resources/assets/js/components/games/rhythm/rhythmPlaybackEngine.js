@@ -174,7 +174,7 @@ var RhythmPlaybackEngine = function(){
         for(var i = 0; i < this.bar_info.num_beats; i++){
             countInNotes.push({
                 type: 'n',
-                duration: new Fraction(1, this.bar_info.base_note)
+                value: this.bar_info.base_note
             });
         }
 

@@ -6,7 +6,7 @@ let VF = Vex.Flow;
 
 var RhythmRenderUtilities = function(){
 
-    this._vex_draw_voice = function(context, stave, batchInfo, info){
+    this._vex_draw_voice = function(context, stave, batchInfo, info, notes){
 
         let renderQueue = batchInfo.notes;
         let width = batchInfo.width;
@@ -26,14 +26,19 @@ var RhythmRenderUtilities = function(){
         voice.addTickables(renderQueue);
         
 
-        var beams = VF.Beam.applyAndGetBeams(voice);
+        // var beams = VF.Beam.applyAndGetBeams(voice);
+        var beams = VF.Beam.generateBeams(voice.getTickables(), {
+            beam_rests: true,
+            //beam_middle_only: true,
+            show_stemlets: true,
+            secondary_breaks: '8',
+        });
+
 
         var formatter = new VF.Formatter();
         formatter.joinVoices([voice]);
-        
         formatter.format([voice], width);
         
-
         voice.draw(context, stave);
         
         this._vex_draw_optionals(context, beams);
@@ -121,7 +126,7 @@ var RhythmRenderUtilities = function(){
         return staves;
     };
 
-    this._vex_render_batches = function(context, batches, optionals, info){
+    this._vex_render_batches = function(context, batches, optionals, info, notes){
 
         // Redraw staves
         var barInfo = [];
@@ -142,7 +147,7 @@ var RhythmRenderUtilities = function(){
         let staves = this._vex_draw_staves(context, barInfo, info);
 
         for(var i = 0; i < batches.length; i++){
-            this._vex_draw_voice(context, staves[i], batches[i], info);
+            this._vex_draw_voice(context, staves[i], batches[i], info, notes);
         }
         
         // Draw ties and tuplets

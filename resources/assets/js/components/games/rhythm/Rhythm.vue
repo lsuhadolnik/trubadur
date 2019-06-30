@@ -245,6 +245,19 @@ export default {
             else if(event.type == "playback"){
                 this.play(event);
             }
+            else if(event.type == "showJson"){
+
+                document.write(JSON.stringify(this.notes.notes));
+
+            }
+            else if(event.type == "changeSignature"){
+                
+                this.bar.num_beats = parseInt(prompt("Num_beats?"));
+                this.bar.base_note = parseInt(prompt("Base_note?"));
+
+                this.notes._call_render();
+
+            }
             else{
 
                 // Invalidate playback cache
@@ -280,10 +293,13 @@ export default {
             this.bar.num_beats = this.generator.currentExerciseInfo.bar.num_beats;
             this.bar.base_note = this.generator.currentExerciseInfo.bar.base_note;
             
-            let BPM_scale = 4 / this.bar.base_note;
-            this.playback.BPM = 120 * BPM_scale;
-            this.playback.BPM_from = 50 * BPM_scale;
-            this.playback.BPM_to = 240 * BPM_scale;
+            let exerciseBPM = 120;
+            if(this.generator.currentExerciseInfo.BPM){
+                exerciseBPM = this.generator.currentExerciseInfo.BPM;
+            }
+            this.playback.BPM = exerciseBPM;
+            this.playback.BPM_from = 50;
+            this.playback.BPM_to = 240;
 
             // Initialize note store
             this.notes = new NoteStore(
@@ -303,8 +319,6 @@ export default {
             
 
         },
-
-
 
         continueGame(){
 

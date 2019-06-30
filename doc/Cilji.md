@@ -12,13 +12,11 @@
 
 - Preveri, ali se da izpolnjevati Šavlijeve vaje in jih vpiši z vmesnikom
 
-- Triole 💩💩😢
+- ~~Triole 💩💩😢~~
 
  
 
 ### Preverjanje ritmičnih vaj in dajanje feedbacka uporabniku
-
- 
 
 - Imamo Diff pogled, 
 

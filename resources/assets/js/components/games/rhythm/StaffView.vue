@@ -332,13 +332,13 @@ export default {
                 let cursorOffset = 0;
                 let currentNoteValue = notes[this.cursor.position - 1].value;
                 switch (currentNoteValue) {
-                    case 1:  cursorOffset = 22; break;
+                    case 1:  cursorOffset = 22;  break;
                     case 2:  cursorOffset = 22;  break;
                     case 4:  cursorOffset = 22;  break;
                     case 8:  cursorOffset = 15;  break;
                     case 16: cursorOffset = 10;  break;
-                    case 32: cursorOffset = 8;  break;
-                    default: cursorOffset = 5;  break;
+                    case 32: cursorOffset = 8;   break;
+                    default: cursorOffset = 5;   break;
                 }
 
                 //alert(this.info.cursor.cursorMargin+" : "+cursorOffset);
@@ -459,9 +459,10 @@ export default {
                 allStaveNotes.push(newNote);
                 
                 if(thisNote.type != "bar"){
-                    renderQueue.push(newNote);
-                    descriptor.rendered.push(newNote);
+                    renderQueue.push(newNote);    
                 }
+
+                descriptor.rendered.push(newNote);
                     
 
                 if(thisNote.type == "bar"){
@@ -494,11 +495,12 @@ export default {
 
                     let tuplet_type = thisNote.tuplet_type;
 
-                    tuplets.push(new Vex.Flow.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
-                        bracketed: true, ratioed: false, num_notes: tuplet_type, notes_occupied: tuplet_type
+                    tuplets.push(new VF.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
+                        bracketed: true, ratioed: false, num_notes: tuplet_type //, notes_occupied: tuplet_type
                     }));
                     firstTupletNoteIdx = -1;
                 }
+
 
 
                /* the new manual bar logic */
@@ -528,7 +530,7 @@ export default {
                 bar: this.bar,
                 barOffsetY: this.info.barOffsetY,
                 width: this.info.width
-            });
+            }, notes);
 
             // set CTX.zoomview.x_coords property
             this.retrieveXCoords(descriptor);
@@ -555,8 +557,6 @@ export default {
                 this._cursor_rendered(cursorNote, descriptor, notes);
             }
 
-            
-            
 
             // Move this logic somewhere else
             // Nastavi lastnost cursor.in_tuplet

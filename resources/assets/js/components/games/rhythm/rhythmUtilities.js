@@ -58,7 +58,7 @@ var utilities = {
                     current_tuplet_type = this._getThisTupletType(notes, i);
                 }
 
-                nV = nV.div(current_tuplet_type);
+                nV = nV.div(current_tuplet_type).mul(2);
 
             }
             else {

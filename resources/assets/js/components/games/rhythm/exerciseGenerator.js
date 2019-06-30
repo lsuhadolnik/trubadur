@@ -4,172 +4,7 @@ let RhythmUtilities = require('./rhythmUtilities');
 
 var ExerciseGenerator = function(){
 
-    let examples = [
-        {
-            bar: {
-                num_beats: 4,
-                base_note: 4
-            }, 
-            exercise: [
-                    {type:"n",   value:"4"  },
-                    {type:"n",   value:"8"  },
-                    {type:"n",   value:"8"  },
-                    {type:"n",   value:"16" },
-                    {type:"n",   value:"16" },
-                    {type:"n",   value:"8"  },
-                    {type:"n",   value:"4"  },
-                    {type:"bar", value:"4"  },
-                    
-                    {type:"n",   value:"4",  in_tuplet: true},
-                    {type:"n",   value:"4",  in_tuplet: true},
-                    {type:"n",   value:"4",  in_tuplet: true, tuplet_type: 3, tuplet_end:true},
-                    {type:"n",   value:"16"},
-                    {type:"n",   value:"16"}, 
-                    {type:"n",   value:"8", dot: true},
-                    {type:"bar", value:"4"},  
-
-                    {type:"n", value:"4"},
-                    {type:"n", value:"4"},
-                    {type:"n", value:"4"},
-                    {type:"n", value:"4"},
-                ],
-        },
-        {
-            bar: {
-                num_beats: 4,
-                base_note: 4
-            }, 
-            exercise: [
-                {type:"n",   value:"4"},
-                {type:"n",   value:"4"},
-                {type:"n",   value:"4"},
-                {type:"n",   value:"4"},
-                {type:"bar", value:"4"},
-
-                {type:"n", value:"4"},
-                {type:"n", value:"4"},
-                {type:"n", value:"4"},
-                {type:"n", value:"4"},
-            ],
-        },
-        {
-            bar: {
-                num_beats: 4,
-                base_note: 4
-            }, 
-            exercise: [
-                {type:"n",   value:"4",  in_tuplet: true},
-                {type:"n",   value:"4",  in_tuplet: true},
-                {type:"n",   value:"4",  in_tuplet: true, tuplet_type: 3, tuplet_end:true},
-                {type:"n",   value:"4" },
-                {type:"r",   value:"4"},
-                {type:"r",   value:"4"},
-                {type:"bar", value:"4"},
-
-                {type:"n", value:"4", in_tuplet: true},
-                {type:"n", value:"4", in_tuplet: true},                
-                {type:"n", value:"4", in_tuplet: true, tuplet_type: 3, tuplet_end:true},
-                {type:"n", value:"4",},
-                {type:"r", value:"4"},
-                {type:"r", value:"4"},
-            ],
-        },
-        {
-            bar: {
-                num_beats: 4,
-                base_note: 4
-            }, 
-            exercise: [
-                {type:"n",   value:"4"},
-                {type:"n",   value:"4"},
-                {type:"n",   value:"8"},
-                {type:"n",   value:"8"},
-                {type:"n",   value:"8"},
-                {type:"n",   value:"8"},
-                {type:"bar", value:"4"},
-
-                {type:"n",   value:"16"},
-                {type:"n",   value:"16"},
-                {type:"n",   value:"16"},
-                {type:"n",   value:"16"},
-                {type:"n",   value:"4",  in_tuplet:true},
-                {type:"n",   value:"4",  in_tuplet:true},
-                {type:"n",   value:"4",  in_tuplet:true, tuplet_type:3, tuplet_end:true},
-                {type:"bar", value:"4",},  
-
-                {type:"n", value:"4"},
-                {type:"n", value:"8"},
-                {type:"n", value:"8"},
-            ]
-        },
-        {
-            bar:{
-                num_beats: 3,
-                base_note: 8
-            },
-            exercise: [
-                {type:"n",   value:"8"  },
-                {type:"n",   value:"16" },
-                {type:"n",   value:"16" },
-                {type:"n",   value:"8"  },
-                {type:"bar", value:"4"  },
-
-                {type:"n", value:"8", in_tuplet: true},
-                {type:"n", value:"8", in_tuplet: true},
-                {type:"n", value:"8", in_tuplet: true, tuplet_type: 3, tuplet_end:true},
-                {type:"r", value:"8"},
-                {type:"n", value:"16"},
-                {type:"n", value:"16"},
-
-
-            ]
-        },
-        {
-            BPM: 50,
-            bar:{
-                num_beats: 3,
-                base_note: 8
-            },
-            exercise: [
-                {type:"n",   value:"8",  },
-                {type:"n",   value:"16", },
-                {type:"n",   value:"16", },
-                {type:"n",   value:"8",  },
-                {type:"bar", value:"4",  },
-
-                {type:"n", value:"8",   in_tuplet: true},
-                {type:"n", value:"8",   in_tuplet: true},
-                {type:"n", value:"8",   in_tuplet: true, tuplet_type: 3, tuplet_end:true},
-                {type:"r", value:"8"},
-                {type:"n", value:"16", },
-                {type:"n", value:"16", },
-
-
-            ]
-        },
-        {
-            bar:{
-                num_beats: 3,
-                base_note: 8
-            },
-            exercise: [
-                {type:"n",   value:"8"  },
-                {type:"n",   value:"16" },
-                {type:"n",   value:"16" },
-                {type:"n",   value:"8"  },
-                {type:"bar", value:"4"  },
-
-                {type:"n", value:"8",  in_tuplet: true},
-                {type:"n", value:"8",  in_tuplet: true},
-                {type:"n", value:"8",  in_tuplet: true, tuplet_type: 3, tuplet_end:true},
-                {type:"r", value:"8",  },
-                {type:"n", value:"16", },
-                {type:"n", value:"16", },
-
-
-            ]
-        }
-    ];
+    let examples = require("./vaje.json");
 
     this.currentExercise = null;
     this.currentExerciseInfo = null;
@@ -177,9 +12,11 @@ var ExerciseGenerator = function(){
     this.currentExampleNumber = -1;
     this.generatorSequence = [];
 
+
     this.generate = function(numGen){
         
         let number = Math.floor(Math.random() * (examples.length - 1));
+
 
         this.currentExerciseInfo = examples[number];
         this.currentExercise = examples[number].exercise;

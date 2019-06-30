@@ -151,6 +151,19 @@
                 <sexy-button :color="checkButtonColor" @click.native="submit()" >
                     <div class="tiny-tajni-pici-mici-font">Oddaj</div>
                 </sexy-button>
+
+                <sexy-button :color="checkButtonColor" @click.native="showJson()" >
+                    <div class="tiny-tajni-pici-mici-font">Show JSON</div>
+                </sexy-button>
+
+                <sexy-button :color="checkButtonColor" @click.native="changeSignature()" >
+                    <div class="tiny-tajni-pici-mici-font">Change Signature</div>
+                </sexy-button>
+
+                <sexy-button color="sunglow" @click.native="play_user()" :percents="percentsUser" customClass="normal-font tiny-tajni-pici-mici-font">
+                        <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'user'"/>
+                        <div v-else class="small-font-button">Ponovi vpisano</div>
+                </sexy-button>
                 
                 <!-- SET CORRECT BUTTON -->
                 <!--<sexy-button :color="checkButtonColor" @click.native="setCorrect()" >
@@ -265,7 +278,7 @@
     }
 
     // For 
-    @include breakpoint-landscape {
+    @include breakpoint-phone-landscape {
 
         .hide-normal{
             display: inline-block;
@@ -325,6 +338,20 @@ export default {
                 value: num
             });
 
+        },
+
+        showJson() {
+
+            this.key_callback({
+                type: "showJson"
+            });
+
+        },
+
+        changeSignature() {
+            this.key_callback({
+                type: "changeSignature"
+            });
         },
 
         rest(num) {

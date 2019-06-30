@@ -15,6 +15,8 @@ import HeaderMenu from '../components/HeaderMenu.vue'
 import Intervals from '../components/Intervals.vue'
 import Rhythm from '../components/games/rhythm/Rhythm.vue'
 
+import PlaybackTest from '../components/PlaybackTest.vue'
+
 import Keyboard from '../components/music/Keyboard.vue'
 import Leaderboard from '../components/Leaderboard.vue'
 import Levels from '../components/profile/Levels.vue'
@@ -71,6 +73,12 @@ export default new VueRouter({
             name: 'rhythm',
             path: '/game/rhythm',
             component: Rhythm,
+            props: true
+        },
+        {
+            name: 'playbackTest',
+            path: '/playbackTest',
+            component: PlaybackTest,
             props: true
         },
         {
