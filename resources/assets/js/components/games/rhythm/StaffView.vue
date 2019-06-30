@@ -496,7 +496,7 @@ export default {
                     let tuplet_type = thisNote.tuplet_type;
 
                     tuplets.push(new VF.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
-                        bracketed: true, ratioed: false, num_notes: tuplet_type //, notes_occupied: tuplet_type
+                        bracketed: true, num_notes: tuplet_type.num_notes , notes_occupied: tuplet_type.in_space_of
                     }));
                     firstTupletNoteIdx = -1;
                 }

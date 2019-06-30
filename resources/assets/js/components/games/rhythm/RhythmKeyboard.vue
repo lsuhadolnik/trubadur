@@ -9,16 +9,16 @@
                 <!--<div v-bind:class="{ half_transparent: cursor.selectionMode }">-->
 
                     <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(2)" ><div class="norfolk-note-padding">&#x0068;</div></sexy-button>
-                    <sexy-button v-else :color="note_color()" @click.native="tuplet(3)"><TupletSign num="3" :bg="note_color()" /></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet(3,2)"><TupletSign num="3" :bg="note_color()" /></sexy-button>
                     
                     <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(4)" ><div class="norfolk-note-padding">&#x0071;</div></sexy-button>
-                    <sexy-button v-else :color="note_color()" @click.native="tuplet(5)"><TupletSign num="5" :bg="note_color()" /></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet(2,3)"><TupletSign num="2" :bg="note_color()" /></sexy-button>
                     
                     <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(8)" ><div class="norfolk-note-padding">&#x0065;</div></sexy-button>
-                    <sexy-button v-else :color="note_color()" @click.native="tuplet(6)"><TupletSign num="6" :bg="note_color()" /></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet(5,4)"><TupletSign num="5:4" :bg="note_color()" /></sexy-button>
                     
                     <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(16)"><div class="norfolk-note-padding">&#x0078;</div></sexy-button>
-                    <sexy-button v-else :color="note_color()" @click.native="tuplet(9)"><TupletSign num="9" :bg="note_color()" /></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet(6,4)"><TupletSign num="6:4" :bg="note_color()" /></sexy-button>
 
                     <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(32)">
                         <div class="norfolk-note-padding thirtytwo-note">
@@ -28,7 +28,7 @@
                             <div class="td-flag3">&#x006A;</div>
                         </div>
                     </sexy-button>
-                    <sexy-button v-else :color="note_color()" @click.native="tuplet()"><TupletSign num="?" :bg="note_color()" /></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet()"><TupletSign num="?:?" :bg="note_color()" /></sexy-button>
 
                 <!--</div>-->
                 
@@ -421,11 +421,19 @@ export default {
 
         },
 
-        tuplet(num) {
+        tuplet(num_notes, in_space_of) {
+
+            let obj = null;
+            if(parseInt(num_notes) && parseInt(in_space_of)){
+                obj = {
+                    num_notes: num_notes,
+                    in_space_of: in_space_of
+                }
+            }
 
             this.key_callback({
                 type: 'tuplet',
-                tuplet_type: num
+                tuplet_type: obj
             });
 
         },

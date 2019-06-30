@@ -2750,24 +2750,24 @@ var utilities = {
     _step_tuplets: function _step_tuplets(notes, values) {
         var _this = this;
 
-        var current_tuplet_type = -1;
+        var current_tuplet_type = null;
         return values.map(function (v, i) {
 
             var nV = v;
 
             if (notes[i].in_tuplet) {
 
-                if (current_tuplet_type == -1) {
+                if (current_tuplet_type == null) {
                     current_tuplet_type = _this._getThisTupletType(notes, i);
                 }
 
-                nV = nV.div(current_tuplet_type).mul(2);
+                nV = nV.div(current_tuplet_type.num_notes).mul(current_tuplet_type.in_space_of);
             } else {
-                current_tuplet_type = -1;
+                current_tuplet_type = null;
             }
 
             if (notes[i].tuplet_end) {
-                current_tuplet_type = -1;
+                current_tuplet_type = null;
             }
 
             return nV;
@@ -28028,7 +28028,10 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     //     tie (bool): false,
     // 
     //     in_tuplet (bool): false,
-    //     tuplet_type (bool): 3 or [2,3,4,5,6,7,8, ...] 
+    //     tuplet_type (object): { // Tuplet ratio
+    //          num_notes (number):       3
+    //          in_space_of (number):     2
+    //     }
     // }
 
 
@@ -28186,10 +28189,15 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         }
 
         if (!event.tuplet_type) {
-            event.tuplet_type = parseInt(prompt("Vnesi vrednost triole"));
-            if (!event.tuplet_type) {
+            var num_notes = parseInt(prompt("Koliko not"));
+            var in_space_of = parseInt(prompt("V koliko not?"));
+            if (!num_notes || !in_space_of) {
                 return;
             }
+            event.tuplet_type = {
+                num_notes: num_notes,
+                in_space_of: in_space_of
+            };
         }
 
         this.tupletEditing_removeInSelection();
@@ -28343,12 +28351,12 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         var tuplet_type = this.currentTupletInfo.type;
 
-        if (tuplet_type == 0) {
+        if (tuplet_type == null) {
 
             this.tupletEditing_startNewTuplet(event);
         } else {
 
-            if (tuplet_type > util.getNoteType(event)) {
+            if (tuplet_type.num_notes > util.getNoteType(event)) {
 
                 this.tupletEditing_handleExit(event);
                 return;
@@ -28688,7 +28696,7 @@ var ExerciseGenerator = function ExerciseGenerator() {
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = [{"BPM":40,"name":"nepravilne poddelitve 2ole 3ole 4ole 5ole 1/17","bar":{"num_beats":3,"base_note":4},"exercise":[{"type":"n","value":8,"in_tuplet":true},{"type":"n","value":8,"in_tuplet":true},{"type":"n","value":8,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},{"type":"r","value":4},{"type":"n","value":8},{"type":"n","value":8},{"type":"n","value":16},{"type":"n","value":16},{"type":"n","value":16},{"type":"n","value":16},{"type":"bar","value":4},{"type":"n","value":4},{"type":"r","value":8},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},{"type":"n","value":8},{"type":"n","value":8},{"type":"bar","value":4},{"type":"n","value":8},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},{"type":"n","value":4},{"type":"n","value":16,"tie":true,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3}]}]
+module.exports = [{"BPM":40,"name":"nepravilne poddelitve 2ole 3ole 4ole 5ole 1/17","bar":{"num_beats":3,"base_note":4},"exercise":[{"type":"n","value":8,"in_tuplet":true},{"type":"n","value":8,"in_tuplet":true},{"type":"n","value":8,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3,"in_space_of":2}},{"type":"r","value":4},{"type":"n","value":8},{"type":"n","value":8},{"type":"n","value":16},{"type":"n","value":16},{"type":"n","value":16},{"type":"n","value":16},{"type":"bar","value":4},{"type":"n","value":4},{"type":"r","value":8},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3,"in_space_of":2}},{"type":"n","value":8},{"type":"n","value":8},{"type":"bar","value":4},{"type":"n","value":8},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3,"in_space_of":2}},{"type":"n","value":4},{"type":"n","value":16,"tie":true,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3,"in_space_of":2}},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3,"in_space_of":2}}]}]
 
 /***/ }),
 /* 25 */
@@ -76026,7 +76034,14 @@ var Fraction = __webpack_require__(6);
                 this.play(event);
             } else if (event.type == "showJson") {
 
-                document.write(JSON.stringify(this.notes.notes));
+                // Replacements:
+                // 1.   },    ->  },\n\t\t\t
+                // 2. ({"type":"bar".*},)    ->   \n\n\t\t\t$1\n\n
+                // 3.   ,"    ->   , "
+
+                var text = JSON.stringify(this.notes.notes).replace(/\[/, "\t\t\t").replace(/\]/, "").replace(/},/gi, "},\n\t\t\t").replace(/({"type":"bar".*},)/gi, "\n\n\t\t\t$1\n\n").replace(/":/gi, "\" :").replace(/,"/gi, ", \"");
+
+                console.log(text);
             } else if (event.type == "changeSignature") {
 
                 this.bar.num_beats = parseInt(prompt("Num_beats?"));
@@ -77346,7 +77361,7 @@ var Tuplet = VF.Tuplet;
                     var tuplet_type = thisNote.tuplet_type;
 
                     tuplets.push(new VF.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
-                        bracketed: true, ratioed: false, num_notes: tuplet_type //, notes_occupied: tuplet_type
+                        bracketed: true, num_notes: tuplet_type.num_notes, notes_occupied: tuplet_type.in_space_of
                     }));
                     firstTupletNoteIdx = -1;
                 }
@@ -77936,7 +77951,7 @@ var RU = new __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__["a" /* default
                     var tuplet_type = thisNote.tuplet_type;
 
                     tuplets.push(new __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
-                        bracketed: true, ratioed: false, num_notes: tuplet_type, notes_occupied: tuplet_type
+                        bracketed: true, num_notes: tuplet_type.num_notes, notes_occupied: tuplet_type.in_space_of
                     }));
                     firstTupletNoteIdx = -1;
                 }
@@ -78591,11 +78606,19 @@ var Fraction = __webpack_require__(6);
                 type: 'delete'
             });
         },
-        tuplet: function tuplet(num) {
+        tuplet: function tuplet(num_notes, in_space_of) {
+
+            var obj = null;
+            if (parseInt(num_notes) && parseInt(in_space_of)) {
+                obj = {
+                    num_notes: num_notes,
+                    in_space_of: in_space_of
+                };
+            }
 
             this.key_callback({
                 type: 'tuplet',
-                tuplet_type: num
+                tuplet_type: obj
             });
         },
         remove_tuplets: function remove_tuplets() {
@@ -79633,7 +79656,7 @@ var render = function() {
                   attrs: { color: _vm.note_color() },
                   nativeOn: {
                     click: function($event) {
-                      _vm.tuplet(3)
+                      _vm.tuplet(3, 2)
                     }
                   }
                 },
@@ -79668,13 +79691,13 @@ var render = function() {
                   attrs: { color: _vm.note_color() },
                   nativeOn: {
                     click: function($event) {
-                      _vm.tuplet(5)
+                      _vm.tuplet(2, 3)
                     }
                   }
                 },
                 [
                   _c("TupletSign", {
-                    attrs: { num: "5", bg: _vm.note_color() }
+                    attrs: { num: "2", bg: _vm.note_color() }
                   })
                 ],
                 1
@@ -79703,13 +79726,13 @@ var render = function() {
                   attrs: { color: _vm.note_color() },
                   nativeOn: {
                     click: function($event) {
-                      _vm.tuplet(6)
+                      _vm.tuplet(5, 4)
                     }
                   }
                 },
                 [
                   _c("TupletSign", {
-                    attrs: { num: "6", bg: _vm.note_color() }
+                    attrs: { num: "5:4", bg: _vm.note_color() }
                   })
                 ],
                 1
@@ -79738,13 +79761,13 @@ var render = function() {
                   attrs: { color: _vm.note_color() },
                   nativeOn: {
                     click: function($event) {
-                      _vm.tuplet(9)
+                      _vm.tuplet(6, 4)
                     }
                   }
                 },
                 [
                   _c("TupletSign", {
-                    attrs: { num: "9", bg: _vm.note_color() }
+                    attrs: { num: "6:4", bg: _vm.note_color() }
                   })
                 ],
                 1
@@ -79789,7 +79812,7 @@ var render = function() {
                 },
                 [
                   _c("TupletSign", {
-                    attrs: { num: "?", bg: _vm.note_color() }
+                    attrs: { num: "?:?", bg: _vm.note_color() }
                   })
                 ],
                 1

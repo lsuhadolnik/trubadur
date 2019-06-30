@@ -47,26 +47,26 @@ var utilities = {
     _step_tuplets(notes, values){
 
 
-        let current_tuplet_type = -1;
+        let current_tuplet_type = null;
         return values.map((v,i) => {
 
             let nV = v;
 
             if(notes[i].in_tuplet){
 
-                if(current_tuplet_type == -1){
+                if(current_tuplet_type == null){
                     current_tuplet_type = this._getThisTupletType(notes, i);
                 }
 
-                nV = nV.div(current_tuplet_type).mul(2);
+                nV = nV.div(current_tuplet_type.num_notes).mul(current_tuplet_type.in_space_of);
 
             }
             else {
-                current_tuplet_type = -1;
+                current_tuplet_type = null;
             }
 
             if(notes[i].tuplet_end){
-                current_tuplet_type = -1;
+                current_tuplet_type = null;
             }
 
             return nV;

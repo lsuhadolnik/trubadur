@@ -247,7 +247,20 @@ export default {
             }
             else if(event.type == "showJson"){
 
-                document.write(JSON.stringify(this.notes.notes));
+                // Replacements:
+                // 1.   },    ->  },\n\t\t\t
+                // 2. ({"type":"bar".*},)    ->   \n\n\t\t\t$1\n\n
+                // 3.   ,"    ->   , "
+
+                let text = JSON.stringify(this.notes.notes)
+                    .replace(/\[/, "\t\t\t")
+                    .replace(/\]/, "")
+                    .replace(/},/gi, "},\n\t\t\t")
+                    .replace(/({"type":"bar".*},)/gi, "\n\n\t\t\t$1\n\n")
+                    .replace(/":/gi, "\" :")
+                    .replace(/,"/gi, ", \"");
+
+                console.log(text);
 
             }
             else if(event.type == "changeSignature"){

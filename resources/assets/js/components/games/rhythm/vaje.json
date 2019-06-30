@@ -10,7 +10,7 @@
 
             {"type":"n","value":8, "in_tuplet": true},
             {"type":"n","value":8, "in_tuplet": true},
-            {"type":"n","value":8, "in_tuplet": true, "tuplet_end":true,"tuplet_type":3},
+            {"type":"n","value":8, "in_tuplet": true, "tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
             {"type":"r","value":4},
             {"type":"n","value":8},
             {"type":"n","value":8},
@@ -25,7 +25,7 @@
             {"type":"r","value":8},
             {"type":"n","value":16,"in_tuplet":true},
             {"type":"n","value":16,"in_tuplet":true},
-            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
             {"type":"n","value":8},
             {"type":"n","value":8},
             
@@ -34,14 +34,14 @@
             {"type":"n","value":8},
             {"type":"n","value":16,"in_tuplet":true},
             {"type":"n","value":16,"in_tuplet":true},
-            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
             {"type":"n","value":4},
             {"type":"n","value":16,"tie":true,"in_tuplet":true},
             {"type":"n","value":16,"in_tuplet":true},
-            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
             {"type":"n","value":16,"in_tuplet":true},
             {"type":"n","value":16,"in_tuplet":true},
-            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3}
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}}
             
         ]
     }

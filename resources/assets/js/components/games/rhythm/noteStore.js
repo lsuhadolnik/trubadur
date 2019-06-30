@@ -16,7 +16,10 @@ var NoteStore = function(bar, cursor, render_function, info) {
     //     tie (bool): false,
     // 
     //     in_tuplet (bool): false,
-    //     tuplet_type (bool): 3 or [2,3,4,5,6,7,8, ...] 
+    //     tuplet_type (object): { // Tuplet ratio
+    //          num_notes (number):       3
+    //          in_space_of (number):     2
+    //     }
     // }
 
 
@@ -203,8 +206,13 @@ var NoteStore = function(bar, cursor, render_function, info) {
         }
 
         if(!event.tuplet_type){
-            event.tuplet_type = parseInt(prompt("Vnesi vrednost triole"));
-            if(!event.tuplet_type){ return; }
+            let num_notes = parseInt(prompt("Koliko not"));
+            let in_space_of = parseInt(prompt("V koliko not?"));
+            if(!num_notes || !in_space_of) { return; }
+            event.tuplet_type = {
+                num_notes: num_notes,
+                in_space_of: in_space_of
+            };
         }
 
         this.tupletEditing_removeInSelection();
@@ -378,13 +386,13 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
         let tuplet_type = this.currentTupletInfo.type;
 
-        if(tuplet_type == 0){
+        if(tuplet_type == null){
 
             this.tupletEditing_startNewTuplet(event)
 
         }else {
 
-            if(tuplet_type > util.getNoteType(event)){
+            if(tuplet_type.num_notes > util.getNoteType(event)){
 
                 this.tupletEditing_handleExit(event);
                 return;

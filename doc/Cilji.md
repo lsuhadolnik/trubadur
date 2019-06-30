@@ -64,62 +64,8 @@
 
 ### Intuitiven vmesnik 
 
-- Triole so obupno neintuitivne
+- ~~Triole so obupno neintuitivne~~
 
-- Kako bi blo bolje:
-
-    - Pritisneš gumb za triole
-    - Triola se obarva z drugo barvo, tako da je tudi pri urejanju jasno, da se ureja to triolo
-    - Prvo noto ali pavzo - ta določi vrednost triole: če je četrtinka, bodo samo četrtinke v tej trioli
-    - Potem naklofa tolk not kolikor hoče in se potem triola vleče naprej - če so 4 note, je kvartola itd itd..
-    - Ko želi končati to triolo, pritisne gumb za triole ali katerokoli drugo vrednost, ki ni v trioli
-
-- Vprašanja: 
-
-    - kako popravljati triolo?
-
-        - Kako izbrisati eno noto? 
-
-            Pritisneš delete in se izbriše samo ena nota, vrednost triole se ustrezno prilagodi
-
-        - Kako izbrisati triolo?
-
-            Izbrišeš zadnjo noto v trioli
-
-        - Kaj če izbrišeš prvo noto v trioli?
-
-            - Če je triola dolga 1, potem se triola izbriše
-            - Če je triola daljša od 1, potem se začetek triole premakne na naslednjo noto, ta nota se pa izbriše
-
-        - Kaj se zgodi, če si v sredini triole in pritisneš neko noto?
-
-            - Če je iste vrednosti, kot triola, potem se doda v sredino, vrednost triole se popravi
-            - Če je druge vrednosti, kot je triola, ali je takt ali pa pika, potem ne naredi nič, javi napako
-
-        - Kako dodaš nove note v triolo:
-
-            - Ko si za triolo, se nad kursorjem pokaže gumb uredi triolo. 
-            - Če ga pritisneš, se triola označi in lahko dodajaš nove vrednosti
-
-        - Kako to vpliva na interno predstavitev not?
-
-            - Lahko ostane enaka, 
-            - Pri dodajanju bo treba spreminjati tip triole, ampak to ne bo trajalo tako dolgo
-
-
-
-Torej kako to spremenit?
-
-- ✅ Spremeni gumb na tipkovnici 
-- Spremeni delovanje NoteStore
-    - ✅ V cursor dodaj editing_tuplet
-    - Ko pritisneš na triola gumb nastavi editing_tuplet
-    - Pol dej v noteStore ClickListener še metodo alter_tuplet, ki popravi trenutno triolo
-
-Implement:
-
-- Tuplet button + correct note
-- Tuplet button + correct notes + tuplet button
 
 
 

@@ -12,7 +12,7 @@
             {"type":"n","value":8},
             {"type":"n","value":16,"in_tuplet":true},
             {"type":"n","value":16,"in_tuplet":true},
-            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
             {"type":"n","value":8},
             {"type":"n","value":8},
             
@@ -21,14 +21,14 @@
             {"type":"n","value":8},
             {"type":"n","value":16,"in_tuplet":true},
             {"type":"n","value":16,"in_tuplet":true},
-            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
             {"type":"n","value":4},
             {"type":"n","value":16,"tie":true,"in_tuplet":true},
             {"type":"n","value":16,"in_tuplet":true},
-            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
             {"type":"n","value":16,"in_tuplet":true},
             {"type":"n","value":16,"in_tuplet":true},
-            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
             
             {"type":"bar","value":4},
             
@@ -38,7 +38,7 @@
             {"type":"n","value":8,"tie":true},
             {"type":"n","value":16,"in_tuplet":true},
             {"type":"n","value":16,"in_tuplet":true},
-            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
             
             {"type":"bar","value":4},
             
@@ -47,7 +47,7 @@
             {"type":"n","value":8},
             {"type":"n","value":8,"in_tuplet":true},
             {"type":"n","value":8,"in_tuplet":true},
-            {"type":"n","value":8,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
+            {"type":"n","value":8,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
             
             {"type":"bar","value":4},
 
@@ -60,7 +60,7 @@
             
             {"type":"n","value":4,"in_tuplet":true},
             {"type":"n","value":4,"in_tuplet":true},
-            {"type":"n","value":4,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
+            {"type":"n","value":4,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
             {"type":"n","value":8},
             {"type":"n","value":8},
             
@@ -72,14 +72,153 @@
             {"type":"r","value":8},
             {"type":"n","value":16,"in_tuplet":true},
             {"type":"n","value":16,"in_tuplet":true},
-            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
             {"type":"n","value":8},
             {"type":"n","value":8}
         ]
     },
     {
+        "BPM": 72,
+        "name": "nepravilne poddelitve 2ole 3ole 4ole 5ole 2/17",
+        "bar":{
+            "num_beats":3,
+            "base_note":4
+        },
+        "exercise": [
+
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true, "tuplet_end": true, "tuplet_type": {"num_notes":3, "in_space_of": 2}},
+            {"type": "n", "value": 4},
+            {"type": "n", "value": 8},
+            {"type": "n", "value": 8},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true, "tuplet_end": true, "tuplet_type": {"num_notes":3, "in_space_of": 2}},
+            
+
+            {"type": "bar", "value": 4},
+
+
+            {"type": "n", "value": 4},
+            {"type": "n", "value": 8, "tie": true},
+            {"type": "n", "value": 4},
+            {"type": "n", "value": 8},
+            
+
+            {"type": "bar", "value": 4},
+
+
+            {"type": "r", "value": 8},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true, "tuplet_end": true, "tuplet_type": {"num_notes":3, "in_space_of": 2}},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true, "tuplet_end": true, "tuplet_type": {"num_notes":3, "in_space_of": 2}},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true, "tuplet_end": true, "tuplet_type": {"num_notes":3, "in_space_of": 2}},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true, "tuplet_end": true, "tuplet_type": {"num_notes":3, "in_space_of": 2}},
+            {"type": "n", "value": 8},
+            
+
+            {"type": "bar", "value": 4},
+
+
+            {"type": "n", "value": 4},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true, "tuplet_end": true, "tuplet_type": {"num_notes":3, "in_space_of": 2}},
+            {"type": "n", "value": 8},
+            {"type": "n", "value": 8, "tie": true},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true},
+            {"type": "n", "value": 16, "in_tuplet": true, "tuplet_end": true, "tuplet_type": {"num_notes":3, "in_space_of": 2}},
+
+            {"type": "bar", "value": 4},
+
+            {"type":"n", "value":4},
+			{"type":"r", "value":8, "in_tuplet":true},
+			{"type":"n", "value":8, "in_tuplet":true},
+			{"type":"n", "value":8, "in_tuplet":true, "tuplet_end":true, "tuplet_type":{"num_notes":3, "in_space_of": 2}},
+			{"type":"n", "value":8},
+			{"type":"n", "value":16, "in_tuplet":true},
+			{"type":"n", "value":16, "in_tuplet":true},
+			{"type":"n", "value":16, "in_tuplet":true, "tuplet_end":true, "tuplet_type":{"num_notes":3, "in_space_of": 2}},
+			
+
+			{"type":"bar", "value":4},
+
+
+			{"type":"n", "value":2},
+			{"type":"r", "value":4}
+        ]
+    },
+    {
+        "name": "Nepravilne poddelitve 2ole, 3ole, 4ole, 5ole, 6ole, 7ole 3/17",
+        "BPM": 72,
+        "bar":{
+            "base_note": 8,
+            "num_beats": 6
+        },
+        "exercise":[
+            {"type" :"n", "value" :4},
+			{"type" :"n", "value" :8},
+			{"type" :"n", "value" :8},
+			{"type" :"n", "value" :16},
+			{"type" :"n", "value" :16},
+			{"type" :"n", "value" :16},
+			{"type" :"n", "value" :16},
+			
+
+			{"type" :"bar", "value" :4},
+
+
+			{"type" :"n", "value" :16, "in_tuplet" :true},
+			{"type" :"n", "value" :16, "in_tuplet" :true},
+			{"type" :"n", "value" :16, "in_tuplet" :true, "tuplet_end" :true, "tuplet_type" :{"num_notes":3, "in_space_of": 2}},
+			{"type" :"n", "value" :8},
+			{"type" :"n", "value" :16},
+			{"type" :"n", "value" :16},
+			{"type" :"n", "value" :8},
+			{"type" :"n", "value" :8},
+			{"type" :"r", "value" :8},
+			
+
+			{"type" :"bar", "value" :4},
+
+
+			{"type" :"n", "value" :8},
+			{"type" :"n", "value" :8},
+			{"type" :"n", "value" :8},
+			{"type" :"n", "value" :8, "in_tuplet" :true},
+			{"type" :"n", "value" :8, "in_tuplet" :true, "tuplet_end" :true, "tuplet_type" :{"num_notes":2, "in_space_of": 3}},
+			
+
+			{"type" :"bar", "value" :4},
+
+
+			{"type" :"n", "value" :8},
+			{"type" :"n", "value" :16},
+			{"type" :"n", "value" :16},
+			{"type" :"n", "value" :16},
+			{"type" :"n", "value" :16},
+			{"type" :"n", "value" :16, "in_tuplet" :true},
+			{"type" :"n", "value" :16, "in_tuplet" :true},
+			{"type" :"n", "value" :16, "in_tuplet" :true},
+            {"type" :"n", "value" :16, "in_tuplet" :true, "tuplet_end" :true, "tuplet_type" :{"num_notes":4, "in_space_of": 3}}
+            
+
+
+
+        ]
+    },
+    {
         "BPM": 40,
-        "name": "nepravilne poddelitve 2ole 3ole 4ole 5ole 4/17",
+        "name": "nepravilne poddelitve 2ole 3ole 4ole 5ole 1/17 (dva takta)",
         "bar":{
             "num_beats":3,
             "base_note":4
@@ -92,7 +231,7 @@
             {"type":"n","value":8,"tie":true},
             {"type":"n","value":16,"in_tuplet":true},
             {"type":"n","value":16,"in_tuplet":true},
-            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
             
             {"type":"bar","value":4},
             
@@ -101,46 +240,11 @@
             {"type":"n","value":8},
             {"type":"n","value":8,"in_tuplet":true},
             {"type":"n","value":8,"in_tuplet":true},
-            {"type":"n","value":8,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3}
+            {"type":"n","value":8,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}}
         ]
     },
     {
-        "BPM": 40,
-        "name": "nepravilne poddelitve 2ole 3ole 4ole 5ole 4/17",
-        "bar":{
-            "num_beats":3,
-            "base_note":4
-        },
-        "exercise":[
-            
-
-            {"type":"n","value":4},
-            {"type":"r","value":8},
-            {"type":"n","value":4},
-            {"type":"n","value":8},
-            
-            {"type":"bar","value":4},
-            
-            {"type":"n","value":4,"in_tuplet":true},
-            {"type":"n","value":4,"in_tuplet":true},
-            {"type":"n","value":4,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
-            {"type":"n","value":8},
-            {"type":"n","value":8},
-            
-            
-            {"type":"bar","value":4},
-            
-            
-            {"type":"n","value":4},
-            {"type":"r","value":8},
-            {"type":"n","value":16,"in_tuplet":true},
-            {"type":"n","value":16,"in_tuplet":true},
-            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":3},
-            {"type":"n","value":8},
-            {"type":"n","value":8}
-        ]
-    },
-    {
+        "name":"Lovro Test 1",
         "bar": {
             "num_beats": 4,
             "base_note": 4
@@ -157,7 +261,7 @@
                 
                 {"type":"n",   "value":"4",  "in_tuplet": true},
                 {"type":"n",   "value":"4",  "in_tuplet": true},
-                {"type":"n",   "value":"4",  "in_tuplet": true, "tuplet_type": 3, "tuplet_end":true},
+                {"type":"n",   "value":"4",  "in_tuplet": true, "tuplet_type": {"num_notes":3, "in_space_of": 2}, "tuplet_end":true},
                 {"type":"n",   "value":"16"},
                 {"type":"n",   "value":"16"}, 
                 {"type":"n",   "value":"8", "dot": true},
@@ -170,6 +274,7 @@
             ]
     },
     {
+        "name": "8 4notes",
         "bar": {
             "num_beats": 4,
             "base_note": 4
@@ -179,6 +284,7 @@
             {"type":"n",   "value":"4"},
             {"type":"n",   "value":"4"},
             {"type":"n",   "value":"4"},
+            
             {"type":"bar", "value":"4"},
 
             {"type":"n", "value":"4"},
@@ -188,6 +294,7 @@
         ]
     },
     {
+        "name": "Test Lovro 3",
         "bar": {
             "num_beats": 4,
             "base_note": 4
@@ -195,7 +302,7 @@
         "exercise": [
             {"type":"n",   "value":"4",  "in_tuplet": true},
             {"type":"n",   "value":"4",  "in_tuplet": true},
-            {"type":"n",   "value":"4",  "in_tuplet": true, "tuplet_type": 3, "tuplet_end":true},
+            {"type":"n",   "value":"4",  "in_tuplet": true, "tuplet_type": {"num_notes":3, "in_space_of": 2}, "tuplet_end":true},
             {"type":"n",   "value":"4" },
             {"type":"r",   "value":"4"},
             {"type":"r",   "value":"4"},
@@ -203,13 +310,14 @@
 
             {"type":"n", "value":"4", "in_tuplet": true},
             {"type":"n", "value":"4", "in_tuplet": true},                
-            {"type":"n", "value":"4", "in_tuplet": true, "tuplet_type": 3, "tuplet_end":true},
+            {"type":"n", "value":"4", "in_tuplet": true, "tuplet_type": {"num_notes":3, "in_space_of": 2}, "tuplet_end":true},
             {"type":"n", "value":"4"},
             {"type":"r", "value":"4"},
             {"type":"r", "value":"4"}
         ]
     },
     {
+        "name": "Test Lovro 4",
         "bar": {
             "num_beats": 4,
             "base_note": 4
@@ -229,7 +337,7 @@
             {"type":"n",   "value":"16"},
             {"type":"n",   "value":"4",  "in_tuplet":true},
             {"type":"n",   "value":"4",  "in_tuplet":true},
-            {"type":"n",   "value":"4",  "in_tuplet":true, "tuplet_type":3, "tuplet_end":true},
+            {"type":"n",   "value":"4",  "in_tuplet":true, "tuplet_type":{"num_notes":3, "in_space_of": 2}, "tuplet_end":true},
             {"type":"bar", "value":"4"},  
 
             {"type":"n", "value":"4"},
@@ -238,6 +346,7 @@
         ]
     },
     {
+        "name": "Test Lovro 5",
         "bar":{
             "num_beats": 3,
             "base_note": 8
@@ -247,59 +356,15 @@
             {"type":"n",   "value":"16" },
             {"type":"n",   "value":"16" },
             {"type":"n",   "value":"8"  },
+            
             {"type":"bar", "value":"4"  },
 
             {"type":"n", "value":"8", "in_tuplet": true},
             {"type":"n", "value":"8", "in_tuplet": true},
-            {"type":"n", "value":"8", "in_tuplet": true, "tuplet_type": 3, "tuplet_end":true},
+            {"type":"n", "value":"8", "in_tuplet": true, "tuplet_type": {"num_notes":3, "in_space_of": 2}, "tuplet_end":true},
             {"type":"r", "value":"8"},
             {"type":"n", "value":"16"},
             {"type":"n", "value":"16"}
-
-
-        ]
-    },
-    {
-        "BPM": 50,
-        "bar":{
-            "num_beats": 3,
-            "base_note": 8
-        },
-        "exercise": [
-            {"type":"n",   "value":"8"  },
-            {"type":"n",   "value":"16" },
-            {"type":"n",   "value":"16" },
-            {"type":"n",   "value":"8" },
-            {"type":"bar", "value":"4"  },
-
-            {"type":"n", "value":"8",   "in_tuplet": true},
-            {"type":"n", "value":"8",   "in_tuplet": true},
-            {"type":"n", "value":"8",   "in_tuplet": true, "tuplet_type": 3, "tuplet_end":true},
-            {"type":"r", "value":"8"},
-            {"type":"n", "value":"16" },
-            {"type":"n", "value":"16" }
-
-
-        ]
-    },
-    {
-        "bar":{
-            "num_beats": 3,
-            "base_note": 8
-        },
-        "exercise": [
-            {"type":"n",   "value":"8"  },
-            {"type":"n",   "value":"16" },
-            {"type":"n",   "value":"16" },
-            {"type":"n",   "value":"8"  },
-            {"type":"bar", "value":"4"  },
-
-            {"type":"n", "value":"8",  "in_tuplet": true},
-            {"type":"n", "value":"8",  "in_tuplet": true},
-            {"type":"n", "value":"8",  "in_tuplet": true, "tuplet_type": 3, "tuplet_end":true},
-            {"type":"r", "value":"8" },
-            {"type":"n", "value":"16" },
-            {"type":"n", "value":"16" }
 
 
         ]
