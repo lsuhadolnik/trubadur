@@ -10,11 +10,16 @@
 
 - Treba je dodati še podporo za različne taktovske načine
 
+    - Vprašaj Šavlija
+
 - Preveri, ali se da izpolnjevati Šavlijeve vaje in jih vpiši z vmesnikom
+
+    - Ali naj dodam podporo za več glasov?
+    - Kako je s mešanimi takti?
 
 - ~~Triole 💩💩😢~~
 
- 
+
 
 ### Preverjanje ritmičnih vaj in dajanje feedbacka uporabniku
 
@@ -41,6 +46,27 @@
     - Ko **en uporabnik** reši vse ritmične vaje, naj sistem opozori administratorje, da so že vse vaje rešene in da rabimo nove.
 
  
+
+RhythmBar
+
+- id
+- content // Naj bo sortirano, da se jih da primerjati kar po stringih
+- barInfo
+- difficulty
+
+RhythmExercise
+
+- id
+- difficulty
+- BPM
+
+RhythmExerciseBar
+
+- id_exercise
+- id_bar
+- seq
+
+
 
 ### Analiza vaj za učitelje
 

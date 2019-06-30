@@ -78177,7 +78177,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.half_transparent[data-v-79470641] {\n  opacity: 0.5;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  margin-left: 4px;\n  font-size: 40px;\n}\n.norfolk-row .button[data-v-79470641], .norfolk[data-v-79470641] {\n  font-family: Norfolk;\n  font-size: 33px;\n}\n.musisync-row .button[data-v-79470641], .musisync[data-v-79470641] {\n  font-family: MusiSync;\n  font-size: 33px;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n.thirtytwo-note .td-flag1[data-v-79470641], .thirtytwo-note .td-flag2[data-v-79470641], .thirtytwo-note .td-flag3[data-v-79470641] {\n  font-size: 30px;\n  margin-left: 17px;\n}\n.thirtytwo-note .td-base[data-v-79470641] {\n  margin-top: -16px;\n}\n.thirtytwo-note .td-flag1[data-v-79470641] {\n  margin-top: -89px;\n}\n.thirtytwo-note .td-flag2[data-v-79470641] {\n  margin-top: -53px;\n}\n.thirtytwo-note .td-flag3[data-v-79470641] {\n  margin-top: -53px;\n}\n.moveButtonsButton[data-v-79470641] {\n  font-family: initial !important;\n  font-size: 26px  !important;\n  font-weight: bold;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-79470641] {\n  font-size: 8pt !important;\n}\n.norfolk-note-padding[data-v-79470641] {\n  padding-top: 19px;\n}\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.button_1_col[data-v-79470641] {\n    width: 60px !important;\n    height: 60px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.half_transparent[data-v-79470641] {\n  opacity: 0.5;\n}\n.rythm-game__keyboard_wrap[data-v-79470641] {\n  padding: 0 10px 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__keyboard[data-v-79470641] {\n  font-size: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-79470641] {\n  margin-left: 4px;\n  font-size: 40px;\n}\n.norfolk-row .button[data-v-79470641] {\n  font-family: Norfolk;\n  font-size: 33px;\n}\n.norfolk[data-v-79470641] {\n  font-family: Norfolk !important;\n}\n.musisync-row .button[data-v-79470641] {\n  font-family: MusiSync;\n  font-size: 33px;\n}\n.musisync[data-v-79470641] {\n  font-family: MusiSync !important;\n}\n.BPM-indicator[data-v-79470641] {\n  font-size: 16px;\n}\n.BPM-slider[data-v-79470641] {\n  width: 80px;\n}\n.thirtytwo-note .td-flag1[data-v-79470641], .thirtytwo-note .td-flag2[data-v-79470641], .thirtytwo-note .td-flag3[data-v-79470641] {\n  font-size: 30px;\n  margin-left: 17px;\n}\n.thirtytwo-note .td-base[data-v-79470641] {\n  margin-top: -16px;\n}\n.thirtytwo-note .td-flag1[data-v-79470641] {\n  margin-top: -89px;\n}\n.thirtytwo-note .td-flag2[data-v-79470641] {\n  margin-top: -53px;\n}\n.thirtytwo-note .td-flag3[data-v-79470641] {\n  margin-top: -53px;\n}\n.moveButtonsButton[data-v-79470641] {\n  font-family: initial !important;\n  font-size: 26px  !important;\n  font-weight: bold;\n}\n.normal-font[data-v-79470641] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-79470641] {\n  font-size: 8pt !important;\n}\n.norfolk-note-padding[data-v-79470641] {\n  padding-top: 19px;\n}\n.hide-normal[data-v-79470641] {\n  display: none;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.hide-normal[data-v-79470641] {\n    display: inline-block;\n}\n.show-normal[data-v-79470641] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-79470641] {\n    margin-bottom: 0px;\n}\n.button_1_col[data-v-79470641] {\n    width: 50px !important;\n    height: 50px !important;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: portrait) {\n.button_1_col[data-v-79470641] {\n    width: 60px !important;\n    height: 60px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -78206,6 +78206,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_vue_awesome_icons_times__ = __webpack_require__(167);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_vue_awesome_icons_i_cursor__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vue_awesome_icons_ban__ = __webpack_require__(169);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -79822,31 +79864,86 @@ var render = function() {
             "div",
             { staticClass: "hide-normal" },
             [
-              _c("sexy-button", {
-                attrs: {
-                  hidden: _vm.cursor.in_tuplet,
-                  text: "\\",
-                  color: "green"
-                },
-                nativeOn: {
-                  click: function($event) {
-                    _vm.add_bar()
-                  }
-                }
-              }),
+              _vm.moving_buttons || _vm.cursor.in_tuplet
+                ? _c("sexy-button", {
+                    attrs: {
+                      text: "<",
+                      color: "orange",
+                      customClass: "moveButtonsButton"
+                    },
+                    nativeOn: {
+                      click: function($event) {
+                        return _vm.move_cursor_backwards($event)
+                      }
+                    }
+                  })
+                : _c("sexy-button", {
+                    attrs: {
+                      hidden: _vm.cursor.in_tuplet,
+                      text: "\\",
+                      color: "green",
+                      customClass: "musisync"
+                    },
+                    nativeOn: {
+                      click: function($event) {
+                        _vm.add_bar()
+                      }
+                    }
+                  }),
               _vm._v(" "),
-              _c("sexy-button", {
-                attrs: {
-                  hidden: _vm.cursor.in_tuplet,
-                  text: ".",
-                  color: "green"
-                },
-                nativeOn: {
-                  click: function($event) {
-                    _vm.dot()
-                  }
-                }
-              }),
+              _vm.moving_buttons || _vm.cursor.in_tuplet
+                ? _c("sexy-button", {
+                    attrs: {
+                      text: ">",
+                      color: "orange",
+                      customClass: "moveButtonsButton"
+                    },
+                    nativeOn: {
+                      click: function($event) {
+                        return _vm.move_cursor_forward($event)
+                      }
+                    }
+                  })
+                : _c("sexy-button", {
+                    attrs: {
+                      hidden: _vm.cursor.in_tuplet,
+                      text: ".",
+                      color: "green",
+                      customClass: "musisync"
+                    },
+                    nativeOn: {
+                      click: function($event) {
+                        _vm.dot()
+                      }
+                    }
+                  }),
+              _vm._v(" "),
+              _vm.moving_buttons
+                ? _c("sexy-button", {
+                    attrs: {
+                      hidden: _vm.cursor.in_tuplet,
+                      text: ". u",
+                      color: "green"
+                    },
+                    nativeOn: {
+                      click: function($event) {
+                        _vm.moving_buttons = !_vm.moving_buttons
+                      }
+                    }
+                  })
+                : _c("sexy-button", {
+                    attrs: {
+                      hidden: _vm.cursor.in_tuplet,
+                      text: "< >",
+                      color: "orange",
+                      customClass: "moveButtonsButton moveButtonsButton_Switch"
+                    },
+                    nativeOn: {
+                      click: function($event) {
+                        _vm.moving_buttons = !_vm.moving_buttons
+                      }
+                    }
+                  }),
               _vm._v(" "),
               _c(
                 "sexy-button",
@@ -79868,31 +79965,6 @@ var render = function() {
                     ? _c("icon", { attrs: { name: "pause" } })
                     : _c("div", { staticClass: "small-font-button" }, [
                         _vm._v("Ponovi vajo")
-                      ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "sexy-button",
-                {
-                  attrs: {
-                    color: "sunglow",
-                    percents: _vm.percentsUser,
-                    customClass: "normal-font tiny-tajni-pici-mici-font"
-                  },
-                  nativeOn: {
-                    click: function($event) {
-                      _vm.play_user()
-                    }
-                  }
-                },
-                [
-                  _vm.playbackStatus.playing &&
-                  _vm.playbackStatus.currentlyLoaded == "user"
-                    ? _c("icon", { attrs: { name: "pause" } })
-                    : _c("div", { staticClass: "small-font-button" }, [
-                        _vm._v("Ponovi vpisano")
                       ])
                 ],
                 1
@@ -80009,7 +80081,7 @@ var render = function() {
             { staticClass: "hide-normal" },
             [
               _c("sexy-button", {
-                attrs: { text: "u", color: "green" },
+                attrs: { text: "u", customClass: "musisync", color: "green" },
                 nativeOn: {
                   click: function($event) {
                     _vm.tie()
@@ -80017,14 +80089,19 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("sexy-button", {
-                attrs: { text: "T", color: _vm.tuplet_color },
-                nativeOn: {
-                  click: function($event) {
-                    _vm.tuplet()
+              _c(
+                "sexy-button",
+                {
+                  attrs: { color: _vm.select_button_color },
+                  nativeOn: {
+                    click: function($event) {
+                      _vm.selection()
+                    }
                   }
-                }
-              }),
+                },
+                [_c("icon", { attrs: { name: "i-cursor" } })],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "sexy-button",
@@ -80304,65 +80381,6 @@ var render = function() {
                 _vm._v("Oddaj")
               ])
             ]
-          ),
-          _vm._v(" "),
-          _c(
-            "sexy-button",
-            {
-              attrs: { color: _vm.checkButtonColor },
-              nativeOn: {
-                click: function($event) {
-                  _vm.showJson()
-                }
-              }
-            },
-            [
-              _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
-                _vm._v("Show JSON")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "sexy-button",
-            {
-              attrs: { color: _vm.checkButtonColor },
-              nativeOn: {
-                click: function($event) {
-                  _vm.changeSignature()
-                }
-              }
-            },
-            [
-              _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
-                _vm._v("Change Signature")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "sexy-button",
-            {
-              attrs: {
-                color: "sunglow",
-                percents: _vm.percentsUser,
-                customClass: "normal-font tiny-tajni-pici-mici-font"
-              },
-              nativeOn: {
-                click: function($event) {
-                  _vm.play_user()
-                }
-              }
-            },
-            [
-              _vm.playbackStatus.playing &&
-              _vm.playbackStatus.currentlyLoaded == "user"
-                ? _c("icon", { attrs: { name: "pause" } })
-                : _c("div", { staticClass: "small-font-button" }, [
-                    _vm._v("Ponovi vpisano")
-                  ])
-            ],
-            1
           )
         ],
         1
