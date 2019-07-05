@@ -165,7 +165,7 @@
                 </sexy-button>
 
                 <!-- DEBUG -->
-                <!--<sexy-button :color="checkButtonColor" @click.native="showJson()" >
+                <sexy-button :color="checkButtonColor" @click.native="showJson()" >
                     <div class="tiny-tajni-pici-mici-font">Show JSON</div>
                 </sexy-button>
 
@@ -176,7 +176,7 @@
                 <sexy-button color="sunglow" @click.native="play_user()" :percents="percentsUser" customClass="normal-font tiny-tajni-pici-mici-font">
                         <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'user'"/>
                         <div v-else class="small-font-button">Ponovi vpisano</div>
-                </sexy-button>-->
+                </sexy-button>
                 <!-- END DEBUG -->
                 
                 <!-- SET CORRECT BUTTON -->
@@ -294,7 +294,6 @@
     //
     // RESPONSIVE CLASSES
     //
-
     .hide-normal{
         display:none;
     }

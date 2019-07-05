@@ -86,12 +86,6 @@ export default {
 
                 zoomViewContainerHeight: 176,
 
-                // Determines how much pixels 
-                // an average note occupies.
-                // Used to space notes evenly
-                //meanNoteWidth: 60,
-                //meanNoteWidth: 30,
-
                 bubble_class: "minimap-bubble",
                 lastMinimapBubbleX: 0,
                 lastMinimapBubbleW: 0,
@@ -106,7 +100,9 @@ export default {
                 cursor: {
                     cursorBarClass: "cursor-bar",
                     cursorMargin: 22
-                }
+                },
+
+                barnoteWidth: 40,
 
             },
 
@@ -114,7 +110,11 @@ export default {
                 minimap: {
                     id: "first-row",
                     role: "minimap",
-                    viewHeight: 60
+                    viewHeight: 60,
+                    renderSpecifics: function(render_context){
+                        // this is the descriptor object
+                        render_context.draw_minimap_bubble(this);
+                    }
                 }, 
                 zoomview: {
                     id: "second-row",
@@ -303,8 +303,13 @@ export default {
 
             // No cursor note
             // Cursor is right at the start
+            // After all time signatures
             if(!cursorNode){
-                this._set_cursor_position(20)
+
+                let signatures = RU._construct_time_signature(this.bar);
+                let offset = 30 * signatures.length;
+
+                this._set_cursor_position(offset)
                 return;
             }
 
@@ -323,6 +328,9 @@ export default {
 
             // ZOOM-BREAK
             this._set_bubble_width(bubbleW);
+            if(descriptor.role == "minimap"){
+
+            }
 
             if(descriptor.role == "zoomview"){
                 
@@ -352,14 +360,13 @@ export default {
             // Here I could cancel unnecessary scroll if the cursor was still visible
             // But I disabled that
 
-
             this.scrolled(startX - screenWidth*0.5);
+
+            RU._check_cursor_in_tuplet(this.cursor, notes);
 
         },
 
         _render_context(descriptor, notes, cursor){
-
-
 
             if(window.innerHeight <= 600){
                 // Size the svg: - PLEASE MOVE THIS LOGIC SOMEWHERE ELSE! THANKS!
@@ -385,21 +392,17 @@ export default {
             //let staveIndex = 0;
             let cursorNote = null;
 
-            let batches = [];
-            let barInfo = [];
+            let batches = [], barInfo = [];
 
-            var ties = [];
-            var tuplets = [];
-            var renderQueue = [];
+            var ties = [], tuplets = [], renderQueue = [];
             descriptor.rendered = [];
 
             let allStaveNotes = [];
-
-            let latestNoteIndex = 0;
-            let lastNoteIndex = -1;
+            let latestNoteIndex = 0, lastNoteIndex = -1;
 
             let firstTupletNoteIdx = -1;
 
+            // Set initial bar width
             let currentBatchWidth = 0;
 
             for(var i = 0; i < notes.length; i++){
@@ -419,15 +422,14 @@ export default {
                 if(thisNote.type == "r")
                     symbol += "r";
 
-                let newNote = new StaveNote(
-                    {
-                        clef: "treble", 
-                        keys: ["g/4"], 
-                        duration: symbol
-                    }
-                );
+                let newNote = null;
+                if(thisNote.type == "bar"){
+                    newNote = new StaveNote({ clef: "treble", keys: ["g/4"], duration: "1r" });
+                }else {
+                    newNote = new StaveNote({ clef: "treble", keys: ["g/4"], duration: symbol });
+                }
 
-                switch (thisNote.value) {
+                if(thisNote.type != "bar") switch (thisNote.value) {
                     case 1:  currentBatchWidth += 100; break;
                     case 2:  currentBatchWidth += 70;  break;
                     case 4:  currentBatchWidth += 40;  break;
@@ -456,19 +458,18 @@ export default {
                     cursorNote = newNote;
                 }
 
+                if(thisNote.type == "bar"){
+                    newNote.setStyle({fillStyle: "transparent", strokeStyle: "transparent"});
+                }
+
                 allStaveNotes.push(newNote);
+                descriptor.rendered.push(newNote);
                 
                 if(thisNote.type != "bar"){
                     renderQueue.push(newNote);    
                 }
 
-                descriptor.rendered.push(newNote);
-                    
-
-                if(thisNote.type == "bar"){
-                    newNote.setStyle({fillStyle: "transparent", strokeStyle: "transparent"});
-                }
-
+                
                 if(thisNote.tie && i > 0){
 
                     // tie is:
@@ -476,12 +477,10 @@ export default {
                     ties.push(new VF.StaveTie({
                         first_note: allStaveNotes[lastNoteIndex],
                         last_note:  allStaveNotes[latestNoteIndex],
-                        first_indices: [0],
-                        last_indices:  [0]
+                        first_indices: [0], last_indices:  [0]
                     }));
 
                 }
-
 
                 if(thisNote.in_tuplet){
                     if(firstTupletNoteIdx == -1){
@@ -508,17 +507,13 @@ export default {
                   
                     batches.push({notes:renderQueue, width:currentBatchWidth});
                     renderQueue = [newNote];
-                    currentBatchWidth = 0;
+                    currentBatchWidth = this.info.barnoteWidth;
 
                 }
 
             }
 
-            // If there are still some notes left 
-            // Happens if the bar is incomplete
-            // sum(durations) != 1
-            // Not only if less than 1 (incomplete bar)
-            // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
+            // Draw the rest
             if(renderQueue.length > 0){
                 // Draw the rest
                 //this._vex_draw_voice(context, staves[staveIndex], renderQueue);
@@ -536,45 +531,16 @@ export default {
             this.retrieveXCoords(descriptor);
 
 
-            // Render the minimap rectangle
-            if(descriptor.role == "minimap"){
-
-                descriptor.context.rect(
-                    this.info.lastMinimapBubbleX, 
-                    0, 
-                    this.info.lastMinimapBubbleW, 
-                    this.info.barHeight, {
-                    class: this.info.bubble_class,
-                    fill: "red",
-                    opacity: 0.5
-                });
+            if(descriptor.renderSpecifics){
+                descriptor.renderSpecifics(this, descriptor)
             }
-            
+
+
 
             if(this.cursor.selectionMode){
                 this.draw_selection_bubble(descriptor)
             }else{
                 this._cursor_rendered(cursorNote, descriptor, notes);
-            }
-
-
-            // Move this logic somewhere else
-            // Nastavi lastnost cursor.in_tuplet
-            // S tem skrijem gumbe takrat, ko sem v trioli, 
-            /// zato da se ne dogajajo čudne stvari
-            if(this.cursor.position - 1 >= 0 && notes.length > this.cursor.position - 1){
-                let ccNote = notes[this.cursor.position - 1];
-                if(ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_end")){
-                    // Ni na zadnji noti triole
-                    this.cursor.in_tuplet = true;
-
-                }
-                else{
-                    // Je na zadnji noti triole
-                    this.cursor.in_tuplet = false;
-                }
-            }else{
-                this.cursor.in_tuplet = false;
             }
 
 
@@ -667,6 +633,20 @@ export default {
             );
 
 
+        },
+
+        draw_minimap_bubble(descriptor) {
+            
+            // Render the minimap rectangle
+            descriptor.context.rect(
+                this.info.lastMinimapBubbleX, 
+                0, 
+                this.info.lastMinimapBubbleW, 
+                this.info.barHeight, {
+                class: this.info.bubble_class,
+                fill: "red",
+                opacity: 0.5
+            });
         },
 
         rerender_notes() {

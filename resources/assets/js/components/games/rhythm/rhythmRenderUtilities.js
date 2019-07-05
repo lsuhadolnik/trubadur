@@ -6,6 +6,7 @@ let VF = Vex.Flow;
 
 var RhythmRenderUtilities = function(){
 
+
     this._vex_draw_voice = function(context, stave, batchInfo, info, notes){
 
         let renderQueue = batchInfo.notes;
@@ -25,15 +26,14 @@ var RhythmRenderUtilities = function(){
         // Add render queue
         voice.addTickables(renderQueue);
         
-
         // var beams = VF.Beam.applyAndGetBeams(voice);
         var beams = VF.Beam.generateBeams(voice.getTickables(), {
             beam_rests: true,
             //beam_middle_only: true,
             show_stemlets: true,
             secondary_breaks: '8',
+            groups: this._get_beam_grouping(info.bar)
         });
-
 
         var formatter = new VF.Formatter();
         formatter.joinVoices([voice]);
@@ -45,6 +45,19 @@ var RhythmRenderUtilities = function(){
 
         
     },
+
+    this._get_beam_grouping = function(bar){
+
+        if(!bar.subdivisions){
+            return [new VF.Fraction(1, 4)];
+        } 
+        else {
+            return bar.subdivisions.map((s) => {
+                return new VF.Fraction(s.n, s.d)
+            });
+        }
+
+    }
 
     this._vex_draw_optionals = function(context, events){
 
@@ -72,28 +85,36 @@ var RhythmRenderUtilities = function(){
         let staves = [];
         let startAtX = 0;
 
+        let timeSignatures = this._construct_time_signature(info.bar)
+
         for(let idx_bar = 0; idx_bar < barInfo.length; idx_bar++){
 
             let thisBar = barInfo[idx_bar];
 
+            let thisWidth = thisBar.width;
+
+            // Make the first bar a bit wider for all time signatures to fit in.
+            if(idx_bar == 0){
+                thisWidth += 20 * (timeSignatures.length - 1);
+            }
+
             let stave = new VF.Stave(
                 startAtX,   // X
                 -info.barOffsetY,           // Y
-                thisBar.width              // Width
+                thisWidth              // Width
             );
 
-            startAtX += thisBar.width;
+            startAtX += thisWidth;
 
             staves.push(stave);
 
             // If this is the first stave
             if(idx_bar == 0){
                 // Add a clef and time signature.
-                stave.addTimeSignature(
-                    info.bar.num_beats
-                    +"/"
-                    +info.bar.base_note
-                );
+                timeSignatures.forEach(b => {
+                    stave.addTimeSignature(b)
+                });
+                
             }
             
             // Connect it to the rendering context
@@ -125,6 +146,14 @@ var RhythmRenderUtilities = function(){
 
         return staves;
     };
+
+    this._construct_time_signature = function(bar){
+        if(!bar.subdivisions){
+            return [bar.num_beats + "/" + bar.base_note];
+        } else {
+            return bar.subdivisions.map(s => s.n + "/" + s.d);
+        }
+    }
 
     this._vex_render_batches = function(context, batches, optionals, info, notes){
 
@@ -174,6 +203,29 @@ var RhythmRenderUtilities = function(){
         }
 
         return {idx: -1, userx: x};
+
+    };
+
+    this._check_cursor_in_tuplet = function(cursor, notes){
+
+        // Move this logic somewhere else
+        // Nastavi lastnost cursor.in_tuplet
+        // S tem skrijem gumbe takrat, ko sem v trioli, 
+        /// zato da se ne dogajajo čudne stvari
+        if(cursor.position - 1 >= 0 && notes.length > cursor.position - 1){
+            let ccNote = notes[cursor.position - 1];
+            if(ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_end")){
+                // Ni na zadnji noti triole
+                cursor.in_tuplet = true;
+
+            }
+            else{
+                // Je na zadnji noti triole
+                cursor.in_tuplet = false;
+            }
+        }else{
+            cursor.in_tuplet = false;
+        }
 
     }
 

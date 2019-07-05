@@ -17,7 +17,6 @@ var ExerciseGenerator = function(){
         
         let number = Math.floor(Math.random() * (examples.length - 1));
 
-
         this.currentExerciseInfo = examples[number];
         this.currentExercise = examples[number].exercise;
 

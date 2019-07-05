@@ -22,6 +22,15 @@ var NoteStore = function(bar, cursor, render_function, info) {
     //     }
     // }
 
+    // Bar object
+    // {
+    //     num_beats: 4, 
+    //     base_note: 4,
+    //     subdivisions: [
+    //         {n: 2, d: 4}, {n: 1, d: 4}, {n: 1, d: 4} 
+    //     ]
+    // }
+
 
     // The supported note values.
     // Currently supports up to a sixteenth note with a dot.

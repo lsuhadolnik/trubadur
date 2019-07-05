@@ -368,5 +368,57 @@
 
 
         ]
+    },
+
+    /*
+    {
+        "BPM": 40,
+        "name": "nepravilne poddelitve 2ole 3ole 4ole 5ole 1/17",
+        "bar": {
+            "num_beats": 3,
+            "base_note": 4,
+            "subdivisions": [
+                {"n": 1, "d": 4}, {"n": 2, "d": 4}
+            ]
+        },
+        "exercise": [
+
+            {"type":"n","value":8, "in_tuplet": true},
+            {"type":"n","value":8, "in_tuplet": true},
+            {"type":"n","value":8, "in_tuplet": true, "tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
+            {"type":"r","value":4},
+            {"type":"n","value":8},
+            {"type":"n","value":8},
+            {"type":"n","value":16},
+            {"type":"n","value":16},
+            {"type":"n","value":16},
+            {"type":"n","value":16},
+            
+            {"type":"bar"},
+
+            {"type":"n","value":4},
+            {"type":"r","value":8},
+            {"type":"n","value":16,"in_tuplet":true},
+            {"type":"n","value":16,"in_tuplet":true},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
+            {"type":"n","value":8},
+            {"type":"n","value":8},
+            
+            {"type":"bar"},
+            
+            {"type":"n","value":8},
+            {"type":"n","value":16,"in_tuplet":true},
+            {"type":"n","value":16,"in_tuplet":true},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
+            {"type":"n","value":4},
+            {"type":"n","value":16,"tie":true,"in_tuplet":true},
+            {"type":"n","value":16,"in_tuplet":true},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
+            {"type":"n","value":16,"in_tuplet":true},
+            {"type":"n","value":16,"in_tuplet":true},
+            {"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}}
+            
+        ]
     }
+    */
 ]

@@ -27875,7 +27875,8 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
             beam_rests: true,
             //beam_middle_only: true,
             show_stemlets: true,
-            secondary_breaks: '8'
+            secondary_breaks: '8',
+            groups: this._get_beam_grouping(info.bar)
         });
 
         var formatter = new VF.Formatter();
@@ -27885,7 +27886,18 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
         voice.draw(context, stave);
 
         this._vex_draw_optionals(context, beams);
-    }, this._vex_draw_optionals = function (context, events) {
+    }, this._get_beam_grouping = function (bar) {
+
+        if (!bar.subdivisions) {
+            return [new VF.Fraction(1, 4)];
+        } else {
+            return bar.subdivisions.map(function (s) {
+                return new VF.Fraction(s.n, s.d);
+            });
+        }
+    };
+
+    this._vex_draw_optionals = function (context, events) {
 
         if (!events) {
             return;
@@ -27908,27 +27920,42 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
         var staves = [];
         var startAtX = 0;
 
-        for (var idx_bar = 0; idx_bar < barInfo.length; idx_bar++) {
+        var timeSignatures = this._construct_time_signature(info.bar);
+
+        var _loop = function _loop(idx_bar) {
 
             var thisBar = barInfo[idx_bar];
 
+            var thisWidth = thisBar.width;
+
+            // Make the first bar a bit wider for all time signatures to fit in.
+            if (idx_bar == 0) {
+                thisWidth += 20 * (timeSignatures.length - 1);
+            }
+
             var stave = new VF.Stave(startAtX, // X
             -info.barOffsetY, // Y
-            thisBar.width // Width
+            thisWidth // Width
             );
 
-            startAtX += thisBar.width;
+            startAtX += thisWidth;
 
             staves.push(stave);
 
             // If this is the first stave
             if (idx_bar == 0) {
                 // Add a clef and time signature.
-                stave.addTimeSignature(info.bar.num_beats + "/" + info.bar.base_note);
+                timeSignatures.forEach(function (b) {
+                    stave.addTimeSignature(b);
+                });
             }
 
             // Connect it to the rendering context
             stave.setContext(context);
+        };
+
+        for (var idx_bar = 0; idx_bar < barInfo.length; idx_bar++) {
+            _loop(idx_bar);
         }
 
         var connectors = [];
@@ -27951,6 +27978,16 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
         }
 
         return staves;
+    };
+
+    this._construct_time_signature = function (bar) {
+        if (!bar.subdivisions) {
+            return [bar.num_beats + "/" + bar.base_note];
+        } else {
+            return bar.subdivisions.map(function (s) {
+                return s.n + "/" + s.d;
+            });
+        }
     };
 
     this._vex_render_batches = function (context, batches, optionals, info, notes) {
@@ -28002,6 +28039,26 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
 
         return { idx: -1, userx: x };
     };
+
+    this._check_cursor_in_tuplet = function (cursor, notes) {
+
+        // Move this logic somewhere else
+        // Nastavi lastnost cursor.in_tuplet
+        // S tem skrijem gumbe takrat, ko sem v trioli, 
+        /// zato da se ne dogajajo čudne stvari
+        if (cursor.position - 1 >= 0 && notes.length > cursor.position - 1) {
+            var ccNote = notes[cursor.position - 1];
+            if (ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_end")) {
+                // Ni na zadnji noti triole
+                cursor.in_tuplet = true;
+            } else {
+                // Je na zadnji noti triole
+                cursor.in_tuplet = false;
+            }
+        } else {
+            cursor.in_tuplet = false;
+        }
+    };
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (RhythmRenderUtilities);
@@ -28032,6 +28089,15 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     //          num_notes (number):       3
     //          in_space_of (number):     2
     //     }
+    // }
+
+    // Bar object
+    // {
+    //     num_beats: 4, 
+    //     base_note: 4,
+    //     subdivisions: [
+    //         {n: 2, d: 4}, {n: 1, d: 4}, {n: 1, d: 4} 
+    //     ]
     // }
 
 
@@ -28696,7 +28762,7 @@ var ExerciseGenerator = function ExerciseGenerator() {
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = [{"BPM":40,"name":"nepravilne poddelitve 2ole 3ole 4ole 5ole 1/17","bar":{"num_beats":3,"base_note":4},"exercise":[{"type":"n","value":8,"in_tuplet":true},{"type":"n","value":8,"in_tuplet":true},{"type":"n","value":8,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3,"in_space_of":2}},{"type":"r","value":4},{"type":"n","value":8},{"type":"n","value":8},{"type":"n","value":16},{"type":"n","value":16},{"type":"n","value":16},{"type":"n","value":16},{"type":"bar","value":4},{"type":"n","value":4},{"type":"r","value":8},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3,"in_space_of":2}},{"type":"n","value":8},{"type":"n","value":8},{"type":"bar","value":4},{"type":"n","value":8},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3,"in_space_of":2}},{"type":"n","value":4},{"type":"n","value":16,"tie":true,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3,"in_space_of":2}},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true},{"type":"n","value":16,"in_tuplet":true,"tuplet_end":true,"tuplet_type":{"num_notes":3,"in_space_of":2}}]}]
+module.exports = [{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  1/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"exercise":[{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4}]},{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  2/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"exercise":[{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4}]}]
 
 /***/ }),
 /* 25 */
@@ -28721,7 +28787,7 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
     this.currentNoteID = null;
     this.currentTimeout = null;
 
-    this.bar_info = null;
+    this.bar = null;
 
     this.countInPlayback = null;
 
@@ -28753,7 +28819,7 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
             // BPM logic
             // Brez spreminjanja trajanja velja, da je celinka dolga 1s
             // torej je vsaka četrtinka dolga 0,25s, kar je 4 BPS, kar je 240 BPM
-            actualDuration = dur.valueOf() / (this.BPM / 60) * this.bar_info.num_beats;
+            actualDuration = dur.valueOf() / (this.BPM / 60) * this.bar.num_beats;
 
             // WTF?! Hahaha :D
             // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
@@ -28767,7 +28833,7 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
         } else {
 
             // Copied code from up
-            actualDuration = -dur.valueOf() / (this.BPM / 60) * this.bar_info.num_beats;
+            actualDuration = -dur.valueOf() / (this.BPM / 60) * this.bar.num_beats;
         }
 
         var milliseconds = actualDuration * 1000;
@@ -28786,13 +28852,42 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
         }
     };
 
+    this._get_countin_pitches = function () {
+
+        // Original
+        // [93, 86];
+
+        var hi = 93;
+        var lo = 86;
+
+        var pitches = [];
+
+        debugger;
+        if (this.bar.subdivisions) {
+
+            this.bar.subdivisions.forEach(function (s) {
+                pitches.push(hi);
+                for (var i = 1; i < s.n; i++) {
+                    pitches.push(lo);
+                }
+            });
+        } else {
+            pitches.push(hi);
+            for (var i = 1; i < this.bar.num_beats; i++) {
+                pitches.push(lo);
+            }
+        }
+
+        return pitches;
+    };
+
     this.playCountIn = function (then) {
 
         if (!this.countInPlayback) {
             this.countInPlayback = new RhythmPlaybackEngine();
-            this.countInPlayback.bar_info = this.bar_info;
+            this.countInPlayback.bar = this.bar;
             this.countInPlayback.channel = 1;
-            this.countInPlayback.pitch = [93, 86];
+            this.countInPlayback.pitch = this._get_countin_pitches();
             this.countInPlayback.load(this.getCountInNotes());
         }
 
@@ -28864,11 +28959,17 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
     this.getCountInNotes = function () {
 
         var countInNotes = [];
-        for (var i = 0; i < this.bar_info.num_beats; i++) {
-            countInNotes.push({
-                type: 'n',
-                value: this.bar_info.base_note
+
+        if (this.bar.subdivisions) {
+            this.bar.subdivisions.forEach(function (sd) {
+                for (var i = 0; i < sd.n; i++) {
+                    countInNotes.push({ type: 'n', value: sd.d });
+                }
             });
+        } else {
+            for (var i = 0; i < this.bar.num_beats; i++) {
+                countInNotes.push({ type: 'n', value: this.bar.base_note });
+            }
         }
 
         return countInNotes;
@@ -75928,8 +76029,9 @@ var Fraction = __webpack_require__(6);
 
             notes: null,
             bar: {
-                num_beats: 4,
-                base_note: 4
+                num_beats: null,
+                base_note: null,
+                subdivisions: null
             },
             cursor: {
                 position: 0,
@@ -76070,12 +76172,17 @@ var Fraction = __webpack_require__(6);
 
             // Generate exercise
             this.generator.generate();
-            this.bar.num_beats = this.generator.currentExerciseInfo.bar.num_beats;
-            this.bar.base_note = this.generator.currentExerciseInfo.bar.base_note;
+            var cei = this.generator.currentExerciseInfo;
+
+            this.bar.num_beats = cei.bar.num_beats;
+            this.bar.base_note = cei.bar.base_note;
+            if (cei.bar.subdivisions) {
+                this.bar.subdivisions = cei.bar.subdivisions;
+            }
 
             var exerciseBPM = 120;
-            if (this.generator.currentExerciseInfo.BPM) {
-                exerciseBPM = this.generator.currentExerciseInfo.BPM;
+            if (cei.BPM) {
+                exerciseBPM = cei.BPM;
             }
             this.playback.BPM = exerciseBPM;
             this.playback.BPM_from = 50;
@@ -76087,7 +76194,7 @@ var Fraction = __webpack_require__(6);
             window.____notes = this.notes;
 
             this.questionState.check = "no";
-            this.playback.bar_info = this.bar;
+            this.playback.bar = this.bar;
 
             if (play) {
                 this.play({ action: "replay", what: "exercise" });
@@ -76966,12 +77073,6 @@ var Tuplet = VF.Tuplet;
 
                 zoomViewContainerHeight: 176,
 
-                // Determines how much pixels 
-                // an average note occupies.
-                // Used to space notes evenly
-                //meanNoteWidth: 60,
-                //meanNoteWidth: 30,
-
                 bubble_class: "minimap-bubble",
                 lastMinimapBubbleX: 0,
                 lastMinimapBubbleW: 0,
@@ -76986,7 +77087,9 @@ var Tuplet = VF.Tuplet;
                 cursor: {
                     cursorBarClass: "cursor-bar",
                     cursorMargin: 22
-                }
+                },
+
+                barnoteWidth: 40
 
             },
 
@@ -76994,7 +77097,11 @@ var Tuplet = VF.Tuplet;
                 minimap: {
                     id: "first-row",
                     role: "minimap",
-                    viewHeight: 60
+                    viewHeight: 60,
+                    renderSpecifics: function renderSpecifics(render_context) {
+                        // this is the descriptor object
+                        render_context.draw_minimap_bubble(this);
+                    }
                 },
                 zoomview: {
                     id: "second-row",
@@ -77169,8 +77276,13 @@ var Tuplet = VF.Tuplet;
 
             // No cursor note
             // Cursor is right at the start
+            // After all time signatures
             if (!cursorNode) {
-                this._set_cursor_position(20);
+
+                var signatures = RU._construct_time_signature(this.bar);
+                var offset = 30 * signatures.length;
+
+                this._set_cursor_position(offset);
                 return;
             }
 
@@ -77188,6 +77300,7 @@ var Tuplet = VF.Tuplet;
 
             // ZOOM-BREAK
             this._set_bubble_width(bubbleW);
+            if (descriptor.role == "minimap") {}
 
             if (descriptor.role == "zoomview") {
 
@@ -77224,8 +77337,9 @@ var Tuplet = VF.Tuplet;
             // Here I could cancel unnecessary scroll if the cursor was still visible
             // But I disabled that
 
-
             this.scrolled(startX - screenWidth * 0.5);
+
+            RU._check_cursor_in_tuplet(this.cursor, notes);
         },
         _render_context: function _render_context(descriptor, notes, cursor) {
 
@@ -77247,21 +77361,21 @@ var Tuplet = VF.Tuplet;
             //let staveIndex = 0;
             var cursorNote = null;
 
-            var batches = [];
-            var barInfo = [];
+            var batches = [],
+                barInfo = [];
 
-            var ties = [];
-            var tuplets = [];
-            var renderQueue = [];
+            var ties = [],
+                tuplets = [],
+                renderQueue = [];
             descriptor.rendered = [];
 
             var allStaveNotes = [];
-
-            var latestNoteIndex = 0;
-            var lastNoteIndex = -1;
+            var latestNoteIndex = 0,
+                lastNoteIndex = -1;
 
             var firstTupletNoteIdx = -1;
 
+            // Set initial bar width
             var currentBatchWidth = 0;
 
             for (var i = 0; i < notes.length; i++) {
@@ -77282,13 +77396,14 @@ var Tuplet = VF.Tuplet;
                 var symbol = thisNote.value + "";
                 if (thisNote.type == "r") symbol += "r";
 
-                var newNote = new StaveNote({
-                    clef: "treble",
-                    keys: ["g/4"],
-                    duration: symbol
-                });
+                var newNote = null;
+                if (thisNote.type == "bar") {
+                    newNote = new StaveNote({ clef: "treble", keys: ["g/4"], duration: "1r" });
+                } else {
+                    newNote = new StaveNote({ clef: "treble", keys: ["g/4"], duration: symbol });
+                }
 
-                switch (thisNote.value) {
+                if (thisNote.type != "bar") switch (thisNote.value) {
                     case 1:
                         currentBatchWidth += 100;break;
                     case 2:
@@ -77324,16 +77439,15 @@ var Tuplet = VF.Tuplet;
                     cursorNote = newNote;
                 }
 
+                if (thisNote.type == "bar") {
+                    newNote.setStyle({ fillStyle: "transparent", strokeStyle: "transparent" });
+                }
+
                 allStaveNotes.push(newNote);
+                descriptor.rendered.push(newNote);
 
                 if (thisNote.type != "bar") {
                     renderQueue.push(newNote);
-                }
-
-                descriptor.rendered.push(newNote);
-
-                if (thisNote.type == "bar") {
-                    newNote.setStyle({ fillStyle: "transparent", strokeStyle: "transparent" });
                 }
 
                 if (thisNote.tie && i > 0) {
@@ -77343,8 +77457,7 @@ var Tuplet = VF.Tuplet;
                     ties.push(new VF.StaveTie({
                         first_note: allStaveNotes[lastNoteIndex],
                         last_note: allStaveNotes[latestNoteIndex],
-                        first_indices: [0],
-                        last_indices: [0]
+                        first_indices: [0], last_indices: [0]
                     }));
                 }
 
@@ -77371,15 +77484,11 @@ var Tuplet = VF.Tuplet;
 
                     batches.push({ notes: renderQueue, width: currentBatchWidth });
                     renderQueue = [newNote];
-                    currentBatchWidth = 0;
+                    currentBatchWidth = this.info.barnoteWidth;
                 }
             }
 
-            // If there are still some notes left 
-            // Happens if the bar is incomplete
-            // sum(durations) != 1
-            // Not only if less than 1 (incomplete bar)
-            // but also if the bar overflows (more notes than possible...) - all notes will fit into the last bar... 
+            // Draw the rest
             if (renderQueue.length > 0) {
                 // Draw the rest
                 //this._vex_draw_voice(context, staves[staveIndex], renderQueue);
@@ -77396,37 +77505,14 @@ var Tuplet = VF.Tuplet;
             // set CTX.zoomview.x_coords property
             this.retrieveXCoords(descriptor);
 
-            // Render the minimap rectangle
-            if (descriptor.role == "minimap") {
-
-                descriptor.context.rect(this.info.lastMinimapBubbleX, 0, this.info.lastMinimapBubbleW, this.info.barHeight, {
-                    class: this.info.bubble_class,
-                    fill: "red",
-                    opacity: 0.5
-                });
+            if (descriptor.renderSpecifics) {
+                descriptor.renderSpecifics(this, descriptor);
             }
 
             if (this.cursor.selectionMode) {
                 this.draw_selection_bubble(descriptor);
             } else {
                 this._cursor_rendered(cursorNote, descriptor, notes);
-            }
-
-            // Move this logic somewhere else
-            // Nastavi lastnost cursor.in_tuplet
-            // S tem skrijem gumbe takrat, ko sem v trioli, 
-            /// zato da se ne dogajajo čudne stvari
-            if (this.cursor.position - 1 >= 0 && notes.length > this.cursor.position - 1) {
-                var ccNote = notes[this.cursor.position - 1];
-                if (ccNote.in_tuplet && !ccNote.hasOwnProperty("tuplet_end")) {
-                    // Ni na zadnji noti triole
-                    this.cursor.in_tuplet = true;
-                } else {
-                    // Je na zadnji noti triole
-                    this.cursor.in_tuplet = false;
-                }
-            } else {
-                this.cursor.in_tuplet = false;
             }
         },
         retrieveXCoords: function retrieveXCoords(ctx) {
@@ -77500,6 +77586,15 @@ var Tuplet = VF.Tuplet;
             ctx.context.rect(fromX + width + offset - handlesWidth, heightOffset, handlesWidth, this.info.barHeight - heightOffset, {
                 class: "notesSelection_right_handle",
                 fill: rightColor, opacity: 0.4
+            });
+        },
+        draw_minimap_bubble: function draw_minimap_bubble(descriptor) {
+
+            // Render the minimap rectangle
+            descriptor.context.rect(this.info.lastMinimapBubbleX, 0, this.info.lastMinimapBubbleW, this.info.barHeight, {
+                class: this.info.bubble_class,
+                fill: "red",
+                opacity: 0.5
             });
         },
         rerender_notes: function rerender_notes() {
@@ -78206,7 +78301,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_vue_awesome_icons_times__ = __webpack_require__(167);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_vue_awesome_icons_i_cursor__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vue_awesome_icons_ban__ = __webpack_require__(169);
-//
 //
 //
 //
@@ -80381,6 +80475,65 @@ var render = function() {
                 _vm._v("Oddaj")
               ])
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: _vm.checkButtonColor },
+              nativeOn: {
+                click: function($event) {
+                  _vm.showJson()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                _vm._v("Show JSON")
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: _vm.checkButtonColor },
+              nativeOn: {
+                click: function($event) {
+                  _vm.changeSignature()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                _vm._v("Change Signature")
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "sexy-button",
+            {
+              attrs: {
+                color: "sunglow",
+                percents: _vm.percentsUser,
+                customClass: "normal-font tiny-tajni-pici-mici-font"
+              },
+              nativeOn: {
+                click: function($event) {
+                  _vm.play_user()
+                }
+              }
+            },
+            [
+              _vm.playbackStatus.playing &&
+              _vm.playbackStatus.currentlyLoaded == "user"
+                ? _c("icon", { attrs: { name: "pause" } })
+                : _c("div", { staticClass: "small-font-button" }, [
+                    _vm._v("Ponovi vpisano")
+                  ])
+            ],
+            1
           )
         ],
         1

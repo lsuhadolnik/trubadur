@@ -128,8 +128,9 @@ export default {
 
             notes: null,
             bar: {
-                num_beats: 4,
-                base_note: 4
+                num_beats: null,
+                base_note: null,
+                subdivisions: null
             },
             cursor: {
                 position: 0,
@@ -285,10 +286,10 @@ export default {
         submitQuestion(){
 
             this.$refs.diff_view.render(
-                    this.generator.currentExercise,
-                    this.notes.notes,
-                    this.bar
-                );
+                this.generator.currentExercise,
+                this.notes.notes,
+                this.bar
+            );
 
             this.displayState = "diff";
 
@@ -303,12 +304,18 @@ export default {
 
             // Generate exercise
             this.generator.generate();
-            this.bar.num_beats = this.generator.currentExerciseInfo.bar.num_beats;
-            this.bar.base_note = this.generator.currentExerciseInfo.bar.base_note;
+            let cei = this.generator.currentExerciseInfo;
+
+
+            this.bar.num_beats = cei.bar.num_beats;
+            this.bar.base_note = cei.bar.base_note;
+            if(cei.bar.subdivisions){
+                this.bar.subdivisions = cei.bar.subdivisions;
+            }
             
             let exerciseBPM = 120;
-            if(this.generator.currentExerciseInfo.BPM){
-                exerciseBPM = this.generator.currentExerciseInfo.BPM;
+            if(cei.BPM){
+                exerciseBPM = cei.BPM;
             }
             this.playback.BPM = exerciseBPM;
             this.playback.BPM_from = 50;
@@ -324,7 +331,7 @@ export default {
             window.____notes = this.notes;
 
             this.questionState.check = "no";
-            this.playback.bar_info = this.bar;
+            this.playback.bar = this.bar;
 
             if(play){
                 this.play({action: "replay", what: "exercise"});
@@ -458,8 +465,6 @@ export default {
         
             }
         });
-
-
 
     },
     

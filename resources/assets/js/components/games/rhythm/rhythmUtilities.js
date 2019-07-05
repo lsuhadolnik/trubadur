@@ -114,7 +114,6 @@ var utilities = {
 
     },
 
-
     generate_playback_durations: function(notes){
 
         // Negativna trajanja pomenijo pavze
@@ -172,7 +171,7 @@ var utilities = {
         }
 
         return parseInt(length);
-    },
+    }
 
 }
 

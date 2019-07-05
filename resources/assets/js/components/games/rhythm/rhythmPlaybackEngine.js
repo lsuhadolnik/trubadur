@@ -16,7 +16,7 @@ var RhythmPlaybackEngine = function(){
     this.currentNoteID = null;
     this.currentTimeout = null;
 
-    this.bar_info = null;
+    this.bar = null;
 
     this.countInPlayback = null;
 
@@ -54,7 +54,7 @@ var RhythmPlaybackEngine = function(){
             // BPM logic
             // Brez spreminjanja trajanja velja, da je celinka dolga 1s
             // torej je vsaka četrtinka dolga 0,25s, kar je 4 BPS, kar je 240 BPM
-            actualDuration = dur.valueOf() / (this.BPM / 60) * this.bar_info.num_beats;
+            actualDuration = dur.valueOf() / (this.BPM / 60) * this.bar.num_beats;
 
             // WTF?! Hahaha :D
             // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
@@ -69,7 +69,7 @@ var RhythmPlaybackEngine = function(){
         }else {
             
             // Copied code from up
-            actualDuration = -dur.valueOf() / (this.BPM / 60) * this.bar_info.num_beats;
+            actualDuration = -dur.valueOf() / (this.BPM / 60) * this.bar.num_beats;
         }
 
         let milliseconds = actualDuration * 1000;
@@ -89,13 +89,40 @@ var RhythmPlaybackEngine = function(){
             
     }
 
+    this._get_countin_pitches = function() {
+
+        // Original
+        // [93, 86];
+
+        const hi = 93;
+        const lo = 86;
+
+        let pitches = [];
+
+        debugger;
+        if(this.bar.subdivisions){
+
+            this.bar.subdivisions.forEach(s => {
+                pitches.push(hi);
+                for (let i = 1; i < s.n; i++) { pitches.push(lo); }
+            });
+
+        } else {
+            pitches.push(hi);
+            for (let i = 1; i < this.bar.num_beats; i++) { pitches.push(lo); }
+        }
+
+        return pitches;
+
+    }
+
     this.playCountIn = function(then){
 
         if(!this.countInPlayback){
             this.countInPlayback = new RhythmPlaybackEngine();
-            this.countInPlayback.bar_info = this.bar_info;
+            this.countInPlayback.bar = this.bar;
             this.countInPlayback.channel = 1;
-            this.countInPlayback.pitch = [93, 86];
+            this.countInPlayback.pitch = this._get_countin_pitches();
             this.countInPlayback.load(this.getCountInNotes());
         }
 
@@ -171,11 +198,17 @@ var RhythmPlaybackEngine = function(){
     this.getCountInNotes = function(){
 
         var countInNotes = [];
-        for(var i = 0; i < this.bar_info.num_beats; i++){
-            countInNotes.push({
-                type: 'n',
-                value: this.bar_info.base_note
+
+        if(this.bar.subdivisions){
+            this.bar.subdivisions.forEach(sd => {
+                for(let i = 0; i < sd.n; i++){
+                    countInNotes.push({ type: 'n', value: sd.d });
+                }
             });
+        } else {
+            for(let i = 0; i < this.bar.num_beats; i++){
+                countInNotes.push({type: 'n', value: this.bar.base_note});
+            }
         }
 
         return countInNotes;
