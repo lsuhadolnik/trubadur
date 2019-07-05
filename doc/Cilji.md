@@ -8,14 +8,14 @@
 
     **PREDNOSTNO**
 
-- Treba je dodati še podporo za različne taktovske načine
+~~- Treba je dodati še podporo za različne taktovske načine~~
 
-    - Vprašaj Šavlija
+    ~~- Vprašaj Šavlija~~
 
 - Preveri, ali se da izpolnjevati Šavlijeve vaje in jih vpiši z vmesnikom
 
-    - Ali naj dodam podporo za več glasov?
-    - Kako je s mešanimi takti?
+    ~~- Ali naj dodam podporo za več glasov? NE~~
+    ~~- Kako je s mešanimi takti? Kar v redu~~
 
 - ~~Triole 💩💩😢~~
 
@@ -56,16 +56,18 @@ RhythmBar
 
 RhythmExercise
 
-- id
+- id*
+- name*
+- barInfo*
+- BPM*
 - difficulty
-- BPM
+- description
 
 RhythmExerciseBar
 
-- id_exercise
-- id_bar
+- rhythm_exercise_id -> id(rhythm_exercises)
+- rhythm_bar_id -> id(rhythm_bars)
 - seq
-
 
 
 ### Analiza vaj za učitelje

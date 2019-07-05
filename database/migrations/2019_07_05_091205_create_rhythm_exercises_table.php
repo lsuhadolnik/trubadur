@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRhythmBarsTable extends Migration
+class CreateRhythmExercisesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateRhythmBarsTable extends Migration
      */
     public function up()
     {
-        Schema::create('rhythm_bars', function (Blueprint $table) {
+        Schema::create('rhythm_exercises', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->string('name');
+            $table->json('barInfo');
+            $table->integer('BPM');
+            $table->integer('difficulty')->nullable();
+            $table->text('description')->nullable();
         });
     }
 
@@ -26,6 +30,6 @@ class CreateRhythmBarsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rhythm_bars');
+        Schema::dropIfExists('rhythm_exercises');
     }
 }
