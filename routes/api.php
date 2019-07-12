@@ -58,3 +58,9 @@ Route::middleware('auth:api')->put('gradeschool/{gradeId}/{schoolId}', 'API\Grad
     ->where(['gradeId' => '[0-9]+', 'schoolId' => '[0-9]+']);
 Route::middleware('auth:api')->delete('gradeschool/{gradeId}/{schoolId}', 'API\GradeSchoolController@destroy')
     ->where(['gradeId' => '[0-9]+', 'schoolId' => '[0-9]+']);
+
+
+// Rabim: 
+Route::middleware('auth:api')->resource('rhythm_bar', 'API\RhythmBarController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->resource('rhythm_exercise', 'API\RhythmExerciseController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->resource('rhythm_exercise_bar', 'API\RhythmExerciseBar', ['except' => ['create', 'edit']]);

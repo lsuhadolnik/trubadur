@@ -32,13 +32,32 @@ $choose-height: 170px;
 
 .game-types__options {
     width            : 100%;
-    min-height       : calc(100vh - #{$header-height} - #{$choose-height} - #{$content-margin} - #{$bottom-padding});
+    min-height       : calc(77vh - #{$header-height} - #{$choose-height} - #{$content-margin} - #{$bottom-padding});
     margin-top       : $content-margin;
     padding          : 20px 0;
     display          : flex;
     align-items      : center;
-    flex-direction   : column;
+    justify-content  : center;
+    flex-direction   : row;
     background-color : $sunglow;
+}
+
+.image-button {
+    border: 3px black solid;
+    width: 160px;
+    height: 200px;
+    margin-left: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.image-button__image {
+    text-align: center;
+    padding: 23px 0 20px 0;
+}
+
+.image-button__text {
+    text-align: center;
 }
 </style>
 
@@ -60,8 +79,16 @@ $choose-height: 170px;
                 <img class="game-types__arrow" id="arrow"/>
             </div>
             <div class="game-types__options">
-                <element-button text="Melodični narek" @click.native="reroute('gameModes', { type: 'intervals' })"></element-button>
-                <element-button text="Ritmični narek" @click.native="reroute('gameModes', { type: 'rhythm' })"></element-button>
+                <!--<element-button text="Melodični narek" @click.native="reroute('gameModes', { type: 'intervals' })"></element-button>
+                <element-button text="Ritmični narek" @click.native="reroute('gameModes', { type: 'rhythm' })"></element-button>-->
+                <div class="image-button" @click="reroute('gameModes', { type: 'intervals' })">
+                    <div class="image-button__image"><img src="/images/games/game_melody.png" width="100" height="100"></div>
+                    <div class="image-button__text">Melodični narek</div>
+                </div>
+                <div class="image-button" @click="reroute('gameModes', { type: 'rhythm' })">
+                    <div class="image-button__image"><img src="/images/games/game_rhythm.png" width="100" height="100"></div>
+                    <div class="image-button__text">Ritmični narek</div>
+                </div>
             </div>
         </div>
     </div>

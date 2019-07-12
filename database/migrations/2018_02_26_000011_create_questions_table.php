@@ -18,7 +18,7 @@ class CreateQuestionsTable extends Migration
             $table->integer('game_id')->unsigned();
             $table->integer('chapter');
             $table->integer('number');
-            $table->string('content')->nullable();
+            $table->text('content')->nullable();
             $table->timestamps();
         });
 

@@ -52,7 +52,7 @@
         padding: 8px 20px 8px 3px; 
     }
 
-    .rythm-game__wrap {
+    .rhythm-game__wrap {
         touch-action: manipulation;
     }
 
@@ -97,12 +97,13 @@ import DiffView from "./DiffView.vue"
 import Keyboard from "./RhythmKeyboard.vue"
 
 import NoteStore from "./noteStore"
-import ExerciseGenerator from './exerciseGenerator'
 import RhythmPlaybackEngine from './rhythmPlaybackEngine'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 var Fraction = require('fraction.js');
+
+const util = require('./rhythmUtilities');
 
 
 export default {
@@ -123,7 +124,10 @@ export default {
             questionState: {
                 check: "no", // "no", "correct", "wrong", "next"
                 numChecks: 0,
-                num_beats: "x"
+                num_beats: "x",
+                number: 1,
+                chapter: 1,
+                exercise: null
             },
 
             notes: null,
@@ -153,8 +157,8 @@ export default {
             errorMessage: "",
             errorTimeout: null,
 
-            generator: new ExerciseGenerator(),
-            playback: new RhythmPlaybackEngine(this.bar),
+            playback: new RhythmPlaybackEngine(),
+            defaultBPM: 120
         }
     },
 
@@ -176,6 +180,8 @@ export default {
     },
     
     methods: {
+
+        ...mapActions(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi']),
 
         clearSelection(){
 
@@ -241,7 +247,6 @@ export default {
 
                 this.toggleSelectionMode();
                 this.notes._call_render();
-
             }
             else if(event.type == "playback"){
                 this.play(event);
@@ -286,13 +291,12 @@ export default {
         submitQuestion(){
 
             this.$refs.diff_view.render(
-                this.generator.currentExercise,
+                this.questionState.exercise.exercise,
                 this.notes.notes,
                 this.bar
             );
 
             this.displayState = "diff";
-
         },
 
         startGame() {
@@ -300,58 +304,73 @@ export default {
             this.play({action: "replay", what: "exercise"});
         },
 
+        _copy_bar_info(exercise) {
+
+            this.bar.num_beats = exercise.bar.num_beats;
+            this.bar.base_note = exercise.bar.base_note;
+            if(exercise.bar.subdivisions){
+                this.bar.subdivisions = exercise.bar.subdivisions;
+            }
+
+        },
+
+        _questionState_reset() {
+            this.questionState.check = "no";
+        },
+
         nextQuestion(play){
 
-            // Generate exercise
-            this.generator.generate();
-            let cei = this.generator.currentExerciseInfo;
+            return this.generateQuestion(
+                { 
+                    game_id: this.game.id, 
+                    number: this.questionState.number, 
+                    chapter: this.questionState.chapter 
+                })
+            .then((question) => {
+                        
+                let exercise = JSON.parse(question.content);
 
+                this.questionState.exercise = exercise;
 
-            this.bar.num_beats = cei.bar.num_beats;
-            this.bar.base_note = cei.bar.base_note;
-            if(cei.bar.subdivisions){
-                this.bar.subdivisions = cei.bar.subdivisions;
-            }
-            
-            let exerciseBPM = 120;
-            if(cei.BPM){
-                exerciseBPM = cei.BPM;
-            }
-            this.playback.BPM = exerciseBPM;
-            this.playback.BPM_from = 50;
-            this.playback.BPM_to = 240;
+                this._questionState_reset();
+                this.questionState.num_beats = util.get_bar_count(exercise);
+                
+                this._copy_bar_info(exercise);
 
-            // Initialize note store
-            this.notes = new NoteStore(
-                this.bar,
-                this.cursor,
-                this.$refs.staff_view.render
-            );
+                this.playback.setBPM(exercise.BPM ? exercise.BPM : this.defaultBPM);
+                this.playback.setBar(exercise.bar);
 
-            window.____notes = this.notes;
+                // Initialize note store
+                this.notes = new NoteStore(
+                    this.bar,
+                    this.cursor,
+                    this.$refs.staff_view.render
+                );
 
-            this.questionState.check = "no";
-            this.playback.bar = this.bar;
+                window.____notes = this.notes;
 
-            if(play){
-                this.play({action: "replay", what: "exercise"});
-            }
-            
+                
+                if(play){
+                    this.play({action: "replay", what: "exercise"});
+                }
+
+            });
 
         },
 
         continueGame(){
 
-            debugger;
+            this.nextQuestion(true).then(() => {
 
-            this.nextQuestion(true);
-            this.displayState = "ready";
+                this.displayState = "ready";
             
-            let out = this;
-            setTimeout(function() {
-                out.$refs.staff_view.reset();
-            }, 100);
+                let out = this;
+                setTimeout(function() {
+                    out.$refs.staff_view.reset();
+                }, 100);
 
+            });
+            
         },
 
         check(){
@@ -361,7 +380,7 @@ export default {
                 return;
             }
 
-            let status = this.generator.check(this.notes.notes);
+            let status = util.check_notes_equal(this.questionState.exercise.exercise, this.notes.notes);
 
             let changeTimeout = 1000;
             let outside = this;
@@ -402,7 +421,7 @@ export default {
                 }
                 else if(event.what == "exercise"){
 
-                    this.playback.load(this.generator.currentExercise, "exercise");
+                    this.playback.load(this.questionState.exercise.exercise, "exercise");
                     this.playback.play(); 
                 }
             }
@@ -428,43 +447,15 @@ export default {
 
         // Če do sem nisi prišel preko vmesnika, 
         // greš lahko kar lepo nazaj
-        /*if (!this.game || !this.difficulty) {
+        if (!this.game || !this.difficulty) {
             this.$router.push({ name: 'dashboard' })
-        }*/
+        } else {
 
-
-        // Init MIDI
-        let instruments = [
-            {
-                channel: 0,
-                soundfont: 'percussive_organ',
-                colume: 127
-            },
-            {
-                channel: 1,
-                soundfont: 'xylophone',
-                volume: 200
-            }   
-        ];
-
-        MIDI.loadPlugin({
-            soundfontUrl: '/soundfonts/',
-            instruments: instruments.map(e => e.soundfont),
-            targetFormat: 'mp3',
-            onsuccess: () => {
-                for (let i = 0; i < instruments.length; i++) {
-                    let instrument = instruments[i];
-                    MIDI.setVolume(instrument.channel, instrument.volume);
-                    MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
-                }
-
-                this.nextQuestion();
-                this.questionState.num_beats = this.generator.get_bar_count();
-
-                this.displayState = "instructions";
-        
-            }
-        });
+            this.fetchMe()
+            .then(() => { return this.setupMidi(true, ['xylophone', 'percussive_organ']); })
+            .then(() => { return this.nextQuestion(); })
+            .then(() => { this.displayState = "instructions"; return; });
+        }
 
     },
     

@@ -1,6 +1,6 @@
 <template>
 
-    <div class="rythm-game__keyboard_wrap">
+    <div class="rhythm-game__keyboard_wrap">
         
         <div class="rhythm-game__keyboard">
 
@@ -200,7 +200,7 @@
         opacity: 0.5;
     }
 
-    .rythm-game__keyboard_wrap {
+    .rhythm-game__keyboard_wrap {
         padding: 0 10px 0 10px;
         display: flex;
         justify-content: center;

@@ -133,6 +133,7 @@ export default {
             }
         },
         createGame (mode) {
+
             this.loading = true
 
             this.fetchDifficulty({ gradeId: this.me.grade_id, schoolId: this.me.school_id }).then((difficulty) => {

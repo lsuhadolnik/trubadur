@@ -12,7 +12,7 @@ use App\User;
 class GamesTableSeeder extends DatabaseSeeder
 {
     const GAME_MODES = ['practice', 'single', 'multi'];
-    const GAME_TYPES = ['intervals', 'rythm'];
+    const GAME_TYPES = ['intervals', 'rhythm'];
     const INSTRUMENTS = ['clarinet', 'guitar', 'piano', 'trumpet', 'violin'];
     const N_CHAPTERS = 3;
     const N_QUESTIONS = 8;

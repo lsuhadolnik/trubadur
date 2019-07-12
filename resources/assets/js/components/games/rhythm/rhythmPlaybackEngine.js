@@ -89,6 +89,36 @@ var RhythmPlaybackEngine = function(){
             
     }
 
+    this.setBar = function(newBar){
+
+        if(!this.bar) {
+            this.bar = {}; 
+        }
+
+        this.bar.num_beats = newBar.num_beats;
+        this.bar.base_note = newBar.base_note;
+        if(newBar.subdivisions){
+            this.bar.subdivisions = newBar.subdivisions;
+        }
+
+        if(this.countInPlayback){
+            this.countInPlayback.bar.num_beats = newBar.num_beats;
+            this.countInPlayback.bar.base_note = newBar.base_note;
+            if(newBar.subdivisions){
+                this.countInPlayback.bar.subdivisions = newBar.subdivisions;
+            }
+        }
+
+    }
+
+    this.setBPM = function(newBPM) {
+
+        if(this.countInPlayback){
+            this.countInPlayback.BPM = newBPM;
+        }
+        this.BPM = newBPM;
+    }
+
     this._get_countin_pitches = function() {
 
         // Original
@@ -99,7 +129,6 @@ var RhythmPlaybackEngine = function(){
 
         let pitches = [];
 
-        debugger;
         if(this.bar.subdivisions){
 
             this.bar.subdivisions.forEach(s => {

@@ -37,7 +37,17 @@ export default new Vuex.Store({
             violin: {
                 channel: 4,
                 soundfont: 'violin'
-            }
+            },
+            percussive_organ: {
+                channel: 5,
+                soundfont: 'percussive_organ',
+                volume: 127
+            },
+            xylophone: {
+                channel: 6,
+                soundfont: 'xylophone',
+                volume: 200
+            }   
         },
         currentInstruments: new Set([]),
         midi: null,
@@ -267,6 +277,7 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 axios.post('/api/questions/generate', data)
                     .then(response => {
+                        console.log(response.data)
                         resolve(response.data)
                     })
                     .catch(error => {
@@ -299,14 +310,18 @@ export default new Vuex.Store({
                     })
             })
         },
-        setupMidi ({ commit, state }, force = false) {
+        setupMidi ({ commit, state }, force = false, additionalInstruments = null) {
             return new Promise((resolve, reject) => {
                 if (!force && state.midi) {
                     resolve()
                 } else {
                     commit('addToCurrentInstruments', state.me.instrument)
-                    const currentInstruments = [...state.currentInstruments]
+                    let currentInstruments = [...state.currentInstruments];
 
+                    if(additionalInstruments){
+                        currentInstruments = currentInstruments.concat(additionalInstruments);
+                    }
+                    
                     MIDI.loadPlugin({
                         soundfontUrl: '/soundfonts/',
                         instruments: currentInstruments.map(name => state.instruments[name].soundfont),

@@ -17,7 +17,7 @@ class CreateGamesTable extends Migration
             $table->increments('id');
             $table->integer('difficulty_id')->unsigned();
             $table->enum('mode', ['practice', 'single', 'multi']);
-            $table->enum('type', ['intervals', 'rythm']);
+            $table->enum('type', ['intervals', 'rhythm']);
             $table->timestamps();
         });
 

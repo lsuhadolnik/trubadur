@@ -106,6 +106,7 @@ class QuestionController extends Controller
      */
     public function generate(Request $request)
     {
+        // Retrievel alredy generated question
         if ($request->has('game_id') && $request->has('chapter') && $request->has('number')) {
             $question = Question::where($request->all())->first();
             if ($question) {
@@ -126,6 +127,7 @@ class QuestionController extends Controller
                 $question->content = $this->generateIntervalsQuestion($game->difficulty, $question);
                 break;
             case 'rhythm':
+                $question->content = $this->generateRhythmQuestion($game->difficulty, $question);
                 break;
         }
         $question->saveOrFail();
@@ -204,6 +206,44 @@ class QuestionController extends Controller
         }
 
         return implode(',', $sample);
+    }
+    
+
+    /**
+     * Generate a random rhythm question based on the given difficulty.
+     *
+     * @param  \App\Difficulty  $difficulty
+     * @param  \App\Question  $question
+     * @return string
+     */
+    private function  generateRhythmQuestion(Difficulty $difficulty, Question $question){
+
+        return <<<LISTEN
+        {
+            "BPM": 200,
+            "name": "mešatni takt. načini, vaja 1 k Lekciji 20  1/2",
+            "bar": {
+                "num_beats": 5,
+                "base_note": 4,
+                "subdivisions": [
+                    {"n": 3, "d": 4}, {"n": 2, "d": 4}
+                ]
+            },
+            "exercise": [
+                {"type" :"n", "value" :2},
+                {"type" :"n", "value" :4},
+                {"type" :"n", "value" :4},
+                {"type" :"n", "value" :4},
+                
+                {"type" :"bar", "value" :4},
+    
+                {"type" :"n", "value" :4},
+                {"type" :"n", "value" :4},
+                {"type" :"n", "value" :4},
+                {"type" :"n", "value" :2}
+            ]
+        }
+LISTEN;
     }
 
     /**
