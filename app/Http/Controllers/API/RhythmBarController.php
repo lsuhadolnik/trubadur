@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
 
 use App\RhythmBar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RhythmBarController extends Controller
 {
@@ -28,23 +31,23 @@ class RhythmBarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $this->prepareAndExecuteIndexQuery($request, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
      * Store a newly created resource in storage.
+     * Accepts one or multiple rhythm bars - JSON array
+     * in format:
+     * [
+     *  {
+     *      content: [...notes...],
+     *      barInfo: {},
+     *      difficulty: {}
+     *  }
+     * ]
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -52,6 +55,15 @@ class RhythmBarController extends Controller
     public function store(Request $request)
     {
         //
+
+        $data = [
+            'content' => 'required|string',
+            'barInfo' => 'required|string',
+            'difficulty'  => 'numeric|min:0'
+        ];
+
+        return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+
     }
 
     /**
@@ -60,20 +72,10 @@ class RhythmBarController extends Controller
      * @param  \App\RhythmBar  $rhythmBar
      * @return \Illuminate\Http\Response
      */
-    public function show(RhythmBar $rhythmBar)
+    public function show(Request $request, $id)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\RhythmBar  $rhythmBar
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(RhythmBar $rhythmBar)
-    {
-        //
+        return $this->prepareAndExecuteShowQuery($request, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
     /**
@@ -83,9 +85,16 @@ class RhythmBarController extends Controller
      * @param  \App\RhythmBar  $rhythmBar
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RhythmBar $rhythmBar)
+    public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'content' => 'string',
+            'barInfo' => 'string',
+            'difficulty'  => 'numeric|min:0'
+        ];
+
+        return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+    
     }
 
     /**
@@ -94,8 +103,9 @@ class RhythmBarController extends Controller
      * @param  \App\RhythmBar  $rhythmBar
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RhythmBar $rhythmBar)
+    public function destroy($id)
     {
         //
+        return $this->prepareAndExecuteDestroyQuery($id, self::MODEL);
     }
 }

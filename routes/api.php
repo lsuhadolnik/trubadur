@@ -61,6 +61,6 @@ Route::middleware('auth:api')->delete('gradeschool/{gradeId}/{schoolId}', 'API\G
 
 
 // Rabim: 
-Route::middleware('auth:api')->resource('rhythm_bar', 'API\RhythmBarController', ['except' => ['create', 'edit']]);
-Route::middleware('auth:api')->resource('rhythm_exercise', 'API\RhythmExerciseController', ['except' => ['create', 'edit']]);
-Route::middleware('auth:api')->resource('rhythm_exercise_bar', 'API\RhythmExerciseBar', ['except' => ['create', 'edit']]);
+Route::resource('rhythm_bar', 'API\RhythmBarController', ['except' => ['create', 'edit']]);
+//Route::middleware('auth:api')->resource('rhythm_exercise', 'API\RhythmExerciseController', ['except' => ['create', 'edit']]);
+//Route::middleware('auth:api')->resource('rhythm_exercise_bar', 'API\RhythmExerciseBar', ['except' => ['create', 'edit']]);

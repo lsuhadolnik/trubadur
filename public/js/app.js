@@ -28991,7 +28991,7 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = [{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  1/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"exercise":[{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4}]},{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  2/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"exercise":[{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4}]}]
+module.exports = [{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  1/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"notes":[{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4}]},{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  2/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"notes":[{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4}]}]
 
 /***/ }),
 /* 25 */
@@ -76230,7 +76230,7 @@ var util = __webpack_require__(8);
         },
         submitQuestion: function submitQuestion() {
 
-            this.$refs.diff_view.render(this.questionState.exercise.exercise, this.notes.notes, this.bar);
+            this.$refs.diff_view.render(this.questionState.exercise.notes, this.notes.notes, this.bar);
 
             this.displayState = "diff";
         },
@@ -76263,7 +76263,7 @@ var util = __webpack_require__(8);
                 _this.questionState.exercise = exercise;
 
                 _this._questionState_reset();
-                _this.questionState.num_beats = util.get_bar_count(exercise);
+                _this.questionState.num_beats = util.get_bar_count(exercise.notes);
 
                 _this._copy_bar_info(exercise);
 
@@ -76300,7 +76300,7 @@ var util = __webpack_require__(8);
                 return;
             }
 
-            var status = util.check_notes_equal(this.questionState.exercise.exercise, this.notes.notes);
+            var status = util.check_notes_equal(this.questionState.exercise.notes, this.notes.notes);
 
             var changeTimeout = 1000;
             var outside = this;
@@ -76337,7 +76337,7 @@ var util = __webpack_require__(8);
                     this.playback.play();
                 } else if (event.what == "exercise") {
 
-                    this.playback.load(this.questionState.exercise.exercise, "exercise");
+                    this.playback.load(this.questionState.exercise.notes, "exercise");
                     this.playback.play();
                 }
             }
@@ -80938,13 +80938,13 @@ var util = __webpack_require__(8);
                 _this.notes = new __WEBPACK_IMPORTED_MODULE_2__games_rhythm_noteStore__["a" /* default */](_this.bar, _this.cursor, _this.$refs.staff_view.render);
 
                 var v = __webpack_require__(24);
-                _this.notes.notes = v[0].exercise;
+                _this.notes.notes = v[0].notes;
                 _this.notes._call_render();
                 _this.playback = new __WEBPACK_IMPORTED_MODULE_4__games_rhythm_rhythmPlaybackEngine__["a" /* default */]();
                 _this.playback.BPM = v[0].BPM;
                 _this.playback.bar_info = v[0].bar;
-                _this.playback.load(v[0].exercise);
-                console.log(util.generate_playback_durations(v[0].exercise));
+                _this.playback.load(v[0].notes);
+                console.log(util.generate_playback_durations(v[0].notes));
             }
         });
     }
@@ -80974,7 +80974,7 @@ var ExerciseGenerator = function ExerciseGenerator() {
         var number = Math.floor(Math.random() * (examples.length - 1));
 
         this.currentExerciseInfo = examples[number];
-        this.currentExercise = examples[number].exercise;
+        this.currentExercise = examples[number].notes;
 
         return examples[number];
     };

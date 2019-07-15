@@ -9,7 +9,7 @@
                 {"n": 3, "d": 4}, {"n": 2, "d": 4}
             ]
         },
-        "exercise": [
+        "notes": [
 
             {"type" :"n", "value" :2},
 			{"type" :"n", "value" :4},
@@ -91,7 +91,7 @@
                 {"n": 3, "d": 4}, {"n": 2, "d": 4}
             ]
         },
-        "exercise":[
+        "notes":[
             {"type" :"n", "value" :2, "dot" :true},
 			{"type" :"n", "value" :2},
 			

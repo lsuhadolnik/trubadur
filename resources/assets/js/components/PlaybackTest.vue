@@ -98,13 +98,13 @@ export default {
                 
 
                 let v = require('./games/rhythm/vaje.json');
-                this.notes.notes = v[0].exercise;
+                this.notes.notes = v[0].notes;
                 this.notes._call_render();
                 this.playback = new RhythmPlaybackEngine();
                 this.playback.BPM = v[0].BPM;
                 this.playback.bar_info = v[0].bar;
-                this.playback.load(v[0].exercise);
-                console.log(util.generate_playback_durations(v[0].exercise));
+                this.playback.load(v[0].notes);
+                console.log(util.generate_playback_durations(v[0].notes));
 
 
         

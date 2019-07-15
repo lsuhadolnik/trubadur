@@ -291,7 +291,7 @@ export default {
         submitQuestion(){
 
             this.$refs.diff_view.render(
-                this.questionState.exercise.exercise,
+                this.questionState.exercise.notes,
                 this.notes.notes,
                 this.bar
             );
@@ -333,7 +333,7 @@ export default {
                 this.questionState.exercise = exercise;
 
                 this._questionState_reset();
-                this.questionState.num_beats = util.get_bar_count(exercise);
+                this.questionState.num_beats = util.get_bar_count(exercise.notes);
                 
                 this._copy_bar_info(exercise);
 
@@ -380,7 +380,7 @@ export default {
                 return;
             }
 
-            let status = util.check_notes_equal(this.questionState.exercise.exercise, this.notes.notes);
+            let status = util.check_notes_equal(this.questionState.exercise.notes, this.notes.notes);
 
             let changeTimeout = 1000;
             let outside = this;
@@ -421,7 +421,7 @@ export default {
                 }
                 else if(event.what == "exercise"){
 
-                    this.playback.load(this.questionState.exercise.exercise, "exercise");
+                    this.playback.load(this.questionState.exercise.notes, "exercise");
                     this.playback.play(); 
                 }
             }
