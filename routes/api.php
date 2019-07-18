@@ -24,7 +24,7 @@ Route::middleware('auth:api')->get('levels/find', 'API\LevelController@find');
 Route::middleware('auth:api')->resource('levels', 'API\LevelController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('logins', 'API\LoginController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('questions', 'API\QuestionController', ['except' => ['create', 'edit']]);
-Route::middleware('auth:api')->post('questions/generate', 'API\QuestionController@generate');
+Route::post('questions/generate', 'API\QuestionController@generate');
 Route::middleware('auth:api')->resource('schools', 'API\SchoolController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('users', 'API\UserController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->put('users/{userId}/complete', 'API\UserController@complete')

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\RhythmExerciseController;
 
 
 use App\Difficulty;
@@ -107,7 +108,7 @@ class QuestionController extends Controller
      */
     public function generate(Request $request)
     {
-        // Retrievel alredy generated question
+        // Retrieve already generated question
         if ($request->has('game_id') && $request->has('chapter') && $request->has('number')) {
             $question = Question::where($request->all())->first();
             if ($question) {
@@ -219,32 +220,9 @@ class QuestionController extends Controller
      */
     private function  generateRhythmQuestion(Difficulty $difficulty, Question $question){
 
-        return <<<LISTEN
-        {
-            "BPM": 200,
-            "name": "mešatni takt. načini, vaja 1 k Lekciji 20  1/2",
-            "bar": {
-                "num_beats": 5,
-                "base_note": 4,
-                "subdivisions": [
-                    {"n": 3, "d": 4}, {"n": 2, "d": 4}
-                ]
-            },
-            "exercise": [
-                {"type" :"n", "value" :2},
-                {"type" :"n", "value" :4},
-                {"type" :"n", "value" :4},
-                {"type" :"n", "value" :4},
-                
-                {"type" :"bar", "value" :4},
-    
-                {"type" :"n", "value" :4},
-                {"type" :"n", "value" :4},
-                {"type" :"n", "value" :4},
-                {"type" :"n", "value" :2}
-            ]
-        }
-LISTEN;
+        $r = new RhythmExerciseController();
+        return $r->generateNew();   
+        
     }
 
     /**

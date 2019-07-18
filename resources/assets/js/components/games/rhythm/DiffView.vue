@@ -92,6 +92,7 @@ export default {
                     scrollX: 0
                 },
 
+                barnoteWidth: 40
             },
 
             CTX: {
@@ -121,7 +122,6 @@ export default {
        _render_context(descriptor, notes, bar){
 
 
-
             if(window.innerHeight <= 600){
                 // Size the svg: - PLEASE MOVE THIS LOGIC SOMEWHERE ELSE! THANKS!
                 descriptor.renderer.resize(
@@ -143,24 +143,17 @@ export default {
             // Clear all notes from svg
             context.clear();
 
-            //let staveIndex = 0;
-            let cursorNote = null;
+            let batches = [], barInfo = [];
 
-            let batches = [];
-            let barInfo = [];
-
-            var ties = [];
-            var tuplets = [];
-            var renderQueue = [];
+            var ties = [], tuplets = [], renderQueue = [];
             descriptor.rendered = [];
 
             let allStaveNotes = [];
-
-            let latestNoteIndex = 0;
-            let lastNoteIndex = -1;
+            let latestNoteIndex = 0, lastNoteIndex = -1;
 
             let firstTupletNoteIdx = -1;
 
+            // Set initial bar width
             let currentBatchWidth = 0;
 
             for(var i = 0; i < notes.length; i++){
@@ -176,19 +169,18 @@ export default {
                 if(!thisNote) { continue; }
 
                 // Handle notes and rests
-                let symbol = thisNote.value + "";;
+                let symbol = thisNote.value + "";
                 if(thisNote.type == "r")
                     symbol += "r";
 
-                let newNote = new VF.StaveNote(
-                    {
-                        clef: "treble", 
-                        keys: ["g/4"], 
-                        duration: symbol
-                    }
-                );
+                let newNote = null;
+                if(thisNote.type == "bar"){
+                    newNote = new VF.StaveNote({ clef: "treble", keys: ["g/4"], duration: "1r" });
+                }else {
+                    newNote = new VF.StaveNote({ clef: "treble", keys: ["g/4"], duration: symbol });
+                }
 
-                switch (thisNote.value) {
+                if(thisNote.type != "bar") switch (thisNote.value) {
                     case 1:  currentBatchWidth += 100; break;
                     case 2:  currentBatchWidth += 70;  break;
                     case 4:  currentBatchWidth += 40;  break;
@@ -211,20 +203,20 @@ export default {
                 if(thisNote.dot){
                     newNote.addDot(0); // enako je tudi newNote.addDotToAll()
                 }
-            
-
-                allStaveNotes.push(newNote);
                 
-                if(thisNote.type != "bar"){
-                    renderQueue.push(newNote);
-                    descriptor.rendered.push(newNote);
-                }
-                    
 
                 if(thisNote.type == "bar"){
                     newNote.setStyle({fillStyle: "transparent", strokeStyle: "transparent"});
                 }
 
+                allStaveNotes.push(newNote);
+                descriptor.rendered.push(newNote);
+                
+                if(thisNote.type != "bar"){
+                    renderQueue.push(newNote);    
+                }
+
+                
                 if(thisNote.tie && i > 0){
 
                     // tie is:
@@ -232,12 +224,10 @@ export default {
                     ties.push(new VF.StaveTie({
                         first_note: allStaveNotes[lastNoteIndex],
                         last_note:  allStaveNotes[latestNoteIndex],
-                        first_indices: [0],
-                        last_indices:  [0]
+                        first_indices: [0], last_indices:  [0]
                     }));
 
                 }
-
 
                 if(thisNote.in_tuplet){
                     if(firstTupletNoteIdx == -1){
@@ -251,24 +241,26 @@ export default {
 
                     let tuplet_type = thisNote.tuplet_type;
 
-                    tuplets.push(new Vex.Flow.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
-                        bracketed: true, num_notes: tuplet_type.num_notes, notes_occupied: tuplet_type.in_space_of
+                    tuplets.push(new VF.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
+                        bracketed: true, num_notes: tuplet_type.num_notes , notes_occupied: tuplet_type.in_space_of
                     }));
                     firstTupletNoteIdx = -1;
                 }
 
 
-               /* the new manual bar logic */
-               if(notes[i].type == "bar"){
-                  
+
+            /* the new manual bar logic */
+            if(notes[i].type == "bar"){
+                
                     batches.push({notes:renderQueue, width:currentBatchWidth});
                     renderQueue = [newNote];
-                    currentBatchWidth = 0;
+                    currentBatchWidth = this.info.barnoteWidth;
 
                 }
 
             }
 
+            // Draw the rest
             if(renderQueue.length > 0){
                 // Draw the rest
                 batches.push({notes:renderQueue, width:currentBatchWidth});
@@ -284,21 +276,21 @@ export default {
         },
 
 
-        render(exerciseNotes, userNotes, bar) {
-            
-            this._render_context(
-                this.CTX.user, 
-                userNotes, 
-                bar
-            );
+    render(exerciseNotes, userNotes, bar) {
+        
+        this._render_context(
+            this.CTX.user, 
+            userNotes, 
+            bar
+        );
 
-            this._render_context(
-                this.CTX.exercise,
-                exerciseNotes,
-                bar
-            );
+        this._render_context(
+            this.CTX.exercise,
+            exerciseNotes,
+            bar
+        );
 
-        },
+    },
 
     },
     mounted(){

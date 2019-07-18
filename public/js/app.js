@@ -77949,8 +77949,9 @@ var RU = new __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__["a" /* default
                 scrollBuffer: {
                     minimapX: 0,
                     scrollX: 0
-                }
+                },
 
+                barnoteWidth: 40
             },
 
             CTX: {
@@ -77994,24 +77995,21 @@ var RU = new __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__["a" /* default
             // Clear all notes from svg
             context.clear();
 
-            //let staveIndex = 0;
-            var cursorNote = null;
+            var batches = [],
+                barInfo = [];
 
-            var batches = [];
-            var barInfo = [];
-
-            var ties = [];
-            var tuplets = [];
-            var renderQueue = [];
+            var ties = [],
+                tuplets = [],
+                renderQueue = [];
             descriptor.rendered = [];
 
             var allStaveNotes = [];
-
-            var latestNoteIndex = 0;
-            var lastNoteIndex = -1;
+            var latestNoteIndex = 0,
+                lastNoteIndex = -1;
 
             var firstTupletNoteIdx = -1;
 
+            // Set initial bar width
             var currentBatchWidth = 0;
 
             for (var i = 0; i < notes.length; i++) {
@@ -78029,16 +78027,17 @@ var RU = new __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__["a" /* default
                 }
 
                 // Handle notes and rests
-                var symbol = thisNote.value + "";;
+                var symbol = thisNote.value + "";
                 if (thisNote.type == "r") symbol += "r";
 
-                var newNote = new VF.StaveNote({
-                    clef: "treble",
-                    keys: ["g/4"],
-                    duration: symbol
-                });
+                var newNote = null;
+                if (thisNote.type == "bar") {
+                    newNote = new VF.StaveNote({ clef: "treble", keys: ["g/4"], duration: "1r" });
+                } else {
+                    newNote = new VF.StaveNote({ clef: "treble", keys: ["g/4"], duration: symbol });
+                }
 
-                switch (thisNote.value) {
+                if (thisNote.type != "bar") switch (thisNote.value) {
                     case 1:
                         currentBatchWidth += 100;break;
                     case 2:
@@ -78069,15 +78068,15 @@ var RU = new __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__["a" /* default
                     newNote.addDot(0); // enako je tudi newNote.addDotToAll()
                 }
 
+                if (thisNote.type == "bar") {
+                    newNote.setStyle({ fillStyle: "transparent", strokeStyle: "transparent" });
+                }
+
                 allStaveNotes.push(newNote);
+                descriptor.rendered.push(newNote);
 
                 if (thisNote.type != "bar") {
                     renderQueue.push(newNote);
-                    descriptor.rendered.push(newNote);
-                }
-
-                if (thisNote.type == "bar") {
-                    newNote.setStyle({ fillStyle: "transparent", strokeStyle: "transparent" });
                 }
 
                 if (thisNote.tie && i > 0) {
@@ -78087,8 +78086,7 @@ var RU = new __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__["a" /* default
                     ties.push(new VF.StaveTie({
                         first_note: allStaveNotes[lastNoteIndex],
                         last_note: allStaveNotes[latestNoteIndex],
-                        first_indices: [0],
-                        last_indices: [0]
+                        first_indices: [0], last_indices: [0]
                     }));
                 }
 
@@ -78104,7 +78102,7 @@ var RU = new __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__["a" /* default
 
                     var tuplet_type = thisNote.tuplet_type;
 
-                    tuplets.push(new __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
+                    tuplets.push(new VF.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
                         bracketed: true, num_notes: tuplet_type.num_notes, notes_occupied: tuplet_type.in_space_of
                     }));
                     firstTupletNoteIdx = -1;
@@ -78115,10 +78113,11 @@ var RU = new __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__["a" /* default
 
                     batches.push({ notes: renderQueue, width: currentBatchWidth });
                     renderQueue = [newNote];
-                    currentBatchWidth = 0;
+                    currentBatchWidth = this.info.barnoteWidth;
                 }
             }
 
+            // Draw the rest
             if (renderQueue.length > 0) {
                 // Draw the rest
                 batches.push({ notes: renderQueue, width: currentBatchWidth });
