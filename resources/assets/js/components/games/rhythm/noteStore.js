@@ -130,8 +130,6 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
         let sel = this.cursor.selection;
 
-        debugger;
-
         // If in the middle of a tuplet; Delete it...
         this.clearTupletBackwards(sel.from);
         this.clearTupletForwards(sel.to);

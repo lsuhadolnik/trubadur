@@ -257,6 +257,8 @@
                 {"type":"n",   "value":"16" },
                 {"type":"n",   "value":"8"  },
                 {"type":"n",   "value":"4"  },
+                
+                
                 {"type":"bar", "value":"4"  },
                 
                 {"type":"n",   "value":"4",  "in_tuplet": true},
@@ -265,6 +267,7 @@
                 {"type":"n",   "value":"16"},
                 {"type":"n",   "value":"16"}, 
                 {"type":"n",   "value":"8", "dot": true},
+                
                 {"type":"bar", "value":"4"},  
 
                 {"type":"n", "value":"4"},
@@ -306,6 +309,8 @@
             {"type":"n",   "value":"4" },
             {"type":"r",   "value":"4"},
             {"type":"r",   "value":"4"},
+            
+            
             {"type":"bar", "value":"4"},
 
             {"type":"n", "value":"4", "in_tuplet": true},
@@ -399,13 +404,24 @@
             {"type":"r","value":4},
             {"type":"n","value":8},
             {"type":"n","value":8},
-            {"type":"n","value":16},
-            {"type":"n","value":16},
-            {"type":"n","value":16},
-            {"type":"n","value":16},
+
             
             {"type":"bar"},
 
+
+            {"type":"n","value":16},
+            {"type":"n","value":16},
+            {"type":"n","value":16},
+            {"type":"n","value":16},
+            {"type":"r","value":4},
+            {"type":"n","value":8,"in_tuplet":true},
+            {"type":"r","value":8,"in_tuplet":true},
+            {"type":"n","value":8,"in_tuplet":true, "tuplet_end":true,"tuplet_type":{"num_notes":3, "in_space_of": 2}},
+            
+
+            {"type":"bar"},
+
+            
             {"type":"n","value":4},
             {"type":"r","value":8},
             {"type":"n","value":16,"in_tuplet":true},

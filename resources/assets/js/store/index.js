@@ -310,7 +310,7 @@ export default new Vuex.Store({
                     })
             })
         },
-        setupMidi ({ commit, state }, force = false, additionalInstruments = null) {
+        setupMidi ({ commit, state }, force = false) {
             return new Promise((resolve, reject) => {
                 if (!force && state.midi) {
                     resolve()
@@ -318,8 +318,8 @@ export default new Vuex.Store({
                     commit('addToCurrentInstruments', state.me.instrument)
                     let currentInstruments = [...state.currentInstruments];
 
-                    if(additionalInstruments){
-                        currentInstruments = currentInstruments.concat(additionalInstruments);
+                    if(force && force.length > 0){
+                        currentInstruments = currentInstruments.concat(force);
                     }
                     
                     MIDI.loadPlugin({

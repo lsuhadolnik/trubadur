@@ -20,14 +20,7 @@
                     <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(16)"><div class="norfolk-note-padding">&#x0078;</div></sexy-button>
                     <sexy-button v-else :color="note_color()" @click.native="tuplet(6,4)"><TupletSign num="6:4" :bg="note_color()" /></sexy-button>
 
-                    <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(32)">
-                        <div class="norfolk-note-padding thirtytwo-note">
-                            <div class="td-base"> &#x0071;</div>
-                            <div class="td-flag1">&#x006A;</div>
-                            <div class="td-flag2">&#x006A;</div>
-                            <div class="td-flag3">&#x006A;</div>
-                        </div>
-                    </sexy-button>
+                    <ThirtyTwoButton v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(32)" />
                     <sexy-button v-else :color="note_color()" @click.native="tuplet()"><TupletSign num="?:?" :bg="note_color()" /></sexy-button>
 
                 <!--</div>-->
@@ -48,12 +41,12 @@
                     
 
                     <sexy-button color="sunglow" @click.native="play_exercise()" :percents="percentsExercise" customClass="normal-font tiny-tajni-pici-mici-font">
-                        <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'"/>
+                        <icon name="pause" v-if="playbackStatus && playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'"/>
                         <div v-else class="small-font-button">Ponovi vajo</div>
                     </sexy-button>
 
                     <!--<sexy-button color="sunglow" @click.native="play_user()" :percents="percentsUser" customClass="normal-font tiny-tajni-pici-mici-font">
-                        <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'user'"/>
+                        <icon name="pause" v-if="playbackStatus && playbackStatus.playing && playbackStatus.currentlyLoaded == 'user'"/>
                         <div v-else class="small-font-button">Ponovi vpisano</div>
                     </sexy-button>-->
 
@@ -63,7 +56,6 @@
             <div class="row rhythm-game__keyboard-row row-2 norfolk-row">
                 
                 
-
                 <sexy-button v-if="!cursor.selectionMode" :color="rest_color()" @click.native="rest(2)" >&#x00D3;</sexy-button>
                 <sexy-button v-else :color="rest_color()" @click.native="remove_tuplets()" >
                     <span class="musisync">T</span>
@@ -103,7 +95,7 @@
                 
                 <div v-bind:class="{ half_transparent: cursor.selectionMode }" style="display: inline-block;">
 
-                    <sexy-button :hidden="cursor.in_tuplet" text="\" color="green" @click.native="add_bar()" />
+                    <BarButton :hidden="cursor.in_tuplet" @click.native="add_bar()" />
                 
                     <!-- MOVE LEFT OR DOT -->
                     <sexy-button v-if="moving_buttons || cursor.in_tuplet" text="<" color="orange" @click.native="move_cursor_backwards" customClass="moveButtonsButton" />
@@ -139,14 +131,14 @@
                 
                 <!-- PLAY EXERCISE BUTTON -->
                 <sexy-button color="sunglow" @click.native="play_exercise()" :percents="percentsExercise">
-                    <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'"/>
+                    <icon name="pause" v-if="playbackStatus && playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'"/>
                     <div v-else class="tiny-tajni-pici-mici-font">Ponovi vajo</div>
                 </sexy-button>
 
                 <!-- BPM SLIDER / BUTTON -->
                 <sexy-slider color="cabaret" :value="playbackStatus" valueKey="BPM" :from="20" :to="250">
                     <div class="BPM-indicator normal-font">
-                        <div class="BPM-value">{{playbackStatus.BPM}}</div>
+                        <div class="BPM-value">{{playbackStatus ? playbackStatus.BPM : 0}}</div>
                         <div class="BPM-prompt">BPM</div>
                     </div>
                 </sexy-slider>
@@ -156,16 +148,16 @@
                     <div v-if="question.check == 'no'" class="tiny-tajni-pici-mici-font">Preveri</div>
                     <icon name="times" v-if="question.check == 'wrong'"/>
                     <icon name="check" v-if="question.check == 'correct'"/>
+                    <icon name="refresh" v-if="question.check == 'waiting'" spin />
+                    <icon name="exclamation-circle" v-if="question.check == 'error'" />
                     <div v-if="question.check == 'next'" class="tiny-tajni-pici-mici-font">Naprej</div>
                 </sexy-button>
 
                 <!-- SUBMIT BUTTON -->
-                <sexy-button :color="checkButtonColor" @click.native="submit()" >
-                    <div class="tiny-tajni-pici-mici-font">Oddaj</div>
-                </sexy-button>
+                <sexy-button color="green" @click.native="showHelp()" ><div class="tiny-tajni-pici-mici-font">Pomoč</div></sexy-button>
 
                 <!-- DEBUG -->
-                <sexy-button :color="checkButtonColor" @click.native="showJson()" >
+                <!--<sexy-button :color="checkButtonColor" @click.native="showJson()" >
                     <div class="tiny-tajni-pici-mici-font">Show JSON</div>
                 </sexy-button>
 
@@ -176,7 +168,7 @@
                 <sexy-button color="sunglow" @click.native="play_user()" :percents="percentsUser" customClass="normal-font tiny-tajni-pici-mici-font">
                         <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'user'"/>
                         <div v-else class="small-font-button">Ponovi vpisano</div>
-                </sexy-button>
+                </sexy-button>-->
                 <!-- END DEBUG -->
                 
                 <!-- SET CORRECT BUTTON -->
@@ -194,7 +186,7 @@
 
 <style lang="scss" scoped>
 
-    @import '../../../../sass/variables/index';
+    @import '../../../../../sass/variables/index';
     
     .half_transparent{
         opacity: 0.5;
@@ -245,30 +237,7 @@
         width: 80px;
     }
 
-    .thirtytwo-note{
-
-        .td-flag1, .td-flag2, .td-flag3{
-            font-size: 30px;
-            margin-left: 17px;
-        }
-
-        .td-base{
-            margin-top: -16px;
-        }
-
-        .td-flag1{
-            margin-top: -89px;
-        }
-
-        .td-flag2{
-            margin-top: -53px;
-        }
-        
-        .td-flag3{
-            margin-top: -53px;
-        }
-
-    }
+    
 
     .moveButtonsButton {
         font-family: initial !important;
@@ -350,10 +319,13 @@
 
 <script>
 
-import SexyButton from "../../elements/SexyButton.vue"
-import TupletSign from "../../elements/TupletSign.vue"
-import SexySlider from "../../elements/SexySlider.vue"
-import TwoRowsButton from "../../elements/TwoRowsButton.vue"
+import SexyButton from "../../../elements/SexyButton.vue"
+import SexySlider from "../../../elements/SexySlider.vue"
+
+
+import TupletSign from "../../../elements/TupletSign.vue"
+import ThirtyTwoButton from "./Buttons/ThirtyTwoButton.vue"
+import BarButton from "./Buttons/BarButton.vue"
 
 import 'vue-awesome/icons/repeat'
 import 'vue-awesome/icons/play'
@@ -365,6 +337,8 @@ import 'vue-awesome/icons/angle-double-right'
 import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/i-cursor'
 import 'vue-awesome/icons/ban'
+import 'vue-awesome/icons/refresh'
+import 'vue-awesome/icons/exclamation-circle'
 
 var Fraction = require('fraction.js');
 
@@ -387,6 +361,12 @@ export default {
                 type: "showJson"
             });
 
+        },
+
+        showHelp() {
+            this.key_callback({
+                type: "showHelp"
+            });
         },
 
         changeSignature() {
@@ -489,6 +469,9 @@ export default {
 
         play_button_click(type){
 
+            if(!this.playbackStatus)
+                return;
+
             if(this.playbackStatus.currentlyLoaded == type){
     
                 if(this.playbackStatus.playing){
@@ -584,7 +567,10 @@ export default {
 
     },
     components: {
-        SexyButton, TwoRowsButton, SexySlider, TupletSign
+        SexyButton, SexySlider, TupletSign, 
+
+        ThirtyTwoButton, BarButton
+
     },
     data: function() {
         return {
@@ -606,7 +592,8 @@ export default {
     computed: {
 
         percentsUser(){
-            if(this.playbackStatus.currentlyLoaded == "user"){
+            
+            if(this.playbackStatus && this.playbackStatus.currentlyLoaded == "user"){
                 
                 return this.playbackStatus.percentPlayed();
 
@@ -616,7 +603,7 @@ export default {
         },
 
         percentsExercise(){
-            if(this.playbackStatus.currentlyLoaded == "exercise"){
+            if(this.playbackStatus && this.playbackStatus.currentlyLoaded == "exercise"){
                 
                 return this.playbackStatus.percentPlayed();
 

@@ -1,4 +1,4 @@
-12<style lang="scss" scoped>
+<style lang="scss" scoped>
 @import '../../../sass/variables/index';
 
 .keyboard {

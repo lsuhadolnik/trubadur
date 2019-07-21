@@ -112,7 +112,7 @@ class RhythmExerciseController extends Controller
 
         // retrieve first 2 bars by IDs
         $bar1 = json_decode( RhythmBar::find($ids[0]->id)->content, true );
-        $bar2 = json_decode( RhythmBar::find($ids[0]->id)->content, true );
+        $bar2 = json_decode( RhythmBar::find($ids[1]->id)->content, true );
         
         // split bar jsons with {type: 'bar'}
         $notes = array_merge($bar1, [["type" => "bar"]], $bar2);
@@ -120,7 +120,7 @@ class RhythmExerciseController extends Controller
         
         // return the exercise
         return json_encode(array(
-            "BPM" => 100,
+            "BPM" => 60,
             "name" => "Hello",
             "bar" => $barInfo,
             "notes" => $notes

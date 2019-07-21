@@ -20,7 +20,12 @@ exercises.forEach(ex => {
 
     let currentBar = [];
     ex.notes.forEach((note, idx) => {
-        if(note.type == "bar" || idx + 1 == ex.notes.length){
+
+        if(note.type != "bar" || idx + 1 == ex.notes.length){
+            currentBar.push(note);
+        }
+
+        if(note.type == "bar"){
             
             //let barId = _.indexOf(bars, currentBar);
             let barId = _.findIndex(bars, function(item) { return _.isEqual(item.content, currentBar) });
@@ -34,14 +39,11 @@ exercises.forEach(ex => {
                 };
                 bars.push(newBar);
                 barId = newBar.id;
-
             }
 
             ex.bars.push(barId);
             currentBar = [];
 
-        }else {
-            currentBar.push(note);
         }
     });
 
@@ -49,28 +51,58 @@ exercises.forEach(ex => {
 
 console.log(bars.map(b => {return b.id}));
 console.log(exercises.map(ex => {return {n: ex.name, bars: ex.bars}}));
-console.log("First");
-console.log(JSON.stringify(bars[0]));
-console.log(JSON.stringify(exercises[0].bar));
 
-// Write to DB
-bars.forEach(b => {
+
+
+let deleteBatch = function(url){
+    // Delete all bars from database
+    console.log(url);
+    return axios.get(url).then((resp) => {    
+        if(resp.data && resp.data.data){
+            return Promise.all(resp.data.data.map((kk) => {
+                return axios.delete("http://localhost/api/rhythm_bar/"+kk.id)
+                .then(respDelete => {
+                    console.log(respDelete);
+                }).catch((err) => {
+                    debugger;
     
-    axios.post('http://localhost/api/rhythm_bar', {
-        content: JSON.stringify(b.content),
-        barInfo: JSON.stringify(b.barInfo),
-        difficulty: b.difficulty
-    })
-      .then(function (response) {
-            console.log("S: "+b.id+"/"+bars.length);
-            //console.log(response);
-      })
-      .catch(function (error) {
-          debugger;
-        console.error("E: "+b.id+"/"+bars.length);
-        console.error(error.message);
+                    console.error(err.message);
+                });
 
-      });
+
+            })).then(() => {
+                if(resp.data.next_page_url){
+                    return deleteBatch(url);
+                }
+            });
+        }
+
+        return null; 
+    });    
+}
+
+deleteBatch('http://localhost/api/rhythm_bar').then(() => {
+
+    // Write to DB
+    return Promise.all(bars.map(b => {
+        
+        return axios.post('http://localhost/api/rhythm_bar', {
+            content: JSON.stringify(b.content),
+            barInfo: JSON.stringify(b.barInfo),
+            difficulty: b.difficulty
+        })
+        .then(function (response) {
+                console.log("S: "+b.id+"/"+bars.length);
+                //console.log(response);
+        })
+        .catch(function (error) {
+            debugger;
+            console.error("E: "+b.id+"/"+bars.length);
+            console.error(error.message);
+
+        });
+
+    }));
 
 });
 /*

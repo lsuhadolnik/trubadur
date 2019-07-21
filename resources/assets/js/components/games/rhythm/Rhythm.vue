@@ -8,7 +8,7 @@
                 <li class="rhythm__instructions-list-item">Preizkusil se boš v ritmičnem nareku.</li>
                 <li class="rhythm__instructions-list-item">Vaja bo v {{bar.num_beats}}/{{bar.base_note}} taktu.</li>
                 <li class="rhythm__instructions-list-item">Slišal boš {{num_beats_text}}.</li>
-                <li class="rhythm__instructions-list-item">Predvajalo se bo s hitrostjo {{playback.BPM}} udarcev na minuto.</li>
+                <li class="rhythm__instructions-list-item">Predvajalo se bo s hitrostjo {{questionState.exercise != null ? questionState.exercise.BPM : "??" }} udarcev na minuto.</li>
                 <li class="rhythm__instructions-list-item">Program je v preizkusni fazi, zanekrat lahko preizkusiš par vpisanih vaj.</li>
             </ul>
         </div>
@@ -25,6 +25,8 @@
             <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" :question="questionState" :say="showError" />
 
             <div class="error" v-show="errorMessage">{{errorMessage}}</div>
+
+            <KeyboardHelp v-if="showHelp" :hide="hideHelp" />
 
         </div>
 
@@ -94,7 +96,8 @@ import ProgressBar from "../../elements/ProgressBar.vue"
 
 import StaffView from "./StaffView.vue"
 import DiffView from "./DiffView.vue"
-import Keyboard from "./RhythmKeyboard.vue"
+import Keyboard from "./Keyboard/RhythmKeyboard.vue"
+import KeyboardHelp from "./Keyboard/KeyboardHelp.vue"
 
 import NoteStore from "./noteStore"
 import RhythmPlaybackEngine from './rhythmPlaybackEngine'
@@ -109,7 +112,7 @@ const util = require('./rhythmUtilities');
 export default {
     
     components: {
-        SexyButton, CircleTimer, ProgressBar, StaffView, DiffView, Keyboard
+        SexyButton, CircleTimer, ProgressBar, StaffView, DiffView, Keyboard, KeyboardHelp
     },
 
     props: ["game", "difficulty"],
@@ -122,12 +125,18 @@ export default {
             displayState: 'loading',
 
             questionState: {
+                id: 0,
                 check: "no", // "no", "correct", "wrong", "next"
                 numChecks: 0,
                 num_beats: "x",
-                number: 1,
+                number: 0,
                 chapter: 1,
-                exercise: null
+                exercise: null,
+                statistics: {
+                    nAdditions: 1, nDeletions: 1,
+                    nPlaybacks: 1, nNoteTaps: 1,
+                    nChecks: 1, startTime: 1
+                }
             },
 
             notes: null,
@@ -157,12 +166,17 @@ export default {
             errorMessage: "",
             errorTimeout: null,
 
-            playback: new RhythmPlaybackEngine(),
+            showHelp: true,
+
+            playback: new RhythmPlaybackEngine(MIDI),
             defaultBPM: 120
         }
     },
 
     computed: {
+
+        ...mapState(['me', 'midi']),
+
         num_beats_text() {
             switch(this.questionState.num_beats){
                 case 1:
@@ -240,8 +254,7 @@ export default {
             }
             if(event.type == "submit"){
 
-                this.submitQuestion();
-                
+                this.showDiff();
             }
             if(event.type == "selectionMode"){
 
@@ -269,6 +282,9 @@ export default {
                 console.log(text);
 
             }
+            else if(event.type == "showHelp") {
+                this.showHelp = true;
+            }
             else if(event.type == "changeSignature"){
                 
                 this.bar.num_beats = parseInt(prompt("Num_beats?"));
@@ -283,12 +299,21 @@ export default {
                 if(this.playback.status != "playing")
                     this.playback.stop();
 
-                this.notes.handle_button(event)
+                this.notes.handle_button(event);
+
+                if(["n", "r", "bar", "dot", "tie", "tuplet"].indexOf(event.type) >= 0){
+                    this.questionState.statistics.nAdditions += 1;
+                }
+
+                if(["remove_tuplets", "delete"].indexOf(event.type) >= 0){
+                    this.questionState.statistics.nDeletions += 1;
+                }
             }
     
         },
 
-        submitQuestion(){
+        showDiff(nowDate){
+
 
             this.$refs.diff_view.render(
                 this.questionState.exercise.notes,
@@ -297,9 +322,13 @@ export default {
             );
 
             this.displayState = "diff";
+            
         },
 
         startGame() {
+
+            this.questionState.statistics.startTime = (new Date()).getTime();
+
             this.displayState = "ready";
             this.play({action: "replay", what: "exercise"});
         },
@@ -310,15 +339,63 @@ export default {
             this.bar.base_note = exercise.bar.base_note;
             if(exercise.bar.subdivisions){
                 this.bar.subdivisions = exercise.bar.subdivisions;
+            }else {
+                this.bar.subdivisions = null;
             }
-
         },
 
         _questionState_reset() {
             this.questionState.check = "no";
+
+            this.questionState.statistics.nAdditions = 1;
+            this.questionState.statistics.nDeletions = 1;
+            this.questionState.statistics.nPlaybacks = 1;
+            this.questionState.statistics.nNoteTaps = 1;
+            this.questionState.statistics.nChecks = 1;
+            this.questionState.statistics.startTime = 1;
+        },
+
+        _increment_question_number() {
+
+            // Next question.
+            this.questionState.number += 1;
+
+            // Is it the end of a chapter?
+            if(this.questionState.number > 8) {
+                
+                // First question in a new chapter
+                this.questionState.number = 1;
+                this.questionState.chapter += 1;
+
+                // Is it the end of a game?
+                if(this.questionState.chapter > 3) {
+                    return "GAME";
+                }
+
+                return "CHAPTER";
+            }
+
+            return "QUESTION";
+
+        },
+
+        gameEnded() {
+            
+            return this.finishGameUser({ gameId: this.game.id, userId: this.me.id })
+            .then(() => { return this.completeBadges(this.me.id) })
+            .then(() => { this.$router.push({ name: 'gameStatistics', params: { id: this.game.id } })});
+
         },
 
         nextQuestion(play){
+
+            this.displayState = 'loading';
+
+            // Increment question and check if the game is over
+            let skipType = this._increment_question_number();
+            if(skipType == "GAME"){
+                return this.gameEnded();
+            }
 
             return this.generateQuestion(
                 { 
@@ -331,10 +408,12 @@ export default {
                 let exercise = JSON.parse(question.content);
 
                 this.questionState.exercise = exercise;
+                this.questionState.id = question.id;
 
                 this._questionState_reset();
                 this.questionState.num_beats = util.get_bar_count(exercise.notes);
-                
+            
+
                 this._copy_bar_info(exercise);
 
                 this.playback.setBPM(exercise.BPM ? exercise.BPM : this.defaultBPM);
@@ -354,21 +433,23 @@ export default {
                     this.play({action: "replay", what: "exercise"});
                 }
 
+                this.$refs.staff_view.reset();
+
             });
 
         },
 
         continueGame(){
 
-            this.nextQuestion(true).then(() => {
+            this.nextQuestion(false).then((state) => {
+                
+                if(state == "GAME"){
 
-                this.displayState = "ready";
-            
-                let out = this;
-                setTimeout(function() {
-                    out.$refs.staff_view.reset();
-                }, 100);
-
+                } else {
+                    this.displayState = "instructions";
+                }
+                
+                
             });
             
         },
@@ -376,33 +457,63 @@ export default {
         check(){
 
             if(this.questionState.check == "next"){
-                this.submitQuestion();
+                this.showDiff();
                 return;
             }
 
-            let status = util.check_notes_equal(this.questionState.exercise.notes, this.notes.notes);
-
-            let changeTimeout = 1000;
-            let outside = this;
-
-            if(status){
-                
-                this.questionState.check = "correct";
-                setTimeout(function() {
-                    // Watch out, could happen when next question is already loaded
-                    outside.questionState.check = "next";
-                }, changeTimeout);
-            }else{
-                this.questionState.check = "wrong";
-                setTimeout(function() {
-                    // Watch out, could happen when next question is already loaded
-                    outside.questionState.check = "no";
-                }, changeTimeout);
+            if(this.questionState.check == "waiting" || this.questionState.check == "wrong"){
+                return;
             }
+
+            // Update statistics
+            this.questionState.statistics.nChecks += 1;
+
+            let status = util.check_notes_equal(this.questionState.exercise.notes, this.notes.notes);
+            let time = ((new Date()).getTime() - this.questionState.statistics.startTime) / 1000;
+            this.questionState.check = "waiting";
+
+            // Log the answer
+            return this.storeAnswer({ 
+                game_id: this.game.id, 
+                user_id: this.me.id, 
+                question_id: this.questionState.id, 
+                time: time, 
+                n_additions: this.questionState.statistics.nAdditions, 
+                n_deletions: this.questionState.statistics.nDeletions, 
+                n_playbacks: this.questionState.statistics.nPlaybacks, 
+                n_answers:   this.questionState.statistics.nChecks, 
+                success:  status})
+            .then(() => {
+
+                let changeTimeout = 1000;
+                let outside = this;
+
+                if(status){
+                    
+                    this.questionState.check = "correct";
+                    setTimeout(function() {
+                        // Watch out, could happen when next question is already loaded
+                        outside.questionState.check = "next";
+                    }, changeTimeout);
+                }else{
+                    this.questionState.check = "wrong";
+                    setTimeout(function() {
+                        // Watch out, could happen when next question is already loaded
+                        outside.questionState.check = "no";
+                    }, changeTimeout);
+                }
+
+            }).catch(() => {
+
+                this.questionState.check = "error";
+
+            });
 
         },
 
         play(event){
+
+            this.questionState.statistics.nPlaybacks += 1;
 
             if(event.action == "resume"){
                 this.playback.play();
@@ -439,7 +550,13 @@ export default {
             this.errorTimeout = setTimeout(function(){
                 outer.showError("");                    
             }, 3000);
-        }
+        },
+
+        hideHelp() {
+            
+            this.showHelp = false;
+            
+        },
 
 },
 
@@ -447,15 +564,19 @@ export default {
 
         // Če do sem nisi prišel preko vmesnika, 
         // greš lahko kar lepo nazaj
-        if (!this.game || !this.difficulty) {
+        /*if (!this.game || !this.difficulty) {
             this.$router.push({ name: 'dashboard' })
-        } else {
+        } else {*/
 
-            this.fetchMe()
-            .then(() => { return this.setupMidi(true, ['xylophone', 'percussive_organ']); })
+            /*this.fetchMe()
+            .then(() => { return this.setupMidi(['xylophone', 'percussive_organ']); })
             .then(() => { return this.nextQuestion(); })
-            .then(() => { this.displayState = "instructions"; return; });
-        }
+            .then(() => { this.displayState = "instructions"; return; });*/
+
+            this.displayState = "ready";
+            
+
+        //}
 
     },
     

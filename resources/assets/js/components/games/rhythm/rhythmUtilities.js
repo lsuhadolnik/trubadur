@@ -156,7 +156,6 @@ var utilities = {
         }
 
         return count;
-
     },
 
     getNoteType: _getNoteType,

@@ -1,11 +1,13 @@
 var Fraction = require("fraction.js");
 let RhythmUtilities = require('./rhythmUtilities');
 
-var RhythmPlaybackEngine = function(){
+var RhythmPlaybackEngine = function(midi){
+
+    this.midi = midi;
 
     this.BPM = 120;
 
-    this.channel = 0;
+    this.channel = 5; // Percussive organ. Look in store/index.js
     this.intensity = 127;
     this.pitch = [65];
 
@@ -25,8 +27,6 @@ var RhythmPlaybackEngine = function(){
     }
 
     this.playNote = function(endCallback, noteCallback){
-
-        let sustain = 1/32;
 
         if(!this.playing 
             || this.playbackQueue == null 
@@ -63,8 +63,8 @@ var RhythmPlaybackEngine = function(){
             let sPitch = this.pitch[Math.min(this.pitch.length - 1, this.currentNoteID - 1)];
 
             // Zaigraj, ustavi se samodejno.
-            MIDI.noteOn(this.channel, sPitch, this.intensity, 0);
-            MIDI.noteOff(this.channel, sPitch, actualDuration);
+            this.midi.noteOn(this.channel, sPitch, this.intensity, 0);
+            this.midi.noteOff(this.channel, sPitch, actualDuration);
 
         }else {
             
@@ -99,6 +99,8 @@ var RhythmPlaybackEngine = function(){
         this.bar.base_note = newBar.base_note;
         if(newBar.subdivisions){
             this.bar.subdivisions = newBar.subdivisions;
+        }else {
+            this.bar.subdivisions = null;
         }
 
         if(this.countInPlayback){
@@ -106,6 +108,8 @@ var RhythmPlaybackEngine = function(){
             this.countInPlayback.bar.base_note = newBar.base_note;
             if(newBar.subdivisions){
                 this.countInPlayback.bar.subdivisions = newBar.subdivisions;
+            } else {
+                this.bar.subdivisions = null;
             }
         }
 
@@ -136,6 +140,11 @@ var RhythmPlaybackEngine = function(){
                 for (let i = 1; i < s.n; i++) { pitches.push(lo); }
             });
 
+        } else if(!this.bar.subdivisions && this.bar.base_note == 8 && this.bar.num_beats == 6) {
+
+            // Special counting for 6/8 time...
+            pitches = [hi, lo, lo, hi, lo, lo];
+
         } else {
             pitches.push(hi);
             for (let i = 1; i < this.bar.num_beats; i++) { pitches.push(lo); }
@@ -148,13 +157,15 @@ var RhythmPlaybackEngine = function(){
     this.playCountIn = function(then){
 
         if(!this.countInPlayback){
-            this.countInPlayback = new RhythmPlaybackEngine();
-            this.countInPlayback.bar = this.bar;
-            this.countInPlayback.channel = 1;
-            this.countInPlayback.pitch = this._get_countin_pitches();
-            this.countInPlayback.load(this.getCountInNotes());
+            this.countInPlayback = new RhythmPlaybackEngine(midi);
+            this.countInPlayback.channel = 6; // xylophone. Look in store/index.js    
         }
 
+
+
+        this.countInPlayback.pitch = this._get_countin_pitches();
+        this.countInPlayback.load(this.getCountInNotes());
+        this.countInPlayback.bar = this.bar;
         this.countInPlayback.BPM = this.BPM;
 
         this.countInPlayback.resume(function(){
@@ -228,6 +239,7 @@ var RhythmPlaybackEngine = function(){
 
         var countInNotes = [];
 
+        debugger;
         if(this.bar.subdivisions){
             this.bar.subdivisions.forEach(sd => {
                 for(let i = 0; i < sd.n; i++){

@@ -124,6 +124,8 @@ export default {
     },
     created () {
         this.fetchGameStatistics(this.id).then((data) => {
+
+            debugger;
             this.users = data.users
             this.statistics = data.statistics
             this.loading = false
@@ -141,6 +143,8 @@ export default {
             return success ? 'Pravilno' : 'Nepravilno'
         },
         formatNumber (number, nDecimals = 1) {
+            if (number == null) return -1;
+
             return number.toFixed(nDecimals)
         },
         formatTime (time, nDecimals = 1) {
