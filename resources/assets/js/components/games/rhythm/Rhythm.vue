@@ -166,7 +166,7 @@ export default {
             errorMessage: "",
             errorTimeout: null,
 
-            showHelp: true,
+            showHelp: false,
 
             playback: new RhythmPlaybackEngine(MIDI),
             defaultBPM: 120
@@ -564,19 +564,18 @@ export default {
 
         // Če do sem nisi prišel preko vmesnika, 
         // greš lahko kar lepo nazaj
-        /*if (!this.game || !this.difficulty) {
+        if (!this.game || !this.difficulty) {
             this.$router.push({ name: 'dashboard' })
-        } else {*/
+        } else {
 
-            /*this.fetchMe()
+            this.fetchMe()
             .then(() => { return this.setupMidi(['xylophone', 'percussive_organ']); })
             .then(() => { return this.nextQuestion(); })
-            .then(() => { this.displayState = "instructions"; return; });*/
-
-            this.displayState = "ready";
+            .then(() => { this.displayState = "instructions"; return; });
             
+        }
 
-        //}
+        //this.displayState = "ready";
 
     },
     

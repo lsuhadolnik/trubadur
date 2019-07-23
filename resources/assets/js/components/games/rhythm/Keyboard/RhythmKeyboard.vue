@@ -30,13 +30,13 @@
                 <div class="hide-normal">
                     
                     <sexy-button v-if="moving_buttons || cursor.in_tuplet" text="<" color="orange" @click.native="move_cursor_backwards" customClass="moveButtonsButton" />
-                    <sexy-button v-else :hidden="cursor.in_tuplet" text="\" color="green" @click.native="add_bar()" customClass="musisync" />                  
+                    <bar-button :hidden="cursor.in_tuplet" color="green" @click.native="add_bar()" />
                     
                     <sexy-button v-if="moving_buttons || cursor.in_tuplet" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
-                    <sexy-button v-else :hidden="cursor.in_tuplet" text="." color="green" @click.native="dot()" customClass="musisync" />
+                    <dot-button v-else :hidden="cursor.in_tuplet" @click.native="dot()" />
 
                      <!-- MOVE SWITCH -->
-                    <sexy-button v-if="moving_buttons" :hidden="cursor.in_tuplet" text=". u"  color="green" @click.native="moving_buttons = !moving_buttons" />
+                    <sexy-button v-if="moving_buttons" :hidden="cursor.in_tuplet" text="j \"  color="green" @click.native="moving_buttons = !moving_buttons" customClass="musisync" />
                     <sexy-button v-else :hidden="cursor.in_tuplet" text="< >"  color="orange" @click.native="moving_buttons = !moving_buttons" customClass="moveButtonsButton moveButtonsButton_Switch" />
                     
 
@@ -77,9 +77,10 @@
                     
                     <sexy-button text="u" customClass="musisync" color="green" @click.native="tie()" />    
                     
-                    <sexy-button :color="select_button_color" @click.native="selection()" >
+                    <!--<sexy-button :color="select_button_color" @click.native="selection()" >
                         <icon name="i-cursor" />
-                    </sexy-button>
+                    </sexy-button>-->
+                    <selection-button :color="select_button_color" @click.native="selection()" />
                     
                     <sexy-button color="cabaret"   @click.native="delete_note()" >
                         <img src="/images/backspace.svg" width="30" />
@@ -99,8 +100,8 @@
                 
                     <!-- MOVE LEFT OR DOT -->
                     <sexy-button v-if="moving_buttons || cursor.in_tuplet" text="<" color="orange" @click.native="move_cursor_backwards" customClass="moveButtonsButton" />
-                    <sexy-button v-else :hidden="cursor.in_tuplet" text="." color="green" @click.native="dot()" />
-                    
+                    <dot-button v-else :hidden="cursor.in_tuplet" @click.native="dot()" />
+
                     <!-- MOVE SWITCH -->
                     <sexy-button v-if="moving_buttons" :hidden="cursor.in_tuplet" text=". u"  color="green" @click.native="moving_buttons = !moving_buttons" />
                     <sexy-button v-else :hidden="cursor.in_tuplet" text="< >"  color="orange" @click.native="moving_buttons = !moving_buttons" customClass="moveButtonsButton" />
@@ -112,9 +113,10 @@
                 </div>
 
                 <!-- SELECTION -->
-                <sexy-button :color="select_button_color" @click.native="selection()" >
+                <!--<sexy-button :color="select_button_color" @click.native="selection()" >
                     <icon name="i-cursor" />
-                </sexy-button>
+                </sexy-button>-->
+                <selection-button :color="select_button_color" @click.native="selection()" />
                 <!--<div v-if="cursor.selection">
                 Base: {{cursor.selection.base}}
                 From: {{cursor.selection.from}}
@@ -326,6 +328,8 @@ import SexySlider from "../../../elements/SexySlider.vue"
 import TupletSign from "../../../elements/TupletSign.vue"
 import ThirtyTwoButton from "./Buttons/ThirtyTwoButton.vue"
 import BarButton from "./Buttons/BarButton.vue"
+import DotButton from "./Buttons/DotButton.vue"
+import SelectionButton from "./Buttons/SelectionButton.vue"
 
 import 'vue-awesome/icons/repeat'
 import 'vue-awesome/icons/play'
@@ -569,7 +573,7 @@ export default {
     components: {
         SexyButton, SexySlider, TupletSign, 
 
-        ThirtyTwoButton, BarButton
+        ThirtyTwoButton, BarButton, DotButton, SelectionButton
 
     },
     data: function() {

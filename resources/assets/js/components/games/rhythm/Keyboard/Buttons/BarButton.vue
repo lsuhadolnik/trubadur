@@ -1,7 +1,7 @@
 <template>
     
     <sexy-button color="green">
-        <div class="rhythm-game__bar-button__text">
+        <div class="rhythm-game__bar-button__text musisync">
             <div class="rhythm-game__bar-button__lines">&#x00A9;&#x00A9;</div>
             <div class="rhythm-game__bar-button__barline">&#x2019;</div>
         </div>
@@ -41,6 +41,14 @@ export default {
         top: -4px;
         left: 50%;
         font-size: 39px;
+    }
+
+    .norfolk {
+        font-family: Norfolk !important;
+    }
+
+    .musisync {
+        font-family: MusiSync !important;
     }
     
 
