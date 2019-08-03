@@ -27,6 +27,10 @@ export default {
 <style lang="scss" scoped>
 
     .thirtytwo-note {
+        margin-top: 23px;
+    }
+
+    .thirtytwo-note {
 
         .td-flag1, .td-flag2, .td-flag3{
             font-size: 30px;

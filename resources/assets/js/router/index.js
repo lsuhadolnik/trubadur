@@ -12,6 +12,10 @@ import GameStatistics from '../components/GameStatistics.vue'
 import GameTypes from '../components/GameTypes.vue'
 import HeaderMenu from '../components/HeaderMenu.vue'
 
+import AdminGames from '../components/admin/AdminGames.vue'
+import AdminPlayers from '../components/admin/AdminPlayers.vue'
+import AdminRhythmBars from '../components/admin/AdminRhythmBars.vue'
+
 import Intervals from '../components/Intervals.vue'
 import Rhythm from '../components/games/rhythm/Rhythm.vue'
 
@@ -102,6 +106,26 @@ export default new VueRouter({
             name: 'settings',
             path: '/settings',
             component: Settings
-        }
+        },
+        
+        {
+            name: 'admin_games',
+            path: '/admin/games',
+            component: AdminGames,
+            props: true
+        },
+        {
+            name: 'admin_bars',
+            path: '/admin/bars',
+            component: AdminRhythmBars,
+            props: true
+        },
+        {
+            name: 'admin_players',
+            path: '/admin/players',
+            component: AdminPlayers,
+            props: true
+        },
+        
     ]
 })

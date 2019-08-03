@@ -3,14 +3,12 @@
     <div class="rhythm-game__staff">
         
         <div class="rhythm-game__staff__first-row">
-            <div id="first-row" ></div>
+            <div id="first-row"></div>
         </div>
         
         <div class="rhythm-game__staff__second-row">
             <div id="second-row"></div>
         </div>
-        
-
         
         <!--height: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.height" v-on:mousemove="force_redraw()"> {{info.height}}
         barHeight: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barHeight" v-on:mousemove="force_redraw()"> {{info.barHeight}}
@@ -98,6 +96,7 @@ export default {
                 },
 
                 cursor: {
+                    enabled: true,
                     cursorBarClass: "cursor-bar",
                     cursorMargin: 22
                 },

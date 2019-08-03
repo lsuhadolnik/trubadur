@@ -2,7 +2,7 @@ import '../bootstrap'
 
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 function handleError (error) {
     switch (error.response.status) {
@@ -337,6 +337,25 @@ export default new Vuex.Store({
                         }
                     })
                 }
+            })
+        },
+
+        fetchRhythmBars ({state}, data) {
+
+            let paging = "";
+            if(data && data.pageNum){
+                paging = "?page="+data.pageNum;
+            }
+
+            return new Promise((resolve, reject) => {
+                axios.get('/api/rhythmBars' + paging)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
             })
         }
     }

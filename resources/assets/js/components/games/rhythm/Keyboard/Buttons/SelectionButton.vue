@@ -4,7 +4,7 @@
             <svg width="50px" height="50px" version="1.1" 
                 xmlns="http://www.w3.org/2000/svg" 
                 xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" 
-                xmlns:serif="http://www.serif.com/" style="margin-top: 6px; fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:1.5;">
+                xmlns:serif="http://www.serif.com/" style="margin-top: 6px; transform: scale(0.9); fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:1.5;">
                 <g>
                     <path d="M2.625,14.651l44.75,0" style="fill:none;stroke:#363636;stroke-width:1.02px;" />
                     <path d="M2.625,19.29l44.75,0" style="fill:none;stroke:#363636;stroke-width:1.02px;" />
@@ -43,8 +43,3 @@ export default {
 };
 </script>
 
-
-<style lang="scss" scoped>
-.rhythmKeyboard__selectionButton {
-}
-</style>

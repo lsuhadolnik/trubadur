@@ -53,6 +53,10 @@
     background-color : $sunglow;
     z-index          : 100;
 
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    
+
     @include breakpoint-small-phone {
         left  : -$menu-width-small;
         width : $menu-width-small;
@@ -203,11 +207,12 @@
             <div class="header__menu-button" @click="toggleMenu">
                 <icon class="header__icon" name="bars"></icon>
             </div>
-            <div class="header__title" @click="dashboard()">TRUBADUR</div>
+            <div class="header__title">TRUBADUR</div>
         </div>
         <div class="menu" :class="{ 'menu--open': isMenuInitialized && isMenuOpened, 'menu--close': isMenuInitialized && !isMenuOpened }" v-click-outside="clickedOutsideMenu" v-touch-outside="clickedOutsideMenu">
             <div class="menu__item" :class="{ 'menu-item--active': isItemActive(item) }" v-for="item in menuItems" @click="open($event, item)">
-                <img class="menu__image" :src="'/images/menu/' + item.image + '.svg'"></img>
+                <img v-if="item.image" class="menu__image" :src="'/images/menu/' + item.image + '.svg'"></img>
+                <div v-else class="menu__image_text">{{item.text}}</div>
                 <label class="menu__label">{{ item.name | uppercase }}</label>
             </div>
             <form id="menu__logout-form" action="/logout" method="POST">
@@ -220,7 +225,7 @@
 <script>
 import 'vue-awesome/icons/bars'
 import 'vue-awesome/icons/sign-out'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
     data () {
@@ -247,6 +252,21 @@ export default {
         window.addEventListener('scroll', this.scroll)
         this.colorHeader(this.$route.name)
         this.colorBackground(this.$route.name)
+
+
+
+        this.fetchMe().then(() => {
+
+            if(this.me && this.me.admin) {
+                this.menuItems = [
+                    { name: 'Takti', route: 'admin_bars', text: 'ADMIN' },
+                    { name: 'Igre', route: 'admin_games', text: 'ADMIN' },
+                    { name: 'Igralci', route: 'admin_players', text: 'ADMIN' }
+                ].concat(this.menuItems);
+            }
+
+        });
+
     },
     beforeDestroy () {
         window.removeEventListener('scroll', this.scroll)
@@ -264,6 +284,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['fetchMe']),
         colorHeader (route) {
             this.isHeaderColored = this.uncoloredRoutes.indexOf(route) >= 0
         },
@@ -314,6 +335,15 @@ export default {
                 case 'logout':
                     func = this.logout()
                     break
+                case 'admin_bars':
+                    func = this.reroute(item.route);
+                    break;
+                case 'admin_games':
+                    func = this.reroute(item.route);
+                break;
+                case 'admin_players':
+                    func = this.reroute(item.route);
+                break;
             }
 
             this.toggleMenu(event)
