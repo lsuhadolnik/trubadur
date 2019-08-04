@@ -18,11 +18,27 @@
             <!--<div class="rhythm-game__progress">
             <CircleTimer></CircleTimer>
             <ProgressBar></ProgressBar>
-        </div>-->
+            </div>-->
 
-            <StaffView ref="staff_view" :bar="bar" :cursor="cursor" />
+            <StaffView ref="staff_view" :bar="bar" :enabledContexts="['minimap', 'zoomview']" >
+
+                <div class="rhythm-game__staff__first-row">
+                    <div id="first-row"></div>
+                </div>
+                
+                <div class="rhythm-game__staff__second-row">
+                    <div id="second-row"></div>
+                </div>
+                
+                <!--height: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.height" v-on:mousemove="force_redraw()"> {{info.height}}
+                barHeight: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barHeight" v-on:mousemove="force_redraw()"> {{info.barHeight}}
+                barOffsetY: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barOffsetY" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
+                zoomViewHeight: <input class="BPM-slider" type="range" :min="10" :max="200" step="1" v-model="CTX.zoomview.containerHeight" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
+                --> 
+
+            </StaffView>
             
-            <Keyboard :cursor="cursor" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" :question="questionState" :say="showError" />
+            <Keyboard ref="keyboard" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" :question="questionState" :say="showError" />
 
             <div class="error" v-show="errorMessage">{{errorMessage}}</div>
 
@@ -32,7 +48,7 @@
 
         <div class="rhythm-diff-check-view" v-show="displayState == 'diff'">
 
-            <DiffView ref="diff_view" :dismiss="continueGame"></DiffView>
+            <DiffView ref="diff_view" :dismiss="continueGame" :bar="bar"></DiffView>
 
         </div>
 
@@ -104,8 +120,6 @@ import RhythmPlaybackEngine from './rhythmPlaybackEngine'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 
-var Fraction = require('fraction.js');
-
 const util = require('./rhythmUtilities');
 
 
@@ -145,23 +159,7 @@ export default {
                 base_note: null,
                 subdivisions: null
             },
-            cursor: {
-                position: 0,
-                x: 0,
-                in_tuplet: false,
-
-                cursor_moved: this.cursor_moved,
-
-                selection: null, 
-                selectionMode: false,
-                selectionSelected: false,
-
-                clearSelection: this.clearSelection,
-                toggleSelectionMode: this.toggleSelectionMode,
-
-                editing_tuplet: false,
-                editing_tuplet_index: -1
-            },
+            
 
             errorMessage: "",
             errorTimeout: null,
@@ -197,13 +195,6 @@ export default {
 
         ...mapActions(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi']),
 
-        clearSelection(){
-
-            this.cursor.selection = null;
-            this.cursor.selectionSelected = false;
-            this.cursor.selectionMode = false;
-
-        },
 
         cursor_moved(pos, from){
 
@@ -211,38 +202,7 @@ export default {
 
         },
 
-        toggleSelectionMode(){
-
-            if(this.cursor.selectionMode){
-
-                    this.clearSelection();
-
-            }else{
-
-                if(this.notes.notes.length == 0) {
-                    return;
-                }
-
-                this.cursor.selectionMode = true;
-                this.cursor.selectionSelected = false;
-                
-                let pos = this.cursor.position - 1;
-                if(pos < 0){
-                    pos = 0;
-                }
-
-                else if(pos > this.notes.notes.length){
-                    pos = this.notes.notes.length - 1;
-                }
-
-                this.cursor.selection = {
-                    base: pos,
-                    from: pos,
-                    to: pos
-                }
-
-            }
-        },
+        
 
         keyboard_click(event) {
 
@@ -258,7 +218,7 @@ export default {
             }
             if(event.type == "selectionMode"){
 
-                this.toggleSelectionMode();
+                this.$refs.staff_view.toggleSelectionMode();
                 this.notes._call_render();
             }
             else if(event.type == "playback"){
@@ -291,7 +251,6 @@ export default {
                 this.bar.base_note = parseInt(prompt("Base_note?"));
 
                 this.notes._call_render();
-
             }
             else{
 
@@ -422,7 +381,7 @@ export default {
                 // Initialize note store
                 this.notes = new NoteStore(
                     this.bar,
-                    this.cursor,
+                    this.$refs.staff_view.cursor,
                     this.$refs.staff_view.render
                 );
 
@@ -561,6 +520,9 @@ export default {
 },
 
     mounted() {
+
+        this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
+        this.$refs.keyboard.init(this.$refs.staff_view.cursor);
 
         // Če do sem nisi prišel preko vmesnika, 
         // greš lahko kar lepo nazaj

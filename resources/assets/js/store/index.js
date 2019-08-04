@@ -357,6 +357,54 @@ export default new Vuex.Store({
                     reject(error)
                 })
             })
+        },
+
+        deleteRhythmBar ({state}, data) {
+
+            if(!data || !data.id) return;
+
+            return new Promise((resolve, reject) => {
+                axios.delete('/api/rhythmBars/'+data.id)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            });
+        },
+
+        createRhythmBar({state}, data) {
+            
+            if(!data || !data.bar) return;
+
+            return new Promise((resolve, reject) => {
+                axios.post('/api/rhythmBars', data.bar)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            });
+        },
+
+        saveRhythmBar ({state}, data) {
+
+            if(!data || !data.bar || !data.bar.id) return;
+
+            return new Promise((resolve, reject) => {
+                axios.patch('/api/rhythmBars/'+data.bar.id, data.bar)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            });
         }
     }
 })

@@ -239,7 +239,6 @@ var RhythmPlaybackEngine = function(midi){
 
         var countInNotes = [];
 
-        debugger;
         if(this.bar.subdivisions){
             this.bar.subdivisions.forEach(sd => {
                 for(let i = 0; i < sd.n; i++){
