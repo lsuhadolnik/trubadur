@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\RhythmExerciseBar;
+use App\RhythmBar;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Utils\MusicXML;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
 class RhythmExerciseBarController extends Controller
 {
@@ -82,4 +86,41 @@ class RhythmExerciseBarController extends Controller
     {
         //
     }
+
+
+    /**
+     * Import MusicXML file
+     *
+     * @param  \App\RhythmExerciseBar  $rhythmExerciseBar
+     * @return \Illuminate\Http\Response
+     */
+    public function importMusicXML()
+    {
+        
+        $file = Input::file("file");
+        if(!$file) return;
+
+        $fileContent = file_get_contents($file->getRealPath());
+
+        $xml = new \SimpleXMLElement($fileContent);
+        $takti = MusicXML::parseMeasures($xml);
+
+        $importedIdx = [];
+        foreach($takti as $t){
+
+            $id = MusicXML::GetMeasureDatabaseIndex($t);
+            if(!$id) {
+                $obj = RhythmBar::create($t);
+                $id = $obj->id;
+                $importedIdx[] = $id;
+            }
+
+        }
+
+        return array(
+            'imported' => $importedIdx
+        );
+
+    }
+
 }

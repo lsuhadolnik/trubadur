@@ -24,7 +24,11 @@ Route::middleware('auth:api')->get('levels/find', 'API\LevelController@find');
 Route::middleware('auth:api')->resource('levels', 'API\LevelController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('logins', 'API\LoginController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('questions', 'API\QuestionController', ['except' => ['create', 'edit']]);
+
+// DANGER!!
 Route::post('questions/generate', 'API\QuestionController@generate');
+
+
 Route::middleware('auth:api')->resource('schools', 'API\SchoolController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('users', 'API\UserController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->put('users/{userId}/complete', 'API\UserController@complete')
@@ -60,8 +64,11 @@ Route::middleware('auth:api')->delete('gradeschool/{gradeId}/{schoolId}', 'API\G
     ->where(['gradeId' => '[0-9]+', 'schoolId' => '[0-9]+']);
 
 
-// Rabim: 
+// DANGER!! 
 Route::resource('rhythmBars', 'API\RhythmBarController', ['except' => ['create', 'edit']]);
 //Route::middleware('auth:api')->resource('rhythm_exercise', 'API\RhythmExerciseController', ['except' => ['create', 'edit']]);
-//Route::middleware('auth:api')->resource('rhythm_exercise_bar', 'API\RhythmExerciseBar', ['except' => ['create', 'edit']]);
+
+// DANGER
+//Route::post('rhythm_exercise_bar', 'API\RhythmExerciseBar', ['except' => ['create', 'edit']]);
+Route::post('rhythmExerciseBar/import/musicXML', 'API\RhythmExerciseBarController@importMusicXML');
 

@@ -8,14 +8,15 @@
                 <div class="addNewBarButton" @click="addEmpty()">Dodaj novega</div>
             </div>
 
-            <div class="admin_rhythmBars_masterView_body">
-                <RhythmBarInfo v-for="item in bars" v-bind:key="item.id" :info="item" @mousedown.native="barSelected(item)" />
+            <div ref="barsScroll" class="admin_rhythmBars_masterView_body">
+                <RhythmBarInfo v-for="item in bars" ref="renderedBar" v-bind:key="item.id" :info="item" @mousedown.native="barSelected(item)" />
                 <div v-if="allPages > currentPage" class="loadMore" @click="loadMore()">Naloži več...</div>
             </div>
 
             <div class="admin_rhythmBars_masterView_footer">
-                <div class="importMusicXML">Uvozi MusicXML</div>
-                <div class="importJSON">Uvozi JSON</div>
+                <!-- <div class="button1 importMusicXML" style="font-size: 10px;"> -->
+                <upload-file text="Uvozi MusicXML" :onFileUploaded="musicXmlImported" />
+                <!--<div class="button1 importJSON" style="font-size: 10px;">Uvozi JSON</div>-->
             </div>
 
 
@@ -30,7 +31,8 @@
 
             <div v-if="selected">
                 <div class="admin_rhythmBars_detailView_header" >
-                    Urejanje takta <span class='normalfont'>#{{selected.id ? selected.id : "Nov takt"}}. Taktovski način: {{takt(selected.barInfo)}} Težavnost: {{selected.difficulty ? selected.difficulty : "??"}}</span>
+                    <div class="" style="display: inline-block;">Urejanje takta <span class='normalfont'>#{{selected.id ? selected.id : "Nov takt"}}. Taktovski način: {{takt(selected.barInfo)}} Težavnost: {{selected.difficulty ? selected.difficulty : "??"}}</span></div>
+                    <!--<div class="button1" @click="downloadJSON" >Prenesi JSON</div>-->
                 </div>
 
                 <StaffView ref="staff_view" :bar="barInfo" :enabledContexts="['zoomview']">
@@ -55,6 +57,7 @@ import StaffView from '../games/rhythm/StaffView.vue'
 import RhythmKeyboard from '../games/rhythm/Keyboard/AdminKeyboard.vue'
 
 import NoteStore from "../games/rhythm/noteStore"
+import UploadFile from "./UploadFile.vue"
 
 let Fraction = require('fraction.js');
 
@@ -66,6 +69,8 @@ export default {
             allPages: null,
             allBarsCount: "nalaganje...",
             bars: [],
+
+            files: [],
 
             notes: [],
 
@@ -85,7 +90,7 @@ export default {
     },
 
     components: {
-        RhythmBarInfo, StaffView, RhythmKeyboard
+        RhythmBarInfo, StaffView, RhythmKeyboard, UploadFile
     },
 
     computed: {
@@ -111,6 +116,80 @@ export default {
             return a.num_beats +"/"+ a.base_note;
         },
 
+        getBarIdx(id){
+            let vId = -1;
+            for(let i = 0; i < this.bars.length && vId < 0; i++){
+                if(this.bars[i].id == id){
+                    vId = i;
+                }
+            }
+            return vId;
+        },
+
+        removeBarFromList(id){
+            
+            let vId = this.getBarIdx(id);
+            if(vId > -1){ 
+                this.bars.splice(vId, 1);
+            }
+            
+        },
+
+        replaceBarInList(bar){
+
+            let idx = this.getBarIdx(bar.id);
+            this.$refs.renderedBar[idx].render();
+
+        },
+
+        addBarToList(bar, idx){
+
+            if(typeof idx == "undefined"){
+                idx = this.bars.length - 1;
+            }
+
+            this.bars.splice(idx, 0, bar);
+            let scE = this.$refs.barsScroll.el;
+            scE.scrollTo(0, scE.scrollHeight);
+            
+        },
+
+        downloadJSON() {
+
+            this.downloadFile(
+                "takt"+this.selected.id+".json", 
+                JSON.stringify(this.notes.notes)
+            );
+
+        },
+
+        downloadMusicXml() {
+
+        },
+
+        downloadFile(filename, content) {
+
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+
+        },
+
+        musicXmlImported(res){
+
+            let imported = res.imported;
+            alert("Uvoženi so bili takti s številkami\n"+JSON.stringify(imported));
+            this.reload();
+
+        },
+
         loadBarsPage() {
 
             let out = this;
@@ -134,7 +213,10 @@ export default {
                 }
 
                 if(out.allPages > res.current_page){
+                    out.allBarsCount = "nalaganje...";
                     return out.loadMore();
+                }else {
+                    return out.allBarsCount = res.total;
                 }
 
             });
@@ -142,15 +224,17 @@ export default {
 
         loadMore() {
             this.currentPage++;
-            this.loadBarsPage();
+            return this.loadBarsPage();
         },
 
         reload(){
 
-            this.bars = [];
             this.currentPage = 1;
             this.allPages = null;
             this.allBarsCount = "nalaganje...";
+            this.bars = [];
+
+            this.files = [];
 
             return this.loadBarsPage();
         },
@@ -302,12 +386,10 @@ export default {
 
         saveBar() {
 
-            debugger;
-
             this.buttonState.save = "loading";
 
             if(!this.selected.difficulty && !this.askForDifficulty()){
-                this.buttonState.save = "error";
+                this.buttonState.save = "normal";
                 return;
             }
 
@@ -322,20 +404,20 @@ export default {
             if(this.selected.id){
                 obj.id = this.selected.id;
                 this.saveRhythmBar({bar: obj}).then(bar => {
-                    alert("Uspešno sem shranil takt.");
-                    this.buttonState.save = "ok";
-                    return out.reload();
+                    this.buttonState.save = "normal";
+                    debugger;
+                    this.replaceBarInList(this.selected);
                 }).catch(() => {
                     this.buttonState.save = "error";
                 });    
             }else {
                 this.createRhythmBar({bar: obj}).then(bar => {
-                    alert("Uspelo je. Novi takt ima številko " + bar.id);
                     out.selected.id = bar.id;
-                    this.buttonState.save = "ok";
-                    return out.reload();
+                    out.buttonState.save = "normal";
+                    out.addBarToList(this.selected);
                 }).catch(() => {
-                    this.buttonState.save = "error";
+                    out.buttonState.save = "error";
+                    return out.reload();
                 });
             }
 
@@ -347,15 +429,21 @@ export default {
             let out = this;
 
             if(confirm("Ali res želite izbrisati ta takt?")){
-                this.deleteRhythmBar({id: this.selected.id}).then((k) => {
-                    delete this.selected.id;
-                    this.buttonState.deleteBar = "ok";
-                    return out.reload();
+                
+                let id = this.selected.id;
+                out.removeBarFromList(id);
+                this.selected = null;
+                this.initialized = false;
+                
+                this.deleteRhythmBar({id: id}).then((k) => {
+                    
+                    this.buttonState.deleteBar = "normal";
                 })
                 .catch((err) => {
                     console.error(err);
                     this.buttonState.deleteBar = "error"
                     alert("Napaka! Ni mi uspelo izbrisati takta...");
+                    return out.reload();
                 });
             }
 
@@ -384,15 +472,21 @@ export default {
 
 <style lang="scss" scoped>
 
+
     @import '../../../sass/variables/index';
 
-    .addNewBarButton {
+    .addNewBarButton, .button1 {
         background: #f7cab1;
         font-family: $font-regular;
         display: inline-block;
         padding: 5px;
         text-align: right;
         cursor: pointer;
+    }
+
+    .addNewBarButton:hover, .button1:hover {
+        background: lighten($color: #f7cab1, $amount: 10) ;
+        
     }
 
     .normalfont {
@@ -458,7 +552,9 @@ export default {
     }
 
     .admin__rhythmBarInfo__barInfoDetail__staffView_container {
-        padding-bottom: 100px;
+        padding-bottom: 79px;
+        overflow-x: scroll;
+        margin-bottom: 45px;
     }
 
     .admin_rhythmBars_detailView_selectPrompt {
@@ -467,6 +563,14 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .headerPrompt {
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+    .addNewBarButton {
     }
 
     .loadMore {

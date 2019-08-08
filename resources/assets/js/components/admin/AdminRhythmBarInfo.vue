@@ -81,6 +81,10 @@ export default {
             }
 
             return a.num_beats +"/"+ a.base_note;
+        },
+
+        render(){
+            this.$refs.staff_view.render(this.info.content);
         }
 
     },
@@ -93,7 +97,7 @@ export default {
         };
         
         this.$refs.staff_view.init("RhythmView");
-        this.$refs.staff_view.render(this.info.content);
+        this.render();
     }
 
 }
