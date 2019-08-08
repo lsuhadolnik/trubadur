@@ -47,13 +47,30 @@ class MusicXML
         );
     }
 
+    // Note:
+    //
+    // {
+    //     "type":"n", ✔
+    //     "value":4,  ✔
+    //     "dot":true, ✔
+    //     "tie": true, ✔
+    //     "in_tuplet":true, ✔
+    //     "tuplet_end":true, ✔
+    //     "tuplet_type": ✔
+    //         {
+    //             "num_notes":3,
+    //             "in_space_of":2
+    //         }
+    // }
+    //
+
     public static function parseMeasures($xml){
         $measures = $xml->xpath('//measure');
 
         $currentBarInfo = array();
 
         $takti = [];
-        foreach($measures as $m){
+        foreach($measures as $idxM => $m){
 
             if(isset($m->attributes) && isset($m->attributes->time)){
                 $currentBarInfo = static::getBarInfoFromMeasure($m);
@@ -64,8 +81,9 @@ class MusicXML
             $mN = [];
 
             $notes = $m->note;
+            $idxN = 0;
             foreach($notes as $note){
-
+                $idxN++;
                 $jN = array();
 
                 // Type
@@ -103,34 +121,39 @@ class MusicXML
 
                 static::fillNoteValue($currentBarInfo, $jN, $note);
 
-                // Note:
-                //
-                // {
-                //     "type":"n", ✔
-                //     "value":4,  ✔
-                //     "dot":true, ✔
-                //     "tie": true, ✔
-                //     "in_tuplet":true, ✔
-                //     "tuplet_end":true, ✔
-                //     "tuplet_type": ✔
-                //         {
-                //             "num_notes":3,
-                //             "in_space_of":2
-                //         }
-                // }
-                //
-
+                $staff = 1;
+                $voice = 1;
+                if(isset($note->staff)){
+                    $staff = (int) $note->staff;
+                }
+                if(isset($note->voice)){
+                    $voice = (int) $note->voice;
+                }
         
-                if(isset($jN["value"]))
-                    $mN[] = $jN;
+                if(isset($jN["value"]) && !isset($note->chord)){
+
+                    if(!isset($mN[$staff])){
+                        $mN[$staff] = [];
+                    }
+
+                    if(!isset($mN[$staff][$voice])){
+                        $mN[$staff][$voice] = [];
+                    }
+
+                    $mN[$staff][$voice][] = $jN;
+                }
+                    
                 
             }
 
-            if(count($mN) > 0)
-            {
-                $takti[] = static::packMeasure($mN, $currentBarInfo);
+            foreach($mN as $staffs){
+                foreach($staffs as $voice){
+                    if(count($voice) > 0)
+                    {
+                        $takti[] = static::packMeasure($voice, $currentBarInfo);
+                    }
+                }
             }
-                
 
         }
 
