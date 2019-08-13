@@ -5,6 +5,10 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Question;
+use App\RhythmExercise;
+use App\RhythmBar;
+
 class AnswerController extends Controller
 {
     /**
@@ -53,7 +57,33 @@ class AnswerController extends Controller
             'success'     => 'required|boolean'
         ];
 
-        return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        $res = $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+
+        
+        // Decrease or increase bar and exercise difficulty
+        // ------------------------------------------------
+        // Get status of the answer and determine difficulty delta
+        $reqData = json_decode($request->getContent());
+        $solved = $reqData->success;
+        $diff = $solved ?  -1 :  1;
+
+        // Find find the game
+        $questionId = $reqData->question_id;
+        $question = Question::find($questionId);
+        $exerciseId = $question->content;
+        $exercise = RhythmExercise::find($exerciseId);
+        
+        RhythmExercise::where('id', $exerciseId)->update(["difficulty" => max($exercise->difficulty + ($diff * 2), 0)]);
+
+        // Find the bars
+        $bars = $exercise->bars->all();
+        foreach($bars as $bar){
+            // Update the bars
+            RhythmBar::where('id', $bar->id)->update(["difficulty" => max($bar->difficulty + $diff, 0)]);
+        }
+        
+        return $res;
+
     }
 
     /**

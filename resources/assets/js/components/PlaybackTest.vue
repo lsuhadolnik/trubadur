@@ -1,7 +1,12 @@
 <template>
 
     <div>
-        <StaffView ref="staff_view" :bar="bar" :cursor="cursor" />
+        <StaffView ref="staff_view" :bar="bar" :cursor="cursor" :enabledContexts="['zoomview']" >
+                
+                <div class="rhythm-game__staff__second-row">
+                    <div id="second-row"></div>
+                </div>
+        </StaffView>
 
         <SexyButton @click.native="play"  text="Predvajaj"/>
     </div>
@@ -16,6 +21,8 @@ import NoteStore from "./games/rhythm/noteStore"
 import ExerciseGenerator from './games/rhythm/exerciseGenerator'
 import RhythmPlaybackEngine from './games/rhythm/rhythmPlaybackEngine'
 
+import { mapState, mapGetters, mapActions } from 'vuex'
+
 const util = require("./games/rhythm/rhythmUtilities");
 
 export default {
@@ -26,8 +33,48 @@ export default {
 
     methods: {
 
+        ...mapActions(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi']),
+
         play(){
             this.playback.resume()
+        },
+
+        loadQuestion() {
+
+            let out = this;
+
+            out.playback = new RhythmPlaybackEngine(MIDI);
+
+            return this.generateQuestion(
+                { 
+                    game_id: 283, 
+                    number: 3, 
+                    chapter: 1
+                })
+            .then((question) => {
+                
+                let exercise = question.content;
+                    
+                out.notes = new NoteStore(
+                    exercise.bar,
+                    null,
+                    out.$refs.staff_view.render
+                );
+
+                out.notes.notes = exercise.notes;
+
+
+                out.notes._call_render();
+
+                out.playback.setBPM(exercise.BPM);
+                out.playback.setBar(exercise.bar);
+
+                out.playback.load(exercise.notes);
+                console.log(util.generate_playback_durations(exercise.notes));
+
+
+            });
+
         }
 
     },
@@ -64,19 +111,23 @@ export default {
     
     mounted(){
         
+        this.$refs.staff_view.init({cursor: {enabled: false}});
+
         // Init MIDI
         let instruments = [
             {
-                channel: 0,
+                channel: 5,
                 soundfont: 'percussive_organ',
                 colume: 127
             },
             {
-                channel: 1,
+                channel: 6,
                 soundfont: 'xylophone',
                 volume: 200
             }   
         ];
+
+        let out = this;
 
         MIDI.loadPlugin({
             soundfontUrl: '/soundfonts/',
@@ -89,23 +140,25 @@ export default {
                     MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
                 }
 
-                this.notes = new NoteStore(
-                    this.bar,
-                    this.cursor,
-                    this.$refs.staff_view.render
-                );
 
-                
+                out.loadQuestion();
+
+                /*
 
                 let v = require('./games/rhythm/vaje.json');
-                this.notes.notes = v[0].notes;
-                this.notes._call_render();
-                this.playback = new RhythmPlaybackEngine();
-                this.playback.BPM = v[0].BPM;
-                this.playback.bar_info = v[0].bar;
-                this.playback.load(v[0].notes);
+                out.notes.notes = v[0].notes;
+                out.notes._call_render();
+                out.playback = new RhythmPlaybackEngine(MIDI);
+                out.playback.BPM = v[0].BPM;
+                out.playback.bar_info = v[0].bar;
+
+                out.playback.setBPM(v[0].BPM);
+                out.playback.setBar(v[0].bar);
+
+                out.playback.load(v[0].notes);
                 console.log(util.generate_playback_durations(v[0].notes));
 
+                */
 
         
             }

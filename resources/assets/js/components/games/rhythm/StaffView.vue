@@ -104,6 +104,7 @@ export default {
                     id: "first-row",
                     role: "minimap",
                     viewHeight: 60,
+                    scale: 0.5,
                     minimap_in_click: false,
 
                     renderSpecifics: function(render_context){
@@ -434,6 +435,7 @@ export default {
                 this._set_cursor_position(v2);
             }
             
+            debugger;
             this.scrolled(startX - screenWidth*0.5);
 
             RU._check_cursor_in_tuplet(this.cursor, notes);

@@ -147,7 +147,7 @@
                 <sexy-button color="green" @click.native="showHelp()" ><div class="tiny-tajni-pici-mici-font">Pomoč</div></sexy-button>
 
                 <!-- DEBUG -->
-                <sexy-button :color="checkButtonColor" @click.native="showJson()" >
+                <!--<sexy-button :color="checkButtonColor" @click.native="showJson()" >
                     <div class="tiny-tajni-pici-mici-font">Show JSON</div>
                 </sexy-button>
 
@@ -162,7 +162,7 @@
 
                 <sexy-button color="sunglow" @click.native="show_diff()" customClass="normal-font tiny-tajni-pici-mici-font">
                         <div class="small-font-button">Oddaj</div>
-                </sexy-button>
+                </sexy-button>-->
                 <!-- END DEBUG -->
                 
                 <!-- SET CORRECT BUTTON -->

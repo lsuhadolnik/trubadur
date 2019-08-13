@@ -11,7 +11,8 @@ class MusicXML
         unset($barInfo["divisions"]);
         return array(
             "content" => json_encode($m),
-            "barInfo" => json_encode($barInfo)
+            "barInfo" => json_encode($barInfo),
+            "difficulty" => 50
         );
     }
 

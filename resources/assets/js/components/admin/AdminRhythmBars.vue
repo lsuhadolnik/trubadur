@@ -253,7 +253,8 @@ export default {
 
             this.barSelected({
                 content: [],
-                barInfo: {num_beats: 4, base_note: 4}
+                barInfo: {num_beats: 4, base_note: 4},
+                difficulty: 50
             });
 
         },

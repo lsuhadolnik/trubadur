@@ -141,7 +141,7 @@ export default {
             questionState: {
                 id: 0,
                 check: "no", // "no", "correct", "wrong", "next"
-                numChecks: 0,
+                maxChecks: 5,
                 num_beats: "x",
                 number: 0,
                 chapter: 1,
@@ -201,8 +201,6 @@ export default {
             this.$refs.staff_view.cursor_moved(pos, from);
 
         },
-
-        
 
         keyboard_click(event) {
 
@@ -364,7 +362,7 @@ export default {
                 })
             .then((question) => {
                         
-                let exercise = JSON.parse(question.content);
+                let exercise = question.content;
 
                 this.questionState.exercise = exercise;
                 this.questionState.id = question.id;
@@ -454,11 +452,17 @@ export default {
                         // Watch out, could happen when next question is already loaded
                         outside.questionState.check = "next";
                     }, changeTimeout);
-                }else{
+                }
+                else{
                     this.questionState.check = "wrong";
                     setTimeout(function() {
+
                         // Watch out, could happen when next question is already loaded
                         outside.questionState.check = "no";
+                        // If 
+                        if(outside.questionState.maxChecks <= outside.questionState.statistics.nChecks){
+                            outside.questionState.check = "next";
+                        }
                     }, changeTimeout);
                 }
 

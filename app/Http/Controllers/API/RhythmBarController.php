@@ -59,7 +59,7 @@ class RhythmBarController extends Controller
         $data = [
             'content' => 'required|string',
             'barInfo' => 'required|string',
-            'difficulty'  => 'numeric|min:0'
+            'difficulty'  => 'numeric|min:50'
         ];
 
         return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -108,4 +108,40 @@ class RhythmBarController extends Controller
         //
         return $this->prepareAndExecuteDestroyQuery($id, self::MODEL);
     }
+
+    /**
+     * Import MusicXML file
+     *
+     * @param  \App\RhythmExerciseBar  $rhythmExerciseBar
+     * @return \Illuminate\Http\Response
+     */
+    public function importMusicXML()
+    {
+        
+        $file = Input::file("file");
+        if(!$file) return;
+
+        $fileContent = file_get_contents($file->getRealPath());
+
+        $xml = new \SimpleXMLElement($fileContent);
+        $takti = MusicXML::parseMeasures($xml);
+
+        $importedIdx = [];
+        foreach($takti as $t){
+
+            $id = MusicXML::GetMeasureDatabaseIndex($t);
+            if(!$id) {
+                $obj = RhythmBar::create($t);
+                $id = $obj->id;
+                $importedIdx[] = $id;
+            }
+
+        }
+
+        return array(
+            'imported' => $importedIdx
+        );
+
+    }
+
 }

@@ -54,12 +54,13 @@ var RhythmPlaybackEngine = function(midi){
             // BPM logic
             // Brez spreminjanja trajanja velja, da je celinka dolga 1s
             // torej je vsaka četrtinka dolga 0,25s, kar je 4 BPS, kar je 240 BPM
-            actualDuration = dur.valueOf() / (this.BPM / 60) * this.bar.num_beats;
+            // actualDuration = dur.valueOf() / (this.BPM / 60) * this.bar.num_beats;
+            // actualDuration = koliko sekund naj traja nota...
+            actualDuration = dur.valueOf() * this.bar.base_note * (60 / this.BPM);
 
-            // WTF?! Hahaha :D
             // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
-            // Za ostale primere je približno neuporabno (no, lahko bi kdaj v prihodnosti dodal melodično-ritmični narek...)
-            // S tem sem hotel povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
+            // Lahko bi kdaj v prihodnosti dodali melodično-ritmični narek...
+            // S tem Math.min sem hotel tudi povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
             let sPitch = this.pitch[Math.min(this.pitch.length - 1, this.currentNoteID - 1)];
 
             // Zaigraj, ustavi se samodejno.

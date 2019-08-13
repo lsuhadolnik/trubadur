@@ -108,10 +108,18 @@ class QuestionController extends Controller
      */
     public function generate(Request $request)
     {
+
+        $game = Game::with('difficulty')->find($request->get('game_id'));
+
         // Retrieve already generated question
         if ($request->has('game_id') && $request->has('chapter') && $request->has('number')) {
             $question = Question::where($request->all())->first();
             if ($question) {
+
+                if($game->type == 'rhythm'){
+                    $question->content = RhythmExerciseController::resolve($question->content);
+                }
+
                 return response()->json($question, 201);
             }
         }
@@ -122,7 +130,6 @@ class QuestionController extends Controller
         }
 
         $question = $response->getOriginalContent();
-        $game = Game::with('difficulty')->find($request->get('game_id'));
 
         switch ($game->type) {
             case 'intervals':
@@ -132,7 +139,16 @@ class QuestionController extends Controller
                 $question->content = $this->generateRhythmQuestion($game->difficulty, $question);
                 break;
         }
+
+        if(!$question->content){
+            return response()->json(["Question" => "Not generated"], 201);
+        }
+
         $question->saveOrFail();
+
+        if($game->type == 'rhythm'){
+            $question->content = RhythmExerciseController::resolve($question->content);
+        }
 
         return response()->json($question, 201);
     }
@@ -218,7 +234,7 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return string
      */
-    private function  generateRhythmQuestion(Difficulty $difficulty, Question $question){
+    private function generateRhythmQuestion(Difficulty $difficulty, Question $question){
 
         $r = new RhythmExerciseController();
         return $r->generateNew();   
