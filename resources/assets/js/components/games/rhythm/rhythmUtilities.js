@@ -112,6 +112,44 @@ function _step_ties(notes, values) {
 
 }
 
+function _step_pauses(values) {
+
+    let newValues = [];
+
+    let currentDuration = null;
+
+    for(let i = 0; i < values.length; i++){
+        const value = values[i];
+
+        if(value.valueOf() < 0) {
+
+            if(currentDuration != null){
+                currentDuration = currentDuration.add(value);
+            }else {
+                currentDuration = value;
+            }
+
+        } else {
+
+            if(currentDuration != null){
+                newValues.push(currentDuration);
+                currentDuration = null;
+            }
+
+            newValues.push(value);
+
+        }
+
+    }
+
+    if(currentDuration != null){
+        newValues.push(currentDuration);
+    }
+
+    return newValues;
+
+}
+
 function _generate_playback_durations(notes){
 
     // Negativna trajanja pomenijo pavze
@@ -133,6 +171,8 @@ function _generate_playback_durations(notes){
     v = _step_tuplets(notes, v);
     v = _step_ties(notes, v); 
     // From here, notes and durations are not in sync anymore
+    v = _step_pauses(v); 
+    
 
     return v;
 

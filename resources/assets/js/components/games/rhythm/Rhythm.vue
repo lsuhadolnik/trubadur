@@ -253,8 +253,8 @@ export default {
             else{
 
                 // Invalidate playback cache
-                if(this.playback.status != "playing")
-                    this.playback.stop();
+                /*if(this.playback.status != "playing")
+                    this.playback.stop();*/
 
                 this.notes.handle_button(event);
 
@@ -476,14 +476,16 @@ export default {
 
         play(event){
 
+            console.log(event);
+
             this.questionState.statistics.nPlaybacks += 1;
 
             if(event.action == "resume"){
                 this.playback.play();
             }
 
-            if(event.action == "pause"){
-                this.playback.pause();
+            if(event.action == "stop"){
+                this.playback.stop();
             }
 
             if(event.action == "replay"){
@@ -535,7 +537,7 @@ export default {
         } else {
 
             this.fetchMe()
-            .then(() => { return this.setupMidi(['xylophone', 'percussive_organ']); })
+            .then(() => { return this.setupMidi(['xylophone', 'trumpet']); })
             .then(() => { return this.nextQuestion(); })
             .then(() => { this.displayState = "instructions"; return; });
             

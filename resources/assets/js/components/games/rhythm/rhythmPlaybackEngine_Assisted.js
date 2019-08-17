@@ -7,7 +7,7 @@ var RhythmPlaybackEngine = function(midi){
 
     this.BPM = 120;
 
-    this.channel = 3; // Trumpet. Look in store/index.js
+    this.channel = 5; // Percussive organ. Look in store/index.js
     this.intensity = 127;
     this.pitch = [65];
 
@@ -39,12 +39,8 @@ var RhythmPlaybackEngine = function(midi){
                     endCallback();
                 }
                     
-                // PAUSE and RESET
-                // this.playing = false;
-                // this.currentNoteID = 0;
-
-                // STOP
-                this.stop();
+                this.playing = false;
+                this.currentNoteID = 0;
                 return;
         }
             
@@ -68,7 +64,7 @@ var RhythmPlaybackEngine = function(midi){
             let sPitch = this.pitch[Math.min(this.pitch.length - 1, this.currentNoteID - 1)];
 
             // Zaigraj, ustavi se samodejno.
-            this.midi.noteOn(this.channel, sPitch, this.intensity, 0, actualDuration);
+            this.midi.noteOn(this.channel, sPitch, this.intensity, 0);
             this.midi.noteOff(this.channel, sPitch, actualDuration - 0.1);
 
         }else {

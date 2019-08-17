@@ -43,8 +43,6 @@
                     <sexy-button v-if="!moreButton && !moving_buttons" :hidden="cursor.in_tuplet" text="< >"  color="orange" @click.native="moving_buttons = !moving_buttons" customClass="moveButtonsButton moveButtonsButton_Switch" />
                     <sexy-button v-if="moreButton" color="green" @click.native="showHelp()" ><div class="tiny-tajni-pici-mici-font">Pomoč</div></sexy-button>
 
-
-                    <!-- PLAY EXERCISE BUTTON -->
                     <sexy-button :color="moreButton ? 'sunglow' : 'cabaret'" text="..." @click.native="moreButton = !moreButton" />
                     <!--<play-button @click.native="play_exercise()" :percents="percentsExercise" :playing="playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'" />-->
 
@@ -320,12 +318,11 @@ import PlayButton from "./Buttons/PlayButton.vue"
 import BPMSlider from "./Buttons/BPMSlider.vue"
 import CheckButton from "./Buttons/CheckButton.vue"
 
-
 import 'vue-awesome/icons/repeat'
 import 'vue-awesome/icons/play'
+import 'vue-awesome/icons/stop'
 import 'vue-awesome/icons/question-circle'
 import 'vue-awesome/icons/user-o'
-import 'vue-awesome/icons/pause'
 import 'vue-awesome/icons/check'
 import 'vue-awesome/icons/angle-double-right'
 import 'vue-awesome/icons/times'
@@ -333,6 +330,7 @@ import 'vue-awesome/icons/i-cursor'
 import 'vue-awesome/icons/ban'
 import 'vue-awesome/icons/refresh'
 import 'vue-awesome/icons/exclamation-circle'
+
 
 var Fraction = require('fraction.js');
 
@@ -466,22 +464,13 @@ export default {
             if(!this.playbackStatus)
                 return;
 
-            if(this.playbackStatus.currentlyLoaded == type){
-    
-                if(this.playbackStatus.playing){
+            if(this.playbackStatus.currentlyLoaded == type && this.playbackStatus.playing){
                 
                     this.key_callback({
                         type: 'playback',
-                        action: 'pause',
+                        action: 'stop',
+                        what: type
                     });
-                }
-                else{
-                    this.key_callback({
-                        type: 'playback',
-                        action: 'resume',
-                    });
-                }
-
             }
             else {
 
@@ -490,7 +479,6 @@ export default {
                     action: 'replay',
                     what: type
                 });
-
             }
         },
 

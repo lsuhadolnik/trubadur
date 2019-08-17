@@ -1,7 +1,7 @@
 <template>
     
     <sexy-button color="sunglow" :percents="percents" customClass="rhythmKeyboard__playButton">
-        <icon name="pause" v-if="playing"/>
+        <icon name="stop" v-if="playing"/>
         <div v-else class="small-font-button rhythmKeyboard__playButton__buttonText">{{text}}</div>
     </sexy-button>
 

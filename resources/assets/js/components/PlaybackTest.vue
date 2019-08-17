@@ -8,7 +8,9 @@
                 </div>
         </StaffView>
 
-        <SexyButton @click.native="play"  text="Predvajaj"/>
+        <SexyButton @click.native="play" :cols="3" color="green" text="Predvajaj"/>
+        <SexyButton @click.native="stop" :cols="3" color="cabaret" text="Ustavi"/>
+        <input type="range" v-model="offsetConstant" step="0.001" min="0.195" max="0.5" width="200"/> {{offsetConstant}}
     </div>
 </template>
 
@@ -36,7 +38,47 @@ export default {
         ...mapActions(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi']),
 
         play(){
-            this.playback.resume()
+
+            let durs = util.generate_playback_durations(this.notes.notes);
+            let start = 0;
+            for(let i = 0; i < durs.length; i++){
+
+                let d = durs[i];
+                let actualDuration = Math.abs(d.valueOf()) * this.bar.base_note * (60 / this.BPM);
+
+                if(d > 0){
+
+                    this.MIDISources.push(MIDI.noteOn(5, 65, 127, start, actualDuration));
+                    MIDI.noteOff(5, 65, start + actualDuration - 0.1);
+
+                }
+
+                start += actualDuration;
+            }
+
+        },
+
+        stop() {
+            this.MIDISources.forEach(s => {
+                s.stop();
+            })
+
+            this.MIDISources = [];
+        },
+
+        playNote(d) {
+
+            actualDuration = dur.valueOf() * this.bar.base_note * (60 / this.BPM);
+
+            // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
+            // Lahko bi kdaj v prihodnosti dodali melodično-ritmični narek...
+            // S tem Math.min sem hotel tudi povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
+            let sPitch = this.pitch[Math.min(this.pitch.length - 1, this.currentNoteID - 1)];
+
+            // Zaigraj, ustavi se samodejno.
+            this.midi.noteOn(this.channel, sPitch, this.intensity, 0);
+            this.midi.noteOff(this.channel, sPitch, actualDuration);
+
         },
 
         loadQuestion() {
@@ -47,8 +89,8 @@ export default {
 
             return this.generateQuestion(
                 { 
-                    game_id: 283, 
-                    number: 3, 
+                    game_id: 288, 
+                    number: 7, 
                     chapter: 1
                 })
             .then((question) => {
@@ -62,6 +104,7 @@ export default {
                 );
 
                 out.notes.notes = exercise.notes;
+                out.BPM = exercise.BPM;
 
 
                 out.notes._call_render();
@@ -82,6 +125,10 @@ export default {
     data() {
         return {
 
+            offsetConstant: 0.195,
+
+            MIDISources: [],
+
             playback: null,
 
             notes: null,
@@ -89,6 +136,7 @@ export default {
                 num_beats: 4,
                 base_note: 4
             },
+            BPM: 60,
             cursor: {
                 position: 0,
                 x: 0,
@@ -117,7 +165,7 @@ export default {
         let instruments = [
             {
                 channel: 5,
-                soundfont: 'percussive_organ',
+                soundfont: 'trumpet',
                 colume: 127
             },
             {

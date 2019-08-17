@@ -26,7 +26,7 @@
         <script src="{{ asset('lib/midi/shim/Base64.js') }}" type="text/javascript"></script>
         <script src="{{ asset('lib/midi/shim/Base64binary.js') }}" type="text/javascript"></script>
         <script src="{{ asset('lib/midi/shim/WebAudioAPI.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('lib/midi/midi.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('lib/midi/midi.js') }}" type="text/javascript"></script>
         <script src="{{ asset('lib/midi/util/dom_request_xhr.js') }}" type="text/javascript"></script>
         <script src="{{ asset('lib/midi/util/dom_request_script.js') }}" type="text/javascript"></script>
         

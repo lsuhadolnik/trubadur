@@ -435,7 +435,6 @@ export default {
                 this._set_cursor_position(v2);
             }
             
-            debugger;
             this.scrolled(startX - screenWidth*0.5);
 
             RU._check_cursor_in_tuplet(this.cursor, notes);
