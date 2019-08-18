@@ -79,6 +79,13 @@ export default {
 
             },
 
+            debug: {
+                v2: [],
+                scrollLeft: [],
+                w1: [],
+                w2: []
+            },
+
             cursor: {
                 position: 0,
                 x: 0,
@@ -408,6 +415,8 @@ export default {
             let w = descriptor.render_widths[cIdx] * scale;
             let startX = l + w / 2;
 
+            this.scrolled(startX - screenWidth*0.5);
+
 
             // ZOOM-BREAK
             if(descriptor.role == "minimap" && descriptor.enabled){
@@ -420,8 +429,7 @@ export default {
                 let bubbleScrollWidth = minimapWidth;
 
                 let cursorOffset = 0;
-                let currentNoteValue = notes[cIdx].value;
-                switch (currentNoteValue) {
+                switch (notes[cIdx].value) {
                     case 1:  cursorOffset = 22;  break;
                     case 2:  cursorOffset = 22;  break;
                     case 4:  cursorOffset = 22;  break;
@@ -431,11 +439,14 @@ export default {
                     default: cursorOffset = 5;   break;
                 }
 
-                let v2 = ((startX + sR.scrollLeft)/zoomScrollWidth)*bubbleScrollWidth + cursorOffset;
+                let absoluteX = startX;
+                let ratio = bubbleScrollWidth / zoomScrollWidth; // 0.5 ponavad
+
+                let v2 = absoluteX * ratio + cursorOffset;
                 this._set_cursor_position(v2);
             }
             
-            this.scrolled(startX - screenWidth*0.5);
+            
 
             RU._check_cursor_in_tuplet(this.cursor, notes);
 
@@ -771,16 +782,18 @@ export default {
     },
     mounted(){
 
-        let vue = this;
-        window.onresize = function(event) {
-            vue.viewportResized();
-        }
-
-        window.onorientationchange = function(event) {
-            vue.viewportResized();
-        }
+        window.addEventListener("resize", this.viewportResized);
+        window.addEventListener("orientationchange", this.viewportResized);
 
     },
+
+    destroyed() {
+
+        let vue = this;
+        window.removeEventListener("resize", this.viewportResized);
+        window.removeEventListener("orientationchange", this.viewportResized);
+
+    }
 
 }
 </script>

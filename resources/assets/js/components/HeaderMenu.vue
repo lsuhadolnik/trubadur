@@ -260,9 +260,7 @@ export default {
             if(this.me && this.me.admin) {
                 this.menuItems = [
                     { name: 'Takti', route: 'admin_bars', text: 'ADMIN' },
-                    { name: 'Igre', route: 'admin_games', text: 'ADMIN' },
                     { name: 'Igralci', route: 'admin_players', text: 'ADMIN' },
-                    //{ name: 'Nastavitve', route: 'admin_settings', text: 'ADMIN' }
                 ].concat(this.menuItems);
             }
 

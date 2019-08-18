@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Question;
 use App\RhythmExercise;
 use App\RhythmBar;
+use App\Answer;
 
 class AnswerController extends Controller
 {
@@ -56,6 +57,14 @@ class AnswerController extends Controller
             'n_answers'   => 'required|numeric|min:1',
             'success'     => 'required|boolean'
         ];
+
+        
+        $rD = $request->all();
+        $answers = Answer::where(['question_id' => $rD['question_id']])->get();
+        
+        if(count($answers) > 0){
+            return $answers[0];
+        }
 
         $res = $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
 

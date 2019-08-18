@@ -4,10 +4,15 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\RhythmExerciseController;
 
 use App\Answer;
+use App\Question;
 use App\Difficulty;
 use App\GameUser;
+use App\RhythmBar;
+use App\RhythmExercise;
+
 
 class GameUserController extends Controller
 {
@@ -122,17 +127,14 @@ class GameUserController extends Controller
 
         if ($gameUser->game->mode !== 'practice') {
             $difficulty = Difficulty::find($gameUser->game->difficulty_id);
-            $rangeFactor = $this->getRangeFactor($difficulty->range);
-            $noteCountFactors = [4 => 1, 5 => 1.2, 6 => 1.5, 7 => 1.75, 8 => 2];
-            $noteCount = $difficulty->max_notes;
-            $noteCountFactor = $noteCountFactors[$noteCount];
-
-            $answers = Answer::where(['game_id' => $gameId, 'user_id' => $userId])->with('question')->get();
-            $successFactors = [true => 1, false => -0.75];
-
             $points = 0;
-            foreach ($answers as $answer) {
-                $points += $rangeFactor * $noteCountFactor * $this->getTimeFactor($answer->time, $answer->success) * $this->getAdditionsDeletionsFactor($noteCount, $answer->nAdditions, $answer->nDeletions, $answer->success) * $successFactors[$answer->success];
+
+            if($gameUser->game->type == 'intervals'){
+                $points = $this->gradeIntervalsGame($gameUser, $difficulty);
+            }else if($gameUser->game->type == 'rhythm'){
+                $points = $this->gradeRhythmGame($gameUser, $difficulty);
+            }else {
+                return response()->json("Game with id {$gameId} has unknown type {$gameUser->game->type}", 500);
             }
 
             $gameUser->points = $points;
@@ -145,6 +147,99 @@ class GameUserController extends Controller
         $gameUser->saveOrFail();
 
         return response()->json([], 204);
+    }
+
+    private function gradeIntervalsGame($gameUser, $difficulty){
+
+        $answers = Answer::where(['game_id' => $gameId, 'user_id' => $userId])->with('question')->get();
+
+        $points = 0;
+        foreach ($answers as $answer) {
+            
+            $points += 
+              $this->getRangeFactor($difficulty->range) 
+            * $this->getNoteCountFactor($difficulty) 
+            * $this->getTimeFactor($answer->time, $answer->success) 
+            * $this->getAdditionsDeletionsFactor($noteCount, $answer->nAdditions, $answer->nDeletions, $answer->success) 
+            * $this->getSuccessFactor($answer);
+
+        }
+
+        return $points;
+
+    }
+
+    private function gradeRhythmGame($gameUser, $difficulty){
+
+        $answers = Answer::where(['game_id' => $gameUser->game->id, 'user_id' => $gameUser->user->id])->with('question')->get();
+
+
+        $points = 0;
+        foreach ($answers as $answer) {
+        
+            $noteCount = $this->getPerfectSolverRhythmGameActionCount($answer->question);
+
+            $points += 
+              $this->getRhythmExerciseDifficultyFactor($answer->question, $answer->success)
+            * $this->getTimeFactor($answer->time, $answer->success)
+            * $this->getAdditionsDeletionsFactor($noteCount, $answer->nAdditions, $answer->nDeletions, $answer->success)
+            * $this->getSuccessFactor($answer->success);
+
+        }
+
+        return $points;
+
+    }
+
+    
+    private function getSuccessFactor($success) 
+    {
+        if($success) {
+            return 1;
+        } else {
+            return -0.75;
+        }
+    }
+
+    private function getNoteCountFactor(Difficulty $difficulty) 
+    {
+        $noteCountFactors = [4 => 1, 5 => 1.2, 6 => 1.5, 7 => 1.75, 8 => 2];
+        
+        $noteCount = $difficulty->max_notes;
+        
+        return $noteCountFactors[$noteCount];
+    }
+
+    private function getPerfectSolverRhythmGameActionCount(Question $question) 
+    {
+        $notes = RhythmExerciseController::resolve($question->content)['notes'];
+
+        $actions = 0;
+        foreach($notes as $note){
+
+            $diff = 1;
+
+            // Za addition se štejejo naslednji tipi akcij
+            // "n", "r", "bar", "dot", "tie", "tuplet"
+
+            if(isset($note['dot']) && $note['dot']){
+                $diff += 1;
+            }
+
+            if(isset($note['tie']) && $note['tie']){
+                $diff += 1;
+            }
+
+            
+            if(isset($note['tuplet_end']) && $note['tuplet_end']) {
+                $diff += 1;
+            }
+
+            $actions += $diff;
+
+        }
+
+        return $actions;
     }
 
     /**
@@ -162,6 +257,27 @@ class GameUserController extends Controller
         } else {
             return 1.5;
         }
+    }
+
+    private function getRhythmExerciseDifficultyFactor($question, $success)
+    {
+
+        // Return number from 1 to 4
+        $exercise = RhythmExercise::find($question->content);
+        $difficulty = $exercise->difficulty;
+
+        // Če je difficulty manj kot 50, ne štej nič dodatno.
+        if($difficulty < 50) 
+        {
+            return 1;
+        }
+
+        // Map range [50 -> 500] to [1, 4] 
+        $minDiff = 50; $maxDiff = 500; 
+        $minPoints = 1; $maxPoints = 4;
+        
+        return ($difficulty - $minDiff) / ($maxDiff - $minDiff) * ($maxPoints - $minPoints) + $minPoints;
+
     }
 
     /**

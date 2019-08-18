@@ -16,6 +16,7 @@ import AdminGames from '../components/admin/AdminGames.vue'
 import AdminPlayers from '../components/admin/AdminPlayers.vue'
 import AdminRhythmBars from '../components/admin/AdminRhythmBars.vue'
 import AdminSettings from '../components/admin/AdminSettings.vue'
+import AdminExercise from '../components/admin/AdminExerciseView.vue'
 
 import Intervals from '../components/Intervals.vue'
 import Rhythm from '../components/games/rhythm/Rhythm.vue'
@@ -131,6 +132,12 @@ export default new VueRouter({
             name: 'admin_settings',
             path: '/admin/settings',
             component: AdminSettings,
+            props: true
+        },
+        {
+            name: 'admin_exercise',
+            path: '/admin/exercise/:id',
+            component: AdminExercise,
             props: true
         },
         

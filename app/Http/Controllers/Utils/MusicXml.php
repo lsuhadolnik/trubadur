@@ -131,7 +131,8 @@ class MusicXML
                     $voice = (int) $note->voice;
                 }
         
-                if(isset($jN["value"]) && !isset($note->chord)){
+                // If the note is valid
+                if(isset($jN["value"]) && isset($jN["type"]) && !isset($note->chord)){
 
                     if(!isset($mN[$staff])){
                         $mN[$staff] = [];
@@ -145,7 +146,7 @@ class MusicXML
                 }
                     
                 
-            }
+            } // END Main loop
 
             foreach($mN as $staffs){
                 foreach($staffs as $voice){

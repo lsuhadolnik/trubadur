@@ -1,37 +1,37 @@
 <template>
-    <div class="admin__rhythmBars">
+    <div class="admin__exerciseView">
 
-        <div class="admin_rhythmBars_masterView" >
+        <div class="admin_exerciseView_masterView" >
 
-            <div class="admin_rhythmBars_masterView_header" >
-                <div class="headerPrompt"> Takti ({{allBarsCount}})</div>
-                <div class="addNewBarButton" @click="addEmpty()">Dodaj novega</div>
+            <div class="admin_exerciseView_masterView_header" >
+                <div class="headerPrompt"> Vprašanja ({{allQuestionsCount}})</div>
+                <!--<div class="addNewBarButton" @click="addEmpty()">Dodaj novega</div>-->
             </div>
 
-            <div ref="barsScroll" class="admin_rhythmBars_masterView_body">
-                <RhythmBarInfo v-for="item in bars" ref="renderedBar" v-bind:key="item.id" :info="item" @mousedown.native="barSelected(item)" />
+            <div ref="barsScroll" class="admin_exerciseView_masterView_body">
+                <!--<QuestionInfo v-for="item in questions" ref="questionRef" v-bind:key="item.id" :info="item" @mousedown.native="questionSelected(item)" />-->
                 <div v-if="allPages > currentPage" class="loadMore" @click="loadMore()">Naloži več...</div>
             </div>
 
-            <div class="admin_rhythmBars_masterView_footer">
+            <div class="admin_exerciseView_masterView_footer">
                 <!-- <div class="button1 importMusicXML" style="font-size: 10px;"> -->
-                <upload-file text="Uvozi MusicXML" :onFileUploaded="musicXmlImported" />
-                <!--<div class="button1 importJSON" style="font-size: 10px;">Uvozi JSON</div>-->
+                <!-- <upload-file text="Uvozi MusicXML" :onFileUploaded="musicXmlImported" /> -->
+                <!-- <div class="button1 importJSON" style="font-size: 10px;">Uvozi JSON</div> -->
             </div>
 
 
         </div>
 
-        <div class="admin_rhythmBars_detailView" >
+        <div class="admin_exerciseView_detailView" >
 
             
-            <div v-if="!selected" class="admin_rhythmBars_detailView_selectPrompt" >
-                Izberi takt na levi
+            <div v-if="!selected" class="admin_exerciseView_detailView_selectPrompt" >
+                <div class="" style="display: inline-block;">Vaja št. <span class='normalfont'>#. Odigrano dne:  Težavnost: </span></div>
             </div>
 
             <div v-if="selected">
-                <div class="admin_rhythmBars_detailView_header" >
-                    <div class="" style="display: inline-block;">Urejanje takta <span class='normalfont'>#{{selected.id ? selected.id : "Nov takt"}}. Taktovski način: {{takt(selected.barInfo)}} Težavnost: {{selected.difficulty ? selected.difficulty : "??"}}</span></div>
+                <div class="admin_exerciseView_detailView_header" >
+                    <div class="" style="display: inline-block;">Vaja št. <span class='normalfont'>#. Odigrano dne:  Težavnost: </span></div>
                     <!--<div class="button1" @click="downloadJSON" >Prenesi JSON</div>-->
                 </div>
 
@@ -41,7 +41,6 @@
                     </div>
                 </StaffView>
 
-                <RhythmKeyboard ref="keyboard" :key_callback="key_callback" :buttonState="buttonState" :selected="selected" />
             </div>
 
         </div>
@@ -57,17 +56,25 @@ import StaffView from '../games/rhythm/StaffView.vue'
 import RhythmKeyboard from '../games/rhythm/Keyboard/AdminKeyboard.vue'
 
 import NoteStore from "../games/rhythm/noteStore"
-import UploadFile from "./UploadFile.vue"
 
 let Fraction = require('fraction.js');
 
 export default {
     
+    props: ['id'],
+
     data() {
         return {
+
+            gameInfo: null,
+            exerciseInfo: [],
+            questions: [],
+
+
+
             currentPage: 1,
             allPages: null,
-            allBarsCount: "nalaganje...",
+            allQuestionsCount: "nalaganje...",
             bars: [],
 
             files: [],
@@ -90,17 +97,10 @@ export default {
     },
 
     components: {
-        RhythmBarInfo, StaffView, RhythmKeyboard, UploadFile
+        RhythmBarInfo, StaffView, RhythmKeyboard
     },
 
     computed: {
-        
-        barInfo() {
-            if(this.selected)
-                return this.selected.barInfo;
-
-            return null;
-        }
 
     },
 
@@ -461,16 +461,8 @@ export default {
     mounted() {
 
         let vue = this;
-        window.onresize = function(event) {
-            vue.$refs.staff_view.viewportResized();
-        }
 
-        window.onorientationchange = function(event) {
-            vue.$refs.staff_view.viewportResized();
-        }
-
-
-        this.loadBarsPage();
+        //this.loadBarsPage();
 
     }
 
@@ -500,31 +492,31 @@ export default {
         font-family: $font-regular;
     }
 
-    .admin__rhythmBars {
+    .admin__exerciseView {
         display: flex;
         flex-direction: row;
         height: calc(100vh - 70px);
     }
 
-    .admin_rhythmBars_masterView {
+    .admin_exerciseView_masterView {
         width: 30%;
         height: 100%;
     }
 
-    .admin_rhythmBars_masterView_header {
+    .admin_exerciseView_masterView_header {
         width: 100%;
         height: 60px;
         background: $jaffa;
         padding: 20px 0 0 10px;
     }
 
-    .admin_rhythmBars_masterView_footer {
+    .admin_exerciseView_masterView_footer {
         height: 30px;
         background: $jaffa;
         padding: 6px;
     }
     
-    .admin_rhythmBars_masterView_body {
+    .admin_exerciseView_masterView_body {
         height: calc(100% - 30px - 60px);
         overflow-y: auto;
         overflow-x: hidden;
@@ -539,14 +531,14 @@ export default {
         background: $sandy-brown;
     }
 
-    .admin_rhythmBars_detailView {
+    .admin_exerciseView_detailView {
         width: 100%;
         height: 100%;
         background: $tacao;
         overflow: hidden;
     }
 
-    .admin_rhythmBars_detailView_header {
+    .admin_exerciseView_detailView_header {
         height: 60px;
         background: #EB7D3D;
         padding: 20px 0 0 10px;
@@ -564,7 +556,7 @@ export default {
         margin-bottom: 45px;
     }
 
-    .admin_rhythmBars_detailView_selectPrompt {
+    .admin_exerciseView_detailView_selectPrompt {
         width: 100%;
         height: 100%;
         display: flex;

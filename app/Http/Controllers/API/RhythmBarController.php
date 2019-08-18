@@ -105,7 +105,7 @@ class RhythmBarController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
         return $this->prepareAndExecuteDestroyQuery($id, self::MODEL);
     }
 

@@ -148,7 +148,10 @@ class RhythmExerciseController extends Controller
     private function generateShufled() {
 
         // group rhytm_bars by barInfo and count them, HAVING COUNT(*) > 1
-        $barInfos = DB::select('SELECT COUNT(*), barInfo from rhythm_bars group by barInfo having COUNT(*) > 1');
+        $barInfos = DB::select('SELECT COUNT(*), barInfo 
+        from rhythm_bars
+        where deleted_at IS NULL
+        group by barInfo having COUNT(*) > 1');
         
         if(count($barInfos) == 0) {
             throw new \Exception("Cannot generate an exercise. Insufficient bars present in database.");
@@ -159,7 +162,17 @@ class RhythmExerciseController extends Controller
         $barInfo = json_decode($barInfoString);
 
         // get IDs
-        $ids = DB::select('SELECT id from rhythm_bars where barInfo = CAST(? as JSON)', [$barInfoString]);
+        $ids = DB::select("SELECT rb.id 
+        FROM rhythm_bars rb
+        LEFT JOIN (
+            SELECT b.id as id, count(b.id) freq 
+            FROM rhythm_bars b 
+            LEFT JOIN rhythm_exercise_bars j ON b.id = j.rhythm_bar_id 
+            GROUP BY b.id 
+        ) k ON k.id = rb.id
+        WHERE barInfo = CAST(? as JSON) AND deleted_at IS NULL
+        ORDER BY k.freq
+        LIMIT 20", [$barInfoString]);
         if(count($ids) == 0){
             throw new \Exception("Something went wrong. I received no bars from the database, although I checked before there should be at least 2 present.");
         }

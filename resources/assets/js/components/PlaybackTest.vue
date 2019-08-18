@@ -89,8 +89,8 @@ export default {
 
             return this.generateQuestion(
                 { 
-                    game_id: 288, 
-                    number: 7, 
+                    game_id: 321, 
+                    number: 2, 
                     chapter: 1
                 })
             .then((question) => {

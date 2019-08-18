@@ -314,18 +314,21 @@ export default {
 
         _increment_question_number() {
 
+            let maxQuestions = 2;
+            let maxChapters = 1;
+
             // Next question.
             this.questionState.number += 1;
 
             // Is it the end of a chapter?
-            if(this.questionState.number > 8) {
+            if(this.questionState.number > maxQuestions) {
                 
                 // First question in a new chapter
                 this.questionState.number = 1;
                 this.questionState.chapter += 1;
 
                 // Is it the end of a game?
-                if(this.questionState.chapter > 3) {
+                if(this.questionState.chapter > maxChapters) {
                     return "GAME";
                 }
 
@@ -411,6 +414,52 @@ export default {
             
         },
 
+        logAnswer(info) {
+
+            return this.storeAnswer({ 
+                    game_id: this.game.id, 
+                    user_id: this.me.id, 
+                    question_id: this.questionState.id, 
+                    time: info.time, 
+                    n_additions: this.questionState.statistics.nAdditions, 
+                    n_deletions: this.questionState.statistics.nDeletions, 
+                    n_playbacks: this.questionState.statistics.nPlaybacks, 
+                    n_answers:   this.questionState.statistics.nChecks, 
+                    success:  info.status})
+                .catch(() => {
+
+                    this.questionState.check = "error";
+
+                });
+
+        },
+
+        updateCheckStatus(status) {
+            let outside = this;
+            let changeTimeout = 1000;
+
+            if(status){
+                        
+                this.questionState.check = "correct";
+                setTimeout(function() {
+                    // Watch out, could happen when next question is already loaded
+                    outside.questionState.check = "next";
+                }, changeTimeout);
+            }
+            else{
+                this.questionState.check = "wrong";
+                setTimeout(function() {
+
+                    // Watch out, could happen when next question is already loaded
+                    outside.questionState.check = "no";
+                    // If 
+                    if(outside.questionState.maxChecks <= outside.questionState.statistics.nChecks){
+                        outside.questionState.check = "next";
+                    }
+                }, changeTimeout);
+            }
+        },
+
         check(){
 
             if(this.questionState.check == "next"){
@@ -418,7 +467,7 @@ export default {
                 return;
             }
 
-            if(this.questionState.check == "waiting" || this.questionState.check == "wrong"){
+            if(this.questionState.check != "no"){
                 return;
             }
 
@@ -429,48 +478,17 @@ export default {
             let time = ((new Date()).getTime() - this.questionState.statistics.startTime) / 1000;
             this.questionState.check = "waiting";
 
-            // Log the answer
-            return this.storeAnswer({ 
-                game_id: this.game.id, 
-                user_id: this.me.id, 
-                question_id: this.questionState.id, 
-                time: time, 
-                n_additions: this.questionState.statistics.nAdditions, 
-                n_deletions: this.questionState.statistics.nDeletions, 
-                n_playbacks: this.questionState.statistics.nPlaybacks, 
-                n_answers:   this.questionState.statistics.nChecks, 
-                success:  status})
-            .then(() => {
+            let outside = this;
 
-                let changeTimeout = 1000;
-                let outside = this;
-
-                if(status){
-                    
-                    this.questionState.check = "correct";
-                    setTimeout(function() {
-                        // Watch out, could happen when next question is already loaded
-                        outside.questionState.check = "next";
-                    }, changeTimeout);
-                }
-                else{
-                    this.questionState.check = "wrong";
-                    setTimeout(function() {
-
-                        // Watch out, could happen when next question is already loaded
-                        outside.questionState.check = "no";
-                        // If 
-                        if(outside.questionState.maxChecks <= outside.questionState.statistics.nChecks){
-                            outside.questionState.check = "next";
-                        }
-                    }, changeTimeout);
-                }
-
-            }).catch(() => {
-
-                this.questionState.check = "error";
-
-            });
+            // Correct or last chance...
+            if(status || this.questionState.maxChecks <= this.questionState.statistics.nChecks){
+                // Log the answer
+                return this.logAnswer({time, status}).then(() => {
+                    return outside.updateCheckStatus(status);
+                })
+            } else {
+                return this.updateCheckStatus();
+            }
 
         },
 
