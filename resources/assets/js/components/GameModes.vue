@@ -107,7 +107,7 @@ export default {
         ...mapState(['me'])
     },
     methods: {
-        ...mapActions(['fetchMe', 'fetchDifficulty', 'storeGame', 'updateGameUser']),
+        ...mapActions(['fetchMe', 'fetchDifficulty', 'fetchRhythmDifficulty', 'storeGame', 'updateGameUser']),
         loadImages () {
             const context = this
 
@@ -136,7 +136,18 @@ export default {
 
             this.loading = true
 
-            this.fetchDifficulty({ gradeId: this.me.grade_id, schoolId: this.me.school_id }).then((difficulty) => {
+            let diffPromise = null;
+            if(this.type == 'intervals') {
+
+                diffPromise = this.fetchDifficulty({ gradeId: this.me.grade_id, schoolId: this.me.school_id });
+
+            } else if(this.type == 'rhythm') {
+
+                diffPromise = this.fetchRhythmDifficulty({ gradeId: this.me.grade_id });
+
+            }
+            
+            diffPromise.then((difficulty) => {
                 const users = []
                 switch (mode) {
                     case 'practice':
@@ -149,7 +160,18 @@ export default {
                         break
                 }
 
-                this.storeGame({ difficulty_id: difficulty.id, mode: mode, type: this.type, users: users }).then((game) => {
+                let gameObj = { mode: mode, type: this.type, users: users };
+                if(this.type == 'intervals'){
+                    
+                    gameObj.difficulty_id = difficulty.id;
+
+                } else if(this.type == 'rhythm') {
+                    
+                    gameObj.rhythm_difficulty_id = difficulty.id;
+
+                }
+
+                this.storeGame(gameObj).then((game) => {
                     this.updateGameUser({ gameId: game.id, userId: this.me.id, data: { instrument: this.me.instrument } }).then(() => {
                         this.loading = false
                         //this.reroute('intervals', { game: game, difficulty: difficulty })

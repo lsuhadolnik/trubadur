@@ -50709,7 +50709,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['me'])),
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'fetchDifficulty', 'storeGame', 'updateGameUser']), {
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'fetchDifficulty', 'fetchRhythmDifficulty', 'storeGame', 'updateGameUser']), {
         loadImages: function loadImages() {
             var context = this;
 
@@ -50760,7 +50760,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             this.loading = true;
 
-            this.fetchDifficulty({ gradeId: this.me.grade_id, schoolId: this.me.school_id }).then(function (difficulty) {
+            var diffPromise = null;
+            if (this.type == 'intervals') {
+
+                diffPromise = this.fetchDifficulty({ gradeId: this.me.grade_id, schoolId: this.me.school_id });
+            } else if (this.type == 'rhythm') {
+
+                diffPromise = this.fetchRhythmDifficulty({ gradeId: this.me.grade_id });
+            }
+
+            diffPromise.then(function (difficulty) {
                 var users = [];
                 switch (mode) {
                     case 'practice':
@@ -50773,7 +50782,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         break;
                 }
 
-                _this2.storeGame({ difficulty_id: difficulty.id, mode: mode, type: _this2.type, users: users }).then(function (game) {
+                var gameObj = { mode: mode, type: _this2.type, users: users };
+                if (_this2.type == 'intervals') {
+
+                    gameObj.difficulty_id = difficulty.id;
+                } else if (_this2.type == 'rhythm') {
+
+                    gameObj.rhythm_difficulty_id = difficulty.id;
+                }
+
+                _this2.storeGame(gameObj).then(function (game) {
                     _this2.updateGameUser({ gameId: game.id, userId: _this2.me.id, data: { instrument: _this2.me.instrument } }).then(function () {
                         _this2.loading = false;
                         //this.reroute('intervals', { game: game, difficulty: difficulty })
@@ -55076,7 +55094,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n  -webkit-touch-action: manipulation;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n}\n.button__percentIndicator[data-v-be802b54] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button__blue[data-v-be802b54] {\n  background-color: rgba(0, 0, 255, 0.4);\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n.button_3_col[data-v-be802b54] {\n  width: 170px;\n}\n", ""]);
+exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n  -webkit-touch-action: manipulation;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n}\n.button__percentIndicator[data-v-be802b54] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button__blue[data-v-be802b54] {\n  background-color: rgba(0, 0, 255, 0.4);\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n@media only screen and (min-device-width: 768px) {\n.button_1_col[data-v-be802b54] {\n      width: 70px !important;\n      height: 70px !important;\n}\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n.button_3_col[data-v-be802b54] {\n  width: 170px;\n}\n", ""]);
 
 // exports
 
@@ -55088,6 +55106,14 @@ exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    positi
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -55380,7 +55406,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.button[data-v-656066f6] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n  -webkit-touch-action: manipulation;\n}\n.button[data-v-656066f6]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-656066f6] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-656066f6] {\n  visibility: hidden;\n}\n.button__hollow[data-v-656066f6] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-656066f6] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n}\n.button__percentIndicator[data-v-656066f6] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-656066f6] {\n  background-color: #33966D;\n}\n.button__orange[data-v-656066f6] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-656066f6] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-656066f6] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-656066f6] {\n  background-color: #FDBB2F;\n}\n.button_1_col[data-v-656066f6] {\n  width: 50px;\n}\n.button_2_col[data-v-656066f6] {\n  width: 110px;\n}\n.button_3_col[data-v-656066f6] {\n  width: 170px;\n}\n", ""]);
+exports.push([module.i, "\n.button[data-v-656066f6] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n  -webkit-touch-action: manipulation;\n}\n.button[data-v-656066f6]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-656066f6] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-656066f6] {\n  visibility: hidden;\n}\n.button__hollow[data-v-656066f6] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-656066f6] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n}\n.button__percentIndicator[data-v-656066f6] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-656066f6] {\n  background-color: #33966D;\n}\n.button__orange[data-v-656066f6] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-656066f6] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-656066f6] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-656066f6] {\n  background-color: #FDBB2F;\n}\n.button_1_col[data-v-656066f6] {\n  width: 50px;\n}\n@media only screen and (min-device-width: 768px) {\n.button_1_col[data-v-656066f6] {\n      width: 70px !important;\n      height: 70px !important;\n}\n}\n.button_2_col[data-v-656066f6] {\n  width: 110px;\n}\n.button_3_col[data-v-656066f6] {\n  width: 170px;\n}\n", ""]);
 
 // exports
 
@@ -55392,6 +55418,11 @@ exports.push([module.i, "\n.button[data-v-656066f6] {\n  display: inline-block;\
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -56403,7 +56434,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythmKeyboard__playButton__buttonText[data-v-3219aa70] {\n  font-size: 8pt;\n  font-family: \"GothamRounded-Bold\";\n}\n", ""]);
+exports.push([module.i, "\n.rhythmKeyboard__playButton__buttonText[data-v-3219aa70] {\n  font-size: 8pt;\n  font-family: \"GothamRounded-Bold\";\n}\n@media only screen and (min-device-width: 768px) {\n.rhythmKeyboard__playButton__buttonText[data-v-3219aa70] {\n      font-size: 10pt;\n}\n}\n", ""]);
 
 // exports
 
@@ -56628,7 +56659,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythmKeyboard__checkButton__text[data-v-7f098cf0] {\n  font-size: 8pt;\n  font-family: \"GothamRounded-Bold\";\n}\n", ""]);
+exports.push([module.i, "\n.rhythmKeyboard__checkButton__text[data-v-7f098cf0] {\n  font-size: 8pt;\n  font-family: \"GothamRounded-Bold\";\n}\n.show-comfortable[data-v-7f098cf0] {\n  display: none;\n}\n@media only screen and (min-device-width: 768px) {\n.show-comfortable[data-v-7f098cf0] {\n      display: inline-block;\n}\n}\n", ""]);
 
 // exports
 
@@ -56654,13 +56685,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ["status"],
+    props: ["status", "textSecond", "textThird", "percents"],
     components: { SexyButton: __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default.a },
     computed: {
         checkButtonColor: function checkButtonColor() {
@@ -56689,11 +56724,28 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "sexy-button",
-    { attrs: { color: _vm.checkButtonColor } },
+    { attrs: { color: _vm.checkButtonColor, percents: _vm.percents } },
     [
       _vm.status == "no"
         ? _c("div", { staticClass: "rhythmKeyboard__checkButton__text" }, [
-            _vm._v("Preveri")
+            _c("div", { staticClass: "checkButton__firstLine" }, [
+              _vm._v("Preveri")
+            ]),
+            _vm._v(" "),
+            _vm.textSecond
+              ? _c("div", { staticClass: "checkButton__secondLine" }, [
+                  _c("span", { staticClass: "show-comfortable" }, [
+                    _vm._v("Še  ")
+                  ]),
+                  _vm._v(_vm._s(_vm.textSecond))
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.textThird
+              ? _c("div", { staticClass: "checkButton__thirdLine" }, [
+                  _vm._v(_vm._s(_vm.textThird))
+                ])
+              : _vm._e()
           ])
         : _vm._e(),
       _vm._v(" "),
@@ -61941,6 +61993,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -61977,7 +62030,10 @@ var util = __webpack_require__(10);
             questionState: {
                 id: 0,
                 check: "no", // "no", "correct", "wrong", "next"
+
                 maxChecks: 5,
+                maxSeconds: 120,
+
                 num_beats: "x",
                 number: 0,
                 chapter: 1,
@@ -61985,9 +62041,12 @@ var util = __webpack_require__(10);
                 statistics: {
                     nAdditions: 1, nDeletions: 1,
                     nPlaybacks: 1, nNoteTaps: 1,
-                    nChecks: 1, startTime: 1
+                    nChecks: 1, startTime: 1,
+                    duration: 0
                 }
             },
+
+            countdownInterval: null,
 
             notes: null,
             bar: {
@@ -62089,8 +62148,20 @@ var util = __webpack_require__(10);
             this.displayState = "diff";
         },
         startGame: function startGame() {
+            var _this = this;
 
             this.questionState.statistics.startTime = new Date().getTime();
+            this.countdownInterval = setInterval(function () {
+
+                _this.questionState.statistics.duration = Math.floor((new Date().getTime() - _this.questionState.statistics.startTime) / 1000);
+
+                var timeout = _this.questionState.statistics.duration >= _this.questionState.maxSeconds;
+                if (timeout) {
+
+                    clearInterval(_this.countdownInterval);
+                    _this.check();
+                }
+            }, 500);
 
             this.displayState = "ready";
             this.play({ action: "replay", what: "exercise" });
@@ -62114,6 +62185,9 @@ var util = __webpack_require__(10);
             this.questionState.statistics.nNoteTaps = 1;
             this.questionState.statistics.nChecks = 1;
             this.questionState.statistics.startTime = 1;
+            this.questionState.statistics.duration = 1;
+
+            clearInterval(this.countdownInterval);
         },
         _increment_question_number: function _increment_question_number() {
 
@@ -62141,16 +62215,16 @@ var util = __webpack_require__(10);
             return "QUESTION";
         },
         gameEnded: function gameEnded() {
-            var _this = this;
+            var _this2 = this;
 
             return this.finishGameUser({ gameId: this.game.id, userId: this.me.id }).then(function () {
-                return _this.completeBadges(_this.me.id);
+                return _this2.completeBadges(_this2.me.id);
             }).then(function () {
-                _this.$router.push({ name: 'gameStatistics', params: { id: _this.game.id } });
+                _this2.$router.push({ name: 'gameStatistics', params: { id: _this2.game.id } });
             });
         },
         nextQuestion: function nextQuestion(play) {
-            var _this2 = this;
+            var _this3 = this;
 
             this.displayState = 'loading';
 
@@ -62168,41 +62242,41 @@ var util = __webpack_require__(10);
 
                 var exercise = question.content;
 
-                _this2.questionState.exercise = exercise;
-                _this2.questionState.id = question.id;
+                _this3.questionState.exercise = exercise;
+                _this3.questionState.id = question.id;
 
-                _this2._questionState_reset();
-                _this2.questionState.num_beats = util.get_bar_count(exercise.notes);
+                _this3._questionState_reset();
+                _this3.questionState.num_beats = util.get_bar_count(exercise.notes);
 
-                _this2._copy_bar_info(exercise);
+                _this3._copy_bar_info(exercise);
 
-                _this2.playback.setBPM(exercise.BPM ? exercise.BPM : _this2.defaultBPM);
-                _this2.playback.setBar(exercise.bar);
+                _this3.playback.setBPM(exercise.BPM ? exercise.BPM : _this3.defaultBPM);
+                _this3.playback.setBar(exercise.bar);
 
                 // Initialize note store
-                _this2.notes = new __WEBPACK_IMPORTED_MODULE_7__noteStore__["a" /* default */](_this2.bar, _this2.$refs.staff_view.cursor, _this2.$refs.staff_view.render);
+                _this3.notes = new __WEBPACK_IMPORTED_MODULE_7__noteStore__["a" /* default */](_this3.bar, _this3.$refs.staff_view.cursor, _this3.$refs.staff_view.render);
 
-                window.____notes = _this2.notes;
+                window.____notes = _this3.notes;
 
                 if (play) {
-                    _this2.play({ action: "replay", what: "exercise" });
+                    _this3.play({ action: "replay", what: "exercise" });
                 }
 
-                _this2.$refs.staff_view.reset();
+                _this3.$refs.staff_view.reset();
             });
         },
         continueGame: function continueGame() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.nextQuestion(false).then(function (state) {
 
                 if (state == "GAME") {} else {
-                    _this3.displayState = "instructions";
+                    _this4.displayState = "instructions";
                 }
             });
         },
         logAnswer: function logAnswer(info) {
-            var _this4 = this;
+            var _this5 = this;
 
             return this.storeAnswer({
                 game_id: this.game.id,
@@ -62215,14 +62289,14 @@ var util = __webpack_require__(10);
                 n_answers: this.questionState.statistics.nChecks,
                 success: info.status }).catch(function () {
 
-                _this4.questionState.check = "error";
+                _this5.questionState.check = "error";
             });
         },
         updateCheckStatus: function updateCheckStatus(status) {
             var outside = this;
             var changeTimeout = 1000;
 
-            if (status) {
+            if (status.success) {
 
                 this.questionState.check = "correct";
                 setTimeout(function () {
@@ -62236,7 +62310,8 @@ var util = __webpack_require__(10);
                     // Watch out, could happen when next question is already loaded
                     outside.questionState.check = "no";
                     // If 
-                    if (outside.questionState.maxChecks <= outside.questionState.statistics.nChecks) {
+
+                    if (status.overcheck || status.timeout) {
                         outside.questionState.check = "next";
                     }
                 }, changeTimeout);
@@ -62257,19 +62332,26 @@ var util = __webpack_require__(10);
             this.questionState.statistics.nChecks += 1;
 
             var status = util.check_notes_equal(this.questionState.exercise.notes, this.notes.notes);
-            var time = (new Date().getTime() - this.questionState.statistics.startTime) / 1000;
+            var time = new Date().getTime() - this.questionState.statistics.startTime;
             this.questionState.check = "waiting";
 
             var outside = this;
 
-            // Correct or last chance...
-            if (status || this.questionState.maxChecks <= this.questionState.statistics.nChecks) {
+            var timeout = this.questionState.statistics.duration >= this.questionState.maxSeconds;
+
+            var checkStatus = {
+                timeout: timeout,
+                overcheck: this.questionState.maxChecks <= this.questionState.statistics.nChecks,
+                success: status
+
+                // Correct or last chance...
+            };if (status || timeout || this.questionState.maxChecks <= this.questionState.statistics.nChecks) {
                 // Log the answer
                 return this.logAnswer({ time: time, status: status }).then(function () {
-                    return outside.updateCheckStatus(status);
+                    return outside.updateCheckStatus(checkStatus);
                 });
             } else {
-                return this.updateCheckStatus();
+                return this.updateCheckStatus(checkStatus);
             }
         },
         play: function play(event) {
@@ -62318,7 +62400,7 @@ var util = __webpack_require__(10);
     }),
 
     mounted: function mounted() {
-        var _this5 = this;
+        var _this6 = this;
 
         this.$refs.staff_view.init({ userName: "RhythmView", cursor: { enabled: true } });
         this.$refs.keyboard.init(this.$refs.staff_view.cursor);
@@ -62330,15 +62412,13 @@ var util = __webpack_require__(10);
         } else {
 
             this.fetchMe().then(function () {
-                return _this5.setupMidi(['xylophone', 'trumpet']);
+                return _this6.setupMidi(['xylophone', 'trumpet']);
             }).then(function () {
-                return _this5.nextQuestion();
+                return _this6.nextQuestion();
             }).then(function () {
-                _this5.displayState = "instructions";return;
+                _this6.displayState = "instructions";return;
             });
         }
-
-        //this.displayState = "ready";
     }
 });
 
@@ -63042,7 +63122,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.half_transparent[data-v-72aa87f1] {\n  opacity: 0.5;\n}\n.rhythm-game__keyboard_wrap[data-v-72aa87f1] {\n  padding: 0 10px 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.rhythm-game__keyboard[data-v-72aa87f1] {\n  font-size: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-72aa87f1] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-72aa87f1] {\n  margin-left: 4px;\n  font-size: 40px;\n}\n.norfolk-row .button[data-v-72aa87f1] {\n  font-family: Norfolk;\n  font-size: 33px;\n}\n.norfolk[data-v-72aa87f1] {\n  font-family: Norfolk !important;\n}\n.musisync-row .button[data-v-72aa87f1] {\n  font-family: MusiSync;\n  font-size: 33px;\n}\n.musisync[data-v-72aa87f1] {\n  font-family: MusiSync !important;\n}\n.moveButtonsButton[data-v-72aa87f1] {\n  font-family: initial !important;\n  font-size: 26px  !important;\n  font-weight: bold;\n}\n.normal-font[data-v-72aa87f1] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-72aa87f1] {\n  font-size: 8pt !important;\n  font-family: \"GothamRounded-Bold\";\n}\n.norfolk-note-padding[data-v-72aa87f1] {\n  padding-top: 19px;\n}\n.hide-normal[data-v-72aa87f1] {\n  display: none;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.hide-normal[data-v-72aa87f1] {\n    display: inline-block;\n}\n.show-normal[data-v-72aa87f1] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-72aa87f1] {\n    margin-bottom: 0px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.hide-normal[data-v-72aa87f1] {\n    display: inline-block;\n}\n.show-normal[data-v-72aa87f1] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-72aa87f1] {\n    margin-bottom: 0px;\n}\n.button_1_col[data-v-72aa87f1] {\n    width: 50px !important;\n    height: 50px !important;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: portrait) {\n.button_1_col[data-v-72aa87f1] {\n    width: 60px !important;\n    height: 60px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.half_transparent[data-v-72aa87f1] {\n  opacity: 0.5;\n}\n.tie-text[data-v-72aa87f1] {\n  font-size: 131px;\n  margin-bottom: 115px;\n  margin-left: 7px;\n}\n.rhythm-game__keyboard_wrap[data-v-72aa87f1] {\n  padding: 0 10px 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n@media only screen and (min-device-width: 768px) {\n.rhythm-game__keyboard_wrap[data-v-72aa87f1] {\n      padding-top: 70px;\n}\n}\n.rhythm-game__keyboard[data-v-72aa87f1] {\n  font-size: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-72aa87f1] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-72aa87f1] {\n  margin-left: 4px;\n  font-size: 40px;\n}\n.norfolk-row .button[data-v-72aa87f1] {\n  font-family: Norfolk;\n  font-size: 33px;\n}\n.norfolk[data-v-72aa87f1] {\n  font-family: Norfolk !important;\n}\n.musisync-row .button[data-v-72aa87f1] {\n  font-family: MusiSync;\n  font-size: 33px;\n}\n.musisync[data-v-72aa87f1] {\n  font-family: MusiSync !important;\n}\n.moveButtonsButton[data-v-72aa87f1] {\n  font-family: initial !important;\n  font-size: 26px  !important;\n  font-weight: bold;\n}\n.normal-font[data-v-72aa87f1] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-72aa87f1] {\n  font-size: 8pt !important;\n  font-family: \"GothamRounded-Bold\";\n}\n.norfolk-note-padding[data-v-72aa87f1] {\n  padding-top: 19px;\n}\n.hide-normal[data-v-72aa87f1] {\n  display: none;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.hide-normal[data-v-72aa87f1] {\n    display: inline-block;\n}\n.show-normal[data-v-72aa87f1] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-72aa87f1] {\n    margin-bottom: 0px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.hide-normal[data-v-72aa87f1] {\n    display: inline-block;\n}\n.show-normal[data-v-72aa87f1] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-72aa87f1] {\n    margin-bottom: 0px;\n}\n.button_1_col[data-v-72aa87f1] {\n    width: 50px !important;\n    height: 50px !important;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: portrait) {\n.button_1_col[data-v-72aa87f1] {\n    width: 60px !important;\n    height: 60px !important;\n}\n}\n", ""]);
 
 // exports
 
@@ -63085,6 +63165,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_vue_awesome_icons_ban__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_vue_awesome_icons_refresh__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_vue_awesome_icons_exclamation_circle__ = __webpack_require__(43);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -63638,6 +63732,14 @@ var Fraction = __webpack_require__(7);
                 return 0;
             }
         },
+        checkButtonTextSecond: function checkButtonTextSecond() {
+
+            var seconds = this.question.maxSeconds - this.question.statistics.duration;
+            return seconds + "s ";
+        },
+        checkButtonTextThird: function checkButtonTextThird() {
+            return this.question.statistics.nChecks + "/" + this.question.maxChecks;
+        },
         checkButtonColor: function checkButtonColor() {
             if (this.question.check == "no") return "cabaret";else if (this.question.check == "wrong") return "red";else if (this.question.check == "correct") return "green";else if (this.question.check == "next") return "sunglow";
             return "cabaret";
@@ -64103,14 +64205,18 @@ var render = function() {
             "div",
             { staticClass: "hide-normal" },
             [
-              _c("sexy-button", {
-                attrs: { text: "u", customClass: "musisync", color: "green" },
-                nativeOn: {
-                  click: function($event) {
-                    return _vm.tie()
+              _c(
+                "sexy-button",
+                {
+                  attrs: { customClass: "musisync", color: "green" },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.tie()
+                    }
                   }
-                }
-              }),
+                },
+                [_c("span", { staticClass: "tie-text" }, [_vm._v("u")])]
+              ),
               _vm._v(" "),
               _c("selection-button", {
                 attrs: { color: _vm.select_button_color },
@@ -64139,7 +64245,17 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("check-button", {
-                attrs: { status: _vm.question.check },
+                attrs: {
+                  color: _vm.checkButtonColor,
+                  status: _vm.question.check,
+                  percents:
+                    (1 -
+                      _vm.question.statistics.duration /
+                        _vm.question.maxSeconds) *
+                    100,
+                  textSecond: _vm.checkButtonTextSecond,
+                  textThird: _vm.checkButtonTextThird
+                },
                 nativeOn: {
                   click: function($event) {
                     return _vm.check()
@@ -64238,14 +64354,20 @@ var render = function() {
                       }
                     }
                   })
-                : _c("sexy-button", {
-                    attrs: { text: "u", color: "green" },
-                    nativeOn: {
-                      click: function($event) {
-                        return _vm.tie()
-                      }
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "sexy-button",
+                {
+                  attrs: { customClass: "musisync", color: "green" },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.tie()
                     }
-                  })
+                  }
+                },
+                [_c("span", { staticClass: "tie-text" }, [_vm._v("u")])]
+              )
             ],
             1
           ),
@@ -64303,7 +64425,16 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("check-button", {
-            attrs: { color: _vm.checkButtonColor, status: _vm.question.check },
+            attrs: {
+              color: _vm.checkButtonColor,
+              status: _vm.question.check,
+              percents:
+                (1 -
+                  _vm.question.statistics.duration / _vm.question.maxSeconds) *
+                100,
+              textSecond: _vm.checkButtonTextSecond,
+              textThird: _vm.checkButtonTextThird
+            },
             nativeOn: {
               click: function($event) {
                 return _vm.check()
@@ -65681,7 +65812,7 @@ var render = function() {
           _vm._v(" "),
           _c("ul", { staticClass: "rhythm__instructions-list" }, [
             _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v("Preizkusil se boš v ritmičnem nareku.")
+              _vm._v("Preizkusila / preizkusil se boš v ritmičnem nareku.")
             ]),
             _vm._v(" "),
             _c("li", { staticClass: "rhythm__instructions-list-item" }, [
@@ -65695,7 +65826,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v("Slišal boš " + _vm._s(_vm.num_beats_text) + ".")
+              _vm._v("Slišala / slišal boš " + _vm._s(_vm.num_beats_text) + ".")
             ]),
             _vm._v(" "),
             _c("li", { staticClass: "rhythm__instructions-list-item" }, [
@@ -65711,9 +65842,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v(
-                "Program je v preizkusni fazi, zanekrat lahko preizkusiš par vpisanih vaj."
-              )
+              _vm._v("Če ne veš, kako deluje kakšen gumb, pritisni gumb pomoč.")
             ])
           ])
         ],
@@ -65970,8 +66099,8 @@ var util = __webpack_require__(10);
             out.playback = new __WEBPACK_IMPORTED_MODULE_4__games_rhythm_rhythmPlaybackEngine__["a" /* default */](MIDI);
 
             return this.generateQuestion({
-                game_id: 321,
-                number: 2,
+                game_id: 344,
+                number: 1,
                 chapter: 1
             }).then(function (question) {
 
@@ -71561,8 +71690,21 @@ function handleError(error) {
                 });
             });
         },
-        fetchUserBadges: function fetchUserBadges(_ref10) {
+        fetchRhythmDifficulty: function fetchRhythmDifficulty(_ref10, _ref11) {
             var state = _ref10.state;
+            var gradeId = _ref11.gradeId;
+
+            return new Promise(function (resolve, reject) {
+                axios.get('/api/rhythmdifficulty/' + gradeId).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        fetchUserBadges: function fetchUserBadges(_ref12) {
+            var state = _ref12.state;
             var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
             return new Promise(function (resolve, reject) {
@@ -71574,8 +71716,8 @@ function handleError(error) {
                 });
             });
         },
-        fetchLevels: function fetchLevels(_ref11) {
-            var state = _ref11.state;
+        fetchLevels: function fetchLevels(_ref13) {
+            var state = _ref13.state;
             var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
             return new Promise(function (resolve, reject) {
@@ -71587,8 +71729,8 @@ function handleError(error) {
                 });
             });
         },
-        storeGame: function storeGame(_ref12, data) {
-            var state = _ref12.state;
+        storeGame: function storeGame(_ref14, data) {
+            var state = _ref14.state;
 
             return new Promise(function (resolve, reject) {
                 axios.post('/api/games', data).then(function (response) {
@@ -71599,11 +71741,11 @@ function handleError(error) {
                 });
             });
         },
-        updateGameUser: function updateGameUser(_ref13, _ref14) {
-            var state = _ref13.state;
-            var gameId = _ref14.gameId,
-                userId = _ref14.userId,
-                data = _ref14.data;
+        updateGameUser: function updateGameUser(_ref15, _ref16) {
+            var state = _ref15.state;
+            var gameId = _ref16.gameId,
+                userId = _ref16.userId,
+                data = _ref16.data;
 
             return new Promise(function (resolve, reject) {
                 axios.put('/api/gameuser/' + gameId + '/' + userId, data).then(function (response) {
@@ -71614,10 +71756,10 @@ function handleError(error) {
                 });
             });
         },
-        finishGameUser: function finishGameUser(_ref15, _ref16) {
-            var state = _ref15.state;
-            var gameId = _ref16.gameId,
-                userId = _ref16.userId;
+        finishGameUser: function finishGameUser(_ref17, _ref18) {
+            var state = _ref17.state;
+            var gameId = _ref18.gameId,
+                userId = _ref18.userId;
 
             return new Promise(function (resolve, reject) {
                 axios.put('/api/gameuser/' + gameId + '/' + userId + '/finish').then(function (response) {
@@ -71628,8 +71770,8 @@ function handleError(error) {
                 });
             });
         },
-        completeBadges: function completeBadges(_ref17, userId) {
-            var state = _ref17.state;
+        completeBadges: function completeBadges(_ref19, userId) {
+            var state = _ref19.state;
 
             return new Promise(function (resolve, reject) {
                 axios.put('/api/users/' + userId + '/complete').then(function (response) {
@@ -71640,8 +71782,8 @@ function handleError(error) {
                 });
             });
         },
-        generateQuestion: function generateQuestion(_ref18, data) {
-            var state = _ref18.state;
+        generateQuestion: function generateQuestion(_ref20, data) {
+            var state = _ref20.state;
 
             return new Promise(function (resolve, reject) {
                 axios.post('/api/questions/generate', data).then(function (response) {
@@ -71653,8 +71795,8 @@ function handleError(error) {
                 });
             });
         },
-        storeAnswer: function storeAnswer(_ref19, data) {
-            var state = _ref19.state;
+        storeAnswer: function storeAnswer(_ref21, data) {
+            var state = _ref21.state;
 
             return new Promise(function (resolve, reject) {
                 axios.post('/api/answers', data).then(function (response) {
@@ -71665,8 +71807,8 @@ function handleError(error) {
                 });
             });
         },
-        fetchGameStatistics: function fetchGameStatistics(_ref20, id) {
-            var state = _ref20.state;
+        fetchGameStatistics: function fetchGameStatistics(_ref22, id) {
+            var state = _ref22.state;
 
             return new Promise(function (resolve, reject) {
                 axios.get('/api/games/' + id + '/statistics').then(function (response) {
@@ -71677,9 +71819,9 @@ function handleError(error) {
                 });
             });
         },
-        setupMidi: function setupMidi(_ref21) {
-            var commit = _ref21.commit,
-                state = _ref21.state;
+        setupMidi: function setupMidi(_ref23) {
+            var commit = _ref23.commit,
+                state = _ref23.state;
             var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
             return new Promise(function (resolve, reject) {
@@ -71734,8 +71876,8 @@ function handleError(error) {
                 }
             });
         },
-        fetchRhythmBars: function fetchRhythmBars(_ref22, data) {
-            var state = _ref22.state;
+        fetchRhythmBars: function fetchRhythmBars(_ref24, data) {
+            var state = _ref24.state;
 
 
             var paging = "";
@@ -71752,8 +71894,8 @@ function handleError(error) {
                 });
             });
         },
-        deleteRhythmBar: function deleteRhythmBar(_ref23, data) {
-            var state = _ref23.state;
+        deleteRhythmBar: function deleteRhythmBar(_ref25, data) {
+            var state = _ref25.state;
 
 
             if (!data || !data.id) return;
@@ -71767,8 +71909,8 @@ function handleError(error) {
                 });
             });
         },
-        createRhythmBar: function createRhythmBar(_ref24, data) {
-            var state = _ref24.state;
+        createRhythmBar: function createRhythmBar(_ref26, data) {
+            var state = _ref26.state;
 
 
             if (!data || !data.bar) return;
@@ -71782,8 +71924,8 @@ function handleError(error) {
                 });
             });
         },
-        saveRhythmBar: function saveRhythmBar(_ref25, data) {
-            var state = _ref25.state;
+        saveRhythmBar: function saveRhythmBar(_ref27, data) {
+            var state = _ref27.state;
 
 
             if (!data || !data.bar || !data.bar.id) return;

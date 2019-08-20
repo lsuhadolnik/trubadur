@@ -12,7 +12,7 @@ class MusicXML
         return array(
             "content" => json_encode($m),
             "barInfo" => json_encode($barInfo),
-            "difficulty" => 50
+            "difficulty" => rand(140, 355)
         );
     }
 
@@ -89,7 +89,7 @@ class MusicXML
 
                 // Type
                 if(isset($note->rest)) { $jN['type'] = "r"; } 
-                else if(isset($note->pitch)) { $jN['type'] = "n"; }
+                else { $jN['type'] = "n"; }
 
                 // Dot
                 if(isset($note->dot)) { $jN['dot'] = true; }

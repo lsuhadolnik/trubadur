@@ -91,6 +91,11 @@
 
 .button_1_col{
     width: 50px;
+
+    @include comfortable-screen {
+        width: 70px !important;
+        height: 70px !important;
+    }
 }
 
 .button_2_col{

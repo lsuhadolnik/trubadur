@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\RhythmBar;
 use App\RhythmExerciseBar;
+use App\RhythmDifficulty;
 
 class RhythmExerciseController extends Controller
 {
@@ -145,7 +146,13 @@ class RhythmExerciseController extends Controller
 
     }
 
-    private function generateShufled() {
+    private function generateShufled($difficulty) {
+
+        $difficultyMid = 200;
+        if($difficulty != null){
+            $difficultyMid = ($difficulty->max_difficulty + $difficulty->min_difficulty) / 2;
+        }
+
 
         // group rhytm_bars by barInfo and count them, HAVING COUNT(*) > 1
         $barInfos = DB::select('SELECT COUNT(*), barInfo 
@@ -161,8 +168,12 @@ class RhythmExerciseController extends Controller
         $barInfoString = $barInfos[0]->barInfo;
         $barInfo = json_decode($barInfoString);
 
+        $randomNull = rand(50, 351);
+
+        $orderCols = rand(0, 1000) > 500 ? 'absDiff, k.freq' : 'k.freq, absDiff';
+
         // get IDs
-        $ids = DB::select("SELECT rb.id 
+        $ids = DB::select("SELECT rb.id, ABS(IFNULL(rb.difficulty, ?) - ?) `absDiff`
         FROM rhythm_bars rb
         LEFT JOIN (
             SELECT b.id as id, count(b.id) freq 
@@ -171,8 +182,8 @@ class RhythmExerciseController extends Controller
             GROUP BY b.id 
         ) k ON k.id = rb.id
         WHERE barInfo = CAST(? as JSON) AND deleted_at IS NULL
-        ORDER BY k.freq
-        LIMIT 20", [$barInfoString]);
+        ORDER BY $orderCols
+        LIMIT 20", [$randomNull, $difficultyMid, $barInfoString]);
         if(count($ids) == 0){
             throw new \Exception("Something went wrong. I received no bars from the database, although I checked before there should be at least 2 present.");
         }
@@ -194,12 +205,14 @@ class RhythmExerciseController extends Controller
         if(!$difficulty){
             $difficulty = 100;
         }
+
+        // Map [0, 1200] to [10, 6]
         
         $ex = RhythmExercise::create([
             "name" => "Random " . time(),
             "barInfo" => $barInfoString,
-            "BPM" => 60,
-            "difficulty" => $bar1->difficulty + $bar2->difficulty,
+            "BPM" => $this->mapInvRange([0, 1200], [100, 60], $difficulty),
+            "difficulty" => $difficulty,
             //"description" => ""
         ]);
 
@@ -219,9 +232,18 @@ class RhythmExerciseController extends Controller
 
     }
 
-    public function generateNew(Request $request = null){
+    private function mapInvRange($i1, $i2, $value){
 
-        return $this->generateShufled();
+        $minFrom = $i1[0]; $maxFrom = $i1[1];
+        $maxTo = $i2[0]; $minTo = $i2[1];
+
+        return ($value - $minFrom) / ($maxFrom - $minFrom) * ($maxTo - $minTo) + $minTo;
+
+    }
+
+    public function generateNew(RhythmDifficulty $difficulty){
+
+        return $this->generateShufled($difficulty);
 
     }
 }

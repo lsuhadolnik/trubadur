@@ -28,6 +28,10 @@ export default {
     .rhythmKeyboard__playButton__buttonText {
         font-size: 8pt;
         font-family: $font-bold;
+
+        @include comfortable-screen {
+            font-size: 10pt;
+        }
     }
     
 </style>

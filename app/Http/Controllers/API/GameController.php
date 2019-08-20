@@ -17,7 +17,7 @@ class GameController extends Controller
     /**
      * Defines dependencies.
      **/
-    const DEPENDENCIES = ['difficulty' => 'App\Difficulty'];
+    const DEPENDENCIES = ['difficulty' => 'App\Difficulty', 'rhythm_difficulty' => 'App\RhythmDifficulty'];
 
     /**
      * Defines pivot dependencies.
@@ -44,7 +44,8 @@ class GameController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'difficulty_id' => 'required|numeric',
+            'difficulty_id' => 'numeric',
+            'rhythm_difficulty_id' => 'numeric',
             'mode'          => 'required|string|in:practice,single,multi',
             'type'          => 'required|string',
             'users'         => 'array'

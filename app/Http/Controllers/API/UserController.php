@@ -131,20 +131,30 @@ class UserController extends Controller
 
         foreach ($badges as $badge) {
             switch ($badge->name) {
-                case 'Igra brez napake':
-                    $count = Answer::where(['user_id' => $userId, 'success' => true])
+                case 'Igra brez napake': // Tole je precej čudno... Ni nujno, da ima igra 3 chapterje in 8 vprašanj na chapter
+                    
+                    /*$userGameIds = GameUser::where(['user_id' => $userId, 'finished' => true])
+                        ->pluck('game_id')
+                        ->all();
+                    $count = Answer::whereIn('game_id', $userGameIds)
+                        ->where(['user_id' => $userId, 'success' => true])
                         ->select(DB::raw('COUNT(*) AS total'))
                         ->groupBy('game_id')
                         ->having('total', '=', 24)
                         ->get()
-                        ->count();
-                    if ($count > 0) {
+                        ->count();*/
+
+                    //if ($count > 0) {
+                    if($this->hasGameWithSuccessRate($userId, 1)) 
+                    {
                         BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
                             ->update(['completed' => true]);
                     }
+
                     break;
-                case 'Igra s 50% točnostjo':
-                    $userGameIds = GameUser::where(['user_id' => $userId, 'finished' => true])
+                case 'Igra s 50% točnostjo': // Tole tudi ni nujno...
+                    
+                    /*$userGameIds = GameUser::where(['user_id' => $userId, 'finished' => true])
                         ->pluck('game_id')
                         ->all();
                     $count = Answer::whereIn('game_id', $userGameIds)
@@ -154,7 +164,9 @@ class UserController extends Controller
                         ->having('total', '>=', 12)
                         ->get()
                         ->count();
-                    if ($count > 0) {
+                    if ($count > 0) {*/
+                    if($this->hasGameWithSuccessRate($userId, 0.5))
+                    {
                         BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
                             ->update(['completed' => true]);
                     }
@@ -248,5 +260,34 @@ class UserController extends Controller
         }
 
         return $success;
+    }
+
+    private function hasGameWithSuccessRate($userId, $r){
+
+        $userGameIds = GameUser::where(['user_id' => $userId, 'finished' => true])
+            ->pluck('game_id')
+            ->all();
+
+        $ratiosCount = Answer::select('game_id', 
+        DB::raw('SUM(if(success = 1, 1, 0)) succeeded'), 
+        DB::raw('SUM(if(success = 0,1,0)) failed'), 
+        DB::raw('COUNT(*) total'))
+        ->whereIn('game_id', $userGameIds)
+        ->groupBy('game_id')
+        ->havingRaw('succeeded / total >= ?', [$r])
+        ->get()
+        ->count();
+
+        return $ratiosCount > 0;
+
+        /* $ratios = DB::select(
+            "SELECT user_id, game_id, 
+            SUM(if(success = 1, 1, 0)) succeeded, 
+            SUM(if(success = 0,1,0)) failed, 
+            COUNT(*) total 
+            from answers 
+            group by game_id 
+            having succeeded > 0 and failed = 0"); */
+
     }
 }

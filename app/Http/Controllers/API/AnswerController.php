@@ -50,7 +50,7 @@ class AnswerController extends Controller
             'game_id'     => 'required|numeric',
             'user_id'     => 'required|numeric',
             'question_id' => 'required|numeric',
-            'time'        => 'required|numeric|min:0|max:120000',
+            'time'        => 'required|numeric|min:0|max:200000',
             'n_additions' => 'required|numeric|min:1',
             'n_deletions' => 'required|numeric|min:0',
             'n_playbacks' => 'required|numeric|min:1',
@@ -68,17 +68,31 @@ class AnswerController extends Controller
 
         $res = $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
 
-        
+
         // Decrease or increase bar and exercise difficulty
         // ------------------------------------------------
         // Get status of the answer and determine difficulty delta
+        $reqData = $request->all();
+
+        // Find find the game
+        $questionId = $reqData['question_id'];
+        $question = Question::find($questionId);
+        $game = $question->game()->first();
+
+        if($game->type == 'rhythm'){
+            $this->decreaseIncreaseDifficulty($request, $question, $diff);
+        }
+        
+        return $res;
+
+    }
+
+    private function decreaseIncreaseDifficulty($request, $question) {
+
         $reqData = json_decode($request->getContent());
         $solved = $reqData->success;
         $diff = $solved ?  -1 :  1;
 
-        // Find find the game
-        $questionId = $reqData->question_id;
-        $question = Question::find($questionId);
         $exerciseId = $question->content;
         $exercise = RhythmExercise::find($exerciseId);
         
@@ -90,8 +104,6 @@ class AnswerController extends Controller
             // Update the bars
             RhythmBar::where('id', $bar->id)->update(["difficulty" => max($bar->difficulty + $diff, 0)]);
         }
-        
-        return $res;
 
     }
 

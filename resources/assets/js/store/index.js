@@ -201,6 +201,18 @@ export default new Vuex.Store({
                     })
             })
         },
+        fetchRhythmDifficulty ({ state }, { gradeId }) {
+            return new Promise((resolve, reject) => {
+                axios.get('/api/rhythmdifficulty/' + gradeId)
+                    .then(response => {
+                        resolve(response.data)
+                    })
+                    .catch(error => {
+                        handleError(error)
+                        reject(error)
+                    })
+            })
+        },
         fetchUserBadges ({ state }, params = { }) {
             return new Promise((resolve, reject) => {
                 axios.get('/api/badgeuser', { params: params })

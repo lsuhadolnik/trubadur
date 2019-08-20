@@ -73,7 +73,9 @@
                 <!-- Will show only on small wide screens (landscape phones) -->
                 <div class="hide-normal">
                     
-                    <sexy-button text="u" customClass="musisync" color="green" @click.native="tie()" />    
+                    <sexy-button customClass="musisync" color="green" @click.native="tie()" >
+                        <span class="tie-text">u</span>
+                    </sexy-button>    
 
                     
                     <selection-button :color="select_button_color" @click.native="selection()" />
@@ -84,7 +86,7 @@
                     </sexy-button>
 
 
-                    <check-button :status="question.check" @click.native="check()"/>
+                    <check-button :color="checkButtonColor" :status="question.check" :percents="(1- question.statistics.duration / question.maxSeconds)*100" :textSecond="checkButtonTextSecond" :textThird="checkButtonTextThird" @click.native="check()"/>
 
                 </div>
 
@@ -107,7 +109,9 @@
                     
                     <!-- MOVE RIGHT OR TIE -->
                     <sexy-button v-if="moving_buttons || cursor.in_tuplet" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
-                    <sexy-button v-else text="u" color="green" @click.native="tie()" />
+                    <sexy-button customClass="musisync" color="green" @click.native="tie()" >
+                        <span class="tie-text">u</span>
+                    </sexy-button>
 
                 </div>
 
@@ -139,7 +143,7 @@
                 <b-p-m-slider :bpmObject="playbackStatus" valueKey="BPM" />
                 
                 <!-- CHECK button -->
-                <check-button :color="checkButtonColor" :status="question.check" @click.native="check()"/>
+                <check-button :color="checkButtonColor" :status="question.check" :percents="(1- question.statistics.duration / question.maxSeconds)*100" :textSecond="checkButtonTextSecond" :textThird="checkButtonTextThird" @click.native="check()"/>
 
                 <!-- HELP BUTTON -->
                 <sexy-button color="green" @click.native="showHelp()" ><div class="tiny-tajni-pici-mici-font">Pomoč</div></sexy-button>
@@ -185,10 +189,20 @@
         opacity: 0.5;
     }
 
+    .tie-text {
+        font-size: 131px;
+        margin-bottom: 115px;
+        margin-left: 7px;
+    }
+
     .rhythm-game__keyboard_wrap {
         padding: 0 10px 0 10px;
         display: flex;
         justify-content: center;
+
+        @include comfortable-screen {
+            padding-top: 70px;
+        }
     }
 
     .rhythm-game__keyboard {
@@ -605,6 +619,16 @@ export default {
             } else{
                 return 0;
             }
+        },
+
+        checkButtonTextSecond() {
+
+            let seconds = this.question.maxSeconds - this.question.statistics.duration;
+            return seconds+"s ";
+        },
+
+        checkButtonTextThird() {
+            return this.question.statistics.nChecks+"/"+this.question.maxChecks
         },
 
         checkButtonColor(){

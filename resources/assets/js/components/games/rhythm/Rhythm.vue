@@ -5,11 +5,12 @@
         <div class="rhythm__instructions" v-show="displayState == 'instructions'">
             <SexyButton @click.native="startGame()" color="green" :cols="3">Začni</SexyButton>
             <ul class="rhythm__instructions-list">
-                <li class="rhythm__instructions-list-item">Preizkusil se boš v ritmičnem nareku.</li>
+                <li class="rhythm__instructions-list-item">Preizkusila / preizkusil se boš v ritmičnem nareku.</li>
                 <li class="rhythm__instructions-list-item">Vaja bo v {{bar.num_beats}}/{{bar.base_note}} taktu.</li>
-                <li class="rhythm__instructions-list-item">Slišal boš {{num_beats_text}}.</li>
+                <li class="rhythm__instructions-list-item">Slišala / slišal boš {{num_beats_text}}.</li>
                 <li class="rhythm__instructions-list-item">Predvajalo se bo s hitrostjo {{questionState.exercise != null ? questionState.exercise.BPM : "??" }} udarcev na minuto.</li>
-                <li class="rhythm__instructions-list-item">Program je v preizkusni fazi, zanekrat lahko preizkusiš par vpisanih vaj.</li>
+                <li class="rhythm__instructions-list-item">Če ne veš, kako deluje kakšen gumb, pritisni gumb pomoč.</li>
+                <!--<li class="rhythm__instructions-list-item">Program je v preizkusni fazi, zanekrat lahko preizkusiš par vpisanih vaj.</li>-->
             </ul>
         </div>
 
@@ -141,7 +142,10 @@ export default {
             questionState: {
                 id: 0,
                 check: "no", // "no", "correct", "wrong", "next"
+                
                 maxChecks: 5,
+                maxSeconds: 120,
+                
                 num_beats: "x",
                 number: 0,
                 chapter: 1,
@@ -149,9 +153,12 @@ export default {
                 statistics: {
                     nAdditions: 1, nDeletions: 1,
                     nPlaybacks: 1, nNoteTaps: 1,
-                    nChecks: 1, startTime: 1
+                    nChecks: 1, startTime: 1,
+                    duration: 0
                 }
             },
+
+            countdownInterval: null,
 
             notes: null,
             bar: {
@@ -285,6 +292,19 @@ export default {
         startGame() {
 
             this.questionState.statistics.startTime = (new Date()).getTime();
+            this.countdownInterval = setInterval(() => {
+                
+                this.questionState.statistics.duration = Math.floor(((new Date().getTime()) - this.questionState.statistics.startTime) / 1000);
+
+                let timeout = this.questionState.statistics.duration >= this.questionState.maxSeconds;
+                if(timeout){
+
+                    clearInterval(this.countdownInterval);
+                    this.check();
+
+                }
+
+            }, 500);
 
             this.displayState = "ready";
             this.play({action: "replay", what: "exercise"});
@@ -310,6 +330,9 @@ export default {
             this.questionState.statistics.nNoteTaps = 1;
             this.questionState.statistics.nChecks = 1;
             this.questionState.statistics.startTime = 1;
+            this.questionState.statistics.duration = 1;
+
+            clearInterval(this.countdownInterval);
         },
 
         _increment_question_number() {
@@ -438,7 +461,7 @@ export default {
             let outside = this;
             let changeTimeout = 1000;
 
-            if(status){
+            if(status.success){
                         
                 this.questionState.check = "correct";
                 setTimeout(function() {
@@ -453,7 +476,8 @@ export default {
                     // Watch out, could happen when next question is already loaded
                     outside.questionState.check = "no";
                     // If 
-                    if(outside.questionState.maxChecks <= outside.questionState.statistics.nChecks){
+
+                    if(status.overcheck || status.timeout){
                         outside.questionState.check = "next";
                     }
                 }, changeTimeout);
@@ -475,19 +499,27 @@ export default {
             this.questionState.statistics.nChecks += 1;
 
             let status = util.check_notes_equal(this.questionState.exercise.notes, this.notes.notes);
-            let time = ((new Date()).getTime() - this.questionState.statistics.startTime) / 1000;
+            let time = ((new Date()).getTime() - this.questionState.statistics.startTime);
             this.questionState.check = "waiting";
 
             let outside = this;
 
+            let timeout = this.questionState.statistics.duration >= this.questionState.maxSeconds;
+
+            let checkStatus = {
+                timeout, 
+                overcheck: this.questionState.maxChecks <= this.questionState.statistics.nChecks,
+                success: status
+            }
+
             // Correct or last chance...
-            if(status || this.questionState.maxChecks <= this.questionState.statistics.nChecks){
+            if(status || timeout || this.questionState.maxChecks <= this.questionState.statistics.nChecks){
                 // Log the answer
                 return this.logAnswer({time, status}).then(() => {
-                    return outside.updateCheckStatus(status);
+                    return outside.updateCheckStatus(checkStatus);
                 })
             } else {
-                return this.updateCheckStatus();
+                return this.updateCheckStatus(checkStatus);
             }
 
         },
@@ -560,8 +592,6 @@ export default {
             .then(() => { this.displayState = "instructions"; return; });
             
         }
-
-        //this.displayState = "ready";
 
     },
     

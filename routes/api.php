@@ -71,4 +71,5 @@ Route::resource('rhythmBars', 'API\RhythmBarController', ['except' => ['create',
 // DANGER
 //Route::post('rhythm_exercise_bar', 'API\RhythmExerciseBar', ['except' => ['create', 'edit']]);
 Route::post('rhythmExerciseBar/import/musicXML', 'API\RhythmBarController@importMusicXML');
+Route::get('rhythmdifficulty/{gradeId}', 'API\RhythmDifficultyController@show');
 

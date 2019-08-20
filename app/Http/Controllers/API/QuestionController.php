@@ -8,6 +8,7 @@ use App\Http\Controllers\API\RhythmExerciseController;
 
 
 use App\Difficulty;
+use App\RhythmDifficulty;
 use App\Game;
 use App\Question;
 
@@ -136,7 +137,7 @@ class QuestionController extends Controller
                 $question->content = $this->generateIntervalsQuestion($game->difficulty, $question);
                 break;
             case 'rhythm':
-                $question->content = $this->generateRhythmQuestion($game->difficulty, $question);
+                $question->content = $this->generateRhythmQuestion($game->rhythm_difficulty, $question);
                 break;
         }
 
@@ -234,10 +235,10 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return string
      */
-    private function generateRhythmQuestion(Difficulty $difficulty, Question $question){
+    private function generateRhythmQuestion(RhythmDifficulty $difficulty, Question $question){
 
         $r = new RhythmExerciseController();
-        return $r->generateNew();   
+        return $r->generateNew($difficulty);   
         
     }
 

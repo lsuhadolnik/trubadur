@@ -26,4 +26,9 @@ class Grade extends Model
     {
         return $this->belongsToMany('App\School')->withTimestamps()->using('App\GradeSchool');
     }
+
+    public function rhythmDifficulty()
+    {
+        return $this->hasOne('App\RhythmDifficulty');
+    }
 }
