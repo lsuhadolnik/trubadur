@@ -510,10 +510,10 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     this.add_tie = function(){
 
-        let n = this.cursor.position - 1;
+        let n = this.cursor.position;
 
-        // Don't do anything if this is the first note...
-        if(n <= 0) {
+        // Don't do anything if this is the first or very last note...
+        if(n <= 0 || n >= this.notes.length) {
             return;
         }
 

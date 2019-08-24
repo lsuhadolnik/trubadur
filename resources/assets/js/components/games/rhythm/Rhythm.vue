@@ -93,12 +93,17 @@
             display: none !important;
             position: static !important;
         }
+
+        @include breakpoint-small-phone-landscape {
+            display: none !important;
+            position: static !important;
+        }
     }
 
     .app--sticky{
-        @include breakpoint-small-phone {
+        
             padding: 0px !important;
-        }
+        
     }
     
 
@@ -171,7 +176,7 @@ export default {
             errorMessage: "",
             errorTimeout: null,
 
-            showHelp: false,
+            showHelp: true,
 
             playback: new RhythmPlaybackEngine(MIDI),
             defaultBPM: 120
@@ -577,7 +582,8 @@ export default {
 
     mounted() {
 
-        this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
+        // Original
+        /*this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
         this.$refs.keyboard.init(this.$refs.staff_view.cursor);
 
         // Če do sem nisi prišel preko vmesnika, 
@@ -591,7 +597,20 @@ export default {
             .then(() => { return this.nextQuestion(); })
             .then(() => { this.displayState = "instructions"; return; });
             
-        }
+        }*/
+
+        this.game = {id: 394};
+
+        this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
+        this.$refs.keyboard.init(this.$refs.staff_view.cursor);
+
+        
+
+        this.fetchMe()
+            .then(() => { return this.setupMidi(['xylophone', 'trumpet']); })
+            .then(() => { return this.nextQuestion(); })
+            .then(() => { this.displayState = 'ready'; });
+        
 
     },
     

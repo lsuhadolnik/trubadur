@@ -34,7 +34,7 @@
                     <bar-button v-if="!moreButton && !moving_buttons" :hidden="cursor.in_tuplet" color="green" @click.native="add_bar()" />
                     <b-p-m-slider v-if="moreButton" :bpmObject="playbackStatus" valueKey="BPM" />
 
-                    <sexy-button v-if="moving_buttons || cursor.in_tuplet && !moreButton" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
+                    <sexy-button v-if="(moving_buttons || cursor.in_tuplet) && !moreButton" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
                     <dot-button v-if="!moreButton && !moving_buttons" :hidden="cursor.in_tuplet" @click.native="dot()" />
                     <play-button v-if="moreButton" @click.native="play_exercise()" text="Ponovi vajo" :percents="percentsExercise" :playing="playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'" />
 
@@ -109,7 +109,7 @@
                     
                     <!-- MOVE RIGHT OR TIE -->
                     <sexy-button v-if="moving_buttons || cursor.in_tuplet" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
-                    <sexy-button customClass="musisync" color="green" @click.native="tie()" >
+                    <sexy-button v-else customClass="musisync" color="green" @click.native="tie()" >
                         <span class="tie-text">u</span>
                     </sexy-button>
 

@@ -38,7 +38,7 @@ export default {
         }
 
         .td-base{
-            margin-top: -16px;
+            margin-top: -38px;
         }
 
         .td-flag1{

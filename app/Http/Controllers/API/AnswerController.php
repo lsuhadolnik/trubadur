@@ -80,7 +80,7 @@ class AnswerController extends Controller
         $game = $question->game()->first();
 
         if($game->type == 'rhythm'){
-            $this->decreaseIncreaseDifficulty($request, $question, $diff);
+            $this->decreaseIncreaseDifficulty($request, $question);
         }
         
         return $res;

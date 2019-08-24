@@ -489,6 +489,7 @@ export default {
         padding: 5px;
         text-align: right;
         cursor: pointer;
+        height: 30px;
     }
 
     .addNewBarButton:hover, .button1:hover {
@@ -519,13 +520,14 @@ export default {
     }
 
     .admin_rhythmBars_masterView_footer {
-        height: 30px;
+        height: 40px;
         background: $jaffa;
         padding: 6px;
     }
     
     .admin_rhythmBars_masterView_body {
-        height: calc(100% - 30px - 60px);
+        // 100% - footer - header
+        height: calc(100% - 40px - 60px);
         overflow-y: auto;
         overflow-x: hidden;
         background: $jaffa;

@@ -3638,10 +3638,10 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
     this.add_tie = function () {
 
-        var n = this.cursor.position - 1;
+        var n = this.cursor.position;
 
-        // Don't do anything if this is the first note...
-        if (n <= 0) {
+        // Don't do anything if this is the first or very last note...
+        if (n <= 0 || n >= this.notes.length) {
             return;
         }
 
@@ -5119,7 +5119,6 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine(midi) {
             // BPM logic
             // Brez spreminjanja trajanja velja, da je celinka dolga 1s
             // torej je vsaka četrtinka dolga 0,25s, kar je 4 BPS, kar je 240 BPM
-            // actualDuration = dur.valueOf() / (this.BPM / 60) * this.bar.num_beats;
             // actualDuration = koliko sekund naj traja nota...
             actualDuration = dur.valueOf() * this.bar.base_note * (60 / this.BPM);
 
@@ -51541,7 +51540,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.game-types[data-v-f0355000] {\n  width: 100%;\n}\n.game-types__content[data-v-f0355000] {\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.game-types__choose[data-v-f0355000] {\n  width: 100%;\n  height: 170px;\n  padding-top: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.game-types__label[data-v-f0355000] {\n  margin: 20px 0 25px 0;\n}\n.game-types__arrow[data-v-f0355000] {\n  width: 30px;\n  height: 30px;\n}\n.game-types__options[data-v-f0355000] {\n  width: 100%;\n  min-height: calc(77vh - 70px - 170px - 20px - 50px);\n  margin-top: 20px;\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  background-color: #FDBB2F;\n}\n.image-button[data-v-f0355000] {\n  border: 3px black solid;\n  width: 160px;\n  height: 200px;\n  margin-left: 10px;\n  border-radius: 6px;\n  cursor: pointer;\n}\n.image-button__image[data-v-f0355000] {\n  text-align: center;\n  padding: 23px 0 20px 0;\n}\n.image-button__text[data-v-f0355000] {\n  text-align: center;\n}\n", ""]);
+exports.push([module.i, "\n.game-types[data-v-f0355000] {\n  width: 100%;\n}\n.game-types__content[data-v-f0355000] {\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.game-types__choose[data-v-f0355000] {\n  width: 100%;\n  height: 170px;\n  padding-top: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.game-types__label[data-v-f0355000] {\n  margin: 20px 0 25px 0;\n}\n.game-types__arrow[data-v-f0355000] {\n  width: 30px;\n  height: 30px;\n}\n.game-types__options[data-v-f0355000] {\n  width: 100%;\n  margin-top: 20px;\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  background-color: #FDBB2F;\n}\n.image-button[data-v-f0355000] {\n  border: 3px black solid;\n  width: 160px;\n  height: 117px;\n  margin-left: 10px;\n  border-radius: 6px;\n  cursor: pointer;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.image-button__image[data-v-f0355000] {\n  text-align: center;\n  padding: 23px 0 20px 0;\n}\n.image-button__text[data-v-f0355000] {\n  text-align: center;\n  font-size: 26px;\n}\n", ""]);
 
 // exports
 
@@ -51592,6 +51591,9 @@ exports.push([module.i, "\n.game-types__choose .title {\n  font-size: 25px;\n}\n
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -51788,10 +51790,8 @@ var render = function() {
                 }
               },
               [
-                _vm._m(0),
-                _vm._v(" "),
                 _c("div", { staticClass: "image-button__text" }, [
-                  _vm._v("Melodični narek")
+                  _vm._v("Intervalni narek")
                 ])
               ]
             ),
@@ -51807,8 +51807,6 @@ var render = function() {
                 }
               },
               [
-                _vm._m(1),
-                _vm._v(" "),
                 _c("div", { staticClass: "image-button__text" }, [
                   _vm._v("Ritmični narek")
                 ])
@@ -51821,36 +51819,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "image-button__image" }, [
-      _c("img", {
-        attrs: {
-          src: "/images/games/game_melody.png",
-          width: "100",
-          height: "100"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "image-button__image" }, [
-      _c("img", {
-        attrs: {
-          src: "/images/games/game_rhythm.png",
-          width: "100",
-          height: "100"
-        }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -52821,7 +52790,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.addNewBarButton[data-v-7359223e], .button1[data-v-7359223e] {\n  background: #f7cab1;\n  font-family: \"GothamRounded-Book\";\n  display: inline-block;\n  padding: 5px;\n  text-align: right;\n  cursor: pointer;\n}\n.addNewBarButton[data-v-7359223e]:hover, .button1[data-v-7359223e]:hover {\n  background: #fce9df;\n}\n.normalfont[data-v-7359223e] {\n  font-family: \"GothamRounded-Book\";\n}\n.admin__rhythmBars[data-v-7359223e] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  height: calc(100vh - 70px);\n}\n.admin_rhythmBars_masterView[data-v-7359223e] {\n  width: 30%;\n  height: 100%;\n}\n.admin_rhythmBars_masterView_header[data-v-7359223e] {\n  width: 100%;\n  height: 60px;\n  background: #EB7D3D;\n  padding: 20px 0 0 10px;\n}\n.admin_rhythmBars_masterView_footer[data-v-7359223e] {\n  height: 30px;\n  background: #EB7D3D;\n  padding: 6px;\n}\n.admin_rhythmBars_masterView_body[data-v-7359223e] {\n  height: calc(100% - 30px - 60px);\n  overflow-y: auto;\n  overflow-x: hidden;\n  background: #EB7D3D;\n}\n.admin__rhythmBarInfo__barInfoEntry[data-v-7359223e]:nth-child(even) {\n  background: #EB7D3D;\n}\n.admin__rhythmBarInfo__barInfoEntry[data-v-7359223e]:nth-child(odd) {\n  background: #F4945D;\n}\n.admin_rhythmBars_detailView[data-v-7359223e] {\n  width: 100%;\n  height: 100%;\n  background: #F8A16E;\n  overflow: hidden;\n}\n.admin_rhythmBars_detailView_header[data-v-7359223e] {\n  height: 60px;\n  background: #EB7D3D;\n  padding: 20px 0 0 10px;\n}\n.admin__rhythmBarInfo__barInfoDetail__staffView[data-v-7359223e] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n.admin__rhythmBarInfo__barInfoDetail__staffView_container[data-v-7359223e] {\n  padding-bottom: 79px;\n  overflow-x: scroll;\n  margin-bottom: 45px;\n}\n.admin_rhythmBars_detailView_selectPrompt[data-v-7359223e] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.headerPrompt[data-v-7359223e] {\n  display: inline-block;\n  margin-right: 20px;\n}\n.loadMore[data-v-7359223e] {\n  padding: 20px 0 20px 0;\n  text-align: center;\n  background: #F4945D;\n}\n.loadMore[data-v-7359223e]:hover {\n  background: #f7b48d;\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n.addNewBarButton[data-v-7359223e], .button1[data-v-7359223e] {\n  background: #f7cab1;\n  font-family: \"GothamRounded-Book\";\n  display: inline-block;\n  padding: 5px;\n  text-align: right;\n  cursor: pointer;\n  height: 30px;\n}\n.addNewBarButton[data-v-7359223e]:hover, .button1[data-v-7359223e]:hover {\n  background: #fce9df;\n}\n.normalfont[data-v-7359223e] {\n  font-family: \"GothamRounded-Book\";\n}\n.admin__rhythmBars[data-v-7359223e] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  height: calc(100vh - 70px);\n}\n.admin_rhythmBars_masterView[data-v-7359223e] {\n  width: 30%;\n  height: 100%;\n}\n.admin_rhythmBars_masterView_header[data-v-7359223e] {\n  width: 100%;\n  height: 60px;\n  background: #EB7D3D;\n  padding: 20px 0 0 10px;\n}\n.admin_rhythmBars_masterView_footer[data-v-7359223e] {\n  height: 40px;\n  background: #EB7D3D;\n  padding: 6px;\n}\n.admin_rhythmBars_masterView_body[data-v-7359223e] {\n  height: calc(100% - 40px - 60px);\n  overflow-y: auto;\n  overflow-x: hidden;\n  background: #EB7D3D;\n}\n.admin__rhythmBarInfo__barInfoEntry[data-v-7359223e]:nth-child(even) {\n  background: #EB7D3D;\n}\n.admin__rhythmBarInfo__barInfoEntry[data-v-7359223e]:nth-child(odd) {\n  background: #F4945D;\n}\n.admin_rhythmBars_detailView[data-v-7359223e] {\n  width: 100%;\n  height: 100%;\n  background: #F8A16E;\n  overflow: hidden;\n}\n.admin_rhythmBars_detailView_header[data-v-7359223e] {\n  height: 60px;\n  background: #EB7D3D;\n  padding: 20px 0 0 10px;\n}\n.admin__rhythmBarInfo__barInfoDetail__staffView[data-v-7359223e] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n.admin__rhythmBarInfo__barInfoDetail__staffView_container[data-v-7359223e] {\n  padding-bottom: 79px;\n  overflow-x: scroll;\n  margin-bottom: 45px;\n}\n.admin_rhythmBars_detailView_selectPrompt[data-v-7359223e] {\n  width: 100%;\n  height: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.headerPrompt[data-v-7359223e] {\n  display: inline-block;\n  margin-right: 20px;\n}\n.loadMore[data-v-7359223e] {\n  padding: 20px 0 20px 0;\n  text-align: center;\n  background: #F4945D;\n}\n.loadMore[data-v-7359223e]:hover {\n  background: #f7b48d;\n  cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -54240,7 +54209,7 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
 
         // var beams = VF.Beam.applyAndGetBeams(voice);
         var beams = VF.Beam.generateBeams(voice.getTickables(), {
-            //beam_rests: true,
+            beam_rests: true,
             //beam_middle_only: true,
             show_stemlets: true,
             secondary_breaks: '8',
@@ -54255,6 +54224,10 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
 
         this._vex_draw_optionals(context, beams);
     }, this._get_beam_grouping = function (bar) {
+
+        if (parseInt(bar.num_beats) == 6 && parseInt(bar.base_note) == 8) {
+            return [new VF.Fraction(3, 8)]; // Naj se note grupirajo po četrtinki s piko
+        }
 
         if (!bar.subdivisions) {
             return [new VF.Fraction(1, 4)];
@@ -55904,7 +55877,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.thirtytwo-note[data-v-ef3b87ec] {\n  margin-top: 23px;\n}\n.thirtytwo-note .td-flag1[data-v-ef3b87ec], .thirtytwo-note .td-flag2[data-v-ef3b87ec], .thirtytwo-note .td-flag3[data-v-ef3b87ec] {\n  font-size: 30px;\n  margin-left: 17px;\n}\n.thirtytwo-note .td-base[data-v-ef3b87ec] {\n  margin-top: -16px;\n}\n.thirtytwo-note .td-flag1[data-v-ef3b87ec] {\n  margin-top: -89px;\n}\n.thirtytwo-note .td-flag2[data-v-ef3b87ec] {\n  margin-top: -53px;\n}\n.thirtytwo-note .td-flag3[data-v-ef3b87ec] {\n  margin-top: -53px;\n}\n", ""]);
+exports.push([module.i, "\n.thirtytwo-note[data-v-ef3b87ec] {\n  margin-top: 23px;\n}\n.thirtytwo-note .td-flag1[data-v-ef3b87ec], .thirtytwo-note .td-flag2[data-v-ef3b87ec], .thirtytwo-note .td-flag3[data-v-ef3b87ec] {\n  font-size: 30px;\n  margin-left: 17px;\n}\n.thirtytwo-note .td-base[data-v-ef3b87ec] {\n  margin-top: -38px;\n}\n.thirtytwo-note .td-flag1[data-v-ef3b87ec] {\n  margin-top: -89px;\n}\n.thirtytwo-note .td-flag2[data-v-ef3b87ec] {\n  margin-top: -53px;\n}\n.thirtytwo-note .td-flag3[data-v-ef3b87ec] {\n  margin-top: -53px;\n}\n", ""]);
 
 // exports
 
@@ -61857,7 +61830,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm__instructions {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.rhythm__instructions-list-item {\n  padding: 8px 20px 8px 3px;\n}\n.rhythm-game__wrap {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.error {\n  text-align: center;\n  text-transform: uppercase;\n  color: #fe664e;\n  background: black;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.app {\n    padding-bottom: 0px !important;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.header-menu {\n    display: none !important;\n    position: static !important;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.app--sticky {\n    padding: 0px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.rhythm__instructions {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.rhythm__instructions-list-item {\n  padding: 8px 20px 8px 3px;\n}\n.rhythm-game__wrap {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.error {\n  text-align: center;\n  text-transform: uppercase;\n  color: #fe664e;\n  background: black;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.app {\n    padding-bottom: 0px !important;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.header-menu {\n    display: none !important;\n    position: static !important;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.header-menu {\n    display: none !important;\n    position: static !important;\n}\n}\n.app--sticky {\n  padding: 0px !important;\n}\n", ""]);
 
 // exports
 
@@ -61887,6 +61860,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vuex__ = __webpack_require__(4);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -62058,7 +62036,7 @@ var util = __webpack_require__(10);
             errorMessage: "",
             errorTimeout: null,
 
-            showHelp: false,
+            showHelp: true,
 
             playback: new __WEBPACK_IMPORTED_MODULE_8__rhythmPlaybackEngine__["a" /* default */](MIDI),
             defaultBPM: 120
@@ -62402,23 +62380,33 @@ var util = __webpack_require__(10);
     mounted: function mounted() {
         var _this6 = this;
 
+        // Original
+        /*this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
+        this.$refs.keyboard.init(this.$refs.staff_view.cursor);
+          // Če do sem nisi prišel preko vmesnika, 
+        // greš lahko kar lepo nazaj
+        if (!this.game || !this.difficulty) {
+            this.$router.push({ name: 'dashboard' })
+        } else {
+              this.fetchMe()
+            .then(() => { return this.setupMidi(['xylophone', 'trumpet']); })
+            .then(() => { return this.nextQuestion(); })
+            .then(() => { this.displayState = "instructions"; return; });
+            
+        }*/
+
+        this.game = { id: 394 };
+
         this.$refs.staff_view.init({ userName: "RhythmView", cursor: { enabled: true } });
         this.$refs.keyboard.init(this.$refs.staff_view.cursor);
 
-        // Če do sem nisi prišel preko vmesnika, 
-        // greš lahko kar lepo nazaj
-        if (!this.game || !this.difficulty) {
-            this.$router.push({ name: 'dashboard' });
-        } else {
-
-            this.fetchMe().then(function () {
-                return _this6.setupMidi(['xylophone', 'trumpet']);
-            }).then(function () {
-                return _this6.nextQuestion();
-            }).then(function () {
-                _this6.displayState = "instructions";return;
-            });
-        }
+        this.fetchMe().then(function () {
+            return _this6.setupMidi(['xylophone', 'trumpet']);
+        }).then(function () {
+            return _this6.nextQuestion();
+        }).then(function () {
+            _this6.displayState = 'ready';
+        });
     }
 });
 
@@ -63989,7 +63977,7 @@ var render = function() {
                   })
                 : _vm._e(),
               _vm._v(" "),
-              _vm.moving_buttons || (_vm.cursor.in_tuplet && !_vm.moreButton)
+              (_vm.moving_buttons || _vm.cursor.in_tuplet) && !_vm.moreButton
                 ? _c("sexy-button", {
                     attrs: {
                       text: ">",
@@ -64354,20 +64342,18 @@ var render = function() {
                       }
                     }
                   })
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "sexy-button",
-                {
-                  attrs: { customClass: "musisync", color: "green" },
-                  nativeOn: {
-                    click: function($event) {
-                      return _vm.tie()
-                    }
-                  }
-                },
-                [_c("span", { staticClass: "tie-text" }, [_vm._v("u")])]
-              )
+                : _c(
+                    "sexy-button",
+                    {
+                      attrs: { customClass: "musisync", color: "green" },
+                      nativeOn: {
+                        click: function($event) {
+                          return _vm.tie()
+                        }
+                      }
+                    },
+                    [_c("span", { staticClass: "tie-text" }, [_vm._v("u")])]
+                  )
             ],
             1
           ),
@@ -64493,7 +64479,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-3ef842c8"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -64536,13 +64522,13 @@ var content = __webpack_require__(244);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("869a91ae", content, false, {});
+var update = __webpack_require__(1)("b3c9ecd0", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ef842c8\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./KeyboardHelp.vue", function() {
-     var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ef842c8\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./KeyboardHelp.vue");
+   module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ef842c8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./KeyboardHelp.vue", function() {
+     var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3ef842c8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./KeyboardHelp.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -64560,7 +64546,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.helpView{\n    \n    display: block;\n    position: fixed;\n    top: 2.5%;\n    left: 2.5%;\n    background: #FDBB2F;\n    width: 95%;\n    height: 95%;\n    z-index: 10;\n    border-radius: 5px;\n    padding: 20px;\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n    overflow-scrolling: touch;\n}\n.helpView__bottomNav__button {\n    display: inline-block;\n    padding-left: 30px;\n}\n.helpView__buttons-center .button {\n    left: 50%;\n}\n.helpView__buttons-center {\n    position: relative;\n}\n.helpView__bottom-nav {\n    display: block;\n    position: fixed;\n    bottom: 0px;\n    left: 0px;\n    background: darkseagreen;\n    z-index: 100;\n    width: 100%;\n    height: 40px;\n    padding: 10px;\n}\n.little-padding {\n    padding-bottom: 22px;\n}\n.helpView__cursor {\n    position: relative;\n    width: 100px;\n    height: 70px;\n}\n.helpView__cursor div {\n    top: 33px;\n}\n.helpView__cursor__lines {\n    position: absolute;\n    font-size: 80px;\n    line-height: 0;\n    color: #999999;\n}\n.helpView__cursor__cursor{\n    position: absolute;\n    color: green;\n    opacity: 0.5;\n    font-size: 108px;\n    line-height: 0;\n    left: 87px;\n}\n.helpView__cursor__notes {\n    position: absolute;\n    font-size: 94px;\n    line-height: 0;\n    top: 36px !important;\n}\n.helpView__cursor__notesBefore {\n    color: rgb(255, 94, 0);\n    opacity: 0.9;\n}\n.helpView__cursor__notesAfter {\n    left: 111px;\n    color: maroon;\n    opacity: 0.9;\n}\n.helpView__cursor__centeredNotes {\n    left: 75px;\n}\n.helpView__cursor__selection{\n    position: absolute;\n    width: 155px;\n    height: 98px;\n    background: rgba(0,0,255,0.4);\n    top: -6px !important;\n    left: 55px;\n}\n.helpView__cursor__selection_bar{\n    width: 6px;\n    height: 98px;\n    top: -6px !important;\n    position: absolute;\n}\n.helpView__cursor__selection_leftBar {\n    background: rgba(255,0,0,0.6);\n    left: 54px;\n}\n.helpView__cursor__selection_rightBar {\n    background: rgba(0,0,255,0.6);\n    left: 203px;\n}\n.helpView__arrows {\n    display: inline-block;\n    position: relative;\n    font-size: 50px;\n    line-height: 0;\n    padding: 0 10px 0 10px;\n    width: 40px;\n    height: 40px;\n    overflow: hidden;\n}\n.helpView__arrows__wrap {\n    position: absolute;\n    bottom: 30px;\n    right: 0;\n}\n.helpView__text-line {\n    padding: 10px 0 10px 0;\n}\n.norfolk-row .button  {\n    font-family: Norfolk;\n    font-size: 33px;\n}\n.norfolk {\n    font-family: Norfolk !important;\n}\n.musisync-row .button {\n    font-family: MusiSync;\n    font-size: 33px;\n}\n.musisync {\n    font-family: MusiSync !important;\n}\n.norfolk-note-padding{\n    padding-top: 19px;\n}\n.moveButtonsButton {\n    font-family: initial !important;\n    font-size: 26px  !important;\n    font-weight: bold;\n}\n.revertMovingButtons {\n    font-size: 41px;\n    line-height: 0;\n    padding: 0px;\n}\n.tiny-tajni-pici-mici-font{\n    font-size: 8pt !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.helpView[data-v-3ef842c8]{\n    \n    display: block;\n    position: fixed;\n    top: 2.5%;\n    left: 2.5%;\n    background: #FDBB2F;\n    width: 95%;\n    height: 95%;\n    z-index: 10;\n    border-radius: 5px;\n    padding: 20px;\n    overflow-y: scroll;\n    -webkit-overflow-scrolling: touch;\n    overflow-scrolling: touch;\n}\n.tie-text[data-v-3ef842c8] {\n    font-size: 131px;\n    margin-bottom: 115px;\n    margin-left: 7px;\n}\n.specialA1[data-v-3ef842c8] {\n    padding-top: 26px !important;\n}\n.helpView__bottomNav__button[data-v-3ef842c8] {\n    display: inline-block;\n    padding-left: 30px;\n}\n.helpView__buttons-center .button[data-v-3ef842c8] {\n    left: 50%;\n}\n.helpView__buttons-center[data-v-3ef842c8] {\n    position: relative;\n}\n.helpView__bottom-nav[data-v-3ef842c8] {\n    display: block;\n    position: fixed;\n    bottom: 0px;\n    left: 0px;\n    background: darkseagreen;\n    z-index: 100;\n    width: 100%;\n    height: 40px;\n    padding: 10px;\n}\n.little-padding[data-v-3ef842c8] {\n    padding-bottom: 22px;\n}\n.helpView__cursor[data-v-3ef842c8] {\n    position: relative;\n    width: 100px;\n    height: 70px;\n}\n.helpView__cursor div[data-v-3ef842c8] {\n    top: 33px;\n}\n.helpView__cursor__lines[data-v-3ef842c8] {\n    position: absolute;\n    font-size: 80px;\n    line-height: 0;\n    color: #999999;\n}\n.helpView__cursor__cursor[data-v-3ef842c8]{\n    position: absolute;\n    color: green;\n    opacity: 0.5;\n    font-size: 108px;\n    line-height: 0;\n    left: 56px;\n}\n.helpView__cursor__notes[data-v-3ef842c8] {\n    position: absolute;\n    font-size: 94px;\n    line-height: 0;\n    top: 36px !important;\n}\n.helpView__cursor__notesBefore[data-v-3ef842c8] {\n    color: rgb(255, 94, 0);\n    opacity: 0.9;\n}\n.helpView__cursor__notesAfter[data-v-3ef842c8] {\n    left: 111px;\n    color: maroon;\n    opacity: 0.9;\n}\n.helpView__cursor__centeredNotes[data-v-3ef842c8] {\n    left: 75px;\n}\n.helpView__cursor__selection[data-v-3ef842c8]{\n    position: absolute;\n    width: 155px;\n    height: 98px;\n    background: rgba(0,0,255,0.4);\n    top: -6px !important;\n    left: 55px;\n}\n.helpView__cursor__selection_bar[data-v-3ef842c8]{\n    width: 6px;\n    height: 98px;\n    top: -6px !important;\n    position: absolute;\n}\n.helpView__cursor__selection_leftBar[data-v-3ef842c8] {\n    background: rgba(255,0,0,0.6);\n    left: 54px;\n}\n.helpView__cursor__selection_rightBar[data-v-3ef842c8] {\n    background: rgba(0,0,255,0.6);\n    left: 203px;\n}\n.helpView__arrows[data-v-3ef842c8] {\n    display: inline-block;\n    position: relative;\n    font-size: 50px;\n    line-height: 0;\n    padding: 0 10px 0 10px;\n    width: 40px;\n    height: 40px;\n    overflow: hidden;\n}\n.helpView__arrows__wrap[data-v-3ef842c8] {\n    position: absolute;\n    bottom: 30px;\n    right: 0;\n}\n.helpView__text-line[data-v-3ef842c8] {\n    padding: 10px 0 10px 0;\n}\n.norfolk-row .button[data-v-3ef842c8]  {\n    font-family: Norfolk;\n    font-size: 33px;\n}\n.norfolk[data-v-3ef842c8] {\n    font-family: Norfolk !important;\n}\n.musisync-row .button[data-v-3ef842c8] {\n    font-family: MusiSync;\n    font-size: 33px;\n}\n.musisync[data-v-3ef842c8] {\n    font-family: MusiSync !important;\n}\n.norfolk-note-padding[data-v-3ef842c8]{\n    padding-top: 19px;\n}\n.moveButtonsButton[data-v-3ef842c8] {\n    font-family: initial !important;\n    font-size: 26px  !important;\n    font-weight: bold;\n}\n.revertMovingButtons[data-v-3ef842c8] {\n    font-size: 41px;\n    line-height: 0;\n    padding: 0px;\n}\n.tiny-tajni-pici-mici-font[data-v-3ef842c8]{\n    font-size: 8pt !important;\n}\n\n", ""]);
 
 // exports
 
@@ -64585,6 +64571,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Buttons_DotButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__Buttons_DotButton_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Buttons_SelectionButton_vue__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Buttons_SelectionButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__Buttons_SelectionButton_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -65085,7 +65080,9 @@ var render = function() {
                       _c("div", { staticClass: "norfolk-note-padding" }, [
                         _vm._v("x")
                       ])
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _c("thitry-two-button", { attrs: { color: "green" } })
                   ],
                   1
                 ),
@@ -65098,6 +65095,10 @@ var render = function() {
                   "div",
                   { staticClass: "helpView__buttons norfolk-row" },
                   [
+                    _c("sexy-button", { attrs: { color: "red" } }, [
+                      _vm._v("Œ")
+                    ]),
+                    _vm._v(" "),
                     _c("sexy-button", { attrs: { color: "red" } }, [
                       _vm._v("Œ")
                     ]),
@@ -65129,50 +65130,54 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "helpView__text-line" }, [
-                  _vm._v("Ta pa piko na noto za kazalnikom:")
+                  _vm._v("Ta pa piko k trenutni noti:")
                 ]),
                 _vm._v(" "),
                 _c(
                   "div",
                   { staticClass: "helpView__buttons musisync-row" },
-                  [_c("sexy-button", { attrs: { text: ".", color: "green" } })],
+                  [_c("dot-button")],
                   1
                 )
               ])
             : _vm._e(),
           _vm._v(" "),
           _vm.view == 2
-            ? _c("div", { staticClass: "helpView__view view-2" }, [
-                _c("div", { staticClass: "helpView__text-line" }, [
-                  _vm._v(
-                    "Če pritisneš na ta gumb, povežeš zadnji dve noti pred kazalnikom z vezajem:"
+            ? _c(
+                "div",
+                { staticClass: "helpView__view view-2" },
+                [
+                  _c("div", { staticClass: "helpView__text-line" }, [
+                    _vm._v(
+                      "Če pritisneš na ta gumb, povežeš zadnji dve noti pred kazalnikom z vezajem:"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "sexy-button",
+                    { attrs: { customClass: "musisync", color: "green" } },
+                    [_c("span", { staticClass: "tie-text" }, [_vm._v("u")])]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "helpView__text-line" }, [
+                    _vm._v("Če se zmotiš, lahko noto pobrišeš s tem gumbom:")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "helpView__buttons musisync-row" },
+                    [
+                      _c("sexy-button", { attrs: { color: "cabaret" } }, [
+                        _c("img", {
+                          attrs: { src: "/images/backspace.svg", width: "30" }
+                        })
+                      ])
+                    ],
+                    1
                   )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "helpView__buttons musisync-row" },
-                  [_c("sexy-button", { attrs: { text: "u", color: "green" } })],
-                  1
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "helpView__text-line" }, [
-                  _vm._v("Če se zmotiš, lahko noto pobrišeš s tem gumbom:")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "helpView__buttons musisync-row" },
-                  [
-                    _c("sexy-button", { attrs: { color: "cabaret" } }, [
-                      _c("img", {
-                        attrs: { src: "/images/backspace.svg", width: "30" }
-                      })
-                    ])
-                  ],
-                  1
-                )
-              ])
+                ],
+                1
+              )
             : _vm._e(),
           _vm._v(" "),
           _vm.view == 3
@@ -65187,31 +65192,19 @@ var render = function() {
                 _vm._v(" "),
                 _vm._m(0),
                 _vm._v(" "),
-                _c("div", { staticClass: "helpView__text-line" }, [
-                  _vm._v(
-                    "Oranžne note so note pred kazalnikom, tiste rdeče pa so note za kazalnikom."
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "helpView__text-line" }, [
-                  _vm._v(
-                    "Če pritisneš na noto na črtovju, se bo kazalnik premaknil za njo, tako da bo sama postala nota pred kazalnikom."
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "helpView__text-line" }, [
-                  _vm._v("Brišeš lahko le note pred kazalnikom.")
+                _c("div", { staticClass: "helpView__text-line specialA1" }, [
+                  _vm._v("Če pritisneš na noto, se bo kazalnik premaknil nanjo")
                 ])
               ])
             : _vm._e(),
           _vm._v(" "),
           _vm.view == 4
             ? _c("div", { staticClass: "helpView__view view-4" }, [
-                _c("h2", [_vm._v("Premikanje med notami")]),
+                _c("h2", [_vm._v("Natančnejše premikanje med notami")]),
                 _vm._v(" "),
                 _c("div", { staticClass: "helpView__text-line" }, [
                   _vm._v(
-                    "Gumb s puščicama prikaže dva nova gumba za premikanje med notami:"
+                    "Gumb s puščicama prikaže dva nova gumba, s katerima se lahko bolj natančno premikaš med notami:"
                   )
                 ]),
                 _vm._v(" "),
@@ -65260,7 +65253,7 @@ var render = function() {
                   "div",
                   { staticClass: "helpView__text-line" },
                   [
-                    _vm._v("Če nato pritisneš srednji gumb "),
+                    _vm._v("Če pritisneš srednji gumb "),
                     _c("sexy-button", {
                       attrs: {
                         text: ". u",
@@ -65268,14 +65261,14 @@ var render = function() {
                         customClass: "musisync revertMovingButtons"
                       }
                     }),
-                    _vm._v(", potem se gumbi za premikanje skrijejo.")
+                    _vm._v(", se gumba za premikanje skrijeta.")
                   ],
                   1
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "helpView__text-line" }, [
                   _vm._v(
-                    "Če se želiš premakniti čisto na začetek črtovja, lahko to narediš s temi gumbi."
+                    "Z gumboma za premikanje se lahko premakneš tudi čisto na začetek črtovja."
                   )
                 ])
               ])
@@ -65303,9 +65296,7 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "helpView__text-line" }, [
-                  _vm._v(
-                    "Pazi: cilj te igre je utrjevanje ritmičnega spomina in s tem čim manjkrat poslušati vajo, zato ti ta gumb zmanjšuje točke."
-                  )
+                  _vm._v("Večkrat kot predvajaš vajo, manj točk dobiš.")
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "helpView__text-line" }, [
@@ -65398,17 +65389,9 @@ var render = function() {
                   _vm._v("Gumb se spreminja glede na to, ali je vaja pravilna.")
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "helpView__text-line" }, [
-                  _vm._v(
-                    "Če je vaja narobe vpisana, se za kratek trenutek prikaže križec, nato pa znova napis Preveri."
-                  )
-                ]),
+                _vm._m(3),
                 _vm._v(" "),
-                _c("div", { staticClass: "helpView__text-line" }, [
-                  _vm._v(
-                    "Če je vaja pravilno vpisana, se za kratek trenutek prikaže kljukica, nato pa napis Naprej."
-                  )
-                ]),
+                _vm._m(4),
                 _vm._v(" "),
                 _c("div", { staticClass: "helpView__text-line" }, [
                   _vm._v("Za nadaljevanje moraš znova pritisniti gumb Naprej.")
@@ -65432,7 +65415,7 @@ var render = function() {
                   [
                     _c("selection-button", { attrs: { color: "green" } }),
                     _vm._v(" "),
-                    _vm._m(3),
+                    _vm._m(5),
                     _vm._v(" "),
                     _c("selection-button", { attrs: { color: "blue" } })
                   ],
@@ -65451,9 +65434,9 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _vm._m(4),
+                _vm._m(6),
                 _vm._v(" "),
-                _c("div", { staticClass: "helpView__text-line" }, [
+                _c("div", { staticClass: "helpView__text-line specialA1" }, [
                   _vm._v(
                     "Izbira se bo vedno raztezala med prvo izbrano noto in tisto, ki jo pritisneš."
                   )
@@ -65702,6 +65685,30 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "helpView__arrows helpView__arrowRight" }, [
       _c("div", { staticClass: "helpView__arrows__wrap" }, [_vm._v("→")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "helpView__text-line" }, [
+      _vm._v("Če je vaja "),
+      _c("span", { staticStyle: { color: "red" } }, [_vm._v("narobe")]),
+      _vm._v(
+        " vpisana, se za kratek trenutek prikaže križec, nato pa znova napis Preveri."
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "helpView__text-line" }, [
+      _vm._v("Če je vaja "),
+      _c("span", { staticStyle: { color: "green" } }, [_vm._v("pravilno")]),
+      _vm._v(
+        " vpisana, se za kratek trenutek prikaže kljukica, nato pa napis Naprej."
+      )
     ])
   },
   function() {

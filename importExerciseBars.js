@@ -53,7 +53,6 @@ console.log(bars.map(b => {return b.id}));
 console.log(exercises.map(ex => {return {n: ex.name, bars: ex.bars}}));
 
 
-
 let deleteBatch = function(url){
     // Delete all bars from database
     console.log(url);
@@ -81,12 +80,12 @@ let deleteBatch = function(url){
     });    
 }
 
-deleteBatch('http://localhost/api/rhythm_bar').then(() => {
+/*deleteBatch('http://localhost/api/rhythm_bar').then(() => {*/
 
     // Write to DB
     return Promise.all(bars.map(b => {
         
-        return axios.post('http://localhost/api/rhythm_bar', {
+        return axios.post('http://localhost/api/rhythmBars', {
             content: JSON.stringify(b.content),
             barInfo: JSON.stringify(b.barInfo),
             difficulty: b.difficulty
@@ -104,7 +103,8 @@ deleteBatch('http://localhost/api/rhythm_bar').then(() => {
 
     }));
 
-});
+/*});*/
+
 /*
 
 

@@ -4,9 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Input;
+
 use App\RhythmBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
+use App\Http\Controllers\Utils\MusicXML;
 
 class RhythmBarController extends Controller
 {
@@ -135,8 +139,10 @@ class RhythmBarController extends Controller
                 $id = $obj->id;
                 $importedIdx[] = $id;
             }
-
+            
         }
+
+        // RhythmBar::whereIn('id', $importedIdx)->update(["deleted_at" => null]);
 
         return array(
             'imported' => $importedIdx

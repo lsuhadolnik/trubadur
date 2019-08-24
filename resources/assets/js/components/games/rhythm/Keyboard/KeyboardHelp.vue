@@ -17,10 +17,12 @@
                             <sexy-button color="green"><div class="norfolk-note-padding">&#x0071;</div></sexy-button>
                             <sexy-button color="green"><div class="norfolk-note-padding">&#x0065;</div></sexy-button>
                             <sexy-button color="green"><div class="norfolk-note-padding">&#x0078;</div></sexy-button>
+                            <thitry-two-button color="green" />
                         </div>
 
                         <div class="helpView__text-line">s temi pa dodaš pavze:</div>
                         <div class="helpView__buttons norfolk-row">
+                            <sexy-button color="red">&#x0152;</sexy-button>
                             <sexy-button color="red">&#x0152;</sexy-button>
                             <sexy-button color="red">&#x2030;</sexy-button>
                             <sexy-button color="red">&#x2248;</sexy-button>
@@ -32,9 +34,9 @@
                             <bar-button />
                         </div>
 
-                        <div class="helpView__text-line">Ta pa piko na noto za kazalnikom:</div>
+                        <div class="helpView__text-line">Ta pa piko k trenutni noti:</div>
                         <div class="helpView__buttons musisync-row">
-                            <sexy-button text="." color="green"/>
+                            <dot-button />
                         </div>
 
                     </div>
@@ -43,9 +45,9 @@
                     <div class="helpView__view view-2" v-if="view == 2">
 
                         <div class="helpView__text-line">Če pritisneš na ta gumb, povežeš zadnji dve noti pred kazalnikom z vezajem:</div>
-                        <div class="helpView__buttons musisync-row">
-                            <sexy-button text="u" color="green"/>
-                        </div>
+                        <sexy-button customClass="musisync" color="green">
+                            <span class="tie-text">u</span>
+                        </sexy-button>
 
                         <div class="helpView__text-line">Če se zmotiš, lahko noto pobrišeš s tem gumbom:</div>
                         <div class="helpView__buttons musisync-row">
@@ -67,17 +69,14 @@
                             <div class="helpView__cursor__cursor">&#x2019;</div>
                             <div class="helpView__cursor__notes helpView__cursor__notesAfter">qq</div>
                         </div>
-                        <div class="helpView__text-line">Oranžne note so note pred kazalnikom, tiste rdeče pa so note za kazalnikom.</div>
-                        <div class="helpView__text-line">Če pritisneš na noto na črtovju, se bo kazalnik premaknil za njo, tako da bo sama postala nota pred kazalnikom.</div>
-                        <div class="helpView__text-line">Brišeš lahko le note pred kazalnikom.</div>
-
+                        <div class="helpView__text-line specialA1">Če pritisneš na noto, se bo kazalnik premaknil nanjo</div>
                     </div>
 
                     <!-- MOVEMENT -->
                     <div class="helpView__view view-4" v-if="view == 4">
 
-                        <h2>Premikanje med notami</h2>
-                        <div class="helpView__text-line">Gumb s puščicama prikaže dva nova gumba za premikanje med notami:</div>
+                        <h2>Natančnejše premikanje med notami</h2>
+                        <div class="helpView__text-line">Gumb s puščicama prikaže dva nova gumba, s katerima se lahko bolj natančno premikaš med notami:</div>
                         <div class="helpView__buttons">
                             <sexy-button text="< >" color="orange" customClass="moveButtonsButton" />
                             <div class="helpView__arrows helpView__arrowRight"><div class="helpView__arrows__wrap">&rarr;</div></div>
@@ -86,8 +85,8 @@
                             <sexy-button text=". u"  color="green" customClass="musisync revertMovingButtons" />
                             <sexy-button text=">" color="orange" customClass="moveButtonsButton" />
                         </div>
-                        <div class="helpView__text-line">Če nato pritisneš srednji gumb <sexy-button text=". u"  color="green" customClass="musisync revertMovingButtons" />, potem se gumbi za premikanje skrijejo.</div>
-                        <div class="helpView__text-line">Če se želiš premakniti čisto na začetek črtovja, lahko to narediš s temi gumbi.</div>
+                        <div class="helpView__text-line">Če pritisneš srednji gumb <sexy-button text=". u"  color="green" customClass="musisync revertMovingButtons" />, se gumba za premikanje skrijeta.</div>
+                        <div class="helpView__text-line">Z gumboma za premikanje se lahko premakneš tudi čisto na začetek črtovja.</div>
 
                     </div>
 
@@ -99,7 +98,7 @@
                         <div class="helpView__buttons">
                             <sexy-button color="sunglow"><div class="tiny-tajni-pici-mici-font">Ponovi vajo</div></sexy-button>
                         </div>
-                        <div class="helpView__text-line">Pazi: cilj te igre je utrjevanje ritmičnega spomina in s tem čim manjkrat poslušati vajo, zato ti ta gumb zmanjšuje točke.</div>
+                        <div class="helpView__text-line">Večkrat kot predvajaš vajo, manj točk dobiš.</div>
 
                         <div class="helpView__text-line">
                             S tem gumbom spreminjaš hitrost predvajanja. 
@@ -139,8 +138,8 @@
                             </sexy-button>
                         </div>
                         <div class="helpView__text-line">Gumb se spreminja glede na to, ali je vaja pravilna.</div>
-                        <div class="helpView__text-line">Če je vaja narobe vpisana, se za kratek trenutek prikaže križec, nato pa znova napis Preveri.</div>
-                        <div class="helpView__text-line">Če je vaja pravilno vpisana, se za kratek trenutek prikaže kljukica, nato pa napis Naprej.</div>
+                        <div class="helpView__text-line">Če je vaja <span style='color: red;'>narobe</span> vpisana, se za kratek trenutek prikaže križec, nato pa znova napis Preveri.</div>
+                        <div class="helpView__text-line">Če je vaja <span style='color: green;'>pravilno</span> vpisana, se za kratek trenutek prikaže kljukica, nato pa napis Naprej.</div>
                         <div class="helpView__text-line">Za nadaljevanje moraš znova pritisniti gumb Naprej.</div>
                     
                     </div>
@@ -164,7 +163,7 @@
                             <div class="helpView__cursor__selection_bar helpView__cursor__selection_leftBar">&nbsp;</div>
                             <div class="helpView__cursor__selection_bar helpView__cursor__selection_rightBar">&nbsp;</div>
                         </div>
-                        <div class="helpView__text-line">Izbira se bo vedno raztezala med prvo izbrano noto in tisto, ki jo pritisneš.</div>
+                        <div class="helpView__text-line specialA1">Izbira se bo vedno raztezala med prvo izbrano noto in tisto, ki jo pritisneš.</div>
                         <div class="helpView__text-line">Če izbereš napačno začetno noto, spet pritisni gumb za izbiro, se premakni do želene note in spet pritisni isti gumb.</div>
 
                     </div>
@@ -222,7 +221,7 @@
 
 </template>
 
-<style>
+<style scoped>
 
     .helpView{
         
@@ -239,6 +238,16 @@
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
+    }
+
+    .tie-text {
+        font-size: 131px;
+        margin-bottom: 115px;
+        margin-left: 7px;
+    }
+
+    .specialA1 {
+        padding-top: 26px !important;
     }
 
     .helpView__bottomNav__button {
@@ -294,7 +303,7 @@
         opacity: 0.5;
         font-size: 108px;
         line-height: 0;
-        left: 87px;
+        left: 56px;
     }
 
     .helpView__cursor__notes {

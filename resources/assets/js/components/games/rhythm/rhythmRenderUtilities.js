@@ -28,7 +28,7 @@ var RhythmRenderUtilities = function(){
         
         // var beams = VF.Beam.applyAndGetBeams(voice);
         var beams = VF.Beam.generateBeams(voice.getTickables(), {
-            //beam_rests: true,
+            beam_rests: true,
             //beam_middle_only: true,
             show_stemlets: true,
             secondary_breaks: '8',
@@ -47,6 +47,10 @@ var RhythmRenderUtilities = function(){
     },
 
     this._get_beam_grouping = function(bar){
+
+        if (parseInt(bar.num_beats) == 6 && parseInt(bar.base_note) == 8){
+            return [new VF.Fraction(3, 8)]; // Naj se note grupirajo po četrtinki s piko
+        }
 
         if(!bar.subdivisions){
             return [new VF.Fraction(1, 4)];

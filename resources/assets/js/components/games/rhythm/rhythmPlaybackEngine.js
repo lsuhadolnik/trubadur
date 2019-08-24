@@ -58,7 +58,6 @@ var RhythmPlaybackEngine = function(midi){
             // BPM logic
             // Brez spreminjanja trajanja velja, da je celinka dolga 1s
             // torej je vsaka četrtinka dolga 0,25s, kar je 4 BPS, kar je 240 BPM
-            // actualDuration = dur.valueOf() / (this.BPM / 60) * this.bar.num_beats;
             // actualDuration = koliko sekund naj traja nota...
             actualDuration = dur.valueOf() * this.bar.base_note * (60 / this.BPM);
 
