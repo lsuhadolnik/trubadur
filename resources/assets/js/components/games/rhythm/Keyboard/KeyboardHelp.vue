@@ -52,7 +52,7 @@
                         <div class="helpView__text-line">Če se zmotiš, lahko noto pobrišeš s tem gumbom:</div>
                         <div class="helpView__buttons musisync-row">
                             <sexy-button color="cabaret">
-                                <img src="/images/backspace.svg" width="30" />
+                                <icon name="trash" scale="2" />
                             </sexy-button>
                         </div>
 
@@ -62,13 +62,14 @@
                     <div class="helpView__view view-3" v-if="view == 3">
 
                         <h2>Kazalnik</h2>
-                        <div class="helpView__text-line">Zelena pokončna črta na notnem črtovju je kazalnik. Pokaže ti, kam bo napisana naslednja nota, ki jo boš dodal.</div>
+                        <div class="helpView__text-line">Zelena pokončna črta na notnem črtovju je kazalnik.</div>
                         <div class="helpView__cursor musisync">
                             <div class="helpView__cursor__lines">&#x00A9;&#x00A9;&#x00A9;&#x00A9;&#x00A9;&#x00A9;&#x00A9;</div>
                             <div class="helpView__cursor__notes helpView__cursor__notesBefore">qq</div>
                             <div class="helpView__cursor__cursor">&#x2019;</div>
                             <div class="helpView__cursor__notes helpView__cursor__notesAfter">qq</div>
                         </div>
+                        <div class="helpView__text-line specialA1">Če pritisneš gumb za dodajanje note ali pavze, se bo nova nota ustvarila za noto, ki je pod kazalnikom.</div>
                         <div class="helpView__text-line specialA1">Če pritisneš na noto, se bo kazalnik premaknil nanjo</div>
                     </div>
 

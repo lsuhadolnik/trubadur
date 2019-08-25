@@ -4,6 +4,9 @@
         
         <slot />
         
+        <input type="range" v-model="test.offset1" min="0" max="100" step="1"/> {{test.offset1}}
+        <input type="range" v-model="test.offset2" min="0" max="100" step="1"/> {{test.offset2}}
+        <input type="button" @click="_render_temp()" value="Render"/>
     </div>
 
 </template>
@@ -54,6 +57,11 @@ export default {
 
     data () {
         return {
+
+            test: {
+                offset1: 0,
+                offset2: 0
+            },
 
             info: {
                 width: 2*(window.innerWidth),
@@ -429,7 +437,7 @@ export default {
                 let bubbleScrollWidth = minimapWidth;
 
                 let cursorOffset = 0;
-                switch (notes[cIdx].value) {
+                /*switch (notes[cIdx].value) {
                     case 1:  cursorOffset = 22;  break;
                     case 2:  cursorOffset = 22;  break;
                     case 4:  cursorOffset = 22;  break;
@@ -437,7 +445,7 @@ export default {
                     case 16: cursorOffset = 10;  break;
                     case 32: cursorOffset = 8;   break;
                     default: cursorOffset = 5;   break;
-                }
+                }*/
 
                 let absoluteX = startX;
                 let ratio = bubbleScrollWidth / zoomScrollWidth; // 0.5 ponavad
@@ -497,11 +505,11 @@ export default {
                 if(thisNote.type != "bar") switch (thisNote.value) {
                     case 1:  currentBatchWidth += 100; break;
                     case 2:  currentBatchWidth += 70;  break;
-                    case 4:  currentBatchWidth += 40;  break;
-                    case 8:  currentBatchWidth += 40;  break;
+                    case 4:  currentBatchWidth += 35;  break;
+                    case 8:  currentBatchWidth += 30;  break;
                     case 16: currentBatchWidth += 30;  break;
                     case 32: currentBatchWidth += 30;  break;
-                    default: currentBatchWidth += 20;  break;
+                    default: currentBatchWidth += 30;  break;
                 }
 
                 // Handle dots
@@ -514,13 +522,12 @@ export default {
                     cursorNote = newNote;
                 }
 
-                if(thisNote.type == "bar"){
+                /* if(thisNote.type == "bar"){
                     newNote.setStyle({fillStyle: "transparent", strokeStyle: "transparent"});
-                }
+                } */
 
-                allStaveNotes.push(newNote);
-                
                 if(thisNote.type != "bar"){
+                    allStaveNotes.push(newNote);
                     renderQueue.push(newNote);    
                 }
 
@@ -559,16 +566,45 @@ export default {
                /* the new manual bar logic */
                if(notes[i].type == "bar"){
 
-                    batches.push({notes:renderQueue, width:currentBatchWidth});
-                    renderQueue = [newNote];
-                    currentBatchWidth = this.info.barnoteWidth;
+                   if(renderQueue.length < 2) {
+                       currentBatchWidth += 20;
+                   }
+
+                   currentBatchWidth += 20;
+
+                   //debugger;
+                   let batchInfo = {notes:renderQueue, width:currentBatchWidth};
+                   if(i > 0 && [8, 16, 32].indexOf(parseInt(notes[i - 1].value)) >= 0 && renderQueue.length > 1){
+                       debugger;
+                       batchInfo.voiceOffset = 10;
+                   }
+
+                    batches.push(batchInfo);
+                    // renderQueue = [newNote]; // Add bar note to the next batch to enable
+                    renderQueue = [];
+                    currentBatchWidth = 0;
                 }
 
             }
 
             // Draw the rest
-            if(renderQueue.length > 0){
-                batches.push({notes:renderQueue, width:currentBatchWidth});
+            if(renderQueue.length > 0 || (batches.length > 0 && renderQueue.length == 0)){
+
+                if(renderQueue.length < 2) {
+                    currentBatchWidth += 20;
+                }
+
+                currentBatchWidth += 20;
+
+                //debugger;
+
+                let batchInfo = {notes:renderQueue, width:currentBatchWidth};
+                if(i > 0 && [8, 16, 32].indexOf(parseInt(notes[notes.length - 1].value)) >= 0 && renderQueue.length > 1){
+                    debugger;
+                    batchInfo.voiceOffset = 20;
+                }
+
+                batches.push(batchInfo);
             }
 
             return {
@@ -595,14 +631,17 @@ export default {
             descriptor.rendered = data.allStaveNotes;
 
             // Finally render everything
-            RU._vex_render_batches(context, data.batches, data.optionals, {
+            let details = RU._vex_render_batches(context, data.batches, data.optionals, {
                 bar: this.bar,
                 barOffsetY: this.info.barOffsetY,
                 width: this.info.width
-            }, notes);
+            }, notes, {
+                offset1: this.test.offset1,
+                offset2: this.test.offset2
+            });
 
             // set CTX.zoomview.x_coords property
-            this.retrieveXCoords(descriptor);
+            this.retrieveXCoords(descriptor, notes);
 
             if(descriptor.renderSpecifics){
                 descriptor.renderSpecifics(this, descriptor)
@@ -619,17 +658,41 @@ export default {
 
         },
 
-        retrieveXCoords(ctx){
+        retrieveXCoords(ctx, notes){
 
             ctx.x_coords = [];
             ctx.render_widths = [];
-            
+
             if(!ctx.rendered) return;
 
-            ctx.rendered.forEach(note => {
+            let r = 0;
+            let b = 0;
+            for(let i = 0; i < notes.length; i++){
+
+                let note = notes[i];
+
+                if(note.type == 'bar'){
+
+                    ctx.x_coords.push(ctx.context.barlineX[b]);
+                    ctx.render_widths.push(2);
+                    b++;
+
+                }
+                else {
+
+                    let rNote = ctx.rendered[r];
+                    ctx.x_coords.push(Math.round(rNote.getAbsoluteX()));
+                    ctx.render_widths.push(rNote.width);
+                    r++;
+
+                }
+
+            }
+
+            /*ctx.rendered.forEach(note => {
                 ctx.x_coords.push(Math.round(note.getAbsoluteX()));
                 ctx.render_widths.push(note.width);
-            });
+            });*/
 
         },
 
@@ -744,6 +807,8 @@ export default {
 
         viewportResized() {
 
+            console.log("Hello");
+
             this.info.width = 2 * (window.innerWidth);
             this.info.barWidth = window.innerWidth;
             
@@ -782,16 +847,20 @@ export default {
     },
     mounted(){
 
-        window.addEventListener("resize", this.viewportResized);
-        window.addEventListener("orientationchange", this.viewportResized);
+        window.addEventListener("resize", function() { 
+            debugger; this.viewportResized(); });
+        window.addEventListener("orientationchange", function() { 
+            debugger; this.viewportResized(); });
 
     },
 
     destroyed() {
 
         let vue = this;
-        window.removeEventListener("resize", this.viewportResized);
-        window.removeEventListener("orientationchange", this.viewportResized);
+        window.removeEventListener("resize", function() { 
+            debugger; this.viewportResized(); });
+        window.removeEventListener("orientationchange", function() { 
+            debugger; this.viewportResized(); });
 
     }
 

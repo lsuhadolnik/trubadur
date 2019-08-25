@@ -35,15 +35,19 @@ var RhythmRenderUtilities = function(){
             groups: this._get_beam_grouping(info.bar)
         });
 
+        let voiceOffset = 0;
+        if(batchInfo.voiceOffset){
+            voiceOffset = batchInfo.voiceOffset;
+        }
+
         var formatter = new VF.Formatter();
         formatter.joinVoices([voice]);
-        formatter.format([voice], width);
+        formatter.format([voice], width - voiceOffset);
         
         voice.draw(context, stave);
         
         this._vex_draw_optionals(context, beams);
 
-        
     },
 
     this._get_beam_grouping = function(bar){
@@ -75,7 +79,7 @@ var RhythmRenderUtilities = function(){
 
     },
 
-    this._vex_draw_staves = function(context, barInfo, info){
+    this._vex_draw_staves = function(context, barInfo, info, timeSignatures){
 
         // info: {
         //     barOffsetY: int,
@@ -89,7 +93,7 @@ var RhythmRenderUtilities = function(){
         let staves = [];
         let startAtX = 0;
 
-        let timeSignatures = this._construct_time_signature(info.bar)
+        let barlineX = [];
 
         for(let idx_bar = 0; idx_bar < barInfo.length; idx_bar++){
 
@@ -97,16 +101,14 @@ var RhythmRenderUtilities = function(){
 
             let thisWidth = thisBar.width;
 
-            // Make the first bar a bit wider for all time signatures to fit in.
-            if(idx_bar == 0){
-                thisWidth += 20 * (timeSignatures.length - 1);
-            }
-
             let stave = new VF.Stave(
                 startAtX,   // X
                 -info.barOffsetY,           // Y
                 thisWidth              // Width
             );
+
+            // Used for retrieving x-coords of barlines in function StaffView.retrieveXCoords
+            barlineX.push(startAtX + thisWidth);
 
             startAtX += thisWidth;
 
@@ -148,6 +150,8 @@ var RhythmRenderUtilities = function(){
             connectors[idx_stave - 1].draw();
         }
 
+        context.barlineX = barlineX;
+
         return staves;
     };
 
@@ -159,25 +163,35 @@ var RhythmRenderUtilities = function(){
         }
     }
 
-    this._vex_render_batches = function(context, batches, optionals, info, notes){
+    this._vex_render_batches = function(context, batches, optionals, info, notes, debug){
+
+
+        //debugger;
 
         // Redraw staves
         var barInfo = [];
+        
+        let timeSignatures = this._construct_time_signature(info.bar)
 
-        batches.forEach(batchInfo => {
+        batches.forEach((batchInfo, idx_bar) => {
             
             let width = batchInfo.width;
 
+            // Make the first bar a bit wider for all time signatures to fit in.
+            if(idx_bar == 0){
+                width += 30 * (timeSignatures.length - 1) + 20;
+            }
+
             barInfo.push({
-                width: width + 60 // Fixed offset
+                width: width + parseInt(debug.offset2)// Fixed offset
             });    
         });
 
         barInfo.push({
-            width: info.width
+            width: info.width + parseInt(debug.offset1)
         });
 
-        let staves = this._vex_draw_staves(context, barInfo, info);
+        let staves = this._vex_draw_staves(context, barInfo, info, timeSignatures);
 
         for(var i = 0; i < batches.length; i++){
             this._vex_draw_voice(context, staves[i], batches[i], info, notes);

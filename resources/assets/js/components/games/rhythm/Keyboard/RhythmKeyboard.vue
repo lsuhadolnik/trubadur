@@ -82,7 +82,7 @@
                     
                     
                     <sexy-button color="cabaret"   @click.native="delete_note()" >
-                        <img src="/images/backspace.svg" width="30" />
+                        <icon name="trash" scale="2" />
                     </sexy-button>
 
 
@@ -133,7 +133,7 @@
                 
                 <!-- BACKSPACE BUTTON -->
                 <sexy-button color="cabaret"   @click.native="delete_note()"  >
-                    <img src="/images/backspace.svg" width="30" />
+                    <icon name="trash" scale="2" />
                 </sexy-button>
                 
                 <!-- PLAY EXERCISE BUTTON -->
@@ -333,6 +333,7 @@ import BPMSlider from "./Buttons/BPMSlider.vue"
 import CheckButton from "./Buttons/CheckButton.vue"
 
 import 'vue-awesome/icons/repeat'
+import 'vue-awesome/icons/trash'
 import 'vue-awesome/icons/play'
 import 'vue-awesome/icons/stop'
 import 'vue-awesome/icons/question-circle'

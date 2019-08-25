@@ -176,7 +176,7 @@ export default {
             errorMessage: "",
             errorTimeout: null,
 
-            showHelp: true,
+            showHelp: false,
 
             playback: new RhythmPlaybackEngine(MIDI),
             defaultBPM: 120
