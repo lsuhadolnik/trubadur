@@ -593,7 +593,7 @@ export default {
     mounted() {
 
         // Original
-        /*this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
+        this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
         this.$refs.keyboard.init(this.$refs.staff_view.cursor);
 
         // Če do sem nisi prišel preko vmesnika, 
@@ -607,11 +607,11 @@ export default {
             .then(() => { return this.nextQuestion(); })
             .then(() => { this.displayState = "instructions"; return; });
             
-        }*/
+        }
 
         // DEBUG
         
-        this.game = {id: 394};
+        /*this.game = {id: 403};
 
         this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
         this.$refs.keyboard.init(this.$refs.staff_view.cursor);
@@ -622,7 +622,7 @@ export default {
             .then(() => { return this.setupMidi(['xylophone', 'trumpet']); })
             .then(() => { return this.nextQuestion(); })
             .then(() => { this.startGame(); });
-        
+        */
         
 
     },
