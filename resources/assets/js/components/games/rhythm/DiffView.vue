@@ -2,6 +2,8 @@
 
     <div class="rhythm-game__diff">
         
+        <h1 style="text-align: center;font-size: 40px;">{{playfulTitle}}</h1>
+
         <h1 class="diff-prompt">Taka je bila vaja:</h1>
         <StaffView ref="staff_view1" :bar="bar" :enabledContexts="['zoomview']" >
             <div class="rhythm-game__diff__zoomview1">
@@ -71,7 +73,7 @@ import SexyButton from "../../elements/SexyButton.vue"
 export default {
 
     props: [
-        'dismiss', "bar" 
+        'dismiss', "bar", "success"
     ],
 
     components: {SexyButton, StaffView},
@@ -80,6 +82,27 @@ export default {
         return {
 
         }
+    },
+
+    computed: {
+
+        playfulTitle() {
+            
+            let successTexts = ["Bravo! ✅💪", "Useplo ti je! 🎆🎆", "Čestitam! 👏", "Odlično! 💪", "Tale ti je pa ratala 💪", "Zakon! Obvladaš! 🎉"];
+            let failureTexts = ["Oooh... 😢", "Ups... 😕", "O ne!", "No ja... 🙂", "Več sreče prihodnjič. 😉", "Skoraj ti je uspelo...", "Še čisto malo!"];
+            
+            let pickRandom = function(a){
+                let idx = parseInt(Math.random() * (a.length - 1));
+                return a[idx];
+            }
+
+            if(this.success){
+                return pickRandom(successTexts);
+            } else {
+                return pickRandom(failureTexts);
+            }
+        }
+
     },
 
     methods: {

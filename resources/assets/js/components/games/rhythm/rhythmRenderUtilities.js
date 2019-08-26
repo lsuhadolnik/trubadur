@@ -166,8 +166,6 @@ var RhythmRenderUtilities = function(){
     this._vex_render_batches = function(context, batches, optionals, info, notes, debug){
 
 
-        //debugger;
-
         // Redraw staves
         var barInfo = [];
         

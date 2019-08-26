@@ -9,7 +9,9 @@
                 <li class="rhythm__instructions-list-item">Vaja bo v {{bar.num_beats}}/{{bar.base_note}} taktu.</li>
                 <li class="rhythm__instructions-list-item">Slišala / slišal boš {{num_beats_text}}.</li>
                 <li class="rhythm__instructions-list-item">Predvajalo se bo s hitrostjo {{questionState.exercise != null ? questionState.exercise.BPM : "??" }} udarcev na minuto.</li>
-                <li class="rhythm__instructions-list-item">Če ne veš, kako deluje kakšen gumb, pritisni gumb pomoč.</li>
+                <li class="rhythm__instructions-list-item">Za reševanje imaš na voljo {{questionState.maxSeconds}} sekund.</li>
+                <li class="rhythm__instructions-list-item">Odgovor lahko preveriš največ {{questionState.maxChecks}}-krat.</li>
+                <li class="rhythm__instructions-list-item">Če ne veš, kako deluje kakšen gumb, pritisni gumb Pomoč.<br>Dobro je, da si Pomoč ogledaš pred prvo igro.</li>
                 <!--<li class="rhythm__instructions-list-item">Program je v preizkusni fazi, zanekrat lahko preizkusiš par vpisanih vaj.</li>-->
             </ul>
         </div>
@@ -49,7 +51,7 @@
 
         <div class="rhythm-diff-check-view" v-show="displayState == 'diff'">
 
-            <DiffView ref="diff_view" :dismiss="continueGame" :bar="bar"></DiffView>
+            <DiffView ref="diff_view" :success="questionState.wasCorrect" :dismiss="continueGame" :bar="bar" />
 
         </div>
 
@@ -147,8 +149,9 @@ export default {
             questionState: {
                 id: 0,
                 check: "no", // "no", "correct", "wrong", "next"
-                
-                maxChecks: 5,
+                wasCorrect: false,
+
+                maxChecks: 10,
                 maxSeconds: 120,
                 
                 num_beats: "x",
@@ -179,7 +182,8 @@ export default {
             showHelp: false,
 
             playback: new RhythmPlaybackEngine(MIDI),
-            defaultBPM: 120
+            defaultBPM: 120,
+            metronome: true
         }
     },
 
@@ -296,6 +300,7 @@ export default {
 
         startGame() {
 
+            this.questionState.wasCorrect = false;
             this.questionState.statistics.startTime = (new Date()).getTime();
             this.countdownInterval = setInterval(() => {
                 
@@ -328,6 +333,8 @@ export default {
 
         _questionState_reset() {
             this.questionState.check = "no";
+            this.questionState.wasCorrect = false;
+
 
             this.questionState.statistics.nAdditions = 1;
             this.questionState.statistics.nDeletions = 1;
@@ -507,6 +514,9 @@ export default {
             let time = ((new Date()).getTime() - this.questionState.statistics.startTime);
             this.questionState.check = "waiting";
 
+            this.questionState.wasCorrect = true;
+            this.questionState.wasCorrect = status;
+
             let outside = this;
 
             let timeout = this.questionState.statistics.duration >= this.questionState.maxSeconds;
@@ -599,6 +609,8 @@ export default {
             
         }*/
 
+        // DEBUG
+        
         this.game = {id: 394};
 
         this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
@@ -609,7 +621,8 @@ export default {
         this.fetchMe()
             .then(() => { return this.setupMidi(['xylophone', 'trumpet']); })
             .then(() => { return this.nextQuestion(); })
-            .then(() => { this.displayState = 'ready'; });
+            .then(() => { this.startGame(); });
+        
         
 
     },

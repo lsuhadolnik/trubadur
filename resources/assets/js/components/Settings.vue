@@ -201,6 +201,12 @@ $instructions-height        : 290px;
                     <label for="notePlaybackDelay" class="settings__slider-label">{{ selectedNotePlaybackDelay }} s</label>
                     <input type="range" class="settings__slider" id="notePlaybackDelay" :min="minPlaybackDelay" :max="maxPlaybackDelay" step="0.1" v-model="selectedNotePlaybackDelay"/>
                 </div>
+                <div class="auth__form-group auth__form-group--checkbox">
+                    <label class="auth__form-checkbox-label">PRIVZETO VKLJUČI METRONOM
+                        <input class="auth__form-checkbox" type="checkbox" name="metronom"/>
+                        <span class="auth__form-checkbox-checkmark"></span>
+                    </label>
+                </div>
                 <element-button text="shrani" @click.native="save()"></element-button>
             </div>
         </div>
@@ -229,7 +235,8 @@ export default {
             selectedClef: null,
             selectedNotePlaybackDelay: 1,
             minPlaybackDelay: 1.5,
-            maxPlaybackDelay: 5
+            maxPlaybackDelay: 5,
+            metronome: true
         }
     },
     mounted () {
@@ -293,6 +300,8 @@ export default {
             if (this.selectedNotePlaybackDelay !== this.me.note_playback_delay) {
                 data['note_playback_delay'] = parseFloat(this.selectedNotePlaybackDelay) * 1000
             }
+
+            data.metronome = this.metronome
 
             if (Object.keys(data).length > 0) {
                 this.loading = true

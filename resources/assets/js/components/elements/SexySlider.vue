@@ -110,11 +110,56 @@
 
 <script>
 
-import { stringProp, booleanProp, numberProp } from '../../utils/propValidators'
+import { stringProp, booleanProp, numberProp, functionProp } from '../../utils/propValidators'
+
+function getTouch(event) {
+
+    if(event.touches && event.touches.length > 0){
+        return event.touches[0].screenX;
+    }
+
+    if(event.screenX >= 0){
+        return event.screenX;
+    }
+
+    return 0;
+
+}
 
 export default {
 
     methods: {
+
+        beginTouch(e) {
+            this.lastTouch = getTouch(e);
+            this.inTouch = true;
+            this.movedSince = false;
+        },
+
+        endTouch(e) {
+            if(this.inTouch && !this.movedSince && this.clickAction){
+                this.clickAction();
+            }
+
+            this.inTouch = false;
+        },
+
+        moveTouch(e) {
+
+            e.preventDefault();
+
+            if(this.inTouch){
+                let newValue = this.value[this.valueKey] + parseInt((getTouch(e) - this.lastTouch) / 2);
+                newValue = Math.min(newValue, this.to);
+                newValue = Math.max(newValue, this.from);
+                this.value[this.valueKey] = newValue;
+
+                this.movedSince = true;
+                this.lastTouch = getTouch(e);
+            }
+
+            return false;
+        }
 
     },
 
@@ -181,12 +226,15 @@ export default {
             required: false,
             default: 1
         },
+        clickAction: functionProp(false)
     },
 
     data: function() {
         return {
             lastTouch: 0,
-            inTouch: false
+            inTouch: false,
+
+            movedSince: false
         };
     },
 
@@ -194,29 +242,14 @@ export default {
 
         let out = this;
 
-        this.$refs.theSlider.addEventListener("touchstart", function(e){
-            
-            out.lastTouch = e.touches[0].screenX;
-            out.inTouch = true;
-            
-        }, false);
+        this.$refs.theSlider.addEventListener("touchstart", function(e) { out.beginTouch.call(out, e) }, false);
+        this.$refs.theSlider.addEventListener("mousedown",  function(e) { out.beginTouch.call(out, e) }, false);
+        
+        window.addEventListener("mouseup",                  function(e) { out.endTouch.call(out, e)   }, false);
+        this.$refs.theSlider.addEventListener("touchend",   function(e) { out.endTouch.call(out, e)   }, false);
 
-        this.$refs.theSlider.addEventListener("touchend", function(e){
-            
-            out.inTouch = false;
-            
-        }, false);
-
-        this.$refs.theSlider.addEventListener("touchmove", function(e){
-            
-            let newValue = out.value[out.valueKey] + parseInt((e.touches[0].screenX - out.lastTouch) / 2);
-            newValue = Math.min(newValue, out.to);
-            newValue = Math.max(newValue, out.from);
-            out.value[out.valueKey] = newValue;
-
-            out.lastTouch = e.touches[0].screenX;
-
-        }, false);
+        window.addEventListener("mousemove",                function(e) { out.moveTouch.call(out, e)  }, false);
+        this.$refs.theSlider.addEventListener("touchmove",  function(e) { out.moveTouch.call(out, e)  }, false);
 
     }
 

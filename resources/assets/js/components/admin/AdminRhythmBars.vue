@@ -319,7 +319,7 @@ export default {
             }
             else if(event.type == "changeSignature"){
                 
-                let heh = prompt("Vnesite taktovski način v obliki: ?/?. Recimo 4/4 ali 3/4\n\n Sestavljen takt vnesite v obliki ?/?+?/?+... recimo 3/4+2/4");
+                let heh = prompt("Vnesite taktovski način v obliki: ?/?. Recimo 4/4 ali 3/4\n\n Mešani taktovski način vnesite v obliki ?/?+?/?+... recimo 3/4+2/4");
                 
                 let subdivisions = heh.split("+");
                 
@@ -338,14 +338,15 @@ export default {
                     return {n: n, d:d};
                 });
 
-                this.barInfo.base_note = sum.d;
-                this.barInfo.num_beats = sum.n;
-
                 if(subdivisions.length == 1){
+                    this.barInfo.base_note = s[0].d;
+                    this.barInfo.num_beats = s[0].n;
                     delete this.barInfo.subdivisions;
                 }
                 else{
                     this.barInfo.subdivisions = s;
+                    this.barInfo.base_note = sum.d;
+                    this.barInfo.num_beats = sum.n;
                 }
 
                 this.notes._call_render();

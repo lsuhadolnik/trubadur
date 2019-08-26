@@ -44,7 +44,7 @@
                     <!-- TIE, DELETE -->
                     <div class="helpView__view view-2" v-if="view == 2">
 
-                        <div class="helpView__text-line">Če pritisneš na ta gumb, povežeš zadnji dve noti pred kazalnikom z vezajem:</div>
+                        <div class="helpView__text-line">Ta gumb z vezajem poveže noto pod kazalnikom in noto, ki ji sledi:</div>
                         <sexy-button customClass="musisync" color="green">
                             <span class="tie-text">u</span>
                         </sexy-button>
@@ -94,7 +94,7 @@
                     <!-- SPECIAL BUTTONS -->
                     <div class="helpView__view view-5" v-if="view == 5">
 
-                        <h2>Posebni gumbi</h2>
+                        <h2>Posebni gumbi, metronom</h2>
                         <div class="helpView__text-line">Če želiš znova predvajati vajo, pritisni ta gumb:</div>
                         <div class="helpView__buttons">
                             <sexy-button color="sunglow"><div class="tiny-tajni-pici-mici-font">Ponovi vajo</div></sexy-button>
@@ -102,18 +102,13 @@
                         <div class="helpView__text-line">Večkrat kot predvajaš vajo, manj točk dobiš.</div>
 
                         <div class="helpView__text-line">
-                            S tem gumbom spreminjaš hitrost predvajanja. 
-                            Dotakni se ga in podrsaj levo ali desno.
+                            S tem gumbom spreminjaš hitrost predvajanja v udarcih na minuto (BPM = beats per minute).<br>
+                            Dotakni se ga in podrsaj levo ali desno.<br>
+                            Če pritisneš samo enkrat, vključiš ali izključiš metronom.<br>
                             Lahko poskusiš na tem spodnjem gumbu.
                         </div>
                         <div class="helpView__buttons helpView__buttons-center">
-                            <sexy-slider color="cabaret" :value="TestBPM" valueKey="BPM" :from="20" :to="250">
-                                <div class="BPM-indicator normal-font">
-                                    <div class="BPM-value">{{TestBPM.BPM}}</div>
-                                    <div class="BPM-prompt">BPM</div>
-                                </div>
-                            
-                            </sexy-slider>
+                            <b-p-m-slider :bpmObject="{BPM: 20, metronome: false}" valueKey="BPM" />
                         </div>
 
                     </div>
@@ -149,7 +144,7 @@
                     <div class="helpView__view view-7" v-if="view == 7">
 
                         <h2>Izbira več not</h2>
-                        <div class="helpView__text-line">Če želiš ustvariti triolo, moraš izbrati note, nad katerimi se bo ta izrisala. To narediš z gumbom za izbiro:</div>
+                        <div class="helpView__text-line">Če želiš ustvariti poddelitev, moraš izbrati note, nad katerimi se bo ta izrisala. To narediš z gumbom za izbiro:</div>
                         <div class="helpView__buttons">
                             <selection-button color="green" />
                             <div class="helpView__arrows helpView__arrowRight"><div class="helpView__arrows__wrap">&rarr;</div></div>
@@ -165,13 +160,13 @@
                             <div class="helpView__cursor__selection_bar helpView__cursor__selection_rightBar">&nbsp;</div>
                         </div>
                         <div class="helpView__text-line specialA1">Izbira se bo vedno raztezala med prvo izbrano noto in tisto, ki jo pritisneš.</div>
-                        <div class="helpView__text-line">Če izbereš napačno začetno noto, spet pritisni gumb za izbiro, se premakni do želene note in spet pritisni isti gumb.</div>
+                        <div class="helpView__text-line">Če izbereš napačno začetno noto, spet pritisni gumb za izbiro in ponovi postopek.</div>
 
                     </div>
                     <!-- TUPLETS -->
                     <div class="helpView__view view-8" v-if="view == 8">
 
-                        <h2>Triole</h2>
+                        <h2>Nepravilne poddelitve / "ole"</h2>
                         <div class="helpView__text-line">Ko imaš izbrane note, se v prvi vrsti pokažejo novi gumbi.</div>
                         <div class="helpView__buttons">
                             <sexy-button color="green"><TupletSign num="3" bg="green" /></sexy-button>
@@ -179,31 +174,31 @@
                             <sexy-button color="green"><TupletSign num="5:4" bg="green" /></sexy-button>
                             <sexy-button color="green"><TupletSign num="6:4" bg="green" /></sexy-button>
                         </div>
-                        <div class="helpView__text-line">Ko pritisneš na enega izmed njih, se iz izbranih not ustvari triola.</div>
+                        <div class="helpView__text-line">Ko pritisneš na enega izmed njih, se iz izbranih not ustvari izbrana poddelitev.</div>
                         <div class="helpView__text-line">Gumb s trojko ustvari triolo, gumb z dvojko ustvari duolo.</div>
-                        <div class="helpView__text-line">Kaj pomeni 5:4? Pomeni, da se bo ustvarila triola nad petimi notami, ki bodo skupaj trajale štiri dobe. To je tudi ena od pentol.</div>
-                        <div class="helpView__text-line">Če želene vrste triole ni med gumbi, pritisni ta gumb:</div>
+                        <div class="helpView__text-line">5:4 pomeni, da se bo ustvarila poddelitev nad petimi notami v času štirih.</div>
+                        <div class="helpView__text-line">Če želene vrste poddelitve ni med gumbi, pritisni ta gumb:</div>
                         <div class="helpView__buttons">
                             <sexy-button color="green"><TupletSign num="?:?" bg="green" /></sexy-button>
                         </div>
-                        <div class="helpView__text-line">Program te bo vprašal, kakšno triolo želiš ustvariti.</div>
+                        <div class="helpView__text-line">Program te bo vprašal, kakšno poddelitev želiš ustvariti.</div>
                         <div class="helpView__text-line">Ne preverja se, ali je triola smiselna, za to moraš poskrbeti sam 🙂💪</div>
                     </div>
 
                     <!-- TUPLET DELETE -->
                     <div class="helpView__view view-9" v-if="view == 9">                        
                         
-                        <h2>Brisanje triol</h2>
-                        <div class="helpView__text-line">Če se zmotiš in vpišeš napačno triolo, ali pa jo narediš nad napačnimi notami, jo lahko pobrišeš.</div>
-                        <div class="helpView__text-line">Lahko se premakneš do note, ki jo veže trola in jo izbrišeš. Poleg note se bo izbrisala tudi triola.</div>
-                        <div class="helpView__text-line">Lahko pa spet označiš triolo, ki je ne želiš, in pritisneš ta gumb:</div>
+                        <h2>Brisanje poddelitev</h2>
+                        <div class="helpView__text-line">Če se zmotiš in ustvariš napačno poddelitev, ali pa jo narediš nad napačnimi notami, jo lahko pobrišeš.</div>
+                        <div class="helpView__text-line">Lahko se premakneš do note, ki jo veže znak za poddelitve in jo izbrišeš. Poleg note se bo izbrisala tudi poddelitev.</div>
+                        <div class="helpView__text-line">Lahko pa spet označiš poddelitev, ki je ne želiš, in pritisneš ta gumb:</div>
                         <div class="helpView__buttons">
                             <sexy-button color="cabaret">
                                 <span class="musisync">T</span>
                                 <icon name="ban" scale="2" class="alert"></icon>
                             </sexy-button>
                         </div>
-                        <div class="helpView__text-line">S tem gumbom izbrišeš vse triole, ki so v izbirnem kvadratu. Tudi če označiš samo pol triole, se bo izbrisala cela.</div>
+                        <div class="helpView__text-line">S tem gumbom izbrišeš vse poddelitve, ki so v izbirnem kvadratu. Tudi če označiš samo del poddelitve, se bo izbrisala cela.</div>
                     </div>
 
                 </div>
@@ -213,9 +208,9 @@
 
         <div class="helpView__bottom-nav">
             <div class="helpView__bottomNav__button helpView__bottomNav__closeButton" @click="hide">Zapri</div>
-            <div class="helpView__bottomNav__button helpView__bottomNav__closeButton" @click="nextView" v-if="view < 9">Naprej</div>
+            <div class="helpView__bottomNav__button helpView__bottomNav__closeButton" v-bind:class="{ dimButton: view == numViews}" @click="nextView">Naprej</div>
             
-            <div class="helpView__bottomNav__button helpView__bottomNav__closeButton" @click="prevView" v-if="view > 1">Nazaj</div>
+            <div class="helpView__bottomNav__button helpView__bottomNav__closeButton" v-bind:class="{ dimButton: view == 1 }"  @click="prevView">Nazaj</div>
         </div>
 
     </div>
@@ -223,6 +218,10 @@
 </template>
 
 <style scoped>
+
+    .dimButton {
+        opacity: 0.5;
+    }
 
     .helpView{
         
@@ -253,7 +252,15 @@
 
     .helpView__bottomNav__button {
         display: inline-block;
-        padding-left: 30px;
+        margin-left: 30px;
+        background: rgba(255,255,255,0.6);
+        padding: 5px;
+        color: black;
+        cursor: pointer;
+    }
+
+    .helpView__bottomNav__button:active {
+        transform: scale(0.95) translate(0px, 5px);
     }
 
     .helpView__buttons-center .button {
@@ -427,6 +434,7 @@ import ThitryTwoButton from "./Buttons/ThirtyTwoButton.vue"
 import BarButton from "./Buttons/BarButton.vue"
 import DotButton from "./Buttons/DotButton.vue"
 import SelectionButton from "./Buttons/SelectionButton.vue"
+import BPMSlider from "./Buttons/BPMSlider.vue"
 
 
 export default {
@@ -437,24 +445,39 @@ export default {
 
         TestBPM: {BPM: 0},
 
-        view: 1
+        view: 1,
+        numViews: 9
 
     }},
 
     components: {
         SexyButton, SexySlider, TupletSign,
         
-        ThitryTwoButton, BarButton, DotButton, SelectionButton
+        ThitryTwoButton, BarButton, DotButton, SelectionButton, BPMSlider
+    },
+
+    mounted() {
     },
 
     methods: {
 
         prevView() {
-            this.view --;
+
+            if(this.view > 1){
+                this.view --;
+            }else {
+                this.view = 1;
+            }
+
         },
 
         nextView() {
-            this.view ++;
+
+            if(this.view < this.numViews){
+                this.view++;
+            }else {
+                this.view = this.numViews;
+            }
         }
 
     }

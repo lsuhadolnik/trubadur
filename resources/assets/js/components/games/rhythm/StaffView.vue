@@ -4,9 +4,9 @@
         
         <slot />
         
-        <input type="range" v-model="test.offset1" min="0" max="100" step="1"/> {{test.offset1}}
+        <!--<input type="range" v-model="test.offset1" min="0" max="100" step="1"/> {{test.offset1}}
         <input type="range" v-model="test.offset2" min="0" max="100" step="1"/> {{test.offset2}}
-        <input type="button" @click="_render_temp()" value="Render"/>
+        <input type="button" @click="_render_temp()" value="Render"/>-->
     </div>
 
 </template>
@@ -572,10 +572,8 @@ export default {
 
                    currentBatchWidth += 20;
 
-                   //debugger;
                    let batchInfo = {notes:renderQueue, width:currentBatchWidth};
                    if(i > 0 && [8, 16, 32].indexOf(parseInt(notes[i - 1].value)) >= 0 && renderQueue.length > 1){
-                       debugger;
                        batchInfo.voiceOffset = 10;
                    }
 
@@ -596,11 +594,8 @@ export default {
 
                 currentBatchWidth += 20;
 
-                //debugger;
-
                 let batchInfo = {notes:renderQueue, width:currentBatchWidth};
                 if(i > 0 && [8, 16, 32].indexOf(parseInt(notes[notes.length - 1].value)) >= 0 && renderQueue.length > 1){
-                    debugger;
                     batchInfo.voiceOffset = 20;
                 }
 
@@ -847,20 +842,17 @@ export default {
     },
     mounted(){
 
-        window.addEventListener("resize", function() { 
-            debugger; this.viewportResized(); });
-        window.addEventListener("orientationchange", function() { 
-            debugger; this.viewportResized(); });
+        let out = this;
+        window.addEventListener("resize", function() { out.viewportResized.call(out) }, false);
+        window.addEventListener("orientationchange", function() { out.viewportResized.call(out) }, false);
 
     },
 
     destroyed() {
 
-        let vue = this;
-        window.removeEventListener("resize", function() { 
-            debugger; this.viewportResized(); });
-        window.removeEventListener("orientationchange", function() { 
-            debugger; this.viewportResized(); });
+        let out = this;
+        window.removeEventListener("resize", function() { out.viewportResized.call(out) }, false);
+        window.removeEventListener("orientationchange", function() { out.viewportResized.call(out) }, false);
 
     }
 

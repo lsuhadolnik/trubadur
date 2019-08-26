@@ -1,9 +1,12 @@
 <template>
     
-    <sexy-slider color="cabaret" :value="bpmObject" :valueKey="valueKey" :from="20" :to="250">
-        <div class="rhythmKeyboard__BPMSlider__BPMIndicator">
+    <sexy-slider :color="buttonColor" :value="bpmObject" :valueKey="valueKey" :from="20" :to="250" :clickAction="toggleMetronome">
+        <div class="rhythmKeyboard__BPMSlider__BPMIndicator" v-if="!metronomeToggled">
             <div class="rhythmKeyboard__BPMSlider__BPMValue">{{bpmObject[valueKey]}}</div>
             <div class="rhythmKeyboard__BPMSlider__BPMPrompt">BPM</div>
+        </div>
+        <div class="rhythmKeyboard__BPMSlider__BPMIndicator" v-else>
+            <div class="rhythmKeyboard__BPMSlider__TinyText">Metro<br>nom<br>{{ bpmObject.metronome ? '✅' : '⛔' }} </div>
         </div>
     </sexy-slider>
 
@@ -11,13 +14,55 @@
 
 <script>
 
-import SexyButton from "../../../../elements/SexyButton.vue"
 import SexySlider from "../../../../elements/SexySlider.vue"
 
 export default {
     
     props: ["bpmObject", "valueKey"],
-    components: { SexyButton, SexySlider }
+    components: { SexySlider },
+
+    data() {
+        return {
+            metronomeToggled: false,
+            changeInterval: null,
+            lastChanged: null
+        }
+    },
+
+    computed: {
+
+        buttonColor() {
+            if(!this.metronomeToggled){
+                return "cabaret";
+            }else {
+                if(this.bpmObject.metronome) return "green";
+                return "red";
+            }
+        }
+    },
+
+    methods: {
+        toggleMetronome() {
+
+            if(!this.lastChanged || (((new Date()).getTime()) - this.lastChanged) > 600 ){
+                this.lastChanged = (new Date()).getTime();
+
+
+                this.metronomeToggled = true;
+
+                this.bpmObject.metronome = !this.bpmObject.metronome;
+                let out = this;
+                
+                if(this.changeInterval){
+                    clearTimeout(this.changeInterval);
+                }
+                this.changeInterval = setTimeout(() => {
+                    out.metronomeToggled = false;
+                }, 600);
+            }
+
+        }
+    }
 
 }
 </script>
@@ -30,6 +75,10 @@ export default {
     .rhythmKeyboard__BPMSlider__BPMIndicator{
         font-size: 16px;
         font-family: $font-bold;
+    }
+
+    .rhythmKeyboard__BPMSlider__TinyText{
+        font-size: 12px;
     }
     
 </style>

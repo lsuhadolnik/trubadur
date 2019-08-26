@@ -1,4 +1,3 @@
-var Fraction = require("fraction.js");
 let RhythmUtilities = require('./rhythmUtilities');
 
 var RhythmPlaybackEngine = function(midi){
@@ -8,7 +7,7 @@ var RhythmPlaybackEngine = function(midi){
     this.BPM = 120;
 
     this.channel = 3; // Trumpet. Look in store/index.js
-    this.intensity = 127;
+    this.intensity = 50;
     this.pitch = [65];
 
     this.currentlyLoaded = "";
@@ -17,6 +16,8 @@ var RhythmPlaybackEngine = function(midi){
     this.loaded = false;
     this.currentNoteID = null;
     this.currentTimeout = null;
+
+    this.metronome = true;
 
     this.bar = null;
 
@@ -127,7 +128,9 @@ var RhythmPlaybackEngine = function(midi){
         this.BPM = newBPM;
     }
 
-    this._get_countin_pitches = function() {
+    this._get_countin_pitches = function(num_bars) {
+
+        if(!num_bars) num_bars = 1;
 
         // Original
         // [93, 86];
@@ -137,54 +140,61 @@ var RhythmPlaybackEngine = function(midi){
 
         let pitches = [];
 
-        if(this.bar.subdivisions){
+        for(let ooo = 0; ooo < num_bars; ooo++){
+            if(this.bar.subdivisions){
 
-            this.bar.subdivisions.forEach(s => {
+                this.bar.subdivisions.forEach(s => {
+                    pitches.push(hi);
+                    for (let i = 1; i < s.n; i++) { pitches.push(lo); }
+                });
+    
+            } else if(!this.bar.subdivisions && this.bar.base_note == 8 && this.bar.num_beats == 6) {
+    
+                // Special counting for 6/8 time...
+                pitches = [hi, lo, lo, hi, lo, lo];
+    
+            } else {
                 pitches.push(hi);
-                for (let i = 1; i < s.n; i++) { pitches.push(lo); }
-            });
-
-        } else if(!this.bar.subdivisions && this.bar.base_note == 8 && this.bar.num_beats == 6) {
-
-            // Special counting for 6/8 time...
-            pitches = [hi, lo, lo, hi, lo, lo];
-
-        } else {
-            pitches.push(hi);
-            for (let i = 1; i < this.bar.num_beats; i++) { pitches.push(lo); }
+                for (let i = 1; i < this.bar.num_beats; i++) { pitches.push(lo); }
+            }
         }
 
         return pitches;
 
     }
 
-    this.playCountIn = function(then){
+    this.playCountIn = function(num_beats){
 
         if(!this.countInPlayback){
             this.countInPlayback = new RhythmPlaybackEngine(midi);
             this.countInPlayback.channel = 6; // xylophone. Look in store/index.js    
+            this.countInPlayback.intensity = 127;
         }
 
-
-
-        this.countInPlayback.pitch = this._get_countin_pitches();
-        this.countInPlayback.load(this.getCountInNotes());
+        this.countInPlayback.pitch = this._get_countin_pitches(num_beats);
+        this.countInPlayback.load(this.getCountInNotes(num_beats));
         this.countInPlayback.bar = this.bar;
         this.countInPlayback.BPM = this.BPM;
 
-        this.countInPlayback.resume(function(){
-            //Done
-            if(then){
-                then();
-            }
-        });
+        let out = this;
+
+        return new Promise(function(resolve, reject){
+            out.countInPlayback.resume(function(){
+                resolve();
+            });
+        })
 
     }
 
     this.play = function(){
 
         var o2 = this;
-        this.playCountIn(function() {
+        return this.playCountIn(1).then(() => {
+            
+            if(o2.metronome) {
+                o2.playCountIn.apply(o2, [2]);
+            }
+            
             o2.resume();
         });
 
@@ -239,19 +249,23 @@ var RhythmPlaybackEngine = function(midi){
         this.loaded = true;
     }
 
-    this.getCountInNotes = function(){
+    this.getCountInNotes = function(num_bars){
+
+        if(!num_bars) num_bars = 1;
 
         var countInNotes = [];
 
-        if(this.bar.subdivisions){
-            this.bar.subdivisions.forEach(sd => {
-                for(let i = 0; i < sd.n; i++){
-                    countInNotes.push({ type: 'n', value: sd.d });
+        for(let i = 0; i < num_bars; i++){
+            if(this.bar.subdivisions){
+                this.bar.subdivisions.forEach(sd => {
+                    for(let i = 0; i < sd.n; i++){
+                        countInNotes.push({ type: 'n', value: sd.d });
+                    }
+                });
+            } else {
+                for(let i = 0; i < this.bar.num_beats; i++){
+                    countInNotes.push({type: 'n', value: this.bar.base_note});
                 }
-            });
-        } else {
-            for(let i = 0; i < this.bar.num_beats; i++){
-                countInNotes.push({type: 'n', value: this.bar.base_note});
             }
         }
 
@@ -278,6 +292,10 @@ var RhythmPlaybackEngine = function(midi){
             clearTimeout(this.currentTimeout);
         }
         this.currentTimeout = null;
+
+        if(this.countInPlayback){
+            this.countInPlayback.stop();
+        }
         
     }
 
