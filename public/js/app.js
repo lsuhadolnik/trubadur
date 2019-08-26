@@ -5222,7 +5222,7 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine(midi) {
             } else if (!this.bar.subdivisions && this.bar.base_note == 8 && this.bar.num_beats == 6) {
 
                 // Special counting for 6/8 time...
-                pitches = [hi, lo, lo, hi, lo, lo];
+                pitches = pitches.concat([hi, lo, lo, hi, lo, lo]);
             } else {
                 pitches.push(hi);
                 for (var i = 1; i < this.bar.num_beats; i++) {
@@ -5322,15 +5322,15 @@ var RhythmPlaybackEngine = function RhythmPlaybackEngine(midi) {
 
         var countInNotes = [];
 
-        for (var i = 0; i < num_bars; i++) {
+        for (var vv = 0; vv < num_bars; vv++) {
             if (this.bar.subdivisions) {
                 this.bar.subdivisions.forEach(function (sd) {
-                    for (var _i = 0; _i < sd.n; _i++) {
+                    for (var i = 0; i < sd.n; i++) {
                         countInNotes.push({ type: 'n', value: sd.d });
                     }
                 });
             } else {
-                for (var _i2 = 0; _i2 < this.bar.num_beats; _i2++) {
+                for (var i = 0; i < this.bar.num_beats; i++) {
                     countInNotes.push({ type: 'n', value: this.bar.base_note });
                 }
             }
@@ -62605,34 +62605,35 @@ var util = __webpack_require__(10);
         var _this6 = this;
 
         // Original
-        /*this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
-        this.$refs.keyboard.init(this.$refs.staff_view.cursor);
-          // Če do sem nisi prišel preko vmesnika, 
-        // greš lahko kar lepo nazaj
-        if (!this.game || !this.difficulty) {
-            this.$router.push({ name: 'dashboard' })
-        } else {
-              this.fetchMe()
-            .then(() => { return this.setupMidi(['xylophone', 'trumpet']); })
-            .then(() => { return this.nextQuestion(); })
-            .then(() => { this.displayState = "instructions"; return; });
-            
-        }*/
-
-        // DEBUG
-
-        this.game = { id: 394 };
-
         this.$refs.staff_view.init({ userName: "RhythmView", cursor: { enabled: true } });
         this.$refs.keyboard.init(this.$refs.staff_view.cursor);
 
-        this.fetchMe().then(function () {
-            return _this6.setupMidi(['xylophone', 'trumpet']);
-        }).then(function () {
-            return _this6.nextQuestion();
-        }).then(function () {
-            _this6.startGame();
-        });
+        // Če do sem nisi prišel preko vmesnika, 
+        // greš lahko kar lepo nazaj
+        if (!this.game || !this.difficulty) {
+            this.$router.push({ name: 'dashboard' });
+        } else {
+
+            this.fetchMe().then(function () {
+                return _this6.setupMidi(['xylophone', 'trumpet']);
+            }).then(function () {
+                return _this6.nextQuestion();
+            }).then(function () {
+                _this6.displayState = "instructions";return;
+            });
+        }
+
+        // DEBUG
+
+        /*this.game = {id: 403};
+          this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
+        this.$refs.keyboard.init(this.$refs.staff_view.cursor);
+          
+          this.fetchMe()
+            .then(() => { return this.setupMidi(['xylophone', 'trumpet']); })
+            .then(() => { return this.nextQuestion(); })
+            .then(() => { this.startGame(); });
+        */
     }
 });
 

@@ -151,7 +151,7 @@ var RhythmPlaybackEngine = function(midi){
             } else if(!this.bar.subdivisions && this.bar.base_note == 8 && this.bar.num_beats == 6) {
     
                 // Special counting for 6/8 time...
-                pitches = [hi, lo, lo, hi, lo, lo];
+                pitches = pitches.concat([hi, lo, lo, hi, lo, lo]);
     
             } else {
                 pitches.push(hi);
@@ -255,7 +255,7 @@ var RhythmPlaybackEngine = function(midi){
 
         var countInNotes = [];
 
-        for(let i = 0; i < num_bars; i++){
+        for(let vv = 0; vv < num_bars; vv++){
             if(this.bar.subdivisions){
                 this.bar.subdivisions.forEach(sd => {
                     for(let i = 0; i < sd.n; i++){
