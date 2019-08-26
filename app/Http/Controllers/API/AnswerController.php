@@ -66,44 +66,7 @@ class AnswerController extends Controller
             return $answers[0];
         }
 
-        $res = $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
-
-
-        // Decrease or increase bar and exercise difficulty
-        // ------------------------------------------------
-        // Get status of the answer and determine difficulty delta
-        $reqData = $request->all();
-
-        // Find find the game
-        $questionId = $reqData['question_id'];
-        $question = Question::find($questionId);
-        $game = $question->game()->first();
-
-        if($game->type == 'rhythm'){
-            $this->decreaseIncreaseDifficulty($request, $question);
-        }
-        
-        return $res;
-
-    }
-
-    private function decreaseIncreaseDifficulty($request, $question) {
-
-        $reqData = json_decode($request->getContent());
-        $solved = $reqData->success;
-        $diff = $solved ?  -1 :  1;
-
-        $exerciseId = $question->content;
-        $exercise = RhythmExercise::find($exerciseId);
-        
-        RhythmExercise::where('id', $exerciseId)->update(["difficulty" => max($exercise->difficulty + ($diff * 2), 0)]);
-
-        // Find the bars
-        $bars = $exercise->bars->all();
-        foreach($bars as $bar){
-            // Update the bars
-            RhythmBar::where('id', $bar->id)->update(["difficulty" => max($bar->difficulty + $diff, 0)]);
-        }
+        return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
 
     }
 
