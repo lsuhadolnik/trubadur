@@ -18,19 +18,12 @@ class CreateRhythmDifficultyTable extends Migration
         Schema::create('rhythm_difficulties', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('grade_id');
-            $table->unsignedInteger('min_difficulty');
-            $table->unsignedInteger('max_difficulty');
             $table->timestamps();
 
             $table->foreign('grade_id')->references('id')->on('grades');
         });
 
-        RhythmDifficulty::create(['grade_id' => 1, 'min_difficulty' => 50,  'max_difficulty' => 150]);
-        RhythmDifficulty::create(['grade_id' => 2, 'min_difficulty' => 151, 'max_difficulty' => 250]);
-        RhythmDifficulty::create(['grade_id' => 3, 'min_difficulty' => 251, 'max_difficulty' => 350]);
-        RhythmDifficulty::create(['grade_id' => 4, 'min_difficulty' => 351, 'max_difficulty' => 400]);
-        RhythmDifficulty::create(['grade_id' => 5, 'min_difficulty' => 401, 'max_difficulty' => 450]);
-        RhythmDifficulty::create(['grade_id' => 6, 'min_difficulty' => 451, 'max_difficulty' => 500]);
+        RhythmDifficulty::create(['id' => 10, 'grade_id' => 1]);
 
         DB::statement('ALTER table `games` modify `difficulty_id` int(10) unsigned NULL;');
 

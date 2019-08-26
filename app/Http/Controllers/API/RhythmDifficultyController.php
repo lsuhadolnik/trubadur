@@ -42,9 +42,8 @@ class RhythmDifficultyController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'grade_id'       => 'required|numeric',
-            'min_difficulty' => 'required|numeric|min:0',
-            'max_difficulty' => 'required|numeric|min:0'
+            'id'       => 'required|numeric',
+            'grade_id' => 'required|numeric'
         ];
 
         return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -72,9 +71,7 @@ class RhythmDifficultyController extends Controller
     public function update(Request $request, $id)
     {
         $data = [
-            'grade_id'       => 'required|numeric',
-            'min_difficulty' => 'required|numeric|min:0',
-            'max_difficulty' => 'required|numeric|min:0'
+            'grade_id' => 'required|numeric'
         ];
 
         return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
