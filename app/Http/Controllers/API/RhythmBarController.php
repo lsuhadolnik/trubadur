@@ -61,9 +61,9 @@ class RhythmBarController extends Controller
         //
 
         $data = [
-            'content' => 'required|string',
-            'barInfo' => 'required|string',
-            'difficulty'  => 'numeric|min:50'
+            'content'    => 'required|string',
+            'length'     => 'required|numeric',
+            'cross_bar'  => 'boolean'
         ];
 
         return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -92,9 +92,9 @@ class RhythmBarController extends Controller
     public function update(Request $request, $id)
     {
         $data = [
-            'content' => 'string',
-            'barInfo' => 'string',
-            'difficulty'  => 'numeric|min:0'
+            'content'    => 'string',
+            'length'     => 'numeric',
+            'cross_bar'  => 'boolean'
         ];
 
         return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);

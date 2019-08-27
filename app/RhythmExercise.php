@@ -16,4 +16,9 @@ class RhythmExercise extends Model
     {
         return $this->belongsToMany('App\RhythmBar', 'rhythm_exercise_bars');
     }
+
+    public function bar_info()
+    {
+        return $this->hasOne('App\BarInfo');
+    }
 }

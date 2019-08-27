@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
+use App\BarInfo;
 use App\RhythmBar;
 use App\RhythmExerciseBar;
 use App\RhythmDifficulty;
@@ -93,157 +94,268 @@ class RhythmExerciseController extends Controller
     public static function resolve(int $id){
 
         $ex = RhythmExercise::find($id);
-
         $bars = $ex->bars->all();
+
+        $bar_info = $ex->bar_info->get();
 
         // split bar jsons with {type: 'bar'}
         $notes = json_decode($bars[0]->content, true);
         for($i = 1; $i < count($bars); $i++){
-            $notes = array_merge($notes, [["type" => "bar"]], json_decode($bars[$i]->content, true));
+            $notes = array_merge($notes, json_decode($bars[$i]->content, true));
         }
 
-        
         // return the exercise
         return array(
             "BPM" => $ex->BPM,
             "name" => $ex->name,
-            "bar" => json_decode($ex->barInfo),
+            "bar" => json_decode($bar_info),
             "notes" => $notes
         );
 
     }
 
-    private function FindExistingExercise($id1, $id2) {
 
-        // 1: $id1, 2: $id2; Exercise
-        $res = DB::select("SELECT
-        k.rhythm_exercise_id as exid
-        FROM (
-            SELECT
-            v.rhythm_exercise_id,
-            IF(v.rhythm_bar_id = ? && v.seq = 1 || v.rhythm_bar_id = ? && v.seq = 2, 1, 0) as c
-            FROM rhythm_exercise_bars v
-            where v.rhythm_exercise_id in 
-            (
-                SELECT rhythm_exercise_id 
-                FROM rhythm_exercise_bars 
-                where 
-                    rhythm_bar_id = ? or 
-                    rhythm_bar_id = ? 
-                group by rhythm_exercise_id 
-                having count(*) = 2
-            )
-        ) k
-        group by k.rhythm_exercise_id
-        HAVING SUM(c) = 2;", 
-        [$id1, $id2, $id1, $id2]);
-
-        if(count($res) == 0){
-            return null;
-        }
-
-        return $res[0]->exid;
-
+    /*
+        Returns time_signature bar duration in number of quarter notes
+    */
+    private function getBarInfoLength(&$ts){
+        
+        return (4/$ts->d) * $ts->n;
     }
 
-    private function generateShufled($difficulty) {
-
-        $difficultyMid = 200;
-        if($difficulty != null){
-            $difficultyMid = ($difficulty->max_difficulty + $difficulty->min_difficulty) / 2;
-        }
-
-
-        // group rhytm_bars by barInfo and count them, HAVING COUNT(*) > 1
-        $barInfos = DB::select('SELECT COUNT(*), barInfo 
-        from rhythm_bars
-        where deleted_at IS NULL
-        group by barInfo having COUNT(*) > 1');
+    private function chooseFeatureBar($featureId, $spaceLeft) {
+        $coll = DB::select("SELECT 
+            b.id as id, 
+            o.bar_probability as prob, 
+            b.length as length 
+        from rhythm_bar_occurrences o 
+            JOIN rhythm_bar b on b.id = rhythm_bar_id 
         
-        if(count($barInfos) == 0) {
-            throw new \Exception("Cannot generate an exercise. Insufficient bars present in database.");
+        WHERE o.rhythm_feature_id = :fid AND b.length < :len", ['fid' => $featureId, 'len' => $spaceLeft]);
+
+        $brs = [];
+        foreach($coll as $c) {
+            $brs[$c->id] = $c->prob;
         }
 
-        shuffle($barInfos);
-        $barInfoString = $barInfos[0]->barInfo;
-        $barInfo = json_decode($barInfoString);
+        $bar_id = $this->weightedRandom($brs);
+        return RhythmBar::find($bar_id);
+    }
 
-        $randomNull = rand(50, 351);
+    private function chooseFeature(&$allF, $spaceLeft) {
+        throw new \MethodNotImplemented();
+    }
 
-        $orderCols = rand(0, 1000) > 500 ? 'absDiff, k.freq' : 'k.freq, absDiff';
+    private function getFirstFreeBar($spaceNeeded, &$lengths, $currentBar) {
+        throw new \MethodNotImplemented();
+    }
 
-        // get IDs
-        $ids = DB::select("SELECT rb.id, ABS(IFNULL(rb.difficulty, ?) - ?) `absDiff`
-        FROM rhythm_bars rb
-        LEFT JOIN (
-            SELECT b.id as id, count(b.id) freq 
-            FROM rhythm_bars b 
-            LEFT JOIN rhythm_exercise_bars j ON b.id = j.rhythm_bar_id 
-            GROUP BY b.id 
-        ) k ON k.id = rb.id
-        WHERE barInfo = CAST(? as JSON) AND deleted_at IS NULL
-        ORDER BY $orderCols
-        LIMIT 20", [$randomNull, $difficultyMid, $barInfoString]);
-        if(count($ids) == 0){
-            throw new \Exception("Something went wrong. I received no bars from the database, although I checked before there should be at least 2 present.");
-        }
-
-        // shuffle IDs array
-        shuffle($ids);
-
-        // Does such exercie already exist?
-        $existingExerciseId = $this->FindExistingExercise($ids[0]->id, $ids[1]->id);
-        if($existingExerciseId != null){
-            return $existingExerciseId;
-        }
-
-        // retrieve first 2 bars by IDs
-        $bar1 = RhythmBar::find($ids[0]->id);
-        $bar2 = RhythmBar::find($ids[1]->id);
-
-        $difficulty = $bar1->difficulty + $bar2->difficulty;
-        if(!$difficulty){
-            $difficulty = 100;
-        }
-
-        // Map [0, 1200] to [10, 6]
+    private function filterFeatures(&$features){
+        $res = [
+            "obligatory" => [],
+            "other" => []
+        ];
         
+        foreach($features as $feature){
+            if(isset($feature->min) && $feature->min > 0){
+                $res['obligatory'][] = $feature;
+            }else {
+                $res['other'][] = $feature;
+            }
+        }
+
+        shuffle($res['obligatory']);
+
+        return $res;
+    }
+
+    private function incrementWrap($val, $max, $min = 0){
+        throw new \MethodNotImplemented();
+    }
+
+    private function incrementArrayValue(&$arr, $idx) {
+        throw new \MethodNotImplemented();
+    }
+
+    
+
+    private function generateForLevel($level) {
+
+        $numbars = 2;
+
+        // - Poglej ker rhythm_level je user 
+        // - Izberi naključni bar_info, ki je primeren za ta level 
+        // - Inicializiraj arraye za bare in inicializiraj maksimalne dolžine
+        // - Prenesi vse pojavitve značilnosti (skupaj z značilnostmi in minimalnimi dolžinami taktov), ki so primerne za ta level in BarInfo
+        // - Pojdi čez značilnosti
+        //     ○ V boben po vrsti dodaj bare tistih značilnosti, ki imajo nastavljen min_occurrence; Za vsakega naključno določi, v kater bar (1.,2.) gre. 
+        //         § ChooseCategoryBar($catId, $spaceLeft)
+        //         § Če zmanjka prostora, odnehaj in nadaljuj algoritem.
+        //     ○ V vrsto za generiranje dodaj vse verjetnosti (kumulativna vsota) (normaliziraj jih s številom verjetnosti), ki imajo minimalno dolžino manjšo ali enako kot $spaceLeft in max_occurrences večji kot število pojavitev te kategorije, da nastane kot nek številski trak 
+        //     ○ Naključno generiraj številko in jo lociraj na traku - tja kamor pade, tisto kategorijo generiraj:
+        //         § Naredi nekaj podobnega za rhythm_bar_occurrence
+        //         § Zmanjšaj potrebno dolžino; Če je takt poln, povečaj index generiranega takta
+        //         § Povečaj število pojavitev kategorije
+        //     ○ Če je index enak številu taktov, odnehaj in shrani vajo.
+
+
+        // - Poglej ker rhythm_level je user ✅ ($level)
+        // - Izberi naključni bar_info, ki je primeren za ta level 
+        $bar_infos_collection = BarInfo::where('min_rhythm_level', '>=', $level)->all();
+        $bar_info_info = $bar_infos_collection[array_rand($bar_infos_collection)];
+
+        $bar_info = json_decode($bar_info_string);
+        $bar_length = $this->getBarInfoLength($bar_info);
+
+        // - Inicializiraj arraye za bare in inicializiraj maksimalne dolžine
+        $currentBar = 0;
+        $result  = [];
+        
+        $crossBars = [];
+        $lengths = [];
+        $featureUseCounter = [];
+        for($i = 0; $i < $numbars; $i++) {
+            $result[] = []; $crossBars[] = []; $lengths[] = $bar_length;
+        }
+
+        
+        // - Prenesi vse pojavitve značilnosti (skupaj z značilnostmi in minimalnimi dolžinami taktov), ki so primerne za ta level in BarInfo
+        $features = DB::select("SELECT 
+            f.id as feature_id, fo.feature_probability as probability, 
+            f.name as name, f.min_occurrences as min, f.max_occurrences as max,
+            v.minBarLength as minBarLength
+
+        FROM rhythm_feature_occurrences fo 
+            JOIN rhythm_features f ON f.id = fo.rhythm_feature_id 
+            JOIN (
+                SELECT f.id as fid, MIN(b.length) as minBarLength
+                FROM rhythm_feature_occurrences fo
+                    JOIN rhythm_feature f ON f.id = fo.rhythm_feature_id
+                    JOIN rhythm_bar_occurrences bo ON bo.rhythm_feature_id = f.id
+                    JOIN rhythm_bars b ON b.id = bo.rhythm_bar_id
+                GROUP BY f.id
+                WHERE fo.rhythm_level = :level AND fo.bar_info_id = :barinfo
+            ) v ON v.fid = f.id
+
+        WHERE fo.rhythm_level = :level AND fo.bar_info_id = :barinfo", 
+            ['level' => $level, 'barinfo' => $bar_info_info->info]);
+
+        
+        $featureTypes = $this->filterFeatures($features);
+
+        // Najprej obvezne sestavine
+        // Generiraj Bar iz značilnosti
+        // Najdi prvi prost bar od trenutno izbranega naprej. Če ga ni, odstrani ta feature in pojdi naprej.
+        // Dodaj bar index v $result
+        // povečaj featureUseCount; Če je večji od min
+        $currentBar = 0;
+        while(count($featureTypes['obligatory']) > 0){
+            $f = $featureTypes['obligatory'][0];
+            
+            $bar = $this->chooseFeatureBar($f->id, $spaceLeft[$obligatoryFill]);
+            
+            $idx = $this->getFirstFreeBar($bar->length, $lengths, $currentBar);
+            if($idx < 0){
+                unset($featureTypes['obligatory'][0]);
+            }
+            $currentBar = $idx;
+
+            $result[$idx][] = $bar->id;
+    
+            $this->incrementArrayValue($featureUseCounter, $f->id);                
+            if($featureUseCounter[$f->id] >= $f->min){
+                
+                if(isset($f->max) && $f->max > $f->min){
+                    $featureTypes['other'][] = $featureTypes['obligatory'][0];
+                }
+
+                unset($featureTypes['obligatory'][0]);
+            }
+        }
+
+        $allF = $featureTypes['other'];
+        $currentBar = 0;
+
+        // Dokler nista zapolnjena oba bara
+        for($currentBar = 0; $currentBar < $numbars; $currentBar++){
+
+            if($lengths[$currentBar] <= 0.00001) continue;
+        
+            $currentBar -= 1;
+            
+            // Izberi uteženo naključno značilnost
+            $f_info = $this->chooseFeature($allF, $lengths[$currentBar]);
+            $f = $f_info['f']; $f_idx = $f_info['idx'];
+
+            // Izberi uteženo naključen bar
+            $bar = $this->chooseFeatureBar($f, $lengths[$currentBar]);
+
+            // Dodaj bar index v array
+            $result[$currentBar][] = $bar->id; 
+
+            // Zmanjšaj številke
+            $this->incrementArrayValue($featureUseCounter, $f->id);
+            if(isset($f->max) && $f->max >= $featureUseCounter[$f->id]){
+                unset($allF[$f_idx]);
+            }
+        }
+
         $ex = RhythmExercise::create([
-            "name" => "Random " . time(),
-            "barInfo" => $barInfoString,
-            "BPM" => $this->mapInvRange([0, 1200], [100, 60], $difficulty),
-            "difficulty" => $difficulty,
-            //"description" => ""
+            'bar_info_id' =>$bar_info->id,
+            'BPM' => 70,
+            'rhythm_level' => $level
         ]);
 
-        RhythmExerciseBar::create([
-            'rhythm_exercise_id' => $ex->id,
-            'rhythm_bar_id' => $bar1->id,
-            'seq' => 1
-        ]);
+        
+        // Shrani vajo in vrni številko
+        $idx = 0;
+        for($i = 0; $i < count($result); $i++){
 
-        RhythmExerciseBar::create([
-            'rhythm_exercise_id' => $ex->id,
-            'rhythm_bar_id' => $bar2->id,
-            'seq' => 2
-        ]);
+            for($j = 0; $j < count($result[$i]); $j++){
+                RhythmExerciseBar::create([
+                    'rhythm_exercise_id' => $ex->id,
+                    'rhythm_bar_id' => $part,
+                    'seq' => $idx++
+                ]);
+            }
+
+            if($i + 1 < count($result)) {
+                RhythmExerciseBar::create([
+                    'rhythm_exercise_id' => $ex->id,
+                    'rhythm_bar_id' => 1, // barline
+                    'seq' => $idx++
+                ]);
+            }
+            
+        }
 
         return $ex->id;
+    
 
     }
 
-    private function mapInvRange($i1, $i2, $value){
-
-        $minFrom = $i1[0]; $maxFrom = $i1[1];
-        $maxTo = $i2[0]; $minTo = $i2[1];
-
-        return ($value - $minFrom) / ($maxFrom - $minFrom) * ($maxTo - $minTo) + $minTo;
-
+    /**
+     * Generate a weighted random value based on the probabilities of each key.
+     *
+     * @param  array  $options
+     * @return mixed
+     */
+    private function weightedRandom($options)
+    {
+        $sum = 0;
+        $rand = rand(0, 1000) / 1000;
+        foreach ($options as $option => $probability) {
+            $sum += $probability;
+            if ($rand <= $sum) {
+                return $option;
+            }
+        }
     }
 
-    public function generateNew(RhythmDifficulty $difficulty){
+    public function generateNew($level){
 
-        return $this->generateShufled($difficulty);
+        //return $this->generateShufled($difficulty);
+        return $this->generateForLevel($level);
 
     }
 }

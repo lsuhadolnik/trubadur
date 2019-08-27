@@ -137,12 +137,12 @@ class QuestionController extends Controller
                 $question->content = $this->generateIntervalsQuestion($game->difficulty, $question);
                 break;
             case 'rhythm':
-                $question->content = $this->generateRhythmQuestion($game->rhythm_difficulty, $question);
+                $question->content = $this->generateRhythmQuestion($game->rhythm_level, $question);
                 break;
         }
 
         if(!$question->content){
-            return response()->json(["Question" => "Not generated"], 201);
+            return response()->json(["Question" => "Not generated"], 500);
         }
 
         $question->saveOrFail();
@@ -231,11 +231,11 @@ class QuestionController extends Controller
     /**
      * Generate a random rhythm question based on the given difficulty.
      *
-     * @param  \App\Difficulty  $difficulty
+     * @param  int  $difficulty
      * @param  \App\Question  $question
      * @return string
      */
-    private function generateRhythmQuestion(RhythmDifficulty $difficulty, Question $question){
+    private function generateRhythmQuestion($difficulty, Question $question){
 
         $r = new RhythmExerciseController();
         return $r->generateNew($difficulty);   

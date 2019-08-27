@@ -62,7 +62,8 @@ class UserController extends Controller
             'avatar'              => 'image|max:16384|mimes:jpeg,bmp,png,svg+xml',
             'school_id'           => 'required|integer',
             'grade_id'            => 'required|integer',
-            'badges'              => 'array'
+            'badges'              => 'array',
+            'rhythm_level'        => 'required|integer'
         ];
 
         return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
@@ -100,7 +101,8 @@ class UserController extends Controller
             'avatar'              => 'image|max:16384|mimes:jpeg,bmp,png,svg+xml',
             'school_id'           => 'integer',
             'grade_id'            => 'integer',
-            'badges'              => 'array'
+            'badges'              => 'array',
+            'rhythm_level'        => 'integer'
         ];
 
         return $this->prepareAndExecuteUpdateQuery($request, $data, $id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);

@@ -85,7 +85,7 @@ class GameUserController extends Controller
     public function update(Request $request, $gameId, $userId)
     {
         $data = [
-            'instrument' => 'required|string|in:clarinet,guitar,piano,trumpet,violin',
+            'instrument' => 'string|in:clarinet,guitar,piano,trumpet,violin',
             'points'     => 'integer',
             'finished'   => 'boolean'
         ];
@@ -264,19 +264,18 @@ class GameUserController extends Controller
 
         // Return number from 1 to 4
         $exercise = RhythmExercise::find($question->content);
-        $difficulty = $exercise->difficulty;
+        $difficulty = $exercise->rhythm_level;
 
-        // Če je difficulty manj kot 50, ne štej nič dodatno.
-        if($difficulty < 50) 
-        {
-            return 1;
-        }
+        $points = [
+            11 => 1, 12 => 1.25, 13 => 1.5, 14 => 1.75,
+            21 => 2, 22 => 2.25, 23 => 2.5, 24 => 2.75,
+            31 => 3, 32 => 3.25, 33 => 3.5, 34 => 3.75,
+            41 => 4, 42 => 4.25, 43 => 4.5, 44 => 4.75,
+        ];
 
-        // Map range [50 -> 500] to [1, 4] 
-        $minDiff = 50; $maxDiff = 500; 
-        $minPoints = 1; $maxPoints = 4;
-        
-        return ($difficulty - $minDiff) / ($maxDiff - $minDiff) * ($maxPoints - $minPoints) + $minPoints;
+        if(isset($points[$difficulty]))
+            return $points[$difficulty];
+        else return 1;
 
     }
 
