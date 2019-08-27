@@ -16,7 +16,6 @@ class IntermediateTableChanges   extends Migration
     public function up()
     {
         DB::statement("ALTER TABLE `games` CHANGE `type` `type` ENUM('intervals','rhythm') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;");
-        DB::statement("ALTER TABLE `questions` MODIFY `content` TEXT;");
     }
 
     /**
