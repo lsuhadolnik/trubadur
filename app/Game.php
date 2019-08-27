@@ -12,7 +12,7 @@ class Game extends Model
      * @var array
      */
     protected $fillable = [
-        'difficulty_id','rhythm_difficulty_id', 'mode', 'type',
+        'difficulty_id','rhythm_level', 'mode', 'type',
     ];
 
     /**
@@ -25,11 +25,6 @@ class Game extends Model
     public function difficulty()
     {
         return $this->belongsTo('App\Difficulty');
-    }
-
-    public function rhythm_difficulty()
-    {
-        return $this->belongsTo('App\RhythmDifficulty');
     }
 
     public function questions()

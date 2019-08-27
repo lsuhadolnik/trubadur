@@ -12,5 +12,5 @@ class RhythmBar extends Model
 
     public $timestamps = false;
 
-    public $fillable = ['content', 'barInfo', 'difficulty'];
+    public $fillable = ['content', 'length', 'cross_bar'];
 }

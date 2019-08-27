@@ -10,7 +10,7 @@ class RhythmExercise extends Model
 
     public $timestamps = false;
 
-    public $fillable = ['name', 'barInfo', 'BPM', 'difficulty', 'description'];
+    public $fillable = ['name', 'bar_info_id', 'BPM', 'rhythm_level'];
 
     public function bars()
     {
