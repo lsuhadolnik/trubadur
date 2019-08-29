@@ -235,10 +235,10 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return string
      */
-    private function generateRhythmQuestion($difficulty, Question $question){
+    private function generateRhythmQuestion($level, Question $question){
 
         $r = new RhythmExerciseController();
-        return $r->generateNew($difficulty);   
+        return $r->generateNew($level);   
         
     }
 

@@ -13,4 +13,9 @@ class RhythmBar extends Model
     public $timestamps = false;
 
     public $fillable = ['content', 'length', 'cross_bar'];
+
+    public function newQuery($excludeDeleted = true) {
+        return parent::newQuery($excludeDeleted)
+            ->where('id', '>', 1);
+    }
 }

@@ -322,10 +322,10 @@ export default {
 
         _copy_bar_info(exercise) {
 
-            this.bar.num_beats = exercise.bar.num_beats;
-            this.bar.base_note = exercise.bar.base_note;
-            if(exercise.bar.subdivisions){
-                this.bar.subdivisions = exercise.bar.subdivisions;
+            this.bar.num_beats = exercise.timeSignature.num_beats;
+            this.bar.base_note = exercise.timeSignature.base_note;
+            if(exercise.timeSignature.subdivisions){
+                this.bar.subdivisions = exercise.timeSignature.subdivisions;
             }else {
                 this.bar.subdivisions = null;
             }
@@ -412,7 +412,7 @@ export default {
                 this._copy_bar_info(exercise);
 
                 this.playback.setBPM(exercise.BPM ? exercise.BPM : this.defaultBPM);
-                this.playback.setBar(exercise.bar);
+                this.playback.setBar(exercise.timeSignature);
 
                 // Initialize note store
                 this.notes = new NoteStore(

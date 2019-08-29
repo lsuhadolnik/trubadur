@@ -182,9 +182,41 @@ function _getNoteType(note) {
     return note.value;
 }
 
+function _getBarLength(notes){
+
+    let length = 0;
+    let tupletLength = 0;
+    for(let i = 0; i < notes.length; i++){
+        let note = notes[i];
+        let dur = 4/note.value;
+        if(note.dot){
+            dur = dur*1.5;
+        }
+
+        if(note.in_tuplet){
+
+            tupletLength += dur;
+
+            if(note.tuplet_end){
+                length += tupletLength/note.tuplet_type.num_notes*note.tuplet_type.in_space_of
+                tupletLength = 0;
+            }
+
+        }else {
+            length += dur;
+        }
+        
+        
+    }
+
+    return length;
+}
+
 var utilities = {
 
     generate_playback_durations: _generate_playback_durations,
+    getNotesDuration: _getBarLength,
+    getNoteType: _getNoteType,
 
     get_bar_count: function(notes){
 
@@ -197,8 +229,6 @@ var utilities = {
 
         return count;
     },
-
-    getNoteType: _getNoteType,
 
     sumTupletLength: function(notes, from, to) {
         let type = 0;
@@ -225,7 +255,7 @@ var utilities = {
         let us = soundsLikeFunc(userNotes);
 
         return _.isEqual(ex, us);
-    }
+    },
 
 }
 

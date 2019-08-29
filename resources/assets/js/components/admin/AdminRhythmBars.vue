@@ -4,7 +4,7 @@
         <div class="admin_rhythmBars_masterView" >
 
             <div class="admin_rhythmBars_masterView_header" >
-                <div class="headerPrompt"> Takti ({{allBarsCount}})</div>
+                <div class="headerPrompt"> Gradbeni elementi ({{allBarsCount}})</div>
                 <div class="addNewBarButton" @click="addEmpty()">Dodaj novega</div>
             </div>
 
@@ -26,22 +26,46 @@
 
             
             <div v-if="!selected" class="admin_rhythmBars_detailView_selectPrompt" >
-                Izberi takt na levi
+                Izberi element na levi
             </div>
 
             <div v-if="selected">
                 <div class="admin_rhythmBars_detailView_header" >
-                    <div class="" style="display: inline-block;">Urejanje takta <span class='normalfont'>#{{selected.id ? selected.id : "Nov takt"}}. Taktovski način: {{takt(selected.barInfo)}} Težavnost: {{selected.difficulty ? selected.difficulty : "??"}}</span></div>
+                    <div class="" style="display: inline-block;">Urejanje elementa <span class='normalfont'>#{{selected.id ? selected.id : "Nov takt"}}.</span></div>
                     <!--<div class="button1" @click="downloadJSON" >Prenesi JSON</div>-->
                 </div>
 
-                <StaffView ref="staff_view" :bar="barInfo" :enabledContexts="['zoomview']">
-                    <div class="admin__rhythmBarInfo__barInfoDetail__staffView_container">
-                        <div class="admin__rhythmBarInfo__barInfoDetail__staffView" id="detailViewStaffView"></div>
-                    </div>
-                </StaffView>
+                <div class="admin_rhythmBars_detailView_header_content">
 
-                <RhythmKeyboard ref="keyboard" :key_callback="key_callback" :buttonState="buttonState" :selected="selected" />
+                    <StaffView ref="staff_view" :bar="barInfo" :hideTimeSignatures="true" :enabledContexts="['zoomview']">
+                        <div class="admin__rhythmBarInfo__barInfoDetail__staffView_container">
+                            <div class="admin__rhythmBarInfo__barInfoDetail__staffView" id="detailViewStaffView"></div>
+                        </div>
+                    </StaffView>
+
+                    <RhythmKeyboard ref="keyboard" :key_callback="key_callback" :buttonState="buttonState" :selected="selected" />
+
+                    <div id="table" class="col-xs-12 table-responsive">
+                        <datatable :columns="columns" :data="rows">
+
+                            <template scope="{ row }">
+                                <tr>
+                                    <td>
+                                        <button class="btn btn-xs btn-primary" @click="expand(row.id)">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                    </td>
+                                    <td>{{ row.id }}</td>
+                                    <td>{{ row.user.username }}</td>
+                                    <td>{{ row.user.first_name }}</td>
+                                    <td>{{ row.user.last_name }}</td>
+                                    <td>Email: <input type="text" v-model="row.user.email" /></td>
+                                </tr>
+                            </template>
+                        </datatable>
+                    </div>
+
+                </div>
             </div>
 
         </div>
@@ -59,12 +83,33 @@ import RhythmKeyboard from '../games/rhythm/Keyboard/AdminKeyboard.vue'
 import NoteStore from "../games/rhythm/noteStore"
 import UploadFile from "./UploadFile.vue"
 
+import DatatableFactory from 'vuejs-datatable';
+
 let Fraction = require('fraction.js');
 
 export default {
     
     data() {
         return {
+
+            columns: [
+                { label: 'ID', field: 'id', align: 'center', filterable: false },
+                { label: 'Username', field: 'user.username' },
+                { label: 'First Name', field: 'user.first_name' },
+                { label: 'Last Name', field: 'user.last_name' },
+                { label: 'Email', field: 'user.email', align: 'right', sortable: false }
+            ],
+            rows: [
+                {id: 1, user: {username: "Fred", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
+                {id: 2, user: {username: "JAKUB", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
+                {id: 3, user: {username: "Vrenje", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
+                {id: 4, user: {username: "Moagel", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
+                {id: 4, user: {username: "Moagel", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
+                {id: 4, user: {username: "Moagel", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
+                {id: 4, user: {username: "Moagel", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
+                {id: 4, user: {username: "Moagel", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
+            ],
+
             currentPage: 1,
             allPages: null,
             allBarsCount: "nalaganje...",
@@ -90,14 +135,14 @@ export default {
     },
 
     components: {
-        RhythmBarInfo, StaffView, RhythmKeyboard, UploadFile
+        RhythmBarInfo, StaffView, RhythmKeyboard, UploadFile, DatatableFactory
     },
 
     computed: {
         
         barInfo() {
             if(this.selected)
-                return this.selected.barInfo;
+                return this.selected.timeSignature;
 
             return null;
         }
@@ -244,7 +289,7 @@ export default {
             // parse JSON bars
             for(let i = 0; i < barsData.length; i++){
                 barsData[i].content = JSON.parse(barsData[i].content);
-                barsData[i].barInfo = JSON.parse(barsData[i].barInfo);
+                barsData[i].timeSignature = {base_note:4, num_beats:4};
             }
             this.bars = this.bars.concat(barsData);
         },
@@ -253,8 +298,7 @@ export default {
 
             this.barSelected({
                 content: [],
-                barInfo: {num_beats: 4, base_note: 4},
-                difficulty: 50
+                timeSignature: {num_beats: 4, base_note: 4}
             });
 
         },
@@ -277,9 +321,11 @@ export default {
                     this.$refs.keyboard.init(this.$refs.staff_view.cursor);
                 }
 
+                //debugger;
+                // TODO TUKAJ SI OSTAL: ne dela, ko pritisneš na bar na levi. Zrihtaj da se da pritisnit, potem uredi še urejanje kategorij in pripadnosti kategorijam.
                 // Initialize note store
                 this.notes = new NoteStore(
-                    this.selected.barInfo,
+                    this.selected.timeSignature,
                     this.$refs.staff_view.cursor,
                     this.$refs.staff_view.render
                 );
@@ -287,22 +333,6 @@ export default {
                 this.notes._call_render();
 
             });
-        },
-
-        getNotesDuration(){
-            let length = 0;
-            let tupletLength = 0;
-            for(let i = 0; i < this.notes.notes.length; i++){
-                let note = this.notes.notes[i];
-                let dur = 4/note.value;
-                if(note.dot){
-                    dur = dur*1.5;
-                }
-                
-                length += dur;
-            }
-
-            return length;
         },
 
         key_callback(event) {
@@ -328,14 +358,16 @@ export default {
                 //     .replace(/,"/gi, ", \"")
                 //     .replace(/"/gi, "'");
 
+                let utils = require('../games/rhythm/rhythmUtilities');
+
+debugger;
                 let text = JSON.stringify(this.notes.notes)
                        .replace(/\[/, "")
                        .replace(/\]/, "")
                        .replace(/"/gi, "'");
-                text = "(   ,"+"\""+text+"\""+", "+this.getNotesDuration()+")";
+                text = "(   ,"+"\""+text+"\""+", "+utils.getNotesDuration(this.notes.notes)+")";
 
                 console.log(text);
-                console.log(this.getNotesDuration()+" četrtink");
 
             }
             else if(event.type == "showHelp") {
@@ -414,24 +446,17 @@ export default {
 
             this.buttonState.save = "loading";
 
-            if(!this.selected.difficulty && !this.askForDifficulty()){
-                this.buttonState.save = "normal";
-                return;
-            }
-
             let out = this;
 
             let obj = {
                 content: JSON.stringify(this.selected.content),
-                barInfo: JSON.stringify(this.selected.barInfo),
-                difficulty: this.selected.difficulty
             };
 
             if(this.selected.id){
                 obj.id = this.selected.id;
                 this.saveRhythmBar({bar: obj}).then(bar => {
                     this.buttonState.save = "normal";
-                    debugger;
+                    
                     this.replaceBarInList(this.selected);
                 }).catch(() => {
                     this.buttonState.save = "error";

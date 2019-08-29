@@ -14,11 +14,11 @@ class RhythmExercise extends Model
 
     public function bars()
     {
-        return $this->belongsToMany('App\RhythmBar', 'rhythm_exercise_bars');
+        return $this->belongsToMany('App\RhythmBar', 'rhythm_exercise_bars')->orderBy('seq');
     }
 
     public function bar_info()
     {
-        return $this->hasOne('App\BarInfo');
+        return $this->belongsTo('App\BarInfo');
     }
 }

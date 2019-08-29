@@ -143,7 +143,9 @@ export default {
 
             } else if(this.type == 'rhythm') {
 
-                diffPromise = this.fetchRhythmDifficulty({ gradeId: this.me.grade_id });
+                let out = this;
+
+                diffPromise = new Promise((resolve, reject) => {resolve(out.me.rhythm_level);});
 
             }
             
@@ -167,7 +169,7 @@ export default {
 
                 } else if(this.type == 'rhythm') {
                     
-                    gameObj.rhythm_difficulty_id = difficulty.id;
+                    gameObj.rhythm_level = difficulty;
 
                 }
 

@@ -78,13 +78,13 @@
                 </sexy-button>
                 
                 <!-- DEBUG -->
-                <sexy-button color="sunglow" :cols="1" @click.native="changeDifficulty()" >
+                <!--<sexy-button color="sunglow" :cols="1" @click.native="changeDifficulty()" >
                     <div class="tiny-tajni-pici-mici-font">Nastavi težavnost</div>
                 </sexy-button>
 
                 <sexy-button color="sunglow" :cols="1" @click.native="changeSignature()" >
                     <div class="tiny-tajni-pici-mici-font">Spremeni<br> taktovski<br> način</div>
-                </sexy-button>
+                </sexy-button>-->
 
                 <sexy-button color="sunglow" :cols="1" @click.native="showJson()" >
                     <div class="tiny-tajni-pici-mici-font">Izpiši JSON</div>

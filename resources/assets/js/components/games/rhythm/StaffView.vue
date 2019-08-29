@@ -52,7 +52,7 @@ let Tuplet = VF.Tuplet;
 export default {
 
     props: [
-        'bar', 'staveCount', 'rerender', 'enabledContexts'
+        'bar', 'staveCount', 'rerender', 'enabledContexts', 'hideTimeSignatures'
     ],
 
     data () {
@@ -629,7 +629,8 @@ export default {
             let details = RU._vex_render_batches(context, data.batches, data.optionals, {
                 bar: this.bar,
                 barOffsetY: this.info.barOffsetY,
-                width: this.info.width
+                width: this.info.width,
+                hideTimeSignatures: this.hideTimeSignatures
             }, notes, {
                 offset1: this.test.offset1,
                 offset2: this.test.offset2

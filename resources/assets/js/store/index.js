@@ -249,6 +249,18 @@ export default new Vuex.Store({
                     })
             })
         },
+        generate10Exercises ({state}, data) {
+            return new Promise((resolve, reject) => {
+                axios.post('/api/rhythmExercise/generate/10/'+data, {})
+                    .then(response => {
+                        resolve(response.data);
+                    })
+                    .catch(error => {
+                        handleError(error);
+                        reject(error);
+                    });
+            })
+        },
         updateGameUser ({ state }, { gameId, userId, data }) {
             return new Promise((resolve, reject) => {
                 axios.put('/api/gameuser/' + gameId + '/' + userId, data)

@@ -115,7 +115,7 @@ var RhythmRenderUtilities = function(){
             staves.push(stave);
 
             // If this is the first stave
-            if(idx_bar == 0){
+            if(idx_bar == 0 && !info.hideTimeSignatures){
                 // Add a clef and time signature.
                 timeSignatures.forEach(b => {
                     stave.addTimeSignature(b)
@@ -133,7 +133,9 @@ var RhythmRenderUtilities = function(){
         for(let idx_stave = 1; idx_stave < staveCount; idx_stave++){
             var connector = new VF.StaveConnector(staves[idx_stave - 1], staves[idx_stave]);
             
-            if(idx_stave + 1 == staveCount)
+            if(info.hideTimeSignatures && idx_stave + 1 == staveCount)
+                connector.setType(VF.StaveConnector.type.NONE);
+            else if(idx_stave + 1 == staveCount)
                 connector.setType(VF.StaveConnector.type.BOLD_DOUBLE_RIGHT);
             else 
                 connector.setType(VF.StaveConnector.type.SINGLE);

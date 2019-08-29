@@ -4,7 +4,7 @@
 
         <!--<StaffView :notes="info.notes" />-->
         <div class="admin__rhythmBarInfo__barInfoEntry__staffView">
-            <StaffView ref="staff_view" :bar="info.barInfo" :enabledContexts="['zoomview']" >
+            <StaffView ref="staff_view" :bar="info.timeSignature" :hideTimeSignatures="true" :enabledContexts="['zoomview']" >
                 <div class="rhythm-game__staff__second-row">
                     <div class="admin__rhythmBarInfo__barInfoEntry__staffView__staff" :id="'rhythmBar'+this._uid"></div>
                 </div>
@@ -12,13 +12,13 @@
         </div>
         <div class="admin__rhythmBarInfo__barInfoEntry__bottomInfo">
 
-            <div class="admin__rhythmBarInfo__barInfoEntry__text admin__rhythmBarInfo__barInfoEntry__barInfo" >
-                #{{info.id}} Takt. način: {{takt(info.barInfo)}}
-            </div>
+            <!---<div class="admin__rhythmBarInfo__barInfoEntry__text admin__rhythmBarInfo__barInfoEntry__barInfo" v-if="info.timeSignature">
+                #{{info.id}} Takt. način: {{takt(info.timeSignature)}}
+            </div>-->
 
-            <div class="admin__rhythmBarInfo__barInfoEntry__text admin__rhythmBarInfo__barInfoEntry__difficulty" >
+            <!--<div class="admin__rhythmBarInfo__barInfoEntry__text admin__rhythmBarInfo__barInfoEntry__difficulty" >
                 Težavnost: {{info.difficulty}}
-            </div>
+            </div>-->
 
         </div>
 
