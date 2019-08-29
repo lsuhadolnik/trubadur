@@ -133,21 +133,32 @@ class RhythmExerciseController extends Controller
         
         WHERE o.rhythm_feature_id = :fid AND b.length < :len", ['fid' => $featureId, 'len' => $spaceLeft]);
 
-        $brs = [];
-        foreach($coll as $c) {
-            $brs[$c->id] = $c->prob;
-        }
-
-        $bar_id = $this->weightedRandom($brs);
-        return RhythmBar::find($bar_id);
+        return $this->weightedRandomSelector($coll, function($b) { return $b->prob; });
     }
 
     private function chooseFeature(&$allF, $spaceLeft) {
-        throw new \MethodNotImplemented();
+
+        // Filtriraj tiste, kjer je minLength manjši od spaceLeft
+        $available = array_filter($allF, function($el){ 
+            return $el->minBarLength <= $spaceLeft; 
+        });
+
+        $feature = $this->weightedRandomSelector($available, function($c){ return $c->id; });
+        
     }
 
     private function getFirstFreeBar($spaceNeeded, &$lengths, $currentBar) {
-        throw new \MethodNotImplemented();
+        
+        $i = $currentBar;
+        for($v = 0; $v < count($lengths); $v++){
+            if($lengths[$i] >= $spaceNeeded){
+                return $i;
+            }
+            $i = $this->incrementWrap($i, count($lengths));
+        }
+
+        return -1;
+
     }
 
     private function filterFeatures(&$features){
@@ -170,14 +181,76 @@ class RhythmExerciseController extends Controller
     }
 
     private function incrementWrap($val, $max, $min = 0){
-        throw new \MethodNotImplemented();
+        if($val >= $max){
+            return $min;
+        }
+        return $val + 1;
     }
 
     private function incrementArrayValue(&$arr, $idx) {
-        throw new \MethodNotImplemented();
+        if(!isset($arr[$idx])){
+            $arr[$idx] = 0; 
+        }
+
+        $arr[$idx]++;
     }
 
-    
+    private function getFeaturesForLevelAndBar($level, $bar_info_id){
+
+        // - Prenesi vse pojavitve značilnosti (skupaj z značilnostmi in minimalnimi dolžinami taktov), ki so primerne za ta level in BarInfo
+        $features = DB::select("SELECT 
+            f.id as feature_id, fo.feature_probability as prob, 
+            f.name as name, f.min_occurrences as min, f.max_occurrences as max,
+            v.minBarLength as minBarLength
+
+        FROM rhythm_feature_occurrences fo 
+            JOIN rhythm_features f ON f.id = fo.rhythm_feature_id 
+            JOIN (
+                SELECT f.id as fid, MIN(b.length) as minBarLength
+                FROM rhythm_feature_occurrences fo
+                    JOIN rhythm_feature f ON f.id = fo.rhythm_feature_id
+                    JOIN rhythm_bar_occurrences bo ON bo.rhythm_feature_id = f.id
+                    JOIN rhythm_bars b ON b.id = bo.rhythm_bar_id
+                GROUP BY f.id
+                WHERE fo.rhythm_level = :level AND fo.bar_info_id = :barinfo
+            ) v ON v.fid = f.id
+
+        WHERE fo.rhythm_level = :level AND fo.bar_info_id = :barinfo", 
+            ['level' => $level, 'barinfo' => $bar_info_id]);
+
+        
+        return $this->filterFeatures($features);
+
+    }
+
+    private function saveExercise($ex, &$bars) {
+
+        $ex = RhythmExercise::create($ex);
+
+        $idx = 0;
+        for($i = 0; $i < count($bars); $i++){
+
+            for($j = 0; $j < count($bars[$i]); $j++){
+                RhythmExerciseBar::create([
+                    'rhythm_exercise_id' => $ex->id,
+                    'rhythm_bar_id' => $part,
+                    'seq' => $idx++
+                ]);
+            }
+
+            if($i + 1 < count($bars)) {
+                RhythmExerciseBar::create([
+                    'rhythm_exercise_id' => $ex->id,
+                    'rhythm_bar_id' => 1, // barline
+                    'seq' => $idx++
+                ]);
+            }
+            
+        }
+
+        return $ex->id;
+
+    }
 
     private function generateForLevel($level) {
 
@@ -208,40 +281,15 @@ class RhythmExerciseController extends Controller
         $bar_length = $this->getBarInfoLength($bar_info);
 
         // - Inicializiraj arraye za bare in inicializiraj maksimalne dolžine
-        $currentBar = 0;
-        $result  = [];
+        $currentBar = 0; $result  = [];
         
-        $crossBars = [];
-        $lengths = [];
+        $crossBars = []; $lengths = [];
         $featureUseCounter = [];
         for($i = 0; $i < $numbars; $i++) {
             $result[] = []; $crossBars[] = []; $lengths[] = $bar_length;
         }
 
-        
-        // - Prenesi vse pojavitve značilnosti (skupaj z značilnostmi in minimalnimi dolžinami taktov), ki so primerne za ta level in BarInfo
-        $features = DB::select("SELECT 
-            f.id as feature_id, fo.feature_probability as probability, 
-            f.name as name, f.min_occurrences as min, f.max_occurrences as max,
-            v.minBarLength as minBarLength
-
-        FROM rhythm_feature_occurrences fo 
-            JOIN rhythm_features f ON f.id = fo.rhythm_feature_id 
-            JOIN (
-                SELECT f.id as fid, MIN(b.length) as minBarLength
-                FROM rhythm_feature_occurrences fo
-                    JOIN rhythm_feature f ON f.id = fo.rhythm_feature_id
-                    JOIN rhythm_bar_occurrences bo ON bo.rhythm_feature_id = f.id
-                    JOIN rhythm_bars b ON b.id = bo.rhythm_bar_id
-                GROUP BY f.id
-                WHERE fo.rhythm_level = :level AND fo.bar_info_id = :barinfo
-            ) v ON v.fid = f.id
-
-        WHERE fo.rhythm_level = :level AND fo.bar_info_id = :barinfo", 
-            ['level' => $level, 'barinfo' => $bar_info_info->info]);
-
-        
-        $featureTypes = $this->filterFeatures($features);
+        $featureTypes = $this->getFeaturesForLevelAndBar($level, $bar_info_info->id);
 
         // Najprej obvezne sestavine
         // Generiraj Bar iz značilnosti
@@ -252,16 +300,20 @@ class RhythmExerciseController extends Controller
         while(count($featureTypes['obligatory']) > 0){
             $f = $featureTypes['obligatory'][0];
             
+            // Choose bar
             $bar = $this->chooseFeatureBar($f->id, $spaceLeft[$obligatoryFill]);
             
+            // Find its place
             $idx = $this->getFirstFreeBar($bar->length, $lengths, $currentBar);
             if($idx < 0){
                 unset($featureTypes['obligatory'][0]);
             }
             $currentBar = $idx;
 
+            // Add bar to result
             $result[$idx][] = $bar->id;
     
+            // Increment and remove if there are enough bas of this type
             $this->incrementArrayValue($featureUseCounter, $f->id);                
             if($featureUseCounter[$f->id] >= $f->min){
                 
@@ -276,7 +328,7 @@ class RhythmExerciseController extends Controller
         $allF = $featureTypes['other'];
         $currentBar = 0;
 
-        // Dokler nista zapolnjena oba bara
+        // Until both bars are full
         for($currentBar = 0; $currentBar < $numbars; $currentBar++){
 
             if($lengths[$currentBar] <= 0.00001) continue;
@@ -300,37 +352,12 @@ class RhythmExerciseController extends Controller
             }
         }
 
-        $ex = RhythmExercise::create([
-            'bar_info_id' =>$bar_info->id,
+        // Shrani vajo in vrni številko
+        return $this->saveExercise([
+            'bar_info_id' => $bar_info_info->id,
             'BPM' => 70,
             'rhythm_level' => $level
-        ]);
-
-        
-        // Shrani vajo in vrni številko
-        $idx = 0;
-        for($i = 0; $i < count($result); $i++){
-
-            for($j = 0; $j < count($result[$i]); $j++){
-                RhythmExerciseBar::create([
-                    'rhythm_exercise_id' => $ex->id,
-                    'rhythm_bar_id' => $part,
-                    'seq' => $idx++
-                ]);
-            }
-
-            if($i + 1 < count($result)) {
-                RhythmExerciseBar::create([
-                    'rhythm_exercise_id' => $ex->id,
-                    'rhythm_bar_id' => 1, // barline
-                    'seq' => $idx++
-                ]);
-            }
-            
-        }
-
-        return $ex->id;
-    
+        ], $result);
 
     }
 
@@ -340,12 +367,12 @@ class RhythmExerciseController extends Controller
      * @param  array  $options
      * @return mixed
      */
-    private function weightedRandom($options)
+    private function weightedRandomSelector($options, $selector)
     {
         $sum = 0;
         $rand = rand(0, 1000) / 1000;
-        foreach ($options as $option => $probability) {
-            $sum += $probability;
+        foreach ($options as $option) {
+            $sum += $selector($option);
             if ($rand <= $sum) {
                 return $option;
             }

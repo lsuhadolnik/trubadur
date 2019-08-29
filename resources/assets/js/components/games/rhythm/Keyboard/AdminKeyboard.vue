@@ -86,6 +86,10 @@
                     <div class="tiny-tajni-pici-mici-font">Spremeni<br> taktovski<br> način</div>
                 </sexy-button>
 
+                <sexy-button color="sunglow" :cols="1" @click.native="showJson()" >
+                    <div class="tiny-tajni-pici-mici-font">Izpiši JSON</div>
+                </sexy-button>
+
                 <sexy-button color="green" :cols="1"  @click.native="saveBar()"  >
                     <div v-if="buttonState.save == 'normal'" class="tiny-tajni-pici-mici-font">Shrani</div>
                     <icon name="check" v-if="buttonState.save == 'ok'"/>

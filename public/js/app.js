@@ -53098,6 +53098,21 @@ var Fraction = __webpack_require__(7);
                 _this.notes._call_render();
             });
         },
+        getNotesDuration: function getNotesDuration() {
+            var length = 0;
+            var tupletLength = 0;
+            for (var i = 0; i < this.notes.notes.length; i++) {
+                var note = this.notes.notes[i];
+                var dur = 4 / note.value;
+                if (note.dot) {
+                    dur = dur * 1.5;
+                }
+
+                length += dur;
+            }
+
+            return length;
+        },
         key_callback: function key_callback(event) {
 
             if (event.type == "selectionMode") {
@@ -53111,9 +53126,20 @@ var Fraction = __webpack_require__(7);
                 // 2. ({"type":"bar".*},)    ->   \n\n\t\t\t$1\n\n
                 // 3.   ,"    ->   , "
 
-                var text = JSON.stringify(this.notes.notes).replace(/\[/, "\t\t\t").replace(/\]/, "").replace(/},/gi, "},\n\t\t\t").replace(/({"type":"bar".*},)/gi, "\n\n\t\t\t$1\n\n").replace(/":/gi, "\" :").replace(/,"/gi, ", \"");
+                // let text = JSON.stringify(this.notes.notes)
+                //     .replace(/\[/, "\t\t\t")
+                //     .replace(/\]/, "")
+                //     .replace(/},/gi, "},\n\t\t\t")
+                //     .replace(/({"type":"bar".*},)/gi, "\n\n\t\t\t$1\n\n")
+                //     .replace(/":/gi, "\" :")
+                //     .replace(/,"/gi, ", \"")
+                //     .replace(/"/gi, "'");
+
+                var text = JSON.stringify(this.notes.notes).replace(/\[/, "").replace(/\]/, "").replace(/"/gi, "'");
+                text = "(   ," + "\"" + text + "\"" + ", " + this.getNotesDuration() + ")";
 
                 console.log(text);
+                console.log(this.getNotesDuration() + " četrtink");
             } else if (event.type == "showHelp") {
                 this.showHelp = true;
             } else if (event.type == "changeSignature") {
@@ -54693,6 +54719,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_vue_awesome_icons_ban__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_vue_awesome_icons_refresh__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_vue_awesome_icons_exclamation_circle__ = __webpack_require__(44);
+//
+//
+//
+//
 //
 //
 //
@@ -57435,6 +57465,23 @@ var render = function() {
                 _vm._v(" taktovski"),
                 _c("br"),
                 _vm._v(" način")
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: "sunglow", cols: 1 },
+              nativeOn: {
+                click: function($event) {
+                  return _vm.showJson()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                _vm._v("Izpiši JSON")
               ])
             ]
           ),

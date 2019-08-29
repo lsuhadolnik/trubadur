@@ -289,6 +289,22 @@ export default {
             });
         },
 
+        getNotesDuration(){
+            let length = 0;
+            let tupletLength = 0;
+            for(let i = 0; i < this.notes.notes.length; i++){
+                let note = this.notes.notes[i];
+                let dur = 4/note.value;
+                if(note.dot){
+                    dur = dur*1.5;
+                }
+                
+                length += dur;
+            }
+
+            return length;
+        },
+
         key_callback(event) {
 
             if(event.type == "selectionMode"){
@@ -303,15 +319,23 @@ export default {
                 // 2. ({"type":"bar".*},)    ->   \n\n\t\t\t$1\n\n
                 // 3.   ,"    ->   , "
 
+                // let text = JSON.stringify(this.notes.notes)
+                //     .replace(/\[/, "\t\t\t")
+                //     .replace(/\]/, "")
+                //     .replace(/},/gi, "},\n\t\t\t")
+                //     .replace(/({"type":"bar".*},)/gi, "\n\n\t\t\t$1\n\n")
+                //     .replace(/":/gi, "\" :")
+                //     .replace(/,"/gi, ", \"")
+                //     .replace(/"/gi, "'");
+
                 let text = JSON.stringify(this.notes.notes)
-                    .replace(/\[/, "\t\t\t")
-                    .replace(/\]/, "")
-                    .replace(/},/gi, "},\n\t\t\t")
-                    .replace(/({"type":"bar".*},)/gi, "\n\n\t\t\t$1\n\n")
-                    .replace(/":/gi, "\" :")
-                    .replace(/,"/gi, ", \"");
+                       .replace(/\[/, "")
+                       .replace(/\]/, "")
+                       .replace(/"/gi, "'");
+                text = "(   ,"+"\""+text+"\""+", "+this.getNotesDuration()+")";
 
                 console.log(text);
+                console.log(this.getNotesDuration()+" četrtink");
 
             }
             else if(event.type == "showHelp") {

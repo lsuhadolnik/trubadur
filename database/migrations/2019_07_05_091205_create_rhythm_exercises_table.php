@@ -54,12 +54,12 @@ class CreateRhythmExercisesTable extends Migration
             $table->unsignedInteger('rhythm_level');
             $table->unsignedInteger('rhythm_feature_id');
             $table->unsignedInteger('bar_info_id');
-            $table->double('category_probability')->default(0.5);
+            $table->double('feature_probability')->default(0.5);
 
             $table->foreign('bar_info_id')->references('id')->on('bar_infos');
             $table->foreign('rhythm_feature_id')->references('id')->on('rhythm_features');
 
-            $table->unique(['rhythm_level', 'rhythm_feature_id', 'bar_info_id'], 'rhythm_level_feature_barInfo_unique');
+            $table->primary(['rhythm_level', 'rhythm_feature_id', 'bar_info_id'], 'rhythm_level_feature_barInfo_unique');
         });
 
 
