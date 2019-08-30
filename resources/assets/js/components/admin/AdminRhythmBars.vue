@@ -50,16 +50,13 @@
 
                             <template scope="{ row }">
                                 <tr>
+                                    <td>{{ row.feature.name }}</td>
+                                    <td>Verjetnost: <input type="text" v-model="row.bar_probability" /></td>
                                     <td>
-                                        <button class="btn btn-xs btn-primary" @click="expand(row.id)">
-                                            <span class="glyphicon glyphicon-search"></span>
+                                        <button class="btn btn-xs btn-primary" @click="alert('Will delete the bar now,')">
+                                            <icon name="trash" />
                                         </button>
                                     </td>
-                                    <td>{{ row.id }}</td>
-                                    <td>{{ row.user.username }}</td>
-                                    <td>{{ row.user.first_name }}</td>
-                                    <td>{{ row.user.last_name }}</td>
-                                    <td>Email: <input type="text" v-model="row.user.email" /></td>
                                 </tr>
                             </template>
                         </datatable>

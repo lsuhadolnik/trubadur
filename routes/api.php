@@ -73,3 +73,18 @@ Route::resource('rhythmBars', 'API\RhythmBarController', ['except' => ['create',
 Route::post('rhythmExerciseBar/import/musicXML', 'API\RhythmBarController@importMusicXML');
 Route::post('rhythmExercise/generate/{n}/{level}', 'API\RhythmExerciseController@generateNForLevel');
 
+Route::post('rhythmBars/{id}/occurrences', 'API\RhythmBarOccurrenceController@create');
+Route::get('rhythmBars/{id}/occurrences', 'API\RhythmBarOccurrenceController@index');
+Route::get('rhythmBars/{id}/occurrences/{fid}', 'API\RhythmBarOccurrenceController@show');
+Route::put('rhythmBars/{id}/occurrences/{fid}', 'API\RhythmBarOccurrenceController@update');
+Route::delete('rhythmBars/{id}/occurrences/{fid}', 'API\RhythmBarOccurrenceController@destroy');
+
+Route::resource('barInfo', 'API\BarInfoController', ['except' => ['create', 'edit']]);
+Route::resource('rhythmFeatures', 'API\RhythmFeatureController', ['except' => ['create', 'edit']]);
+
+Route::post('rhythmFeatures/{fid}/occurrences', 'API\RhythmFeatureOccurrenceController@store');
+Route::    get('rhythmFeatures/{fid}/occurrences', 'API\RhythmFeatureOccurrenceController@index');
+Route::    get('rhythmFeatures/{fid}/occurrences/{level}/{bar}', 'API\RhythmFeatureOccurrenceController@show');
+Route::    put('rhythmFeatures/{fid}/occurrences', 'API\RhythmFeatureOccurrenceController@update');
+Route:: delete('rhythmFeatures/{fid}/occurrences/{level}/{bar}', 'API\RhythmFeatureOccurrenceController@destroy');
+

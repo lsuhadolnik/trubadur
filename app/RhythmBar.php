@@ -18,4 +18,8 @@ class RhythmBar extends Model
         return parent::newQuery($excludeDeleted)
             ->where('id', '>', 1);
     }
+
+    public function occurrences(){
+        return $this->hasMany('App\RhythmBarOccurrence');
+    }
 }

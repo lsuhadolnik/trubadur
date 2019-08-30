@@ -383,6 +383,20 @@ export default new Vuex.Store({
             })
         },
 
+        fetchRhythmBarOccurrences ({state}, data) {
+
+            return new Promise((resolve, reject) => {
+                axios.get('/api/rhythmBar/'+data+'/occurrences')
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            })
+        },
+
         deleteRhythmBar ({state}, data) {
 
             if(!data || !data.id) return;

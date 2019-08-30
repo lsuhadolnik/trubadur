@@ -54352,9 +54352,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
 
 
 
@@ -60138,6 +60135,36 @@ var render = function() {
                               var row = ref.row
                               return [
                                 _c("tr", [
+                                  _c("td", [_vm._v(_vm._s(row.feature.name))]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v("Verjetnost: "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: row.bar_probability,
+                                          expression: "row.bar_probability"
+                                        }
+                                      ],
+                                      attrs: { type: "text" },
+                                      domProps: { value: row.bar_probability },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            row,
+                                            "bar_probability",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
                                   _c("td", [
                                     _c(
                                       "button",
@@ -60145,57 +60172,17 @@ var render = function() {
                                         staticClass: "btn btn-xs btn-primary",
                                         on: {
                                           click: function($event) {
-                                            return _vm.expand(row.id)
+                                            return _vm.alert(
+                                              "Will delete the bar now,"
+                                            )
                                           }
                                         }
                                       },
                                       [
-                                        _c("span", {
-                                          staticClass:
-                                            "glyphicon glyphicon-search"
-                                        })
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(row.id))]),
-                                  _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(row.user.username))]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v(_vm._s(row.user.first_name))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v(_vm._s(row.user.last_name))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v("Email: "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: row.user.email,
-                                          expression: "row.user.email"
-                                        }
+                                        _c("icon", { attrs: { name: "trash" } })
                                       ],
-                                      attrs: { type: "text" },
-                                      domProps: { value: row.user.email },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            row.user,
-                                            "email",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
+                                      1
+                                    )
                                   ])
                                 ])
                               ]
@@ -60204,7 +60191,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        1616735346
+                        1233332569
                       )
                     })
                   ],
@@ -72447,8 +72434,21 @@ function handleError(error) {
                 });
             });
         },
-        deleteRhythmBar: function deleteRhythmBar(_ref26, data) {
+        fetchRhythmBarOccurrences: function fetchRhythmBarOccurrences(_ref26, data) {
             var state = _ref26.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.get('/api/rhythmBar/' + data + '/occurrences').then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        deleteRhythmBar: function deleteRhythmBar(_ref27, data) {
+            var state = _ref27.state;
 
 
             if (!data || !data.id) return;
@@ -72462,8 +72462,8 @@ function handleError(error) {
                 });
             });
         },
-        createRhythmBar: function createRhythmBar(_ref27, data) {
-            var state = _ref27.state;
+        createRhythmBar: function createRhythmBar(_ref28, data) {
+            var state = _ref28.state;
 
 
             if (!data || !data.bar) return;
@@ -72477,8 +72477,8 @@ function handleError(error) {
                 });
             });
         },
-        saveRhythmBar: function saveRhythmBar(_ref28, data) {
-            var state = _ref28.state;
+        saveRhythmBar: function saveRhythmBar(_ref29, data) {
+            var state = _ref29.state;
 
 
             if (!data || !data.bar || !data.bar.id) return;
