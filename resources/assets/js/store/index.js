@@ -397,6 +397,62 @@ export default new Vuex.Store({
             })
         },
 
+        createRhythmBarOccurrence ({state}, data) {
+
+            return new Promise((resolve, reject) => {
+                axios.post('/api/rhythmBar/'+data.rhythm_bar_id+'/occurrences', data)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            })
+        },
+
+        deleteRhythmBarOccurrence ({state}, data) {
+
+            return new Promise((resolve, reject) => {
+                axios.delete('/api/rhythmBar/'+data.rhythm_bar_id+'/occurrences/'+data.rhythm_feature_id, data)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            })
+        },
+
+        updateRhythmBarOccurrence ({state}, data) {
+
+            return new Promise((resolve, reject) => {
+                axios.delete('/api/rhythmBar/'+data.rhythm_bar_id+'/occurrences/'+data.rhythm_feature_id, data)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            })
+        },
+
+        updateRhythmFeatureOccurrence ({state}, data) {
+
+            return new Promise((resolve, reject) => {
+                axios.delete('/api/rhythmBar/'+data.rhythm_bar_id+'/occurrences/'+data.rhythm_feature_id, data)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            })
+        },
+
         deleteRhythmBar ({state}, data) {
 
             if(!data || !data.id) return;

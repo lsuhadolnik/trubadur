@@ -52756,6 +52756,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -52768,19 +52770,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     data: function data() {
         return {
             bars: [],
-            level: 11
+            level: 11,
+
+            displayState: 'ready'
         };
     },
 
 
     methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])(['generate10Exercises']), {
         generate: function generate() {
+            var _this = this;
+
             var out = this;
+            this.displayState = 'loading';
             this.generate10Exercises(this.level).then(function (res) {
                 out.bars = res;
+                _this.displayState = 'ready';
             }).catch(function (e) {
                 console.error(e);
                 alert("Napaka! \n\n" + e.message);
+                _this.displayState = 'ready';
             });
         }
     })
@@ -52921,7 +52930,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return a.num_beats + "/" + a.base_note;
         },
         render: function render() {
-            this.$refs.staff_view.render(this.info.content);
+            if (this.info.notes) {
+                this.$refs.staff_view.render(this.info.notes);
+            } else {
+                this.$refs.staff_view.render(this.info.content);
+            }
         }
     },
 
@@ -54119,45 +54132,60 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "main_adminPlayers" }, [
-    _vm._v("\n\n    Generiraj vajo za nivo "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.level,
-          expression: "level"
-        }
-      ],
-      attrs: { type: "number", placeholder: "nivo" },
-      domProps: { value: _vm.level },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
+  return _c(
+    "div",
+    { staticClass: "main_adminPlayers" },
+    [
+      _c("loader", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.displayState == "loading",
+            expression: "displayState == 'loading'"
           }
-          _vm.level = $event.target.value
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c("button", { on: { click: _vm.generate } }, [_vm._v("Generiraj")]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "barze" },
-      _vm._l(_vm.bars, function(item) {
-        return _c("RhythmBarInfo", {
-          key: item.id,
-          ref: "renderedBar",
-          refInFor: true,
-          attrs: { info: item }
-        })
+        ]
       }),
-      1
-    )
-  ])
+      _vm._v("\n\n    Generiraj vajo za nivo "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.level,
+            expression: "level"
+          }
+        ],
+        attrs: { type: "number", placeholder: "nivo" },
+        domProps: { value: _vm.level },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.level = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("button", { on: { click: _vm.generate } }, [_vm._v("Generiraj")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "barze" },
+        _vm._l(_vm.bars, function(item) {
+          return _c("RhythmBarInfo", {
+            key: item.id,
+            ref: "renderedBar",
+            refInFor: true,
+            attrs: { info: item }
+          })
+        }),
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -54524,6 +54552,7 @@ var Fraction = __webpack_require__(7);
 
             // parse JSON bars
             for (var i = 0; i < barsData.length; i++) {
+                debugger;
                 barsData[i].content = JSON.parse(barsData[i].content);
                 barsData[i].timeSignature = { base_note: 4, num_beats: 4 };
             }
@@ -72447,8 +72476,60 @@ function handleError(error) {
                 });
             });
         },
-        deleteRhythmBar: function deleteRhythmBar(_ref27, data) {
+        createRhythmBarOccurrence: function createRhythmBarOccurrence(_ref27, data) {
             var state = _ref27.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.post('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences', data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        deleteRhythmBarOccurrence: function deleteRhythmBarOccurrence(_ref28, data) {
+            var state = _ref28.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.delete('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences/' + data.rhythm_feature_id, data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        updateRhythmBarOccurrence: function updateRhythmBarOccurrence(_ref29, data) {
+            var state = _ref29.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.delete('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences/' + data.rhythm_feature_id, data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        updateRhythmFeatureOccurrence: function updateRhythmFeatureOccurrence(_ref30, data) {
+            var state = _ref30.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.delete('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences/' + data.rhythm_feature_id, data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        deleteRhythmBar: function deleteRhythmBar(_ref31, data) {
+            var state = _ref31.state;
 
 
             if (!data || !data.id) return;
@@ -72462,8 +72543,8 @@ function handleError(error) {
                 });
             });
         },
-        createRhythmBar: function createRhythmBar(_ref28, data) {
-            var state = _ref28.state;
+        createRhythmBar: function createRhythmBar(_ref32, data) {
+            var state = _ref32.state;
 
 
             if (!data || !data.bar) return;
@@ -72477,8 +72558,8 @@ function handleError(error) {
                 });
             });
         },
-        saveRhythmBar: function saveRhythmBar(_ref29, data) {
-            var state = _ref29.state;
+        saveRhythmBar: function saveRhythmBar(_ref33, data) {
+            var state = _ref33.state;
 
 
             if (!data || !data.bar || !data.bar.id) return;

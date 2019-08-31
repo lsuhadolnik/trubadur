@@ -1,6 +1,8 @@
 <template>
     <div class="main_adminPlayers">
 
+        <loader v-show="displayState == 'loading'"></loader>
+
         Generiraj vajo za nivo <input type="number" placeholder="nivo" v-model="level" />
         <button @click="generate">Generiraj</button>
 
@@ -23,7 +25,9 @@ export default {
     data() {
         return {
             bars: [],
-            level: 11
+            level: 11,
+
+            displayState: 'ready'
         }
     },
 
@@ -32,11 +36,14 @@ export default {
 
         generate() {
             let out = this;
+            this.displayState='loading';
             this.generate10Exercises(this.level).then((res) => {
                 out.bars = res;
+                this.displayState='ready';
             }).catch((e) => {
                 console.error(e);
                 alert("Napaka! \n\n"+e.message)
+                this.displayState='ready';
             });
         }
     }

@@ -84,7 +84,13 @@ export default {
         },
 
         render(){
-            this.$refs.staff_view.render(this.info.content);
+            if(this.info.notes){
+                this.$refs.staff_view.render(this.info.notes);
+            }else {
+                this.$refs.staff_view.render(this.info.content);
+            }
+
+            
         }
 
     },

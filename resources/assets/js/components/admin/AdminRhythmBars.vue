@@ -285,6 +285,7 @@ export default {
 
             // parse JSON bars
             for(let i = 0; i < barsData.length; i++){
+                debugger;
                 barsData[i].content = JSON.parse(barsData[i].content);
                 barsData[i].timeSignature = {base_note:4, num_beats:4};
             }
