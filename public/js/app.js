@@ -52248,7 +52248,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         this.fetchMe().then(function () {
 
             if (_this.me && _this.me.admin) {
-                _this.menuItems = [{ name: 'Takti', route: 'admin_bars', text: 'ADMIN' }, { name: 'Igralci', route: 'admin_players', text: 'ADMIN' }].concat(_this.menuItems);
+                _this.menuItems = [
+                /*{ name: 'Takti', route: 'admin_bars', text: 'ADMIN' },*/
+                { name: 'Generiranje', route: 'admin_players', text: 'ADMIN' }].concat(_this.menuItems);
             }
         });
     },

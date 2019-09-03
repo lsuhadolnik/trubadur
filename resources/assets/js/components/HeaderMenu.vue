@@ -259,8 +259,8 @@ export default {
 
             if(this.me && this.me.admin) {
                 this.menuItems = [
-                    { name: 'Takti', route: 'admin_bars', text: 'ADMIN' },
-                    { name: 'Igralci', route: 'admin_players', text: 'ADMIN' },
+                    /*{ name: 'Takti', route: 'admin_bars', text: 'ADMIN' },*/
+                    { name: 'Generiranje', route: 'admin_players', text: 'ADMIN' },
                 ].concat(this.menuItems);
             }
 
