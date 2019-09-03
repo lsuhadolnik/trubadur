@@ -173,6 +173,15 @@
                 </sexy-button>-->
 
             </div>
+
+            <div class="row rhythm-game__keyboard-row row-5 show-normal">
+                
+                <!-- BACKSPACE BUTTON -->
+                <sexy-button color="cabaret"   @click.native="feedback()"  >
+                    <div class="tiny-tajni-pici-mici-font">Povratne informacije</div>
+                </sexy-button>
+
+            </div>
             
 
         </div>
@@ -366,6 +375,14 @@ export default {
 
             this.key_callback({
                 type: "showJson"
+            });
+
+        },
+
+        feedback() {
+
+            this.key_callback({
+                type: "feedback"
             });
 
         },

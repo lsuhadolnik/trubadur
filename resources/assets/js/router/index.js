@@ -77,7 +77,7 @@ export default new VueRouter({
         },
         {
             name: 'rhythm',
-            path: '/game/rhythm',
+            path: '/game/rhythm/:exerciseId?',
             component: Rhythm,
             props: true
         },

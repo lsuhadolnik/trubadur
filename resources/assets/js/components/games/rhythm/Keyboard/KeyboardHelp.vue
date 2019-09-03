@@ -107,6 +107,9 @@
                             Če pritisneš samo enkrat, vključiš ali izključiš metronom.<br>
                             Lahko poskusiš na tem spodnjem gumbu.
                         </div>
+                        <div class="helpView__text-line">
+                            Če je gumb zelene barve, pomeni, da je metronom vključen, sicer je izključen.
+                        </div>
                         <div class="helpView__buttons helpView__buttons-center">
                             <b-p-m-slider :bpmObject="{BPM: 20, metronome: false}" valueKey="BPM" />
                         </div>

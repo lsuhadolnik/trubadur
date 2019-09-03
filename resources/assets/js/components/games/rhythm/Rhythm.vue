@@ -8,10 +8,14 @@
                 <li class="rhythm__instructions-list-item">Preizkusila / preizkusil se boš v ritmičnem nareku.</li>
                 <li class="rhythm__instructions-list-item">Vaja bo v {{bar.num_beats}}/{{bar.base_note}} taktu.</li>
                 <li class="rhythm__instructions-list-item">Slišala / slišal boš {{num_beats_text}}.</li>
+                <li class="rhythm__instructions-list-item">Na začetku bo metronom odtapkal en takt.</li>
                 <li class="rhythm__instructions-list-item">Predvajalo se bo s hitrostjo {{questionState.exercise != null ? questionState.exercise.BPM : "??" }} udarcev na minuto.</li>
                 <li class="rhythm__instructions-list-item">Za reševanje imaš na voljo {{questionState.maxSeconds}} sekund.</li>
                 <li class="rhythm__instructions-list-item">Odgovor lahko preveriš največ {{questionState.maxChecks}}-krat.</li>
                 <li class="rhythm__instructions-list-item">Če ne veš, kako deluje kakšen gumb, pritisni gumb Pomoč.<br>Dobro je, da si Pomoč ogledaš pred prvo igro.</li>
+                <li class="rhythm__instructions-list-item" style="list-style-type: none;">
+                    <sexy-button :text="metronomeButtonText" :color="metronomeButtonColor" :cols="3" @click.native="playback.metronome = !playback.metronome"/>
+                </li>
                 <!--<li class="rhythm__instructions-list-item">Program je v preizkusni fazi, zanekrat lahko preizkusiš par vpisanih vaj.</li>-->
             </ul>
         </div>
@@ -183,7 +187,6 @@ export default {
 
             playback: new RhythmPlaybackEngine(MIDI),
             defaultBPM: 120,
-            metronome: true
         }
     },
 
@@ -204,12 +207,26 @@ export default {
                 default:
                     return this.questionState.num_beats+ " taktov";
             }
+        },
+
+        metronomeButtonText() {
+            if(this.playback.metronome){
+                return "IZKLJUČI METRONOM";
+            }
+            return "VKLJUČI METRONOM";
+        },
+
+        metronomeButtonColor() {
+            if(this.playback.metronome){
+                return "green";
+            }
+            return "cabaret";
         }
     },
     
     methods: {
 
-        ...mapActions(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi']),
+        ...mapActions(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi', 'fetchRhythmExercise', 'createRhythmExerciseFeedback']),
 
 
         cursor_moved(pos, from){
@@ -225,6 +242,9 @@ export default {
             }
             if(event.type == "pass"){
                 this.questionState.check = "next";
+            }
+            if(event.type == "feedback"){
+                this.openFeedbackWindow();
             }
             if(event.type == "submit"){
 
@@ -382,6 +402,17 @@ export default {
 
         },
 
+        loadExerciseWithId(exerciseId) {
+
+            this.displayState = 'loading';
+
+            return this.fetchRhythmExercise(exerciseId)
+            .then((exercise) => {
+                return this.prepareQuestionWithContent(1, exercise, false);
+            });
+
+        },
+
         nextQuestion(play){
 
             this.displayState = 'loading';
@@ -399,42 +430,52 @@ export default {
                     chapter: this.questionState.chapter 
                 })
             .then((question) => {
-                        
+
                 let exercise = question.content;
 
-                this.questionState.exercise = exercise;
-                this.questionState.id = question.id;
-
-                this._questionState_reset();
-                this.questionState.num_beats = util.get_bar_count(exercise.notes);
-            
-
-                this._copy_bar_info(exercise);
-
-                this.playback.setBPM(exercise.BPM ? exercise.BPM : this.defaultBPM);
-                this.playback.setBar(exercise.timeSignature);
-
-                // Initialize note store
-                this.notes = new NoteStore(
-                    this.bar,
-                    this.$refs.staff_view.cursor,
-                    this.$refs.staff_view.render
-                );
-
-                window.____notes = this.notes;
-
-                
-                if(play){
-                    this.play({action: "replay", what: "exercise"});
-                }
-
-                this.$refs.staff_view.reset();
-
+                this.prepareQuestionWithContent(question.id, exercise)
             });
 
         },
 
+        prepareQuestionWithContent(questionId, exercise, play) {
+
+            this.questionState.exercise = exercise;
+            this.questionState.id = questionId;
+
+            this._questionState_reset();
+            this.questionState.num_beats = util.get_bar_count(exercise.notes);
+        
+            this._copy_bar_info(exercise);
+
+            this.playback.setBPM(exercise.BPM ? exercise.BPM : this.defaultBPM);
+            this.playback.setBar(exercise.timeSignature);
+
+            // Initialize note store
+            this.notes = new NoteStore(
+                this.bar,
+                this.$refs.staff_view.cursor,
+                this.$refs.staff_view.render
+            );
+
+            window.____notes = this.notes;
+
+            
+            if(play){
+                this.play({action: "replay", what: "exercise"});
+            }
+
+            this.$refs.staff_view.reset();
+
+        },
+
         continueGame(){
+
+            if(this.isExerciseTest()){
+                window.close();
+                alert("Okno se bo zdaj zaprlo.");
+                return;
+            }
 
             this.nextQuestion(false).then((state) => {
                 
@@ -528,7 +569,7 @@ export default {
             }
 
             // Correct or last chance...
-            if(status || timeout || this.questionState.maxChecks <= this.questionState.statistics.nChecks){
+            if((status || timeout || this.questionState.maxChecks <= this.questionState.statistics.nChecks) && !this.isExerciseTest()){
                 // Log the answer
                 return this.logAnswer({time, status}).then(() => {
                     return outside.updateCheckStatus(checkStatus);
@@ -588,13 +629,49 @@ export default {
             
         },
 
+        isExerciseTest(){
+            return this.$route.params.exerciseId != null;
+        },
+
+        openFeedbackWindow(){
+
+            let feedback = prompt("Kaj želite sporočiti?");
+
+            if(feedback){
+                this.createRhythmExerciseFeedback({
+                    rhythm_exercise_id: this.$route.params.exerciseId,
+                    question_id: this.questionState.id,
+                    content: feedback
+                }).then(() => {
+                    alert("Komentar uspešno posredovan.");
+                }).catch(() => {
+                    alert("Napaka pri pošiljanju komentarja. Poskusite znova.");
+                })
+            }
+            
+
+        }
+
 },
 
     mounted() {
 
+        let out = this;
+
         // Original
         this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
         this.$refs.keyboard.init(this.$refs.staff_view.cursor);
+
+        if(this.isExerciseTest()){
+            // Override - show certain exercise and quit
+
+            this.fetchMe()
+            .then(() => { return this.setupMidi(['xylophone', 'trumpet']); })
+            .then(() => { return this.loadExerciseWithId(out.$route.params.exerciseId); })
+            .then(() => { this.displayState = "instructions"; return false;});
+
+            return;
+        }
 
         // Če do sem nisi prišel preko vmesnika, 
         // greš lahko kar lepo nazaj

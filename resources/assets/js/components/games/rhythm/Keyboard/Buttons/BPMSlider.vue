@@ -1,6 +1,6 @@
 <template>
     
-    <sexy-slider :color="buttonColor" :value="bpmObject" :valueKey="valueKey" :from="20" :to="250" :clickAction="toggleMetronome">
+    <sexy-slider :color="metronomeBorder" :value="bpmObject" :valueKey="valueKey" :from="20" :to="250" :clickAction="toggleMetronome">
         <div class="rhythmKeyboard__BPMSlider__BPMIndicator" v-if="!metronomeToggled">
             <div class="rhythmKeyboard__BPMSlider__BPMValue">{{bpmObject[valueKey]}}</div>
             <div class="rhythmKeyboard__BPMSlider__BPMPrompt">BPM</div>
@@ -38,6 +38,13 @@ export default {
                 if(this.bpmObject.metronome) return "green";
                 return "red";
             }
+        },
+
+        metronomeBorder() {
+            if(this.bpmObject.metronome)
+            return "green";
+
+            return "cabaret";
         }
     },
 

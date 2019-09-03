@@ -7,7 +7,7 @@
         <button @click="generate">Generiraj</button>
 
         <div class="barze" >
-            <RhythmBarInfo v-for="item in bars" ref="renderedBar" v-bind:key="item.id" :info="item" />
+            <RhythmBarInfo v-for="item in bars" ref="renderedBar" v-bind:key="item.id" :info="item" @click.native="openRhythmView(item.id)"/>
         </div>
 
     </div>
@@ -45,6 +45,13 @@ export default {
                 alert("Napaka! \n\n"+e.message)
                 this.displayState='ready';
             });
+        },
+
+        openRhythmView(exerciseId) {
+            let routeData = this.$router.resolve({name: 'rhythm', params: {exerciseId}});
+            console.log(routeData.href);
+            debugger;
+            window.open(routeData.href, '_blank');
         }
     }
 

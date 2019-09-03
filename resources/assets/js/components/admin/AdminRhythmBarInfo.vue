@@ -12,9 +12,9 @@
         </div>
         <div class="admin__rhythmBarInfo__barInfoEntry__bottomInfo">
 
-            <!---<div class="admin__rhythmBarInfo__barInfoEntry__text admin__rhythmBarInfo__barInfoEntry__barInfo" v-if="info.timeSignature">
-                #{{info.id}} Takt. način: {{takt(info.timeSignature)}}
-            </div>-->
+            <div class="admin__rhythmBarInfo__barInfoEntry__text admin__rhythmBarInfo__barInfoEntry__barInfo" v-if="info.timeSignature">
+                #{{info.id}} <!--Takt. način: {{takt(info.timeSignature)}}-->
+            </div>
 
             <!--<div class="admin__rhythmBarInfo__barInfoEntry__text admin__rhythmBarInfo__barInfoEntry__difficulty" >
                 Težavnost: {{info.difficulty}}

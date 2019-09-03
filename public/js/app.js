@@ -46453,7 +46453,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
         props: true
     }, {
         name: 'rhythm',
-        path: '/game/rhythm',
+        path: '/game/rhythm/:exerciseId?',
         component: __WEBPACK_IMPORTED_MODULE_17__components_games_rhythm_Rhythm_vue___default.a,
         props: true
     }, {
@@ -52791,6 +52791,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 alert("Napaka! \n\n" + e.message);
                 _this.displayState = 'ready';
             });
+        },
+        openRhythmView: function openRhythmView(exerciseId) {
+            var routeData = this.$router.resolve({ name: 'rhythm', params: { exerciseId: exerciseId } });
+            console.log(routeData.href);
+            debugger;
+            window.open(routeData.href, '_blank');
         }
     })
 
@@ -54111,7 +54117,22 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "admin__rhythmBarInfo__barInfoEntry__bottomInfo" })
+    _c(
+      "div",
+      { staticClass: "admin__rhythmBarInfo__barInfoEntry__bottomInfo" },
+      [
+        _vm.info.timeSignature
+          ? _c(
+              "div",
+              {
+                staticClass:
+                  "admin__rhythmBarInfo__barInfoEntry__text admin__rhythmBarInfo__barInfoEntry__barInfo"
+              },
+              [_vm._v("\n            #" + _vm._s(_vm.info.id) + " ")]
+            )
+          : _vm._e()
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -54178,7 +54199,12 @@ var render = function() {
             key: item.id,
             ref: "renderedBar",
             refInFor: true,
-            attrs: { info: item }
+            attrs: { info: item },
+            nativeOn: {
+              click: function($event) {
+                return _vm.openRhythmView(item.id)
+              }
+            }
           })
         }),
         1
@@ -54308,23 +54334,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuejs_datatable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vuejs_datatable__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -54552,7 +54561,6 @@ var Fraction = __webpack_require__(7);
 
             // parse JSON bars
             for (var i = 0; i < barsData.length; i++) {
-                debugger;
                 barsData[i].content = JSON.parse(barsData[i].content);
                 barsData[i].timeSignature = { base_note: 4, num_beats: 4 };
             }
@@ -54613,8 +54621,6 @@ var Fraction = __webpack_require__(7);
                 //     .replace(/"/gi, "'");
 
                 var utils = __webpack_require__(9);
-
-                debugger;
                 var text = JSON.stringify(this.notes.notes).replace(/\[/, "").replace(/\]/, "").replace(/"/gi, "'");
                 text = "(   ," + "\"" + text + "\"" + ", " + utils.getNotesDuration(this.notes.notes) + ")";
 
@@ -55319,7 +55325,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n  -webkit-touch-action: manipulation;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n}\n.button__percentIndicator[data-v-be802b54] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button__blue[data-v-be802b54] {\n  background-color: rgba(0, 0, 255, 0.4);\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n@media only screen and (min-device-width: 768px) {\n.button_1_col[data-v-be802b54] {\n      width: 70px !important;\n      height: 70px !important;\n}\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n.button_3_col[data-v-be802b54] {\n  width: 170px;\n}\n", ""]);
+exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n  -webkit-touch-action: manipulation;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n}\n.button__percentIndicator[data-v-be802b54] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button__blue[data-v-be802b54] {\n  background-color: rgba(0, 0, 255, 0.4);\n}\n.button__border_green[data-v-be802b54] {\n  border-color: #33966D;\n}\n.button__border_orange[data-v-be802b54] {\n  border-color: #EB7D3D;\n}\n.button__border_red[data-v-be802b54] {\n  border-color: #fe664e;\n}\n.button__border_cabaret[data-v-be802b54] {\n  border-color: #D2495F;\n}\n.button__border_sunglow[data-v-be802b54] {\n  border-color: #FDBB2F;\n}\n.button__border_blue[data-v-be802b54] {\n  border-color: rgba(0, 0, 255, 0.4);\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n@media only screen and (min-device-width: 768px) {\n.button_1_col[data-v-be802b54] {\n      width: 70px !important;\n      height: 70px !important;\n}\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n.button_3_col[data-v-be802b54] {\n  width: 170px;\n}\n", ""]);
 
 // exports
 
@@ -55331,6 +55337,39 @@ exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    positi
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -55531,6 +55570,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         disable: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["a" /* booleanProp */])(false),
         customClass: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
         color: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
+        borderColor: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
         hidden: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["a" /* booleanProp */])(false),
         percents: {
             type: Number,
@@ -55581,7 +55621,14 @@ var render = function() {
         button__red: _vm.color == "red",
         button__cabaret: _vm.color == "cabaret",
         button__sunglow: _vm.color == "sunglow",
-        button__blue: _vm.color == "blue"
+        button__blue: _vm.color == "blue",
+
+        button__border_green: _vm.borderColor == "green",
+        button__border_orange: _vm.borderColor == "orange",
+        button__border_red: _vm.borderColor == "red",
+        button__border_cabaret: _vm.borderColor == "cabaret",
+        button__border_sunglow: _vm.borderColor == "sunglow",
+        button__border_blue: _vm.borderColor == "blue"
       }
     })
   ])
@@ -55631,7 +55678,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.button[data-v-656066f6] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n  -webkit-touch-action: manipulation;\n}\n.button[data-v-656066f6]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-656066f6] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-656066f6] {\n  visibility: hidden;\n}\n.button__hollow[data-v-656066f6] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-656066f6] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n}\n.button__percentIndicator[data-v-656066f6] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-656066f6] {\n  background-color: #33966D;\n}\n.button__orange[data-v-656066f6] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-656066f6] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-656066f6] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-656066f6] {\n  background-color: #FDBB2F;\n}\n.button_1_col[data-v-656066f6] {\n  width: 50px;\n}\n@media only screen and (min-device-width: 768px) {\n.button_1_col[data-v-656066f6] {\n      width: 70px !important;\n      height: 70px !important;\n}\n}\n.button_2_col[data-v-656066f6] {\n  width: 110px;\n}\n.button_3_col[data-v-656066f6] {\n  width: 170px;\n}\n", ""]);
+exports.push([module.i, "\n.button[data-v-656066f6] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n  -webkit-touch-action: manipulation;\n}\n.button[data-v-656066f6]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-656066f6] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-656066f6] {\n  visibility: hidden;\n}\n.button__hollow[data-v-656066f6] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-656066f6] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n}\n.button__percentIndicator[data-v-656066f6] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-656066f6] {\n  background-color: #33966D;\n}\n.button__orange[data-v-656066f6] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-656066f6] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-656066f6] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-656066f6] {\n  background-color: #FDBB2F;\n}\n.button__border_green[data-v-656066f6] {\n  border-color: #33966D;\n}\n.button__border_orange[data-v-656066f6] {\n  border-color: #EB7D3D;\n}\n.button__border_red[data-v-656066f6] {\n  border-color: #fe664e;\n}\n.button__border_cabaret[data-v-656066f6] {\n  border-color: #D2495F;\n}\n.button__border_sunglow[data-v-656066f6] {\n  border-color: #FDBB2F;\n}\n.button__border_blue[data-v-656066f6] {\n  border-color: rgba(0, 0, 255, 0.4);\n}\n.button_1_col[data-v-656066f6] {\n  width: 50px;\n}\n@media only screen and (min-device-width: 768px) {\n.button_1_col[data-v-656066f6] {\n      width: 70px !important;\n      height: 70px !important;\n}\n}\n.button_2_col[data-v-656066f6] {\n  width: 110px;\n}\n.button_3_col[data-v-656066f6] {\n  width: 170px;\n}\n", ""]);
 
 // exports
 
@@ -55643,6 +55690,40 @@ exports.push([module.i, "\n.button[data-v-656066f6] {\n  display: inline-block;\
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -55847,6 +55928,7 @@ function getTouch(event) {
         disable: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["a" /* booleanProp */])(false),
         customClass: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
         color: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
+        borderColor: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
         hidden: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["a" /* booleanProp */])(false),
         value: {
             type: Object,
@@ -56867,6 +56949,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (this.bpmObject.metronome) return "green";
                 return "red";
             }
+        },
+        metronomeBorder: function metronomeBorder() {
+            if (this.bpmObject.metronome) return "green";
+
+            return "cabaret";
         }
     },
 
@@ -56905,7 +56992,7 @@ var render = function() {
     "sexy-slider",
     {
       attrs: {
-        color: _vm.buttonColor,
+        color: _vm.metronomeBorder,
         value: _vm.bpmObject,
         valueKey: _vm.valueKey,
         from: 20,
@@ -60145,87 +60232,7 @@ var render = function() {
                     buttonState: _vm.buttonState,
                     selected: _vm.selected
                   }
-                }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "col-xs-12 table-responsive",
-                    attrs: { id: "table" }
-                  },
-                  [
-                    _c("datatable", {
-                      attrs: { columns: _vm.columns, data: _vm.rows },
-                      scopedSlots: _vm._u(
-                        [
-                          {
-                            key: "default",
-                            fn: function(ref) {
-                              var row = ref.row
-                              return [
-                                _c("tr", [
-                                  _c("td", [_vm._v(_vm._s(row.feature.name))]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v("Verjetnost: "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: row.bar_probability,
-                                          expression: "row.bar_probability"
-                                        }
-                                      ],
-                                      attrs: { type: "text" },
-                                      domProps: { value: row.bar_probability },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            row,
-                                            "bar_probability",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-xs btn-primary",
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.alert(
-                                              "Will delete the bar now,"
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("icon", { attrs: { name: "trash" } })
-                                      ],
-                                      1
-                                    )
-                                  ])
-                                ])
-                              ]
-                            }
-                          }
-                        ],
-                        null,
-                        false,
-                        1233332569
-                      )
-                    })
-                  ],
-                  1
-                )
+                })
               ],
               1
             )
@@ -62404,6 +62411,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -62472,8 +62483,7 @@ var util = __webpack_require__(9);
             showHelp: false,
 
             playback: new __WEBPACK_IMPORTED_MODULE_8__rhythmPlaybackEngine__["a" /* default */](MIDI),
-            defaultBPM: 120,
-            metronome: true
+            defaultBPM: 120
         };
     },
 
@@ -62492,10 +62502,22 @@ var util = __webpack_require__(9);
                 default:
                     return this.questionState.num_beats + " taktov";
             }
+        },
+        metronomeButtonText: function metronomeButtonText() {
+            if (this.playback.metronome) {
+                return "IZKLJUČI METRONOM";
+            }
+            return "VKLJUČI METRONOM";
+        },
+        metronomeButtonColor: function metronomeButtonColor() {
+            if (this.playback.metronome) {
+                return "green";
+            }
+            return "cabaret";
         }
     }),
 
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_9_vuex__["b" /* mapActions */])(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi']), {
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_9_vuex__["b" /* mapActions */])(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi', 'fetchRhythmExercise', 'createRhythmExerciseFeedback']), {
         cursor_moved: function cursor_moved(pos, from) {
 
             this.$refs.staff_view.cursor_moved(pos, from);
@@ -62507,6 +62529,9 @@ var util = __webpack_require__(9);
             }
             if (event.type == "pass") {
                 this.questionState.check = "next";
+            }
+            if (event.type == "feedback") {
+                this.openFeedbackWindow();
             }
             if (event.type == "submit") {
 
@@ -62637,8 +62662,17 @@ var util = __webpack_require__(9);
                 _this2.$router.push({ name: 'gameStatistics', params: { id: _this2.game.id } });
             });
         },
-        nextQuestion: function nextQuestion(play) {
+        loadExerciseWithId: function loadExerciseWithId(exerciseId) {
             var _this3 = this;
+
+            this.displayState = 'loading';
+
+            return this.fetchRhythmExercise(exerciseId).then(function (exercise) {
+                return _this3.prepareQuestionWithContent(1, exercise, false);
+            });
+        },
+        nextQuestion: function nextQuestion(play) {
+            var _this4 = this;
 
             this.displayState = 'loading';
 
@@ -62656,41 +62690,51 @@ var util = __webpack_require__(9);
 
                 var exercise = question.content;
 
-                _this3.questionState.exercise = exercise;
-                _this3.questionState.id = question.id;
-
-                _this3._questionState_reset();
-                _this3.questionState.num_beats = util.get_bar_count(exercise.notes);
-
-                _this3._copy_bar_info(exercise);
-
-                _this3.playback.setBPM(exercise.BPM ? exercise.BPM : _this3.defaultBPM);
-                _this3.playback.setBar(exercise.timeSignature);
-
-                // Initialize note store
-                _this3.notes = new __WEBPACK_IMPORTED_MODULE_7__noteStore__["a" /* default */](_this3.bar, _this3.$refs.staff_view.cursor, _this3.$refs.staff_view.render);
-
-                window.____notes = _this3.notes;
-
-                if (play) {
-                    _this3.play({ action: "replay", what: "exercise" });
-                }
-
-                _this3.$refs.staff_view.reset();
+                _this4.prepareQuestionWithContent(question.id, exercise);
             });
         },
+        prepareQuestionWithContent: function prepareQuestionWithContent(questionId, exercise, play) {
+
+            this.questionState.exercise = exercise;
+            this.questionState.id = questionId;
+
+            this._questionState_reset();
+            this.questionState.num_beats = util.get_bar_count(exercise.notes);
+
+            this._copy_bar_info(exercise);
+
+            this.playback.setBPM(exercise.BPM ? exercise.BPM : this.defaultBPM);
+            this.playback.setBar(exercise.timeSignature);
+
+            // Initialize note store
+            this.notes = new __WEBPACK_IMPORTED_MODULE_7__noteStore__["a" /* default */](this.bar, this.$refs.staff_view.cursor, this.$refs.staff_view.render);
+
+            window.____notes = this.notes;
+
+            if (play) {
+                this.play({ action: "replay", what: "exercise" });
+            }
+
+            this.$refs.staff_view.reset();
+        },
         continueGame: function continueGame() {
-            var _this4 = this;
+            var _this5 = this;
+
+            if (this.isExerciseTest()) {
+                window.close();
+                alert("Okno se bo zdaj zaprlo.");
+                return;
+            }
 
             this.nextQuestion(false).then(function (state) {
 
                 if (state == "GAME") {} else {
-                    _this4.displayState = "instructions";
+                    _this5.displayState = "instructions";
                 }
             });
         },
         logAnswer: function logAnswer(info) {
-            var _this5 = this;
+            var _this6 = this;
 
             return this.storeAnswer({
                 game_id: this.game.id,
@@ -62703,7 +62747,7 @@ var util = __webpack_require__(9);
                 n_answers: this.questionState.statistics.nChecks,
                 success: info.status }).catch(function () {
 
-                _this5.questionState.check = "error";
+                _this6.questionState.check = "error";
             });
         },
         updateCheckStatus: function updateCheckStatus(status) {
@@ -62762,7 +62806,7 @@ var util = __webpack_require__(9);
                 success: status
 
                 // Correct or last chance...
-            };if (status || timeout || this.questionState.maxChecks <= this.questionState.statistics.nChecks) {
+            };if ((status || timeout || this.questionState.maxChecks <= this.questionState.statistics.nChecks) && !this.isExerciseTest()) {
                 // Log the answer
                 return this.logAnswer({ time: time, status: status }).then(function () {
                     return outside.updateCheckStatus(checkStatus);
@@ -62813,15 +62857,50 @@ var util = __webpack_require__(9);
         hideHelp: function hideHelp() {
 
             this.showHelp = false;
+        },
+        isExerciseTest: function isExerciseTest() {
+            return this.$route.params.exerciseId != null;
+        },
+        openFeedbackWindow: function openFeedbackWindow() {
+
+            var feedback = prompt("Kaj želite sporočiti?");
+
+            if (feedback) {
+                this.createRhythmExerciseFeedback({
+                    rhythm_exercise_id: this.$route.params.exerciseId,
+                    question_id: this.questionState.id,
+                    content: feedback
+                }).then(function () {
+                    alert("Komentar uspešno posredovan.");
+                }).catch(function () {
+                    alert("Napaka pri pošiljanju komentarja. Poskusite znova.");
+                });
+            }
         }
     }),
 
     mounted: function mounted() {
-        var _this6 = this;
+        var _this7 = this;
+
+        var out = this;
 
         // Original
         this.$refs.staff_view.init({ userName: "RhythmView", cursor: { enabled: true } });
         this.$refs.keyboard.init(this.$refs.staff_view.cursor);
+
+        if (this.isExerciseTest()) {
+            // Override - show certain exercise and quit
+
+            this.fetchMe().then(function () {
+                return _this7.setupMidi(['xylophone', 'trumpet']);
+            }).then(function () {
+                return _this7.loadExerciseWithId(out.$route.params.exerciseId);
+            }).then(function () {
+                _this7.displayState = "instructions";return false;
+            });
+
+            return;
+        }
 
         // Če do sem nisi prišel preko vmesnika, 
         // greš lahko kar lepo nazaj
@@ -62830,11 +62909,11 @@ var util = __webpack_require__(9);
         } else {
 
             this.fetchMe().then(function () {
-                return _this6.setupMidi(['xylophone', 'trumpet']);
+                return _this7.setupMidi(['xylophone', 'trumpet']);
             }).then(function () {
-                return _this6.nextQuestion();
+                return _this7.nextQuestion();
             }).then(function () {
-                _this6.displayState = "instructions";return;
+                _this7.displayState = "instructions";return;
             });
         }
 
@@ -63943,6 +64022,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -63987,6 +64075,12 @@ var Fraction = __webpack_require__(7);
 
             this.key_callback({
                 type: "showJson"
+            });
+        },
+        feedback: function feedback() {
+
+            this.key_callback({
+                type: "feedback"
             });
         },
         showHelp: function showHelp() {
@@ -64911,6 +65005,30 @@ var render = function() {
           )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "row rhythm-game__keyboard-row row-5 show-normal" },
+        [
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: "cabaret" },
+              nativeOn: {
+                click: function($event) {
+                  return _vm.feedback()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                _vm._v("Povratne informacije")
+              ])
+            ]
+          )
+        ],
+        1
       )
     ])
   ])
@@ -65038,6 +65156,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Buttons_SelectionButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__Buttons_SelectionButton_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Buttons_BPMSlider_vue__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Buttons_BPMSlider_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__Buttons_BPMSlider_vue__);
+//
+//
+//
 //
 //
 //
@@ -65796,6 +65917,12 @@ var render = function() {
                 _vm._v(" "),
                 _vm._m(2),
                 _vm._v(" "),
+                _c("div", { staticClass: "helpView__text-line" }, [
+                  _vm._v(
+                    "\n                        Če je gumb zelene barve, pomeni, da je metronom vključen, sicer je izključen.\n                    "
+                  )
+                ]),
+                _vm._v(" "),
                 _c(
                   "div",
                   { staticClass: "helpView__buttons helpView__buttons-center" },
@@ -66327,6 +66454,10 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v("Na začetku bo metronom odtapkal en takt.")
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
               _vm._v(
                 "Predvajalo se bo s hitrostjo " +
                   _vm._s(
@@ -66354,7 +66485,30 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(0)
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "rhythm__instructions-list-item",
+                staticStyle: { "list-style-type": "none" }
+              },
+              [
+                _c("sexy-button", {
+                  attrs: {
+                    text: _vm.metronomeButtonText,
+                    color: _vm.metronomeButtonColor,
+                    cols: 3
+                  },
+                  nativeOn: {
+                    click: function($event) {
+                      _vm.playback.metronome = !_vm.playback.metronome
+                    }
+                  }
+                })
+              ],
+              1
+            )
           ])
         ],
         1
@@ -72476,8 +72630,34 @@ function handleError(error) {
                 });
             });
         },
-        createRhythmBarOccurrence: function createRhythmBarOccurrence(_ref27, data) {
+        fetchRhythmExercise: function fetchRhythmExercise(_ref27, id) {
             var state = _ref27.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.get('/api/rhythmExercise/' + id).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        createRhythmExerciseFeedback: function createRhythmExerciseFeedback(_ref28, data) {
+            var state = _ref28.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.post('/api/rhythmExerciseFeedback', data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        createRhythmBarOccurrence: function createRhythmBarOccurrence(_ref29, data) {
+            var state = _ref29.state;
 
 
             return new Promise(function (resolve, reject) {
@@ -72489,33 +72669,7 @@ function handleError(error) {
                 });
             });
         },
-        deleteRhythmBarOccurrence: function deleteRhythmBarOccurrence(_ref28, data) {
-            var state = _ref28.state;
-
-
-            return new Promise(function (resolve, reject) {
-                axios.delete('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences/' + data.rhythm_feature_id, data).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        updateRhythmBarOccurrence: function updateRhythmBarOccurrence(_ref29, data) {
-            var state = _ref29.state;
-
-
-            return new Promise(function (resolve, reject) {
-                axios.delete('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences/' + data.rhythm_feature_id, data).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        updateRhythmFeatureOccurrence: function updateRhythmFeatureOccurrence(_ref30, data) {
+        deleteRhythmBarOccurrence: function deleteRhythmBarOccurrence(_ref30, data) {
             var state = _ref30.state;
 
 
@@ -72528,8 +72682,34 @@ function handleError(error) {
                 });
             });
         },
-        deleteRhythmBar: function deleteRhythmBar(_ref31, data) {
+        updateRhythmBarOccurrence: function updateRhythmBarOccurrence(_ref31, data) {
             var state = _ref31.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.delete('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences/' + data.rhythm_feature_id, data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        updateRhythmFeatureOccurrence: function updateRhythmFeatureOccurrence(_ref32, data) {
+            var state = _ref32.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.delete('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences/' + data.rhythm_feature_id, data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        deleteRhythmBar: function deleteRhythmBar(_ref33, data) {
+            var state = _ref33.state;
 
 
             if (!data || !data.id) return;
@@ -72543,8 +72723,8 @@ function handleError(error) {
                 });
             });
         },
-        createRhythmBar: function createRhythmBar(_ref32, data) {
-            var state = _ref32.state;
+        createRhythmBar: function createRhythmBar(_ref34, data) {
+            var state = _ref34.state;
 
 
             if (!data || !data.bar) return;
@@ -72558,8 +72738,8 @@ function handleError(error) {
                 });
             });
         },
-        saveRhythmBar: function saveRhythmBar(_ref33, data) {
-            var state = _ref33.state;
+        saveRhythmBar: function saveRhythmBar(_ref35, data) {
+            var state = _ref35.state;
 
 
             if (!data || !data.bar || !data.bar.id) return;

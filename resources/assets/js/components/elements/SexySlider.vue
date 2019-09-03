@@ -4,13 +4,14 @@
             {{text}}
             <slot></slot>
         </div>
-        <div class="button__hollow button__percentIndicator" v-bind:style="{ width: percents + '%' }">&nbsp;</div>
+        <div class="button__hollow button__percentIndicator" v-bind:style="{ width: percents + '%' }" >&nbsp;</div>
         <div class="button__full" :class="{
             'button__green':color=='green', 
             'button__orange':color=='orange', 
             'button__red':color=='red',
             'button__cabaret':color=='cabaret',
-            'button__sunglow':color=='sunglow'}"></div>
+            'button__sunglow':color=='sunglow',
+            }"></div>
     </div>
 </template>
 
@@ -88,6 +89,39 @@
 .button__sunglow{
     background-color: $sunglow;
 }
+
+
+
+
+
+.button__border_green{
+    border-color: $sea-green;
+}
+
+.button__border_orange{
+    border-color: $jaffa;
+}
+
+.button__border_red{
+    border-color: $neon-red;
+}
+
+.button__border_cabaret{
+    border-color: $cabaret;
+}
+
+.button__border_sunglow{
+    border-color: $sunglow;
+}
+
+.button__border_blue{
+    border-color: rgba(0,0,255,0.4);
+}
+
+
+
+
+
 
 .button_1_col{
     width: 50px;
@@ -207,6 +241,7 @@ export default {
         disable: booleanProp(false),
         customClass: stringProp(false),
         color: stringProp(false),
+        borderColor: stringProp(false),
         hidden: booleanProp(false),
         value: {
             type: Object,

@@ -397,6 +397,34 @@ export default new Vuex.Store({
             })
         },
 
+        fetchRhythmExercise ({state}, id) {
+
+            return new Promise((resolve, reject) => {
+                axios.get('/api/rhythmExercise/'+id)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            })
+        },
+
+        createRhythmExerciseFeedback ({state}, data) {
+
+            return new Promise((resolve, reject) => {
+                axios.post('/api/rhythmExerciseFeedback', data)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            })
+        },
+
         createRhythmBarOccurrence ({state}, data) {
 
             return new Promise((resolve, reject) => {

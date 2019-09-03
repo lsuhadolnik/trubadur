@@ -11,7 +11,15 @@
             'button__red':color=='red',
             'button__cabaret':color=='cabaret',
             'button__sunglow':color=='sunglow',
-            'button__blue':color=='blue'}"></div>
+            'button__blue':color=='blue',
+            
+              'button__border_green':borderColor=='green', 
+             'button__border_orange':borderColor=='orange', 
+                'button__border_red':borderColor=='red',
+            'button__border_cabaret':borderColor=='cabaret',
+            'button__border_sunglow':borderColor=='sunglow',
+               'button__border_blue':borderColor=='blue',
+            }"></div>
     </div>
 </template>
 
@@ -124,6 +132,31 @@
     background-color: rgba(0,0,255,0.4);
 }
 
+
+.button__border_green{
+    border-color: $sea-green;
+}
+
+.button__border_orange{
+    border-color: $jaffa;
+}
+
+.button__border_red{
+    border-color: $neon-red;
+}
+
+.button__border_cabaret{
+    border-color: $cabaret;
+}
+
+.button__border_sunglow{
+    border-color: $sunglow;
+}
+
+.button__border_blue{
+    border-color: rgba(0,0,255,0.4);
+}
+
 .button_1_col{
     width: 50px;
 
@@ -191,7 +224,7 @@ export default {
             }
 
             return k;
-        }
+        },
 
     },
 
@@ -200,6 +233,7 @@ export default {
         disable: booleanProp(false),
         customClass: stringProp(false),
         color: stringProp(false),
+        borderColor: stringProp(false),
         hidden: booleanProp(false),
         percents: {
             type: Number,

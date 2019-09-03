@@ -45,23 +45,6 @@
 
                     <RhythmKeyboard ref="keyboard" :key_callback="key_callback" :buttonState="buttonState" :selected="selected" />
 
-                    <div id="table" class="col-xs-12 table-responsive">
-                        <datatable :columns="columns" :data="rows">
-
-                            <template scope="{ row }">
-                                <tr>
-                                    <td>{{ row.feature.name }}</td>
-                                    <td>Verjetnost: <input type="text" v-model="row.bar_probability" /></td>
-                                    <td>
-                                        <button class="btn btn-xs btn-primary" @click="alert('Will delete the bar now,')">
-                                            <icon name="trash" />
-                                        </button>
-                                    </td>
-                                </tr>
-                            </template>
-                        </datatable>
-                    </div>
-
                 </div>
             </div>
 
@@ -285,7 +268,6 @@ export default {
 
             // parse JSON bars
             for(let i = 0; i < barsData.length; i++){
-                debugger;
                 barsData[i].content = JSON.parse(barsData[i].content);
                 barsData[i].timeSignature = {base_note:4, num_beats:4};
             }
@@ -357,8 +339,6 @@ export default {
                 //     .replace(/"/gi, "'");
 
                 let utils = require('../games/rhythm/rhythmUtilities');
-
-debugger;
                 let text = JSON.stringify(this.notes.notes)
                        .replace(/\[/, "")
                        .replace(/\]/, "")
