@@ -1,3 +1,5 @@
+use trubadur;
+
 insert into rhythm_bars (id, content, length) VALUES
 (1,  "[{\"type\" :\"bar\" }]", 0),
 (2,  "[{\"type\" :\"n\", \"value\" :4}]", 1),
