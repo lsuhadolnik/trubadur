@@ -27,29 +27,50 @@
             <ProgressBar></ProgressBar>
             </div>-->
 
-            <StaffView ref="staff_view" :bar="bar" :enabledContexts="['minimap', 'zoomview']" >
+            <div class="staff_view_wrap">
+                <div class="staff_view_contents">
+                    <StaffView ref="staff_view" :bar="bar" :enabledContexts="['minimap', 'zoomview']" >
 
-                <div class="rhythm-game__staff__first-row">
-                    <div id="first-row"></div>
-                </div>
-                
-                <div class="rhythm-game__staff__second-row">
-                    <div id="second-row"></div>
-                </div>
-                
-                <!--height: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.height" v-on:mousemove="force_redraw()"> {{info.height}}
-                barHeight: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barHeight" v-on:mousemove="force_redraw()"> {{info.barHeight}}
-                barOffsetY: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barOffsetY" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
-                zoomViewHeight: <input class="BPM-slider" type="range" :min="10" :max="200" step="1" v-model="CTX.zoomview.containerHeight" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
-                --> 
+                        <div class="rhythm-game__staff__first-row">
+                            <div id="first-row"></div>
+                        </div>
+                        
+                        <div class="rhythm-game__staff__second-row">
+                            <div id="second-row"></div>
+                        </div>
+                        
+                        <!--height: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.height" v-on:mousemove="force_redraw()"> {{info.height}}
+                        barHeight: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barHeight" v-on:mousemove="force_redraw()"> {{info.barHeight}}
+                        barOffsetY: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barOffsetY" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
+                        zoomViewHeight: <input class="BPM-slider" type="range" :min="10" :max="200" step="1" v-model="CTX.zoomview.containerHeight" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
+                        --> 
 
-            </StaffView>
+                    </StaffView>
+                </div>
+                <div class="staff_view_time_slider" v-bind:style="{width: timeLeftPercents}">&nbsp;</div> 
+            </div>
             
             <Keyboard ref="keyboard" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" :question="questionState" :say="showError" />
 
             <div class="error" v-show="errorMessage">{{errorMessage}}</div>
 
             <KeyboardHelp v-if="showHelp" :hide="hideHelp" />
+
+            <div class="ready-rhythm-game-view__checkOverlay" v-if="['wrong', 'correct', 'waiting'].indexOf(questionState.check) > -1">
+                <div class="ready-rhythm-game-view__checkOverlay__center" >
+                    <div class="ready-rhythm-game-view__checkOverlay__center_bubble">
+                        <div class="" v-if="questionState.check == 'wrong'">
+                            <icon name="times"  scale="4"/>
+                        </div>
+                        <div class="timesLeft" v-if="questionState.check == 'wrong'">
+                            {{ questionState.statistics.nChecks + "/" + questionState.maxChecks }}
+                        </div>
+                        <icon name="check" v-if="questionState.check == 'correct'" scale="4"/>
+                        <icon name="refresh" v-if="questionState.check == 'waiting'" scale="4" spin />
+                        <icon name="exclamation-circle" v-if="questionState.check == 'error'" />
+                    </div>
+                </div>
+            </div>
 
         </div>
 
@@ -79,6 +100,56 @@
 
     .rhythm-game__wrap {
         touch-action: manipulation;
+    }
+
+    .staff_view_wrap {
+        position: relative;
+    }
+
+    .staff_view_contents {
+        position: relative;
+        z-index: 1;
+    }
+
+    .staff_view_time_slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(112,100,67,0.2);
+        width: 100%;
+        height: 100%;
+        transition: width .1s ease-in;
+    }
+
+    .ready-rhythm-game-view__checkOverlay {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0,0,0,0.3);
+        z-index: 100;
+    }
+
+    .ready-rhythm-game-view__checkOverlay__center {
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        align-items: center;
+    }
+
+    .ready-rhythm-game-view__checkOverlay__center_bubble {
+
+        width: 160px;
+        height: 160px;
+        background-color: rgba(0,0,0,0.6);
+        border-radius: 5px;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
     }
 
     .error{
@@ -152,7 +223,7 @@ export default {
 
             questionState: {
                 id: 0,
-                check: "no", // "no", "correct", "wrong", "next"
+                check: "no", // "no", "correct", "wrong", "next", "waiting"
                 wasCorrect: false,
 
                 maxChecks: 10,
@@ -178,6 +249,9 @@ export default {
                 base_note: null,
                 subdivisions: null
             },
+            BPMobj: {
+                BPM: 120
+            },
             
 
             errorMessage: "",
@@ -185,14 +259,14 @@ export default {
 
             showHelp: false,
 
-            playback: new RhythmPlaybackEngine(MIDI),
+            playback: new RhythmPlaybackEngine(),
             defaultBPM: 120,
         }
     },
 
     computed: {
 
-        ...mapState(['me', 'midi']),
+        ...mapState(['me']),
 
         num_beats_text() {
             switch(this.questionState.num_beats){
@@ -221,12 +295,17 @@ export default {
                 return "green";
             }
             return "cabaret";
+        },
+
+        timeLeftPercents() {
+            let seconds = 100 * (1 - (this.questionState.statistics.duration / this.questionState.maxSeconds));
+            return seconds+"%";
         }
     },
     
     methods: {
 
-        ...mapActions(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi', 'fetchRhythmExercise', 'createRhythmExerciseFeedback']),
+        ...mapActions(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'fetchRhythmExercise', 'createRhythmExerciseFeedback']),
 
 
         cursor_moved(pos, from){
@@ -287,10 +366,6 @@ export default {
                 this.notes._call_render();
             }
             else{
-
-                // Invalidate playback cache
-                /*if(this.playback.status != "playing")
-                    this.playback.stop();*/
 
                 this.notes.handle_button(event);
 
@@ -520,6 +595,7 @@ export default {
                 setTimeout(function() {
                     // Watch out, could happen when next question is already loaded
                     outside.questionState.check = "next";
+                    outside.check();
                 }, changeTimeout);
             }
             else{
@@ -532,6 +608,7 @@ export default {
 
                     if(status.overcheck || status.timeout){
                         outside.questionState.check = "next";
+                        outside.check();
                     }
                 }, changeTimeout);
             }
@@ -555,7 +632,7 @@ export default {
             let time = ((new Date()).getTime() - this.questionState.statistics.startTime);
             this.questionState.check = "waiting";
 
-            this.questionState.wasCorrect = true;
+
             this.questionState.wasCorrect = status;
 
             let outside = this;
@@ -586,27 +663,27 @@ export default {
 
             this.questionState.statistics.nPlaybacks += 1;
 
-            if(event.action == "resume"){
-                this.playback.play();
-            }
-
+            
             if(event.action == "stop"){
                 this.playback.stop();
+                return;
             }
+
+            let values = [];
 
             if(event.action == "replay"){
                 if(event.what == "user"){
 
-                    this.playback.load(this.notes.notes, "user");
-                    this.playback.play();
-
+                    values = this.notes.notes;
                 }
                 else if(event.what == "exercise"){
 
-                    this.playback.load(this.questionState.exercise.notes, "exercise");
-                    this.playback.play(); 
+
+                    values = this.questionState.exercise.notes;
                 }
             }
+            
+            this.playback.play(null, null, values);
         },
 
         showError(err){
@@ -666,7 +743,6 @@ export default {
             // Override - show certain exercise and quit
 
             this.fetchMe()
-            .then(() => { return this.setupMidi(['xylophone', 'trumpet']); })
             .then(() => { return this.loadExerciseWithId(out.$route.params.exerciseId); })
             .then(() => { this.displayState = "instructions"; return false;});
 
@@ -680,7 +756,6 @@ export default {
         } else {
 
             this.fetchMe()
-            .then(() => { return this.setupMidi(['xylophone', 'trumpet']); })
             .then(() => { return this.nextQuestion(); })
             .then(() => { this.displayState = "instructions"; return; });
             
@@ -696,7 +771,6 @@ export default {
         
 
         this.fetchMe()
-            .then(() => { return this.setupMidi(['xylophone', 'trumpet']); })
             .then(() => { return this.nextQuestion(); })
             .then(() => { this.startGame(); });
         */

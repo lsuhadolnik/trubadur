@@ -36,7 +36,7 @@
 
                     <sexy-button v-if="(moving_buttons || cursor.in_tuplet) && !moreButton" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
                     <dot-button v-if="!moreButton && !moving_buttons" :hidden="cursor.in_tuplet" @click.native="dot()" />
-                    <play-button v-if="moreButton" @click.native="play_exercise()" text="Ponovi vajo" :percents="percentsExercise" :playing="playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'" />
+                    <play-button v-if="moreButton" @click.native="play_exercise()" text="Ponovi vajo" :percents="percentsExercise" :playing="playbackStatus.playing" />
 
                      <!-- MOVE SWITCH -->
                     <sexy-button v-if="moving_buttons && !moreButton" :hidden="cursor.in_tuplet" text="j \"  color="green" @click.native="moving_buttons = !moving_buttons" customClass="musisync" />
@@ -44,7 +44,7 @@
                     <sexy-button v-if="moreButton" color="green" @click.native="showHelp()" ><div class="tiny-tajni-pici-mici-font">Pomoč</div></sexy-button>
 
                     <sexy-button :color="moreButton ? 'sunglow' : 'cabaret'" text="..." @click.native="moreButton = !moreButton" />
-                    <!--<play-button @click.native="play_exercise()" :percents="percentsExercise" :playing="playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'" />-->
+                    <!--<play-button @click.native="play_exercise()" :percents="percentsExercise" :playing="playbackStatus.playing" />-->
 
                 </div>
 
@@ -137,7 +137,7 @@
                 </sexy-button>
                 
                 <!-- PLAY EXERCISE BUTTON -->
-                <play-button @click.native="play_exercise()" text="Ponovi vajo" :percents="percentsExercise" :playing="playbackStatus.playing && playbackStatus.currentlyLoaded == 'exercise'" />
+                <play-button @click.native="play_exercise()" text="Ponovi vajo" :percents="percentsExercise" :playing="playbackStatus.playing" />
 
                 <!-- BPM SLIDER / BUTTON -->
                 <b-p-m-slider :bpmObject="playbackStatus" valueKey="BPM" />
@@ -155,11 +155,6 @@
 
                 <sexy-button :color="checkButtonColor" @click.native="changeSignature()" >
                     <div class="tiny-tajni-pici-mici-font">Change Signature</div>
-                </sexy-button>
-
-                <sexy-button color="sunglow" @click.native="play_user()" :percents="percentsUser" customClass="normal-font tiny-tajni-pici-mici-font">
-                        <icon name="pause" v-if="playbackStatus.playing && playbackStatus.currentlyLoaded == 'user'"/>
-                        <div v-else class="small-font-button">Ponovi vpisano</div>
                 </sexy-button>
 
                 <sexy-button color="sunglow" @click.native="show_diff()" customClass="normal-font tiny-tajni-pici-mici-font">
@@ -496,22 +491,21 @@ export default {
             if(!this.playbackStatus)
                 return;
 
-            if(this.playbackStatus.currentlyLoaded == type && this.playbackStatus.playing){
-                
-                    this.key_callback({
-                        type: 'playback',
-                        action: 'stop',
-                        what: type
-                    });
-            }
-            else {
 
+            if(this.playbackStatus.playing){
+                this.key_callback({
+                    type: 'playback',
+                    action: 'stop',
+                });
+            } else {
                 this.key_callback({
                     type: 'playback',
                     action: 'replay',
                     what: type
                 });
             }
+
+            
         },
 
         play_user(){
@@ -526,24 +520,6 @@ export default {
             this.key_callback({
                 type: 'submit'
             });
-        },
-
-        pause() {
-
-            this.key_callback({
-                type: 'playback',
-                action: 'pause',
-            });
-
-        },
-
-        resume() {
-
-            this.key_callback({
-                type: 'playback',
-                action: 'resume'
-            });
-            
         },
 
         check(){
@@ -641,12 +617,14 @@ export default {
 
         checkButtonTextSecond() {
 
-            let seconds = this.question.maxSeconds - this.question.statistics.duration;
-            return seconds+"s ";
+            // let seconds = this.question.maxSeconds - this.question.statistics.duration;
+            // return seconds+"s ";
+            return "";
         },
 
         checkButtonTextThird() {
-            return this.question.statistics.nChecks+"/"+this.question.maxChecks
+            //return this.question.statistics.nChecks+"/"+this.question.maxChecks
+            return "";
         },
 
         checkButtonColor(){

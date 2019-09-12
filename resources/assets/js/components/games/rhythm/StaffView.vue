@@ -482,11 +482,6 @@ export default {
 
                 var thisNote = notes[i];
 
-                if(thisNote.type != "bar"){
-                    lastNoteIndex = latestNoteIndex;
-                    latestNoteIndex = i;
-                }
-
                 // Bye bye, false note
                 if(!thisNote) { continue; }
 
@@ -522,10 +517,6 @@ export default {
                     cursorNote = newNote;
                 }
 
-                /* if(thisNote.type == "bar"){
-                    newNote.setStyle({fillStyle: "transparent", strokeStyle: "transparent"});
-                } */
-
                 if(thisNote.type != "bar"){
                     allStaveNotes.push(newNote);
                     renderQueue.push(newNote);    
@@ -534,11 +525,15 @@ export default {
                 
                 if(thisNote.tie && i > 0){
 
+                    //debugger;
+
+                    let allLen = allStaveNotes.length;
+
                     // tie is:
                     //  - this note + last note
                     ties.push(new VF.StaveTie({
-                        first_note: allStaveNotes[lastNoteIndex],
-                        last_note:  allStaveNotes[latestNoteIndex],
+                        first_note: allStaveNotes[allLen - 2],
+                        last_note:  allStaveNotes[allLen - 1],
                         first_indices: [0], last_indices:  [0]
                     }));
 
@@ -631,10 +626,7 @@ export default {
                 barOffsetY: this.info.barOffsetY,
                 width: this.info.width,
                 hideTimeSignatures: this.hideTimeSignatures
-            }, notes, {
-                offset1: this.test.offset1,
-                offset2: this.test.offset2
-            });
+            }, notes);
 
             // set CTX.zoomview.x_coords property
             this.retrieveXCoords(descriptor, notes);

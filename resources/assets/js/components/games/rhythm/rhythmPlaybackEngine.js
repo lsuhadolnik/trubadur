@@ -1,104 +1,107 @@
-let RhythmUtilities = require('./rhythmUtilities');
+let Channel = require('./rhythmPlaybackChannel');
+let util = require('./rhythmUtilities');
+let Instruments = require('webaudio-instruments');
 
-var RhythmPlaybackEngine = function(midi){
+const RhythmPlaybackEngine = function() {
 
-    this.midi = midi;
-
-    this.BPM = 120;
-
-    this.channel = 3; // Trumpet. Look in store/index.js
-    this.intensity = 50;
-    this.pitch = [65];
-
-    this.currentlyLoaded = "";
-    this.playing = false;
-    this.playbackQueue = [];
-    this.loaded = false;
-    this.currentNoteID = null;
-    this.currentTimeout = null;
+    if(!window.___player)
+        window.___player = [];
+    window.___player.push(this);
 
     this.metronome = true;
 
-    this.bar = null;
+    this.lastNotes = [];
+    this.BPM = 120;
+    this.bar = {};
 
-    this.countInPlayback = null;
+    this.playing = false;
 
-    this.percentPlayed = function(){
-        return this.currentNoteID*100/(this.playbackQueue.length);
+    const player = new Instruments();
+
+    const metronomeConfig = {
+        program: 4,
+        channel: 1,
+        intensity: 3,
+        constantDuration: 0.001
+    };
+
+    const trackConfig = {
+        program: 18,
+        channel: 0,
+        intensity: 20,
+    };
+
+    let out = this;
+
+    this.metronomeChannel = new Channel(player, metronomeConfig, () => {});
+    this.trackChannel = new Channel(player, trackConfig, () => {out.playing = false;});
+
+    this.percentPlayed = function(){ return currentNoteID / this.lastNotes.length; },
+
+    this.playCountIn = function(bar, BPM, num_beats){
+
+        let countinPitches   = util.get_countin_pitches(bar, num_beats);
+        let countinNotes     = util.get_countin_notes  (bar, num_beats);
+        let countInDurations = util.generate_playback_durations(countinNotes);
+
+        let out = this;
+
+        return new Promise(function(resolve, reject){
+            out.metronomeChannel.play(BPM, bar, 
+                countinPitches, countInDurations, function(){
+                resolve();
+            }, null);
+        })
+
+    };
+
+    this.play = function(bar, BPM, values){
+
+        this.stop();
+
+        this.playing = true;
+
+        if(!bar){
+            bar = this.bar;
+        }
+
+        if(!BPM){
+            BPM = this.BPM;
+        }
+
+        if(!values){
+            values = this.lastNotes;
+        }else {
+            this.lastNotes = values;
+        }
+
+        let defaultPitch = [67];
+        let notes = util.generate_playback_durations(values);
+
+        var o2 = this;
+        return this.playCountIn(bar, BPM, 1).then(() => {
+            
+            if(o2.metronome) {
+                o2.playCountIn.apply(o2, [bar, BPM, 2]); // static num_bars...
+            }
+            
+            return new Promise((resolve, reject) => {
+                o2.trackChannel.play(BPM, bar, defaultPitch, notes, resolve);
+            });
+        });
+
     }
 
-    this.playNote = function(endCallback, noteCallback){
+    this.stop = function() {
+        this.metronomeChannel.stop();
+        this.trackChannel.stop();
+    }
 
-        if(!this.playing 
-            || this.playbackQueue == null 
-            || this.playbackQueue.length == 0
-            || this.loaded == false
-            || this.currentNoteID == null
-            || this.currentNoteID >= this.playbackQueue.length){
-            
-                if(endCallback){
-                    endCallback();
-                }
-                    
-                // PAUSE and RESET
-                // this.playing = false;
-                // this.currentNoteID = 0;
-
-                // STOP
-                this.stop();
-                return;
-        }
-            
-        this.playing = true;
-        let dur = this.playbackQueue[this.currentNoteID++];
-        let actualDuration = 0;
-
-        if(dur > 0)
-        {
-
-            // BPM logic
-            // Brez spreminjanja trajanja velja, da je celinka dolga 1s
-            // torej je vsaka četrtinka dolga 0,25s, kar je 4 BPS, kar je 240 BPM
-            // actualDuration = koliko sekund naj traja nota...
-            actualDuration = dur.valueOf() * this.bar.base_note * (60 / this.BPM);
-
-            // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
-            // Lahko bi kdaj v prihodnosti dodali melodično-ritmični narek...
-            // S tem Math.min sem hotel tudi povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
-            let sPitch = this.pitch[Math.min(this.pitch.length - 1, this.currentNoteID - 1)];
-
-            // Zaigraj, ustavi se samodejno.
-            this.midi.noteOn(this.channel, sPitch, this.intensity, 0, actualDuration);
-            this.midi.noteOff(this.channel, sPitch, actualDuration - 0.1);
-
-        }else {
-            
-            // Copied code from up
-            actualDuration = -dur.valueOf() / (this.BPM / 60) * this.bar.num_beats;
-        }
-
-        let milliseconds = actualDuration * 1000;
-        //console.log("Will last for "+milliseconds);
-
-        let outside = this;
-        if(this.playing) {
-            this.currentTimeout = setTimeout(function() {
-                
-                if(noteCallback){
-                    noteCallback();
-                }
-                
-                outside.playNote(endCallback, noteCallback);
-            }, milliseconds);
-        }
-            
+    this.load = function(notes) {
+        this.lastNotes = notes;
     }
 
     this.setBar = function(newBar){
-
-        if(!this.bar) {
-            this.bar = {}; 
-        }
 
         this.bar.num_beats = newBar.num_beats;
         this.bar.base_note = newBar.base_note;
@@ -108,197 +111,12 @@ var RhythmPlaybackEngine = function(midi){
             this.bar.subdivisions = null;
         }
 
-        if(this.countInPlayback){
-            this.countInPlayback.bar.num_beats = newBar.num_beats;
-            this.countInPlayback.bar.base_note = newBar.base_note;
-            if(newBar.subdivisions){
-                this.countInPlayback.bar.subdivisions = newBar.subdivisions;
-            } else {
-                this.bar.subdivisions = null;
-            }
-        }
-
     }
 
     this.setBPM = function(newBPM) {
-
-        if(this.countInPlayback){
-            this.countInPlayback.BPM = newBPM;
-        }
         this.BPM = newBPM;
     }
 
-    this._get_countin_pitches = function(num_bars) {
-
-        if(!num_bars) num_bars = 1;
-
-        // Original
-        // [93, 86];
-
-        const hi = 93;
-        const lo = 86;
-
-        let pitches = [];
-
-        for(let ooo = 0; ooo < num_bars; ooo++){
-            if(this.bar.subdivisions){
-
-                this.bar.subdivisions.forEach(s => {
-                    pitches.push(hi);
-                    for (let i = 1; i < s.n; i++) { pitches.push(lo); }
-                });
-    
-            } else if(!this.bar.subdivisions && this.bar.base_note == 8 && this.bar.num_beats == 6) {
-    
-                // Special counting for 6/8 time...
-                pitches = pitches.concat([hi, lo, lo, hi, lo, lo]);
-    
-            } else {
-                pitches.push(hi);
-                for (let i = 1; i < this.bar.num_beats; i++) { pitches.push(lo); }
-            }
-        }
-
-        return pitches;
-
-    }
-
-    this.playCountIn = function(num_beats){
-
-        if(!this.countInPlayback){
-            this.countInPlayback = new RhythmPlaybackEngine(midi);
-            this.countInPlayback.channel = 6; // xylophone. Look in store/index.js    
-            this.countInPlayback.intensity = 127;
-        }
-
-        this.countInPlayback.pitch = this._get_countin_pitches(num_beats);
-        this.countInPlayback.load(this.getCountInNotes(num_beats));
-        this.countInPlayback.bar = this.bar;
-        this.countInPlayback.BPM = this.BPM;
-
-        let out = this;
-
-        return new Promise(function(resolve, reject){
-            out.countInPlayback.resume(function(){
-                resolve();
-            });
-        })
-
-    }
-
-    this.play = function(){
-
-        var o2 = this;
-        return this.playCountIn(1).then(() => {
-            
-            if(o2.metronome) {
-                o2.playCountIn.apply(o2, [2]);
-            }
-            
-            o2.resume();
-        });
-
-    }
-
-    this.resume = function(endCallback, noteCallback){
-
-        if(!this.loaded){
-            console.log("No notes to play. Before the playback, you must call the load() method.");
-            return;
-        }
-
-        if(this.playing){
-            return;
-        }
-
-        this.playing = true;
-        this.playNote(endCallback, noteCallback);
-
-        /**
-         * Note so naložene v polju playbackQueue
-         * Predvajaj noto na položaju currentNoteID - kliči noteOn za to noto in povečaj currentNoteID za 1
-         * Nastavi timeout, ki naj se sproži po trajanju note. 
-         *      noteOff() - takoj
-         *      Naj kliče isto funkcijo za predvajanje note
-         * 
-         */
-
-    }
-
-    this.load = function(values, playbackName){
-
-        if(this.playing){
-            this.playing = false;
-            clearTimeout(this.currentTimeout);
-        }
-
-        this.playing = false;
-        this.currentTimeout = null;
-        this.currentNoteID = 0;
-
-        if(playbackName){
-            if(playbackName == "countin"){
-                this.countIn = true
-            }else{
-                this.currentlyLoaded = playbackName;
-            }
-            
-        }
-
-        this.playbackQueue = RhythmUtilities.generate_playback_durations(values);
-        this.loaded = true;
-    }
-
-    this.getCountInNotes = function(num_bars){
-
-        if(!num_bars) num_bars = 1;
-
-        var countInNotes = [];
-
-        for(let vv = 0; vv < num_bars; vv++){
-            if(this.bar.subdivisions){
-                this.bar.subdivisions.forEach(sd => {
-                    for(let i = 0; i < sd.n; i++){
-                        countInNotes.push({ type: 'n', value: sd.d });
-                    }
-                });
-            } else {
-                for(let i = 0; i < this.bar.num_beats; i++){
-                    countInNotes.push({type: 'n', value: this.bar.base_note});
-                }
-            }
-        }
-
-        return countInNotes;
-    }
-
-    this.pause = function(){
-
-        //this.currentNoteID += 1;
-        clearTimeout(this.currentTimeout);
-        this.playing = false;
-        
-    }
-
-    this.stop = function() {
-
-        this.currentlyLoaded = "";
-        this.playing = false;
-        this.playbackQueue = [];
-        this.loaded = false;
-        this.currentNoteID = null;
-
-        if(this.currentTimeout){
-            clearTimeout(this.currentTimeout);
-        }
-        this.currentTimeout = null;
-
-        if(this.countInPlayback){
-            this.countInPlayback.stop();
-        }
-        
-    }
-
-}
+};
 
 export default RhythmPlaybackEngine;

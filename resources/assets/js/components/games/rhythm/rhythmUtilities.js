@@ -182,6 +182,64 @@ function _getNoteType(note) {
     return note.value;
 }
 
+function _get_countin_pitches(bar, num_bars) {
+
+    if(!num_bars) num_bars = 1;
+
+    // Original
+    // [93, 86];
+
+    const hi = 100;
+    const lo = 76;
+
+    let pitches = [];
+
+    for(let ooo = 0; ooo < num_bars; ooo++){
+        if(bar.subdivisions){
+
+            bar.subdivisions.forEach(s => {
+                pitches.push(hi);
+                for (let i = 1; i < s.n; i++) { pitches.push(lo); }
+            });
+
+        } else if(!bar.subdivisions && bar.base_note == 8 && bar.num_beats == 6) {
+
+            // Special counting for 6/8 time...
+            pitches = pitches.concat([hi, lo, lo, hi, lo, lo]);
+
+        } else {
+            pitches.push(hi);
+            for (let i = 1; i < bar.num_beats; i++) { pitches.push(lo); }
+        }
+    }
+
+    return pitches;
+
+}
+
+function _get_countin_notes(bar, num_bars){
+
+    if(!num_bars) num_bars = 1;
+
+    var countInNotes = [];
+
+    for(let vv = 0; vv < num_bars; vv++){
+        if(bar.subdivisions){
+            bar.subdivisions.forEach(sd => {
+                for(let i = 0; i < sd.n; i++){
+                    countInNotes.push({ type: 'n', value: sd.d });
+                }
+            });
+        } else {
+            for(let i = 0; i < bar.num_beats; i++){
+                countInNotes.push({type: 'n', value: bar.base_note});
+            }
+        }
+    }
+
+    return countInNotes;
+}
+
 function _getBarLength(notes){
 
     let length = 0;
@@ -217,6 +275,8 @@ var utilities = {
     generate_playback_durations: _generate_playback_durations,
     getNotesDuration: _getBarLength,
     getNoteType: _getNoteType,
+    get_countin_notes: _get_countin_notes,
+    get_countin_pitches: _get_countin_pitches,
 
     get_bar_count: function(notes){
 

@@ -517,11 +517,13 @@ var NoteStore = function(bar, cursor, render_function, info) {
             return;
         }
 
-        if(this.notes[n].type == "bar"){
-            return;
+        debugger;
+        for(let i = n; i < this.notes.length; i++){
+            if(this.notes[i].type != "bar"){
+                this.notes[i].tie = !this.notes[i].tie;
+                return;
+            }
         }
-
-        this.notes[n].tie = !this.notes[n].tie;
         
     }
 
@@ -644,6 +646,8 @@ var NoteStore = function(bar, cursor, render_function, info) {
         if(event.type != "bar" && !this._is_supported_length(event)){
             return;
         }
+
+        this._remove_tie_at_cursor();
 
         // Add the note
         // Add the new note to the current position (at the cursor)

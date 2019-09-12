@@ -183,12 +183,12 @@ var RhythmRenderUtilities = function(){
             }
 
             barInfo.push({
-                width: width + parseInt(debug.offset2)// Fixed offset
+                width: width // + parseInt(debug.offset2)// Fixed offset
             });    
         });
 
         barInfo.push({
-            width: info.width + parseInt(debug.offset1)
+            width: info.width // + parseInt(debug.offset1)
         });
 
         let staves = this._vex_draw_staves(context, barInfo, info, timeSignatures);
