@@ -7,7 +7,7 @@
         <button @click="generate">Generiraj</button>
 
         <div class="barze" >
-            <RhythmBarInfo v-for="item in bars" ref="renderedBar" v-bind:key="item.id" :info="item" @click.native="openRhythmView(item.id)"/>
+            <RhythmBarInfo v-for="item in bars" ref="renderedBar" v-bind:key="item.id" :hideTimeSignature="false" :info="item" @click.native="openRhythmView(item.id)"/>
         </div>
 
     </div>

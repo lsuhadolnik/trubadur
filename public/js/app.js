@@ -3062,12 +3062,23 @@ function _get_countin_notes(bar, num_bars) {
     return countInNotes;
 }
 
-function _getBarLength(notes) {
+function _getBarLength(notes, stopOnBar) {
 
     var length = 0;
     var tupletLength = 0;
+
     for (var i = 0; i < notes.length; i++) {
+
         var note = notes[i];
+
+        if (note.type == "bar") {
+            if (stopOnBar) {
+                return length;
+            }
+
+            continue;
+        }
+
         var dur = 4 / note.value;
         if (note.dot) {
             dur = dur * 1.5;
@@ -3089,10 +3100,24 @@ function _getBarLength(notes) {
     return length;
 }
 
+function _get_bar_length_properties(notes) {
+
+    debugger;
+
+    var length = _getBarLength(notes, false);
+    var cross_bar = _getBarLength(notes, true);
+    if (length > cross_bar) {
+        return { cross_bar: cross_bar, length: length };
+    }
+
+    return { length: length };
+}
+
 var utilities = {
 
     generate_playback_durations: _generate_playback_durations,
     getNotesDuration: _getBarLength,
+    get_bar_length_properties: _get_bar_length_properties,
     getNoteType: _getNoteType,
     get_countin_notes: _get_countin_notes,
     get_countin_pitches: _get_countin_pitches,
@@ -52816,7 +52841,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    props: ['info'],
+    props: ['info', 'hideTimeSignature'],
     components: {
         StaffView: __WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue___default.a
     },
@@ -53987,7 +54012,7 @@ var render = function() {
             ref: "staff_view",
             attrs: {
               bar: _vm.info.timeSignature,
-              hideTimeSignatures: true,
+              hideTimeSignatures: _vm.hideTimeSignature,
               enabledContexts: ["zoomview"]
             }
           },
@@ -54087,7 +54112,7 @@ var render = function() {
             key: item.id,
             ref: "renderedBar",
             refInFor: true,
-            attrs: { info: item },
+            attrs: { hideTimeSignature: false, info: item },
             nativeOn: {
               click: function($event) {
                 return _vm.openRhythmView(item.id)
@@ -54290,6 +54315,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 var Fraction = __webpack_require__(7);
+var utils = __webpack_require__(9);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -54373,7 +54399,7 @@ var Fraction = __webpack_require__(7);
             }
 
             this.bars.splice(idx, 0, bar);
-            var scE = this.$refs.barsScroll.el;
+            var scE = this.$refs.barsScroll;
             scE.scrollTo(0, scE.scrollHeight);
         },
         downloadJSON: function downloadJSON() {
@@ -54508,7 +54534,6 @@ var Fraction = __webpack_require__(7);
                 //     .replace(/,"/gi, ", \"")
                 //     .replace(/"/gi, "'");
 
-                var utils = __webpack_require__(9);
                 var text = JSON.stringify(this.notes.notes).replace(/\[/, "").replace(/\]/, "").replace(/"/gi, "'");
                 text = "(   ," + "\"" + text + "\"" + ", " + utils.getNotesDuration(this.notes.notes) + ")";
 
@@ -54580,9 +54605,9 @@ var Fraction = __webpack_require__(7);
 
             var out = this;
 
-            var obj = {
+            var obj = _extends({
                 content: JSON.stringify(this.selected.content)
-            };
+            }, utils.get_bar_length_properties(this.notes.notes));
 
             if (this.selected.id) {
                 obj.id = this.selected.id;
@@ -54590,7 +54615,8 @@ var Fraction = __webpack_require__(7);
                     _this2.buttonState.save = "normal";
 
                     _this2.replaceBarInList(_this2.selected);
-                }).catch(function () {
+                }).catch(function (e) {
+                    console.log(e);
                     _this2.buttonState.save = "error";
                 });
             } else {
@@ -54598,7 +54624,8 @@ var Fraction = __webpack_require__(7);
                     out.selected.id = bar.id;
                     out.buttonState.save = "normal";
                     out.addBarToList(_this2.selected);
-                }).catch(function () {
+                }).catch(function (e) {
+                    console.log(e);
                     out.buttonState.save = "error";
                     return out.reload();
                 });
@@ -55057,8 +55084,7 @@ var Fraction = __webpack_require__(7);
                 add_bar: function add_bar() {
 
                         this.key_callback({
-                                type: 'bar',
-                                value: 4
+                                type: 'bar'
                         });
                 },
                 move_cursor_forward: function move_cursor_forward() {
@@ -60015,7 +60041,7 @@ var render = function() {
               key: item.id,
               ref: "renderedBar",
               refInFor: true,
-              attrs: { info: item },
+              attrs: { info: item, hideTimeSignature: true },
               nativeOn: {
                 mousedown: function($event) {
                   return _vm.barSelected(item)
@@ -63390,7 +63416,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         playfulTitle: function playfulTitle() {
 
-            var successTexts = ["Bravo! ✅💪", "Useplo ti je! 🎆🎆", "Čestitam! 👏", "Odlično! 💪", "Tale ti je pa ratala 💪", "Zakon! Obvladaš! 🎉"];
+            var successTexts = ["Bravo! ✅💪", "Useplo ti je! 🎆🎆", "Čestitam! 👏", "Odlično! 💪", "Zakon! Obvladaš! 🎉"];
             var failureTexts = ["Oooh... 😢", "Ups... 😕", "O ne!", "No ja... 🙂", "Več sreče prihodnjič. 😉", "Skoraj ti je uspelo...", "Še čisto malo!"];
 
             var pickRandom = function pickRandom(a) {

@@ -4,7 +4,7 @@
 
         <!--<StaffView :notes="info.notes" />-->
         <div class="admin__rhythmBarInfo__barInfoEntry__staffView">
-            <StaffView ref="staff_view" :bar="info.timeSignature" :hideTimeSignatures="true" :enabledContexts="['zoomview']" >
+            <StaffView ref="staff_view" :bar="info.timeSignature" :hideTimeSignatures="hideTimeSignature" :enabledContexts="['zoomview']" >
                 <div class="rhythm-game__staff__second-row">
                     <div class="admin__rhythmBarInfo__barInfoEntry__staffView__staff" :id="'rhythmBar'+this._uid"></div>
                 </div>
@@ -68,7 +68,7 @@ import StaffView from '../games/rhythm/StaffView.vue'
 
 export default {
     
-    props: ['info'],
+    props: ['info', 'hideTimeSignature'],
     components: {
         StaffView
     },

@@ -9,7 +9,7 @@
             </div>
 
             <div ref="barsScroll" class="admin_rhythmBars_masterView_body">
-                <RhythmBarInfo v-for="item in bars" ref="renderedBar" v-bind:key="item.id" :info="item" @mousedown.native="barSelected(item)" />
+                <RhythmBarInfo v-for="item in bars" ref="renderedBar" v-bind:key="item.id" :info="item" :hideTimeSignature="true" @mousedown.native="barSelected(item)" />
                 <div v-if="allPages > currentPage" class="loadMore" @click="loadMore()">Naloži več...</div>
             </div>
 
@@ -66,6 +66,7 @@ import UploadFile from "./UploadFile.vue"
 import DatatableFactory from 'vuejs-datatable';
 
 let Fraction = require('fraction.js');
+let utils = require('../games/rhythm/rhythmUtilities');
 
 export default {
     
@@ -174,7 +175,7 @@ export default {
             }
 
             this.bars.splice(idx, 0, bar);
-            let scE = this.$refs.barsScroll.el;
+            let scE = this.$refs.barsScroll;
             scE.scrollTo(0, scE.scrollHeight);
             
         },
@@ -338,7 +339,6 @@ export default {
                 //     .replace(/,"/gi, ", \"")
                 //     .replace(/"/gi, "'");
 
-                let utils = require('../games/rhythm/rhythmUtilities');
                 let text = JSON.stringify(this.notes.notes)
                        .replace(/\[/, "")
                        .replace(/\]/, "")
@@ -428,6 +428,7 @@ export default {
 
             let obj = {
                 content: JSON.stringify(this.selected.content),
+                ...utils.get_bar_length_properties(this.notes.notes)
             };
 
             if(this.selected.id){
@@ -436,7 +437,8 @@ export default {
                     this.buttonState.save = "normal";
                     
                     this.replaceBarInList(this.selected);
-                }).catch(() => {
+                }).catch((e) => {
+                    console.log(e);
                     this.buttonState.save = "error";
                 });    
             }else {
@@ -444,7 +446,8 @@ export default {
                     out.selected.id = bar.id;
                     out.buttonState.save = "normal";
                     out.addBarToList(this.selected);
-                }).catch(() => {
+                }).catch((e) => {
+                    console.log(e);
                     out.buttonState.save = "error";
                     return out.reload();
                 });

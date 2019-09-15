@@ -88,7 +88,7 @@ export default {
 
         playfulTitle() {
             
-            let successTexts = ["Bravo! ✅💪", "Useplo ti je! 🎆🎆", "Čestitam! 👏", "Odlično! 💪", "Tale ti je pa ratala 💪", "Zakon! Obvladaš! 🎉"];
+            let successTexts = ["Bravo! ✅💪", "Useplo ti je! 🎆🎆", "Čestitam! 👏", "Odlično! 💪", "Zakon! Obvladaš! 🎉"];
             let failureTexts = ["Oooh... 😢", "Ups... 😕", "O ne!", "No ja... 🙂", "Več sreče prihodnjič. 😉", "Skoraj ti je uspelo...", "Še čisto malo!"];
             
             let pickRandom = function(a){

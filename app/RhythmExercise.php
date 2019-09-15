@@ -19,6 +19,6 @@ class RhythmExercise extends Model
 
     public function bar_info()
     {
-        return $this->belongsTo('App\BarInfo');
+        return $this->belongsTo('App\BarInfo', 'bar_info_id', 'id');
     }
 }

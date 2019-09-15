@@ -11,6 +11,9 @@ use App\BarInfo;
 use App\RhythmBar;
 use App\RhythmExerciseBar;
 use App\RhythmDifficulty;
+use App\RhythmFeatureOccurrence;
+
+use App\Http\Controllers\Utils\ModuleLoader;
 
 class RhythmExerciseController extends Controller
 {
@@ -95,7 +98,7 @@ class RhythmExerciseController extends Controller
         $ex = RhythmExercise::find($id);
         $bars = $ex->bars->all();
 
-        $bar_info_info = $ex->bar_info->get()->first();
+        $bar_info_info = BarInfo::find($ex->bar_info_id);
         $bar_info = json_decode($bar_info_info->bar_info);
 
         // split bar jsons with {type: 'bar'}
@@ -132,7 +135,7 @@ class RhythmExerciseController extends Controller
         from rhythm_bar_occurrences o 
             JOIN rhythm_bars b on b.id = o.rhythm_bar_id 
         
-        WHERE o.rhythm_feature_id = :fid AND b.length <= :len", ['fid' => $feature->id, 'len' => $spaceLeft]);
+        WHERE (b.cross_bar = 0 OR b.cross_bar IS NULL) AND o.rhythm_feature_id = :fid AND b.length <= :len", ['fid' => $feature->id, 'len' => $spaceLeft]);
 
         return $this->weightedRandomSelector($coll, function($b) { return $b->prob; });
     }
@@ -211,7 +214,7 @@ class RhythmExerciseController extends Controller
             JOIN rhythm_features f ON f.id = fo.rhythm_feature_id
             JOIN rhythm_bar_occurrences bo ON bo.rhythm_feature_id = f.id
             JOIN rhythm_bars b ON b.id = bo.rhythm_bar_id
-          WHERE fo.rhythm_level = :level1 AND fo.bar_info_id = :barinfo1
+          WHERE fo.rhythm_level = :level1 AND fo.bar_info_id = :barinfo1 AND f.cross_bar = 0
           GROUP BY f.id
         ) v ON v.fid = f.id
     
@@ -226,35 +229,53 @@ class RhythmExerciseController extends Controller
     private function saveExercise($ex, &$bars) {
 
         $ex = RhythmExercise::create($ex);
-
+        
         $idx = 0;
-        for($i = 0; $i < count($bars); $i++){
+        $tuplets = implode(',', array_map(function($barId) use ($ex, &$idx) {
+            return '(' . $ex->id . ", $barId, ". $idx++ . ")";
+        }, $bars));
 
-            for($j = 0; $j < count($bars[$i]); $j++){
-                RhythmExerciseBar::create([
-                    'rhythm_exercise_id' => $ex->id,
-                    'rhythm_bar_id' => $bars[$i][$j],
-                    'seq' => $idx++
-                ]);
-            }
-
-            if($i + 1 < count($bars)) {
-                RhythmExerciseBar::create([
-                    'rhythm_exercise_id' => $ex->id,
-                    'rhythm_bar_id' => 1, // barline
-                    'seq' => $idx++
-                ]);
-            }
-            
-        }
+        DB::insert("INSERT INTO rhythm_exercise_bars (rhythm_exercise_id, rhythm_bar_id, seq) VALUES $tuplets");
 
         return $ex->id;
 
     }
 
+    private function getCrossBarForLevel($level, $barInfo){
+        
+        $defaultObj = (object) [
+            'id' => 1,
+            'length' => 0,
+            'cross_bar' => 0
+        ];
+
+        $fts = DB::select("SELECT f.id as rhythm_feature_id
+        from rhythm_features f 
+            join rhythm_feature_occurrences fo on fo.rhythm_feature_id = f.id
+        where f.cross_bar = 1 AND fo.bar_info_id = ? AND fo.rhythm_level = ?", [$barInfo->id, $level]);
+
+    
+        if(count($fts) == 0){ return $defaultObj; }
+
+        $ids = implode(', ', array_map(function($f) {return $f->rhythm_feature_id;}, $fts));
+
+        // Select all cross bars from appropriate features
+        $coll = DB::select("SELECT b.id as id, b.cross_bar as cross_bar, b.length as length, bo.bar_probability as prob
+        from rhythm_bars b 
+            join rhythm_bar_occurrences bo on bo.rhythm_bar_id = b.id 
+        where b.cross_bar IS NOT NULL AND bo.rhythm_feature_id IN (?)", [$ids]); // TODO
+
+        if(count($coll) == 0) { return $defaultObj; }
+
+        return $this->weightedRandomSelector($coll, function($b) { return $b->prob; });
+        
+    }
+
     private function generateForLevel($level) {
 
         $numbars = 2;
+
+        $ml = new ModuleLoader();
 
         // - Poglej ker rhythm_level je user 
         // - Izberi naključni bar_info, ki je primeren za ta level 
@@ -281,13 +302,23 @@ class RhythmExerciseController extends Controller
         $bar_length = $this->getBarInfoLength($bar_info);
 
         // - Inicializiraj arraye za bare in inicializiraj maksimalne dolžine
-        $currentBar = 0; $result  = [];
+        $currentBar = 0; 
         
-        $crossBars = []; $lengths = [];
+        $result  = [];
+        $lengths = [];
         $featureUseCounter = [];
         for($i = 0; $i < $numbars; $i++) {
             $result[] = []; $crossBars[] = []; $lengths[] = $bar_length;
         }
+
+        // Choose bar splitters
+        // - Randomly choose a cross-bar
+        $crossBar = $this->getCrossBarForLevel($level, $bar_info_info);
+        // - Decreade first bar length for value in cross_bar
+        $lengths[0] -= $crossBar->cross_bar;
+        // - Decrease second bar length for (bar.length - bar.cross_bar)
+        $lengths[1] -= $crossBar->length - $crossBar->cross_bar;
+
 
         $featureTypes = $this->getFeaturesForLevelAndBar($level, $bar_info_info->id);
 
@@ -336,13 +367,13 @@ class RhythmExerciseController extends Controller
             // Izberi uteženo naključno značilnost
             $f = $this->chooseFeature($allF, $lengths[$currentBar]);
             if(!is_object($f)) { 
-                continue; 
+                throw new \Exception("FEATURE FOR SPECIFIED MIN LENGTH NOT AVAILABLE!");
             }
 
             // Izberi uteženo naključen bar
             $bar = $this->chooseFeatureBar($f, $lengths[$currentBar]);
             if(!is_object($bar)) { 
-                continue; 
+                throw new \Exception("ERROR! FEATURE DEFINITION CORRUPTED! BAR OF SPECIFIED LENGTH NOT AVAILABLE DESPITE THE INITIAL MIN LENGTH CHECK!");
             }
 
             // Dodaj bar index v array
@@ -358,26 +389,15 @@ class RhythmExerciseController extends Controller
             $currentBar -= 1;
         }
 
-        $bars = [];
-        $skippedFirst = false;
-        foreach($result as $bar){
-            
-            if(!$skippedFirst){
-                $skippedFirst = true;
-            }else {
-                $bars[] = 1; // add barline
-            }
+        $bars = array_merge($result[0], [$crossBar->id], $result[1]);
 
-            $bars = array_merge($bars, $bar);
-            
-        }
 
         // Shrani vajo in vrni številko
         return $this->saveExercise([
             'bar_info_id' => $bar_info_info->id,
             'BPM' => 70,
             'rhythm_level' => $level
-        ], $result);
+        ], $bars);
 
     }
 

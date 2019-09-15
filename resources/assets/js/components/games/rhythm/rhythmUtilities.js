@@ -240,12 +240,23 @@ function _get_countin_notes(bar, num_bars){
     return countInNotes;
 }
 
-function _getBarLength(notes){
+function _getBarLength(notes, stopOnBar){
 
     let length = 0;
     let tupletLength = 0;
+
     for(let i = 0; i < notes.length; i++){
+        
         let note = notes[i];
+        
+        if(note.type == "bar"){
+            if(stopOnBar){
+                return length;
+            }
+            
+            continue;
+        }
+        
         let dur = 4/note.value;
         if(note.dot){
             dur = dur*1.5;
@@ -270,10 +281,25 @@ function _getBarLength(notes){
     return length;
 }
 
+function _get_bar_length_properties(notes) {
+
+    debugger;
+
+    let length = _getBarLength(notes, false);
+    let cross_bar = _getBarLength(notes, true);
+    if(length > cross_bar){
+        return { cross_bar, length };
+    }
+
+    return { length };
+
+}
+
 var utilities = {
 
     generate_playback_durations: _generate_playback_durations,
     getNotesDuration: _getBarLength,
+    get_bar_length_properties: _get_bar_length_properties,
     getNoteType: _getNoteType,
     get_countin_notes: _get_countin_notes,
     get_countin_pitches: _get_countin_pitches,

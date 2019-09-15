@@ -339,8 +339,7 @@ export default {
         add_bar(){
 
             this.key_callback({
-                type: 'bar',
-                value: 4
+                type: 'bar'
             });
 
         },
