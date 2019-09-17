@@ -123,6 +123,11 @@ class RhythmExerciseController extends Controller
         Returns time_signature bar duration in number of quarter notes
     */
     private function getBarInfoLength(&$ts){
+
+        if(isset($ts->d) && isset($ts->n)){
+            return (4/$ts->d) * $ts->n;
+        }
+
         return (4/$ts->base_note) * $ts->num_beats;
     }
 
@@ -271,11 +276,52 @@ class RhythmExerciseController extends Controller
         
     }
 
+    private function barLengthIterator(&$bar_info, &$crossBar, $numbars) {
+
+        $inverted = false;
+        for($barIdx = 0; $barIdx < $numbars; $barIdx++){
+
+            if(isset($bar_info->subdivisions)){
+
+                if(!$inverted) {
+
+                    $lastIdx = count($bar_info->subdivisions) - 1;
+
+                    for($i = 0; $i < $lastIdx; $i++) {
+                        yield $this->getBarInfoLength($bar_info->subdivisions[$i]);
+                    }
+
+                    yield $this->getBarInfoLength($bar_info->subdivisions[$lastIdx]) - $crossBar->cross_bar;
+
+                }
+                         
+                else {
+                    
+                    $firstIdx = count($bar_info->subdivisions) - 1;
+                    // BarIdx is greater than 0 - it's at least second run.
+                    yield $this->getBarInfoLength($bar_info->subdivisions[$i]) - $crossBar->length + $crossBar->cross_bar;
+
+                    for($i = $firstIdx - 1; $i >= 0; $i--) {
+                        yield $this->getBarInfoLength($bar_info->subdivisions[$i]);
+                    }
+                        
+                }
+                    
+
+            } else {
+                yield $this->getBarInfoLength($bar_info);
+            }
+
+
+            $inverted = true;
+        }
+
+    }
+
     private function generateForLevel($level) {
 
         $numbars = 2;
-
-        $ml = new ModuleLoader();
+        $numSubdivisions = 1;
 
         // - Poglej ker rhythm_level je user 
         // - Izberi naključni bar_info, ki je primeren za ta level 
@@ -299,27 +345,22 @@ class RhythmExerciseController extends Controller
         $bar_info_info = $bar_infos_collection[array_rand($bar_infos_collection)];
 
         $bar_info = json_decode($bar_info_info->bar_info);
-        $bar_length = $this->getBarInfoLength($bar_info);
 
+        if(isset($bar_info->subdivisions)){
+            $numSubdivisions = count($bar_info->subdivisions);
+        }
+        
         // - Inicializiraj arraye za bare in inicializiraj maksimalne dolžine
         $currentBar = 0; 
-        
-        $result  = [];
-        $notesResult = [];
-        $lengths = [];
-        $featureUseCounter = [];
-        for($i = 0; $i < $numbars; $i++) {
-            $result[] = []; $crossBars[] = []; $lengths[] = $bar_length;
-            $notesResult[] = [];
-        }
+        $numResults = $numSubdivisions * $numbars;
 
         // Choose bar splitters
         // - Randomly choose a cross-bar
         $crossBar = $this->getCrossBarForLevel($level, $bar_info_info);
-        // - Decreade first bar length for value in cross_bar
-        $lengths[0] -= $crossBar->cross_bar;
-        // - Decrease second bar length for (bar.length - bar.cross_bar)
-        $lengths[1] -= $crossBar->length - $crossBar->cross_bar;
+
+        $result  = array_fill(0, $numResults, []); // Fill with empty arrays
+        $lengths = iterator_to_array($this->barLengthIterator($bar_info, $crossBar, $numbars));
+        $featureUseCounter = [];
 
 
         $featureTypes = $this->getFeaturesForLevelAndBar($level, $bar_info_info->id);
@@ -361,10 +402,10 @@ class RhythmExerciseController extends Controller
         $allF = $featureTypes->other;
         $currentBar = 0;
 
-        // Until both bars are full
-        for($currentBar = 0; $currentBar < $numbars; $currentBar++){
+        // Until all bars are full
+        for($currentBar = 0; $currentBar < $numResults; $currentBar++){
 
-            $remLength = $ml->RunRemLengthStep($notesResult[$currentBar], $lengths[$currentBar], $bar_info, $currentBar);
+            $remLength = $lengths[$currentBar];
 
             if($remLength <= 0.001) continue;
             
@@ -380,8 +421,6 @@ class RhythmExerciseController extends Controller
                 throw new \Exception("ERROR! FEATURE DEFINITION CORRUPTED! BAR OF SPECIFIED LENGTH NOT AVAILABLE DESPITE THE INITIAL MIN LENGTH CHECK!");
             }
 
-            $notesResult[$currentBar] = array_merge($notesResult[$currentBar], json_decode($bar->content));
-
             // Dodaj bar index v array
             $result[$currentBar][] = $bar->id; 
             $lengths[$currentBar] -= $bar->length;
@@ -395,8 +434,18 @@ class RhythmExerciseController extends Controller
             $currentBar -= 1;
         }
 
-        $bars = array_merge($result[0], [$crossBar->id], $result[1]);
+        // Basic 2 bars merge
+        // $bars = array_merge($result[0], [$crossBar->id], $result[1]);
 
+        $bars = [];
+        for($i = 0; $i < $numResults; $i++) {
+
+            if($i > 0 && ($i % $numSubdivisions == 0)){
+                $bars = array_merge($bars, [$crossBar->id]);
+            }
+
+            $bars = array_merge($bars, $result[$i]);
+        }
 
         // Shrani vajo in vrni številko
         return $this->saveExercise([
