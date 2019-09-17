@@ -309,7 +309,13 @@ class RhythmExerciseController extends Controller
                     
 
             } else {
-                yield $this->getBarInfoLength($bar_info);
+
+                if($inverted){
+                    yield $this->getBarInfoLength($bar_info) - $crossBar->length + $crossBar->cross_bar;
+                } else {
+                    yield $this->getBarInfoLength($bar_info) - $crossBar->cross_bar;
+                }
+
             }
 
 
