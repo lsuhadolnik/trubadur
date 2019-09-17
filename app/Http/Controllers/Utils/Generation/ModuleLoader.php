@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Utils;
+namespace App\Http\Controllers\Utils\Generation;
+
+use App\Http\Controllers\Utils\Generation\SubdivisionsModule;
 
 class ModuleLoader {
 
@@ -18,6 +20,10 @@ class ModuleLoader {
         $this->postSteps = [
 
         ];
+
+        $this->remLengthSteps = [
+            // new SubdivisionsModule()
+        ];
     }
 
     public function RunPreSteps(&$result, &$lengths){
@@ -33,6 +39,18 @@ class ModuleLoader {
         foreach($this->postSteps as $m){
             $m->PostStep($result, $lengths);
         }
+
+    }
+
+    public function RunRemLengthStep(&$result, $length, &$barInfo, $barId){
+
+        $remLen = $length;
+
+        foreach($this->remLengthSteps as $m){
+            $remLen = $m->RemLenStep($result, $remLen, $barInfo, $barId);
+        }
+
+        return $remLen;
 
     }
 

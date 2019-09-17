@@ -13,7 +13,7 @@ use App\RhythmExerciseBar;
 use App\RhythmDifficulty;
 use App\RhythmFeatureOccurrence;
 
-use App\Http\Controllers\Utils\ModuleLoader;
+use App\Http\Controllers\Utils\Generation\ModuleLoader;
 
 class RhythmExerciseController extends Controller
 {
@@ -305,10 +305,12 @@ class RhythmExerciseController extends Controller
         $currentBar = 0; 
         
         $result  = [];
+        $notesResult = [];
         $lengths = [];
         $featureUseCounter = [];
         for($i = 0; $i < $numbars; $i++) {
             $result[] = []; $crossBars[] = []; $lengths[] = $bar_length;
+            $notesResult[] = [];
         }
 
         // Choose bar splitters
@@ -362,19 +364,23 @@ class RhythmExerciseController extends Controller
         // Until both bars are full
         for($currentBar = 0; $currentBar < $numbars; $currentBar++){
 
-            if($lengths[$currentBar] <= 0.001) continue;
+            $remLength = $ml->RunRemLengthStep($notesResult[$currentBar], $lengths[$currentBar], $bar_info, $currentBar);
+
+            if($remLength <= 0.001) continue;
             
             // Izberi uteženo naključno značilnost
-            $f = $this->chooseFeature($allF, $lengths[$currentBar]);
+            $f = $this->chooseFeature($allF, $remLength);
             if(!is_object($f)) { 
                 throw new \Exception("FEATURE FOR SPECIFIED MIN LENGTH NOT AVAILABLE!");
             }
 
             // Izberi uteženo naključen bar
-            $bar = $this->chooseFeatureBar($f, $lengths[$currentBar]);
+            $bar = $this->chooseFeatureBar($f, $remLength);
             if(!is_object($bar)) { 
                 throw new \Exception("ERROR! FEATURE DEFINITION CORRUPTED! BAR OF SPECIFIED LENGTH NOT AVAILABLE DESPITE THE INITIAL MIN LENGTH CHECK!");
             }
+
+            $notesResult[$currentBar] = array_merge($notesResult[$currentBar], json_decode($bar->content));
 
             // Dodaj bar index v array
             $result[$currentBar][] = $bar->id; 
