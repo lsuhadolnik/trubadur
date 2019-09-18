@@ -8,8 +8,8 @@
                 <li class="rhythm__instructions-list-item">Preizkusila / preizkusil se boš v ritmičnem nareku.</li>
                 <li class="rhythm__instructions-list-item">Vaja bo v {{bar.num_beats}}/{{bar.base_note}} taktu.</li>
                 <li class="rhythm__instructions-list-item">Slišala / slišal boš {{num_beats_text}}.</li>
-                <li class="rhythm__instructions-list-item">Na začetku bo metronom odtapkal en takt.</li>
-                <li class="rhythm__instructions-list-item">Predvajalo se bo s hitrostjo {{questionState.exercise != null ? questionState.exercise.BPM : "??" }} udarcev na minuto.</li>
+                <li class="rhythm__instructions-list-item">Na začetku bo metronom izvajal en takt.</li>
+                <li class="rhythm__instructions-list-item">Tempo bo {{questionState.exercise != null ? questionState.exercise.BPM : "??" }} udarcev na minuto.</li>
                 <li class="rhythm__instructions-list-item">Za reševanje imaš na voljo {{questionState.maxSeconds}} sekund.</li>
                 <li class="rhythm__instructions-list-item">Odgovor lahko preveriš največ {{questionState.maxChecks}}-krat.</li>
                 <li class="rhythm__instructions-list-item">Če ne veš, kako deluje kakšen gumb, pritisni gumb Pomoč.<br>Dobro je, da si Pomoč ogledaš pred prvo igro.</li>
@@ -498,6 +498,7 @@ export default {
                 return this.gameEnded();
             }
 
+
             return this.generateQuestion(
                 { 
                     game_id: this.game.id, 
@@ -595,7 +596,7 @@ export default {
                 setTimeout(function() {
                     // Watch out, could happen when next question is already loaded
                     outside.questionState.check = "next";
-                    outside.check();
+                    // outside.check();
                 }, changeTimeout);
             }
             else{
@@ -608,7 +609,7 @@ export default {
 
                     if(status.overcheck || status.timeout){
                         outside.questionState.check = "next";
-                        outside.check();
+                        // outside.check();
                     }
                 }, changeTimeout);
             }
@@ -716,7 +717,7 @@ export default {
 
             if(feedback){
                 this.createRhythmExerciseFeedback({
-                    rhythm_exercise_id: this.$route.params.exerciseId,
+                    rhythm_exercise_id: this.questionState.exercise.id,
                     question_id: this.questionState.id,
                     content: feedback
                 }).then(() => {

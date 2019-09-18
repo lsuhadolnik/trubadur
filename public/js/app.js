@@ -62748,7 +62748,7 @@ var util = __webpack_require__(9);
                 setTimeout(function () {
                     // Watch out, could happen when next question is already loaded
                     outside.questionState.check = "next";
-                    outside.check();
+                    // outside.check();
                 }, changeTimeout);
             } else {
                 this.questionState.check = "wrong";
@@ -62760,7 +62760,7 @@ var util = __webpack_require__(9);
 
                     if (status.overcheck || status.timeout) {
                         outside.questionState.check = "next";
-                        outside.check();
+                        // outside.check();
                     }
                 }, changeTimeout);
             }
@@ -62855,7 +62855,7 @@ var util = __webpack_require__(9);
 
             if (feedback) {
                 this.createRhythmExerciseFeedback({
-                    rhythm_exercise_id: this.$route.params.exerciseId,
+                    rhythm_exercise_id: this.questionState.exercise.id,
                     question_id: this.questionState.id,
                     content: feedback
                 }).then(function () {
@@ -63316,7 +63316,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 163px;\n  overflow-y: hidden;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n      height: 150px;\n}\n}\n#diff-zoom-view1[data-v-0556eb24], #diff-zoom-view2[data-v-0556eb24] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n.diff-prompt[data-v-0556eb24] {\n  padding: 0px;\n  margin: 10px 0 0 0;\n  font-size: 26px;\n  text-align: center;\n}\n.button-holder[data-v-0556eb24] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  width: 100%;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 163px;\n  overflow-y: hidden;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n      height: 150px;\n}\n}\n#diff-zoom-view1[data-v-0556eb24], #diff-zoom-view2[data-v-0556eb24] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n.diff-prompt[data-v-0556eb24] {\n  padding: 0px;\n  margin: 10px 0 0 0;\n  font-size: 26px;\n  text-align: center;\n}\n.button-holder[data-v-0556eb24] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  width: 100%;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.feedbackButton[data-v-0556eb24] {\n  margin-left: 15px;\n}\n", ""]);
 
 // exports
 
@@ -63331,6 +63331,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__StaffView_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__StaffView_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(4);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -63396,6 +63399,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -63432,13 +63441,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
 
-    methods: {
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])(['createRhythmExerciseFeedback']), {
         render: function render(exerciseNotes, userNotes) {
 
             this.$refs.staff_view1.render(exerciseNotes);
             this.$refs.staff_view2.render(userNotes);
+        },
+        feedback: function feedback() {
+
+            var feedback = prompt("Kaj želite sporočiti?");
+
+            if (feedback) {
+                this.createRhythmExerciseFeedback({
+                    rhythm_exercise_id: this.$parent.questionState.exercise.id,
+                    question_id: this.$parent.questionState.id,
+                    content: "(DiffView) " + feedback
+                }).then(function () {
+                    alert("Komentar uspešno posredovan.");
+                }).catch(function () {
+                    alert("Napaka pri pošiljanju komentarja. Poskusite znova.");
+                });
+            }
         }
-    },
+    }),
     mounted: function mounted() {
 
         var out = this;
@@ -63537,6 +63562,23 @@ var render = function() {
               }
             },
             [_vm._v("Vredu")]
+          ),
+          _vm._v(" "),
+          _c(
+            "SexyButton",
+            {
+              attrs: {
+                color: "cabaret",
+                cols: 2,
+                customClass: "feedbackButton"
+              },
+              nativeOn: {
+                click: function($event) {
+                  return _vm.feedback()
+                }
+              }
+            },
+            [_vm._v("Povratne informacije")]
           )
         ],
         1
@@ -67802,12 +67844,12 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v("Na začetku bo metronom odtapkal en takt.")
+              _vm._v("Na začetku bo metronom izvajal en takt.")
             ]),
             _vm._v(" "),
             _c("li", { staticClass: "rhythm__instructions-list-item" }, [
               _vm._v(
-                "Predvajalo se bo s hitrostjo " +
+                "Tempo bo " +
                   _vm._s(
                     _vm.questionState.exercise != null
                       ? _vm.questionState.exercise.BPM

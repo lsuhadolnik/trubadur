@@ -20,6 +20,7 @@
         
         <div class="button-holder">
             <SexyButton color="green" @click.native="dismiss()" :cols="2" >Vredu</SexyButton>
+            <SexyButton color="cabaret" @click.native="feedback()" :cols="2" customClass="feedbackButton" >Povratne informacije</SexyButton>
         </div>
 
     </div>
@@ -59,6 +60,10 @@
         justify-content: center;
     }
 
+    .feedbackButton {
+        margin-left: 15px;
+    }
+
 
 </style>
 
@@ -68,6 +73,7 @@
 import StaffView from "./StaffView.vue"
 
 import SexyButton from "../../elements/SexyButton.vue"
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 
 export default {
@@ -107,11 +113,32 @@ export default {
 
     methods: {
 
+        ...mapActions(['createRhythmExerciseFeedback']),
+
         render(exerciseNotes, userNotes) {
 
             this.$refs.staff_view1.render(exerciseNotes);
             this.$refs.staff_view2.render(userNotes);    
         },
+
+        feedback() {
+
+            let feedback = prompt("Kaj želite sporočiti?");
+
+
+            if(feedback){
+                this.createRhythmExerciseFeedback({
+                    rhythm_exercise_id: this.$parent.questionState.exercise.id,
+                    question_id: this.$parent.questionState.id,
+                    content: "(DiffView) " + feedback
+                }).then(() => {
+                    alert("Komentar uspešno posredovan.");
+                }).catch(() => {
+                    alert("Napaka pri pošiljanju komentarja. Poskusite znova.");
+                })
+            }
+
+        }
 
     },
     mounted(){
