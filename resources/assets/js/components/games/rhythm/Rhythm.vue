@@ -227,7 +227,7 @@ export default {
                 wasCorrect: false,
 
                 maxChecks: 10,
-                maxSeconds: 120,
+                maxSeconds: 60 * 10, // 10 minut
                 
                 num_beats: "x",
                 number: 0,
