@@ -324,6 +324,18 @@ class RhythmExerciseController extends Controller
 
     }
 
+    private function getBarInfosCollection($level) {
+        // BarInfo::where('min_rhythm_level', '<=', $level)->get()->all();
+        return DB::select("SELECT bi.* from bar_infos bi where bi.min_rhythm_level <= ? and bi.id in (
+            SELECT b.id 
+            from bar_infos b
+                join rhythm_feature_occurrences fo on fo.bar_info_id = b.id
+            where fo.rhythm_level >= ?
+            group by b.id
+            having COUNT(*) > 0
+        )", [$level, $level]);
+    }
+
     private function generateForLevel($level) {
 
         $numbars = 2;
@@ -347,7 +359,7 @@ class RhythmExerciseController extends Controller
 
         // - Poglej ker rhythm_level je user ✅ ($level)
         // - Izberi naključni bar_info, ki je primeren za ta level 
-        $bar_infos_collection = BarInfo::where('min_rhythm_level', '<=', $level)->get()->all();
+        $bar_infos_collection = $this->getBarInfosCollection($level);
         $bar_info_info = $bar_infos_collection[array_rand($bar_infos_collection)];
 
         $bar_info = json_decode($bar_info_info->bar_info);
