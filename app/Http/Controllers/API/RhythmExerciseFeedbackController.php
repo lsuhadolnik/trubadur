@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use Telegram\Bot\Api;
+
 use App\RhythmExerciseFeedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,6 +41,27 @@ class RhythmExerciseFeedbackController extends Controller
         return $this->prepareAndExecuteIndexQuery($request, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
+    private function sendTelegram($exId, $content) {
+        if(env('TELEGRAM_API_KEY') && env('TELEGRAM_CHAT_ID')){
+            try{
+
+                $text = "($exId) ";
+                $text .= $content;
+
+
+                $telegram = new Api(env('TELEGRAM_API_KEY'));
+                $response = $telegram->sendMessage([
+                    'chat_id' => env('TELEGRAM_CHAT_ID'), 
+                    'text' => $text
+                ]);
+
+            }
+            catch(\Exception $ex){
+
+            }
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -53,18 +76,24 @@ class RhythmExerciseFeedbackController extends Controller
             throw new \Exception("Content is required");
         }
 
+        
+        $exId = -1;
+
         if(isset($req->rhythm_exercise_id)){
-            return RhythmExerciseFeedback::create([
-                "rhythm_exercise_id" => $req->rhythm_exercise_id,
-                "content" => $req->content
-            ]);
+            $exId = $req->rhythm_exercise_id;
+
         }else if(isset($req->question_id)){
             $q = Question::findOrFail($req->question_id);
-            return RhythmExerciseFeedback::create([
-                "rhythm_exercise_id" => $q->content,
-                "content" => $req->content
-            ]);
+            $exId = $q->content;
+
         }
+
+        $this->sendTelegram($exId, $req->content);
+
+        return RhythmExerciseFeedback::create([
+            "rhythm_exercise_id" => $exId,
+            "content" => $req->content
+        ]);
         
         // $data = [
         //     'rhythm_exercise_id' => 'integer',
