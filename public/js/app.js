@@ -52912,7 +52912,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 176px;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 150px;\n}\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n", ""]);
+exports.push([module.i, "\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n#first-row[data-v-5a6b0eb1] {\n      display: none;\n}\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 176px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 95px;\n}\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(1.5) translate(16.65%);\n  transform: scale(1.5) translate(16.65%);\n}\n", ""]);
 
 // exports
 
@@ -52926,6 +52926,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vexflow__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__ = __webpack_require__(143);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -53084,19 +53091,30 @@ var Tuplet = VF.Tuplet;
                 zoomview: {
                     id: "second-row",
                     role: "zoomview",
-                    scale: 2,
+                    scale: 1.5,
                     //containerHeight: 176,  
                     init: function init(vue) {
                         // this = descriptor object
 
                         var sR = this.parentElement;
                         sR.onscroll = function (e) {
+                            alert("Hello4 :(");
                             vue.scrolled(sR.scrollLeft, true);
                             return false;
                         };
 
                         sR.onmousedown = function (e) {
+                            alert("HELLO2 :(");
                             vue.note_clicked(e.offsetX);
+                        };
+
+                        sR.ontouchstart = function (e) {
+                            alert("HELLO!");
+                            e.preventDefault();
+
+                            vue.note_clicked(e.offsetX);
+
+                            return false;
                         };
                     }
                 }

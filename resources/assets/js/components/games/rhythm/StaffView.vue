@@ -15,8 +15,14 @@
 
     @import '../../../../sass/variables/index';
 
+    $zoomviewScale: 1.5; 
+    $zoomviewTranslate: 16.65%; 
+
     #first-row {
         transform: scale(0.5) translate(-50%, 0);
+
+        @include breakpoint-small-phone-landscape { display: none; }
+
     }
 
     .rhythm-game__staff__second-row {
@@ -25,12 +31,13 @@
         overflow-scrolling: touch;
         height: 176px;
 
-        @include breakpoint-phone-landscape { height: 150px; }
+        @include breakpoint-small-phone-landscape { height: 95px; }
+        //@include breakpoint-phone { height: 95px; }
     }
 
     #second-row {
-        -webkit-transform: scale(2) translate(25%, 25%);
-        transform: scale(2) translate(25%, 25%);
+        -webkit-transform: scale($zoomviewScale) translate($zoomviewTranslate);
+        transform: scale($zoomviewScale) translate($zoomviewTranslate);
     }
 
 
@@ -159,19 +166,30 @@ export default {
                 zoomview: {
                     id: "second-row",
                     role: "zoomview",
-                    scale: 2,
+                    scale: 1.5,
                     //containerHeight: 176,  
                     init: function(vue) {
                         // this = descriptor object
 
                         var sR = this.parentElement;
                         sR.onscroll = function(e){
+                            alert("Hello4 :(");
                             vue.scrolled(sR.scrollLeft, true);
                             return false;
                         }
 
                         sR.onmousedown = function(e){
+                            alert("HELLO2 :(");
                             vue.note_clicked(e.offsetX);
+                        }
+
+                        sR.ontouchstart = function(e){
+                            alert("HELLO!");
+                            e.preventDefault();
+
+                            vue.note_clicked(e.offsetX);
+
+                            return false;
                         }
 
                     }

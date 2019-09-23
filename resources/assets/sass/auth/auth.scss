@@ -12,17 +12,23 @@
     justify-content  : center;
     align-items      : center;
     background-color : transparent;
+
+    @include breakpoint-small-phone-landscape { height: 40px; }
 }
 
 .header__title {
     font-size : 25px;
     cursor    : pointer;
+    
 }
 
 .auth__title {
     margin     : 30px 0 40px 0;
     font-size  : 40px;
     text-align : center;
+
+    @include breakpoint-small-phone-landscape { display: none; }
+
 }
 
 .auth__form {
@@ -38,11 +44,15 @@
     align-items      : center;
     flex-direction   : column;
     background-color : $sunglow;
+
+    @include breakpoint-small-phone-landscape { padding: 3px 10%; }
 }
 
 .auth__form-group {
     width         : 100%;
     margin-bottom : 20px;
+
+    @include breakpoint-small-phone-landscape { margin-bottom: 5px;}
 }
 
 .auth__form-group--checkbox { padding-top: 10px; }
@@ -78,6 +88,8 @@
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus { -webkit-box-shadow: 0 0 0 100px $golden-tainoi inset !important; }
+
+    @include breakpoint-small-phone-landscape { height: 33px; }
 }
 
 .auth__form-checkbox-label {
@@ -87,6 +99,8 @@
     cursor    : pointer;
 
     &:hover .auth__form-checkbox-checkmark { background-color: $golden-tainoi; }
+
+    @include breakpoint-small-phone-landscape { font-size: 13px; }
 }
 
 .auth__form-checkbox {
@@ -160,6 +174,13 @@
     transition : filter $button-transition-time linear;
 
     &:hover { filter: brightness(0.85); }
+
+    @include breakpoint-small-phone-landscape { 
+        width: 133px;
+        height: 36px;
+        margin-top: 8px;
+    }
+    
 }
 
 .auth__button-hollow {
