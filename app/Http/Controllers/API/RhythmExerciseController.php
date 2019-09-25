@@ -13,6 +13,8 @@ use App\RhythmExerciseBar;
 use App\RhythmDifficulty;
 use App\RhythmFeatureOccurrence;
 
+use App\Http\Controllers\Utils\Midi;
+
 use App\Http\Controllers\Utils\Generation\ModuleLoader;
 
 class RhythmExerciseController extends Controller
@@ -102,10 +104,13 @@ class RhythmExerciseController extends Controller
         $bar_info = json_decode($bar_info_info->bar_info);
 
         // split bar jsons with {type: 'bar'}
-        $notes = json_decode($bars[0]->content, true);
+        $notes = json_decode($bars[0]->content);
         for($i = 1; $i < count($bars); $i++){
-            $notes = array_merge($notes, json_decode($bars[$i]->content, true));
+            $notes = array_merge($notes, json_decode($bars[$i]->content));
         }
+
+        // Generate MP3 recording of the exercise
+
 
         // return the exercise
         return array(

@@ -91,3 +91,4 @@ Route:: delete('rhythmFeatures/{fid}/occurrences/{level}/{bar}', 'API\RhythmFeat
 
 Route::resource('rhythmExerciseFeedback', 'API\RhythmExerciseFeedbackController', ['except' => ['create', 'edit']]);
 
+Route::get('sound/{exId}', 'Utils\Midi\MidiNotes@GetExercise');
