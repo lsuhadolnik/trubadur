@@ -82,9 +82,16 @@ class MidiConvert {
         $wav = $this->tmp_folder."/$inName.wav";
         $mp3 = $this->tmp_folder."/$outName.mp3";
 
-        $cmd = "ffmpeg -i $wav -ab 320k $mp3";
+        $cmd = "ffmpeg -i $wav -ab 320k $mp3 2>&1";
 
-        exec($cmd);
+        $out = [];
+        $errCode = -1;
+
+        if(file_exists($mp3)) {
+            unlink($mp3);
+        }
+
+        exec($cmd, $out, $errCode);
 
         /*if(filesize($mp3_path)<1000){
           unlink($mp3_path);

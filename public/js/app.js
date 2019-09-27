@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 47);
+/******/ 	return __webpack_require__(__webpack_require__.s = 46);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -165,7 +165,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(79)
+var listToStyles = __webpack_require__(78)
 
 /*
 type StyleObject = {
@@ -489,13 +489,13 @@ module.exports = function normalizeComponent (
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(77)
+  __webpack_require__(76)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(80)
+var __vue_script__ = __webpack_require__(79)
 /* template */
-var __vue_template__ = __webpack_require__(81)
+var __vue_template__ = __webpack_require__(80)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -1556,17 +1556,68 @@ var index_esm = {
 /* harmony default export */ __webpack_exports__["a"] = (index_esm);
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(153)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(155)
+/* template */
+var __vue_template__ = __webpack_require__(156)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-be802b54"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/elements/SexyButton.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-be802b54", Component.options)
+  } else {
+    hotAPI.reload("data-v-be802b54", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var bind = __webpack_require__(25);
-var isBuffer = __webpack_require__(57);
+var isBuffer = __webpack_require__(56);
 
 /*global toString:true*/
 
@@ -1866,57 +1917,6 @@ module.exports = {
   extend: extend,
   trim: trim
 };
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(154)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(156)
-/* template */
-var __vue_template__ = __webpack_require__(157)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-be802b54"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/elements/SexyButton.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-be802b54", Component.options)
-  } else {
-    hotAPI.reload("data-v-be802b54", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
 
 
 /***/ }),
@@ -2762,6 +2762,33 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2840,7 +2867,7 @@ function functionProp() {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -3166,46 +3193,19 @@ var utilities = {
 module.exports = utilities;
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(140)
+  __webpack_require__(139)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(142)
+var __vue_script__ = __webpack_require__(141)
 /* template */
-var __vue_template__ = __webpack_require__(144)
+var __vue_template__ = __webpack_require__(143)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -3250,13 +3250,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(158)
+  __webpack_require__(157)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(160)
+var __vue_script__ = __webpack_require__(159)
 /* template */
-var __vue_template__ = __webpack_require__(161)
+var __vue_template__ = __webpack_require__(160)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -3302,7 +3302,7 @@ module.exports = Component.exports
 //import { util } from "node-forge";
 
 var Fraction = __webpack_require__(7);
-var util = __webpack_require__(9);
+var util = __webpack_require__(10);
 
 var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
@@ -3947,10 +3947,10 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-window._ = __webpack_require__(49);
-window.$ = window.jQuery = __webpack_require__(50);
-window.Vue = __webpack_require__(51);
-window.axios = __webpack_require__(55);
+window._ = __webpack_require__(48);
+window.$ = window.jQuery = __webpack_require__(49);
+window.Vue = __webpack_require__(50);
+window.axios = __webpack_require__(54);
 
 window.axios.defaults.headers.common = {
   'Accept': 'application/json',
@@ -3981,8 +3981,8 @@ window.axios.defaults.headers.common = {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(5);
-var normalizeHeaderName = __webpack_require__(59);
+var utils = __webpack_require__(6);
+var normalizeHeaderName = __webpack_require__(58);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -4081,13 +4081,13 @@ module.exports = defaults;
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(137)
+  __webpack_require__(136)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(139)
+var __vue_script__ = __webpack_require__(138)
 /* template */
-var __vue_template__ = __webpack_require__(145)
+var __vue_template__ = __webpack_require__(144)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -4132,13 +4132,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(162)
+  __webpack_require__(161)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(164)
+var __vue_script__ = __webpack_require__(163)
 /* template */
-var __vue_template__ = __webpack_require__(165)
+var __vue_template__ = __webpack_require__(164)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -4183,13 +4183,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(166)
+  __webpack_require__(165)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(168)
+var __vue_script__ = __webpack_require__(167)
 /* template */
-var __vue_template__ = __webpack_require__(169)
+var __vue_template__ = __webpack_require__(168)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -4234,13 +4234,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(170)
+  __webpack_require__(169)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(172)
+var __vue_script__ = __webpack_require__(171)
 /* template */
-var __vue_template__ = __webpack_require__(173)
+var __vue_template__ = __webpack_require__(172)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -4285,13 +4285,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(174)
+  __webpack_require__(173)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(176)
+var __vue_script__ = __webpack_require__(175)
 /* template */
-var __vue_template__ = __webpack_require__(177)
+var __vue_template__ = __webpack_require__(176)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -4336,9 +4336,9 @@ module.exports = Component.exports
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(178)
+var __vue_script__ = __webpack_require__(177)
 /* template */
-var __vue_template__ = __webpack_require__(179)
+var __vue_template__ = __webpack_require__(178)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -4383,13 +4383,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(184)
+  __webpack_require__(183)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(186)
+var __vue_script__ = __webpack_require__(185)
 /* template */
-var __vue_template__ = __webpack_require__(187)
+var __vue_template__ = __webpack_require__(186)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -4670,13 +4670,13 @@ module.exports = function bind(fn, thisArg) {
 "use strict";
 
 
-var utils = __webpack_require__(5);
-var settle = __webpack_require__(60);
-var buildURL = __webpack_require__(62);
-var parseHeaders = __webpack_require__(63);
-var isURLSameOrigin = __webpack_require__(64);
+var utils = __webpack_require__(6);
+var settle = __webpack_require__(59);
+var buildURL = __webpack_require__(61);
+var parseHeaders = __webpack_require__(62);
+var isURLSameOrigin = __webpack_require__(63);
 var createError = __webpack_require__(27);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(65);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(64);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -4773,7 +4773,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(66);
+      var cookies = __webpack_require__(65);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -4857,7 +4857,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(61);
+var enhanceError = __webpack_require__(60);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -4927,13 +4927,13 @@ module.exports = Cancel;
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(151)
+  __webpack_require__(150)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(153)
+var __vue_script__ = __webpack_require__(152)
 /* template */
-var __vue_template__ = __webpack_require__(193)
+var __vue_template__ = __webpack_require__(192)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -4978,13 +4978,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(180)
+  __webpack_require__(179)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(182)
+var __vue_script__ = __webpack_require__(181)
 /* template */
-var __vue_template__ = __webpack_require__(183)
+var __vue_template__ = __webpack_require__(182)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -5029,13 +5029,13 @@ module.exports = Component.exports
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(188)
+  __webpack_require__(187)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(190)
+var __vue_script__ = __webpack_require__(189)
 /* template */
-var __vue_template__ = __webpack_require__(191)
+var __vue_template__ = __webpack_require__(190)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -5219,148 +5219,24 @@ __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"exclamat
 
 /***/ }),
 /* 46 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-var Channel = __webpack_require__(249);
-var util = __webpack_require__(9);
-var Instruments = __webpack_require__(250);
+__webpack_require__(47);
+module.exports = __webpack_require__(322);
 
-var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
-
-    if (!window.___player) window.___player = [];
-    window.___player.push(this);
-
-    this.metronome = true;
-
-    this.lastNotes = [];
-    this.BPM = 120;
-    this.bar = {};
-
-    this.playing = false;
-
-    var player = new Instruments();
-
-    var metronomeConfig = {
-        program: 4,
-        channel: 1,
-        intensity: 3,
-        constantDuration: 0.001
-    };
-
-    var trackConfig = {
-        program: 18,
-        channel: 0,
-        intensity: 20
-    };
-
-    var out = this;
-
-    this.metronomeChannel = new Channel(player, metronomeConfig, function () {});
-    this.trackChannel = new Channel(player, trackConfig, function () {
-        out.playing = false;
-    });
-
-    this.percentPlayed = function () {
-        return currentNoteID / this.lastNotes.length;
-    }, this.playCountIn = function (bar, BPM, num_beats) {
-
-        var countinPitches = util.get_countin_pitches(bar, num_beats);
-        var countinNotes = util.get_countin_notes(bar, num_beats);
-        var countInDurations = util.generate_playback_durations(countinNotes);
-
-        var out = this;
-
-        return new Promise(function (resolve, reject) {
-            out.metronomeChannel.play(BPM, bar, countinPitches, countInDurations, function () {
-                resolve();
-            }, null);
-        });
-    };
-
-    this.play = function (bar, BPM, values) {
-
-        this.stop();
-
-        this.playing = true;
-
-        if (!bar) {
-            bar = this.bar;
-        }
-
-        if (!BPM) {
-            BPM = this.BPM;
-        }
-
-        if (!values) {
-            values = this.lastNotes;
-        } else {
-            this.lastNotes = values;
-        }
-
-        var defaultPitch = [67];
-        var notes = util.generate_playback_durations(values);
-
-        var o2 = this;
-        return this.playCountIn(bar, BPM, 1).then(function () {
-
-            if (o2.metronome) {
-                o2.playCountIn.apply(o2, [bar, BPM, 2]); // static num_bars...
-            }
-
-            return new Promise(function (resolve, reject) {
-                o2.trackChannel.play(BPM, bar, defaultPitch, notes, resolve);
-            });
-        });
-    };
-
-    this.stop = function () {
-        this.metronomeChannel.stop();
-        this.trackChannel.stop();
-    };
-
-    this.load = function (notes) {
-        this.lastNotes = notes;
-    };
-
-    this.setBar = function (newBar) {
-
-        this.bar.num_beats = newBar.num_beats;
-        this.bar.base_note = newBar.base_note;
-        if (newBar.subdivisions) {
-            this.bar.subdivisions = newBar.subdivisions;
-        } else {
-            this.bar.subdivisions = null;
-        }
-    };
-
-    this.setBPM = function (newBPM) {
-        this.BPM = newBPM;
-    };
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (RhythmPlaybackEngine);
 
 /***/ }),
 /* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(48);
-module.exports = __webpack_require__(315);
-
-
-/***/ }),
-/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(314);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(321);
 
 
 
@@ -5374,7 +5250,7 @@ new Vue({ // eslint-disable-line no-new
 });
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -22491,10 +22367,10 @@ new Vue({ // eslint-disable-line no-new
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(23)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(23)(module)))
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -33099,18 +32975,18 @@ return jQuery;
 
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 if (false) {
   module.exports = require('./vue.common.prod.js')
 } else {
-  module.exports = __webpack_require__(52)
+  module.exports = __webpack_require__(51)
 }
 
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45053,10 +44929,10 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(53).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(52).setImmediate))
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -45112,7 +44988,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(54);
+__webpack_require__(53);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -45123,10 +44999,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -45316,24 +45192,24 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(24)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(24)))
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(55);
 
 /***/ }),
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(56);
-
-/***/ }),
-/* 56 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
-var utils = __webpack_require__(5);
+var utils = __webpack_require__(6);
 var bind = __webpack_require__(25);
-var Axios = __webpack_require__(58);
+var Axios = __webpack_require__(57);
 var defaults = __webpack_require__(15);
 
 /**
@@ -45368,14 +45244,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(29);
-axios.CancelToken = __webpack_require__(72);
+axios.CancelToken = __webpack_require__(71);
 axios.isCancel = __webpack_require__(28);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(73);
+axios.spread = __webpack_require__(72);
 
 module.exports = axios;
 
@@ -45384,7 +45260,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, exports) {
 
 /*!
@@ -45411,18 +45287,18 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var defaults = __webpack_require__(15);
-var utils = __webpack_require__(5);
-var InterceptorManager = __webpack_require__(67);
-var dispatchRequest = __webpack_require__(68);
-var isAbsoluteURL = __webpack_require__(70);
-var combineURLs = __webpack_require__(71);
+var utils = __webpack_require__(6);
+var InterceptorManager = __webpack_require__(66);
+var dispatchRequest = __webpack_require__(67);
+var isAbsoluteURL = __webpack_require__(69);
+var combineURLs = __webpack_require__(70);
 
 /**
  * Create a new instance of Axios
@@ -45504,13 +45380,13 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(5);
+var utils = __webpack_require__(6);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -45523,7 +45399,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45556,7 +45432,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 61 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45584,13 +45460,13 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 62 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(5);
+var utils = __webpack_require__(6);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -45659,13 +45535,13 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(5);
+var utils = __webpack_require__(6);
 
 /**
  * Parse headers into an object
@@ -45703,13 +45579,13 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 64 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(5);
+var utils = __webpack_require__(6);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -45778,7 +45654,7 @@ module.exports = (
 
 
 /***/ }),
-/* 65 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45821,13 +45697,13 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 66 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(5);
+var utils = __webpack_require__(6);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -45881,13 +45757,13 @@ module.exports = (
 
 
 /***/ }),
-/* 67 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(5);
+var utils = __webpack_require__(6);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -45940,14 +45816,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 68 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(5);
-var transformData = __webpack_require__(69);
+var utils = __webpack_require__(6);
+var transformData = __webpack_require__(68);
 var isCancel = __webpack_require__(28);
 var defaults = __webpack_require__(15);
 
@@ -46026,13 +45902,13 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 69 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(5);
+var utils = __webpack_require__(6);
 
 /**
  * Transform the data for a request or a response
@@ -46053,7 +45929,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 70 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46074,7 +45950,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 71 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46095,7 +45971,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 72 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46159,7 +46035,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 73 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46193,7 +46069,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 74 */
+/* 73 */
 /***/ (function(module, exports) {
 
 Vue.filter('capitalize', function (value) {
@@ -46237,66 +46113,66 @@ Vue.directive('touch-outside', {
 });
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_awesome_components_Icon__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_awesome_components_Icon___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_awesome_components_Icon__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_App_vue__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_App_vue__ = __webpack_require__(81);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_App_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_profile_Badges_vue__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_profile_Badges_vue__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_profile_Badges_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_profile_Badges_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_elements_Button_vue__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_elements_Button_vue__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_elements_Button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_elements_Button_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Dashboard_vue__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Dashboard_vue__ = __webpack_require__(96);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_Dashboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_Dashboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_GameModes_vue__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_GameModes_vue__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_GameModes_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_GameModes_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_GameStatistics_vue__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_GameStatistics_vue__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_GameStatistics_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_GameStatistics_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_GameTypes_vue__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_GameTypes_vue__ = __webpack_require__(113);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_GameTypes_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_GameTypes_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_HeaderMenu_vue__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_HeaderMenu_vue__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_HeaderMenu_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_HeaderMenu_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_admin_AdminGames_vue__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_admin_AdminGames_vue__ = __webpack_require__(127);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_admin_AdminGames_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_admin_AdminGames_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_admin_AdminPlayers_vue__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_admin_AdminPlayers_vue__ = __webpack_require__(132);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_admin_AdminPlayers_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_admin_AdminPlayers_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_admin_AdminRhythmBars_vue__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_admin_AdminRhythmBars_vue__ = __webpack_require__(146);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_admin_AdminRhythmBars_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_admin_AdminRhythmBars_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_admin_AdminSettings_vue__ = __webpack_require__(202);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_admin_AdminSettings_vue__ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_admin_AdminSettings_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_admin_AdminSettings_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_admin_AdminExerciseView_vue__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_admin_AdminExerciseView_vue__ = __webpack_require__(206);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_admin_AdminExerciseView_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_admin_AdminExerciseView_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_Intervals_vue__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_Intervals_vue__ = __webpack_require__(211);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_Intervals_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_Intervals_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_games_rhythm_Rhythm_vue__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_games_rhythm_Rhythm_vue__ = __webpack_require__(218);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_games_rhythm_Rhythm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_games_rhythm_Rhythm_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_PlaybackTest_vue__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_PlaybackTest_vue__ = __webpack_require__(256);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_PlaybackTest_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_PlaybackTest_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_music_Keyboard_vue__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_music_Keyboard_vue__ = __webpack_require__(265);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_music_Keyboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_music_Keyboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Leaderboard_vue__ = __webpack_require__(263);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Leaderboard_vue__ = __webpack_require__(270);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_Leaderboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__components_Leaderboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_profile_Levels_vue__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_profile_Levels_vue__ = __webpack_require__(277);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_profile_Levels_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__components_profile_Levels_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_elements_Loader_vue__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_elements_Loader_vue__ = __webpack_require__(282);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_elements_Loader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__components_elements_Loader_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_profile_Me_vue__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_profile_Me_vue__ = __webpack_require__(287);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_profile_Me_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23__components_profile_Me_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_music_Note_vue__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_music_Note_vue__ = __webpack_require__(294);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_music_Note_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24__components_music_Note_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_Profile_vue__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_Profile_vue__ = __webpack_require__(299);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_25__components_Profile_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_Settings_vue__ = __webpack_require__(297);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_Settings_vue__ = __webpack_require__(304);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_Settings_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26__components_Settings_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_music_Stave_vue__ = __webpack_require__(304);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_music_Stave_vue__ = __webpack_require__(311);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_music_Stave_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_27__components_music_Stave_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_elements_Title_vue__ = __webpack_require__(309);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_elements_Title_vue__ = __webpack_require__(316);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_elements_Title_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_28__components_elements_Title_vue__);
 
 
@@ -46427,7 +46303,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 }));
 
 /***/ }),
-/* 76 */
+/* 75 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49108,13 +48984,13 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 77 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(78);
+var content = __webpack_require__(77);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -49134,7 +49010,7 @@ if(false) {
 }
 
 /***/ }),
-/* 78 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -49148,7 +49024,7 @@ exports.push([module.i, "\n.fa-icon {\n  display: inline-block;\n  fill: current
 
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports) {
 
 /**
@@ -49181,7 +49057,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 80 */
+/* 79 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49422,7 +49298,7 @@ function getId() {
 }
 
 /***/ }),
-/* 81 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -49484,19 +49360,19 @@ if (false) {
 }
 
 /***/ }),
-/* 82 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(83)
+  __webpack_require__(82)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(85)
+var __vue_script__ = __webpack_require__(84)
 /* template */
-var __vue_template__ = __webpack_require__(86)
+var __vue_template__ = __webpack_require__(85)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -49535,13 +49411,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(84);
+var content = __webpack_require__(83);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -49561,7 +49437,7 @@ if(false) {
 }
 
 /***/ }),
-/* 84 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -49575,7 +49451,7 @@ exports.push([module.i, "\n.app[data-v-8142f38c] {\n  width: 100%;\n}\n@supports
 
 
 /***/ }),
-/* 85 */
+/* 84 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49615,7 +49491,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 86 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -49644,19 +49520,19 @@ if (false) {
 }
 
 /***/ }),
-/* 87 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(88)
+  __webpack_require__(87)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(90)
+var __vue_script__ = __webpack_require__(89)
 /* template */
-var __vue_template__ = __webpack_require__(91)
+var __vue_template__ = __webpack_require__(90)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -49695,13 +49571,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 88 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(89);
+var content = __webpack_require__(88);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -49721,7 +49597,7 @@ if(false) {
 }
 
 /***/ }),
-/* 89 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -49735,7 +49611,7 @@ exports.push([module.i, "\n.badges[data-v-06927b4d] {\n  width: 100%;\n}\n.badge
 
 
 /***/ }),
-/* 90 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49868,7 +49744,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 91 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -49942,19 +49818,19 @@ if (false) {
 }
 
 /***/ }),
-/* 92 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(93)
+  __webpack_require__(92)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(95)
+var __vue_script__ = __webpack_require__(94)
 /* template */
-var __vue_template__ = __webpack_require__(96)
+var __vue_template__ = __webpack_require__(95)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -49993,13 +49869,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 93 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(94);
+var content = __webpack_require__(93);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -50019,7 +49895,7 @@ if(false) {
 }
 
 /***/ }),
-/* 94 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -50033,12 +49909,12 @@ exports.push([module.i, "\n.button[data-v-52b0fda3] {\n  position: relative;\n  
 
 
 /***/ }),
-/* 95 */
+/* 94 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
 //
 //
 //
@@ -50099,7 +49975,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 96 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -50129,20 +50005,20 @@ if (false) {
 }
 
 /***/ }),
-/* 97 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(98)
-  __webpack_require__(100)
+  __webpack_require__(97)
+  __webpack_require__(99)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(102)
+var __vue_script__ = __webpack_require__(101)
 /* template */
-var __vue_template__ = __webpack_require__(103)
+var __vue_template__ = __webpack_require__(102)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -50181,13 +50057,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 98 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(99);
+var content = __webpack_require__(98);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -50207,7 +50083,7 @@ if(false) {
 }
 
 /***/ }),
-/* 99 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -50221,13 +50097,13 @@ exports.push([module.i, "\n.dashboard[data-v-1f65406d] {\n  width: 100%;\n}\n.da
 
 
 /***/ }),
-/* 100 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(101);
+var content = __webpack_require__(100);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -50247,7 +50123,7 @@ if(false) {
 }
 
 /***/ }),
-/* 101 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -50261,7 +50137,7 @@ exports.push([module.i, "\n.dashboard__area .button .button__full {\n  backgroun
 
 
 /***/ }),
-/* 102 */
+/* 101 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50386,7 +50262,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 103 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -50482,19 +50358,19 @@ if (false) {
 }
 
 /***/ }),
-/* 104 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(105)
+  __webpack_require__(104)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(107)
+var __vue_script__ = __webpack_require__(106)
 /* template */
-var __vue_template__ = __webpack_require__(108)
+var __vue_template__ = __webpack_require__(107)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -50533,13 +50409,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 105 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(106);
+var content = __webpack_require__(105);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -50559,7 +50435,7 @@ if(false) {
 }
 
 /***/ }),
-/* 106 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -50573,7 +50449,7 @@ exports.push([module.i, "\n.game-modes[data-v-1f207192] {\n  width: 100%;\n}\n.g
 
 
 /***/ }),
-/* 107 */
+/* 106 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50790,7 +50666,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 108 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -50870,19 +50746,19 @@ if (false) {
 }
 
 /***/ }),
-/* 109 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(110)
+  __webpack_require__(109)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(112)
+var __vue_script__ = __webpack_require__(111)
 /* template */
-var __vue_template__ = __webpack_require__(113)
+var __vue_template__ = __webpack_require__(112)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -50921,13 +50797,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 110 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(111);
+var content = __webpack_require__(110);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -50947,7 +50823,7 @@ if(false) {
 }
 
 /***/ }),
-/* 111 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -50961,7 +50837,7 @@ exports.push([module.i, "\n.game-statistics[data-v-ad6b13a8] {\n  width: 100%;\n
 
 
 /***/ }),
-/* 112 */
+/* 111 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51138,7 +51014,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -51436,20 +51312,20 @@ if (false) {
 }
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(115)
-  __webpack_require__(117)
+  __webpack_require__(114)
+  __webpack_require__(116)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(119)
+var __vue_script__ = __webpack_require__(118)
 /* template */
-var __vue_template__ = __webpack_require__(120)
+var __vue_template__ = __webpack_require__(119)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -51488,13 +51364,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 115 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(116);
+var content = __webpack_require__(115);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -51514,7 +51390,7 @@ if(false) {
 }
 
 /***/ }),
-/* 116 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -51528,13 +51404,13 @@ exports.push([module.i, "\n.game-types[data-v-f0355000] {\n  width: 100%;\n}\n.g
 
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(118);
+var content = __webpack_require__(117);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -51554,7 +51430,7 @@ if(false) {
 }
 
 /***/ }),
-/* 118 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -51568,7 +51444,7 @@ exports.push([module.i, "\n.game-types__choose .title {\n  font-size: 25px;\n}\n
 
 
 /***/ }),
-/* 119 */
+/* 118 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51706,7 +51582,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 120 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -51812,19 +51688,19 @@ if (false) {
 }
 
 /***/ }),
-/* 121 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(122)
+  __webpack_require__(121)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(124)
+var __vue_script__ = __webpack_require__(123)
 /* template */
-var __vue_template__ = __webpack_require__(127)
+var __vue_template__ = __webpack_require__(126)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -51863,13 +51739,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 122 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(123);
+var content = __webpack_require__(122);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -51889,7 +51765,7 @@ if(false) {
 }
 
 /***/ }),
-/* 123 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -51903,13 +51779,13 @@ exports.push([module.i, "\n.header[data-v-11ef0503] {\n  width: 100%;\n  height:
 
 
 /***/ }),
-/* 124 */
+/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_icons_bars__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_awesome_icons_sign_out__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_icons_bars__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_awesome_icons_sign_out__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(4);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -52272,7 +52148,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 125 */
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52284,7 +52160,7 @@ __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"bars":{"
 
 
 /***/ }),
-/* 126 */
+/* 125 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52296,7 +52172,7 @@ __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"sign-out
 
 
 /***/ }),
-/* 127 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -52420,19 +52296,19 @@ if (false) {
 }
 
 /***/ }),
-/* 128 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(129)
+  __webpack_require__(128)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(131)
+var __vue_script__ = __webpack_require__(130)
 /* template */
-var __vue_template__ = __webpack_require__(132)
+var __vue_template__ = __webpack_require__(131)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52471,13 +52347,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 129 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(130);
+var content = __webpack_require__(129);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -52497,7 +52373,7 @@ if(false) {
 }
 
 /***/ }),
-/* 130 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -52511,7 +52387,7 @@ exports.push([module.i, "", ""]);
 
 
 /***/ }),
-/* 131 */
+/* 130 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52532,7 +52408,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 132 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -52563,19 +52439,19 @@ if (false) {
 }
 
 /***/ }),
-/* 133 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(134)
+  __webpack_require__(133)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(136)
+var __vue_script__ = __webpack_require__(135)
 /* template */
-var __vue_template__ = __webpack_require__(146)
+var __vue_template__ = __webpack_require__(145)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52614,13 +52490,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 134 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(135);
+var content = __webpack_require__(134);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -52640,7 +52516,7 @@ if(false) {
 }
 
 /***/ }),
-/* 135 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -52654,7 +52530,7 @@ exports.push([module.i, "\n.barze[data-v-3846e31a] :first-child {\n  margin-top:
 
 
 /***/ }),
-/* 136 */
+/* 135 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52724,13 +52600,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 137 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(138);
+var content = __webpack_require__(137);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -52750,7 +52626,7 @@ if(false) {
 }
 
 /***/ }),
-/* 138 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -52764,7 +52640,7 @@ exports.push([module.i, "\n.rhythm-game__staff__second-row[data-v-447bf2d3] {\n 
 
 
 /***/ }),
-/* 139 */
+/* 138 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52878,13 +52754,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 140 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(141);
+var content = __webpack_require__(140);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -52904,7 +52780,7 @@ if(false) {
 }
 
 /***/ }),
-/* 141 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -52912,20 +52788,20 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n#first-row[data-v-5a6b0eb1] {\n      display: none;\n}\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 176px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 95px;\n}\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(1.5) translate(16.65%);\n  transform: scale(1.5) translate(16.65%);\n}\n", ""]);
+exports.push([module.i, "\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n#first-row[data-v-5a6b0eb1] {\n      display: none;\n}\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 176px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 95px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 100px;\n}\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(1.5) translate(16.65%);\n  transform: scale(1.5) translate(16.65%);\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 142 */
+/* 141 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vexflow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vexflow__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__ = __webpack_require__(142);
 //
 //
 //
@@ -52978,7 +52854,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var RU = new __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__["a" /* default */]();
 
-var util = __webpack_require__(9);
+var util = __webpack_require__(10);
 
 var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
 var StaveNote = VF.StaveNote;
@@ -53098,23 +52974,23 @@ var Tuplet = VF.Tuplet;
 
                         var sR = this.parentElement;
                         sR.onscroll = function (e) {
-                            alert("Hello4 :(");
+
                             vue.scrolled(sR.scrollLeft, true);
                             return false;
                         };
 
                         sR.onmousedown = function (e) {
-                            alert("HELLO2 :(");
+
                             vue.note_clicked(e.offsetX);
                         };
 
                         sR.ontouchstart = function (e) {
-                            alert("HELLO!");
-                            e.preventDefault();
+
+                            // e.preventDefault();
 
                             vue.note_clicked(e.offsetX);
 
-                            return false;
+                            // return false;
                         };
                     }
                 }
@@ -53746,7 +53622,7 @@ var Tuplet = VF.Tuplet;
 });
 
 /***/ }),
-/* 143 */
+/* 142 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53987,7 +53863,7 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
 /* harmony default export */ __webpack_exports__["a"] = (RhythmRenderUtilities);
 
 /***/ }),
-/* 144 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -54012,7 +53888,7 @@ if (false) {
 }
 
 /***/ }),
-/* 145 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -54077,7 +53953,7 @@ if (false) {
 }
 
 /***/ }),
-/* 146 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -54155,19 +54031,19 @@ if (false) {
 }
 
 /***/ }),
-/* 147 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(148)
+  __webpack_require__(147)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(150)
+var __vue_script__ = __webpack_require__(149)
 /* template */
-var __vue_template__ = __webpack_require__(201)
+var __vue_template__ = __webpack_require__(200)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -54206,13 +54082,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 148 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(149);
+var content = __webpack_require__(148);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -54232,7 +54108,7 @@ if(false) {
 }
 
 /***/ }),
-/* 149 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -54246,7 +54122,7 @@ exports.push([module.i, "\n.addNewBarButton[data-v-7359223e], .button1[data-v-73
 
 
 /***/ }),
-/* 150 */
+/* 149 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54259,9 +54135,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__games_rhythm_Keyboard_AdminKeyboard_vue__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__games_rhythm_Keyboard_AdminKeyboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__games_rhythm_Keyboard_AdminKeyboard_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__games_rhythm_noteStore__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__UploadFile_vue__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__UploadFile_vue__ = __webpack_require__(193);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__UploadFile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__UploadFile_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuejs_datatable__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuejs_datatable__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuejs_datatable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vuejs_datatable__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -54333,7 +54209,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 var Fraction = __webpack_require__(7);
-var utils = __webpack_require__(9);
+var utils = __webpack_require__(10);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -54697,13 +54573,13 @@ var utils = __webpack_require__(9);
 });
 
 /***/ }),
-/* 151 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(152);
+var content = __webpack_require__(151);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -54723,7 +54599,7 @@ if(false) {
 }
 
 /***/ }),
-/* 152 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -54737,12 +54613,12 @@ exports.push([module.i, "\n.half_transparent[data-v-416d519c] {\n  opacity: 0.5;
 
 
 /***/ }),
-/* 153 */
+/* 152 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue__);
@@ -54767,7 +54643,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_vue_awesome_icons_play__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vue_awesome_icons_question_circle__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_vue_awesome_icons_user_o__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_vue_awesome_icons_pause__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_vue_awesome_icons_pause__ = __webpack_require__(191);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_vue_awesome_icons_check__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17_vue_awesome_icons_angle_double_right__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_vue_awesome_icons_times__ = __webpack_require__(41);
@@ -55223,13 +55099,13 @@ var Fraction = __webpack_require__(7);
 });
 
 /***/ }),
-/* 154 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(155);
+var content = __webpack_require__(154);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -55249,7 +55125,7 @@ if(false) {
 }
 
 /***/ }),
-/* 155 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -55263,12 +55139,12 @@ exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    positi
 
 
 /***/ }),
-/* 156 */
+/* 155 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
 //
 //
 //
@@ -55518,7 +55394,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 157 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -55576,13 +55452,13 @@ if (false) {
 }
 
 /***/ }),
-/* 158 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(159);
+var content = __webpack_require__(158);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -55602,7 +55478,7 @@ if(false) {
 }
 
 /***/ }),
-/* 159 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -55616,12 +55492,12 @@ exports.push([module.i, "\n.button[data-v-656066f6] {\n  display: inline-block;\
 
 
 /***/ }),
-/* 160 */
+/* 159 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
 //
 //
 //
@@ -55920,7 +55796,7 @@ function getTouch(event) {
 });
 
 /***/ }),
-/* 161 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -55974,13 +55850,13 @@ if (false) {
 }
 
 /***/ }),
-/* 162 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(163);
+var content = __webpack_require__(162);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -56000,7 +55876,7 @@ if(false) {
 }
 
 /***/ }),
-/* 163 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -56014,7 +55890,7 @@ exports.push([module.i, "\n.tuplet-sign-wrap{\n    margin-top: 18px;\n}\n\n", ""
 
 
 /***/ }),
-/* 164 */
+/* 163 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56067,7 +55943,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 165 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -56154,13 +56030,13 @@ if (false) {
 }
 
 /***/ }),
-/* 166 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(167);
+var content = __webpack_require__(166);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -56180,7 +56056,7 @@ if(false) {
 }
 
 /***/ }),
-/* 167 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -56194,12 +56070,12 @@ exports.push([module.i, "\n.thirtytwo-note[data-v-ef3b87ec] {\n  margin-top: 23p
 
 
 /***/ }),
-/* 168 */
+/* 167 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
 //
 //
@@ -56226,7 +56102,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 169 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -56256,13 +56132,13 @@ if (false) {
 }
 
 /***/ }),
-/* 170 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(171);
+var content = __webpack_require__(170);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -56282,7 +56158,7 @@ if(false) {
 }
 
 /***/ }),
-/* 171 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -56296,12 +56172,12 @@ exports.push([module.i, "\n.rhythm-game__bar-button__text[data-v-6571a75a] {\n  
 
 
 /***/ }),
-/* 172 */
+/* 171 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
 //
 //
@@ -56326,7 +56202,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 173 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -56356,13 +56232,13 @@ if (false) {
 }
 
 /***/ }),
-/* 174 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(175);
+var content = __webpack_require__(174);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -56382,7 +56258,7 @@ if(false) {
 }
 
 /***/ }),
-/* 175 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -56396,12 +56272,12 @@ exports.push([module.i, "\n.rhythmKeyboard__dotButton[data-v-3fcdaa09] {\n  font
 
 
 /***/ }),
-/* 176 */
+/* 175 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
 //
 //
@@ -56425,7 +56301,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 177 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -56449,12 +56325,12 @@ if (false) {
 }
 
 /***/ }),
-/* 178 */
+/* 177 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
 //
 //
@@ -56501,7 +56377,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 179 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -56684,13 +56560,13 @@ if (false) {
 }
 
 /***/ }),
-/* 180 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(181);
+var content = __webpack_require__(180);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -56710,7 +56586,7 @@ if(false) {
 }
 
 /***/ }),
-/* 181 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -56724,12 +56600,12 @@ exports.push([module.i, "\n.rhythmKeyboard__playButton__buttonText[data-v-3219aa
 
 
 /***/ }),
-/* 182 */
+/* 181 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
 //
 //
@@ -56752,7 +56628,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 183 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -56794,13 +56670,13 @@ if (false) {
 }
 
 /***/ }),
-/* 184 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(185);
+var content = __webpack_require__(184);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -56820,7 +56696,7 @@ if(false) {
 }
 
 /***/ }),
-/* 185 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -56834,7 +56710,7 @@ exports.push([module.i, "\n.rhythmKeyboard__BPMSlider__BPMIndicator[data-v-1c058
 
 
 /***/ }),
-/* 186 */
+/* 185 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56913,7 +56789,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 187 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -56982,13 +56858,13 @@ if (false) {
 }
 
 /***/ }),
-/* 188 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(189);
+var content = __webpack_require__(188);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -57008,7 +56884,7 @@ if(false) {
 }
 
 /***/ }),
-/* 189 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -57022,12 +56898,12 @@ exports.push([module.i, "\n.rhythmKeyboard__checkButton__text[data-v-7f098cf0] {
 
 
 /***/ }),
-/* 190 */
+/* 189 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
 //
 //
@@ -57072,7 +56948,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 191 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -57142,7 +57018,7 @@ if (false) {
 }
 
 /***/ }),
-/* 192 */
+/* 191 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57154,7 +57030,7 @@ __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"pause":{
 
 
 /***/ }),
-/* 193 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -57670,19 +57546,19 @@ if (false) {
 }
 
 /***/ }),
-/* 194 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(195)
+  __webpack_require__(194)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(197)
+var __vue_script__ = __webpack_require__(196)
 /* template */
-var __vue_template__ = __webpack_require__(199)
+var __vue_template__ = __webpack_require__(198)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -57721,13 +57597,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 195 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(196);
+var content = __webpack_require__(195);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -57747,7 +57623,7 @@ if(false) {
 }
 
 /***/ }),
-/* 196 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -57761,7 +57637,7 @@ exports.push([module.i, "", ""]);
 
 
 /***/ }),
-/* 197 */
+/* 196 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57788,7 +57664,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-var VueUploadComponent = __webpack_require__(198);
+var VueUploadComponent = __webpack_require__(197);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -57863,7 +57739,7 @@ var VueUploadComponent = __webpack_require__(198);
 });
 
 /***/ }),
-/* 198 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -59963,7 +59839,7 @@ var VueUploadComponent = __webpack_require__(198);
 
 
 /***/ }),
-/* 199 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -60013,16 +59889,16 @@ if (false) {
 }
 
 /***/ }),
-/* 200 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {!function(){"use strict";var t=function(t,e,s,n,r,i,a,o){const l=("function"==typeof s?s.options:s)||{};return l.__file="vue-datatable-cell.vue",l.render||(l.render=t.render,l.staticRenderFns=t.staticRenderFns,l._compiled=!0,r&&(l.functional=!0)),l._scopeId=n,l}({render:function(){var t=this,e=t.$createElement,s=t._self._c||e;return s("td",{style:{"text-align":t.column.align}},[t.column.component?s(t.column.component,{tag:"component",attrs:{row:t.row,column:t.column}}):t.column.interpolate?s("span",{domProps:{innerHTML:t._s(t.content)}}):s("span",[t._v(t._s(t.content))])],1)},staticRenderFns:[]},0,{props:{column:[Object,Array],row:[Object,Array]},computed:{content(){return this.column.getRepresentation(this.row)}}},void 0,!1);var e=function(t,e,s,n,r,i,a,o){const l=("function"==typeof s?s.options:s)||{};return l.__file="vue-datatable-header.vue",l.render||(l.render=t.render,l.staticRenderFns=t.staticRenderFns,l._compiled=!0,r&&(l.functional=!0)),l._scopeId=n,l}({render:function(){var t=this,e=t.$createElement,s=t._self._c||e;return s("th",{class:t.column.headerClass,style:{"text-align":t.column.align}},[t.column.headerComponent?s(t.column.headerComponent,{tag:"component",attrs:{column:t.column}}):s("span",[t._v(t._s(t.column.label))]),t._v(" "),t.column.sortable?s("span",{class:t.classes,on:{click:t.toggleSort}}):t._e()],1)},staticRenderFns:[]},0,{props:{model:{prop:"direction",event:"change"},column:[Object,Array],settings:Object,direction:{type:String,default:null}},computed:{canSort(){return this.column.sortable},is_sorted_ascending(){return"asc"===this.direction},is_sorted_descending(){return"desc"===this.direction},is_sorted(){return this.is_sorted_descending||this.is_sorted_ascending},classes(){var t=this.settings.get("table.sorting.classes"),e=t.canSort;return this.canSort?this.is_sorted?(this.is_sorted_ascending&&(e=e.concat(t.sortAsc)),this.is_sorted_descending&&(e=e.concat(t.sortDesc)),this.joinClasses(e)):(e=e.concat(t.sortNone),this.joinClasses(e)):""}},methods:{joinClasses(t){return this.unique(t).join(" ")},toggleSort(){this.direction&&null!==this.direction?"asc"===this.direction?this.$emit("change","desc",this.column):this.$emit("change",null,this.column):this.$emit("change","asc",this.column)},unique(t){var e={};return t.filter(function(t){return!e.hasOwnProperty(t)&&(e[t]=!0)})}}},void 0,!1);"undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self&&self;var s,n=(function(t){t.exports=function(){var t=Object.prototype.toString;function e(t,e){return null!=t&&Object.prototype.hasOwnProperty.call(t,e)}function s(t){if(!t)return!0;if(r(t)&&0===t.length)return!0;if("string"!=typeof t){for(var s in t)if(e(t,s))return!1;return!0}return!1}function n(e){return t.call(e)}var r=Array.isArray||function(e){return"[object Array]"===t.call(e)};function i(t){var e=parseInt(t);return e.toString()===t?e:t}function a(t){t=t||{};var a=function(t){return Object.keys(a).reduce(function(e,s){return"create"===s?e:("function"==typeof a[s]&&(e[s]=a[s].bind(a,t)),e)},{})};function o(s,n){return t.includeInheritedProps||"number"==typeof n&&Array.isArray(s)||e(s,n)}function l(t,e){if(o(t,e))return t[e]}function c(t,e,s,n){if("number"==typeof e&&(e=[e]),!e||0===e.length)return t;if("string"==typeof e)return c(t,e.split(".").map(i),s,n);var r=e[0],a=l(t,r);return 1===e.length?(void 0!==a&&n||(t[r]=s),a):(void 0===a&&("number"==typeof e[1]?t[r]=[]:t[r]={}),c(t[r],e.slice(1),s,n))}return a.has=function(s,n){if("number"==typeof n?n=[n]:"string"==typeof n&&(n=n.split(".")),!n||0===n.length)return!!s;for(var a=0;a<n.length;a++){var o=i(n[a]);if(!("number"==typeof o&&r(s)&&o<s.length||(t.includeInheritedProps?o in Object(s):e(s,o))))return!1;s=s[o]}return!0},a.ensureExists=function(t,e,s){return c(t,e,s,!0)},a.set=function(t,e,s,n){return c(t,e,s,n)},a.insert=function(t,e,s,n){var i=a.get(t,e);n=~~n,r(i)||(i=[],a.set(t,e,i)),i.splice(n,0,s)},a.empty=function(t,e){var i,l;if(!s(e)&&null!=t&&(i=a.get(t,e))){if("string"==typeof i)return a.set(t,e,"");if(function(t){return"boolean"==typeof t||"[object Boolean]"===n(t)}(i))return a.set(t,e,!1);if("number"==typeof i)return a.set(t,e,0);if(r(i))i.length=0;else{if(!function(t){return"object"==typeof t&&"[object Object]"===n(t)}(i))return a.set(t,e,null);for(l in i)o(i,l)&&delete i[l]}}},a.push=function(t,e){var s=a.get(t,e);r(s)||(s=[],a.set(t,e,s)),s.push.apply(s,Array.prototype.slice.call(arguments,2))},a.coalesce=function(t,e,s){for(var n,r=0,i=e.length;r<i;r++)if(void 0!==(n=a.get(t,e[r])))return n;return s},a.get=function(t,e,s){if("number"==typeof e&&(e=[e]),!e||0===e.length)return t;if(null==t)return s;if("string"==typeof e)return a.get(t,e.split("."),s);var n=i(e[0]),r=l(t,n);return void 0===r?s:1===e.length?r:a.get(t[n],e.slice(1),s)},a.del=function(t,e){if("number"==typeof e&&(e=[e]),null==t)return t;if(s(e))return t;if("string"==typeof e)return a.del(t,e.split("."));var n=i(e[0]);return o(t,n)?1!==e.length?a.del(t[n],e.slice(1)):(r(t)?t.splice(n,1):delete t[n],t):t},a}var o=a();return o.create=a,o.withInheritedProps=a({includeInheritedProps:!0}),o}()}(s={exports:{}},s.exports),s.exports),r=n.get,i=n.set;class a{constructor(){this.properties={table:{class:"table table-hover table-striped",row:{classes:[""]},sorting:{classes:{canSort:["sort"],sortNone:["glyphicon","glyphicon-sort"],sortAsc:["glyphicon","glyphicon-sort-by-alphabet"],sortDesc:["glyphicon","glyphicon-sort-by-alphabet-alt"]}}},pager:{classes:{pager:"pagination",li:"",a:"",selected:"active",disabled:"disabled"},icons:{previous:"&lt;",next:"&gt;"}}}}get(t){return r(this.properties,t)}set(t,e){return i(this.properties,t,e),this}merge(t){return this.properties=this._mergeObjects(this.properties,t),this}_mergeObjects(t,e){for(var s in e)null!==e[s]?"object"!=typeof e[s]?t[s]=e[s]:t[s]=this._mergeObjects(t[s],e[s]):t[s]=e[s];return t}}var o=function(t,e,s,n,r,i,a,o){const l=("function"==typeof s?s.options:s)||{};return l.__file="vue-datatable-pager-button.vue",l.render||(l.render=t.render,l.staticRenderFns=t.staticRenderFns,l._compiled=!0,r&&(l.functional=!0)),l._scopeId=n,l}({render:function(){var t=this.$createElement,e=this._self._c||t;return e("li",{class:this.li_classes},[e("a",{class:this.a_classes,attrs:{href:"javascript: void(0);"},on:{click:this.sendClick}},[this._t("default",[this._v(this._s(this.value))])],2)])},staticRenderFns:[]},0,{props:{disabled:{type:Boolean,default:!1},selected:{type:Boolean,default:!1},value:{type:Number,default:null}},computed:{li_classes(){var t=[];return this.settings.get("pager.classes.li")&&t.push(this.settings.get("pager.classes.li")),this.disabled&&t.push(this.settings.get("pager.classes.disabled")),this.selected&&t.push(this.settings.get("pager.classes.selected")),t.join(" ")},a_classes(){var t=[];return this.settings.get("pager.classes.a")&&t.push(this.settings.get("pager.classes.a")),t.join(" ")},settings(){return this.$parent.settings}},methods:{sendClick(){this.disabled||this.$emit("click",this.value)}}},void 0,!1);class l{constructor(t){this.setAlignment(t.align),this.label=t.label||"",this.field=t.field||null,this.representedAs=t.representedAs||null,this.component=t.component||null,this.interpolate=t.interpolate||!1,this.headerComponent=t.headerComponent||null,this.sortable=this.isSortable(t),this.filterable=this.isFilterable(t),this.headerClass=t.headerClass||""}setAlignment(t){return t&&"string"==typeof t?"center"===t.toLowerCase()?(this.align="center",this):"right"===t.toLowerCase()?(this.align="right",this):(this.align="left",this):(this.align="left",this)}isFilterable(t){return!1!==t.filterable&&(!(!t.field&&!t.representedAs)&&!(this.component&&!this.representedAs&&!this.field))}isSortable(t){return!1!==t.sortable&&(!(!t.field&&!t.representedAs)&&!(this.component&&!this.representedAs&&!this.field))}getRepresentation(t){return this.representedAs&&"function"==typeof this.representedAs?this.representedAs(t):this.component&&this.filterable?this.plain_text_function(t,this):r(t,this.field)}getValue(t){return this.getRepresentation(t)}matches(t,e){return-1!==(""+this.getRepresentation(t)).toLowerCase().indexOf(e.toLowerCase())}}var c=function(t,e,s,n,r,i,a,o){const l=("function"==typeof s?s.options:s)||{};return l.__file="vue-datatable.vue",l.render||(l.render=t.render,l.staticRenderFns=t.staticRenderFns,l._compiled=!0,r&&(l.functional=!0)),l._scopeId=n,l}({render:function(){var t=this,e=t.$createElement,s=t._self._c||e;return s("table",{class:t.table_class},[s("thead",[s("tr",t._l(t.normalized_columns,function(e,n){return s("datatable-header",{key:n,attrs:{column:e,settings:t.settings,direction:t.getSortDirectionForColumn(e)},on:{change:t.setSortDirectionForColumn}})}))]),t._v(" "),s("tbody",[t._l(t.processed_rows,function(e,n){return t._t("default",[s("tr",{key:n,class:t.getRowClasses(e)},t._l(t.normalized_columns,function(t,n){return s("datatable-cell",{key:n,attrs:{column:t,row:e}})}))],{row:e,columns:t.normalized_columns})}),t._v(" "),0==t.processed_rows.length?s("tr",[s("td",{attrs:{colspan:t.normalized_columns.length}},[t._t("no-results")],2)]):t._e()],2),t._v(" "),t.$slots.footer||t.$scopedSlots.footer?s("tfoot",[t._t("footer",null,{rows:t.processed_rows})],2):t._e()])},staticRenderFns:[]},0,{props:{name:{type:String,default:"default"},columns:[Object,Array],data:[Object,Array,String,Function],filterBy:{type:[String,Array],default:null},rowClasses:{type:[String,Array,Object,Function],default:null}},data:()=>({sort_by:null,sort_dir:null,total_rows:0,page:1,per_page:null,processed_rows:[]}),computed:{rows(){return this.data.slice(0)},settings(){return this.$options.settings},handler(){return this.$options.handler},normalized_columns(){return this.columns.map(function(t){return new l(t)})},table_class(){return this.settings.get("table.class")}},methods:{getSortDirectionForColumn(t){return this.sort_by!==t?null:this.sort_dir},setSortDirectionForColumn(t,e){this.sort_by=e,this.sort_dir=t},processRows(){if("function"==typeof this.data){let t={filter:this.filterBy,sort_by:this.sort_by?this.sort_by.field:null,sort_dir:this.sort_dir,page_length:this.per_page,page_number:this.page};this.data(t,function(t,e){this.setRows(t),this.setTotalRowCount(e)}.bind(this));return}let t=this.handler.filterHandler(this.rows,this.filterBy,this.normalized_columns),e=this.handler.sortHandler(t,this.sort_by,this.sort_dir),s=this.handler.paginateHandler(e,this.per_page,this.page);this.handler.displayHandler(s,{filtered_data:t,sorted_data:e,paged_data:s},this.setRows,this.setTotalRowCount)},setRows(t){this.processed_rows=t},setTotalRowCount(t){this.total_rows=t},getRowClasses(t){var e=this.rowClasses;return null===e&&(e=this.settings.get("table.row.classes")),"function"==typeof e?e(t):e}},created(){this.$datatables[this.name]=this,this.$root.$emit("table.ready",this.name),this.$watch(function(){return this.data}.bind(this),this.processRows,{deep:!0}),this.$watch("columns",this.processRows),this.$watch(function(){return this.filterBy+this.per_page+this.page+this.sort_by+this.sort_dir}.bind(this),this.processRows),this.processRows()},handler:null,settings:null},void 0,!1);var u=function(t,e,s,n,r,i,a,o){const l=("function"==typeof s?s.options:s)||{};return l.__file="vue-datatable-pager.vue",l.render||(l.render=t.render,l.staticRenderFns=t.staticRenderFns,l._compiled=!0,r&&(l.functional=!0)),l._scopeId=n,l}({render:function(){var t=this,e=t.$createElement,s=t._self._c||e;return t.show?s("nav",["abbreviated"===t.type?s("ul",{class:t.pagination_class},[t.page-3>=1?s("datatable-button",{attrs:{value:1},on:{click:t.setPageNum}}):t._e(),t._v(" "),t.page-4>=1?s("datatable-button",{attrs:{disabled:""}},[t._v("...")]):t._e(),t._v(" "),t.page-2>=1?s("datatable-button",{attrs:{value:t.page-2},on:{click:t.setPageNum}}):t._e(),t._v(" "),t.page-1>=1?s("datatable-button",{attrs:{value:t.page-1},on:{click:t.setPageNum}}):t._e(),t._v(" "),s("datatable-button",{attrs:{value:t.page,selected:""}}),t._v(" "),t.page+1<=t.total_pages?s("datatable-button",{attrs:{value:t.page+1},on:{click:t.setPageNum}}):t._e(),t._v(" "),t.page+2<=t.total_pages?s("datatable-button",{attrs:{value:t.page+2},on:{click:t.setPageNum}}):t._e(),t._v(" "),t.page+4<=t.total_pages?s("datatable-button",{attrs:{disabled:""}},[t._v("...")]):t._e(),t._v(" "),t.page+3<=t.total_pages?s("datatable-button",{attrs:{value:t.total_pages},on:{click:t.setPageNum}}):t._e()],1):"long"===t.type?s("ul",{class:t.pagination_class},t._l(t.total_pages,function(e){return s("datatable-button",{key:e,attrs:{value:e,selected:e===t.page},on:{click:t.setPageNum}})})):"short"===t.type?s("ul",{class:t.pagination_class},[s("datatable-button",{attrs:{disabled:t.page-1<1,value:t.page-1},on:{click:t.setPageNum}},[s("span",{domProps:{innerHTML:t._s(t.previous_icon)}})]),t._v(" "),s("datatable-button",{attrs:{value:t.page,selected:""}}),t._v(" "),s("datatable-button",{attrs:{disabled:t.page+1>t.total_pages,value:t.page+1},on:{click:t.setPageNum}},[s("span",{domProps:{innerHTML:t._s(t.next_icon)}})])],1):t._e()]):t._e()},staticRenderFns:[]},0,{model:{prop:"page",event:"change"},props:{table:{type:String,default:"default"},type:{type:String,default:"long"},perPage:{type:Number,default:10},page:{type:Number,default:1}},data:()=>({table_instance:null}),computed:{show(){return this.table_instance&&this.total_rows>0},total_rows(){return this.table_instance?this.table_instance.total_rows:0},pagination_class(){return this.settings.get("pager.classes.pager")},disabled_class(){return this.settings.get("pager.classes.disabled")},previous_link_classes(){return this.page-1<1?this.settings.get("pager.classes.disabled"):""},next_link_classes(){return this.page+1>this.total_pages?this.settings.get("pager.classes.disabled"):""},total_pages(){return this.total_rows>0?Math.ceil(this.total_rows/this.perPage):0},previous_icon(){return this.settings.get("pager.icons.previous")},next_icon(){return this.settings.get("pager.icons.next")},settings(){return this.$options.settings}},methods:{setPageNum(t){this.table_instance.page=t,this.table_instance.per_page=this.perPage,this.$emit("change",t)},getClassForPage(t){return this.page==t?this.settings.get("pager.classes.selected"):""}},watch:{total_rows(){this.page>this.total_pages&&this.setPageNum(this.total_pages)},perPage(){var t=this.page;t>this.total_pages&&(t=this.total_pages),this.setPageNum(t)}},created(){if(this.$datatables[this.table])return this.table_instance=this.$datatables[this.table],void(this.table_instance.per_page=this.perPage);this.$root.$on("table.ready",function(t){t===this.table&&(this.table_instance=this.$datatables[this.table],this.table_instance.per_page=this.perPage)}.bind(this))},settings:null},void 0,!1);class h{constructor(){this.filterHandler=this.handleFilter,this.sortHandler=this.handleSort,this.paginateHandler=this.handlePaginate,this.displayHandler=this.handleDisplay}handleFilter(t,e,s){return e?(Array.isArray(e)||(e=[e]),t.filter(function(t){for(var n in e){let i=e[n].split(/\s/),a=!0;for(var r in i)this.rowMatches(t,i[r],s)||(a=!1);if(a)return!0}return!1}.bind(this))):t}rowMatches(t,e,s){for(var n in s)if(s[n].matches(t,e))return!0;return!1}handleSort(t,e,s){return e&&null!==s?t.sort(function(t,n){var r=e.getRepresentation(t),i=e.getRepresentation(n);if(r==i)return 0;var a=r>i?1:-1;return"desc"===s&&(a*=-1),a}):t}handlePaginate(t,e,s){if(!e)return t;s<1&&(s=1);let n=(s-1)*e,r=s*e;return t.slice(n,r)}handleDisplay(t,e,s,n){s(t),n(e.filtered_data.length)}}class d{constructor(t){this.id=t,this.handler=new h,this.settings=new a}getId(){return this.id}setFilterHandler(t){return this.handler.filterHandler=t,this}setSortHandler(t){return this.handler.sortHandler=t,this}setPaginateHandler(t){return this.handler.paginateHandler=t,this}setDisplayHandler(t){return this.handler.displayHandler=t,this}setting(t,e){return void 0===e?this.settings.get(t):(this.settings.set(t,e),this)}mergeSettings(t){return this.settings.merge(t),this}getTableDefinition(){let t=this.clone(c);return t.handler=this.handler,t.settings=this.settings,t.name=this.id,t}getPagerDefinition(){let t=this.clone(u);return t.settings=this.settings,t.name=this.id,t}clone(t){var e;if(null===t||"object"!=typeof t)return t;if(t instanceof Array){e=[];for(var s=0;s<t.length;s++)e[s]=this.clone(t[s]);return e}if(t instanceof Object){for(var n in e={},t)t.hasOwnProperty(n)&&(e[n]=this.clone(t[n]));return e}throw new Error("Unable to copy obj! Its type isn't supported.")}}var p=new class{constructor(){this.table_types=[],this.use_default_type=!0,this.default_table_settings=new a}useDefaultType(t){return this.use_default_type=!!t,this}registerTableType(t,e){let s=new d(t);return this.table_types.push(s),e&&"function"==typeof e&&e(s),this}install(s){for(var n in s.prototype.$datatables={},s.component("datatable-cell",t),s.component("datatable-header",e),s.component("datatable-button",o),this.use_default_type&&this.registerTableType("datatable",function(t){t.mergeSettings(this.default_table_settings.properties)}.bind(this)),this.table_types)this.installTableType(this.table_types[n].getId(),this.table_types[n],s)}installTableType(t,e,s){s.component(t,e.getTableDefinition()),s.component(t+"-pager",e.getPagerDefinition())}};window.Vue.use(p)}();
 //# sourceMappingURL=vuejs-datatable.js.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 201 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -60184,19 +60060,19 @@ if (false) {
 }
 
 /***/ }),
-/* 202 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(203)
+  __webpack_require__(202)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(205)
+var __vue_script__ = __webpack_require__(204)
 /* template */
-var __vue_template__ = __webpack_require__(206)
+var __vue_template__ = __webpack_require__(205)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -60235,13 +60111,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 203 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(204);
+var content = __webpack_require__(203);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -60261,7 +60137,7 @@ if(false) {
 }
 
 /***/ }),
-/* 204 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -60275,7 +60151,7 @@ exports.push([module.i, "", ""]);
 
 
 /***/ }),
-/* 205 */
+/* 204 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60309,7 +60185,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 206 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -60384,19 +60260,19 @@ if (false) {
 }
 
 /***/ }),
-/* 207 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(208)
+  __webpack_require__(207)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(210)
+var __vue_script__ = __webpack_require__(209)
 /* template */
-var __vue_template__ = __webpack_require__(211)
+var __vue_template__ = __webpack_require__(210)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -60435,13 +60311,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 208 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(209);
+var content = __webpack_require__(208);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -60461,7 +60337,7 @@ if(false) {
 }
 
 /***/ }),
-/* 209 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -60475,7 +60351,7 @@ exports.push([module.i, "\n.addNewBarButton[data-v-31cceae5], .button1[data-v-31
 
 
 /***/ }),
-/* 210 */
+/* 209 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60897,7 +60773,7 @@ var Fraction = __webpack_require__(7);
 });
 
 /***/ }),
-/* 211 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -61020,20 +60896,20 @@ if (false) {
 }
 
 /***/ }),
-/* 212 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(213)
-  __webpack_require__(215)
+  __webpack_require__(212)
+  __webpack_require__(214)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(217)
+var __vue_script__ = __webpack_require__(216)
 /* template */
-var __vue_template__ = __webpack_require__(218)
+var __vue_template__ = __webpack_require__(217)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -61072,13 +60948,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 213 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(214);
+var content = __webpack_require__(213);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -61098,7 +60974,7 @@ if(false) {
 }
 
 /***/ }),
-/* 214 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -61112,13 +60988,13 @@ exports.push([module.i, "\n.intervals[data-v-13f0c5b2] {\n  width: 100%;\n  padd
 
 
 /***/ }),
-/* 215 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(216);
+var content = __webpack_require__(215);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -61138,7 +61014,7 @@ if(false) {
 }
 
 /***/ }),
-/* 216 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -61152,7 +61028,7 @@ exports.push([module.i, "\n.intervals__instructions .button {\n  margin: 30px 0 
 
 
 /***/ }),
-/* 217 */
+/* 216 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61778,7 +61654,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 218 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -62114,19 +61990,19 @@ if (false) {
 }
 
 /***/ }),
-/* 219 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(220)
+  __webpack_require__(219)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(222)
+var __vue_script__ = __webpack_require__(221)
 /* template */
-var __vue_template__ = __webpack_require__(252)
+var __vue_template__ = __webpack_require__(255)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -62165,13 +62041,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 220 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(221);
+var content = __webpack_require__(220);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -62191,7 +62067,7 @@ if(false) {
 }
 
 /***/ }),
-/* 221 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -62205,28 +62081,29 @@ exports.push([module.i, "\n.rhythm__instructions {\n  padding: 20px 0;\n  displa
 
 
 /***/ }),
-/* 222 */
+/* 221 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_CircleTimer_vue__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_CircleTimer_vue__ = __webpack_require__(222);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_CircleTimer_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_CircleTimer_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_ProgressBar_vue__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_ProgressBar_vue__ = __webpack_require__(227);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_ProgressBar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__elements_ProgressBar_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__StaffView_vue__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__StaffView_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__StaffView_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__DiffView_vue__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__DiffView_vue__ = __webpack_require__(232);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__DiffView_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__DiffView_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Keyboard_RhythmKeyboard_vue__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Keyboard_RhythmKeyboard_vue__ = __webpack_require__(237);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Keyboard_RhythmKeyboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__Keyboard_RhythmKeyboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Keyboard_KeyboardHelp_vue__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Keyboard_KeyboardHelp_vue__ = __webpack_require__(249);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Keyboard_KeyboardHelp_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__Keyboard_KeyboardHelp_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__noteStore__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__rhythmPlaybackEngine__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vuex__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vuex__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_howler__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_howler___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_howler__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -62413,11 +62290,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -62434,7 +62306,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 
-var util = __webpack_require__(9);
+
+var util = __webpack_require__(10);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -62479,22 +62352,27 @@ var util = __webpack_require__(9);
                 base_note: null,
                 subdivisions: null
             },
-            BPMobj: {
-                BPM: 120
-            },
 
             errorMessage: "",
             errorTimeout: null,
 
             showHelp: false,
 
-            playback: new __WEBPACK_IMPORTED_MODULE_8__rhythmPlaybackEngine__["a" /* default */](),
-            defaultBPM: 120
+            playbackStatus: {
+                sound: null,
+                metronome: true,
+                BPM: 60,
+                setBPM: this.setBPM,
+                toggleMetronome: this.toggleMetronome,
+                playing: false
+            },
+
+            rhythmAudioSource: ""
         };
     },
 
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_9_vuex__["d" /* mapState */])(['me']), {
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_8_vuex__["d" /* mapState */])(['me']), {
         num_beats_text: function num_beats_text() {
             switch (this.questionState.num_beats) {
                 case 1:
@@ -62510,13 +62388,13 @@ var util = __webpack_require__(9);
             }
         },
         metronomeButtonText: function metronomeButtonText() {
-            if (this.playback.metronome) {
+            if (this.playbackStatus.metronome) {
                 return "IZKLJUČI METRONOM";
             }
             return "VKLJUČI METRONOM";
         },
         metronomeButtonColor: function metronomeButtonColor() {
-            if (this.playback.metronome) {
+            if (this.playbackStatus.metronome) {
                 return "green";
             }
             return "cabaret";
@@ -62527,7 +62405,40 @@ var util = __webpack_require__(9);
         }
     }),
 
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_9_vuex__["b" /* mapActions */])(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'fetchRhythmExercise', 'createRhythmExerciseFeedback']), {
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_8_vuex__["b" /* mapActions */])(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'fetchRhythmExercise', 'createRhythmExerciseFeedback']), {
+        showMetadataAlert: function showMetadataAlert() {
+
+            alert("loadedmetadata");
+        },
+        setPlaying: function setPlaying(v) {
+            this.playbackStatus.playing = v;
+        },
+        toggleMetronome: function toggleMetronome() {
+            this.playbackStatus.metronome = !this.playbackStatus.metronome;
+            this.reloadAudio();
+        },
+        setBPM: function setBPM(val) {
+            this.playbackStatus.BPM = val;
+            this.reloadAudio();
+        },
+        reloadAudio: function reloadAudio() {
+
+            var out = this;
+            this.loadAudio().then(function () {
+                out.displayState = "ready";
+            });
+        },
+        setSoundBPM: function setSoundBPM() {
+
+            var newRate = this.playbackStatus.BPM / this.questionState.exercise.BPM;
+
+            alert("SETTING BPM. New rate: " + newRate);
+
+            if (this.playbackStatus.sound) {
+
+                this.playbackStatus.sound.rate(newRate);
+            }
+        },
         cursor_moved: function cursor_moved(pos, from) {
 
             this.$refs.staff_view.cursor_moved(pos, from);
@@ -62584,31 +62495,85 @@ var util = __webpack_require__(9);
                 }
             }
         },
+        loadAudio: function loadAudio(play) {
+            var _this = this;
+
+            this.displayState = "loading";
+
+            var exid = this.questionState.exercise.id;
+
+            var out = this;
+
+            return new Promise(function (resolve, reject) {
+
+                var baseURL = "/api/sound/" + exid + "?";
+                var metEnabled = "metronome=" + _this.playbackStatus.metronome;
+                var bpmOverride = "bpm=" + _this.playbackStatus.BPM;
+                var url = baseURL + [metEnabled, bpmOverride].join('&');
+
+                // Setup the new Howl.
+                _this.playbackStatus.sound = new __WEBPACK_IMPORTED_MODULE_9_howler__["Howl"]({
+                    src: [url],
+                    format: ['mp3'],
+                    onload: function onload() {
+
+                        if (play) {
+                            out.playbackStatus.sound.play();
+                        }
+
+                        resolve();
+                    },
+                    onplay: function onplay() {
+                        out.setPlaying(true);
+                    },
+                    onpause: function onpause() {
+                        out.setPlaying(false);
+                    },
+                    onstop: function onstop() {
+                        out.setPlaying(false);
+                    },
+                    onend: function onend() {
+                        out.setPlaying(false);
+                    }
+                });
+
+                // Change global volume.
+                __WEBPACK_IMPORTED_MODULE_9_howler__["Howler"].volume(1);
+            });
+        },
         showDiff: function showDiff(nowDate) {
 
             this.$refs.diff_view.render(this.questionState.exercise.notes, this.notes.notes, this.bar);
 
             this.displayState = "diff";
         },
-        startGame: function startGame() {
-            var _this = this;
+        startCountdownInterval: function startCountdownInterval() {
+            var _this2 = this;
 
-            this.questionState.wasCorrect = false;
-            this.questionState.statistics.startTime = new Date().getTime();
             this.countdownInterval = setInterval(function () {
 
-                _this.questionState.statistics.duration = Math.floor((new Date().getTime() - _this.questionState.statistics.startTime) / 1000);
+                _this2.questionState.statistics.duration = Math.floor((new Date().getTime() - _this2.questionState.statistics.startTime) / 1000);
 
-                var timeout = _this.questionState.statistics.duration >= _this.questionState.maxSeconds;
+                var timeout = _this2.questionState.statistics.duration >= _this2.questionState.maxSeconds;
                 if (timeout) {
 
-                    clearInterval(_this.countdownInterval);
-                    _this.check();
+                    clearInterval(_this2.countdownInterval);
+                    _this2.check();
                 }
             }, 500);
+        },
+        startGame: function startGame() {
+            var _this3 = this;
 
-            this.displayState = "ready";
-            this.play({ action: "replay", what: "exercise" });
+            return this.loadAudio().then(function () {
+
+                _this3.questionState.wasCorrect = false;
+                _this3.questionState.statistics.startTime = new Date().getTime();
+                _this3.startCountdownInterval();
+
+                _this3.displayState = "ready";
+                _this3.play({ action: "replay", what: "exercise" });
+            });
         },
         _copy_bar_info: function _copy_bar_info(exercise) {
 
@@ -62660,25 +62625,25 @@ var util = __webpack_require__(9);
             return "QUESTION";
         },
         gameEnded: function gameEnded() {
-            var _this2 = this;
+            var _this4 = this;
 
             return this.finishGameUser({ gameId: this.game.id, userId: this.me.id }).then(function () {
-                return _this2.completeBadges(_this2.me.id);
+                return _this4.completeBadges(_this4.me.id);
             }).then(function () {
-                _this2.$router.push({ name: 'gameStatistics', params: { id: _this2.game.id } });
+                _this4.$router.push({ name: 'gameStatistics', params: { id: _this4.game.id } });
             });
         },
         loadExerciseWithId: function loadExerciseWithId(exerciseId) {
-            var _this3 = this;
+            var _this5 = this;
 
             this.displayState = 'loading';
 
             return this.fetchRhythmExercise(exerciseId).then(function (exercise) {
-                return _this3.prepareQuestionWithContent(1, exercise, false);
+                return _this5.prepareQuestionWithContent(1, exercise, false);
             });
         },
         nextQuestion: function nextQuestion(play) {
-            var _this4 = this;
+            var _this6 = this;
 
             this.displayState = 'loading';
 
@@ -62688,6 +62653,8 @@ var util = __webpack_require__(9);
                 return this.gameEnded();
             }
 
+            debugger;
+
             return this.generateQuestion({
                 game_id: this.game.id,
                 number: this.questionState.number,
@@ -62696,7 +62663,7 @@ var util = __webpack_require__(9);
 
                 var exercise = question.content;
 
-                _this4.prepareQuestionWithContent(question.id, exercise);
+                _this6.prepareQuestionWithContent(question.id, exercise);
             });
         },
         prepareQuestionWithContent: function prepareQuestionWithContent(questionId, exercise, play) {
@@ -62709,8 +62676,7 @@ var util = __webpack_require__(9);
 
             this._copy_bar_info(exercise);
 
-            this.playback.setBPM(exercise.BPM ? exercise.BPM : this.defaultBPM);
-            this.playback.setBar(exercise.timeSignature);
+            this.setBPM(exercise.BPM ? exercise.BPM : 60);
 
             // Initialize note store
             this.notes = new __WEBPACK_IMPORTED_MODULE_7__noteStore__["a" /* default */](this.bar, this.$refs.staff_view.cursor, this.$refs.staff_view.render);
@@ -62724,7 +62690,7 @@ var util = __webpack_require__(9);
             this.$refs.staff_view.reset();
         },
         continueGame: function continueGame() {
-            var _this5 = this;
+            var _this7 = this;
 
             if (this.isExerciseTest()) {
                 window.close();
@@ -62735,12 +62701,12 @@ var util = __webpack_require__(9);
             this.nextQuestion(false).then(function (state) {
 
                 if (state == "GAME") {} else {
-                    _this5.displayState = "instructions";
+                    _this7.displayState = "instructions";
                 }
             });
         },
         logAnswer: function logAnswer(info) {
-            var _this6 = this;
+            var _this8 = this;
 
             return this.storeAnswer({
                 game_id: this.game.id,
@@ -62753,7 +62719,7 @@ var util = __webpack_require__(9);
                 n_answers: this.questionState.statistics.nChecks,
                 success: info.status }).catch(function () {
 
-                _this6.questionState.check = "error";
+                _this8.questionState.check = "error";
             });
         },
         updateCheckStatus: function updateCheckStatus(status) {
@@ -62824,28 +62790,17 @@ var util = __webpack_require__(9);
         },
         play: function play(event) {
 
-            console.log(event);
-
             this.questionState.statistics.nPlaybacks += 1;
 
             if (event.action == "stop") {
-                this.playback.stop();
-                return;
-            }
 
-            var values = [];
+                this.playbackStatus.sound.stop();
+            }
 
             if (event.action == "replay") {
-                if (event.what == "user") {
 
-                    values = this.notes.notes;
-                } else if (event.what == "exercise") {
-
-                    values = this.questionState.exercise.notes;
-                }
+                this.playbackStatus.sound.play();
             }
-
-            this.playback.play(null, null, values);
         },
         showError: function showError(err) {
             this.errorMessage = err;
@@ -62869,6 +62824,9 @@ var util = __webpack_require__(9);
         },
         openFeedbackWindow: function openFeedbackWindow() {
 
+            alert("GO BWAH!");
+            return;
+
             var feedback = prompt("Kaj želite sporočiti?");
 
             if (feedback) {
@@ -62886,7 +62844,7 @@ var util = __webpack_require__(9);
     }),
 
     mounted: function mounted() {
-        var _this7 = this;
+        var _this9 = this;
 
         var out = this;
 
@@ -62898,9 +62856,9 @@ var util = __webpack_require__(9);
             // Override - show certain exercise and quit
 
             this.fetchMe().then(function () {
-                return _this7.loadExerciseWithId(out.$route.params.exerciseId);
+                return _this9.loadExerciseWithId(out.$route.params.exerciseId);
             }).then(function () {
-                _this7.displayState = "instructions";return false;
+                _this9.displayState = "instructions";return false;
             });
 
             return;
@@ -62913,9 +62871,9 @@ var util = __webpack_require__(9);
         } else {
 
             this.fetchMe().then(function () {
-                return _this7.nextQuestion();
+                return _this9.nextQuestion();
             }).then(function () {
-                _this7.displayState = "instructions";return;
+                _this9.displayState = "instructions";return;
             });
         }
 
@@ -62933,19 +62891,19 @@ var util = __webpack_require__(9);
 });
 
 /***/ }),
-/* 223 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(224)
+  __webpack_require__(223)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(226)
+var __vue_script__ = __webpack_require__(225)
 /* template */
-var __vue_template__ = __webpack_require__(227)
+var __vue_template__ = __webpack_require__(226)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -62984,13 +62942,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 224 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(225);
+var content = __webpack_require__(224);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -63010,7 +62968,7 @@ if(false) {
 }
 
 /***/ }),
-/* 225 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -63024,7 +62982,7 @@ exports.push([module.i, "\n.circle-timer__wrap[data-v-565f2198] {\n  display: in
 
 
 /***/ }),
-/* 226 */
+/* 225 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63083,7 +63041,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 227 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -63105,19 +63063,19 @@ if (false) {
 }
 
 /***/ }),
-/* 228 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(229)
+  __webpack_require__(228)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(231)
+var __vue_script__ = __webpack_require__(230)
 /* template */
-var __vue_template__ = __webpack_require__(232)
+var __vue_template__ = __webpack_require__(231)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -63156,13 +63114,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 229 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(230);
+var content = __webpack_require__(229);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -63182,7 +63140,7 @@ if(false) {
 }
 
 /***/ }),
-/* 230 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -63196,7 +63154,7 @@ exports.push([module.i, "\n.intervals__progress-chapter[data-v-3ff07905] {\n  ba
 
 
 /***/ }),
-/* 231 */
+/* 230 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63229,7 +63187,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 232 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -63249,19 +63207,19 @@ if (false) {
 }
 
 /***/ }),
-/* 233 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(234)
+  __webpack_require__(233)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(236)
+var __vue_script__ = __webpack_require__(235)
 /* template */
-var __vue_template__ = __webpack_require__(237)
+var __vue_template__ = __webpack_require__(236)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -63300,13 +63258,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 234 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(235);
+var content = __webpack_require__(234);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -63326,7 +63284,7 @@ if(false) {
 }
 
 /***/ }),
-/* 235 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -63340,14 +63298,14 @@ exports.push([module.i, "\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhyt
 
 
 /***/ }),
-/* 236 */
+/* 235 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__StaffView_vue__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__StaffView_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__StaffView_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(4);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -63516,7 +63474,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 237 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -63616,19 +63574,19 @@ if (false) {
 }
 
 /***/ }),
-/* 238 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(239)
+  __webpack_require__(238)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(241)
+var __vue_script__ = __webpack_require__(240)
 /* template */
-var __vue_template__ = __webpack_require__(243)
+var __vue_template__ = __webpack_require__(248)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -63667,13 +63625,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 239 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(240);
+var content = __webpack_require__(239);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -63693,7 +63651,7 @@ if(false) {
 }
 
 /***/ }),
-/* 240 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -63701,18 +63659,18 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.half_transparent[data-v-72aa87f1] {\n  opacity: 0.5;\n}\n.tie-text[data-v-72aa87f1] {\n  font-size: 131px;\n  margin-bottom: 115px;\n  margin-left: 7px;\n}\n.rhythm-game__keyboard_wrap[data-v-72aa87f1] {\n  padding: 0 10px 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n@media only screen and (min-device-width: 768px) {\n.rhythm-game__keyboard_wrap[data-v-72aa87f1] {\n      padding-top: 70px;\n}\n}\n.rhythm-game__keyboard[data-v-72aa87f1] {\n  font-size: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-72aa87f1] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-72aa87f1] {\n  margin-left: 4px;\n  font-size: 40px;\n}\n.norfolk-row .button[data-v-72aa87f1] {\n  font-family: Norfolk;\n  font-size: 33px;\n}\n.norfolk[data-v-72aa87f1] {\n  font-family: Norfolk !important;\n}\n.musisync-row .button[data-v-72aa87f1] {\n  font-family: MusiSync;\n  font-size: 33px;\n}\n.musisync[data-v-72aa87f1] {\n  font-family: MusiSync !important;\n}\n.moveButtonsButton[data-v-72aa87f1] {\n  font-family: initial !important;\n  font-size: 26px  !important;\n  font-weight: bold;\n}\n.normal-font[data-v-72aa87f1] {\n  font-family: inherit !important;\n}\n.tiny-tajni-pici-mici-font[data-v-72aa87f1] {\n  font-size: 8pt !important;\n  font-family: \"GothamRounded-Bold\";\n}\n.norfolk-note-padding[data-v-72aa87f1] {\n  padding-top: 19px;\n}\n.hide-normal[data-v-72aa87f1] {\n  display: none;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.hide-normal[data-v-72aa87f1] {\n    display: inline-block;\n}\n.show-normal[data-v-72aa87f1] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-72aa87f1] {\n    margin-bottom: 0px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.hide-normal[data-v-72aa87f1] {\n    display: inline-block;\n}\n.show-normal[data-v-72aa87f1] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-72aa87f1] {\n    margin-bottom: 0px;\n}\n.button_1_col[data-v-72aa87f1] {\n    width: 50px !important;\n    height: 50px !important;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: portrait) {\n.button_1_col[data-v-72aa87f1] {\n    width: 60px !important;\n    height: 60px !important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.half_transparent[data-v-72aa87f1] {\n  opacity: 0.5;\n}\n.overflow-hidden[data-v-72aa87f1] {\n  overflow: hidden;\n}\n.tie-text[data-v-72aa87f1] {\n  font-size: 131px;\n  margin-bottom: 115px;\n  margin-left: 7px;\n}\n.rhythm-game__keyboard_wrap[data-v-72aa87f1] {\n  padding: 0 10px 0 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n@media only screen and (min-device-width: 768px) {\n.rhythm-game__keyboard_wrap[data-v-72aa87f1] {\n      padding-top: 70px;\n}\n}\n.rhythm-game__keyboard[data-v-72aa87f1] {\n  font-size: 20px;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.rhythm-game__keyboard-row[data-v-72aa87f1] {\n  margin-bottom: 5px;\n}\n.rhythm-game__keyboard-row .button[data-v-72aa87f1] {\n  margin-left: 4px;\n  font-size: 40px;\n}\n.norfolk-row .button[data-v-72aa87f1] {\n  font-family: Norfolk;\n  font-size: 33px;\n}\n.norfolk[data-v-72aa87f1] {\n  font-family: Norfolk !important;\n}\n.musisync-row .button[data-v-72aa87f1] {\n  font-family: MusiSync;\n  font-size: 33px;\n}\n.musisync[data-v-72aa87f1] {\n  font-family: MusiSync !important;\n}\n.jcsb[data-v-72aa87f1] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.moveButtonsButton[data-v-72aa87f1] {\n  font-family: initial !important;\n  font-size: 26px  !important;\n  font-weight: bold;\n}\n.normal-font[data-v-72aa87f1] {\n  font-family: \"GothamRounded-Bold\" !important;\n  font-size: 8pt !important;\n}\n.tiny-tajni-pici-mici-font[data-v-72aa87f1] {\n  font-size: 8pt !important;\n  font-family: \"GothamRounded-Bold\";\n}\n.norfolk-note-padding[data-v-72aa87f1] {\n  padding-top: 19px;\n}\n.hide-normal[data-v-72aa87f1] {\n  display: none;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.hide-normal[data-v-72aa87f1] {\n    display: inline-block;\n}\n.show-normal[data-v-72aa87f1] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-72aa87f1] {\n    margin-bottom: 0px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.hide-normal[data-v-72aa87f1] {\n    display: inline-block;\n}\n.show-normal[data-v-72aa87f1] {\n    display: none;\n}\n.rhythm-game__keyboard-row[data-v-72aa87f1] {\n    margin-bottom: 0px;\n}\n.button_1_col[data-v-72aa87f1] {\n    width: 50px !important;\n    height: 50px !important;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: portrait) {\n.button_1_col[data-v-72aa87f1] {\n    width: 60px !important;\n    height: 60px !important;\n}\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 241 */
+/* 240 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue__);
@@ -63730,21 +63688,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Buttons_PlayButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__Buttons_PlayButton_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Buttons_BPMSlider_vue__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Buttons_BPMSlider_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__Buttons_BPMSlider_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Buttons_CheckButton_vue__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Buttons_CheckButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__Buttons_CheckButton_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_vue_awesome_icons_repeat__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_vue_awesome_icons_trash__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_vue_awesome_icons_play__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vue_awesome_icons_stop__ = __webpack_require__(242);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_vue_awesome_icons_question_circle__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_vue_awesome_icons_user_o__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_vue_awesome_icons_check__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17_vue_awesome_icons_angle_double_right__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_vue_awesome_icons_times__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_vue_awesome_icons_i_cursor__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_vue_awesome_icons_ban__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_vue_awesome_icons_refresh__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_vue_awesome_icons_exclamation_circle__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Buttons_BPMTextButton_vue__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Buttons_BPMTextButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__Buttons_BPMTextButton_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Buttons_CheckButton_vue__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Buttons_CheckButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__Buttons_CheckButton_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_vue_awesome_icons_repeat__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_vue_awesome_icons_trash__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vue_awesome_icons_play__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_vue_awesome_icons_stop__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_vue_awesome_icons_question_circle__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_vue_awesome_icons_user_o__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17_vue_awesome_icons_check__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_vue_awesome_icons_angle_double_right__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_vue_awesome_icons_times__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_vue_awesome_icons_i_cursor__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_vue_awesome_icons_ban__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_vue_awesome_icons_refresh__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23_vue_awesome_icons_exclamation_circle__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_vue_awesome_icons_cog__ = __webpack_require__(247);
 //
 //
 //
@@ -64069,6 +64030,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -64101,235 +64105,383 @@ var Fraction = __webpack_require__(7);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
-    methods: {
-        note: function note(num) {
+        methods: {
+                note: function note(num) {
 
-            this.key_callback({
-                type: 'n',
-                value: num
-            });
-        },
-        showJson: function showJson() {
+                        this.key_callback({
+                                type: 'n',
+                                value: num
+                        });
+                },
+                show_settings: function show_settings() {
 
-            this.key_callback({
-                type: "showJson"
-            });
-        },
-        feedback: function feedback() {
+                        this.settingsVisible = true;
+                },
+                hide_settings: function hide_settings() {
 
-            this.key_callback({
-                type: "feedback"
-            });
-        },
-        showHelp: function showHelp() {
-            this.key_callback({
-                type: "showHelp"
-            });
-        },
-        changeSignature: function changeSignature() {
-            this.key_callback({
-                type: "changeSignature"
-            });
-        },
-        rest: function rest(num) {
+                        this.settingsVisible = false;
+                },
+                showJson: function showJson() {
 
-            this.key_callback({
-                type: 'r',
-                value: num
-            });
-        },
-        setCorrect: function setCorrect() {
+                        this.key_callback({
+                                type: "showJson"
+                        });
+                },
+                setBPM: function setBPM(value) {
+                        this.playbackStatus.setBPM(value);
+                },
+                feedback: function feedback() {
 
-            this.key_callback({
-                type: 'pass'
-            });
-        },
-        add_bar: function add_bar() {
+                        this.key_callback({
+                                type: "feedback"
+                        });
+                },
+                showHelp: function showHelp() {
+                        this.key_callback({
+                                type: "showHelp"
+                        });
+                },
+                changeSignature: function changeSignature() {
+                        this.key_callback({
+                                type: "changeSignature"
+                        });
+                },
+                rest: function rest(num) {
 
-            this.key_callback({
-                type: 'bar',
-                value: 4
-            });
-        },
-        move_cursor_forward: function move_cursor_forward() {
+                        this.key_callback({
+                                type: 'r',
+                                value: num
+                        });
+                },
+                setCorrect: function setCorrect() {
 
-            this.key_callback({
-                type: '>'
-            });
-        },
-        move_cursor_backwards: function move_cursor_backwards() {
+                        this.key_callback({
+                                type: 'pass'
+                        });
+                },
+                add_bar: function add_bar() {
 
-            this.key_callback({
-                type: '<'
-            });
-        },
-        dot: function dot() {
+                        this.key_callback({
+                                type: 'bar',
+                                value: 4
+                        });
+                },
+                move_cursor_forward: function move_cursor_forward() {
 
-            this.key_callback({
-                type: 'dot'
-            });
-        },
-        tie: function tie() {
+                        this.key_callback({
+                                type: '>'
+                        });
+                },
+                move_cursor_backwards: function move_cursor_backwards() {
 
-            this.key_callback({
-                type: 'tie'
-            });
-        },
-        delete_note: function delete_note() {
+                        this.key_callback({
+                                type: '<'
+                        });
+                },
+                dot: function dot() {
 
-            this.key_callback({
-                type: 'delete'
-            });
-        },
-        tuplet: function tuplet(num_notes, in_space_of) {
+                        this.key_callback({
+                                type: 'dot'
+                        });
+                },
+                tie: function tie() {
 
-            var obj = null;
-            if (parseInt(num_notes) && parseInt(in_space_of)) {
-                obj = {
-                    num_notes: num_notes,
-                    in_space_of: in_space_of
+                        this.key_callback({
+                                type: 'tie'
+                        });
+                },
+                delete_note: function delete_note() {
+
+                        this.key_callback({
+                                type: 'delete'
+                        });
+                },
+                tuplet: function tuplet(num_notes, in_space_of) {
+
+                        var obj = null;
+                        if (parseInt(num_notes) && parseInt(in_space_of)) {
+                                obj = {
+                                        num_notes: num_notes,
+                                        in_space_of: in_space_of
+                                };
+                        }
+
+                        this.key_callback({
+                                type: 'tuplet',
+                                tuplet_type: obj
+                        });
+                },
+                remove_tuplets: function remove_tuplets() {
+
+                        this.key_callback({
+                                type: 'remove_tuplets'
+                        });
+                },
+                play_button_click: function play_button_click(type) {
+
+                        if (!this.playbackStatus) return;
+
+                        // alert("RECEIVED! Status: "+this.playbackStatus.playing);
+
+                        if (this.playbackStatus.playing) {
+                                this.key_callback({
+                                        type: 'playback',
+                                        action: 'stop'
+                                });
+                        } else {
+                                this.key_callback({
+                                        type: 'playback',
+                                        action: 'replay',
+                                        what: type
+                                });
+                        }
+                },
+                play_user: function play_user() {
+                        this.play_button_click("user");
+                },
+                play_exercise: function play_exercise() {
+                        this.play_button_click("exercise");
+                },
+                show_diff: function show_diff() {
+                        this.key_callback({
+                                type: 'submit'
+                        });
+                },
+                check: function check() {
+
+                        this.key_callback({
+                                type: 'check'
+                        });
+                },
+                submit: function submit() {
+
+                        this.key_callback({
+                                type: 'submit'
+                        });
+                },
+                selection: function selection() {
+
+                        this.key_callback({
+                                type: "selectionMode"
+                        });
+                },
+                note_color: function note_color() {
+                        return "green";
+                },
+                rest_color: function rest_color() {
+                        return "red";
+                },
+                hideNoteButtonWhenInTuplet: function hideNoteButtonWhenInTuplet(button_type) {
+                        if (this.in_tuplet) {
+                                return true;
+                        }
+                        return false;
+                },
+                init: function init(cursor) {
+                        this.$set(this, 'cursor', cursor);
+                }
+        },
+        components: {
+                SexyButton: __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default.a, SexySlider: __WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue___default.a, TupletSign: __WEBPACK_IMPORTED_MODULE_2__elements_TupletSign_vue___default.a, BPMTextButton: __WEBPACK_IMPORTED_MODULE_9__Buttons_BPMTextButton_vue___default.a,
+
+                ThirtyTwoButton: __WEBPACK_IMPORTED_MODULE_3__Buttons_ThirtyTwoButton_vue___default.a, BarButton: __WEBPACK_IMPORTED_MODULE_4__Buttons_BarButton_vue___default.a, DotButton: __WEBPACK_IMPORTED_MODULE_5__Buttons_DotButton_vue___default.a, SelectionButton: __WEBPACK_IMPORTED_MODULE_6__Buttons_SelectionButton_vue___default.a, PlayButton: __WEBPACK_IMPORTED_MODULE_7__Buttons_PlayButton_vue___default.a, BPMSlider: __WEBPACK_IMPORTED_MODULE_8__Buttons_BPMSlider_vue___default.a, CheckButton: __WEBPACK_IMPORTED_MODULE_10__Buttons_CheckButton_vue___default.a
+
+        },
+        data: function data() {
+                return {
+
+                        btn_idx: [0, 1, 2, 3, 4],
+                        available_notes: [2, 4, 8, 16, 32],
+                        available_tuplets: [],
+
+                        rest_mode: false,
+                        moving_buttons: false,
+
+                        moreButton: false,
+
+                        buttons: false,
+
+                        settingsVisible: false,
+
+                        bpm_slider: {
+                                value: 10
+                        },
+
+                        cursor: {}
+
                 };
-            }
+        },
+        props: ['key_callback', 'playbackStatus', 'question', 'say'],
+        computed: {
+                percentsUser: function percentsUser() {
 
-            this.key_callback({
-                type: 'tuplet',
-                tuplet_type: obj
-            });
-        },
-        remove_tuplets: function remove_tuplets() {
+                        if (this.playbackStatus && this.playbackStatus.currentlyLoaded == "user") {
 
-            this.key_callback({
-                type: 'remove_tuplets'
-            });
-        },
-        play_button_click: function play_button_click(type) {
+                                return this.playbackStatus.percentPlayed();
+                        } else {
+                                return 0;
+                        }
+                },
+                percentsExercise: function percentsExercise() {
+                        if (this.playbackStatus && this.playbackStatus.currentlyLoaded == "exercise") {
 
-            if (!this.playbackStatus) return;
+                                return this.playbackStatus.percentPlayed();
+                        } else {
+                                return 0;
+                        }
+                },
+                checkButtonTextSecond: function checkButtonTextSecond() {
 
-            if (this.playbackStatus.playing) {
-                this.key_callback({
-                    type: 'playback',
-                    action: 'stop'
-                });
-            } else {
-                this.key_callback({
-                    type: 'playback',
-                    action: 'replay',
-                    what: type
-                });
-            }
-        },
-        play_user: function play_user() {
-            this.play_button_click("user");
-        },
-        play_exercise: function play_exercise() {
-            this.play_button_click("exercise");
-        },
-        show_diff: function show_diff() {
-            this.key_callback({
-                type: 'submit'
-            });
-        },
-        check: function check() {
-
-            this.key_callback({
-                type: 'check'
-            });
-        },
-        submit: function submit() {
-
-            this.key_callback({
-                type: 'submit'
-            });
-        },
-        selection: function selection() {
-
-            this.key_callback({
-                type: "selectionMode"
-            });
-        },
-        note_color: function note_color() {
-            return "green";
-        },
-        rest_color: function rest_color() {
-            return "red";
-        },
-        hideNoteButtonWhenInTuplet: function hideNoteButtonWhenInTuplet(button_type) {
-            if (this.in_tuplet) {
-                return true;
-            }
-            return false;
-        },
-        init: function init(cursor) {
-            this.$set(this, 'cursor', cursor);
+                        // let seconds = this.question.maxSeconds - this.question.statistics.duration;
+                        // return seconds+"s ";
+                        return "";
+                },
+                checkButtonTextThird: function checkButtonTextThird() {
+                        //return this.question.statistics.nChecks+"/"+this.question.maxChecks
+                        return "";
+                },
+                checkButtonColor: function checkButtonColor() {
+                        if (this.question.check == "no") return "cabaret";else if (this.question.check == "wrong") return "red";else if (this.question.check == "correct") return "green";else if (this.question.check == "next") return "sunglow";
+                        return "cabaret";
+                },
+                checkButtonIcon: function checkButtonIcon() {
+                        if (this.question.check == "no") return "question-circle";else if (this.question.check == "wrong") return "times";else if (this.question.check == "correct") return "check";else if (this.question.check == "next") return "angle-double-right";
+                        return "question-circle";
+                },
+                tuplet_color: function tuplet_color() {
+                        if (this.cursor.editing_tuplet) return "sunglow";
+                        return "green";
+                },
+                select_button_color: function select_button_color() {
+                        if (this.cursor.selectionMode) return "blue";
+                        return "green";
+                }
         }
-    },
-    components: {
-        SexyButton: __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default.a, SexySlider: __WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue___default.a, TupletSign: __WEBPACK_IMPORTED_MODULE_2__elements_TupletSign_vue___default.a,
 
-        ThirtyTwoButton: __WEBPACK_IMPORTED_MODULE_3__Buttons_ThirtyTwoButton_vue___default.a, BarButton: __WEBPACK_IMPORTED_MODULE_4__Buttons_BarButton_vue___default.a, DotButton: __WEBPACK_IMPORTED_MODULE_5__Buttons_DotButton_vue___default.a, SelectionButton: __WEBPACK_IMPORTED_MODULE_6__Buttons_SelectionButton_vue___default.a, PlayButton: __WEBPACK_IMPORTED_MODULE_7__Buttons_PlayButton_vue___default.a, BPMSlider: __WEBPACK_IMPORTED_MODULE_8__Buttons_BPMSlider_vue___default.a, CheckButton: __WEBPACK_IMPORTED_MODULE_9__Buttons_CheckButton_vue___default.a
+});
 
-    },
-    data: function data() {
-        return {
-            rest_mode: false,
-            moving_buttons: false,
+/***/ }),
+/* 241 */
+/***/ (function(module, exports, __webpack_require__) {
 
-            moreButton: false,
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(242)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(244)
+/* template */
+var __vue_template__ = __webpack_require__(245)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-743f75ac"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/games/rhythm/Keyboard/Buttons/BPMTextButton.vue"
 
-            buttons: false,
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-743f75ac", Component.options)
+  } else {
+    hotAPI.reload("data-v-743f75ac", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
 
-            bpm_slider: {
-                value: 10
-            },
+module.exports = Component.exports
 
-            cursor: {}
 
-        };
-    },
-    props: ['key_callback', 'playbackStatus', 'question', 'say'],
+/***/ }),
+/* 242 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(243);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("37665054", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-743f75ac\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BPMTextButton.vue", function() {
+     var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-743f75ac\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BPMTextButton.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 243 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.rhythmKeyboard__BPMText__BPMIndicator[data-v-743f75ac] {\n  font-size: 16px;\n  font-family: \"GothamRounded-Bold\";\n}\n.rhythmKeyboard__BPMText__TinyText[data-v-743f75ac] {\n  font-size: 12px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 244 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    props: ["text", "selected"],
+    components: { SexyButton: __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default.a },
     computed: {
-        percentsUser: function percentsUser() {
+        buttonColor: function buttonColor() {
 
-            if (this.playbackStatus && this.playbackStatus.currentlyLoaded == "user") {
-
-                return this.playbackStatus.percentPlayed();
-            } else {
-                return 0;
+            if (this.selected) {
+                return "sunglow";
             }
-        },
-        percentsExercise: function percentsExercise() {
-            if (this.playbackStatus && this.playbackStatus.currentlyLoaded == "exercise") {
-
-                return this.playbackStatus.percentPlayed();
-            } else {
-                return 0;
-            }
-        },
-        checkButtonTextSecond: function checkButtonTextSecond() {
-
-            // let seconds = this.question.maxSeconds - this.question.statistics.duration;
-            // return seconds+"s ";
-            return "";
-        },
-        checkButtonTextThird: function checkButtonTextThird() {
-            //return this.question.statistics.nChecks+"/"+this.question.maxChecks
-            return "";
-        },
-        checkButtonColor: function checkButtonColor() {
-            if (this.question.check == "no") return "cabaret";else if (this.question.check == "wrong") return "red";else if (this.question.check == "correct") return "green";else if (this.question.check == "next") return "sunglow";
-            return "cabaret";
-        },
-        checkButtonIcon: function checkButtonIcon() {
-            if (this.question.check == "no") return "question-circle";else if (this.question.check == "wrong") return "times";else if (this.question.check == "correct") return "check";else if (this.question.check == "next") return "angle-double-right";
-            return "question-circle";
-        },
-        tuplet_color: function tuplet_color() {
-            if (this.cursor.editing_tuplet) return "sunglow";
-            return "green";
-        },
-        select_button_color: function select_button_color() {
-            if (this.cursor.selectionMode) return "blue";
             return "green";
         }
     }
@@ -64337,7 +64489,37 @@ var Fraction = __webpack_require__(7);
 });
 
 /***/ }),
-/* 242 */
+/* 245 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("sexy-button", { attrs: { color: _vm.buttonColor } }, [
+    _c("div", { staticClass: "rhythmKeyboard__BPMText__BPMIndicator" }, [
+      _c("div", { staticClass: "rhythmKeyboard__BPMText__BPMValue" }, [
+        _vm._v(_vm._s(_vm.text))
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "rhythmKeyboard__BPMText__BPMPrompt" }, [
+        _vm._v("BPM")
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-743f75ac", module.exports)
+  }
+}
+
+/***/ }),
+/* 246 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -64349,7 +64531,19 @@ __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"stop":{"
 
 
 /***/ }),
-/* 243 */
+/* 247 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Icon_vue__);
+
+
+__WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"cog":{"width":1536,"height":1792,"paths":[{"d":"M1024 896q0-106-75-181t-181-75-181 75-75 181 75 181 181 75 181-75 75-181zM1536 787v222q0 12-8 23t-20 13l-185 28q-19 54-39 91 35 50 107 138 10 12 10 25t-9 23q-27 37-99 108t-94 71q-12 0-26-9l-138-108q-44 23-91 38-16 136-29 186-7 28-36 28h-222q-14 0-24.5-8.5t-11.5-21.5l-28-184q-49-16-90-37l-141 107q-10 9-25 9-14 0-25-11-126-114-165-168-7-10-7-23 0-12 8-23 15-21 51-66.5t54-70.5q-27-50-41-99l-183-27q-13-2-21-12.5t-8-23.5v-222q0-12 8-23t19-13l186-28q14-46 39-92-40-57-107-138-10-12-10-24 0-10 9-23 26-36 98.5-107.5t94.5-71.5q13 0 26 10l138 107q44-23 91-38 16-136 29-186 7-28 36-28h222q14 0 24.5 8.5t11.5 21.5l28 184q49 16 90 37l142-107q9-9 24-9 13 0 25 10 129 119 165 170 7 8 7 22 0 12-8 23-15 21-51 66.5t-54 70.5q26 50 41 98l183 28q13 2 21 12.5t8 23.5z"}]}})
+
+
+/***/ }),
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -64357,7 +64551,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "rhythm-game__keyboard_wrap" }, [
-    _c("div", { staticClass: "rhythm-game__keyboard" }, [
+    _c("div", { staticClass: "rhythm-game__keyboard show-normal" }, [
       _c(
         "div",
         { staticClass: "row rhythm-game__keyboard-row row-1 norfolk-row" },
@@ -64527,150 +64721,7 @@ var render = function() {
                   })
                 ],
                 1
-              ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "hide-normal" },
-            [
-              (_vm.moving_buttons || _vm.cursor.in_tuplet) && !_vm.moreButton
-                ? _c("sexy-button", {
-                    attrs: {
-                      text: "<",
-                      color: "orange",
-                      customClass: "moveButtonsButton"
-                    },
-                    nativeOn: {
-                      click: function($event) {
-                        return _vm.move_cursor_backwards($event)
-                      }
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              !_vm.moreButton && !_vm.moving_buttons
-                ? _c("bar-button", {
-                    attrs: { hidden: _vm.cursor.in_tuplet, color: "green" },
-                    nativeOn: {
-                      click: function($event) {
-                        return _vm.add_bar()
-                      }
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.moreButton
-                ? _c("b-p-m-slider", {
-                    attrs: { bpmObject: _vm.playbackStatus, valueKey: "BPM" }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              (_vm.moving_buttons || _vm.cursor.in_tuplet) && !_vm.moreButton
-                ? _c("sexy-button", {
-                    attrs: {
-                      text: ">",
-                      color: "orange",
-                      customClass: "moveButtonsButton"
-                    },
-                    nativeOn: {
-                      click: function($event) {
-                        return _vm.move_cursor_forward($event)
-                      }
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              !_vm.moreButton && !_vm.moving_buttons
-                ? _c("dot-button", {
-                    attrs: { hidden: _vm.cursor.in_tuplet },
-                    nativeOn: {
-                      click: function($event) {
-                        return _vm.dot()
-                      }
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.moreButton
-                ? _c("play-button", {
-                    attrs: {
-                      text: "Ponovi vajo",
-                      percents: _vm.percentsExercise,
-                      playing: _vm.playbackStatus.playing
-                    },
-                    nativeOn: {
-                      click: function($event) {
-                        return _vm.play_exercise()
-                      }
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.moving_buttons && !_vm.moreButton
-                ? _c("sexy-button", {
-                    attrs: {
-                      hidden: _vm.cursor.in_tuplet,
-                      text: "j \\",
-                      color: "green",
-                      customClass: "musisync"
-                    },
-                    nativeOn: {
-                      click: function($event) {
-                        _vm.moving_buttons = !_vm.moving_buttons
-                      }
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              !_vm.moreButton && !_vm.moving_buttons
-                ? _c("sexy-button", {
-                    attrs: {
-                      hidden: _vm.cursor.in_tuplet,
-                      text: "< >",
-                      color: "orange",
-                      customClass: "moveButtonsButton moveButtonsButton_Switch"
-                    },
-                    nativeOn: {
-                      click: function($event) {
-                        _vm.moving_buttons = !_vm.moving_buttons
-                      }
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.moreButton
-                ? _c(
-                    "sexy-button",
-                    {
-                      attrs: { color: "green" },
-                      nativeOn: {
-                        click: function($event) {
-                          return _vm.showHelp()
-                        }
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
-                        _vm._v("Pomoč")
-                      ])
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _c("sexy-button", {
-                attrs: {
-                  color: _vm.moreButton ? "sunglow" : "cabaret",
-                  text: "..."
-                },
-                nativeOn: {
-                  click: function($event) {
-                    _vm.moreButton = !_vm.moreButton
-                  }
-                }
-              })
-            ],
-            1
-          )
+              )
         ],
         1
       ),
@@ -64773,68 +64824,6 @@ var render = function() {
               )
             ],
             1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "hide-normal" },
-            [
-              _c(
-                "sexy-button",
-                {
-                  attrs: { customClass: "musisync", color: "green" },
-                  nativeOn: {
-                    click: function($event) {
-                      return _vm.tie()
-                    }
-                  }
-                },
-                [_c("span", { staticClass: "tie-text" }, [_vm._v("u")])]
-              ),
-              _vm._v(" "),
-              _c("selection-button", {
-                attrs: { color: _vm.select_button_color },
-                nativeOn: {
-                  click: function($event) {
-                    return _vm.selection()
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "sexy-button",
-                {
-                  attrs: { color: "cabaret" },
-                  nativeOn: {
-                    click: function($event) {
-                      return _vm.delete_note()
-                    }
-                  }
-                },
-                [_c("icon", { attrs: { name: "trash", scale: "2" } })],
-                1
-              ),
-              _vm._v(" "),
-              _c("check-button", {
-                attrs: {
-                  color: _vm.checkButtonColor,
-                  status: _vm.question.check,
-                  percents:
-                    (1 -
-                      _vm.question.statistics.duration /
-                        _vm.question.maxSeconds) *
-                    100,
-                  textSecond: _vm.checkButtonTextSecond,
-                  textThird: _vm.checkButtonTextThird
-                },
-                nativeOn: {
-                  click: function($event) {
-                    return _vm.check()
-                  }
-                }
-              })
-            ],
-            1
           )
         ],
         1
@@ -64842,120 +64831,181 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass:
-            "row rhythm-game__keyboard-row row-3 musisync-row show-normal"
-        },
+        { staticClass: "row rhythm-game__keyboard-row row-3 musisync-row" },
         [
-          _c(
-            "div",
-            {
-              class: { half_transparent: _vm.cursor.selectionMode },
-              staticStyle: { display: "inline-block" }
-            },
-            [
-              _c("BarButton", {
-                attrs: { hidden: _vm.cursor.in_tuplet },
-                nativeOn: {
-                  click: function($event) {
-                    return _vm.add_bar()
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _vm.moving_buttons || _vm.cursor.in_tuplet
-                ? _c("sexy-button", {
-                    attrs: {
-                      text: "<",
-                      color: "orange",
-                      customClass: "moveButtonsButton"
-                    },
-                    nativeOn: {
-                      click: function($event) {
-                        return _vm.move_cursor_backwards($event)
-                      }
-                    }
-                  })
-                : _c("dot-button", {
-                    attrs: { hidden: _vm.cursor.in_tuplet },
-                    nativeOn: {
-                      click: function($event) {
-                        return _vm.dot()
-                      }
-                    }
-                  }),
-              _vm._v(" "),
-              _vm.moving_buttons
-                ? _c("sexy-button", {
-                    attrs: {
-                      hidden: _vm.cursor.in_tuplet,
-                      text: ". u",
-                      color: "green"
-                    },
-                    nativeOn: {
-                      click: function($event) {
-                        _vm.moving_buttons = !_vm.moving_buttons
-                      }
-                    }
-                  })
-                : _c("sexy-button", {
-                    attrs: {
-                      hidden: _vm.cursor.in_tuplet,
-                      text: "< >",
-                      color: "orange",
-                      customClass: "moveButtonsButton"
-                    },
-                    nativeOn: {
-                      click: function($event) {
-                        _vm.moving_buttons = !_vm.moving_buttons
-                      }
-                    }
-                  }),
-              _vm._v(" "),
-              _vm.moving_buttons || _vm.cursor.in_tuplet
-                ? _c("sexy-button", {
-                    attrs: {
-                      text: ">",
-                      color: "orange",
-                      customClass: "moveButtonsButton"
-                    },
-                    nativeOn: {
-                      click: function($event) {
-                        return _vm.move_cursor_forward($event)
-                      }
-                    }
-                  })
-                : _c(
-                    "sexy-button",
+          !_vm.settingsVisible
+            ? _c(
+                "div",
+                [
+                  _c(
+                    "div",
                     {
-                      attrs: { customClass: "musisync", color: "green" },
+                      class: { half_transparent: _vm.cursor.selectionMode },
+                      staticStyle: { display: "inline-block" }
+                    },
+                    [
+                      _c("BarButton", {
+                        attrs: { hidden: _vm.cursor.in_tuplet },
+                        nativeOn: {
+                          click: function($event) {
+                            return _vm.add_bar()
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.moving_buttons || _vm.cursor.in_tuplet
+                        ? _c("sexy-button", {
+                            attrs: {
+                              text: "<",
+                              color: "orange",
+                              customClass: "moveButtonsButton"
+                            },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.move_cursor_backwards($event)
+                              }
+                            }
+                          })
+                        : _c("dot-button", {
+                            attrs: { hidden: _vm.cursor.in_tuplet },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.dot()
+                              }
+                            }
+                          }),
+                      _vm._v(" "),
+                      _vm.moving_buttons
+                        ? _c("sexy-button", {
+                            attrs: {
+                              hidden: _vm.cursor.in_tuplet,
+                              text: ". u",
+                              color: "green"
+                            },
+                            nativeOn: {
+                              click: function($event) {
+                                _vm.moving_buttons = !_vm.moving_buttons
+                              }
+                            }
+                          })
+                        : _c("sexy-button", {
+                            attrs: {
+                              hidden: _vm.cursor.in_tuplet,
+                              text: "< >",
+                              color: "orange",
+                              customClass: "moveButtonsButton"
+                            },
+                            nativeOn: {
+                              click: function($event) {
+                                _vm.moving_buttons = !_vm.moving_buttons
+                              }
+                            }
+                          }),
+                      _vm._v(" "),
+                      _vm.moving_buttons || _vm.cursor.in_tuplet
+                        ? _c("sexy-button", {
+                            attrs: {
+                              text: ">",
+                              color: "orange",
+                              customClass: "moveButtonsButton"
+                            },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.move_cursor_forward($event)
+                              }
+                            }
+                          })
+                        : _c(
+                            "sexy-button",
+                            {
+                              attrs: {
+                                customClass: "musisync",
+                                color: "green"
+                              },
+                              nativeOn: {
+                                click: function($event) {
+                                  return _vm.tie()
+                                }
+                              }
+                            },
+                            [
+                              _c("span", { staticClass: "tie-text" }, [
+                                _vm._v("u")
+                              ])
+                            ]
+                          )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("selection-button", {
+                    attrs: { color: _vm.select_button_color },
+                    nativeOn: {
+                      click: function($event) {
+                        return _vm.selection()
+                      }
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.settingsVisible
+            ? _c(
+                "div",
+                { staticClass: "jcsb" },
+                [
+                  _vm._l([60, 70, 80, 90], function(i) {
+                    return _c("b-p-m-text-button", {
+                      key: i,
+                      attrs: { text: i, selected: _vm.playbackStatus.BPM == i },
                       nativeOn: {
                         click: function($event) {
-                          return _vm.tie()
+                          return _vm.setBPM(i)
+                        }
+                      }
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "sexy-button",
+                    {
+                      attrs: {
+                        color: _vm.playbackStatus.metronome
+                          ? "sunglow"
+                          : "cabaret"
+                      },
+                      nativeOn: {
+                        click: function($event) {
+                          return _vm.playbackStatus.toggleMetronome($event)
                         }
                       }
                     },
-                    [_c("span", { staticClass: "tie-text" }, [_vm._v("u")])]
+                    [
+                      _vm.playbackStatus.metronome
+                        ? _c("div", { staticClass: "normal-font" }, [
+                            _vm._v("IZKLJUČI METRO"),
+                            _c("br"),
+                            _vm._v("NOM")
+                          ])
+                        : _c("div", { staticClass: "normal-font" }, [
+                            _vm._v("VKLJUČI METRO"),
+                            _c("br"),
+                            _vm._v("NOM")
+                          ])
+                    ]
                   )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("selection-button", {
-            attrs: { color: _vm.select_button_color },
-            nativeOn: {
-              click: function($event) {
-                return _vm.selection()
-              }
-            }
-          })
-        ],
-        1
+                ],
+                2
+              )
+            : _vm._e()
+        ]
       ),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "row rhythm-game__keyboard-row row-4 show-normal" },
+        { staticClass: "row rhythm-game__keyboard-row row-4" },
         [
           _c(
             "sexy-button",
@@ -64984,9 +65034,33 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("b-p-m-slider", {
-            attrs: { bpmObject: _vm.playbackStatus, valueKey: "BPM" }
-          }),
+          !_vm.settingsVisible
+            ? _c(
+                "sexy-button",
+                {
+                  attrs: { color: "sunglow" },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.show_settings()
+                    }
+                  }
+                },
+                [_c("icon", { attrs: { name: "cog", scale: "2" } })],
+                1
+              )
+            : _c(
+                "sexy-button",
+                {
+                  attrs: { color: "cabaret" },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.hide_settings()
+                    }
+                  }
+                },
+                [_c("icon", { attrs: { name: "cog", scale: "2" } })],
+                1
+              ),
           _vm._v(" "),
           _c("check-button", {
             attrs: {
@@ -65049,7 +65123,560 @@ var render = function() {
         ],
         1
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "rhythm-game__keyboard rhythm-game__keyboard-landscape-phone hide-normal"
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "row norfolk-row" },
+          [
+            !_vm.settingsVisible
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "row",
+                    staticStyle: { display: "inline-block" }
+                  },
+                  [
+                    !_vm.cursor.selectionMode
+                      ? _c(
+                          "sexy-button",
+                          {
+                            attrs: { color: _vm.note_color() },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.note(2)
+                              }
+                            }
+                          },
+                          [
+                            _c("div", { staticClass: "norfolk-note-padding" }, [
+                              _vm._v("h")
+                            ])
+                          ]
+                        )
+                      : _c(
+                          "sexy-button",
+                          {
+                            attrs: { color: _vm.note_color() },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.tuplet(3, 2)
+                              }
+                            }
+                          },
+                          [
+                            _c("TupletSign", {
+                              attrs: { num: "3", bg: _vm.note_color() }
+                            })
+                          ],
+                          1
+                        ),
+                    _vm._v(" "),
+                    !_vm.cursor.selectionMode
+                      ? _c(
+                          "sexy-button",
+                          {
+                            attrs: { color: _vm.note_color() },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.note(4)
+                              }
+                            }
+                          },
+                          [
+                            _c("div", { staticClass: "norfolk-note-padding" }, [
+                              _vm._v("q")
+                            ])
+                          ]
+                        )
+                      : _c(
+                          "sexy-button",
+                          {
+                            attrs: { color: _vm.note_color() },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.tuplet(2, 3)
+                              }
+                            }
+                          },
+                          [
+                            _c("TupletSign", {
+                              attrs: { num: "2", bg: _vm.note_color() }
+                            })
+                          ],
+                          1
+                        ),
+                    _vm._v(" "),
+                    !_vm.cursor.selectionMode
+                      ? _c(
+                          "sexy-button",
+                          {
+                            attrs: { color: _vm.note_color() },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.note(8)
+                              }
+                            }
+                          },
+                          [
+                            _c("div", { staticClass: "norfolk-note-padding" }, [
+                              _vm._v("e")
+                            ])
+                          ]
+                        )
+                      : _c(
+                          "sexy-button",
+                          {
+                            attrs: { color: _vm.note_color() },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.tuplet(5, 4)
+                              }
+                            }
+                          },
+                          [
+                            _c("TupletSign", {
+                              attrs: { num: "5:4", bg: _vm.note_color() }
+                            })
+                          ],
+                          1
+                        ),
+                    _vm._v(" "),
+                    !_vm.cursor.selectionMode
+                      ? _c(
+                          "sexy-button",
+                          {
+                            attrs: { color: _vm.note_color() },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.note(16)
+                              }
+                            }
+                          },
+                          [
+                            _c("div", { staticClass: "norfolk-note-padding" }, [
+                              _vm._v("x")
+                            ])
+                          ]
+                        )
+                      : _c(
+                          "sexy-button",
+                          {
+                            attrs: { color: _vm.note_color() },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.tuplet(6, 4)
+                              }
+                            }
+                          },
+                          [
+                            _c("TupletSign", {
+                              attrs: { num: "6:4", bg: _vm.note_color() }
+                            })
+                          ],
+                          1
+                        ),
+                    _vm._v(" "),
+                    !_vm.cursor.selectionMode
+                      ? _c("ThirtyTwoButton", {
+                          attrs: { color: _vm.note_color() },
+                          nativeOn: {
+                            click: function($event) {
+                              return _vm.note(32)
+                            }
+                          }
+                        })
+                      : _c(
+                          "sexy-button",
+                          {
+                            attrs: { color: _vm.note_color() },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.tuplet()
+                              }
+                            }
+                          },
+                          [
+                            _c("TupletSign", {
+                              attrs: { num: "?:?", bg: _vm.note_color() }
+                            })
+                          ],
+                          1
+                        )
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.settingsVisible
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "rhythm-game__keyboard-row",
+                    staticStyle: { display: "inline-block" }
+                  },
+                  [
+                    _vm._l([60, 70, 80, 90], function(i) {
+                      return _c("b-p-m-text-button", {
+                        key: i,
+                        attrs: {
+                          text: i,
+                          selected: _vm.playbackStatus.BPM == i
+                        },
+                        nativeOn: {
+                          click: function($event) {
+                            return _vm.setBPM(i)
+                          }
+                        }
+                      })
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "sexy-button",
+                      {
+                        attrs: {
+                          color: _vm.playbackStatus.metronome
+                            ? "sunglow"
+                            : "cabaret"
+                        },
+                        nativeOn: {
+                          click: function($event) {
+                            return _vm.playbackStatus.toggleMetronome($event)
+                          }
+                        }
+                      },
+                      [
+                        _vm.playbackStatus.metronome
+                          ? _c("div", { staticClass: "normal-font" }, [
+                              _vm._v("IZKLJUČI METRO"),
+                              _c("br"),
+                              _vm._v("NOM")
+                            ])
+                          : _c("div", { staticClass: "normal-font" }, [
+                              _vm._v("VKLJUČI METRO"),
+                              _c("br"),
+                              _vm._v("NOM")
+                            ])
+                      ]
+                    )
+                  ],
+                  2
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            (_vm.moving_buttons || _vm.cursor.in_tuplet) && !_vm.settingsVisible
+              ? _c("sexy-button", {
+                  attrs: {
+                    text: "<",
+                    color: "orange",
+                    customClass: "moveButtonsButton"
+                  },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.move_cursor_backwards($event)
+                    }
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.settingsVisible && !_vm.moving_buttons
+              ? _c("bar-button", {
+                  attrs: { hidden: _vm.cursor.in_tuplet, color: "green" },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.add_bar()
+                    }
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            (_vm.moving_buttons || _vm.cursor.in_tuplet) && !_vm.settingsVisible
+              ? _c("sexy-button", {
+                  attrs: {
+                    text: ">",
+                    color: "orange",
+                    customClass: "moveButtonsButton"
+                  },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.move_cursor_forward($event)
+                    }
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.settingsVisible && !_vm.moving_buttons
+              ? _c("dot-button", {
+                  attrs: { hidden: _vm.cursor.in_tuplet },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.dot()
+                    }
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.settingsVisible
+              ? _c("play-button", {
+                  attrs: {
+                    text: "Ponovi vajo",
+                    playing: _vm.playbackStatus.playing
+                  },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.play_exercise()
+                    }
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.moving_buttons && !_vm.settingsVisible
+              ? _c("sexy-button", {
+                  attrs: {
+                    hidden: _vm.cursor.in_tuplet,
+                    text: "j \\",
+                    color: "green",
+                    customClass: "musisync"
+                  },
+                  nativeOn: {
+                    click: function($event) {
+                      _vm.moving_buttons = !_vm.moving_buttons
+                    }
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.settingsVisible && !_vm.moving_buttons
+              ? _c("sexy-button", {
+                  attrs: {
+                    hidden: _vm.cursor.in_tuplet,
+                    text: "< >",
+                    color: "orange",
+                    customClass: "moveButtonsButton moveButtonsButton_Switch"
+                  },
+                  nativeOn: {
+                    click: function($event) {
+                      _vm.moving_buttons = !_vm.moving_buttons
+                    }
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.settingsVisible
+              ? _c(
+                  "sexy-button",
+                  {
+                    attrs: { color: "green" },
+                    nativeOn: {
+                      click: function($event) {
+                        return _vm.showHelp()
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                      _vm._v("Pomoč")
+                    ])
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.settingsVisible
+              ? _c("sexy-button", {
+                  attrs: { customClass: "normal-font", text: "Odpri meni" }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.settingsVisible
+              ? _c(
+                  "sexy-button",
+                  {
+                    attrs: { color: "sunglow" },
+                    nativeOn: {
+                      click: function($event) {
+                        return _vm.show_settings()
+                      }
+                    }
+                  },
+                  [_c("icon", { attrs: { name: "cog", scale: "2" } })],
+                  1
+                )
+              : _c(
+                  "sexy-button",
+                  {
+                    attrs: { color: "cabaret" },
+                    nativeOn: {
+                      click: function($event) {
+                        return _vm.hide_settings()
+                      }
+                    }
+                  },
+                  [_c("icon", { attrs: { name: "cog", scale: "2" } })],
+                  1
+                )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "row norfolk-row" },
+          [
+            !_vm.cursor.selectionMode
+              ? _c(
+                  "sexy-button",
+                  {
+                    attrs: { color: _vm.rest_color() },
+                    nativeOn: {
+                      click: function($event) {
+                        return _vm.rest(2)
+                      }
+                    }
+                  },
+                  [_vm._v("Ó")]
+                )
+              : _c(
+                  "sexy-button",
+                  {
+                    attrs: { color: _vm.rest_color() },
+                    nativeOn: {
+                      click: function($event) {
+                        return _vm.remove_tuplets()
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { staticClass: "musisync" }, [_vm._v("T")]),
+                    _vm._v(" "),
+                    _c("icon", {
+                      staticClass: "alert",
+                      attrs: { name: "ban", scale: "2" }
+                    })
+                  ],
+                  1
+                ),
+            _vm._v(" "),
+            _c(
+              "sexy-button",
+              {
+                attrs: { color: _vm.rest_color() },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.rest(4)
+                  }
+                }
+              },
+              [_vm._v("Œ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "sexy-button",
+              {
+                attrs: { color: _vm.rest_color() },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.rest(8)
+                  }
+                }
+              },
+              [_vm._v("‰")]
+            ),
+            _vm._v(" "),
+            _c(
+              "sexy-button",
+              {
+                attrs: { color: _vm.rest_color() },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.rest(16)
+                  }
+                }
+              },
+              [_vm._v("≈")]
+            ),
+            _vm._v(" "),
+            _c(
+              "sexy-button",
+              {
+                attrs: { color: _vm.rest_color() },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.rest(32)
+                  }
+                }
+              },
+              [_vm._v("®")]
+            ),
+            _vm._v(" "),
+            _c(
+              "sexy-button",
+              {
+                attrs: {
+                  customClass: "musisync overflow-hidden",
+                  color: "green"
+                },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.tie()
+                  }
+                }
+              },
+              [_c("span", { staticClass: "tie-text" }, [_vm._v("u")])]
+            ),
+            _vm._v(" "),
+            _c("selection-button", {
+              attrs: { color: _vm.select_button_color },
+              nativeOn: {
+                click: function($event) {
+                  return _vm.selection()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "sexy-button",
+              {
+                attrs: { color: "cabaret" },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.delete_note()
+                  }
+                }
+              },
+              [_c("icon", { attrs: { name: "trash", scale: "2" } })],
+              1
+            ),
+            _vm._v(" "),
+            _c("check-button", {
+              attrs: {
+                color: _vm.checkButtonColor,
+                status: _vm.question.check,
+                percents:
+                  (1 -
+                    _vm.question.statistics.duration /
+                      _vm.question.maxSeconds) *
+                  100,
+                textSecond: _vm.checkButtonTextSecond,
+                textThird: _vm.checkButtonTextThird
+              },
+              nativeOn: {
+                click: function($event) {
+                  return _vm.check()
+                }
+              }
+            })
+          ],
+          1
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -65063,19 +65690,19 @@ if (false) {
 }
 
 /***/ }),
-/* 244 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(245)
+  __webpack_require__(250)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(247)
+var __vue_script__ = __webpack_require__(252)
 /* template */
-var __vue_template__ = __webpack_require__(248)
+var __vue_template__ = __webpack_require__(253)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -65114,13 +65741,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 245 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(246);
+var content = __webpack_require__(251);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -65140,7 +65767,7 @@ if(false) {
 }
 
 /***/ }),
-/* 246 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -65154,12 +65781,12 @@ exports.push([module.i, "\n.dimButton[data-v-3ef842c8] {\n    opacity: 0.5;\n}\n
 
 
 /***/ }),
-/* 247 */
+/* 252 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__elements_SexyButton_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_SexySlider_vue__);
@@ -65663,7 +66290,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 248 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -66404,7 +67031,3994 @@ if (false) {
 }
 
 /***/ }),
-/* 249 */
+/* 254 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ *  howler.js v2.1.2
+ *  howlerjs.com
+ *
+ *  (c) 2013-2019, James Simpson of GoldFire Studios
+ *  goldfirestudios.com
+ *
+ *  MIT License
+ */
+
+(function() {
+
+  'use strict';
+
+  /** Global Methods **/
+  /***************************************************************************/
+
+  /**
+   * Create the global controller. All contained methods and properties apply
+   * to all sounds that are currently playing or will be in the future.
+   */
+  var HowlerGlobal = function() {
+    this.init();
+  };
+  HowlerGlobal.prototype = {
+    /**
+     * Initialize the global Howler object.
+     * @return {Howler}
+     */
+    init: function() {
+      var self = this || Howler;
+
+      // Create a global ID counter.
+      self._counter = 1000;
+
+      // Pool of unlocked HTML5 Audio objects.
+      self._html5AudioPool = [];
+      self.html5PoolSize = 10;
+
+      // Internal properties.
+      self._codecs = {};
+      self._howls = [];
+      self._muted = false;
+      self._volume = 1;
+      self._canPlayEvent = 'canplaythrough';
+      self._navigator = (typeof window !== 'undefined' && window.navigator) ? window.navigator : null;
+
+      // Public properties.
+      self.masterGain = null;
+      self.noAudio = false;
+      self.usingWebAudio = true;
+      self.autoSuspend = true;
+      self.ctx = null;
+
+      // Set to false to disable the auto audio unlocker.
+      self.autoUnlock = true;
+
+      // Setup the various state values for global tracking.
+      self._setup();
+
+      return self;
+    },
+
+    /**
+     * Get/set the global volume for all sounds.
+     * @param  {Float} vol Volume from 0.0 to 1.0.
+     * @return {Howler/Float}     Returns self or current volume.
+     */
+    volume: function(vol) {
+      var self = this || Howler;
+      vol = parseFloat(vol);
+
+      // If we don't have an AudioContext created yet, run the setup.
+      if (!self.ctx) {
+        setupAudioContext();
+      }
+
+      if (typeof vol !== 'undefined' && vol >= 0 && vol <= 1) {
+        self._volume = vol;
+
+        // Don't update any of the nodes if we are muted.
+        if (self._muted) {
+          return self;
+        }
+
+        // When using Web Audio, we just need to adjust the master gain.
+        if (self.usingWebAudio) {
+          self.masterGain.gain.setValueAtTime(vol, Howler.ctx.currentTime);
+        }
+
+        // Loop through and change volume for all HTML5 audio nodes.
+        for (var i=0; i<self._howls.length; i++) {
+          if (!self._howls[i]._webAudio) {
+            // Get all of the sounds in this Howl group.
+            var ids = self._howls[i]._getSoundIds();
+
+            // Loop through all sounds and change the volumes.
+            for (var j=0; j<ids.length; j++) {
+              var sound = self._howls[i]._soundById(ids[j]);
+
+              if (sound && sound._node) {
+                sound._node.volume = sound._volume * vol;
+              }
+            }
+          }
+        }
+
+        return self;
+      }
+
+      return self._volume;
+    },
+
+    /**
+     * Handle muting and unmuting globally.
+     * @param  {Boolean} muted Is muted or not.
+     */
+    mute: function(muted) {
+      var self = this || Howler;
+
+      // If we don't have an AudioContext created yet, run the setup.
+      if (!self.ctx) {
+        setupAudioContext();
+      }
+
+      self._muted = muted;
+
+      // With Web Audio, we just need to mute the master gain.
+      if (self.usingWebAudio) {
+        self.masterGain.gain.setValueAtTime(muted ? 0 : self._volume, Howler.ctx.currentTime);
+      }
+
+      // Loop through and mute all HTML5 Audio nodes.
+      for (var i=0; i<self._howls.length; i++) {
+        if (!self._howls[i]._webAudio) {
+          // Get all of the sounds in this Howl group.
+          var ids = self._howls[i]._getSoundIds();
+
+          // Loop through all sounds and mark the audio node as muted.
+          for (var j=0; j<ids.length; j++) {
+            var sound = self._howls[i]._soundById(ids[j]);
+
+            if (sound && sound._node) {
+              sound._node.muted = (muted) ? true : sound._muted;
+            }
+          }
+        }
+      }
+
+      return self;
+    },
+
+    /**
+     * Unload and destroy all currently loaded Howl objects.
+     * @return {Howler}
+     */
+    unload: function() {
+      var self = this || Howler;
+
+      for (var i=self._howls.length-1; i>=0; i--) {
+        self._howls[i].unload();
+      }
+
+      // Create a new AudioContext to make sure it is fully reset.
+      if (self.usingWebAudio && self.ctx && typeof self.ctx.close !== 'undefined') {
+        self.ctx.close();
+        self.ctx = null;
+        setupAudioContext();
+      }
+
+      return self;
+    },
+
+    /**
+     * Check for codec support of specific extension.
+     * @param  {String} ext Audio file extention.
+     * @return {Boolean}
+     */
+    codecs: function(ext) {
+      return (this || Howler)._codecs[ext.replace(/^x-/, '')];
+    },
+
+    /**
+     * Setup various state values for global tracking.
+     * @return {Howler}
+     */
+    _setup: function() {
+      var self = this || Howler;
+
+      // Keeps track of the suspend/resume state of the AudioContext.
+      self.state = self.ctx ? self.ctx.state || 'suspended' : 'suspended';
+
+      // Automatically begin the 30-second suspend process
+      self._autoSuspend();
+
+      // Check if audio is available.
+      if (!self.usingWebAudio) {
+        // No audio is available on this system if noAudio is set to true.
+        if (typeof Audio !== 'undefined') {
+          try {
+            var test = new Audio();
+
+            // Check if the canplaythrough event is available.
+            if (typeof test.oncanplaythrough === 'undefined') {
+              self._canPlayEvent = 'canplay';
+            }
+          } catch(e) {
+            self.noAudio = true;
+          }
+        } else {
+          self.noAudio = true;
+        }
+      }
+
+      // Test to make sure audio isn't disabled in Internet Explorer.
+      try {
+        var test = new Audio();
+        if (test.muted) {
+          self.noAudio = true;
+        }
+      } catch (e) {}
+
+      // Check for supported codecs.
+      if (!self.noAudio) {
+        self._setupCodecs();
+      }
+
+      return self;
+    },
+
+    /**
+     * Check for browser support for various codecs and cache the results.
+     * @return {Howler}
+     */
+    _setupCodecs: function() {
+      var self = this || Howler;
+      var audioTest = null;
+
+      // Must wrap in a try/catch because IE11 in server mode throws an error.
+      try {
+        audioTest = (typeof Audio !== 'undefined') ? new Audio() : null;
+      } catch (err) {
+        return self;
+      }
+
+      if (!audioTest || typeof audioTest.canPlayType !== 'function') {
+        return self;
+      }
+
+      var mpegTest = audioTest.canPlayType('audio/mpeg;').replace(/^no$/, '');
+
+      // Opera version <33 has mixed MP3 support, so we need to check for and block it.
+      var checkOpera = self._navigator && self._navigator.userAgent.match(/OPR\/([0-6].)/g);
+      var isOldOpera = (checkOpera && parseInt(checkOpera[0].split('/')[1], 10) < 33);
+
+      self._codecs = {
+        mp3: !!(!isOldOpera && (mpegTest || audioTest.canPlayType('audio/mp3;').replace(/^no$/, ''))),
+        mpeg: !!mpegTest,
+        opus: !!audioTest.canPlayType('audio/ogg; codecs="opus"').replace(/^no$/, ''),
+        ogg: !!audioTest.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, ''),
+        oga: !!audioTest.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, ''),
+        wav: !!audioTest.canPlayType('audio/wav; codecs="1"').replace(/^no$/, ''),
+        aac: !!audioTest.canPlayType('audio/aac;').replace(/^no$/, ''),
+        caf: !!audioTest.canPlayType('audio/x-caf;').replace(/^no$/, ''),
+        m4a: !!(audioTest.canPlayType('audio/x-m4a;') || audioTest.canPlayType('audio/m4a;') || audioTest.canPlayType('audio/aac;')).replace(/^no$/, ''),
+        mp4: !!(audioTest.canPlayType('audio/x-mp4;') || audioTest.canPlayType('audio/mp4;') || audioTest.canPlayType('audio/aac;')).replace(/^no$/, ''),
+        weba: !!audioTest.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/, ''),
+        webm: !!audioTest.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/, ''),
+        dolby: !!audioTest.canPlayType('audio/mp4; codecs="ec-3"').replace(/^no$/, ''),
+        flac: !!(audioTest.canPlayType('audio/x-flac;') || audioTest.canPlayType('audio/flac;')).replace(/^no$/, '')
+      };
+
+      return self;
+    },
+
+    /**
+     * Some browsers/devices will only allow audio to be played after a user interaction.
+     * Attempt to automatically unlock audio on the first user interaction.
+     * Concept from: http://paulbakaus.com/tutorials/html5/web-audio-on-ios/
+     * @return {Howler}
+     */
+    _unlockAudio: function() {
+      var self = this || Howler;
+
+      // Only run this if Web Audio is supported and it hasn't already been unlocked.
+      if (self._audioUnlocked || !self.ctx) {
+        return;
+      }
+
+      self._audioUnlocked = false;
+      self.autoUnlock = false;
+
+      // Some mobile devices/platforms have distortion issues when opening/closing tabs and/or web views.
+      // Bugs in the browser (especially Mobile Safari) can cause the sampleRate to change from 44100 to 48000.
+      // By calling Howler.unload(), we create a new AudioContext with the correct sampleRate.
+      if (!self._mobileUnloaded && self.ctx.sampleRate !== 44100) {
+        self._mobileUnloaded = true;
+        self.unload();
+      }
+
+      // Scratch buffer for enabling iOS to dispose of web audio buffers correctly, as per:
+      // http://stackoverflow.com/questions/24119684
+      self._scratchBuffer = self.ctx.createBuffer(1, 1, 22050);
+
+      // Call this method on touch start to create and play a buffer,
+      // then check if the audio actually played to determine if
+      // audio has now been unlocked on iOS, Android, etc.
+      var unlock = function(e) {
+        // Create a pool of unlocked HTML5 Audio objects that can
+        // be used for playing sounds without user interaction. HTML5
+        // Audio objects must be individually unlocked, as opposed
+        // to the WebAudio API which only needs a single activation.
+        // This must occur before WebAudio setup or the source.onended
+        // event will not fire.
+        for (var i=0; i<self.html5PoolSize; i++) {
+          try {
+            var audioNode = new Audio();
+
+            // Mark this Audio object as unlocked to ensure it can get returned
+            // to the unlocked pool when released.
+            audioNode._unlocked = true;
+
+            // Add the audio node to the pool.
+            self._releaseHtml5Audio(audioNode);
+          } catch (e) {
+            self.noAudio = true;
+          }
+        }
+
+        // Loop through any assigned audio nodes and unlock them.
+        for (var i=0; i<self._howls.length; i++) {
+          if (!self._howls[i]._webAudio) {
+            // Get all of the sounds in this Howl group.
+            var ids = self._howls[i]._getSoundIds();
+
+            // Loop through all sounds and unlock the audio nodes.
+            for (var j=0; j<ids.length; j++) {
+              var sound = self._howls[i]._soundById(ids[j]);
+
+              if (sound && sound._node && !sound._node._unlocked) {
+                sound._node._unlocked = true;
+                sound._node.load();
+              }
+            }
+          }
+        }
+
+        // Fix Android can not play in suspend state.
+        self._autoResume();
+
+        // Create an empty buffer.
+        var source = self.ctx.createBufferSource();
+        source.buffer = self._scratchBuffer;
+        source.connect(self.ctx.destination);
+
+        // Play the empty buffer.
+        if (typeof source.start === 'undefined') {
+          source.noteOn(0);
+        } else {
+          source.start(0);
+        }
+
+        // Calling resume() on a stack initiated by user gesture is what actually unlocks the audio on Android Chrome >= 55.
+        if (typeof self.ctx.resume === 'function') {
+          self.ctx.resume();
+        }
+
+        // Setup a timeout to check that we are unlocked on the next event loop.
+        source.onended = function() {
+          source.disconnect(0);
+
+          // Update the unlocked state and prevent this check from happening again.
+          self._audioUnlocked = true;
+
+          // Remove the touch start listener.
+          document.removeEventListener('touchstart', unlock, true);
+          document.removeEventListener('touchend', unlock, true);
+          document.removeEventListener('click', unlock, true);
+
+          // Let all sounds know that audio has been unlocked.
+          for (var i=0; i<self._howls.length; i++) {
+            self._howls[i]._emit('unlock');
+          }
+        };
+      };
+
+      // Setup a touch start listener to attempt an unlock in.
+      document.addEventListener('touchstart', unlock, true);
+      document.addEventListener('touchend', unlock, true);
+      document.addEventListener('click', unlock, true);
+
+      return self;
+    },
+
+    /**
+     * Get an unlocked HTML5 Audio object from the pool. If none are left,
+     * return a new Audio object and throw a warning.
+     * @return {Audio} HTML5 Audio object.
+     */
+    _obtainHtml5Audio: function() {
+      var self = this || Howler;
+
+      // Return the next object from the pool if one exists.
+      if (self._html5AudioPool.length) {
+        return self._html5AudioPool.pop();
+      }
+
+      //.Check if the audio is locked and throw a warning.
+      var testPlay = new Audio().play();
+      if (testPlay && typeof Promise !== 'undefined' && (testPlay instanceof Promise || typeof testPlay.then === 'function')) {
+        testPlay.catch(function() {
+          console.warn('HTML5 Audio pool exhausted, returning potentially locked audio object.');
+        });
+      }
+
+      return new Audio();
+    },
+
+    /**
+     * Return an activated HTML5 Audio object to the pool.
+     * @return {Howler}
+     */
+    _releaseHtml5Audio: function(audio) {
+      var self = this || Howler;
+
+      // Don't add audio to the pool if we don't know if it has been unlocked.
+      if (audio._unlocked) {
+        self._html5AudioPool.push(audio);
+      }
+
+      return self;
+    },
+
+    /**
+     * Automatically suspend the Web Audio AudioContext after no sound has played for 30 seconds.
+     * This saves processing/energy and fixes various browser-specific bugs with audio getting stuck.
+     * @return {Howler}
+     */
+    _autoSuspend: function() {
+      var self = this;
+
+      if (!self.autoSuspend || !self.ctx || typeof self.ctx.suspend === 'undefined' || !Howler.usingWebAudio) {
+        return;
+      }
+
+      // Check if any sounds are playing.
+      for (var i=0; i<self._howls.length; i++) {
+        if (self._howls[i]._webAudio) {
+          for (var j=0; j<self._howls[i]._sounds.length; j++) {
+            if (!self._howls[i]._sounds[j]._paused) {
+              return self;
+            }
+          }
+        }
+      }
+
+      if (self._suspendTimer) {
+        clearTimeout(self._suspendTimer);
+      }
+
+      // If no sound has played after 30 seconds, suspend the context.
+      self._suspendTimer = setTimeout(function() {
+        if (!self.autoSuspend) {
+          return;
+        }
+
+        self._suspendTimer = null;
+        self.state = 'suspending';
+        self.ctx.suspend().then(function() {
+          self.state = 'suspended';
+
+          if (self._resumeAfterSuspend) {
+            delete self._resumeAfterSuspend;
+            self._autoResume();
+          }
+        });
+      }, 30000);
+
+      return self;
+    },
+
+    /**
+     * Automatically resume the Web Audio AudioContext when a new sound is played.
+     * @return {Howler}
+     */
+    _autoResume: function() {
+      var self = this;
+
+      if (!self.ctx || typeof self.ctx.resume === 'undefined' || !Howler.usingWebAudio) {
+        return;
+      }
+
+      if (self.state === 'running' && self._suspendTimer) {
+        clearTimeout(self._suspendTimer);
+        self._suspendTimer = null;
+      } else if (self.state === 'suspended') {
+        self.ctx.resume().then(function() {
+          self.state = 'running';
+
+          // Emit to all Howls that the audio has resumed.
+          for (var i=0; i<self._howls.length; i++) {
+            self._howls[i]._emit('resume');
+          }
+        });
+
+        if (self._suspendTimer) {
+          clearTimeout(self._suspendTimer);
+          self._suspendTimer = null;
+        }
+      } else if (self.state === 'suspending') {
+        self._resumeAfterSuspend = true;
+      }
+
+      return self;
+    }
+  };
+
+  // Setup the global audio controller.
+  var Howler = new HowlerGlobal();
+
+  /** Group Methods **/
+  /***************************************************************************/
+
+  /**
+   * Create an audio group controller.
+   * @param {Object} o Passed in properties for this group.
+   */
+  var Howl = function(o) {
+    var self = this;
+
+    // Throw an error if no source is provided.
+    if (!o.src || o.src.length === 0) {
+      console.error('An array of source files must be passed with any new Howl.');
+      return;
+    }
+
+    self.init(o);
+  };
+  Howl.prototype = {
+    /**
+     * Initialize a new Howl group object.
+     * @param  {Object} o Passed in properties for this group.
+     * @return {Howl}
+     */
+    init: function(o) {
+      var self = this;
+
+      // If we don't have an AudioContext created yet, run the setup.
+      if (!Howler.ctx) {
+        setupAudioContext();
+      }
+
+      // Setup user-defined default properties.
+      self._autoplay = o.autoplay || false;
+      self._format = (typeof o.format !== 'string') ? o.format : [o.format];
+      self._html5 = o.html5 || false;
+      self._muted = o.mute || false;
+      self._loop = o.loop || false;
+      self._pool = o.pool || 5;
+      self._preload = (typeof o.preload === 'boolean') ? o.preload : true;
+      self._rate = o.rate || 1;
+      self._sprite = o.sprite || {};
+      self._src = (typeof o.src !== 'string') ? o.src : [o.src];
+      self._volume = o.volume !== undefined ? o.volume : 1;
+      self._xhrWithCredentials = o.xhrWithCredentials || false;
+
+      // Setup all other default properties.
+      self._duration = 0;
+      self._state = 'unloaded';
+      self._sounds = [];
+      self._endTimers = {};
+      self._queue = [];
+      self._playLock = false;
+
+      // Setup event listeners.
+      self._onend = o.onend ? [{fn: o.onend}] : [];
+      self._onfade = o.onfade ? [{fn: o.onfade}] : [];
+      self._onload = o.onload ? [{fn: o.onload}] : [];
+      self._onloaderror = o.onloaderror ? [{fn: o.onloaderror}] : [];
+      self._onplayerror = o.onplayerror ? [{fn: o.onplayerror}] : [];
+      self._onpause = o.onpause ? [{fn: o.onpause}] : [];
+      self._onplay = o.onplay ? [{fn: o.onplay}] : [];
+      self._onstop = o.onstop ? [{fn: o.onstop}] : [];
+      self._onmute = o.onmute ? [{fn: o.onmute}] : [];
+      self._onvolume = o.onvolume ? [{fn: o.onvolume}] : [];
+      self._onrate = o.onrate ? [{fn: o.onrate}] : [];
+      self._onseek = o.onseek ? [{fn: o.onseek}] : [];
+      self._onunlock = o.onunlock ? [{fn: o.onunlock}] : [];
+      self._onresume = [];
+
+      // Web Audio or HTML5 Audio?
+      self._webAudio = Howler.usingWebAudio && !self._html5;
+
+      // Automatically try to enable audio.
+      if (typeof Howler.ctx !== 'undefined' && Howler.ctx && Howler.autoUnlock) {
+        Howler._unlockAudio();
+      }
+
+      // Keep track of this Howl group in the global controller.
+      Howler._howls.push(self);
+
+      // If they selected autoplay, add a play event to the load queue.
+      if (self._autoplay) {
+        self._queue.push({
+          event: 'play',
+          action: function() {
+            self.play();
+          }
+        });
+      }
+
+      // Load the source file unless otherwise specified.
+      if (self._preload) {
+        self.load();
+      }
+
+      return self;
+    },
+
+    /**
+     * Load the audio file.
+     * @return {Howler}
+     */
+    load: function() {
+      var self = this;
+      var url = null;
+
+      // If no audio is available, quit immediately.
+      if (Howler.noAudio) {
+        self._emit('loaderror', null, 'No audio support.');
+        return;
+      }
+
+      // Make sure our source is in an array.
+      if (typeof self._src === 'string') {
+        self._src = [self._src];
+      }
+
+      // Loop through the sources and pick the first one that is compatible.
+      for (var i=0; i<self._src.length; i++) {
+        var ext, str;
+
+        if (self._format && self._format[i]) {
+          // If an extension was specified, use that instead.
+          ext = self._format[i];
+        } else {
+          // Make sure the source is a string.
+          str = self._src[i];
+          if (typeof str !== 'string') {
+            self._emit('loaderror', null, 'Non-string found in selected audio sources - ignoring.');
+            continue;
+          }
+
+          // Extract the file extension from the URL or base64 data URI.
+          ext = /^data:audio\/([^;,]+);/i.exec(str);
+          if (!ext) {
+            ext = /\.([^.]+)$/.exec(str.split('?', 1)[0]);
+          }
+
+          if (ext) {
+            ext = ext[1].toLowerCase();
+          }
+        }
+
+        // Log a warning if no extension was found.
+        if (!ext) {
+          console.warn('No file extension was found. Consider using the "format" property or specify an extension.');
+        }
+
+        // Check if this extension is available.
+        if (ext && Howler.codecs(ext)) {
+          url = self._src[i];
+          break;
+        }
+      }
+
+      if (!url) {
+        self._emit('loaderror', null, 'No codec support for selected audio sources.');
+        return;
+      }
+
+      self._src = url;
+      self._state = 'loading';
+
+      // If the hosting page is HTTPS and the source isn't,
+      // drop down to HTML5 Audio to avoid Mixed Content errors.
+      if (window.location.protocol === 'https:' && url.slice(0, 5) === 'http:') {
+        self._html5 = true;
+        self._webAudio = false;
+      }
+
+      // Create a new sound object and add it to the pool.
+      new Sound(self);
+
+      // Load and decode the audio data for playback.
+      if (self._webAudio) {
+        loadBuffer(self);
+      }
+
+      return self;
+    },
+
+    /**
+     * Play a sound or resume previous playback.
+     * @param  {String/Number} sprite   Sprite name for sprite playback or sound id to continue previous.
+     * @param  {Boolean} internal Internal Use: true prevents event firing.
+     * @return {Number}          Sound ID.
+     */
+    play: function(sprite, internal) {
+      var self = this;
+      var id = null;
+
+      // Determine if a sprite, sound id or nothing was passed
+      if (typeof sprite === 'number') {
+        id = sprite;
+        sprite = null;
+      } else if (typeof sprite === 'string' && self._state === 'loaded' && !self._sprite[sprite]) {
+        // If the passed sprite doesn't exist, do nothing.
+        return null;
+      } else if (typeof sprite === 'undefined') {
+        // Use the default sound sprite (plays the full audio length).
+        sprite = '__default';
+
+        // Check if there is a single paused sound that isn't ended. 
+        // If there is, play that sound. If not, continue as usual.  
+        if (!self._playLock) {
+          var num = 0;
+          for (var i=0; i<self._sounds.length; i++) {
+            if (self._sounds[i]._paused && !self._sounds[i]._ended) {
+              num++;
+              id = self._sounds[i]._id;
+            }
+          }
+
+          if (num === 1) {
+            sprite = null;
+          } else {
+            id = null;
+          }
+        }
+      }
+
+      // Get the selected node, or get one from the pool.
+      var sound = id ? self._soundById(id) : self._inactiveSound();
+
+      // If the sound doesn't exist, do nothing.
+      if (!sound) {
+        return null;
+      }
+
+      // Select the sprite definition.
+      if (id && !sprite) {
+        sprite = sound._sprite || '__default';
+      }
+
+      // If the sound hasn't loaded, we must wait to get the audio's duration.
+      // We also need to wait to make sure we don't run into race conditions with
+      // the order of function calls.
+      if (self._state !== 'loaded') {
+        // Set the sprite value on this sound.
+        sound._sprite = sprite;
+
+        // Mark this sound as not ended in case another sound is played before this one loads.
+        sound._ended = false;
+
+        // Add the sound to the queue to be played on load.
+        var soundId = sound._id;
+        self._queue.push({
+          event: 'play',
+          action: function() {
+            self.play(soundId);
+          }
+        });
+
+        return soundId;
+      }
+
+      // Don't play the sound if an id was passed and it is already playing.
+      if (id && !sound._paused) {
+        // Trigger the play event, in order to keep iterating through queue.
+        if (!internal) {
+          self._loadQueue('play');
+        }
+
+        return sound._id;
+      }
+
+      // Make sure the AudioContext isn't suspended, and resume it if it is.
+      if (self._webAudio) {
+        Howler._autoResume();
+      }
+
+      // Determine how long to play for and where to start playing.
+      var seek = Math.max(0, sound._seek > 0 ? sound._seek : self._sprite[sprite][0] / 1000);
+      var duration = Math.max(0, ((self._sprite[sprite][0] + self._sprite[sprite][1]) / 1000) - seek);
+      var timeout = (duration * 1000) / Math.abs(sound._rate);
+      var start = self._sprite[sprite][0] / 1000;
+      var stop = (self._sprite[sprite][0] + self._sprite[sprite][1]) / 1000;
+      var loop = !!(sound._loop || self._sprite[sprite][2]);
+      sound._sprite = sprite;
+
+      // Mark the sound as ended instantly so that this async playback
+      // doesn't get grabbed by another call to play while this one waits to start.
+      sound._ended = false;
+
+      // Update the parameters of the sound.
+      var setParams = function() {
+        sound._paused = false;
+        sound._seek = seek;
+        sound._start = start;
+        sound._stop = stop;
+        sound._loop = loop;
+      };
+
+      // End the sound instantly if seek is at the end.
+      if (seek >= stop) {
+        self._ended(sound);
+        return;
+      }
+
+      // Begin the actual playback.
+      var node = sound._node;
+      if (self._webAudio) {
+        // Fire this when the sound is ready to play to begin Web Audio playback.
+        var playWebAudio = function() {
+          self._playLock = false;
+          setParams();
+          self._refreshBuffer(sound);
+
+          // Setup the playback params.
+          var vol = (sound._muted || self._muted) ? 0 : sound._volume;
+          node.gain.setValueAtTime(vol, Howler.ctx.currentTime);
+          sound._playStart = Howler.ctx.currentTime;
+
+          // Play the sound using the supported method.
+          if (typeof node.bufferSource.start === 'undefined') {
+            sound._loop ? node.bufferSource.noteGrainOn(0, seek, 86400) : node.bufferSource.noteGrainOn(0, seek, duration);
+          } else {
+            sound._loop ? node.bufferSource.start(0, seek, 86400) : node.bufferSource.start(0, seek, duration);
+          }
+
+          // Start a new timer if none is present.
+          if (timeout !== Infinity) {
+            self._endTimers[sound._id] = setTimeout(self._ended.bind(self, sound), timeout);
+          }
+
+          if (!internal) {
+            setTimeout(function() {
+              self._emit('play', sound._id);
+              self._loadQueue();
+            }, 0);
+          }
+        };
+
+        if (Howler.state === 'running') {
+          playWebAudio();
+        } else {
+          self._playLock = true;
+
+          // Wait for the audio context to resume before playing.
+          self.once('resume', playWebAudio);
+
+          // Cancel the end timer.
+          self._clearTimer(sound._id);
+        }
+      } else {
+        // Fire this when the sound is ready to play to begin HTML5 Audio playback.
+        var playHtml5 = function() {
+          node.currentTime = seek;
+          node.muted = sound._muted || self._muted || Howler._muted || node.muted;
+          node.volume = sound._volume * Howler.volume();
+          node.playbackRate = sound._rate;
+
+          // Some browsers will throw an error if this is called without user interaction.
+          try {
+            var play = node.play();
+
+            // Support older browsers that don't support promises, and thus don't have this issue.
+            if (play && typeof Promise !== 'undefined' && (play instanceof Promise || typeof play.then === 'function')) {
+              // Implements a lock to prevent DOMException: The play() request was interrupted by a call to pause().
+              self._playLock = true;
+
+              // Set param values immediately.
+              setParams();
+
+              // Releases the lock and executes queued actions.
+              play
+                .then(function() {
+                  self._playLock = false;
+                  node._unlocked = true;
+                  if (!internal) {
+                    self._emit('play', sound._id);
+                    self._loadQueue();
+                  }
+                })
+                .catch(function() {
+                  self._playLock = false;
+                  self._emit('playerror', sound._id, 'Playback was unable to start. This is most commonly an issue ' +
+                    'on mobile devices and Chrome where playback was not within a user interaction.');
+
+                  // Reset the ended and paused values.
+                  sound._ended = true;
+                  sound._paused = true;
+                });
+            } else if (!internal) {
+              self._playLock = false;
+              setParams();
+              self._emit('play', sound._id);
+              self._loadQueue();
+            }
+
+            // Setting rate before playing won't work in IE, so we set it again here.
+            node.playbackRate = sound._rate;
+
+            // If the node is still paused, then we can assume there was a playback issue.
+            if (node.paused) {
+              self._emit('playerror', sound._id, 'Playback was unable to start. This is most commonly an issue ' +
+                'on mobile devices and Chrome where playback was not within a user interaction.');
+              return;
+            }
+
+            // Setup the end timer on sprites or listen for the ended event.
+            if (sprite !== '__default' || sound._loop) {
+              self._endTimers[sound._id] = setTimeout(self._ended.bind(self, sound), timeout);
+            } else {
+              self._endTimers[sound._id] = function() {
+                // Fire ended on this audio node.
+                self._ended(sound);
+
+                // Clear this listener.
+                node.removeEventListener('ended', self._endTimers[sound._id], false);
+              };
+              node.addEventListener('ended', self._endTimers[sound._id], false);
+            }
+          } catch (err) {
+            self._emit('playerror', sound._id, err);
+          }
+        };
+
+        // If this is streaming audio, make sure the src is set and load again.
+        if (node.src === 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA') {
+          node.src = self._src;
+          node.load();
+        }
+
+        // Play immediately if ready, or wait for the 'canplaythrough'e vent.
+        var loadedNoReadyState = (window && window.ejecta) || (!node.readyState && Howler._navigator.isCocoonJS);
+        if (node.readyState >= 3 || loadedNoReadyState) {
+          playHtml5();
+        } else {
+          self._playLock = true;
+
+          var listener = function() {
+            // Begin playback.
+            playHtml5();
+
+            // Clear this listener.
+            node.removeEventListener(Howler._canPlayEvent, listener, false);
+          };
+          node.addEventListener(Howler._canPlayEvent, listener, false);
+
+          // Cancel the end timer.
+          self._clearTimer(sound._id);
+        }
+      }
+
+      return sound._id;
+    },
+
+    /**
+     * Pause playback and save current position.
+     * @param  {Number} id The sound ID (empty to pause all in group).
+     * @return {Howl}
+     */
+    pause: function(id) {
+      var self = this;
+
+      // If the sound hasn't loaded or a play() promise is pending, add it to the load queue to pause when capable.
+      if (self._state !== 'loaded' || self._playLock) {
+        self._queue.push({
+          event: 'pause',
+          action: function() {
+            self.pause(id);
+          }
+        });
+
+        return self;
+      }
+
+      // If no id is passed, get all ID's to be paused.
+      var ids = self._getSoundIds(id);
+
+      for (var i=0; i<ids.length; i++) {
+        // Clear the end timer.
+        self._clearTimer(ids[i]);
+
+        // Get the sound.
+        var sound = self._soundById(ids[i]);
+
+        if (sound && !sound._paused) {
+          // Reset the seek position.
+          sound._seek = self.seek(ids[i]);
+          sound._rateSeek = 0;
+          sound._paused = true;
+
+          // Stop currently running fades.
+          self._stopFade(ids[i]);
+
+          if (sound._node) {
+            if (self._webAudio) {
+              // Make sure the sound has been created.
+              if (!sound._node.bufferSource) {
+                continue;
+              }
+
+              if (typeof sound._node.bufferSource.stop === 'undefined') {
+                sound._node.bufferSource.noteOff(0);
+              } else {
+                sound._node.bufferSource.stop(0);
+              }
+
+              // Clean up the buffer source.
+              self._cleanBuffer(sound._node);
+            } else if (!isNaN(sound._node.duration) || sound._node.duration === Infinity) {
+              sound._node.pause();
+            }
+          }
+        }
+
+        // Fire the pause event, unless `true` is passed as the 2nd argument.
+        if (!arguments[1]) {
+          self._emit('pause', sound ? sound._id : null);
+        }
+      }
+
+      return self;
+    },
+
+    /**
+     * Stop playback and reset to start.
+     * @param  {Number} id The sound ID (empty to stop all in group).
+     * @param  {Boolean} internal Internal Use: true prevents event firing.
+     * @return {Howl}
+     */
+    stop: function(id, internal) {
+      var self = this;
+
+      // If the sound hasn't loaded, add it to the load queue to stop when capable.
+      if (self._state !== 'loaded' || self._playLock) {
+        self._queue.push({
+          event: 'stop',
+          action: function() {
+            self.stop(id);
+          }
+        });
+
+        return self;
+      }
+
+      // If no id is passed, get all ID's to be stopped.
+      var ids = self._getSoundIds(id);
+
+      for (var i=0; i<ids.length; i++) {
+        // Clear the end timer.
+        self._clearTimer(ids[i]);
+
+        // Get the sound.
+        var sound = self._soundById(ids[i]);
+
+        if (sound) {
+          // Reset the seek position.
+          sound._seek = sound._start || 0;
+          sound._rateSeek = 0;
+          sound._paused = true;
+          sound._ended = true;
+
+          // Stop currently running fades.
+          self._stopFade(ids[i]);
+
+          if (sound._node) {
+            if (self._webAudio) {
+              // Make sure the sound's AudioBufferSourceNode has been created.
+              if (sound._node.bufferSource) {
+                if (typeof sound._node.bufferSource.stop === 'undefined') {
+                  sound._node.bufferSource.noteOff(0);
+                } else {
+                  sound._node.bufferSource.stop(0);
+                }
+
+                // Clean up the buffer source.
+                self._cleanBuffer(sound._node);
+              }
+            } else if (!isNaN(sound._node.duration) || sound._node.duration === Infinity) {
+              sound._node.currentTime = sound._start || 0;
+              sound._node.pause();
+
+              // If this is a live stream, stop download once the audio is stopped.
+              if (sound._node.duration === Infinity) {
+                self._clearSound(sound._node);
+              }
+            }
+          }
+
+          if (!internal) {
+            self._emit('stop', sound._id);
+          }
+        }
+      }
+
+      return self;
+    },
+
+    /**
+     * Mute/unmute a single sound or all sounds in this Howl group.
+     * @param  {Boolean} muted Set to true to mute and false to unmute.
+     * @param  {Number} id    The sound ID to update (omit to mute/unmute all).
+     * @return {Howl}
+     */
+    mute: function(muted, id) {
+      var self = this;
+
+      // If the sound hasn't loaded, add it to the load queue to mute when capable.
+      if (self._state !== 'loaded'|| self._playLock) {
+        self._queue.push({
+          event: 'mute',
+          action: function() {
+            self.mute(muted, id);
+          }
+        });
+
+        return self;
+      }
+
+      // If applying mute/unmute to all sounds, update the group's value.
+      if (typeof id === 'undefined') {
+        if (typeof muted === 'boolean') {
+          self._muted = muted;
+        } else {
+          return self._muted;
+        }
+      }
+
+      // If no id is passed, get all ID's to be muted.
+      var ids = self._getSoundIds(id);
+
+      for (var i=0; i<ids.length; i++) {
+        // Get the sound.
+        var sound = self._soundById(ids[i]);
+
+        if (sound) {
+          sound._muted = muted;
+
+          // Cancel active fade and set the volume to the end value.
+          if (sound._interval) {
+            self._stopFade(sound._id);
+          }
+
+          if (self._webAudio && sound._node) {
+            sound._node.gain.setValueAtTime(muted ? 0 : sound._volume, Howler.ctx.currentTime);
+          } else if (sound._node) {
+            sound._node.muted = Howler._muted ? true : muted;
+          }
+
+          self._emit('mute', sound._id);
+        }
+      }
+
+      return self;
+    },
+
+    /**
+     * Get/set the volume of this sound or of the Howl group. This method can optionally take 0, 1 or 2 arguments.
+     *   volume() -> Returns the group's volume value.
+     *   volume(id) -> Returns the sound id's current volume.
+     *   volume(vol) -> Sets the volume of all sounds in this Howl group.
+     *   volume(vol, id) -> Sets the volume of passed sound id.
+     * @return {Howl/Number} Returns self or current volume.
+     */
+    volume: function() {
+      var self = this;
+      var args = arguments;
+      var vol, id;
+
+      // Determine the values based on arguments.
+      if (args.length === 0) {
+        // Return the value of the groups' volume.
+        return self._volume;
+      } else if (args.length === 1 || args.length === 2 && typeof args[1] === 'undefined') {
+        // First check if this is an ID, and if not, assume it is a new volume.
+        var ids = self._getSoundIds();
+        var index = ids.indexOf(args[0]);
+        if (index >= 0) {
+          id = parseInt(args[0], 10);
+        } else {
+          vol = parseFloat(args[0]);
+        }
+      } else if (args.length >= 2) {
+        vol = parseFloat(args[0]);
+        id = parseInt(args[1], 10);
+      }
+
+      // Update the volume or return the current volume.
+      var sound;
+      if (typeof vol !== 'undefined' && vol >= 0 && vol <= 1) {
+        // If the sound hasn't loaded, add it to the load queue to change volume when capable.
+        if (self._state !== 'loaded'|| self._playLock) {
+          self._queue.push({
+            event: 'volume',
+            action: function() {
+              self.volume.apply(self, args);
+            }
+          });
+
+          return self;
+        }
+
+        // Set the group volume.
+        if (typeof id === 'undefined') {
+          self._volume = vol;
+        }
+
+        // Update one or all volumes.
+        id = self._getSoundIds(id);
+        for (var i=0; i<id.length; i++) {
+          // Get the sound.
+          sound = self._soundById(id[i]);
+
+          if (sound) {
+            sound._volume = vol;
+
+            // Stop currently running fades.
+            if (!args[2]) {
+              self._stopFade(id[i]);
+            }
+
+            if (self._webAudio && sound._node && !sound._muted) {
+              sound._node.gain.setValueAtTime(vol, Howler.ctx.currentTime);
+            } else if (sound._node && !sound._muted) {
+              sound._node.volume = vol * Howler.volume();
+            }
+
+            self._emit('volume', sound._id);
+          }
+        }
+      } else {
+        sound = id ? self._soundById(id) : self._sounds[0];
+        return sound ? sound._volume : 0;
+      }
+
+      return self;
+    },
+
+    /**
+     * Fade a currently playing sound between two volumes (if no id is passsed, all sounds will fade).
+     * @param  {Number} from The value to fade from (0.0 to 1.0).
+     * @param  {Number} to   The volume to fade to (0.0 to 1.0).
+     * @param  {Number} len  Time in milliseconds to fade.
+     * @param  {Number} id   The sound id (omit to fade all sounds).
+     * @return {Howl}
+     */
+    fade: function(from, to, len, id) {
+      var self = this;
+
+      // If the sound hasn't loaded, add it to the load queue to fade when capable.
+      if (self._state !== 'loaded' || self._playLock) {
+        self._queue.push({
+          event: 'fade',
+          action: function() {
+            self.fade(from, to, len, id);
+          }
+        });
+
+        return self;
+      }
+
+      // Make sure the to/from/len values are numbers.
+      from = parseFloat(from);
+      to = parseFloat(to);
+      len = parseFloat(len);
+
+      // Set the volume to the start position.
+      self.volume(from, id);
+
+      // Fade the volume of one or all sounds.
+      var ids = self._getSoundIds(id);
+      for (var i=0; i<ids.length; i++) {
+        // Get the sound.
+        var sound = self._soundById(ids[i]);
+
+        // Create a linear fade or fall back to timeouts with HTML5 Audio.
+        if (sound) {
+          // Stop the previous fade if no sprite is being used (otherwise, volume handles this).
+          if (!id) {
+            self._stopFade(ids[i]);
+          }
+
+          // If we are using Web Audio, let the native methods do the actual fade.
+          if (self._webAudio && !sound._muted) {
+            var currentTime = Howler.ctx.currentTime;
+            var end = currentTime + (len / 1000);
+            sound._volume = from;
+            sound._node.gain.setValueAtTime(from, currentTime);
+            sound._node.gain.linearRampToValueAtTime(to, end);
+          }
+
+          self._startFadeInterval(sound, from, to, len, ids[i], typeof id === 'undefined');
+        }
+      }
+
+      return self;
+    },
+
+    /**
+     * Starts the internal interval to fade a sound.
+     * @param  {Object} sound Reference to sound to fade.
+     * @param  {Number} from The value to fade from (0.0 to 1.0).
+     * @param  {Number} to   The volume to fade to (0.0 to 1.0).
+     * @param  {Number} len  Time in milliseconds to fade.
+     * @param  {Number} id   The sound id to fade.
+     * @param  {Boolean} isGroup   If true, set the volume on the group.
+     */
+    _startFadeInterval: function(sound, from, to, len, id, isGroup) {
+      var self = this;
+      var vol = from;
+      var diff = to - from;
+      var steps = Math.abs(diff / 0.01);
+      var stepLen = Math.max(4, (steps > 0) ? len / steps : len);
+      var lastTick = Date.now();
+
+      // Store the value being faded to.
+      sound._fadeTo = to;
+
+      // Update the volume value on each interval tick.
+      sound._interval = setInterval(function() {
+        // Update the volume based on the time since the last tick.
+        var tick = (Date.now() - lastTick) / len;
+        lastTick = Date.now();
+        vol += diff * tick;
+
+        // Make sure the volume is in the right bounds.
+        vol = Math.max(0, vol);
+        vol = Math.min(1, vol);
+
+        // Round to within 2 decimal points.
+        vol = Math.round(vol * 100) / 100;
+
+        // Change the volume.
+        if (self._webAudio) {
+          sound._volume = vol;
+        } else {
+          self.volume(vol, sound._id, true);
+        }
+
+        // Set the group's volume.
+        if (isGroup) {
+          self._volume = vol;
+        }
+
+        // When the fade is complete, stop it and fire event.
+        if ((to < from && vol <= to) || (to > from && vol >= to)) {
+          clearInterval(sound._interval);
+          sound._interval = null;
+          sound._fadeTo = null;
+          self.volume(to, sound._id);
+          self._emit('fade', sound._id);
+        }
+      }, stepLen);
+    },
+
+    /**
+     * Internal method that stops the currently playing fade when
+     * a new fade starts, volume is changed or the sound is stopped.
+     * @param  {Number} id The sound id.
+     * @return {Howl}
+     */
+    _stopFade: function(id) {
+      var self = this;
+      var sound = self._soundById(id);
+
+      if (sound && sound._interval) {
+        if (self._webAudio) {
+          sound._node.gain.cancelScheduledValues(Howler.ctx.currentTime);
+        }
+
+        clearInterval(sound._interval);
+        sound._interval = null;
+        self.volume(sound._fadeTo, id);
+        sound._fadeTo = null;
+        self._emit('fade', id);
+      }
+
+      return self;
+    },
+
+    /**
+     * Get/set the loop parameter on a sound. This method can optionally take 0, 1 or 2 arguments.
+     *   loop() -> Returns the group's loop value.
+     *   loop(id) -> Returns the sound id's loop value.
+     *   loop(loop) -> Sets the loop value for all sounds in this Howl group.
+     *   loop(loop, id) -> Sets the loop value of passed sound id.
+     * @return {Howl/Boolean} Returns self or current loop value.
+     */
+    loop: function() {
+      var self = this;
+      var args = arguments;
+      var loop, id, sound;
+
+      // Determine the values for loop and id.
+      if (args.length === 0) {
+        // Return the grou's loop value.
+        return self._loop;
+      } else if (args.length === 1) {
+        if (typeof args[0] === 'boolean') {
+          loop = args[0];
+          self._loop = loop;
+        } else {
+          // Return this sound's loop value.
+          sound = self._soundById(parseInt(args[0], 10));
+          return sound ? sound._loop : false;
+        }
+      } else if (args.length === 2) {
+        loop = args[0];
+        id = parseInt(args[1], 10);
+      }
+
+      // If no id is passed, get all ID's to be looped.
+      var ids = self._getSoundIds(id);
+      for (var i=0; i<ids.length; i++) {
+        sound = self._soundById(ids[i]);
+
+        if (sound) {
+          sound._loop = loop;
+          if (self._webAudio && sound._node && sound._node.bufferSource) {
+            sound._node.bufferSource.loop = loop;
+            if (loop) {
+              sound._node.bufferSource.loopStart = sound._start || 0;
+              sound._node.bufferSource.loopEnd = sound._stop;
+            }
+          }
+        }
+      }
+
+      return self;
+    },
+
+    /**
+     * Get/set the playback rate of a sound. This method can optionally take 0, 1 or 2 arguments.
+     *   rate() -> Returns the first sound node's current playback rate.
+     *   rate(id) -> Returns the sound id's current playback rate.
+     *   rate(rate) -> Sets the playback rate of all sounds in this Howl group.
+     *   rate(rate, id) -> Sets the playback rate of passed sound id.
+     * @return {Howl/Number} Returns self or the current playback rate.
+     */
+    rate: function() {
+      var self = this;
+      var args = arguments;
+      var rate, id;
+
+      // Determine the values based on arguments.
+      if (args.length === 0) {
+        // We will simply return the current rate of the first node.
+        id = self._sounds[0]._id;
+      } else if (args.length === 1) {
+        // First check if this is an ID, and if not, assume it is a new rate value.
+        var ids = self._getSoundIds();
+        var index = ids.indexOf(args[0]);
+        if (index >= 0) {
+          id = parseInt(args[0], 10);
+        } else {
+          rate = parseFloat(args[0]);
+        }
+      } else if (args.length === 2) {
+        rate = parseFloat(args[0]);
+        id = parseInt(args[1], 10);
+      }
+
+      // Update the playback rate or return the current value.
+      var sound;
+      if (typeof rate === 'number') {
+        // If the sound hasn't loaded, add it to the load queue to change playback rate when capable.
+        if (self._state !== 'loaded' || self._playLock) {
+          self._queue.push({
+            event: 'rate',
+            action: function() {
+              self.rate.apply(self, args);
+            }
+          });
+
+          return self;
+        }
+
+        // Set the group rate.
+        if (typeof id === 'undefined') {
+          self._rate = rate;
+        }
+
+        // Update one or all volumes.
+        id = self._getSoundIds(id);
+        for (var i=0; i<id.length; i++) {
+          // Get the sound.
+          sound = self._soundById(id[i]);
+
+          if (sound) {
+            // Keep track of our position when the rate changed and update the playback
+            // start position so we can properly adjust the seek position for time elapsed.
+            if (self.playing(id[i])) {
+              sound._rateSeek = self.seek(id[i]);
+              sound._playStart = self._webAudio ? Howler.ctx.currentTime : sound._playStart;
+            }
+            sound._rate = rate;
+
+            // Change the playback rate.
+            if (self._webAudio && sound._node && sound._node.bufferSource) {
+              sound._node.bufferSource.playbackRate.setValueAtTime(rate, Howler.ctx.currentTime);
+            } else if (sound._node) {
+              sound._node.playbackRate = rate;
+            }
+
+            // Reset the timers.
+            var seek = self.seek(id[i]);
+            var duration = ((self._sprite[sound._sprite][0] + self._sprite[sound._sprite][1]) / 1000) - seek;
+            var timeout = (duration * 1000) / Math.abs(sound._rate);
+
+            // Start a new end timer if sound is already playing.
+            if (self._endTimers[id[i]] || !sound._paused) {
+              self._clearTimer(id[i]);
+              self._endTimers[id[i]] = setTimeout(self._ended.bind(self, sound), timeout);
+            }
+
+            self._emit('rate', sound._id);
+          }
+        }
+      } else {
+        sound = self._soundById(id);
+        return sound ? sound._rate : self._rate;
+      }
+
+      return self;
+    },
+
+    /**
+     * Get/set the seek position of a sound. This method can optionally take 0, 1 or 2 arguments.
+     *   seek() -> Returns the first sound node's current seek position.
+     *   seek(id) -> Returns the sound id's current seek position.
+     *   seek(seek) -> Sets the seek position of the first sound node.
+     *   seek(seek, id) -> Sets the seek position of passed sound id.
+     * @return {Howl/Number} Returns self or the current seek position.
+     */
+    seek: function() {
+      var self = this;
+      var args = arguments;
+      var seek, id;
+
+      // Determine the values based on arguments.
+      if (args.length === 0) {
+        // We will simply return the current position of the first node.
+        id = self._sounds[0]._id;
+      } else if (args.length === 1) {
+        // First check if this is an ID, and if not, assume it is a new seek position.
+        var ids = self._getSoundIds();
+        var index = ids.indexOf(args[0]);
+        if (index >= 0) {
+          id = parseInt(args[0], 10);
+        } else if (self._sounds.length) {
+          id = self._sounds[0]._id;
+          seek = parseFloat(args[0]);
+        }
+      } else if (args.length === 2) {
+        seek = parseFloat(args[0]);
+        id = parseInt(args[1], 10);
+      }
+
+      // If there is no ID, bail out.
+      if (typeof id === 'undefined') {
+        return self;
+      }
+
+      // If the sound hasn't loaded, add it to the load queue to seek when capable.
+      if (self._state !== 'loaded' || self._playLock) {
+        self._queue.push({
+          event: 'seek',
+          action: function() {
+            self.seek.apply(self, args);
+          }
+        });
+
+        return self;
+      }
+
+      // Get the sound.
+      var sound = self._soundById(id);
+
+      if (sound) {
+        if (typeof seek === 'number' && seek >= 0) {
+          // Pause the sound and update position for restarting playback.
+          var playing = self.playing(id);
+          if (playing) {
+            self.pause(id, true);
+          }
+
+          // Move the position of the track and cancel timer.
+          sound._seek = seek;
+          sound._ended = false;
+          self._clearTimer(id);
+
+          // Update the seek position for HTML5 Audio.
+          if (!self._webAudio && sound._node && !isNaN(sound._node.duration)) {
+            sound._node.currentTime = seek;
+          }
+
+          // Seek and emit when ready.
+          var seekAndEmit = function() {
+            self._emit('seek', id);
+
+            // Restart the playback if the sound was playing.
+            if (playing) {
+              self.play(id, true);
+            }
+          };
+
+          // Wait for the play lock to be unset before emitting (HTML5 Audio).
+          if (playing && !self._webAudio) {
+            var emitSeek = function() {
+              if (!self._playLock) {
+                seekAndEmit();
+              } else {
+                setTimeout(emitSeek, 0);
+              }
+            };
+            setTimeout(emitSeek, 0);
+          } else {
+            seekAndEmit();
+          }
+        } else {
+          if (self._webAudio) {
+            var realTime = self.playing(id) ? Howler.ctx.currentTime - sound._playStart : 0;
+            var rateSeek = sound._rateSeek ? sound._rateSeek - sound._seek : 0;
+            return sound._seek + (rateSeek + realTime * Math.abs(sound._rate));
+          } else {
+            return sound._node.currentTime;
+          }
+        }
+      }
+
+      return self;
+    },
+
+    /**
+     * Check if a specific sound is currently playing or not (if id is provided), or check if at least one of the sounds in the group is playing or not.
+     * @param  {Number}  id The sound id to check. If none is passed, the whole sound group is checked.
+     * @return {Boolean} True if playing and false if not.
+     */
+    playing: function(id) {
+      var self = this;
+
+      // Check the passed sound ID (if any).
+      if (typeof id === 'number') {
+        var sound = self._soundById(id);
+        return sound ? !sound._paused : false;
+      }
+
+      // Otherwise, loop through all sounds and check if any are playing.
+      for (var i=0; i<self._sounds.length; i++) {
+        if (!self._sounds[i]._paused) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+
+    /**
+     * Get the duration of this sound. Passing a sound id will return the sprite duration.
+     * @param  {Number} id The sound id to check. If none is passed, return full source duration.
+     * @return {Number} Audio duration in seconds.
+     */
+    duration: function(id) {
+      var self = this;
+      var duration = self._duration;
+
+      // If we pass an ID, get the sound and return the sprite length.
+      var sound = self._soundById(id);
+      if (sound) {
+        duration = self._sprite[sound._sprite][1] / 1000;
+      }
+
+      return duration;
+    },
+
+    /**
+     * Returns the current loaded state of this Howl.
+     * @return {String} 'unloaded', 'loading', 'loaded'
+     */
+    state: function() {
+      return this._state;
+    },
+
+    /**
+     * Unload and destroy the current Howl object.
+     * This will immediately stop all sound instances attached to this group.
+     */
+    unload: function() {
+      var self = this;
+
+      // Stop playing any active sounds.
+      var sounds = self._sounds;
+      for (var i=0; i<sounds.length; i++) {
+        // Stop the sound if it is currently playing.
+        if (!sounds[i]._paused) {
+          self.stop(sounds[i]._id);
+        }
+
+        // Remove the source or disconnect.
+        if (!self._webAudio) {
+          // Set the source to 0-second silence to stop any downloading (except in IE).
+          self._clearSound(sounds[i]._node);
+
+          // Remove any event listeners.
+          sounds[i]._node.removeEventListener('error', sounds[i]._errorFn, false);
+          sounds[i]._node.removeEventListener(Howler._canPlayEvent, sounds[i]._loadFn, false);
+
+          // Release the Audio object back to the pool.
+          Howler._releaseHtml5Audio(sounds[i]._node);
+        }
+
+        // Empty out all of the nodes.
+        delete sounds[i]._node;
+
+        // Make sure all timers are cleared out.
+        self._clearTimer(sounds[i]._id);
+      }
+
+      // Remove the references in the global Howler object.
+      var index = Howler._howls.indexOf(self);
+      if (index >= 0) {
+        Howler._howls.splice(index, 1);
+      }
+
+      // Delete this sound from the cache (if no other Howl is using it).
+      var remCache = true;
+      for (i=0; i<Howler._howls.length; i++) {
+        if (Howler._howls[i]._src === self._src || self._src.indexOf(Howler._howls[i]._src) >= 0) {
+          remCache = false;
+          break;
+        }
+      }
+
+      if (cache && remCache) {
+        delete cache[self._src];
+      }
+
+      // Clear global errors.
+      Howler.noAudio = false;
+
+      // Clear out `self`.
+      self._state = 'unloaded';
+      self._sounds = [];
+      self = null;
+
+      return null;
+    },
+
+    /**
+     * Listen to a custom event.
+     * @param  {String}   event Event name.
+     * @param  {Function} fn    Listener to call.
+     * @param  {Number}   id    (optional) Only listen to events for this sound.
+     * @param  {Number}   once  (INTERNAL) Marks event to fire only once.
+     * @return {Howl}
+     */
+    on: function(event, fn, id, once) {
+      var self = this;
+      var events = self['_on' + event];
+
+      if (typeof fn === 'function') {
+        events.push(once ? {id: id, fn: fn, once: once} : {id: id, fn: fn});
+      }
+
+      return self;
+    },
+
+    /**
+     * Remove a custom event. Call without parameters to remove all events.
+     * @param  {String}   event Event name.
+     * @param  {Function} fn    Listener to remove. Leave empty to remove all.
+     * @param  {Number}   id    (optional) Only remove events for this sound.
+     * @return {Howl}
+     */
+    off: function(event, fn, id) {
+      var self = this;
+      var events = self['_on' + event];
+      var i = 0;
+
+      // Allow passing just an event and ID.
+      if (typeof fn === 'number') {
+        id = fn;
+        fn = null;
+      }
+
+      if (fn || id) {
+        // Loop through event store and remove the passed function.
+        for (i=0; i<events.length; i++) {
+          var isId = (id === events[i].id);
+          if (fn === events[i].fn && isId || !fn && isId) {
+            events.splice(i, 1);
+            break;
+          }
+        }
+      } else if (event) {
+        // Clear out all events of this type.
+        self['_on' + event] = [];
+      } else {
+        // Clear out all events of every type.
+        var keys = Object.keys(self);
+        for (i=0; i<keys.length; i++) {
+          if ((keys[i].indexOf('_on') === 0) && Array.isArray(self[keys[i]])) {
+            self[keys[i]] = [];
+          }
+        }
+      }
+
+      return self;
+    },
+
+    /**
+     * Listen to a custom event and remove it once fired.
+     * @param  {String}   event Event name.
+     * @param  {Function} fn    Listener to call.
+     * @param  {Number}   id    (optional) Only listen to events for this sound.
+     * @return {Howl}
+     */
+    once: function(event, fn, id) {
+      var self = this;
+
+      // Setup the event listener.
+      self.on(event, fn, id, 1);
+
+      return self;
+    },
+
+    /**
+     * Emit all events of a specific type and pass the sound id.
+     * @param  {String} event Event name.
+     * @param  {Number} id    Sound ID.
+     * @param  {Number} msg   Message to go with event.
+     * @return {Howl}
+     */
+    _emit: function(event, id, msg) {
+      var self = this;
+      var events = self['_on' + event];
+
+      // Loop through event store and fire all functions.
+      for (var i=events.length-1; i>=0; i--) {
+        // Only fire the listener if the correct ID is used.
+        if (!events[i].id || events[i].id === id || event === 'load') {
+          setTimeout(function(fn) {
+            fn.call(this, id, msg);
+          }.bind(self, events[i].fn), 0);
+
+          // If this event was setup with `once`, remove it.
+          if (events[i].once) {
+            self.off(event, events[i].fn, events[i].id);
+          }
+        }
+      }
+
+      // Pass the event type into load queue so that it can continue stepping.
+      self._loadQueue(event);
+
+      return self;
+    },
+
+    /**
+     * Queue of actions initiated before the sound has loaded.
+     * These will be called in sequence, with the next only firing
+     * after the previous has finished executing (even if async like play).
+     * @return {Howl}
+     */
+    _loadQueue: function(event) {
+      var self = this;
+
+      if (self._queue.length > 0) {
+        var task = self._queue[0];
+
+        // Remove this task if a matching event was passed.
+        if (task.event === event) {
+          self._queue.shift();
+          self._loadQueue();
+        }
+
+        // Run the task if no event type is passed.
+        if (!event) {
+          task.action();
+        }
+      }
+
+      return self;
+    },
+
+    /**
+     * Fired when playback ends at the end of the duration.
+     * @param  {Sound} sound The sound object to work with.
+     * @return {Howl}
+     */
+    _ended: function(sound) {
+      var self = this;
+      var sprite = sound._sprite;
+
+      // If we are using IE and there was network latency we may be clipping
+      // audio before it completes playing. Lets check the node to make sure it
+      // believes it has completed, before ending the playback.
+      if (!self._webAudio && sound._node && !sound._node.paused && !sound._node.ended && sound._node.currentTime < sound._stop) {
+        setTimeout(self._ended.bind(self, sound), 100);
+        return self;
+      }
+
+      // Should this sound loop?
+      var loop = !!(sound._loop || self._sprite[sprite][2]);
+
+      // Fire the ended event.
+      self._emit('end', sound._id);
+
+      // Restart the playback for HTML5 Audio loop.
+      if (!self._webAudio && loop) {
+        self.stop(sound._id, true).play(sound._id);
+      }
+
+      // Restart this timer if on a Web Audio loop.
+      if (self._webAudio && loop) {
+        self._emit('play', sound._id);
+        sound._seek = sound._start || 0;
+        sound._rateSeek = 0;
+        sound._playStart = Howler.ctx.currentTime;
+
+        var timeout = ((sound._stop - sound._start) * 1000) / Math.abs(sound._rate);
+        self._endTimers[sound._id] = setTimeout(self._ended.bind(self, sound), timeout);
+      }
+
+      // Mark the node as paused.
+      if (self._webAudio && !loop) {
+        sound._paused = true;
+        sound._ended = true;
+        sound._seek = sound._start || 0;
+        sound._rateSeek = 0;
+        self._clearTimer(sound._id);
+
+        // Clean up the buffer source.
+        self._cleanBuffer(sound._node);
+
+        // Attempt to auto-suspend AudioContext if no sounds are still playing.
+        Howler._autoSuspend();
+      }
+
+      // When using a sprite, end the track.
+      if (!self._webAudio && !loop) {
+        self.stop(sound._id, true);
+      }
+
+      return self;
+    },
+
+    /**
+     * Clear the end timer for a sound playback.
+     * @param  {Number} id The sound ID.
+     * @return {Howl}
+     */
+    _clearTimer: function(id) {
+      var self = this;
+
+      if (self._endTimers[id]) {
+        // Clear the timeout or remove the ended listener.
+        if (typeof self._endTimers[id] !== 'function') {
+          clearTimeout(self._endTimers[id]);
+        } else {
+          var sound = self._soundById(id);
+          if (sound && sound._node) {
+            sound._node.removeEventListener('ended', self._endTimers[id], false);
+          }
+        }
+
+        delete self._endTimers[id];
+      }
+
+      return self;
+    },
+
+    /**
+     * Return the sound identified by this ID, or return null.
+     * @param  {Number} id Sound ID
+     * @return {Object}    Sound object or null.
+     */
+    _soundById: function(id) {
+      var self = this;
+
+      // Loop through all sounds and find the one with this ID.
+      for (var i=0; i<self._sounds.length; i++) {
+        if (id === self._sounds[i]._id) {
+          return self._sounds[i];
+        }
+      }
+
+      return null;
+    },
+
+    /**
+     * Return an inactive sound from the pool or create a new one.
+     * @return {Sound} Sound playback object.
+     */
+    _inactiveSound: function() {
+      var self = this;
+
+      self._drain();
+
+      // Find the first inactive node to recycle.
+      for (var i=0; i<self._sounds.length; i++) {
+        if (self._sounds[i]._ended) {
+          return self._sounds[i].reset();
+        }
+      }
+
+      // If no inactive node was found, create a new one.
+      return new Sound(self);
+    },
+
+    /**
+     * Drain excess inactive sounds from the pool.
+     */
+    _drain: function() {
+      var self = this;
+      var limit = self._pool;
+      var cnt = 0;
+      var i = 0;
+
+      // If there are less sounds than the max pool size, we are done.
+      if (self._sounds.length < limit) {
+        return;
+      }
+
+      // Count the number of inactive sounds.
+      for (i=0; i<self._sounds.length; i++) {
+        if (self._sounds[i]._ended) {
+          cnt++;
+        }
+      }
+
+      // Remove excess inactive sounds, going in reverse order.
+      for (i=self._sounds.length - 1; i>=0; i--) {
+        if (cnt <= limit) {
+          return;
+        }
+
+        if (self._sounds[i]._ended) {
+          // Disconnect the audio source when using Web Audio.
+          if (self._webAudio && self._sounds[i]._node) {
+            self._sounds[i]._node.disconnect(0);
+          }
+
+          // Remove sounds until we have the pool size.
+          self._sounds.splice(i, 1);
+          cnt--;
+        }
+      }
+    },
+
+    /**
+     * Get all ID's from the sounds pool.
+     * @param  {Number} id Only return one ID if one is passed.
+     * @return {Array}    Array of IDs.
+     */
+    _getSoundIds: function(id) {
+      var self = this;
+
+      if (typeof id === 'undefined') {
+        var ids = [];
+        for (var i=0; i<self._sounds.length; i++) {
+          ids.push(self._sounds[i]._id);
+        }
+
+        return ids;
+      } else {
+        return [id];
+      }
+    },
+
+    /**
+     * Load the sound back into the buffer source.
+     * @param  {Sound} sound The sound object to work with.
+     * @return {Howl}
+     */
+    _refreshBuffer: function(sound) {
+      var self = this;
+
+      // Setup the buffer source for playback.
+      sound._node.bufferSource = Howler.ctx.createBufferSource();
+      sound._node.bufferSource.buffer = cache[self._src];
+
+      // Connect to the correct node.
+      if (sound._panner) {
+        sound._node.bufferSource.connect(sound._panner);
+      } else {
+        sound._node.bufferSource.connect(sound._node);
+      }
+
+      // Setup looping and playback rate.
+      sound._node.bufferSource.loop = sound._loop;
+      if (sound._loop) {
+        sound._node.bufferSource.loopStart = sound._start || 0;
+        sound._node.bufferSource.loopEnd = sound._stop || 0;
+      }
+      sound._node.bufferSource.playbackRate.setValueAtTime(sound._rate, Howler.ctx.currentTime);
+
+      return self;
+    },
+
+    /**
+     * Prevent memory leaks by cleaning up the buffer source after playback.
+     * @param  {Object} node Sound's audio node containing the buffer source.
+     * @return {Howl}
+     */
+    _cleanBuffer: function(node) {
+      var self = this;
+      var isIOS = Howler._navigator && Howler._navigator.vendor.indexOf('Apple') >= 0;
+
+      if (Howler._scratchBuffer && node.bufferSource) {
+        node.bufferSource.onended = null;
+        node.bufferSource.disconnect(0);
+        if (isIOS) {
+          try { node.bufferSource.buffer = Howler._scratchBuffer; } catch(e) {}
+        }
+      }
+      node.bufferSource = null;
+
+      return self;
+    },
+
+    /**
+     * Set the source to a 0-second silence to stop any downloading (except in IE).
+     * @param  {Object} node Audio node to clear.
+     */
+    _clearSound: function(node) {
+      var checkIE = /MSIE |Trident\//.test(Howler._navigator && Howler._navigator.userAgent);
+      if (!checkIE) {
+        node.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+      }
+    }
+  };
+
+  /** Single Sound Methods **/
+  /***************************************************************************/
+
+  /**
+   * Setup the sound object, which each node attached to a Howl group is contained in.
+   * @param {Object} howl The Howl parent group.
+   */
+  var Sound = function(howl) {
+    this._parent = howl;
+    this.init();
+  };
+  Sound.prototype = {
+    /**
+     * Initialize a new Sound object.
+     * @return {Sound}
+     */
+    init: function() {
+      var self = this;
+      var parent = self._parent;
+
+      // Setup the default parameters.
+      self._muted = parent._muted;
+      self._loop = parent._loop;
+      self._volume = parent._volume;
+      self._rate = parent._rate;
+      self._seek = 0;
+      self._paused = true;
+      self._ended = true;
+      self._sprite = '__default';
+
+      // Generate a unique ID for this sound.
+      self._id = ++Howler._counter;
+
+      // Add itself to the parent's pool.
+      parent._sounds.push(self);
+
+      // Create the new node.
+      self.create();
+
+      return self;
+    },
+
+    /**
+     * Create and setup a new sound object, whether HTML5 Audio or Web Audio.
+     * @return {Sound}
+     */
+    create: function() {
+      var self = this;
+      var parent = self._parent;
+      var volume = (Howler._muted || self._muted || self._parent._muted) ? 0 : self._volume;
+
+      if (parent._webAudio) {
+        // Create the gain node for controlling volume (the source will connect to this).
+        self._node = (typeof Howler.ctx.createGain === 'undefined') ? Howler.ctx.createGainNode() : Howler.ctx.createGain();
+        self._node.gain.setValueAtTime(volume, Howler.ctx.currentTime);
+        self._node.paused = true;
+        self._node.connect(Howler.masterGain);
+      } else {
+        // Get an unlocked Audio object from the pool.
+        self._node = Howler._obtainHtml5Audio();
+
+        // Listen for errors (http://dev.w3.org/html5/spec-author-view/spec.html#mediaerror).
+        self._errorFn = self._errorListener.bind(self);
+        self._node.addEventListener('error', self._errorFn, false);
+
+        // Listen for 'canplaythrough' event to let us know the sound is ready.
+        self._loadFn = self._loadListener.bind(self);
+        self._node.addEventListener(Howler._canPlayEvent, self._loadFn, false);
+
+        // Setup the new audio node.
+        self._node.src = parent._src;
+        self._node.preload = 'auto';
+        self._node.volume = volume * Howler.volume();
+
+        // Begin loading the source.
+        self._node.load();
+      }
+
+      return self;
+    },
+
+    /**
+     * Reset the parameters of this sound to the original state (for recycle).
+     * @return {Sound}
+     */
+    reset: function() {
+      var self = this;
+      var parent = self._parent;
+
+      // Reset all of the parameters of this sound.
+      self._muted = parent._muted;
+      self._loop = parent._loop;
+      self._volume = parent._volume;
+      self._rate = parent._rate;
+      self._seek = 0;
+      self._rateSeek = 0;
+      self._paused = true;
+      self._ended = true;
+      self._sprite = '__default';
+
+      // Generate a new ID so that it isn't confused with the previous sound.
+      self._id = ++Howler._counter;
+
+      return self;
+    },
+
+    /**
+     * HTML5 Audio error listener callback.
+     */
+    _errorListener: function() {
+      var self = this;
+
+      // Fire an error event and pass back the code.
+      self._parent._emit('loaderror', self._id, self._node.error ? self._node.error.code : 0);
+
+      // Clear the event listener.
+      self._node.removeEventListener('error', self._errorFn, false);
+    },
+
+    /**
+     * HTML5 Audio canplaythrough listener callback.
+     */
+    _loadListener: function() {
+      var self = this;
+      var parent = self._parent;
+
+      // Round up the duration to account for the lower precision in HTML5 Audio.
+      parent._duration = Math.ceil(self._node.duration * 10) / 10;
+
+      // Setup a sprite if none is defined.
+      if (Object.keys(parent._sprite).length === 0) {
+        parent._sprite = {__default: [0, parent._duration * 1000]};
+      }
+
+      if (parent._state !== 'loaded') {
+        parent._state = 'loaded';
+        parent._emit('load');
+        parent._loadQueue();
+      }
+
+      // Clear the event listener.
+      self._node.removeEventListener(Howler._canPlayEvent, self._loadFn, false);
+    }
+  };
+
+  /** Helper Methods **/
+  /***************************************************************************/
+
+  var cache = {};
+
+  /**
+   * Buffer a sound from URL, Data URI or cache and decode to audio source (Web Audio API).
+   * @param  {Howl} self
+   */
+  var loadBuffer = function(self) {
+    var url = self._src;
+
+    // Check if the buffer has already been cached and use it instead.
+    if (cache[url]) {
+      // Set the duration from the cache.
+      self._duration = cache[url].duration;
+
+      // Load the sound into this Howl.
+      loadSound(self);
+
+      return;
+    }
+
+    if (/^data:[^;]+;base64,/.test(url)) {
+      // Decode the base64 data URI without XHR, since some browsers don't support it.
+      var data = atob(url.split(',')[1]);
+      var dataView = new Uint8Array(data.length);
+      for (var i=0; i<data.length; ++i) {
+        dataView[i] = data.charCodeAt(i);
+      }
+
+      decodeAudioData(dataView.buffer, self);
+    } else {
+      // Load the buffer from the URL.
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+      xhr.withCredentials = self._xhrWithCredentials;
+      xhr.responseType = 'arraybuffer';
+      xhr.onload = function() {
+        // Make sure we get a successful response back.
+        var code = (xhr.status + '')[0];
+        if (code !== '0' && code !== '2' && code !== '3') {
+          self._emit('loaderror', null, 'Failed loading audio file with status: ' + xhr.status + '.');
+          return;
+        }
+
+        decodeAudioData(xhr.response, self);
+      };
+      xhr.onerror = function() {
+        // If there is an error, switch to HTML5 Audio.
+        if (self._webAudio) {
+          self._html5 = true;
+          self._webAudio = false;
+          self._sounds = [];
+          delete cache[url];
+          self.load();
+        }
+      };
+      safeXhrSend(xhr);
+    }
+  };
+
+  /**
+   * Send the XHR request wrapped in a try/catch.
+   * @param  {Object} xhr XHR to send.
+   */
+  var safeXhrSend = function(xhr) {
+    try {
+      xhr.send();
+    } catch (e) {
+      xhr.onerror();
+    }
+  };
+
+  /**
+   * Decode audio data from an array buffer.
+   * @param  {ArrayBuffer} arraybuffer The audio data.
+   * @param  {Howl}        self
+   */
+  var decodeAudioData = function(arraybuffer, self) {
+    // Fire a load error if something broke.
+    var error = function() {
+      self._emit('loaderror', null, 'Decoding audio data failed.');
+    };
+
+    // Load the sound on success.
+    var success = function(buffer) {
+      if (buffer && self._sounds.length > 0) {
+        cache[self._src] = buffer;
+        loadSound(self, buffer);
+      } else {
+        error();
+      }
+    };
+
+    // Decode the buffer into an audio source.
+    if (typeof Promise !== 'undefined' && Howler.ctx.decodeAudioData.length === 1) {
+      Howler.ctx.decodeAudioData(arraybuffer).then(success).catch(error);
+    } else {
+      Howler.ctx.decodeAudioData(arraybuffer, success, error);
+    }
+  }
+
+  /**
+   * Sound is now loaded, so finish setting everything up and fire the loaded event.
+   * @param  {Howl} self
+   * @param  {Object} buffer The decoded buffer sound source.
+   */
+  var loadSound = function(self, buffer) {
+    // Set the duration.
+    if (buffer && !self._duration) {
+      self._duration = buffer.duration;
+    }
+
+    // Setup a sprite if none is defined.
+    if (Object.keys(self._sprite).length === 0) {
+      self._sprite = {__default: [0, self._duration * 1000]};
+    }
+
+    // Fire the loaded event.
+    if (self._state !== 'loaded') {
+      self._state = 'loaded';
+      self._emit('load');
+      self._loadQueue();
+    }
+  };
+
+  /**
+   * Setup the audio context when available, or switch to HTML5 Audio mode.
+   */
+  var setupAudioContext = function() {
+    // If we have already detected that Web Audio isn't supported, don't run this step again.
+    if (!Howler.usingWebAudio) {
+      return;
+    }
+
+    // Check if we are using Web Audio and setup the AudioContext if we are.
+    try {
+      if (typeof AudioContext !== 'undefined') {
+        Howler.ctx = new AudioContext();
+      } else if (typeof webkitAudioContext !== 'undefined') {
+        Howler.ctx = new webkitAudioContext();
+      } else {
+        Howler.usingWebAudio = false;
+      }
+    } catch(e) {
+      Howler.usingWebAudio = false;
+    }
+
+    // If the audio context creation still failed, set using web audio to false.
+    if (!Howler.ctx) {
+      Howler.usingWebAudio = false;
+    }
+
+    // Check if a webview is being used on iOS8 or earlier (rather than the browser).
+    // If it is, disable Web Audio as it causes crashing.
+    var iOS = (/iP(hone|od|ad)/.test(Howler._navigator && Howler._navigator.platform));
+    var appVersion = Howler._navigator && Howler._navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);
+    var version = appVersion ? parseInt(appVersion[1], 10) : null;
+    if (iOS && version && version < 9) {
+      var safari = /safari/.test(Howler._navigator && Howler._navigator.userAgent.toLowerCase());
+      if (Howler._navigator && Howler._navigator.standalone && !safari || Howler._navigator && !Howler._navigator.standalone && !safari) {
+        Howler.usingWebAudio = false;
+      }
+    }
+
+    // Create and expose the master GainNode when using Web Audio (useful for plugins or advanced usage).
+    if (Howler.usingWebAudio) {
+      Howler.masterGain = (typeof Howler.ctx.createGain === 'undefined') ? Howler.ctx.createGainNode() : Howler.ctx.createGain();
+      Howler.masterGain.gain.setValueAtTime(Howler._muted ? 0 : 1, Howler.ctx.currentTime);
+      Howler.masterGain.connect(Howler.ctx.destination);
+    }
+
+    // Re-run the setup on Howler.
+    Howler._setup();
+  };
+
+  // Add support for AMD (Asynchronous Module Definition) libraries such as require.js.
+  if (true) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() {
+      return {
+        Howler: Howler,
+        Howl: Howl
+      };
+    }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  }
+
+  // Add support for CommonJS libraries such as browserify.
+  if (true) {
+    exports.Howler = Howler;
+    exports.Howl = Howl;
+  }
+
+  // Define globally in case AMD is not available or unused.
+  if (typeof window !== 'undefined') {
+    window.HowlerGlobal = HowlerGlobal;
+    window.Howler = Howler;
+    window.Howl = Howl;
+    window.Sound = Sound;
+  } else if (typeof global !== 'undefined') { // Add to global in Node.js (for testing, etc).
+    global.HowlerGlobal = HowlerGlobal;
+    global.Howler = Howler;
+    global.Howl = Howl;
+    global.Sound = Sound;
+  }
+})();
+
+
+/*!
+ *  Spatial Plugin - Adds support for stereo and 3D audio where Web Audio is supported.
+ *  
+ *  howler.js v2.1.2
+ *  howlerjs.com
+ *
+ *  (c) 2013-2019, James Simpson of GoldFire Studios
+ *  goldfirestudios.com
+ *
+ *  MIT License
+ */
+
+(function() {
+
+  'use strict';
+
+  // Setup default properties.
+  HowlerGlobal.prototype._pos = [0, 0, 0];
+  HowlerGlobal.prototype._orientation = [0, 0, -1, 0, 1, 0];
+
+  /** Global Methods **/
+  /***************************************************************************/
+
+  /**
+   * Helper method to update the stereo panning position of all current Howls.
+   * Future Howls will not use this value unless explicitly set.
+   * @param  {Number} pan A value of -1.0 is all the way left and 1.0 is all the way right.
+   * @return {Howler/Number}     Self or current stereo panning value.
+   */
+  HowlerGlobal.prototype.stereo = function(pan) {
+    var self = this;
+
+    // Stop right here if not using Web Audio.
+    if (!self.ctx || !self.ctx.listener) {
+      return self;
+    }
+
+    // Loop through all Howls and update their stereo panning.
+    for (var i=self._howls.length-1; i>=0; i--) {
+      self._howls[i].stereo(pan);
+    }
+
+    return self;
+  };
+
+  /**
+   * Get/set the position of the listener in 3D cartesian space. Sounds using
+   * 3D position will be relative to the listener's position.
+   * @param  {Number} x The x-position of the listener.
+   * @param  {Number} y The y-position of the listener.
+   * @param  {Number} z The z-position of the listener.
+   * @return {Howler/Array}   Self or current listener position.
+   */
+  HowlerGlobal.prototype.pos = function(x, y, z) {
+    var self = this;
+
+    // Stop right here if not using Web Audio.
+    if (!self.ctx || !self.ctx.listener) {
+      return self;
+    }
+
+    // Set the defaults for optional 'y' & 'z'.
+    y = (typeof y !== 'number') ? self._pos[1] : y;
+    z = (typeof z !== 'number') ? self._pos[2] : z;
+
+    if (typeof x === 'number') {
+      self._pos = [x, y, z];
+
+      if (typeof self.ctx.listener.positionX !== 'undefined') {
+        self.ctx.listener.positionX.setTargetAtTime(self._pos[0], Howler.ctx.currentTime, 0.1);
+        self.ctx.listener.positionY.setTargetAtTime(self._pos[1], Howler.ctx.currentTime, 0.1);
+        self.ctx.listener.positionZ.setTargetAtTime(self._pos[2], Howler.ctx.currentTime, 0.1);
+      } else {
+        self.ctx.listener.setPosition(self._pos[0], self._pos[1], self._pos[2]);
+      }
+    } else {
+      return self._pos;
+    }
+
+    return self;
+  };
+
+  /**
+   * Get/set the direction the listener is pointing in the 3D cartesian space.
+   * A front and up vector must be provided. The front is the direction the
+   * face of the listener is pointing, and up is the direction the top of the
+   * listener is pointing. Thus, these values are expected to be at right angles
+   * from each other.
+   * @param  {Number} x   The x-orientation of the listener.
+   * @param  {Number} y   The y-orientation of the listener.
+   * @param  {Number} z   The z-orientation of the listener.
+   * @param  {Number} xUp The x-orientation of the top of the listener.
+   * @param  {Number} yUp The y-orientation of the top of the listener.
+   * @param  {Number} zUp The z-orientation of the top of the listener.
+   * @return {Howler/Array}     Returns self or the current orientation vectors.
+   */
+  HowlerGlobal.prototype.orientation = function(x, y, z, xUp, yUp, zUp) {
+    var self = this;
+
+    // Stop right here if not using Web Audio.
+    if (!self.ctx || !self.ctx.listener) {
+      return self;
+    }
+
+    // Set the defaults for optional 'y' & 'z'.
+    var or = self._orientation;
+    y = (typeof y !== 'number') ? or[1] : y;
+    z = (typeof z !== 'number') ? or[2] : z;
+    xUp = (typeof xUp !== 'number') ? or[3] : xUp;
+    yUp = (typeof yUp !== 'number') ? or[4] : yUp;
+    zUp = (typeof zUp !== 'number') ? or[5] : zUp;
+
+    if (typeof x === 'number') {
+      self._orientation = [x, y, z, xUp, yUp, zUp];
+
+      if (typeof self.ctx.listener.forwardX !== 'undefined') {
+        self.ctx.listener.forwardX.setTargetAtTime(x, Howler.ctx.currentTime, 0.1);
+        self.ctx.listener.forwardY.setTargetAtTime(y, Howler.ctx.currentTime, 0.1);
+        self.ctx.listener.forwardZ.setTargetAtTime(z, Howler.ctx.currentTime, 0.1);
+        self.ctx.listener.upX.setTargetAtTime(x, Howler.ctx.currentTime, 0.1);
+        self.ctx.listener.upY.setTargetAtTime(y, Howler.ctx.currentTime, 0.1);
+        self.ctx.listener.upZ.setTargetAtTime(z, Howler.ctx.currentTime, 0.1);
+      } else {
+        self.ctx.listener.setOrientation(x, y, z, xUp, yUp, zUp);
+      }
+    } else {
+      return or;
+    }
+
+    return self;
+  };
+
+  /** Group Methods **/
+  /***************************************************************************/
+
+  /**
+   * Add new properties to the core init.
+   * @param  {Function} _super Core init method.
+   * @return {Howl}
+   */
+  Howl.prototype.init = (function(_super) {
+    return function(o) {
+      var self = this;
+
+      // Setup user-defined default properties.
+      self._orientation = o.orientation || [1, 0, 0];
+      self._stereo = o.stereo || null;
+      self._pos = o.pos || null;
+      self._pannerAttr = {
+        coneInnerAngle: typeof o.coneInnerAngle !== 'undefined' ? o.coneInnerAngle : 360,
+        coneOuterAngle: typeof o.coneOuterAngle !== 'undefined' ? o.coneOuterAngle : 360,
+        coneOuterGain: typeof o.coneOuterGain !== 'undefined' ? o.coneOuterGain : 0,
+        distanceModel: typeof o.distanceModel !== 'undefined' ? o.distanceModel : 'inverse',
+        maxDistance: typeof o.maxDistance !== 'undefined' ? o.maxDistance : 10000,
+        panningModel: typeof o.panningModel !== 'undefined' ? o.panningModel : 'HRTF',
+        refDistance: typeof o.refDistance !== 'undefined' ? o.refDistance : 1,
+        rolloffFactor: typeof o.rolloffFactor !== 'undefined' ? o.rolloffFactor : 1
+      };
+
+      // Setup event listeners.
+      self._onstereo = o.onstereo ? [{fn: o.onstereo}] : [];
+      self._onpos = o.onpos ? [{fn: o.onpos}] : [];
+      self._onorientation = o.onorientation ? [{fn: o.onorientation}] : [];
+
+      // Complete initilization with howler.js core's init function.
+      return _super.call(this, o);
+    };
+  })(Howl.prototype.init);
+
+  /**
+   * Get/set the stereo panning of the audio source for this sound or all in the group.
+   * @param  {Number} pan  A value of -1.0 is all the way left and 1.0 is all the way right.
+   * @param  {Number} id (optional) The sound ID. If none is passed, all in group will be updated.
+   * @return {Howl/Number}    Returns self or the current stereo panning value.
+   */
+  Howl.prototype.stereo = function(pan, id) {
+    var self = this;
+
+    // Stop right here if not using Web Audio.
+    if (!self._webAudio) {
+      return self;
+    }
+
+    // If the sound hasn't loaded, add it to the load queue to change stereo pan when capable.
+    if (self._state !== 'loaded') {
+      self._queue.push({
+        event: 'stereo',
+        action: function() {
+          self.stereo(pan, id);
+        }
+      });
+
+      return self;
+    }
+
+    // Check for PannerStereoNode support and fallback to PannerNode if it doesn't exist.
+    var pannerType = (typeof Howler.ctx.createStereoPanner === 'undefined') ? 'spatial' : 'stereo';
+
+    // Setup the group's stereo panning if no ID is passed.
+    if (typeof id === 'undefined') {
+      // Return the group's stereo panning if no parameters are passed.
+      if (typeof pan === 'number') {
+        self._stereo = pan;
+        self._pos = [pan, 0, 0];
+      } else {
+        return self._stereo;
+      }
+    }
+
+    // Change the streo panning of one or all sounds in group.
+    var ids = self._getSoundIds(id);
+    for (var i=0; i<ids.length; i++) {
+      // Get the sound.
+      var sound = self._soundById(ids[i]);
+
+      if (sound) {
+        if (typeof pan === 'number') {
+          sound._stereo = pan;
+          sound._pos = [pan, 0, 0];
+
+          if (sound._node) {
+            // If we are falling back, make sure the panningModel is equalpower.
+            sound._pannerAttr.panningModel = 'equalpower';
+
+            // Check if there is a panner setup and create a new one if not.
+            if (!sound._panner || !sound._panner.pan) {
+              setupPanner(sound, pannerType);
+            }
+
+            if (pannerType === 'spatial') {
+              if (typeof sound._panner.positionX !== 'undefined') {
+                sound._panner.positionX.setValueAtTime(pan, Howler.ctx.currentTime);
+                sound._panner.positionY.setValueAtTime(0, Howler.ctx.currentTime);
+                sound._panner.positionZ.setValueAtTime(0, Howler.ctx.currentTime);
+              } else {
+                sound._panner.setPosition(pan, 0, 0);
+              }
+            } else {
+              sound._panner.pan.setValueAtTime(pan, Howler.ctx.currentTime);
+            }
+          }
+
+          self._emit('stereo', sound._id);
+        } else {
+          return sound._stereo;
+        }
+      }
+    }
+
+    return self;
+  };
+
+  /**
+   * Get/set the 3D spatial position of the audio source for this sound or group relative to the global listener.
+   * @param  {Number} x  The x-position of the audio source.
+   * @param  {Number} y  The y-position of the audio source.
+   * @param  {Number} z  The z-position of the audio source.
+   * @param  {Number} id (optional) The sound ID. If none is passed, all in group will be updated.
+   * @return {Howl/Array}    Returns self or the current 3D spatial position: [x, y, z].
+   */
+  Howl.prototype.pos = function(x, y, z, id) {
+    var self = this;
+
+    // Stop right here if not using Web Audio.
+    if (!self._webAudio) {
+      return self;
+    }
+
+    // If the sound hasn't loaded, add it to the load queue to change position when capable.
+    if (self._state !== 'loaded') {
+      self._queue.push({
+        event: 'pos',
+        action: function() {
+          self.pos(x, y, z, id);
+        }
+      });
+
+      return self;
+    }
+
+    // Set the defaults for optional 'y' & 'z'.
+    y = (typeof y !== 'number') ? 0 : y;
+    z = (typeof z !== 'number') ? -0.5 : z;
+
+    // Setup the group's spatial position if no ID is passed.
+    if (typeof id === 'undefined') {
+      // Return the group's spatial position if no parameters are passed.
+      if (typeof x === 'number') {
+        self._pos = [x, y, z];
+      } else {
+        return self._pos;
+      }
+    }
+
+    // Change the spatial position of one or all sounds in group.
+    var ids = self._getSoundIds(id);
+    for (var i=0; i<ids.length; i++) {
+      // Get the sound.
+      var sound = self._soundById(ids[i]);
+
+      if (sound) {
+        if (typeof x === 'number') {
+          sound._pos = [x, y, z];
+
+          if (sound._node) {
+            // Check if there is a panner setup and create a new one if not.
+            if (!sound._panner || sound._panner.pan) {
+              setupPanner(sound, 'spatial');
+            }
+
+            if (typeof sound._panner.positionX !== 'undefined') {
+              sound._panner.positionX.setValueAtTime(x, Howler.ctx.currentTime);
+              sound._panner.positionY.setValueAtTime(y, Howler.ctx.currentTime);
+              sound._panner.positionZ.setValueAtTime(z, Howler.ctx.currentTime);
+            } else {
+              sound._panner.setPosition(x, y, z);
+            }
+          }
+
+          self._emit('pos', sound._id);
+        } else {
+          return sound._pos;
+        }
+      }
+    }
+
+    return self;
+  };
+
+  /**
+   * Get/set the direction the audio source is pointing in the 3D cartesian coordinate
+   * space. Depending on how direction the sound is, based on the `cone` attributes,
+   * a sound pointing away from the listener can be quiet or silent.
+   * @param  {Number} x  The x-orientation of the source.
+   * @param  {Number} y  The y-orientation of the source.
+   * @param  {Number} z  The z-orientation of the source.
+   * @param  {Number} id (optional) The sound ID. If none is passed, all in group will be updated.
+   * @return {Howl/Array}    Returns self or the current 3D spatial orientation: [x, y, z].
+   */
+  Howl.prototype.orientation = function(x, y, z, id) {
+    var self = this;
+
+    // Stop right here if not using Web Audio.
+    if (!self._webAudio) {
+      return self;
+    }
+
+    // If the sound hasn't loaded, add it to the load queue to change orientation when capable.
+    if (self._state !== 'loaded') {
+      self._queue.push({
+        event: 'orientation',
+        action: function() {
+          self.orientation(x, y, z, id);
+        }
+      });
+
+      return self;
+    }
+
+    // Set the defaults for optional 'y' & 'z'.
+    y = (typeof y !== 'number') ? self._orientation[1] : y;
+    z = (typeof z !== 'number') ? self._orientation[2] : z;
+
+    // Setup the group's spatial orientation if no ID is passed.
+    if (typeof id === 'undefined') {
+      // Return the group's spatial orientation if no parameters are passed.
+      if (typeof x === 'number') {
+        self._orientation = [x, y, z];
+      } else {
+        return self._orientation;
+      }
+    }
+
+    // Change the spatial orientation of one or all sounds in group.
+    var ids = self._getSoundIds(id);
+    for (var i=0; i<ids.length; i++) {
+      // Get the sound.
+      var sound = self._soundById(ids[i]);
+
+      if (sound) {
+        if (typeof x === 'number') {
+          sound._orientation = [x, y, z];
+
+          if (sound._node) {
+            // Check if there is a panner setup and create a new one if not.
+            if (!sound._panner) {
+              // Make sure we have a position to setup the node with.
+              if (!sound._pos) {
+                sound._pos = self._pos || [0, 0, -0.5];
+              }
+
+              setupPanner(sound, 'spatial');
+            }
+
+            if (typeof sound._panner.orientationX !== 'undefined') {
+              sound._panner.orientationX.setValueAtTime(x, Howler.ctx.currentTime);
+              sound._panner.orientationY.setValueAtTime(y, Howler.ctx.currentTime);
+              sound._panner.orientationZ.setValueAtTime(z, Howler.ctx.currentTime);
+            } else {
+              sound._panner.setOrientation(x, y, z);
+            }
+          }
+
+          self._emit('orientation', sound._id);
+        } else {
+          return sound._orientation;
+        }
+      }
+    }
+
+    return self;
+  };
+
+  /**
+   * Get/set the panner node's attributes for a sound or group of sounds.
+   * This method can optionall take 0, 1 or 2 arguments.
+   *   pannerAttr() -> Returns the group's values.
+   *   pannerAttr(id) -> Returns the sound id's values.
+   *   pannerAttr(o) -> Set's the values of all sounds in this Howl group.
+   *   pannerAttr(o, id) -> Set's the values of passed sound id.
+   *
+   *   Attributes:
+   *     coneInnerAngle - (360 by default) A parameter for directional audio sources, this is an angle, in degrees,
+   *                      inside of which there will be no volume reduction.
+   *     coneOuterAngle - (360 by default) A parameter for directional audio sources, this is an angle, in degrees,
+   *                      outside of which the volume will be reduced to a constant value of `coneOuterGain`.
+   *     coneOuterGain - (0 by default) A parameter for directional audio sources, this is the gain outside of the
+   *                     `coneOuterAngle`. It is a linear value in the range `[0, 1]`.
+   *     distanceModel - ('inverse' by default) Determines algorithm used to reduce volume as audio moves away from
+   *                     listener. Can be `linear`, `inverse` or `exponential.
+   *     maxDistance - (10000 by default) The maximum distance between source and listener, after which the volume
+   *                   will not be reduced any further.
+   *     refDistance - (1 by default) A reference distance for reducing volume as source moves further from the listener.
+   *                   This is simply a variable of the distance model and has a different effect depending on which model
+   *                   is used and the scale of your coordinates. Generally, volume will be equal to 1 at this distance.
+   *     rolloffFactor - (1 by default) How quickly the volume reduces as source moves from listener. This is simply a
+   *                     variable of the distance model and can be in the range of `[0, 1]` with `linear` and `[0, ∞]`
+   *                     with `inverse` and `exponential`.
+   *     panningModel - ('HRTF' by default) Determines which spatialization algorithm is used to position audio.
+   *                     Can be `HRTF` or `equalpower`.
+   *
+   * @return {Howl/Object} Returns self or current panner attributes.
+   */
+  Howl.prototype.pannerAttr = function() {
+    var self = this;
+    var args = arguments;
+    var o, id, sound;
+
+    // Stop right here if not using Web Audio.
+    if (!self._webAudio) {
+      return self;
+    }
+
+    // Determine the values based on arguments.
+    if (args.length === 0) {
+      // Return the group's panner attribute values.
+      return self._pannerAttr;
+    } else if (args.length === 1) {
+      if (typeof args[0] === 'object') {
+        o = args[0];
+
+        // Set the grou's panner attribute values.
+        if (typeof id === 'undefined') {
+          if (!o.pannerAttr) {
+            o.pannerAttr = {
+              coneInnerAngle: o.coneInnerAngle,
+              coneOuterAngle: o.coneOuterAngle,
+              coneOuterGain: o.coneOuterGain,
+              distanceModel: o.distanceModel,
+              maxDistance: o.maxDistance,
+              refDistance: o.refDistance,
+              rolloffFactor: o.rolloffFactor,
+              panningModel: o.panningModel
+            };
+          }
+
+          self._pannerAttr = {
+            coneInnerAngle: typeof o.pannerAttr.coneInnerAngle !== 'undefined' ? o.pannerAttr.coneInnerAngle : self._coneInnerAngle,
+            coneOuterAngle: typeof o.pannerAttr.coneOuterAngle !== 'undefined' ? o.pannerAttr.coneOuterAngle : self._coneOuterAngle,
+            coneOuterGain: typeof o.pannerAttr.coneOuterGain !== 'undefined' ? o.pannerAttr.coneOuterGain : self._coneOuterGain,
+            distanceModel: typeof o.pannerAttr.distanceModel !== 'undefined' ? o.pannerAttr.distanceModel : self._distanceModel,
+            maxDistance: typeof o.pannerAttr.maxDistance !== 'undefined' ? o.pannerAttr.maxDistance : self._maxDistance,
+            refDistance: typeof o.pannerAttr.refDistance !== 'undefined' ? o.pannerAttr.refDistance : self._refDistance,
+            rolloffFactor: typeof o.pannerAttr.rolloffFactor !== 'undefined' ? o.pannerAttr.rolloffFactor : self._rolloffFactor,
+            panningModel: typeof o.pannerAttr.panningModel !== 'undefined' ? o.pannerAttr.panningModel : self._panningModel
+          };
+        }
+      } else {
+        // Return this sound's panner attribute values.
+        sound = self._soundById(parseInt(args[0], 10));
+        return sound ? sound._pannerAttr : self._pannerAttr;
+      }
+    } else if (args.length === 2) {
+      o = args[0];
+      id = parseInt(args[1], 10);
+    }
+
+    // Update the values of the specified sounds.
+    var ids = self._getSoundIds(id);
+    for (var i=0; i<ids.length; i++) {
+      sound = self._soundById(ids[i]);
+
+      if (sound) {
+        // Merge the new values into the sound.
+        var pa = sound._pannerAttr;
+        pa = {
+          coneInnerAngle: typeof o.coneInnerAngle !== 'undefined' ? o.coneInnerAngle : pa.coneInnerAngle,
+          coneOuterAngle: typeof o.coneOuterAngle !== 'undefined' ? o.coneOuterAngle : pa.coneOuterAngle,
+          coneOuterGain: typeof o.coneOuterGain !== 'undefined' ? o.coneOuterGain : pa.coneOuterGain,
+          distanceModel: typeof o.distanceModel !== 'undefined' ? o.distanceModel : pa.distanceModel,
+          maxDistance: typeof o.maxDistance !== 'undefined' ? o.maxDistance : pa.maxDistance,
+          refDistance: typeof o.refDistance !== 'undefined' ? o.refDistance : pa.refDistance,
+          rolloffFactor: typeof o.rolloffFactor !== 'undefined' ? o.rolloffFactor : pa.rolloffFactor,
+          panningModel: typeof o.panningModel !== 'undefined' ? o.panningModel : pa.panningModel
+        };
+
+        // Update the panner values or create a new panner if none exists.
+        var panner = sound._panner;
+        if (panner) {
+          panner.coneInnerAngle = pa.coneInnerAngle;
+          panner.coneOuterAngle = pa.coneOuterAngle;
+          panner.coneOuterGain = pa.coneOuterGain;
+          panner.distanceModel = pa.distanceModel;
+          panner.maxDistance = pa.maxDistance;
+          panner.refDistance = pa.refDistance;
+          panner.rolloffFactor = pa.rolloffFactor;
+          panner.panningModel = pa.panningModel;
+        } else {
+          // Make sure we have a position to setup the node with.
+          if (!sound._pos) {
+            sound._pos = self._pos || [0, 0, -0.5];
+          }
+
+          // Create a new panner node.
+          setupPanner(sound, 'spatial');
+        }
+      }
+    }
+
+    return self;
+  };
+
+  /** Single Sound Methods **/
+  /***************************************************************************/
+
+  /**
+   * Add new properties to the core Sound init.
+   * @param  {Function} _super Core Sound init method.
+   * @return {Sound}
+   */
+  Sound.prototype.init = (function(_super) {
+    return function() {
+      var self = this;
+      var parent = self._parent;
+
+      // Setup user-defined default properties.
+      self._orientation = parent._orientation;
+      self._stereo = parent._stereo;
+      self._pos = parent._pos;
+      self._pannerAttr = parent._pannerAttr;
+
+      // Complete initilization with howler.js core Sound's init function.
+      _super.call(this);
+
+      // If a stereo or position was specified, set it up.
+      if (self._stereo) {
+        parent.stereo(self._stereo);
+      } else if (self._pos) {
+        parent.pos(self._pos[0], self._pos[1], self._pos[2], self._id);
+      }
+    };
+  })(Sound.prototype.init);
+
+  /**
+   * Override the Sound.reset method to clean up properties from the spatial plugin.
+   * @param  {Function} _super Sound reset method.
+   * @return {Sound}
+   */
+  Sound.prototype.reset = (function(_super) {
+    return function() {
+      var self = this;
+      var parent = self._parent;
+
+      // Reset all spatial plugin properties on this sound.
+      self._orientation = parent._orientation;
+      self._stereo = parent._stereo;
+      self._pos = parent._pos;
+      self._pannerAttr = parent._pannerAttr;
+
+      // If a stereo or position was specified, set it up.
+      if (self._stereo) {
+        parent.stereo(self._stereo);
+      } else if (self._pos) {
+        parent.pos(self._pos[0], self._pos[1], self._pos[2], self._id);
+      } else if (self._panner) {
+        // Disconnect the panner.
+        self._panner.disconnect(0);
+        self._panner = undefined;
+        parent._refreshBuffer(self);
+      }
+
+      // Complete resetting of the sound.
+      return _super.call(this);
+    };
+  })(Sound.prototype.reset);
+
+  /** Helper Methods **/
+  /***************************************************************************/
+
+  /**
+   * Create a new panner node and save it on the sound.
+   * @param  {Sound} sound Specific sound to setup panning on.
+   * @param {String} type Type of panner to create: 'stereo' or 'spatial'.
+   */
+  var setupPanner = function(sound, type) {
+    type = type || 'spatial';
+
+    // Create the new panner node.
+    if (type === 'spatial') {
+      sound._panner = Howler.ctx.createPanner();
+      sound._panner.coneInnerAngle = sound._pannerAttr.coneInnerAngle;
+      sound._panner.coneOuterAngle = sound._pannerAttr.coneOuterAngle;
+      sound._panner.coneOuterGain = sound._pannerAttr.coneOuterGain;
+      sound._panner.distanceModel = sound._pannerAttr.distanceModel;
+      sound._panner.maxDistance = sound._pannerAttr.maxDistance;
+      sound._panner.refDistance = sound._pannerAttr.refDistance;
+      sound._panner.rolloffFactor = sound._pannerAttr.rolloffFactor;
+      sound._panner.panningModel = sound._pannerAttr.panningModel;
+
+      if (typeof sound._panner.positionX !== 'undefined') {
+        sound._panner.positionX.setValueAtTime(sound._pos[0], Howler.ctx.currentTime);
+        sound._panner.positionY.setValueAtTime(sound._pos[1], Howler.ctx.currentTime);
+        sound._panner.positionZ.setValueAtTime(sound._pos[2], Howler.ctx.currentTime);
+      } else {
+        sound._panner.setPosition(sound._pos[0], sound._pos[1], sound._pos[2]);
+      }
+
+      if (typeof sound._panner.orientationX !== 'undefined') {
+        sound._panner.orientationX.setValueAtTime(sound._orientation[0], Howler.ctx.currentTime);
+        sound._panner.orientationY.setValueAtTime(sound._orientation[1], Howler.ctx.currentTime);
+        sound._panner.orientationZ.setValueAtTime(sound._orientation[2], Howler.ctx.currentTime);
+      } else {
+        sound._panner.setOrientation(sound._orientation[0], sound._orientation[1], sound._orientation[2]);
+      }
+    } else {
+      sound._panner = Howler.ctx.createStereoPanner();
+      sound._panner.pan.setValueAtTime(sound._stereo, Howler.ctx.currentTime);
+    }
+
+    sound._panner.connect(sound._node);
+
+    // Update the connections.
+    if (!sound._paused) {
+      sound._parent.pause(sound._id, true).play(sound._id, true);
+    }
+  };
+})();
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+
+/***/ }),
+/* 255 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "rhythm-game__wrap" },
+    [
+      _c("loader", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.displayState == "loading",
+            expression: "displayState == 'loading'"
+          }
+        ]
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.displayState == "instructions",
+              expression: "displayState == 'instructions'"
+            }
+          ],
+          staticClass: "rhythm__instructions"
+        },
+        [
+          _c(
+            "SexyButton",
+            {
+              attrs: { color: "green", cols: 3 },
+              nativeOn: {
+                click: function($event) {
+                  return _vm.startGame()
+                }
+              }
+            },
+            [_vm._v("Začni")]
+          ),
+          _vm._v(" "),
+          _c("ul", { staticClass: "rhythm__instructions-list" }, [
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v("Preizkusil se boš v ritmičnem nareku.")
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v(
+                "Vaja bo v " +
+                  _vm._s(_vm.bar.num_beats) +
+                  "/" +
+                  _vm._s(_vm.bar.base_note) +
+                  " taktu."
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v("Slišal boš " + _vm._s(_vm.num_beats_text) + ".")
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v("Na začetku bo metronom izvajal en takt.")
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v(
+                "Tempo bo " +
+                  _vm._s(
+                    _vm.questionState.exercise != null
+                      ? _vm.questionState.exercise.BPM
+                      : "??"
+                  ) +
+                  " udarcev na minuto."
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v(
+                "Za reševanje imaš na voljo " +
+                  _vm._s(_vm.questionState.maxSeconds) +
+                  " sekund."
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v(
+                "Odgovor lahko preveriš največ " +
+                  _vm._s(_vm.questionState.maxChecks) +
+                  "-krat."
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "rhythm__instructions-list-item",
+                staticStyle: { "list-style-type": "none" }
+              },
+              [
+                _c("sexy-button", {
+                  attrs: {
+                    text: _vm.metronomeButtonText,
+                    color: _vm.metronomeButtonColor,
+                    cols: 3
+                  },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.toggleMetronome()
+                    }
+                  }
+                })
+              ],
+              1
+            )
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.displayState == "ready",
+              expression: "displayState == 'ready'"
+            }
+          ],
+          staticClass: "ready-rhythm-game-view"
+        },
+        [
+          _c("div", { staticClass: "staff_view_wrap" }, [
+            _c(
+              "div",
+              { staticClass: "staff_view_contents" },
+              [
+                _c(
+                  "StaffView",
+                  {
+                    ref: "staff_view",
+                    attrs: {
+                      bar: _vm.bar,
+                      enabledContexts: ["minimap", "zoomview"]
+                    }
+                  },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "rhythm-game__staff__first-row" },
+                      [_c("div", { attrs: { id: "first-row" } })]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "rhythm-game__staff__second-row" },
+                      [_c("div", { attrs: { id: "second-row" } })]
+                    )
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "staff_view_time_slider",
+                style: { width: _vm.timeLeftPercents }
+              },
+              [_vm._v(" ")]
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "Keyboard",
+            _vm._b(
+              {
+                ref: "keyboard",
+                attrs: {
+                  playbackStatus: _vm.playbackStatus,
+                  question: _vm.questionState,
+                  say: _vm.showError
+                }
+              },
+              "Keyboard",
+              { key_callback: _vm.keyboard_click },
+              false
+            )
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errorMessage,
+                  expression: "errorMessage"
+                }
+              ],
+              staticClass: "error"
+            },
+            [_vm._v(_vm._s(_vm.errorMessage))]
+          ),
+          _vm._v(" "),
+          _vm.showHelp
+            ? _c("KeyboardHelp", { attrs: { hide: _vm.hideHelp } })
+            : _vm._e(),
+          _vm._v(" "),
+          ["wrong", "correct", "waiting"].indexOf(_vm.questionState.check) > -1
+            ? _c(
+                "div",
+                { staticClass: "ready-rhythm-game-view__checkOverlay" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "ready-rhythm-game-view__checkOverlay__center"
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "ready-rhythm-game-view__checkOverlay__center_bubble"
+                        },
+                        [
+                          _vm.questionState.check == "wrong"
+                            ? _c(
+                                "div",
+                                {},
+                                [
+                                  _c("icon", {
+                                    attrs: { name: "times", scale: "4" }
+                                  })
+                                ],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.questionState.check == "wrong"
+                            ? _c("div", { staticClass: "timesLeft" }, [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(
+                                      _vm.questionState.statistics.nChecks +
+                                        "/" +
+                                        _vm.questionState.maxChecks
+                                    ) +
+                                    "\n                    "
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.questionState.check == "correct"
+                            ? _c("icon", {
+                                attrs: { name: "check", scale: "4" }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.questionState.check == "waiting"
+                            ? _c("icon", {
+                                attrs: { name: "refresh", scale: "4", spin: "" }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.questionState.check == "error"
+                            ? _c("icon", {
+                                attrs: { name: "exclamation-circle" }
+                              })
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ]
+              )
+            : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "audio",
+        {
+          ref: "rhythmAudio",
+          on: {
+            loadedmetadata: function($event) {
+              return _vm.showMetadataAlert()
+            },
+            play: function($event) {
+              return _vm.setPlaying(true)
+            },
+            ended: function($event) {
+              return _vm.setPlaying(false)
+            },
+            pause: function($event) {
+              return _vm.setPlaying(false)
+            }
+          }
+        },
+        [
+          _c("source", {
+            attrs: { src: _vm.rhythmAudioSource, type: "audio/mpeg" }
+          }),
+          _vm._v("\n        I hate Internet explorer.\n    ")
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.displayState == "diff",
+              expression: "displayState == 'diff'"
+            }
+          ],
+          staticClass: "rhythm-diff-check-view"
+        },
+        [
+          _c("DiffView", {
+            ref: "diff_view",
+            attrs: {
+              success: _vm.questionState.wasCorrect,
+              dismiss: _vm.continueGame,
+              bar: _vm.bar
+            }
+          })
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+      _vm._v("Če ne veš, kako deluje kakšen gumb, pritisni gumb Pomoč."),
+      _c("br"),
+      _vm._v("Dobro je, da si Pomoč ogledaš pred prvo igro.")
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5e41cbba", module.exports)
+  }
+}
+
+/***/ }),
+/* 256 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(257)
+/* template */
+var __vue_template__ = __webpack_require__(264)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/PlaybackTest.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7c75ac84", Component.options)
+  } else {
+    hotAPI.reload("data-v-7c75ac84", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 257 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__games_rhythm_noteStore__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__games_rhythm_exerciseGenerator__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__games_rhythm_rhythmPlaybackEngine__ = __webpack_require__(260);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuex__ = __webpack_require__(4);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+
+
+
+var util = __webpack_require__(10);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    components: {
+        StaffView: __WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue___default.a, SexyButton: __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue___default.a
+    },
+
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_5_vuex__["b" /* mapActions */])(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi']), {
+        play: function play() {
+
+            var durs = util.generate_playback_durations(this.notes.notes);
+            var start = 0;
+            for (var i = 0; i < durs.length; i++) {
+
+                var d = durs[i];
+                var _actualDuration = Math.abs(d.valueOf()) * this.bar.base_note * (60 / this.BPM);
+
+                if (d > 0) {
+
+                    this.MIDISources.push(MIDI.noteOn(5, 65, 127, start, _actualDuration));
+                    MIDI.noteOff(5, 65, start + _actualDuration - 0.1);
+                }
+
+                start += _actualDuration;
+            }
+        },
+        stop: function stop() {
+            this.MIDISources.forEach(function (s) {
+                s.stop();
+            });
+
+            this.MIDISources = [];
+        },
+        playNote: function playNote(d) {
+
+            actualDuration = dur.valueOf() * this.bar.base_note * (60 / this.BPM);
+
+            // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
+            // Lahko bi kdaj v prihodnosti dodali melodično-ritmični narek...
+            // S tem Math.min sem hotel tudi povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
+            var sPitch = this.pitch[Math.min(this.pitch.length - 1, this.currentNoteID - 1)];
+
+            // Zaigraj, ustavi se samodejno.
+            this.midi.noteOn(this.channel, sPitch, this.intensity, 0);
+            this.midi.noteOff(this.channel, sPitch, actualDuration);
+        },
+        loadQuestion: function loadQuestion() {
+            var _this = this;
+
+            var out = this;
+
+            out.playback = new __WEBPACK_IMPORTED_MODULE_4__games_rhythm_rhythmPlaybackEngine__["a" /* default */](MIDI);
+
+            return this.generateQuestion({
+                game_id: 163,
+                number: 1,
+                chapter: 1
+            }).then(function (question) {
+
+                var exercise = question.content;
+
+                var exid = exercise.id;
+                _this.audioSource = "/api/sound/" + exid;
+
+                _this.$refs.rhythmAudio.pause();
+                _this.$refs.rhythmAudio.load();
+                _this.$refs.rhythmAudio.addEventListener('canplaythrough', function (e) {
+
+                    _this.$refs.rhythmAudio.play();
+                }, false);
+
+                out.notes = new __WEBPACK_IMPORTED_MODULE_2__games_rhythm_noteStore__["a" /* default */](exercise.bar, null, out.$refs.staff_view.render);
+
+                out.notes.notes = exercise.notes;
+                out.BPM = exercise.BPM;
+
+                out.notes._call_render();
+
+                out.playback.setBPM(exercise.BPM);
+                out.playback.setBar(exercise.bar);
+
+                out.playback.load(exercise.notes);
+                console.log(util.generate_playback_durations(exercise.notes));
+            });
+        }
+    }),
+
+    data: function data() {
+        return {
+
+            audioSource: "",
+
+            offsetConstant: 0.195,
+
+            MIDISources: [],
+
+            playback: null,
+
+            notes: null,
+            bar: {
+                num_beats: 4,
+                base_note: 4
+            },
+            BPM: 60,
+            cursor: {
+                position: 0,
+                x: 0,
+                in_tuplet: false,
+
+                cursor_moved: this.cursor_moved,
+
+                selection: null,
+                selectionMode: false,
+                selectionSelected: false,
+
+                clearSelection: this.clearSelection,
+                toggleSelectionMode: this.toggleSelectionMode,
+
+                editing_tuplet: false,
+                editing_tuplet_index: -1
+            }
+        };
+    },
+    mounted: function mounted() {
+
+        this.$refs.staff_view.init({ cursor: { enabled: false } });
+
+        // Init MIDI
+        var instruments = [{
+            channel: 5,
+            soundfont: 'trumpet',
+            colume: 127
+        }, {
+            channel: 6,
+            soundfont: 'xylophone',
+            volume: 200
+        }];
+
+        var out = this;
+
+        MIDI.loadPlugin({
+            soundfontUrl: '/soundfonts/',
+            instruments: instruments.map(function (e) {
+                return e.soundfont;
+            }),
+            targetFormat: 'mp3',
+            onsuccess: function onsuccess() {
+                for (var i = 0; i < instruments.length; i++) {
+                    var instrument = instruments[i];
+                    MIDI.setVolume(instrument.channel, instrument.volume);
+                    MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
+                }
+
+                out.loadQuestion();
+
+                /*
+                  let v = require('./games/rhythm/vaje.json');
+                out.notes.notes = v[0].notes;
+                out.notes._call_render();
+                out.playback = new RhythmPlaybackEngine(MIDI);
+                out.playback.BPM = v[0].BPM;
+                out.playback.bar_info = v[0].bar;
+                  out.playback.setBPM(v[0].BPM);
+                out.playback.setBar(v[0].bar);
+                  out.playback.load(v[0].notes);
+                console.log(util.generate_playback_durations(v[0].notes));
+                  */
+            }
+        });
+    }
+});
+
+/***/ }),
+/* 258 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var Fraction = __webpack_require__(7);
+
+var RhythmUtilities = __webpack_require__(10);
+
+var ExerciseGenerator = function ExerciseGenerator() {
+
+    var examples = __webpack_require__(259);
+
+    this.currentExercise = null;
+    this.currentExerciseInfo = null;
+
+    this.currentExampleNumber = -1;
+    this.generatorSequence = [];
+
+    this.generate = function (numGen) {
+
+        var number = Math.floor(Math.random() * (examples.length - 1));
+
+        this.currentExerciseInfo = examples[number];
+        this.currentExercise = examples[number].notes;
+
+        return examples[number];
+    };
+
+    this.check = function (value) {
+
+        var soundsLikeFunc = RhythmUtilities.generate_playback_durations;
+
+        // Return string fractions
+        var ex = soundsLikeFunc(this.currentExercise, true);
+        var us = soundsLikeFunc(value, true);
+
+        return _.isEqual(ex, us);
+    };
+
+    this.get_bar_count = function () {
+
+        return RhythmUtilities.get_bar_count(this.currentExercise);
+    };
+};
+
+/* unused harmony default export */ var _unused_webpack_default_export = (ExerciseGenerator);
+
+/***/ }),
+/* 259 */
+/***/ (function(module, exports) {
+
+module.exports = [{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  1/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"notes":[{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4}]},{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  2/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"notes":[{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4}]}]
+
+/***/ }),
+/* 260 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var Channel = __webpack_require__(261);
+var util = __webpack_require__(10);
+var Instruments = __webpack_require__(262);
+
+var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
+
+    if (!window.___player) window.___player = [];
+    window.___player.push(this);
+
+    this.metronome = true;
+
+    this.lastNotes = [];
+    this.BPM = 120;
+    this.bar = {};
+
+    this.playing = false;
+
+    var player = new Instruments();
+
+    var metronomeConfig = {
+        program: 4,
+        channel: 1,
+        intensity: 3,
+        constantDuration: 0.001
+    };
+
+    var trackConfig = {
+        program: 18,
+        channel: 0,
+        intensity: 20
+    };
+
+    var out = this;
+
+    this.metronomeChannel = new Channel(player, metronomeConfig, function () {});
+    this.trackChannel = new Channel(player, trackConfig, function () {
+        out.playing = false;
+    });
+
+    this.percentPlayed = function () {
+        return currentNoteID / this.lastNotes.length;
+    }, this.playCountIn = function (bar, BPM, num_beats) {
+
+        var countinPitches = util.get_countin_pitches(bar, num_beats);
+        var countinNotes = util.get_countin_notes(bar, num_beats);
+        var countInDurations = util.generate_playback_durations(countinNotes);
+
+        var out = this;
+
+        return new Promise(function (resolve, reject) {
+            out.metronomeChannel.play(BPM, bar, countinPitches, countInDurations, function () {
+                resolve();
+            }, null);
+        });
+    };
+
+    this.play = function (bar, BPM, values) {
+
+        this.stop();
+
+        this.playing = true;
+
+        if (!bar) {
+            bar = this.bar;
+        }
+
+        if (!BPM) {
+            BPM = this.BPM;
+        }
+
+        if (!values) {
+            values = this.lastNotes;
+        } else {
+            this.lastNotes = values;
+        }
+
+        var defaultPitch = [67];
+        var notes = util.generate_playback_durations(values);
+
+        var o2 = this;
+        return this.playCountIn(bar, BPM, 1).then(function () {
+
+            if (o2.metronome) {
+                o2.playCountIn.apply(o2, [bar, BPM, 2]); // static num_bars...
+            }
+
+            return new Promise(function (resolve, reject) {
+                o2.trackChannel.play(BPM, bar, defaultPitch, notes, resolve);
+            });
+        });
+    };
+
+    this.stop = function () {
+        this.metronomeChannel.stop();
+        this.trackChannel.stop();
+    };
+
+    this.load = function (notes) {
+        this.lastNotes = notes;
+    };
+
+    this.setBar = function (newBar) {
+
+        this.bar.num_beats = newBar.num_beats;
+        this.bar.base_note = newBar.base_note;
+        if (newBar.subdivisions) {
+            this.bar.subdivisions = newBar.subdivisions;
+        } else {
+            this.bar.subdivisions = null;
+        }
+    };
+
+    this.setBPM = function (newBPM) {
+        this.BPM = newBPM;
+    };
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (RhythmPlaybackEngine);
+
+/***/ }),
+/* 261 */
 /***/ (function(module, exports) {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -66509,13 +71123,13 @@ module.exports = function (player, conf, playingStopped) {
 };
 
 /***/ }),
-/* 250 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Synth = __webpack_require__(251)
+var Synth = __webpack_require__(263)
 
 module.exports = Player
 
@@ -66671,7 +71285,7 @@ function Player(audioContext, destination) {
 
 
 /***/ }),
-/* 251 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67793,659 +72407,7 @@ if (module) module.exports = WebAudioTinySynth
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)(module)))
 
 /***/ }),
-/* 252 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "rhythm-game__wrap" },
-    [
-      _c("loader", {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.displayState == "loading",
-            expression: "displayState == 'loading'"
-          }
-        ]
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.displayState == "instructions",
-              expression: "displayState == 'instructions'"
-            }
-          ],
-          staticClass: "rhythm__instructions"
-        },
-        [
-          _c(
-            "SexyButton",
-            {
-              attrs: { color: "green", cols: 3 },
-              nativeOn: {
-                click: function($event) {
-                  return _vm.startGame()
-                }
-              }
-            },
-            [_vm._v("Začni")]
-          ),
-          _vm._v(" "),
-          _c("ul", { staticClass: "rhythm__instructions-list" }, [
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v("Preizkusila / preizkusil se boš v ritmičnem nareku.")
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v(
-                "Vaja bo v " +
-                  _vm._s(_vm.bar.num_beats) +
-                  "/" +
-                  _vm._s(_vm.bar.base_note) +
-                  " taktu."
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v("Slišala / slišal boš " + _vm._s(_vm.num_beats_text) + ".")
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v("Na začetku bo metronom izvajal en takt.")
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v(
-                "Tempo bo " +
-                  _vm._s(
-                    _vm.questionState.exercise != null
-                      ? _vm.questionState.exercise.BPM
-                      : "??"
-                  ) +
-                  " udarcev na minuto."
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v(
-                "Za reševanje imaš na voljo " +
-                  _vm._s(_vm.questionState.maxSeconds) +
-                  " sekund."
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v(
-                "Odgovor lahko preveriš največ " +
-                  _vm._s(_vm.questionState.maxChecks) +
-                  "-krat."
-              )
-            ]),
-            _vm._v(" "),
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "li",
-              {
-                staticClass: "rhythm__instructions-list-item",
-                staticStyle: { "list-style-type": "none" }
-              },
-              [
-                _c("sexy-button", {
-                  attrs: {
-                    text: _vm.metronomeButtonText,
-                    color: _vm.metronomeButtonColor,
-                    cols: 3
-                  },
-                  nativeOn: {
-                    click: function($event) {
-                      _vm.playback.metronome = !_vm.playback.metronome
-                    }
-                  }
-                })
-              ],
-              1
-            )
-          ])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.displayState == "ready",
-              expression: "displayState == 'ready'"
-            }
-          ],
-          staticClass: "ready-rhythm-game-view"
-        },
-        [
-          _c("div", { staticClass: "staff_view_wrap" }, [
-            _c(
-              "div",
-              { staticClass: "staff_view_contents" },
-              [
-                _c(
-                  "StaffView",
-                  {
-                    ref: "staff_view",
-                    attrs: {
-                      bar: _vm.bar,
-                      enabledContexts: ["minimap", "zoomview"]
-                    }
-                  },
-                  [
-                    _c(
-                      "div",
-                      { staticClass: "rhythm-game__staff__first-row" },
-                      [_c("div", { attrs: { id: "first-row" } })]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "rhythm-game__staff__second-row" },
-                      [_c("div", { attrs: { id: "second-row" } })]
-                    )
-                  ]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "staff_view_time_slider",
-                style: { width: _vm.timeLeftPercents }
-              },
-              [_vm._v(" ")]
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "Keyboard",
-            _vm._b(
-              {
-                ref: "keyboard",
-                attrs: {
-                  playbackStatus: _vm.playback,
-                  question: _vm.questionState,
-                  say: _vm.showError
-                }
-              },
-              "Keyboard",
-              { key_callback: _vm.keyboard_click },
-              false
-            )
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.errorMessage,
-                  expression: "errorMessage"
-                }
-              ],
-              staticClass: "error"
-            },
-            [_vm._v(_vm._s(_vm.errorMessage))]
-          ),
-          _vm._v(" "),
-          _vm.showHelp
-            ? _c("KeyboardHelp", { attrs: { hide: _vm.hideHelp } })
-            : _vm._e(),
-          _vm._v(" "),
-          ["wrong", "correct", "waiting"].indexOf(_vm.questionState.check) > -1
-            ? _c(
-                "div",
-                { staticClass: "ready-rhythm-game-view__checkOverlay" },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "ready-rhythm-game-view__checkOverlay__center"
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "ready-rhythm-game-view__checkOverlay__center_bubble"
-                        },
-                        [
-                          _vm.questionState.check == "wrong"
-                            ? _c(
-                                "div",
-                                {},
-                                [
-                                  _c("icon", {
-                                    attrs: { name: "times", scale: "4" }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.questionState.check == "wrong"
-                            ? _c("div", { staticClass: "timesLeft" }, [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(
-                                      _vm.questionState.statistics.nChecks +
-                                        "/" +
-                                        _vm.questionState.maxChecks
-                                    ) +
-                                    "\n                    "
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.questionState.check == "correct"
-                            ? _c("icon", {
-                                attrs: { name: "check", scale: "4" }
-                              })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.questionState.check == "waiting"
-                            ? _c("icon", {
-                                attrs: { name: "refresh", scale: "4", spin: "" }
-                              })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.questionState.check == "error"
-                            ? _c("icon", {
-                                attrs: { name: "exclamation-circle" }
-                              })
-                            : _vm._e()
-                        ],
-                        1
-                      )
-                    ]
-                  )
-                ]
-              )
-            : _vm._e()
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.displayState == "diff",
-              expression: "displayState == 'diff'"
-            }
-          ],
-          staticClass: "rhythm-diff-check-view"
-        },
-        [
-          _c("DiffView", {
-            ref: "diff_view",
-            attrs: {
-              success: _vm.questionState.wasCorrect,
-              dismiss: _vm.continueGame,
-              bar: _vm.bar
-            }
-          })
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-      _vm._v("Če ne veš, kako deluje kakšen gumb, pritisni gumb Pomoč."),
-      _c("br"),
-      _vm._v("Dobro je, da si Pomoč ogledaš pred prvo igro.")
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5e41cbba", module.exports)
-  }
-}
-
-/***/ }),
-/* 253 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(254)
-/* template */
-var __vue_template__ = __webpack_require__(257)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/PlaybackTest.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7c75ac84", Component.options)
-  } else {
-    hotAPI.reload("data-v-7c75ac84", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 254 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__games_rhythm_noteStore__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__games_rhythm_exerciseGenerator__ = __webpack_require__(255);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__games_rhythm_rhythmPlaybackEngine__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuex__ = __webpack_require__(4);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-
-
-
-
-
-var util = __webpack_require__(9);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-
-    components: {
-        StaffView: __WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue___default.a, SexyButton: __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue___default.a
-    },
-
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_5_vuex__["b" /* mapActions */])(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi']), {
-        play: function play() {
-
-            var durs = util.generate_playback_durations(this.notes.notes);
-            var start = 0;
-            for (var i = 0; i < durs.length; i++) {
-
-                var d = durs[i];
-                var _actualDuration = Math.abs(d.valueOf()) * this.bar.base_note * (60 / this.BPM);
-
-                if (d > 0) {
-
-                    this.MIDISources.push(MIDI.noteOn(5, 65, 127, start, _actualDuration));
-                    MIDI.noteOff(5, 65, start + _actualDuration - 0.1);
-                }
-
-                start += _actualDuration;
-            }
-        },
-        stop: function stop() {
-            this.MIDISources.forEach(function (s) {
-                s.stop();
-            });
-
-            this.MIDISources = [];
-        },
-        playNote: function playNote(d) {
-
-            actualDuration = dur.valueOf() * this.bar.base_note * (60 / this.BPM);
-
-            // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
-            // Lahko bi kdaj v prihodnosti dodali melodično-ritmični narek...
-            // S tem Math.min sem hotel tudi povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
-            var sPitch = this.pitch[Math.min(this.pitch.length - 1, this.currentNoteID - 1)];
-
-            // Zaigraj, ustavi se samodejno.
-            this.midi.noteOn(this.channel, sPitch, this.intensity, 0);
-            this.midi.noteOff(this.channel, sPitch, actualDuration);
-        },
-        loadQuestion: function loadQuestion() {
-
-            var out = this;
-
-            out.playback = new __WEBPACK_IMPORTED_MODULE_4__games_rhythm_rhythmPlaybackEngine__["a" /* default */](MIDI);
-
-            return this.generateQuestion({
-                game_id: 344,
-                number: 1,
-                chapter: 1
-            }).then(function (question) {
-
-                var exercise = question.content;
-
-                out.notes = new __WEBPACK_IMPORTED_MODULE_2__games_rhythm_noteStore__["a" /* default */](exercise.bar, null, out.$refs.staff_view.render);
-
-                out.notes.notes = exercise.notes;
-                out.BPM = exercise.BPM;
-
-                out.notes._call_render();
-
-                out.playback.setBPM(exercise.BPM);
-                out.playback.setBar(exercise.bar);
-
-                out.playback.load(exercise.notes);
-                console.log(util.generate_playback_durations(exercise.notes));
-            });
-        }
-    }),
-
-    data: function data() {
-        return {
-
-            offsetConstant: 0.195,
-
-            MIDISources: [],
-
-            playback: null,
-
-            notes: null,
-            bar: {
-                num_beats: 4,
-                base_note: 4
-            },
-            BPM: 60,
-            cursor: {
-                position: 0,
-                x: 0,
-                in_tuplet: false,
-
-                cursor_moved: this.cursor_moved,
-
-                selection: null,
-                selectionMode: false,
-                selectionSelected: false,
-
-                clearSelection: this.clearSelection,
-                toggleSelectionMode: this.toggleSelectionMode,
-
-                editing_tuplet: false,
-                editing_tuplet_index: -1
-            }
-        };
-    },
-    mounted: function mounted() {
-
-        this.$refs.staff_view.init({ cursor: { enabled: false } });
-
-        // Init MIDI
-        var instruments = [{
-            channel: 5,
-            soundfont: 'trumpet',
-            colume: 127
-        }, {
-            channel: 6,
-            soundfont: 'xylophone',
-            volume: 200
-        }];
-
-        var out = this;
-
-        MIDI.loadPlugin({
-            soundfontUrl: '/soundfonts/',
-            instruments: instruments.map(function (e) {
-                return e.soundfont;
-            }),
-            targetFormat: 'mp3',
-            onsuccess: function onsuccess() {
-                for (var i = 0; i < instruments.length; i++) {
-                    var instrument = instruments[i];
-                    MIDI.setVolume(instrument.channel, instrument.volume);
-                    MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
-                }
-
-                out.loadQuestion();
-
-                /*
-                  let v = require('./games/rhythm/vaje.json');
-                out.notes.notes = v[0].notes;
-                out.notes._call_render();
-                out.playback = new RhythmPlaybackEngine(MIDI);
-                out.playback.BPM = v[0].BPM;
-                out.playback.bar_info = v[0].bar;
-                  out.playback.setBPM(v[0].BPM);
-                out.playback.setBar(v[0].bar);
-                  out.playback.load(v[0].notes);
-                console.log(util.generate_playback_durations(v[0].notes));
-                  */
-            }
-        });
-    }
-});
-
-/***/ }),
-/* 255 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var Fraction = __webpack_require__(7);
-
-var RhythmUtilities = __webpack_require__(9);
-
-var ExerciseGenerator = function ExerciseGenerator() {
-
-    var examples = __webpack_require__(256);
-
-    this.currentExercise = null;
-    this.currentExerciseInfo = null;
-
-    this.currentExampleNumber = -1;
-    this.generatorSequence = [];
-
-    this.generate = function (numGen) {
-
-        var number = Math.floor(Math.random() * (examples.length - 1));
-
-        this.currentExerciseInfo = examples[number];
-        this.currentExercise = examples[number].notes;
-
-        return examples[number];
-    };
-
-    this.check = function (value) {
-
-        var soundsLikeFunc = RhythmUtilities.generate_playback_durations;
-
-        // Return string fractions
-        var ex = soundsLikeFunc(this.currentExercise, true);
-        var us = soundsLikeFunc(value, true);
-
-        return _.isEqual(ex, us);
-    };
-
-    this.get_bar_count = function () {
-
-        return RhythmUtilities.get_bar_count(this.currentExercise);
-    };
-};
-
-/* unused harmony default export */ var _unused_webpack_default_export = (ExerciseGenerator);
-
-/***/ }),
-/* 256 */
-/***/ (function(module, exports) {
-
-module.exports = [{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  1/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"notes":[{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4}]},{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  2/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"notes":[{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4}]}]
-
-/***/ }),
-/* 257 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -68513,7 +72475,10 @@ var render = function() {
           }
         }
       }),
-      _vm._v(" " + _vm._s(_vm.offsetConstant) + "\n")
+      _vm._v(" " + _vm._s(_vm.offsetConstant) + "\n\n\n    "),
+      _c("audio", { ref: "rhythmAudio", attrs: { controls: "" } }, [
+        _c("source", { attrs: { src: _vm.audioSource, type: "audio/mpeg" } })
+      ])
     ],
     1
   )
@@ -68529,19 +72494,19 @@ if (false) {
 }
 
 /***/ }),
-/* 258 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(259)
+  __webpack_require__(266)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(261)
+var __vue_script__ = __webpack_require__(268)
 /* template */
-var __vue_template__ = __webpack_require__(262)
+var __vue_template__ = __webpack_require__(269)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -68580,13 +72545,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 259 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(260);
+var content = __webpack_require__(267);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -68606,7 +72571,7 @@ if(false) {
 }
 
 /***/ }),
-/* 260 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -68620,12 +72585,12 @@ exports.push([module.i, "\n.keyboard[data-v-1d2aae08] {\n  width: 45vw;\n  heigh
 
 
 /***/ }),
-/* 261 */
+/* 268 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 //
@@ -68829,7 +72794,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 });
 
 /***/ }),
-/* 262 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -68966,20 +72931,20 @@ if (false) {
 }
 
 /***/ }),
-/* 263 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(264)
-  __webpack_require__(266)
+  __webpack_require__(271)
+  __webpack_require__(273)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(268)
+var __vue_script__ = __webpack_require__(275)
 /* template */
-var __vue_template__ = __webpack_require__(269)
+var __vue_template__ = __webpack_require__(276)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -69018,13 +72983,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 264 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(265);
+var content = __webpack_require__(272);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -69044,7 +73009,7 @@ if(false) {
 }
 
 /***/ }),
-/* 265 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -69058,13 +73023,13 @@ exports.push([module.i, "\n.leaderboard[data-v-19d0d496] {\n  width: 100%;\n}\n.
 
 
 /***/ }),
-/* 266 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(267);
+var content = __webpack_require__(274);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -69084,7 +73049,7 @@ if(false) {
 }
 
 /***/ }),
-/* 267 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -69098,7 +73063,7 @@ exports.push([module.i, "\n.leaderboard__instructions .title {\n  font-size: 25p
 
 
 /***/ }),
-/* 268 */
+/* 275 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -69379,7 +73344,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 269 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -69608,19 +73573,19 @@ if (false) {
 }
 
 /***/ }),
-/* 270 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(271)
+  __webpack_require__(278)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(273)
+var __vue_script__ = __webpack_require__(280)
 /* template */
-var __vue_template__ = __webpack_require__(274)
+var __vue_template__ = __webpack_require__(281)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -69659,13 +73624,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 271 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(272);
+var content = __webpack_require__(279);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -69685,7 +73650,7 @@ if(false) {
 }
 
 /***/ }),
-/* 272 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -69699,7 +73664,7 @@ exports.push([module.i, "\n.levels[data-v-5b057fe8] {\n  width: 100%;\n}\n.level
 
 
 /***/ }),
-/* 273 */
+/* 280 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -69880,7 +73845,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 274 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -69983,19 +73948,19 @@ if (false) {
 }
 
 /***/ }),
-/* 275 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(276)
+  __webpack_require__(283)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(278)
+var __vue_script__ = __webpack_require__(285)
 /* template */
-var __vue_template__ = __webpack_require__(279)
+var __vue_template__ = __webpack_require__(286)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -70034,13 +73999,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 276 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(277);
+var content = __webpack_require__(284);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -70060,7 +74025,7 @@ if(false) {
 }
 
 /***/ }),
-/* 277 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -70074,7 +74039,7 @@ exports.push([module.i, "\n.loader[data-v-4f02ae04] {\n  position: absolute;\n  
 
 
 /***/ }),
-/* 278 */
+/* 285 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -70105,7 +74070,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
-/* 279 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -70128,20 +74093,20 @@ if (false) {
 }
 
 /***/ }),
-/* 280 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(281)
-  __webpack_require__(283)
+  __webpack_require__(288)
+  __webpack_require__(290)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(285)
+var __vue_script__ = __webpack_require__(292)
 /* template */
-var __vue_template__ = __webpack_require__(286)
+var __vue_template__ = __webpack_require__(293)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -70180,13 +74145,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 281 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(282);
+var content = __webpack_require__(289);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -70206,7 +74171,7 @@ if(false) {
 }
 
 /***/ }),
-/* 282 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -70220,13 +74185,13 @@ exports.push([module.i, "\n.me[data-v-7cb87396] {\n  width: 100%;\n}\n.me__conte
 
 
 /***/ }),
-/* 283 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(284);
+var content = __webpack_require__(291);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -70246,7 +74211,7 @@ if(false) {
 }
 
 /***/ }),
-/* 284 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -70260,7 +74225,7 @@ exports.push([module.i, "\n.me__commands .me__command--edit .button .button__ful
 
 
 /***/ }),
-/* 285 */
+/* 292 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -70807,7 +74772,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 286 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -71290,19 +75255,19 @@ if (false) {
 }
 
 /***/ }),
-/* 287 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(288)
+  __webpack_require__(295)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(290)
+var __vue_script__ = __webpack_require__(297)
 /* template */
-var __vue_template__ = __webpack_require__(291)
+var __vue_template__ = __webpack_require__(298)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -71341,13 +75306,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 288 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(289);
+var content = __webpack_require__(296);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -71367,7 +75332,7 @@ if(false) {
 }
 
 /***/ }),
-/* 289 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -71381,12 +75346,12 @@ exports.push([module.i, "\n.note__hidden[data-v-443c4dda] {\n  display: none;\n}
 
 
 /***/ }),
-/* 290 */
+/* 297 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
 //
 //
 //
@@ -71617,7 +75582,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 291 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -72164,19 +76129,19 @@ if (false) {
 }
 
 /***/ }),
-/* 292 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(293)
+  __webpack_require__(300)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(295)
+var __vue_script__ = __webpack_require__(302)
 /* template */
-var __vue_template__ = __webpack_require__(296)
+var __vue_template__ = __webpack_require__(303)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -72215,13 +76180,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 293 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(294);
+var content = __webpack_require__(301);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -72241,7 +76206,7 @@ if(false) {
 }
 
 /***/ }),
-/* 294 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -72255,7 +76220,7 @@ exports.push([module.i, "\n.profile[data-v-4bdda942] {\n  width: 100%;\n}\n.prof
 
 
 /***/ }),
-/* 295 */
+/* 302 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -72330,7 +76295,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 296 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -72413,20 +76378,20 @@ if (false) {
 }
 
 /***/ }),
-/* 297 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(298)
-  __webpack_require__(300)
+  __webpack_require__(305)
+  __webpack_require__(307)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(302)
+var __vue_script__ = __webpack_require__(309)
 /* template */
-var __vue_template__ = __webpack_require__(303)
+var __vue_template__ = __webpack_require__(310)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -72465,13 +76430,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 298 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(299);
+var content = __webpack_require__(306);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -72491,7 +76456,7 @@ if(false) {
 }
 
 /***/ }),
-/* 299 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -72505,13 +76470,13 @@ exports.push([module.i, "\n.settings[data-v-095e6bda] {\n  width: 100%;\n}\n.set
 
 
 /***/ }),
-/* 300 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(301);
+var content = __webpack_require__(308);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -72531,7 +76496,7 @@ if(false) {
 }
 
 /***/ }),
-/* 301 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -72545,7 +76510,7 @@ exports.push([module.i, "\n.settings__elements .button {\n  margin-top: 50px;\n}
 
 
 /***/ }),
-/* 302 */
+/* 309 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -72873,7 +76838,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 303 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -73173,19 +77138,19 @@ if (false) {
 }
 
 /***/ }),
-/* 304 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(305)
+  __webpack_require__(312)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(307)
+var __vue_script__ = __webpack_require__(314)
 /* template */
-var __vue_template__ = __webpack_require__(308)
+var __vue_template__ = __webpack_require__(315)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -73224,13 +77189,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 305 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(306);
+var content = __webpack_require__(313);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -73250,7 +77215,7 @@ if(false) {
 }
 
 /***/ }),
-/* 306 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -73264,12 +77229,12 @@ exports.push([module.i, "\n.stave__svg[data-v-0430ad04] {\n  width: 45vw;\n  hei
 
 
 /***/ }),
-/* 307 */
+/* 314 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
 //
 //
 //
@@ -73402,7 +77367,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 308 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -73536,19 +77501,19 @@ if (false) {
 }
 
 /***/ }),
-/* 309 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(310)
+  __webpack_require__(317)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(312)
+var __vue_script__ = __webpack_require__(319)
 /* template */
-var __vue_template__ = __webpack_require__(313)
+var __vue_template__ = __webpack_require__(320)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -73587,13 +77552,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 310 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(311);
+var content = __webpack_require__(318);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -73613,7 +77578,7 @@ if(false) {
 }
 
 /***/ }),
-/* 311 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -73627,12 +77592,12 @@ exports.push([module.i, "\n.title[data-v-76a54612] {\n  padding: 10px 20px;\n  b
 
 
 /***/ }),
-/* 312 */
+/* 319 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
 //
 //
 //
@@ -73658,7 +77623,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 313 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -73680,7 +77645,7 @@ if (false) {
 }
 
 /***/ }),
-/* 314 */
+/* 321 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -74262,7 +78227,7 @@ function handleError(error) {
 }));
 
 /***/ }),
-/* 315 */
+/* 322 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

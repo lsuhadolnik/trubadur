@@ -5,27 +5,21 @@
         <div class="rhythm__instructions" v-show="displayState == 'instructions'">
             <SexyButton @click.native="startGame()" color="green" :cols="3">Začni</SexyButton>
             <ul class="rhythm__instructions-list">
-                <li class="rhythm__instructions-list-item">Preizkusila / preizkusil se boš v ritmičnem nareku.</li>
+                <li class="rhythm__instructions-list-item">Preizkusil se boš v ritmičnem nareku.</li>
                 <li class="rhythm__instructions-list-item">Vaja bo v {{bar.num_beats}}/{{bar.base_note}} taktu.</li>
-                <li class="rhythm__instructions-list-item">Slišala / slišal boš {{num_beats_text}}.</li>
+                <li class="rhythm__instructions-list-item">Slišal boš {{num_beats_text}}.</li>
                 <li class="rhythm__instructions-list-item">Na začetku bo metronom izvajal en takt.</li>
                 <li class="rhythm__instructions-list-item">Tempo bo {{questionState.exercise != null ? questionState.exercise.BPM : "??" }} udarcev na minuto.</li>
                 <li class="rhythm__instructions-list-item">Za reševanje imaš na voljo {{questionState.maxSeconds}} sekund.</li>
                 <li class="rhythm__instructions-list-item">Odgovor lahko preveriš največ {{questionState.maxChecks}}-krat.</li>
                 <li class="rhythm__instructions-list-item">Če ne veš, kako deluje kakšen gumb, pritisni gumb Pomoč.<br>Dobro je, da si Pomoč ogledaš pred prvo igro.</li>
                 <li class="rhythm__instructions-list-item" style="list-style-type: none;">
-                    <sexy-button :text="metronomeButtonText" :color="metronomeButtonColor" :cols="3" @click.native="playback.metronome = !playback.metronome"/>
+                    <sexy-button :text="metronomeButtonText" :color="metronomeButtonColor" :cols="3" @click.native="toggleMetronome()"/>
                 </li>
-                <!--<li class="rhythm__instructions-list-item">Program je v preizkusni fazi, zanekrat lahko preizkusiš par vpisanih vaj.</li>-->
             </ul>
         </div>
 
         <div class="ready-rhythm-game-view" v-show="displayState == 'ready'">
-
-            <!--<div class="rhythm-game__progress">
-            <CircleTimer></CircleTimer>
-            <ProgressBar></ProgressBar>
-            </div>-->
 
             <div class="staff_view_wrap">
                 <div class="staff_view_contents">
@@ -38,19 +32,13 @@
                         <div class="rhythm-game__staff__second-row">
                             <div id="second-row"></div>
                         </div>
-                        
-                        <!--height: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.height" v-on:mousemove="force_redraw()"> {{info.height}}
-                        barHeight: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barHeight" v-on:mousemove="force_redraw()"> {{info.barHeight}}
-                        barOffsetY: <input class="BPM-slider" type="range" :min="10" :max="100" step="1" v-model="info.barOffsetY" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
-                        zoomViewHeight: <input class="BPM-slider" type="range" :min="10" :max="200" step="1" v-model="CTX.zoomview.containerHeight" v-on:mousemove="force_redraw()"> {{info.barOffsetY}}
-                        --> 
 
                     </StaffView>
                 </div>
                 <div class="staff_view_time_slider" v-bind:style="{width: timeLeftPercents}">&nbsp;</div> 
             </div>
             
-            <Keyboard ref="keyboard" v-bind="{key_callback: keyboard_click}" :playbackStatus="playback" :question="questionState" :say="showError" />
+            <Keyboard ref="keyboard" v-bind="{key_callback: keyboard_click}" :playbackStatus="playbackStatus" :question="questionState" :say="showError" />
 
             <div class="error" v-show="errorMessage">{{errorMessage}}</div>
 
@@ -73,6 +61,13 @@
             </div>
 
         </div>
+
+        <audio ref="rhythmAudio" @loadedmetadata="showMetadataAlert()" @play="setPlaying(true)" @ended="setPlaying(false)" @pause="setPlaying(false)">
+            <source :src="rhythmAudioSource" type="audio/mpeg" />
+            I hate Internet explorer.
+        </audio>
+
+        
 
         <div class="rhythm-diff-check-view" v-show="displayState == 'diff'">
 
@@ -199,9 +194,10 @@ import Keyboard from "./Keyboard/RhythmKeyboard.vue"
 import KeyboardHelp from "./Keyboard/KeyboardHelp.vue"
 
 import NoteStore from "./noteStore"
-import RhythmPlaybackEngine from './rhythmPlaybackEngine'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
+
+import {Howl, Howler} from 'howler';
 
 const util = require('./rhythmUtilities');
 
@@ -249,18 +245,22 @@ export default {
                 base_note: null,
                 subdivisions: null
             },
-            BPMobj: {
-                BPM: 120
-            },
             
-
             errorMessage: "",
             errorTimeout: null,
 
             showHelp: false,
 
-            playback: new RhythmPlaybackEngine(),
-            defaultBPM: 120,
+            playbackStatus: {
+                sound: null,
+                metronome: true,
+                BPM: 60,
+                setBPM: this.setBPM,
+                toggleMetronome: this.toggleMetronome,
+                playing: false,
+            },
+
+            rhythmAudioSource: ""
         }
     },
 
@@ -284,14 +284,14 @@ export default {
         },
 
         metronomeButtonText() {
-            if(this.playback.metronome){
+            if(this.playbackStatus.metronome){
                 return "IZKLJUČI METRONOM";
             }
             return "VKLJUČI METRONOM";
         },
 
         metronomeButtonColor() {
-            if(this.playback.metronome){
+            if(this.playbackStatus.metronome){
                 return "green";
             }
             return "cabaret";
@@ -307,6 +307,46 @@ export default {
 
         ...mapActions(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'fetchRhythmExercise', 'createRhythmExerciseFeedback']),
 
+        showMetadataAlert() {
+
+            alert("loadedmetadata")
+
+        },
+
+        setPlaying(v) {
+            this.playbackStatus.playing = v;
+        },
+
+        toggleMetronome() {
+            this.playbackStatus.metronome = !this.playbackStatus.metronome;
+            this.reloadAudio();
+        },
+
+        setBPM(val) {
+            this.playbackStatus.BPM = val;
+            this.reloadAudio();
+        },
+
+        reloadAudio() {
+
+            let out = this;
+            this.loadAudio().then(() => {
+                out.displayState = "ready";
+            });
+        },
+
+        setSoundBPM() {
+
+            let newRate = this.playbackStatus.BPM / this.questionState.exercise.BPM;
+
+            alert("SETTING BPM. New rate: " + newRate);
+
+            if(this.playbackStatus.sound){
+                
+                this.playbackStatus.sound.rate(newRate);
+            }
+
+        },
 
         cursor_moved(pos, from){
 
@@ -380,6 +420,46 @@ export default {
     
         },
 
+        loadAudio(play){
+
+            this.displayState = "loading";
+
+            let exid = this.questionState.exercise.id;
+
+            let out = this;
+
+            return new Promise((resolve, reject) => {
+                
+                let baseURL = "/api/sound/"+exid+"?";
+                let metEnabled = "metronome=" + this.playbackStatus.metronome;
+                let bpmOverride = "bpm=" + this.playbackStatus.BPM;
+                let url = baseURL + [metEnabled, bpmOverride].join('&');
+
+                // Setup the new Howl.
+                this.playbackStatus.sound = new Howl({
+                    src: [ url ],
+                    format: [ 'mp3' ],
+                    onload: () => {
+
+                        if(play) {
+                            out.playbackStatus.sound.play();
+                        }
+
+                        resolve();
+
+                    },
+                    onplay:  () => { out.setPlaying(true) },
+                    onpause: () => { out.setPlaying(false) },
+                    onstop:  () => { out.setPlaying(false) },
+                    onend:   () => { out.setPlaying(false) },
+                });
+
+                // Change global volume.
+                Howler.volume(1);
+
+            });
+        },
+
         showDiff(nowDate){
 
 
@@ -393,12 +473,10 @@ export default {
             
         },
 
-        startGame() {
+        startCountdownInterval() {
 
-            this.questionState.wasCorrect = false;
-            this.questionState.statistics.startTime = (new Date()).getTime();
             this.countdownInterval = setInterval(() => {
-                
+                    
                 this.questionState.statistics.duration = Math.floor(((new Date().getTime()) - this.questionState.statistics.startTime) / 1000);
 
                 let timeout = this.questionState.statistics.duration >= this.questionState.maxSeconds;
@@ -411,8 +489,22 @@ export default {
 
             }, 500);
 
-            this.displayState = "ready";
-            this.play({action: "replay", what: "exercise"});
+        },
+
+        startGame() {
+
+            return this.loadAudio()
+            .then(()=> {
+
+                this.questionState.wasCorrect = false;
+                this.questionState.statistics.startTime = (new Date()).getTime();
+                this.startCountdownInterval();
+
+                this.displayState = "ready";
+                this.play({action: "replay", what: "exercise"});
+
+            });
+
         },
 
         _copy_bar_info(exercise) {
@@ -498,6 +590,7 @@ export default {
                 return this.gameEnded();
             }
 
+            debugger;
 
             return this.generateQuestion(
                 { 
@@ -509,7 +602,7 @@ export default {
 
                 let exercise = question.content;
 
-                this.prepareQuestionWithContent(question.id, exercise)
+                this.prepareQuestionWithContent(question.id, exercise);
             });
 
         },
@@ -524,8 +617,7 @@ export default {
         
             this._copy_bar_info(exercise);
 
-            this.playback.setBPM(exercise.BPM ? exercise.BPM : this.defaultBPM);
-            this.playback.setBar(exercise.timeSignature);
+            this.setBPM(exercise.BPM ? exercise.BPM : 60);
 
             // Initialize note store
             this.notes = new NoteStore(
@@ -660,31 +752,17 @@ export default {
 
         play(event){
 
-            console.log(event);
-
             this.questionState.statistics.nPlaybacks += 1;
 
-            
             if(event.action == "stop"){
-                this.playback.stop();
-                return;
+                
+                this.playbackStatus.sound.stop();
             }
-
-            let values = [];
 
             if(event.action == "replay"){
-                if(event.what == "user"){
-
-                    values = this.notes.notes;
-                }
-                else if(event.what == "exercise"){
-
-
-                    values = this.questionState.exercise.notes;
-                }
-            }
-            
-            this.playback.play(null, null, values);
+                
+                this.playbackStatus.sound.play();
+            }            
         },
 
         showError(err){
@@ -712,6 +790,9 @@ export default {
         },
 
         openFeedbackWindow(){
+
+            alert("GO BWAH!");
+            return;
 
             let feedback = prompt("Kaj želite sporočiti?");
 

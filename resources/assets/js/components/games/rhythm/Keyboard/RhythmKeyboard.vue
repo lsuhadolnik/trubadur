@@ -2,12 +2,10 @@
 
     <div class="rhythm-game__keyboard_wrap">
         
-        <div class="rhythm-game__keyboard">
-
+        <div class="rhythm-game__keyboard show-normal">
 
             <div class="row rhythm-game__keyboard-row row-1 norfolk-row" >
 
-                <!--<div v-bind:class="{ half_transparent: cursor.selectionMode }">-->
 
                     <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(2)" ><div class="norfolk-note-padding">&#x0068;</div></sexy-button>
                     <sexy-button v-else :color="note_color()" @click.native="tuplet(3,2)"><TupletSign num="3" :bg="note_color()" /></sexy-button>
@@ -23,30 +21,6 @@
 
                     <ThirtyTwoButton v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(32)" />
                     <sexy-button v-else :color="note_color()" @click.native="tuplet()"><TupletSign num="?:?" :bg="note_color()" /></sexy-button>
-
-                <!--</div>-->
-                
-                <!-- RESPONSIVE DIRECTIVES -->
-                <!-- Will show only on small wide screens (landscape phones) -->
-                <div class="hide-normal">
-                    
-                    <sexy-button v-if="(moving_buttons || cursor.in_tuplet) && !moreButton" text="<" color="orange" @click.native="move_cursor_backwards" customClass="moveButtonsButton" />
-                    <bar-button v-if="!moreButton && !moving_buttons" :hidden="cursor.in_tuplet" color="green" @click.native="add_bar()" />
-                    <b-p-m-slider v-if="moreButton" :bpmObject="playbackStatus" valueKey="BPM" />
-
-                    <sexy-button v-if="(moving_buttons || cursor.in_tuplet) && !moreButton" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
-                    <dot-button v-if="!moreButton && !moving_buttons" :hidden="cursor.in_tuplet" @click.native="dot()" />
-                    <play-button v-if="moreButton" @click.native="play_exercise()" text="Ponovi vajo" :percents="percentsExercise" :playing="playbackStatus.playing" />
-
-                     <!-- MOVE SWITCH -->
-                    <sexy-button v-if="moving_buttons && !moreButton" :hidden="cursor.in_tuplet" text="j \"  color="green" @click.native="moving_buttons = !moving_buttons" customClass="musisync" />
-                    <sexy-button v-if="!moreButton && !moving_buttons" :hidden="cursor.in_tuplet" text="< >"  color="orange" @click.native="moving_buttons = !moving_buttons" customClass="moveButtonsButton moveButtonsButton_Switch" />
-                    <sexy-button v-if="moreButton" color="green" @click.native="showHelp()" ><div class="tiny-tajni-pici-mici-font">Pomoč</div></sexy-button>
-
-                    <sexy-button :color="moreButton ? 'sunglow' : 'cabaret'" text="..." @click.native="moreButton = !moreButton" />
-                    <!--<play-button @click.native="play_exercise()" :percents="percentsExercise" :playing="playbackStatus.playing" />-->
-
-                </div>
 
             </div>
             
@@ -69,67 +43,53 @@
                 
                 </div>
 
-                <!-- RESPONSIVE DIRECTIVES -->
-                <!-- Will show only on small wide screens (landscape phones) -->
-                <div class="hide-normal">
-                    
-                    <sexy-button customClass="musisync" color="green" @click.native="tie()" >
-                        <span class="tie-text">u</span>
-                    </sexy-button>    
+            </div>
+            
+            
+            <div class="row rhythm-game__keyboard-row row-3 musisync-row">
+                
+                <div v-if="!settingsVisible">
+                    <div v-bind:class="{ half_transparent: cursor.selectionMode }" style="display: inline-block;">
 
+                        <BarButton :hidden="cursor.in_tuplet" @click.native="add_bar()" />
                     
+                        <!-- MOVE LEFT OR DOT -->
+                        <sexy-button v-if="moving_buttons || cursor.in_tuplet" text="<" color="orange" @click.native="move_cursor_backwards" customClass="moveButtonsButton" />
+                        <dot-button v-else :hidden="cursor.in_tuplet" @click.native="dot()" />
+
+                        <!-- MOVE SWITCH -->
+                        <sexy-button v-if="moving_buttons" :hidden="cursor.in_tuplet" text=". u"  color="green" @click.native="moving_buttons = !moving_buttons" />
+                        <sexy-button v-else :hidden="cursor.in_tuplet" text="< >"  color="orange" @click.native="moving_buttons = !moving_buttons" customClass="moveButtonsButton" />
+                        
+                        <!-- MOVE RIGHT OR TIE -->
+                        <sexy-button v-if="moving_buttons || cursor.in_tuplet" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
+                        <sexy-button v-else customClass="musisync" color="green" @click.native="tie()" >
+                            <span class="tie-text">u</span>
+                        </sexy-button>
+
+                    </div>
+
+                    <!-- SELECTION -->
                     <selection-button :color="select_button_color" @click.native="selection()" />
+                </div>
+
+                <div v-if="settingsVisible" class="jcsb">
                     
-                    
-                    <sexy-button color="cabaret"   @click.native="delete_note()" >
-                        <icon name="trash" scale="2" />
+                    <b-p-m-text-button 
+                        v-for="i in [60, 70, 80, 90]"  :key="i" 
+                        @click.native="setBPM(i)" :text="i" 
+                        :selected="playbackStatus.BPM == i" />
+
+                    <sexy-button :color="playbackStatus.metronome ? 'sunglow' : 'cabaret'" @click.native="playbackStatus.toggleMetronome">
+                        <div v-if="playbackStatus.metronome" class="normal-font">IZKLJUČI METRO<br>NOM</div>
+                        <div v-else class="normal-font">VKLJUČI METRO<br>NOM</div>
                     </sexy-button>
-
-
-                    <check-button :color="checkButtonColor" :status="question.check" :percents="(1- question.statistics.duration / question.maxSeconds)*100" :textSecond="checkButtonTextSecond" :textThird="checkButtonTextThird" @click.native="check()"/>
-
                 </div>
 
             </div>
             
             
-            <div class="row rhythm-game__keyboard-row row-3 musisync-row show-normal">
-                
-                <div v-bind:class="{ half_transparent: cursor.selectionMode }" style="display: inline-block;">
-
-                    <BarButton :hidden="cursor.in_tuplet" @click.native="add_bar()" />
-                
-                    <!-- MOVE LEFT OR DOT -->
-                    <sexy-button v-if="moving_buttons || cursor.in_tuplet" text="<" color="orange" @click.native="move_cursor_backwards" customClass="moveButtonsButton" />
-                    <dot-button v-else :hidden="cursor.in_tuplet" @click.native="dot()" />
-
-                    <!-- MOVE SWITCH -->
-                    <sexy-button v-if="moving_buttons" :hidden="cursor.in_tuplet" text=". u"  color="green" @click.native="moving_buttons = !moving_buttons" />
-                    <sexy-button v-else :hidden="cursor.in_tuplet" text="< >"  color="orange" @click.native="moving_buttons = !moving_buttons" customClass="moveButtonsButton" />
-                    
-                    <!-- MOVE RIGHT OR TIE -->
-                    <sexy-button v-if="moving_buttons || cursor.in_tuplet" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
-                    <sexy-button v-else customClass="musisync" color="green" @click.native="tie()" >
-                        <span class="tie-text">u</span>
-                    </sexy-button>
-
-                </div>
-
-                <!-- SELECTION -->
-                <!--<sexy-button :color="select_button_color" @click.native="selection()" >
-                    <icon name="i-cursor" />
-                </sexy-button>-->
-                <selection-button :color="select_button_color" @click.native="selection()" />
-                <!--<div v-if="cursor.selection">
-                Base: {{cursor.selection.base}}
-                From: {{cursor.selection.from}}
-                To: {{cursor.selection.to}}
-                </div>-->
-
-            </div>
-            
-            
-            <div class="row rhythm-game__keyboard-row row-4 show-normal">
+            <div class="row rhythm-game__keyboard-row row-4">
                 
                 <!-- BACKSPACE BUTTON -->
                 <sexy-button color="cabaret"   @click.native="delete_note()"  >
@@ -140,32 +100,15 @@
                 <play-button @click.native="play_exercise()" text="Ponovi vajo" :percents="percentsExercise" :playing="playbackStatus.playing" />
 
                 <!-- BPM SLIDER / BUTTON -->
-                <b-p-m-slider :bpmObject="playbackStatus" valueKey="BPM" />
+                <!--<b-p-m-slider :bpmObject="playbackStatus" valueKey="BPM" />-->
+                <sexy-button v-if="!settingsVisible" color="sunglow" @click.native="show_settings()"><icon name="cog" scale="2" /></sexy-button>
+                <sexy-button v-else color="cabaret" @click.native="hide_settings()"><icon name="cog" scale="2" /></sexy-button>
                 
                 <!-- CHECK button -->
                 <check-button :color="checkButtonColor" :status="question.check" :percents="(1- question.statistics.duration / question.maxSeconds)*100" :textSecond="checkButtonTextSecond" :textThird="checkButtonTextThird" @click.native="check()"/>
 
                 <!-- HELP BUTTON -->
                 <sexy-button color="green" @click.native="showHelp()" ><div class="tiny-tajni-pici-mici-font">Pomoč</div></sexy-button>
-
-                <!-- DEBUG -->
-                <!--<sexy-button :color="checkButtonColor" @click.native="showJson()" >
-                    <div class="tiny-tajni-pici-mici-font">Show JSON</div>
-                </sexy-button>
-
-                <sexy-button :color="checkButtonColor" @click.native="changeSignature()" >
-                    <div class="tiny-tajni-pici-mici-font">Change Signature</div>
-                </sexy-button>
-
-                <sexy-button color="sunglow" @click.native="show_diff()" customClass="normal-font tiny-tajni-pici-mici-font">
-                        <div class="small-font-button">Oddaj</div>
-                </sexy-button>-->
-                <!-- END DEBUG -->
-                
-                <!-- SET CORRECT BUTTON -->
-                <!--<sexy-button :color="checkButtonColor" @click.native="setCorrect()" >
-                    <div class="tiny-tajni-pici-mici-font">Set correct</div>
-                </sexy-button>-->
 
             </div>
 
@@ -180,6 +123,95 @@
             
 
         </div>
+
+        <div class="rhythm-game__keyboard rhythm-game__keyboard-landscape-phone hide-normal">
+
+            <div class="row norfolk-row">
+
+                <div v-if="!settingsVisible" class="row" style="display: inline-block;">
+
+                    <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(2)" ><div class="norfolk-note-padding">&#x0068;</div></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet(3,2)"><TupletSign num="3" :bg="note_color()" /></sexy-button>
+                    
+                    <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(4)" ><div class="norfolk-note-padding">&#x0071;</div></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet(2,3)"><TupletSign num="2" :bg="note_color()" /></sexy-button>
+                    
+                    <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(8)" ><div class="norfolk-note-padding">&#x0065;</div></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet(5,4)"><TupletSign num="5:4" :bg="note_color()" /></sexy-button>
+                    
+                    <sexy-button v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(16)"><div class="norfolk-note-padding">&#x0078;</div></sexy-button>
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet(6,4)"><TupletSign num="6:4" :bg="note_color()" /></sexy-button>
+
+                    <ThirtyTwoButton v-if="!cursor.selectionMode" :color="note_color()" @click.native="note(32)" />
+                    <sexy-button v-else :color="note_color()" @click.native="tuplet()"><TupletSign num="?:?" :bg="note_color()" /></sexy-button>
+                    
+                </div>
+
+                <div v-if="settingsVisible" style="display: inline-block" class="rhythm-game__keyboard-row">
+                    
+                    <b-p-m-text-button 
+                        v-for="i in [60, 70, 80, 90]"  :key="i" 
+                        @click.native="setBPM(i)" :text="i" 
+                        :selected="playbackStatus.BPM == i" />
+
+                    <sexy-button :color="playbackStatus.metronome ? 'sunglow' : 'cabaret'" @click.native="playbackStatus.toggleMetronome">
+                        <div v-if="playbackStatus.metronome" class="normal-font">IZKLJUČI METRO<br>NOM</div>
+                        <div v-else class="normal-font">VKLJUČI METRO<br>NOM</div>
+                    </sexy-button>
+                
+                </div>
+
+                <sexy-button v-if="(moving_buttons || cursor.in_tuplet) && !settingsVisible" text="<" color="orange" @click.native="move_cursor_backwards" customClass="moveButtonsButton" />
+                <bar-button v-if="!settingsVisible && !moving_buttons" :hidden="cursor.in_tuplet" color="green" @click.native="add_bar()" />
+                
+                <sexy-button v-if="(moving_buttons || cursor.in_tuplet) && !settingsVisible" text=">" color="orange" @click.native="move_cursor_forward" customClass="moveButtonsButton" />
+                <dot-button v-if="!settingsVisible && !moving_buttons" :hidden="cursor.in_tuplet" @click.native="dot()" />
+                <play-button v-if="settingsVisible" @click.native="play_exercise()" text="Ponovi vajo" :playing="playbackStatus.playing" />
+
+                <!-- MOVE SWITCH -->
+                <sexy-button v-if="moving_buttons && !settingsVisible" :hidden="cursor.in_tuplet" text="j \"  color="green" @click.native="moving_buttons = !moving_buttons" customClass="musisync" />
+                <sexy-button v-if="!settingsVisible && !moving_buttons" :hidden="cursor.in_tuplet" text="< >"  color="orange" @click.native="moving_buttons = !moving_buttons" customClass="moveButtonsButton moveButtonsButton_Switch" />
+                <sexy-button v-if="settingsVisible" color="green" @click.native="showHelp()" ><div class="tiny-tajni-pici-mici-font">Pomoč</div></sexy-button>
+
+                <sexy-button v-if="settingsVisible" customClass="normal-font" text="Odpri meni"/>
+
+                <sexy-button v-if="!settingsVisible" color="sunglow" @click.native="show_settings()"><icon name="cog" scale="2" /></sexy-button>
+                <sexy-button v-else color="cabaret" @click.native="hide_settings()"><icon name="cog" scale="2" /></sexy-button>
+                
+
+            </div>
+
+            <div class="row norfolk-row">
+
+                <sexy-button v-if="!cursor.selectionMode" :color="rest_color()" @click.native="rest(2)" >&#x00D3;</sexy-button>
+                <sexy-button v-else :color="rest_color()" @click.native="remove_tuplets()" >
+                    <span class="musisync">T</span>
+                    <icon name="ban" scale="2" class="alert"></icon>
+                </sexy-button>
+                
+                <sexy-button :color="rest_color()" @click.native="rest(4)" >&#x0152;</sexy-button>
+                <sexy-button :color="rest_color()" @click.native="rest(8)" >&#x2030;</sexy-button>
+                <sexy-button :color="rest_color()" @click.native="rest(16)">&#x2248;</sexy-button>
+                <sexy-button :color="rest_color()" @click.native="rest(32)">&#x00AE;</sexy-button>
+                    
+                <sexy-button customClass="musisync overflow-hidden" color="green" @click.native="tie()" >
+                    <span class="tie-text">u</span>
+                </sexy-button>    
+
+                
+                <selection-button :color="select_button_color" @click.native="selection()" />
+                
+                
+                <sexy-button color="cabaret"   @click.native="delete_note()" >
+                    <icon name="trash" scale="2" />
+                </sexy-button>
+
+
+                <check-button :color="checkButtonColor" :status="question.check" :percents="(1- question.statistics.duration / question.maxSeconds)*100" :textSecond="checkButtonTextSecond" :textThird="checkButtonTextThird" @click.native="check()"/>
+
+            </div>
+
+        </div>
             
     </div>
 
@@ -191,6 +223,10 @@
     
     .half_transparent{
         opacity: 0.5;
+    }
+
+    .overflow-hidden {
+        overflow: hidden;
     }
 
     .tie-text {
@@ -241,6 +277,10 @@
         font-family: MusiSync !important;
     }
 
+    .jcsb {
+        display: flex;
+        justify-content: space-between;
+    }
     
 
     .moveButtonsButton {
@@ -250,7 +290,8 @@
     }
 
     .normal-font{
-        font-family: inherit !important;
+        font-family: $font-bold !important;
+        font-size: 8pt !important;
     }
 
     .tiny-tajni-pici-mici-font{
@@ -334,6 +375,7 @@ import DotButton from "./Buttons/DotButton.vue"
 import SelectionButton from "./Buttons/SelectionButton.vue"
 import PlayButton from "./Buttons/PlayButton.vue"
 import BPMSlider from "./Buttons/BPMSlider.vue"
+import BPMTextButton from "./Buttons/BPMTextButton.vue"
 import CheckButton from "./Buttons/CheckButton.vue"
 
 import 'vue-awesome/icons/repeat'
@@ -349,7 +391,7 @@ import 'vue-awesome/icons/i-cursor'
 import 'vue-awesome/icons/ban'
 import 'vue-awesome/icons/refresh'
 import 'vue-awesome/icons/exclamation-circle'
-
+import 'vue-awesome/icons/cog'
 
 var Fraction = require('fraction.js');
 
@@ -366,12 +408,26 @@ export default {
 
         },
 
+        show_settings() {
+
+            this.settingsVisible = true;
+        },
+
+        hide_settings() {
+
+            this.settingsVisible = false;
+        },
+
         showJson() {
 
             this.key_callback({
                 type: "showJson"
             });
 
+        },
+
+        setBPM(value) {
+            this.playbackStatus.setBPM(value);
         },
 
         feedback() {
@@ -491,6 +547,7 @@ export default {
             if(!this.playbackStatus)
                 return;
 
+            // alert("RECEIVED! Status: "+this.playbackStatus.playing);
 
             if(this.playbackStatus.playing){
                 this.key_callback({
@@ -567,19 +624,26 @@ export default {
 
     },
     components: {
-        SexyButton, SexySlider, TupletSign, 
+        SexyButton, SexySlider, TupletSign, BPMTextButton,
 
         ThirtyTwoButton, BarButton, DotButton, SelectionButton, PlayButton, BPMSlider, CheckButton
 
     },
     data: function() {
         return {
+
+            btn_idx: [0,1,2,3,4],
+            available_notes: [2, 4, 8, 16, 32],
+            available_tuplets: [],
+
             rest_mode: false,
             moving_buttons: false,
 
             moreButton: false,
 
             buttons: false,
+
+            settingsVisible: false,
 
             bpm_slider: {
                 value: 10

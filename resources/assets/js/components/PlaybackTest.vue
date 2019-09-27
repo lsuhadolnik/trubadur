@@ -11,6 +11,12 @@
         <SexyButton @click.native="play" :cols="3" color="green" text="Predvajaj"/>
         <SexyButton @click.native="stop" :cols="3" color="cabaret" text="Ustavi"/>
         <input type="range" v-model="offsetConstant" step="0.001" min="0.195" max="0.5" width="200"/> {{offsetConstant}}
+    
+    
+        <audio controls ref="rhythmAudio">
+            <source :src="audioSource" type="audio/mpeg">
+        </audio>
+
     </div>
 </template>
 
@@ -89,14 +95,25 @@ export default {
 
             return this.generateQuestion(
                 { 
-                    game_id: 344, 
+                    game_id: 163, 
                     number: 1, 
                     chapter: 1
                 })
             .then((question) => {
-                
+
                 let exercise = question.content;
                     
+                let exid = exercise.id;
+                this.audioSource = "/api/sound/"+exid;
+                
+                this.$refs.rhythmAudio.pause();
+                this.$refs.rhythmAudio.load();
+                this.$refs.rhythmAudio.addEventListener('canplaythrough', (e) =>{
+
+                    this.$refs.rhythmAudio.play();
+
+                }, false);
+
                 out.notes = new NoteStore(
                     exercise.bar,
                     null,
@@ -124,6 +141,8 @@ export default {
 
     data() {
         return {
+
+            audioSource: "",
 
             offsetConstant: 0.195,
 

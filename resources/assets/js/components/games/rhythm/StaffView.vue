@@ -32,7 +32,7 @@
         height: 176px;
 
         @include breakpoint-small-phone-landscape { height: 95px; }
-        //@include breakpoint-phone { height: 95px; }
+        @include breakpoint-small-phone-portrait { height: 100px; }
     }
 
     #second-row {
@@ -173,23 +173,23 @@ export default {
 
                         var sR = this.parentElement;
                         sR.onscroll = function(e){
-                            alert("Hello4 :(");
+                            
                             vue.scrolled(sR.scrollLeft, true);
                             return false;
                         }
 
                         sR.onmousedown = function(e){
-                            alert("HELLO2 :(");
+                            
                             vue.note_clicked(e.offsetX);
                         }
 
                         sR.ontouchstart = function(e){
-                            alert("HELLO!");
-                            e.preventDefault();
+                            
+                            // e.preventDefault();
 
                             vue.note_clicked(e.offsetX);
 
-                            return false;
+                            // return false;
                         }
 
                     }
