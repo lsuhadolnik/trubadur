@@ -13,6 +13,7 @@ class BadgesTableSeeder extends DatabaseSeeder
      */
     public function run()
     {
+        
         DB::table('badges')->delete();
 
         foreach (self::BADGES as $item) {

@@ -222,16 +222,16 @@ class GameUserController extends Controller
             // Za addition se štejejo naslednji tipi akcij
             // "n", "r", "bar", "dot", "tie", "tuplet"
 
-            if(isset($note['dot']) && $note['dot']){
+            if(isset($note->dot) && $note->dot){
                 $diff += 1;
             }
 
-            if(isset($note['tie']) && $note['tie']){
+            if(isset($note->tie) && $note->tie){
                 $diff += 1;
             }
 
             
-            if(isset($note['tuplet_end']) && $note['tuplet_end']) {
+            if(isset($note->tuplet_end) && $note->tuplet_end) {
                 $diff += 1;
             }
 
@@ -262,7 +262,7 @@ class GameUserController extends Controller
     private function getRhythmExerciseDifficultyFactor($question, $success)
     {
 
-        // Return number from 1 to 4
+        // Return number from 1 to 4.75
         $exercise = RhythmExercise::find($question->content);
         $difficulty = $exercise->rhythm_level;
 
@@ -274,7 +274,7 @@ class GameUserController extends Controller
         ];
 
         if(isset($points[$difficulty]))
-            return $points[$difficulty];
+            return $points[$difficulty] * 2;
         else return 1;
 
     }

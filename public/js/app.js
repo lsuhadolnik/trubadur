@@ -50831,7 +50831,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.game-statistics[data-v-ad6b13a8] {\n  width: 100%;\n}\n.game-statistics__content[data-v-ad6b13a8] {\n  width: 100%;\n  height: 100%;\n  padding: 20px 0 50px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.game-statistics__table[data-v-ad6b13a8] {\n  width: 100%;\n  border-collapse: collapse;\n}\n.game-statistics__table-row[data-v-ad6b13a8] {\n  height: 50px;\n}\n.game-statistics__table-row--header[data-v-ad6b13a8] {\n  border-bottom: 1px solid #777780;\n}\n.game-statistics__table-row--body[data-v-ad6b13a8] {\n  border-bottom: 1px solid rgba(119, 119, 128, 0.33);\n  cursor: pointer;\n  -webkit-transition: background-color 0.1s linear;\n  transition: background-color 0.1s linear;\n}\n.game-statistics__table-row--body[data-v-ad6b13a8]:hover {\n    background-color: rgba(119, 119, 128, 0.33);\n}\n.game-statistics__table-column[data-v-ad6b13a8] {\n  padding: 5px 10px;\n  text-align: left;\n}\n.game-statistics__table-column[data-v-ad6b13a8]:last-child {\n    width: 25%;\n    text-align: right;\n}\n.game-statistics__avatar[data-v-ad6b13a8] {\n  width: 40px;\n  height: 40px;\n}\n.game-statistics__info[data-v-ad6b13a8] {\n  margin: 20px 0;\n  padding: 10px 0;\n}\n.game-statistics__line[data-v-ad6b13a8] {\n  border-bottom: 1px solid rgba(119, 119, 128, 0.33);\n}\n", ""]);
+exports.push([module.i, "\n.game-statistics[data-v-ad6b13a8] {\n  width: 100%;\n}\n.game-statistics__content[data-v-ad6b13a8] {\n  width: 100%;\n  height: 100%;\n  padding: 20px 0 50px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.game-statistics__table[data-v-ad6b13a8] {\n  width: 100%;\n  border-collapse: collapse;\n}\n.game-statistics__table-row[data-v-ad6b13a8] {\n  height: 50px;\n}\n.game-statistics__table-row--header[data-v-ad6b13a8] {\n  border-bottom: 1px solid #777780;\n}\n.game-statistics__table-row--body[data-v-ad6b13a8] {\n  border-bottom: 1px solid rgba(119, 119, 128, 0.33);\n  cursor: pointer;\n  -webkit-transition: background-color 0.1s linear;\n  transition: background-color 0.1s linear;\n}\n.game-statistics__table-row--body[data-v-ad6b13a8]:hover {\n    background-color: rgba(119, 119, 128, 0.33);\n}\n.game-statistics__table-column[data-v-ad6b13a8] {\n  padding: 5px 10px;\n  text-align: left;\n}\n.game-statistics__table-column[data-v-ad6b13a8]:last-child {\n    width: 25%;\n    text-align: right;\n}\n.game-statistics__avatar[data-v-ad6b13a8] {\n  width: 40px;\n  height: 40px;\n}\n.game-statistics__info[data-v-ad6b13a8] {\n  margin: 20px 0;\n  padding: 10px 0;\n}\n.game-statistics__line[data-v-ad6b13a8] {\n  border-bottom: 1px solid rgba(119, 119, 128, 0.33);\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-wrap[data-v-ad6b13a8] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n}\n}\n.game-statistics__achievment-title[data-v-ad6b13a8] {\n  font-weight: bold;\n  text-align: center;\n  font-size: 65px;\n  margin-top: 27px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.game-statistics__achievment-title[data-v-ad6b13a8] {\n      font-size: 41px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-title[data-v-ad6b13a8] {\n      font-size: 41px;\n      margin-left: 25px;\n}\n}\n.game-statistics__achievment-subtitle[data-v-ad6b13a8] {\n  text-align: center;\n  font-size: 18px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.game-statistics__achievment-subtitle[data-v-ad6b13a8] {\n      font-size: 17px;\n      padding: 0 10px 0 10px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-subtitle[data-v-ad6b13a8] {\n      font-size: 15px;\n      margin-left: 28px;\n}\n}\n.game-statistics__achievment-image[data-v-ad6b13a8] {\n  text-align: center;\n  margin-top: 19px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.game-statistics__achievment-image[data-v-ad6b13a8] {\n      margin-top: 0px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.game-statistics__achievment-image-img[data-v-ad6b13a8] {\n    width: 100px;\n}\n}\n.game-statistics__achievments[data-v-ad6b13a8] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  margin-top: 25px;\n  margin-bottom: 42px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievments[data-v-ad6b13a8] {\n      margin-top: 0;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievments[data-v-ad6b13a8] {\n      width: 60%;\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: center;\n          -ms-flex-pack: center;\n              justify-content: center;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-title-side[data-v-ad6b13a8] {\n    height: 78vh;\n    width: 40%;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n}\n}\n.game-statistics__achievment-badge-title[data-v-ad6b13a8] {\n  text-align: center;\n  font-size: 21px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-badge-title[data-v-ad6b13a8] {\n      font-size: 20px;\n}\n}\n.game-statistics__achievment-badge-description[data-v-ad6b13a8] {\n  margin-top: 13px;\n  text-align: center;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-badge-description[data-v-ad6b13a8] {\n      font-size: 11px;\n      margin-top: 0;\n}\n}\n.game-statistics__achievment[data-v-ad6b13a8] {\n  margin-top: 18px;\n  display: inline-block;\n  width: 260px;\n  background: aliceblue;\n  border-radius: 8px;\n  padding: 15px;\n  margin-bottom: 10px;\n  margin-right: 12px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.game-statistics__achievment[data-v-ad6b13a8] {\n      margin-top: 0px;\n}\n}\n", ""]);
 
 // exports
 
@@ -50957,6 +50957,163 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -50966,7 +51123,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         return {
             loading: true,
             users: [],
-            statistics: null
+            statistics: null,
+
+            achievments: []
         };
     },
     created: function created() {
@@ -50974,9 +51133,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
         this.fetchGameStatistics(this.id).then(function (data) {
 
-            debugger;
             _this.users = data.users;
             _this.statistics = data.statistics;
+            _this.achievments = data.achievments;
+
             _this.loading = false;
         });
     },
@@ -51036,6 +51196,65 @@ var render = function() {
         ]
       }),
       _vm._v(" "),
+      _vm.achievments.length > 0
+        ? _c("div", { staticClass: "game-statistics__achievment-wrap" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "game-statistics__achievments" },
+              _vm._l(_vm.achievments, function(a) {
+                return _c(
+                  "div",
+                  { key: a.id, staticClass: "game-statistics__achievment" },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "game-statistics__achievment-image" },
+                      [
+                        _c("img", {
+                          staticClass: "game-statistics__achievment-image-img",
+                          attrs: { src: a.image }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "game-statistics__achievment-badge-title"
+                      },
+                      [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(a.title) +
+                            "\n                "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "game-statistics__achievment-badge-description"
+                      },
+                      [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(a.description) +
+                            "\n                "
+                        )
+                      ]
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       !_vm.loading
         ? _c(
             "div",
@@ -51044,7 +51263,7 @@ var render = function() {
               _c("element-title", { attrs: { text: "statistika" } }),
               _vm._v(" "),
               _c("table", { staticClass: "game-statistics__table" }, [
-                _vm._m(0),
+                _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -51113,7 +51332,7 @@ var render = function() {
                     "div",
                     { staticClass: "game-statistics__details" },
                     [
-                      _vm._m(1),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c(
                         "ul",
@@ -51244,6 +51463,26 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "game-statistics__achievment-title-side" },
+      [
+        _c("div", { staticClass: "game-statistics__achievment-title" }, [
+          _vm._v("\n                Čestitam!\n            ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "game-statistics__achievment-subtitle" }, [
+          _vm._v(
+            "\n                Napredoval/a si do novega dosežka v igri!\n            "
+          )
+        ])
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

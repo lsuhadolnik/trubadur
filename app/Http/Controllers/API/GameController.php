@@ -5,7 +5,11 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\DB;
+
 use App\Answer;
+use App\BadgeUser;
+use App\Badge;
 
 class GameController extends Controller
 {
@@ -114,6 +118,8 @@ class GameController extends Controller
         $game = $response->getOriginalContent();
         $users = $game->users()->orderBy('points', 'desc')->get(['id', 'name', 'rating', 'avatar', 'points']);
 
+        $userId = $request->user()->id;
+
         $participated = false;
         foreach ($users as $user) {
             if ($user->id === $request->user()->id) {
@@ -147,10 +153,24 @@ class GameController extends Controller
             }
         }
 
+        $achievments = [];
+        $badges = DB::select("SELECT 
+            b.id as id, b.name as title, b.description as description, b.image as image
+            from badges b 
+            join badge_user bu on bu.badge_id = b.id 
+            join games g on g.id = bu.game_id
+            where bu.user_id = ? and g.id = ?", [$userId, $game->id]);
+
+
+        if(count($badges) > 0){
+            $achievments = $badges;
+        }
+
         return response()->json([
             'users'      => $users,
             'difficulty' => $game->difficulty,
-            'statistics' => $statistics
+            'statistics' => $statistics,
+            'achievments' => $achievments
         ], 200);
     }
 }

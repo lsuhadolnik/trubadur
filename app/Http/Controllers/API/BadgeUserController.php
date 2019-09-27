@@ -44,7 +44,8 @@ class BadgeUserController extends Controller
         $data = [
             'badge_id'  => 'required|integer',
             'user_id'   => 'required|integer',
-            'completed' => 'boolean'
+            'completed' => 'boolean',
+            'game_id'   => 'integer'
         ];
 
         return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);

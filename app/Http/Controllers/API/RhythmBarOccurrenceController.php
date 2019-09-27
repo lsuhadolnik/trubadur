@@ -61,8 +61,8 @@ class RhythmBarOccurrenceController extends Controller
         //
 
         $data = [
-            'rhythm_feature_id'    => 'required|numeric',
-            'bar_probability'    => 'required|numeric',
+            'rhythm_feature_id' => 'required|numeric',
+            'bar_probability'   => 'required|numeric',
         ];
 
         $validator = Validator::make($request->all(), $data);

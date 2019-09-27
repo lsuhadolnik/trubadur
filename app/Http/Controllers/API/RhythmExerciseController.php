@@ -109,8 +109,6 @@ class RhythmExerciseController extends Controller
             $notes = array_merge($notes, json_decode($bars[$i]->content));
         }
 
-        // Generate MP3 recording of the exercise
-
 
         // return the exercise
         return array(
@@ -331,7 +329,8 @@ class RhythmExerciseController extends Controller
 
     private function getBarInfosCollection($level) {
         // BarInfo::where('min_rhythm_level', '<=', $level)->get()->all();
-        return DB::select("SELECT bi.* from bar_infos bi where bi.min_rhythm_level <= ? and bi.id in (
+        $infos = DB::select("SELECT bi.*, bi.probability as prob 
+            from bar_infos bi where bi.min_rhythm_level <= ? and bi.id in (
             SELECT b.id 
             from bar_infos b
                 join rhythm_feature_occurrences fo on fo.bar_info_id = b.id
@@ -339,6 +338,12 @@ class RhythmExerciseController extends Controller
             group by b.id
             having COUNT(*) > 0
         )", [$level, $level]);
+
+        if(!$infos || count($infos) == 0) {
+            throw new \Exception("There are no time signatures available.");
+        }
+
+        return $this->weightedRandomSelector($infos, function($b) { return $b->prob; });
     }
 
     private function generateForLevel($level) {
@@ -363,9 +368,8 @@ class RhythmExerciseController extends Controller
 
 
         // - Poglej ker rhythm_level je user ✅ ($level)
-        // - Izberi naključni bar_info, ki je primeren za ta level 
-        $bar_infos_collection = $this->getBarInfosCollection($level);
-        $bar_info_info = $bar_infos_collection[array_rand($bar_infos_collection)];
+        // - Izberi naključni bar_info, ki je primeren za ta level
+        $bar_info_info = $this->getBarInfosCollection($level);
 
         $bar_info = json_decode($bar_info_info->bar_info);
 

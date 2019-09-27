@@ -52,11 +52,168 @@
 .game-statistics__line {
     border-bottom : 1px solid $dolphin-transparent;
 }
+
+.game-statistics__achievment-wrap {
+    @include breakpoint-small-phone-landscape {
+        display: flex;
+    }
+}
+
+.game-statistics__achievment-title {
+    font-weight: bold;
+    text-align: center;
+    font-size: 65px;
+    margin-top: 27px;
+
+    @include breakpoint-small-phone-portrait {
+        font-size: 41px;
+    }
+
+    @include breakpoint-small-phone-landscape {
+        font-size: 41px;
+        margin-left: 25px;
+    }
+}
+
+.game-statistics__achievment-subtitle {
+    text-align: center;
+    font-size: 18px;
+
+    @include breakpoint-small-phone-portrait {
+        font-size: 17px;
+        padding: 0 10px 0 10px;
+    }
+
+    @include breakpoint-small-phone-landscape {
+        font-size: 15px;
+        margin-left: 28px;
+    }
+
+}
+
+.game-statistics__achievment-image {
+    text-align: center;
+    margin-top: 19px;
+
+    @include breakpoint-small-phone {
+        margin-top: 0px;
+    }
+    
+}
+
+.game-statistics__achievment-image-img {
+
+    @include breakpoint-small-phone {
+        width: 100px;
+    }
+}
+
+.game-statistics__achievments {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 25px;
+    margin-bottom: 42px;
+
+
+
+    @include breakpoint-small-phone-landscape {
+        margin-top: 0;
+    }
+
+    @include breakpoint-small-phone-landscape {
+        width: 60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.game-statistics__achievment-title-side {
+
+    @include breakpoint-small-phone-landscape {
+        height: 78vh;
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+.game-statistics__achievment-badge-title {
+    text-align: center;
+    font-size: 21px;
+
+    @include breakpoint-small-phone-landscape {
+        font-size: 20px;
+    }
+}
+
+.game-statistics__achievment-badge-description{
+    margin-top: 13px;
+    text-align: center;
+
+    @include breakpoint-small-phone-landscape {
+        font-size: 11px;
+        margin-top: 0;
+    }
+}
+
+.game-statistics__achievment {
+    margin-top: 18px;
+    display: inline-block;
+    width: 260px;
+    background: aliceblue;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    margin-right: 12px;
+
+    @include breakpoint-small-phone-portrait {
+        margin-top: 0px;
+    }
+
+}
+
+
 </style>
 
 <template>
     <div class="game-statistics">
         <loader v-show="loading"></loader>
+
+        <div class="game-statistics__achievment-wrap" v-if="achievments.length > 0">
+
+            <div class="game-statistics__achievment-title-side">
+                <div class="game-statistics__achievment-title">
+                    Čestitam!
+                </div>
+                <div class="game-statistics__achievment-subtitle">
+                    Napredoval/a si do novega dosežka v igri!
+                </div>
+            </div>
+
+            <div class="game-statistics__achievments">
+                <div class="game-statistics__achievment" v-for="a in achievments" :key="a.id">
+
+                    <div class="game-statistics__achievment-image">
+                        <img :src="a.image" class="game-statistics__achievment-image-img">
+                    </div>
+
+                    <div class="game-statistics__achievment-badge-title">
+                        {{a.title}}
+                    </div>
+
+                    <div class="game-statistics__achievment-badge-description">
+                        {{a.description}}
+                    </div>
+
+                </div>
+            </div>  
+
+        </div>
+
         <div class="game-statistics__content" v-if="!loading">
             <element-title text="statistika"></element-title>
             <table class="game-statistics__table">
@@ -119,17 +276,20 @@ export default {
         return {
             loading: true,
             users: [],
-            statistics: null
+            statistics: null,
+
+            achievments: []
         }
     },
     created () {
         this.fetchGameStatistics(this.id).then((data) => {
 
-            debugger;
             this.users = data.users
             this.statistics = data.statistics
+            this.achievments = data.achievments;
+            
             this.loading = false
-        })
+        });
     },
     methods: {
         ...mapActions(['fetchGameStatistics']),

@@ -119,6 +119,33 @@ class UserController extends Controller
         return $this->prepareAndExecuteDestroyQuery($id, self::MODEL);
     }
 
+    public function getLastGameId($user_id) {
+
+        $coll = DB::select("SELECT game_id from trubadur.game_user where user_id = ? order by game_id desc limit 1", [$user_id]);
+        if(count($coll) == 0) {
+            throw new \Exception("No game was found for user $game_id");
+        }
+
+        return $coll[0]->game_id;
+
+    }
+
+    public function badge_claimed($badge_id, $user_id, $game_id) {
+
+        $coll = BadgeUser::where(['badge_id' => $badge_id, 'user_id' => $user_id])->get()->first();
+        if($coll){
+            $coll->update(['completed' => true]);
+        }else {
+            BadgeUser::create([
+                'badge_id' => $badge_id,
+                'user_id' => $user_id,
+                'completed' => true, 
+                'game_id' => $game_id
+            ]);
+        }
+
+    }
+
     /**
      * Potentially complete the user's badges.
      *
@@ -131,46 +158,24 @@ class UserController extends Controller
         $completedBadgeIds = BadgeUser::where(['user_id' => $userId, 'completed' => true])->pluck('badge_id')->all();
         $badges = Badge::whereNotIn('id', $completedBadgeIds)->get(['id', 'name']);
 
+        $game_id = $this->getLastGameId($userId);
+        $userRhythmLevel = $this->getUserRhythmLevel($userId);
+
         foreach ($badges as $badge) {
             switch ($badge->name) {
-                case 'Igra brez napake': // Tole je precej čudno... Ni nujno, da ima igra 3 chapterje in 8 vprašanj na chapter
-                    
-                    /*$userGameIds = GameUser::where(['user_id' => $userId, 'finished' => true])
-                        ->pluck('game_id')
-                        ->all();
-                    $count = Answer::whereIn('game_id', $userGameIds)
-                        ->where(['user_id' => $userId, 'success' => true])
-                        ->select(DB::raw('COUNT(*) AS total'))
-                        ->groupBy('game_id')
-                        ->having('total', '=', 24)
-                        ->get()
-                        ->count();*/
+                case 'Igra brez napake': 
 
-                    //if ($count > 0) {
                     if($this->hasGameWithSuccessRate($userId, 1)) 
                     {
-                        BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
-                            ->update(['completed' => true]);
+                        $this->badge_claimed($badge->id, $userId, $game_id);
                     }
 
                     break;
-                case 'Igra s 50% točnostjo': // Tole tudi ni nujno...
-                    
-                    /*$userGameIds = GameUser::where(['user_id' => $userId, 'finished' => true])
-                        ->pluck('game_id')
-                        ->all();
-                    $count = Answer::whereIn('game_id', $userGameIds)
-                        ->where(['user_id' => $userId, 'success' => true])
-                        ->select('game_id', DB::raw('COUNT(*) AS total'))
-                        ->groupBy('game_id')
-                        ->having('total', '>=', 12)
-                        ->get()
-                        ->count();
-                    if ($count > 0) {*/
+                case 'Igra s 50% točnostjo': 
+
                     if($this->hasGameWithSuccessRate($userId, 0.5))
                     {
-                        BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
-                            ->update(['completed' => true]);
+                        $this->badge_claimed($badge->id, $userId, $game_id);
                     }
                     break;
                 case 'Igra končana v 25 minutah':
@@ -185,20 +190,17 @@ class UserController extends Controller
                         ->get()
                         ->count();
                     if ($count > 0) {
-                        BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
-                            ->update(['completed' => true]);
+                        $this->badge_claimed($badge->id, $userId, $game_id);
                     }
                     break;
                 case 'Dokončana igra 3 dni zapored':
                     if ($this->hasFinishedGame($userId, 2)) {
-                        BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
-                            ->update(['completed' => true]);
+                        $this->badge_claimed($badge->id, $userId, $game_id);
                     }
                     break;
                 case 'Dokončana igra 7 dni zapored':
                     if ($this->hasFinishedGame($userId, 6)) {
-                        BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
-                            ->update(['completed' => true]);
+                        $this->badge_claimed($badge->id, $userId, $game_id);
                     }
                     break;
                 case 'Dokončana igra z vsemi različnimi inštrumenti':
@@ -208,8 +210,7 @@ class UserController extends Controller
                         ->get()
                         ->count();
                     if ($count === 5) {
-                        BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
-                            ->update(['completed' => true]);
+                        $this->badge_claimed($badge->id, $userId, $game_id);
                     }
                     break;
                 case 'Zmaga v večigralski igri':
@@ -226,16 +227,61 @@ class UserController extends Controller
                             ->pluck('user_id')
                             ->all();
                         if ($userIds[0] == $userId) {
-                            BadgeUser::where(['badge_id' => $badge->id, 'user_id' => $userId])
-                                ->update(['completed' => true]);
+                            $this->badge_claimed($badge->id, $userId, $game_id);
                             break;
                         }
                     }
                     break;
+
+                default:
+
+                    $this->testForRhythmBadges($badge, $userId, $userRhythmLevel);
+
+                break;
             }
+
+
         }
 
         return response()->json([], 204);
+    }
+
+    private function testForRhythmBadges($badge, $userId, $userRhythmLevel){
+
+        $rhythmBadges = [
+            "Znam uporabljati ritmične vaje" => [11, 10],
+            "Uspešni prvi koraki" => [12, 20],
+            "Zdaj pa že znam" => [13, 20],
+            "Napredovanje v drugi letnik" => [14, 20],
+            "Dober začetek" => [21, 20],
+            "Nič me ne more ustaviti" => [22, 25],
+            "Triole so mačji kašelj" => [23, 25],
+            "Napredovanje v tretji letnik" => [24, 30],
+            "Vajenec ritmičnega čarovnika" => [31, 30],
+            "Na poti do slave" => [32, 30],
+            "Sanjam šestnajstinke" => [33, 35],
+            "Napredovanje v četrti letnik" => [34, 35],
+            "Ritmični čarovnik" => [41, 40],
+            "Kralj ritma" => [42, 40],
+            "Profesorjev asistent" => [43, 40],
+            "Ritmični genij" => [44, 40]
+        ];
+
+        if(isset($rhythmBadges[$badge->name])){
+
+            $level = $rhythmBadges[$badge->name][0];
+            $n = $rhythmBadges[$badge->name][1];
+
+            if($this->hasFinishedNRhythmExercisesOfLevel($userId, $level, $n)){
+
+                $this->badge_claimed($badge->id, $userId, $game_id);
+
+                // Advance in rhythm level
+                if($userRhythmLevel < $level && $level < 45){
+                    User::find($userId)->update(['rhythm_level', $level]);
+                }
+            }
+        }
     }
 
     /**
@@ -262,6 +308,27 @@ class UserController extends Controller
         }
 
         return $success;
+    }
+
+    private function getUserRhythmLevel($userId) {
+        $coll = DB::select('SELECT rhythm_level as level from users where id = ?', [$userId]);
+        return $coll[0]->level;
+    }
+
+    private function hasFinishedNRhythmExercisesOfLevel($userId, $level, $n) {
+
+        $coll = DB::select("SELECT count(*) as k from (
+            SELECT game_id
+                from trubadur.games g
+                JOIN trubadur.answers a on a.game_id = g.id 
+                where success = 1 
+                    and mode = 'single' 
+                    and user_id = ?
+                    and rhythm_level = ? 
+                group by game_id
+        ) vv;", [$userId, $level]);
+
+        return $coll[0]->k >= $n;
     }
 
     private function hasGameWithSuccessRate($userId, $r){

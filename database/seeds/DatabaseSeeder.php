@@ -53,8 +53,87 @@ class DatabaseSeeder extends Seeder
             'name'        => 'Zmaga v večigralski igri',
             'description' => 'Zmagati moraš v igri večigralskega načina.',
             'image'       => 'crown'
+        ],
+        [
+            "name" => "Znam uporabljati ritmične vaje",
+            "description" => "Pravilno moraš rešiti 10 ritmičnih vaj iz prvega nivoja prvega letnika.",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Uspešni prvi koraki",
+            "description" => "Pravilno moraš rešiti 20 ritmičnih vaj iz drugega nivoja prvega letnika",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Zdaj pa že znam",
+            "description" => "Pravilno moraš rešiti 20 ritmičnih vaj iz tretjega nivoja prvega letnika.",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Napredovanje v drugi letnik",
+            "description" => "Pravilno moraš rešiti 20 ritmičnih vaj iz četrtega nivoja prvega letnika.",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Dober začetek",
+            "description" => "Pravilno moraš rešiti 20 ritmičnih vaj iz prvega nivoja drugega letnika.",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Nič me ne more ustaviti",
+            "description" => "Pravilno moraš rešiti 25 ritmičnih vaj iz drugega nivoja drugega letnika.",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Triole so mačji kašelj",
+            "description" => "Pravilno moraš rešiti 25 ritmičnih vaj iz tretjega nivoja drugega letnika.",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Napredovanje v tretji letnik",
+            "description" => "Pravilno moraš rešiti 30 ritmičnih vaj četrtega nivoja drugega letnika.",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Vajenec ritmičnega čarovnika",
+            "description" => "Pravilno moraš rešiti 30 ritmičnih vaj prvega nivoja tretjega letnika",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Na poti do slave",
+            "description" => "Pravilno moraš rešiti 30 ritmičnih vaj drugega nivoja tretjega letnika.",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Sanjam šestnajstinke",
+            "description" => "Pravilno moraš rešiti 35 ritmičnih vaj tretjega nivoja tretjega letnika.",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Napredovanje v četrti letnik",
+            "description" => "Pravilno moraš rešiti 35 ritmičnih vaj četrtega nivoja tretjega letnika.",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Ritmični čarovnik",
+            "description" => "Pravilno moraš rešiti 40 ritmičnih vaj prvega nivoja četrtega letnika.",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Kralj ritma",
+            "description" => "Pravilno moraš rešiti 40 ritmičnih vaj drugega nivoja četrtega letnika",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Profesorjev asistent",
+            "description" => "Pravilno moraš rešiti 40 ritmičnih vaj tretjega nivoja četrtega letnika.",
+            "image" => "crown",
+        ],
+        [
+            "name" => "Ritmični genij",
+            "description" => "Pravilno moraš rešiti 40 ritmičnih vaj četrtega nivoja četrtega letnika.",
+            "image" => "crown",
         ]
-
     ];
 
     const GRADES = [
