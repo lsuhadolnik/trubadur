@@ -25,14 +25,11 @@ Route::middleware('auth:api')->resource('levels', 'API\LevelController', ['excep
 Route::middleware('auth:api')->resource('logins', 'API\LoginController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('questions', 'API\QuestionController', ['except' => ['create', 'edit']]);
 
-// DANGER!!
-Route::post('questions/generate', 'API\QuestionController@generate');
-
-
+Route::middleware('auth:api')->post('questions/generate', 'API\QuestionController@generate');
 Route::middleware('auth:api')->resource('schools', 'API\SchoolController', ['except' => ['create', 'edit']]);
 Route::middleware('auth:api')->resource('users', 'API\UserController', ['except' => ['create', 'edit']]);
 
-Route::put('users/{userId}/complete', 'API\UserController@complete')
+Route::middleware('auth:api')->put('users/{userId}/complete', 'API\UserController@complete')
     ->where(['userId' => '[0-9]+']);
 
 Route::middleware('auth:api')->get('badgeuser', 'API\BadgeUserController@index');
@@ -54,7 +51,7 @@ Route::middleware('auth:api')->delete('gameuser/{gameId}/{userId}', 'API\GameUse
     ->where(['gameId' => '[0-9]+', 'userId' => '[0-9]+']);
 
     /// DANGER!!!!
-    Route::put('gameuser/{gameId}/{userId}/finish', 'API\GameUserController@finish')
+    Route::middleware('auth:api')->put('gameuser/{gameId}/{userId}/finish', 'API\GameUserController@finish')
     ->where(['gameId' => '[0-9]+', 'userId' => '[0-9]+']);
 
 Route::middleware('auth:api')->get('gradeschool', 'API\GradeSchoolController@index');
@@ -68,30 +65,29 @@ Route::middleware('auth:api')->delete('gradeschool/{gradeId}/{schoolId}', 'API\G
 
 
 // DANGER!! 
-Route::resource('rhythmBars', 'API\RhythmBarController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->resource('rhythmBars', 'API\RhythmBarController', ['except' => ['create', 'edit']]);
 //Route::middleware('auth:api')->resource('rhythm_exercise', 'API\RhythmExerciseController', ['except' => ['create', 'edit']]);
 
 // DANGER
 //Route::post('rhythm_exercise_bar', 'API\RhythmExerciseBar', ['except' => ['create', 'edit']]);
-Route::post('rhythmExerciseBar/import/musicXML', 'API\RhythmBarController@importMusicXML');
-Route::post('rhythmExercise/generate/{n}/{level}', 'API\RhythmExerciseController@generateNForLevel');
-Route::get('rhythmExercise/{id}', 'API\RhythmExerciseController@resolve');
+Route::middleware('auth:api')->post('rhythmExerciseBar/import/musicXML', 'API\RhythmBarController@importMusicXML');
+Route::middleware('auth:api')->post('rhythmExercise/generate/{n}/{level}', 'API\RhythmExerciseController@generateNForLevel');
+Route::middleware('auth:api')->get('rhythmExercise/{id}', 'API\RhythmExerciseController@resolve');
 
-Route::post('rhythmBars/{id}/occurrences', 'API\RhythmBarOccurrenceController@create');
-Route::get('rhythmBars/{id}/occurrences', 'API\RhythmBarOccurrenceController@index');
-Route::get('rhythmBars/{id}/occurrences/{fid}', 'API\RhythmBarOccurrenceController@show');
-Route::put('rhythmBars/{id}/occurrences/{fid}', 'API\RhythmBarOccurrenceController@update');
-Route::delete('rhythmBars/{id}/occurrences/{fid}', 'API\RhythmBarOccurrenceController@destroy');
+Route::middleware('auth:api')->post('rhythmBars/{id}/occurrences', 'API\RhythmBarOccurrenceController@create');
+Route::middleware('auth:api')->get('rhythmBars/{id}/occurrences', 'API\RhythmBarOccurrenceController@index');
+Route::middleware('auth:api')->get('rhythmBars/{id}/occurrences/{fid}', 'API\RhythmBarOccurrenceController@show');
+Route::middleware('auth:api')->put('rhythmBars/{id}/occurrences/{fid}', 'API\RhythmBarOccurrenceController@update');
+Route::middleware('auth:api')->delete('rhythmBars/{id}/occurrences/{fid}', 'API\RhythmBarOccurrenceController@destroy');
 
-Route::resource('barInfo', 'API\BarInfoController', ['except' => ['create', 'edit']]);
-Route::resource('rhythmFeatures', 'API\RhythmFeatureController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->resource('barInfo', 'API\BarInfoController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->resource('rhythmFeatures', 'API\RhythmFeatureController', ['except' => ['create', 'edit']]);
+Route::middleware('auth:api')->post('rhythmFeatures/{fid}/occurrences', 'API\RhythmFeatureOccurrenceController@store');
+Route::middleware('auth:api')->get('rhythmFeatures/{fid}/occurrences', 'API\RhythmFeatureOccurrenceController@index');
+Route::middleware('auth:api')->get('rhythmFeatures/{fid}/occurrences/{level}/{bar}', 'API\RhythmFeatureOccurrenceController@show');
+Route::middleware('auth:api')->put('rhythmFeatures/{fid}/occurrences', 'API\RhythmFeatureOccurrenceController@update');
+Route::middleware('auth:api')->delete('rhythmFeatures/{fid}/occurrences/{level}/{bar}', 'API\RhythmFeatureOccurrenceController@destroy');
+Route::middleware('auth:api')->resource('rhythmExerciseFeedback', 'API\RhythmExerciseFeedbackController', ['except' => ['create', 'edit']]);
 
-Route::post('rhythmFeatures/{fid}/occurrences', 'API\RhythmFeatureOccurrenceController@store');
-Route::    get('rhythmFeatures/{fid}/occurrences', 'API\RhythmFeatureOccurrenceController@index');
-Route::    get('rhythmFeatures/{fid}/occurrences/{level}/{bar}', 'API\RhythmFeatureOccurrenceController@show');
-Route::    put('rhythmFeatures/{fid}/occurrences', 'API\RhythmFeatureOccurrenceController@update');
-Route:: delete('rhythmFeatures/{fid}/occurrences/{level}/{bar}', 'API\RhythmFeatureOccurrenceController@destroy');
-
-Route::resource('rhythmExerciseFeedback', 'API\RhythmExerciseFeedbackController', ['except' => ['create', 'edit']]);
-
+// Howler.js cannot make authenticated requests and it's not so 
 Route::get('sound/{exId}', 'Utils\Midi\MidiNotes@GetExercise');

@@ -492,13 +492,8 @@ export default {
     mounted() {
 
         let vue = this;
-        window.onresize = function(event) {
-            vue.$refs.staff_view.viewportResized();
-        }
-
-        window.onorientationchange = function(event) {
-            vue.$refs.staff_view.viewportResized();
-        }
+        window.addEventListener('resize', this.$refs.staff_view.viewportResized);
+        window.addEventListener('orientationchange', this.$refs.staff_view.viewportResized);
 
 
         this.loadBarsPage();

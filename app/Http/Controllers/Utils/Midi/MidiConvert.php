@@ -40,9 +40,11 @@ class MidiConvert {
 
         $midi_path = $this->tmp_folder."/$midi_name.mid";
 
+        $sfFile = env("SOUNDFONT", $this->defaultSoundFont);
+
         $this->init();
 
-        if(!file_exists(env("soundfont", $this->defaultSoundFont))){
+        if(!file_exists($sfFile)){
           throw new Exception("No soundfont file found!");
         }
 
@@ -60,10 +62,9 @@ class MidiConvert {
           if(file_exists($wav))unlink($wav);
         }
 
-        $soundfont = env("soundfont", $this->defaultSoundFont);
         $gain = $this->gain;
 
-        $cmd = "fluidsynth -F $wav $soundfont -g $gain $midi_path";
+        $cmd = "fluidsynth -F $wav $sfFile -g $gain $midi_path";
         exec($cmd);
 
         if(filesize($wav) < 1000) {

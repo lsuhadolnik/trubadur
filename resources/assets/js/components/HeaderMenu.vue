@@ -202,7 +202,7 @@
 </style>
 
 <template>
-    <div class="header-menu" v-if="!isDisabled">
+    <div class="header-menu" v-if="!headerMenuDisabled">
         <div class="header" :class="{ 'header--sticky': isHeaderSticky, 'header--colored': isHeaderColored }">
             <div class="header__menu-button" @click="toggleMenu">
                 <icon class="header__icon" name="bars"></icon>
@@ -225,12 +225,11 @@
 <script>
 import 'vue-awesome/icons/bars'
 import 'vue-awesome/icons/sign-out'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
     data () {
         return {
-            isDisabled: false,
             csrfToken: window.Laravel.csrfToken,
             backgroundImage: "url('/images/backgrounds/sparse.png')",
             uncoloredRoutes: ['gameModes', 'intervals', 'gameStatistics', 'rhythm'],
@@ -271,7 +270,7 @@ export default {
         window.removeEventListener('scroll', this.scroll)
     },
     computed: {
-        ...mapState(['me']),
+        ...mapState(['me', 'headerMenuDisabled']),
         userId () {
             return this.user ? this.me.id : 0
         }
@@ -292,7 +291,7 @@ export default {
         },
         scroll () {
 
-            if(this.isDisabled){
+            if(this.headerMenuDisabled){
                 return;
             }
 

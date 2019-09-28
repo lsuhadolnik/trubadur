@@ -7,6 +7,7 @@ use Telegram\Bot\Api;
 use App\RhythmExerciseFeedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Controller;
 
@@ -76,6 +77,11 @@ class RhythmExerciseFeedbackController extends Controller
             throw new \Exception("Content is required");
         }
 
+        $currUser = Auth::user();
+        if(!$currUser){
+            throw new \Exception('USER NOT LOGGED IN!');
+        }
+
         
         $exId = -1;
 
@@ -92,7 +98,8 @@ class RhythmExerciseFeedbackController extends Controller
 
         return RhythmExerciseFeedback::create([
             "rhythm_exercise_id" => $exId,
-            "content" => $req->content
+            "content" => $req->content,
+            "user_id" => $currUser->id
         ]);
         
         // $data = [

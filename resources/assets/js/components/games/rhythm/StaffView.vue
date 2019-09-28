@@ -859,7 +859,7 @@ export default {
 
     },
 
-    destroyed() {
+    beforeDestroy() {
 
         let out = this;
         window.removeEventListener("resize", function() { out.viewportResized.call(out) }, false);

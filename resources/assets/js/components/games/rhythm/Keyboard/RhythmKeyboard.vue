@@ -77,10 +77,10 @@
                     
                     <b-p-m-text-button 
                         v-for="i in [60, 70, 80, 90]"  :key="i" 
-                        @click.native="setBPM(i)" :text="i" 
+                        @click.native="setBPM(i, true)" :text="i" 
                         :selected="playbackStatus.BPM == i" />
 
-                    <sexy-button :color="playbackStatus.metronome ? 'sunglow' : 'cabaret'" @click.native="playbackStatus.toggleMetronome">
+                    <sexy-button :color="playbackStatus.metronome ? 'sunglow' : 'cabaret'" @click.native="playbackStatus.toggleMetronome(true)">
                         <div v-if="playbackStatus.metronome" class="normal-font">IZKLJUČI METRO<br>NOM</div>
                         <div v-else class="normal-font">VKLJUČI METRO<br>NOM</div>
                     </sexy-button>
@@ -119,6 +119,10 @@
                     <div class="tiny-tajni-pici-mici-font">Povratne informacije</div>
                 </sexy-button>
 
+                <sexy-button @click.native="toggleMenu()"  >
+                    <div class="tiny-tajni-pici-mici-font">Odpri Zapri Meni</div>
+                </sexy-button>
+
             </div>
             
 
@@ -151,10 +155,10 @@
                     
                     <b-p-m-text-button 
                         v-for="i in [60, 70, 80, 90]"  :key="i" 
-                        @click.native="setBPM(i)" :text="i" 
+                        @click.native="setBPM(i, true)" :text="i" 
                         :selected="playbackStatus.BPM == i" />
 
-                    <sexy-button :color="playbackStatus.metronome ? 'sunglow' : 'cabaret'" @click.native="playbackStatus.toggleMetronome">
+                    <sexy-button :color="playbackStatus.metronome ? 'sunglow' : 'cabaret'" @click.native="playbackStatus.toggleMetronome(true)">
                         <div v-if="playbackStatus.metronome" class="normal-font">IZKLJUČI METRO<br>NOM</div>
                         <div v-else class="normal-font">VKLJUČI METRO<br>NOM</div>
                     </sexy-button>
@@ -173,7 +177,7 @@
                 <sexy-button v-if="!settingsVisible && !moving_buttons" :hidden="cursor.in_tuplet" text="< >"  color="orange" @click.native="moving_buttons = !moving_buttons" customClass="moveButtonsButton moveButtonsButton_Switch" />
                 <sexy-button v-if="settingsVisible" color="green" @click.native="showHelp()" ><div class="tiny-tajni-pici-mici-font">Pomoč</div></sexy-button>
 
-                <sexy-button v-if="settingsVisible" customClass="normal-font" text="Odpri meni"/>
+                <sexy-button v-if="settingsVisible" @click.native="toggleMenu()" customClass="normal-font" text="Odpri Zapri meni"/>
 
                 <sexy-button v-if="!settingsVisible" color="sunglow" @click.native="show_settings()"><icon name="cog" scale="2" /></sexy-button>
                 <sexy-button v-else color="cabaret" @click.native="hide_settings()"><icon name="cog" scale="2" /></sexy-button>
@@ -418,6 +422,13 @@ export default {
             this.settingsVisible = false;
         },
 
+        toggleMenu() {
+
+            this.key_callback({
+                type: "toggleMenu"
+            });
+        },
+
         showJson() {
 
             this.key_callback({
@@ -426,8 +437,8 @@ export default {
 
         },
 
-        setBPM(value) {
-            this.playbackStatus.setBPM(value);
+        setBPM(value, reload) {
+            this.playbackStatus.setBPM(value, reload);
         },
 
         feedback() {

@@ -78,7 +78,7 @@
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
     @import '../../../../sass/variables/index';
 
@@ -195,9 +195,9 @@ import KeyboardHelp from "./Keyboard/KeyboardHelp.vue"
 
 import NoteStore from "./noteStore"
 
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
-import {Howl, Howler} from 'howler';
+import { Howl, Howler } from 'howler';
 
 const util = require('./rhythmUtilities');
 
@@ -306,6 +306,7 @@ export default {
     methods: {
 
         ...mapActions(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'fetchRhythmExercise', 'createRhythmExerciseFeedback']),
+        ...mapMutations(['setHeaderMenuDisabled', 'toggleHeaderMenuDisabled']),
 
         showMetadataAlert() {
 
@@ -313,18 +314,33 @@ export default {
 
         },
 
+        checkIsSmallPhone(){
+
+            let width  = window.screen.width;
+
+            // and (min-device-width: 320px)
+            // and (max-device-width: 568px)
+            this.setHeaderMenuDisabled(width < 568);
+        },
+
         setPlaying(v) {
             this.playbackStatus.playing = v;
         },
 
-        toggleMetronome() {
+        toggleMetronome(reload) {
             this.playbackStatus.metronome = !this.playbackStatus.metronome;
-            this.reloadAudio();
+            if(reload) {
+                this.reloadAudio();
+            }
+            
         },
 
-        setBPM(val) {
+        setBPM(val, reload) {
             this.playbackStatus.BPM = val;
-            this.reloadAudio();
+            if(reload) {
+                this.reloadAudio();
+            }
+            
         },
 
         reloadAudio() {
@@ -404,6 +420,9 @@ export default {
                 this.bar.base_note = parseInt(prompt("Base_note?"));
 
                 this.notes._call_render();
+            }
+            else if(event.type == 'toggleMenu') {
+                this.toggleHeaderMenuDisabled();
             }
             else{
 
@@ -589,8 +608,6 @@ export default {
             if(skipType == "GAME"){
                 return this.gameEnded();
             }
-
-            debugger;
 
             return this.generateQuestion(
                 { 
@@ -791,9 +808,6 @@ export default {
 
         openFeedbackWindow(){
 
-            alert("GO BWAH!");
-            return;
-
             let feedback = prompt("Kaj želite sporočiti?");
 
             if(feedback){
@@ -813,9 +827,18 @@ export default {
 
 },
 
+    beforeDestroy() {
+
+        this.setHeaderMenuDisabled(false);
+        window.removeEventListener('resize', this.checkIsSmallPhone);
+
+    },
+
     mounted() {
 
         let out = this;
+
+
 
         // Original
         this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
@@ -843,19 +866,10 @@ export default {
             
         }
 
-        // DEBUG
-        
-        /*this.game = {id: 403};
+        // setInitial
+        this.checkIsSmallPhone();
 
-        this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
-        this.$refs.keyboard.init(this.$refs.staff_view.cursor);
-
-        
-
-        this.fetchMe()
-            .then(() => { return this.nextQuestion(); })
-            .then(() => { this.startGame(); });
-        */
+        window.addEventListener('resize', this.checkIsSmallPhone);
         
 
     },

@@ -540,8 +540,8 @@ module.exports = Component.exports
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {/* unused harmony export Store */
 /* unused harmony export install */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return mapState; });
-/* unused harmony export mapMutations */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return mapState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return mapMutations; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapGetters; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapActions; });
 /* unused harmony export createNamespacedHelpers */
@@ -49712,7 +49712,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['me']), {
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["e" /* mapState */])(['me']), {
         badges: function badges() {
             return this.userBadges.length > 0 ? this.userBadges.map(function (userBadge) {
                 return userBadge.badge;
@@ -50235,7 +50235,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['me']), {
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["e" /* mapState */])(['me']), {
         name: function name() {
             return this.me ? this.me.name : '';
         },
@@ -50561,7 +50561,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['me'])),
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["e" /* mapState */])(['me'])),
     methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'fetchDifficulty', 'fetchRhythmDifficulty', 'storeGame', 'updateGameUser']), {
         loadImages: function loadImages() {
             var context = this;
@@ -52260,7 +52260,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            isDisabled: false,
             csrfToken: window.Laravel.csrfToken,
             backgroundImage: "url('/images/backgrounds/sparse.png')",
             uncoloredRoutes: ['gameModes', 'intervals', 'gameStatistics', 'rhythm'],
@@ -52292,7 +52291,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         window.removeEventListener('scroll', this.scroll);
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapState */])(['me']), {
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])(['me', 'headerMenuDisabled']), {
         userId: function userId() {
             return this.user ? this.me.id : 0;
         }
@@ -52312,7 +52311,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         scroll: function scroll() {
 
-            if (this.isDisabled) {
+            if (this.headerMenuDisabled) {
                 return;
             }
 
@@ -52418,7 +52417,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return !_vm.isDisabled
+  return !_vm.headerMenuDisabled
     ? _c("div", { staticClass: "header-menu" }, [
         _c(
           "div",
@@ -53848,7 +53847,7 @@ var Tuplet = VF.Tuplet;
             out.viewportResized.call(out);
         }, false);
     },
-    destroyed: function destroyed() {
+    beforeDestroy: function beforeDestroy() {
 
         var out = this;
         window.removeEventListener("resize", function () {
@@ -54799,13 +54798,8 @@ var utils = __webpack_require__(10);
     mounted: function mounted() {
 
         var vue = this;
-        window.onresize = function (event) {
-            vue.$refs.staff_view.viewportResized();
-        };
-
-        window.onorientationchange = function (event) {
-            vue.$refs.staff_view.viewportResized();
-        };
+        window.addEventListener('resize', this.$refs.staff_view.viewportResized);
+        window.addEventListener('orientationchange', this.$refs.staff_view.viewportResized);
 
         this.loadBarsPage();
     }
@@ -61701,7 +61695,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         clearTimeout(this.timeoutId);
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['me', 'midi']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['getInstrumentChannel']), {
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["e" /* mapState */])(['me', 'midi']), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['getInstrumentChannel']), {
         isPractice: function isPractice() {
             return this.game ? this.game.mode === 'practice' : false;
         }
@@ -62247,7 +62241,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-5e41cbba"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -62290,13 +62284,13 @@ var content = __webpack_require__(220);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("cc002334", content, false, {});
+var update = __webpack_require__(1)("c8344d22", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5e41cbba\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Rhythm.vue", function() {
-     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5e41cbba\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Rhythm.vue");
+   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5e41cbba\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Rhythm.vue", function() {
+     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5e41cbba\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Rhythm.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -62314,7 +62308,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm__instructions {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.rhythm__instructions-list-item {\n  padding: 8px 20px 8px 3px;\n}\n.rhythm-game__wrap {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.staff_view_wrap {\n  position: relative;\n}\n.staff_view_contents {\n  position: relative;\n  z-index: 1;\n}\n.staff_view_time_slider {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background: rgba(112, 100, 67, 0.2);\n  width: 100%;\n  height: 100%;\n  -webkit-transition: width .1s ease-in;\n  transition: width .1s ease-in;\n}\n.ready-rhythm-game-view__checkOverlay {\n  position: absolute;\n  display: block;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  background: rgba(0, 0, 0, 0.3);\n  z-index: 100;\n}\n.ready-rhythm-game-view__checkOverlay__center {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 100%;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.ready-rhythm-game-view__checkOverlay__center_bubble {\n  width: 160px;\n  height: 160px;\n  background-color: rgba(0, 0, 0, 0.6);\n  border-radius: 5px;\n  color: white;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.error {\n  text-align: center;\n  text-transform: uppercase;\n  color: #fe664e;\n  background: black;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.app {\n    padding-bottom: 0px !important;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.header-menu {\n    display: none !important;\n    position: static !important;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.header-menu {\n    display: none !important;\n    position: static !important;\n}\n}\n.app--sticky {\n  padding: 0px !important;\n}\n", ""]);
+exports.push([module.i, "\n.rhythm__instructions[data-v-5e41cbba] {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.rhythm__instructions-list-item[data-v-5e41cbba] {\n  padding: 8px 20px 8px 3px;\n}\n.rhythm-game__wrap[data-v-5e41cbba] {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.staff_view_wrap[data-v-5e41cbba] {\n  position: relative;\n}\n.staff_view_contents[data-v-5e41cbba] {\n  position: relative;\n  z-index: 1;\n}\n.staff_view_time_slider[data-v-5e41cbba] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background: rgba(112, 100, 67, 0.2);\n  width: 100%;\n  height: 100%;\n  -webkit-transition: width .1s ease-in;\n  transition: width .1s ease-in;\n}\n.ready-rhythm-game-view__checkOverlay[data-v-5e41cbba] {\n  position: absolute;\n  display: block;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  background: rgba(0, 0, 0, 0.3);\n  z-index: 100;\n}\n.ready-rhythm-game-view__checkOverlay__center[data-v-5e41cbba] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 100%;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.ready-rhythm-game-view__checkOverlay__center_bubble[data-v-5e41cbba] {\n  width: 160px;\n  height: 160px;\n  background-color: rgba(0, 0, 0, 0.6);\n  border-radius: 5px;\n  color: white;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.error[data-v-5e41cbba] {\n  text-align: center;\n  text-transform: uppercase;\n  color: #fe664e;\n  background: black;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.app[data-v-5e41cbba] {\n    padding-bottom: 0px !important;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.header-menu[data-v-5e41cbba] {\n    display: none !important;\n    position: static !important;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.header-menu[data-v-5e41cbba] {\n    display: none !important;\n    position: static !important;\n}\n}\n.app--sticky[data-v-5e41cbba] {\n  padding: 0px !important;\n}\n", ""]);
 
 // exports
 
@@ -62611,7 +62605,7 @@ var util = __webpack_require__(10);
     },
 
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_8_vuex__["d" /* mapState */])(['me']), {
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_8_vuex__["e" /* mapState */])(['me']), {
         num_beats_text: function num_beats_text() {
             switch (this.questionState.num_beats) {
                 case 1:
@@ -62644,21 +62638,33 @@ var util = __webpack_require__(10);
         }
     }),
 
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_8_vuex__["b" /* mapActions */])(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'fetchRhythmExercise', 'createRhythmExerciseFeedback']), {
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_8_vuex__["b" /* mapActions */])(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'fetchRhythmExercise', 'createRhythmExerciseFeedback']), Object(__WEBPACK_IMPORTED_MODULE_8_vuex__["d" /* mapMutations */])(['setHeaderMenuDisabled', 'toggleHeaderMenuDisabled']), {
         showMetadataAlert: function showMetadataAlert() {
 
             alert("loadedmetadata");
         },
+        checkIsSmallPhone: function checkIsSmallPhone() {
+
+            var width = window.screen.width;
+
+            // and (min-device-width: 320px)
+            // and (max-device-width: 568px)
+            this.setHeaderMenuDisabled(width < 568);
+        },
         setPlaying: function setPlaying(v) {
             this.playbackStatus.playing = v;
         },
-        toggleMetronome: function toggleMetronome() {
+        toggleMetronome: function toggleMetronome(reload) {
             this.playbackStatus.metronome = !this.playbackStatus.metronome;
-            this.reloadAudio();
+            if (reload) {
+                this.reloadAudio();
+            }
         },
-        setBPM: function setBPM(val) {
+        setBPM: function setBPM(val, reload) {
             this.playbackStatus.BPM = val;
-            this.reloadAudio();
+            if (reload) {
+                this.reloadAudio();
+            }
         },
         reloadAudio: function reloadAudio() {
 
@@ -62721,6 +62727,8 @@ var util = __webpack_require__(10);
                 this.bar.base_note = parseInt(prompt("Base_note?"));
 
                 this.notes._call_render();
+            } else if (event.type == 'toggleMenu') {
+                this.toggleHeaderMenuDisabled();
             } else {
 
                 this.notes.handle_button(event);
@@ -62892,8 +62900,6 @@ var util = __webpack_require__(10);
                 return this.gameEnded();
             }
 
-            debugger;
-
             return this.generateQuestion({
                 game_id: this.game.id,
                 number: this.questionState.number,
@@ -63063,9 +63069,6 @@ var util = __webpack_require__(10);
         },
         openFeedbackWindow: function openFeedbackWindow() {
 
-            alert("GO BWAH!");
-            return;
-
             var feedback = prompt("Kaj želite sporočiti?");
 
             if (feedback) {
@@ -63082,6 +63085,11 @@ var util = __webpack_require__(10);
         }
     }),
 
+    beforeDestroy: function beforeDestroy() {
+
+        this.setHeaderMenuDisabled(false);
+        window.removeEventListener('resize', this.checkIsSmallPhone);
+    },
     mounted: function mounted() {
         var _this9 = this;
 
@@ -63116,16 +63124,10 @@ var util = __webpack_require__(10);
             });
         }
 
-        // DEBUG
+        // setInitial
+        this.checkIsSmallPhone();
 
-        /*this.game = {id: 403};
-          this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
-        this.$refs.keyboard.init(this.$refs.staff_view.cursor);
-          
-          this.fetchMe()
-            .then(() => { return this.nextQuestion(); })
-            .then(() => { this.startGame(); });
-        */
+        window.addEventListener('resize', this.checkIsSmallPhone);
     }
 });
 
@@ -64310,6 +64312,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -64360,14 +64366,20 @@ var Fraction = __webpack_require__(7);
 
                         this.settingsVisible = false;
                 },
+                toggleMenu: function toggleMenu() {
+
+                        this.key_callback({
+                                type: "toggleMenu"
+                        });
+                },
                 showJson: function showJson() {
 
                         this.key_callback({
                                 type: "showJson"
                         });
                 },
-                setBPM: function setBPM(value) {
-                        this.playbackStatus.setBPM(value);
+                setBPM: function setBPM(value, reload) {
+                        this.playbackStatus.setBPM(value, reload);
                 },
                 feedback: function feedback() {
 
@@ -65201,7 +65213,7 @@ var render = function() {
                       attrs: { text: i, selected: _vm.playbackStatus.BPM == i },
                       nativeOn: {
                         click: function($event) {
-                          return _vm.setBPM(i)
+                          return _vm.setBPM(i, true)
                         }
                       }
                     })
@@ -65217,7 +65229,7 @@ var render = function() {
                       },
                       nativeOn: {
                         click: function($event) {
-                          return _vm.playbackStatus.toggleMetronome($event)
+                          return _vm.playbackStatus.toggleMetronome(true)
                         }
                       }
                     },
@@ -65356,6 +65368,22 @@ var render = function() {
             [
               _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
                 _vm._v("Povratne informacije")
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "sexy-button",
+            {
+              nativeOn: {
+                click: function($event) {
+                  return _vm.toggleMenu()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                _vm._v("Odpri Zapri Meni")
               ])
             ]
           )
@@ -65571,7 +65599,7 @@ var render = function() {
                         },
                         nativeOn: {
                           click: function($event) {
-                            return _vm.setBPM(i)
+                            return _vm.setBPM(i, true)
                           }
                         }
                       })
@@ -65587,7 +65615,7 @@ var render = function() {
                         },
                         nativeOn: {
                           click: function($event) {
-                            return _vm.playbackStatus.toggleMetronome($event)
+                            return _vm.playbackStatus.toggleMetronome(true)
                           }
                         }
                       },
@@ -65729,7 +65757,15 @@ var render = function() {
             _vm._v(" "),
             _vm.settingsVisible
               ? _c("sexy-button", {
-                  attrs: { customClass: "normal-font", text: "Odpri meni" }
+                  attrs: {
+                    customClass: "normal-font",
+                    text: "Odpri Zapri meni"
+                  },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.toggleMenu()
+                    }
+                  }
                 })
               : _vm._e(),
             _vm._v(" "),
@@ -74862,7 +74898,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['me', 'schools', 'grades']), {
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["e" /* mapState */])(['me', 'schools', 'grades']), {
         name: function name() {
             return this.user ? this.user.name : '';
         },
@@ -77012,7 +77048,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])(['me'])),
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["e" /* mapState */])(['me'])),
     methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'updateMe']), {
         loadImages: function loadImages() {
             var _this2 = this;
@@ -77971,6 +78007,12 @@ function handleError(error) {
         },
         addToCurrentInstruments: function addToCurrentInstruments(state, name) {
             state.currentInstruments.add(name);
+        },
+        setHeaderMenuDisabled: function setHeaderMenuDisabled(state, v) {
+            state.headerMenuDisabled = v;
+        },
+        toggleHeaderMenuDisabled: function toggleHeaderMenuDisabled(state) {
+            state.headerMenuDisabled = !state.headerMenuDisabled;
         }
     },
     actions: {

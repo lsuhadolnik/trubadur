@@ -56,8 +56,8 @@ export default new Vuex.Store({
     },
     getters: {
         getInstrumentChannel: (state) => (name) => {
-            return state.instruments[name].channel
-        }
+            return state.instruments[name].channel;
+        },
     },
     mutations: {
         setMe: (state, me) => {
@@ -74,6 +74,12 @@ export default new Vuex.Store({
         },
         addToCurrentInstruments: (state, name) => {
             state.currentInstruments.add(name)
+        },
+        setHeaderMenuDisabled: (state, v) => {
+            state.headerMenuDisabled = v;
+        },
+        toggleHeaderMenuDisabled: (state) => {
+            state.headerMenuDisabled = !state.headerMenuDisabled;
         }
     },
     actions: {

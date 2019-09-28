@@ -2,13 +2,13 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
-        "fideloper/proxy": "~4.0",
+        "fideloper/proxy": "4.2.1",
         "irazasyed/telegram-bot-sdk": "^2.0",
-        "laravel/framework": "5.6.7",
-        "laravel/passport": "^5.0",
+        "laravel/framework": "v5.6.7",
+        "laravel/passport": "v5.0.3",
         "laravel/tinker": "~1.0",
-        "motniemtin/midi": "^1.0",
-        "phospr/fraction": "^1.2"
+        "motniemtin/midi": "v1.0",
+        "phospr/fraction": "v1.2.1"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

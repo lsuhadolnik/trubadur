@@ -16,3 +16,4 @@ rundocker.ps1
 .vscode/launch.json
 test.json
 storage/midi/
+composer.phar
