@@ -8,7 +8,7 @@ class RhythmExerciseFeedback extends Model
 {
     //
     public $table = "rhythm_exercise_feedbacks";
-    public $fillable = ['content', 'rhythm_exercise_id'];
+    public $fillable = ['content', 'rhythm_exercise_id', 'user_id'];
 
 
     public function rhythm_exercise() {
