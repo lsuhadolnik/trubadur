@@ -222,7 +222,7 @@ export default {
                 check: "no", // "no", "correct", "wrong", "next", "waiting"
                 wasCorrect: false,
 
-                maxChecks: 10,
+                maxChecks: 12,
                 maxSeconds: 60 * 10, // 10 minut
                 
                 num_beats: "x",
@@ -233,7 +233,8 @@ export default {
                     nAdditions: 1, nDeletions: 1,
                     nPlaybacks: 1, nNoteTaps: 1,
                     nChecks: 1, startTime: 1,
-                    duration: 0
+                    duration: 0,
+                    surrendered: false,
                 }
             },
 
@@ -380,6 +381,13 @@ export default {
             }
             if(event.type == "feedback"){
                 this.openFeedbackWindow();
+            }
+            if(event.type == "surrender"){
+
+                this.questionState.statistics.nChecks = this.questionState.maxChecks - 1;
+                this.questionState.statistics.surrendered = true;
+                this.check();
+
             }
             if(event.type == "submit"){
 
@@ -549,6 +557,7 @@ export default {
             this.questionState.statistics.nChecks = 1;
             this.questionState.statistics.startTime = 1;
             this.questionState.statistics.duration = 1;
+            this.questionState.statistics.surrendered = false;
 
             clearInterval(this.countdownInterval);
         },
@@ -709,12 +718,22 @@ export default {
                 }, changeTimeout);
             }
             else{
+
+                if(status.canSubmit === false && !status.overcheck && !status.timeout){
+                    alert("Poglej znova. Na črtovju ne sme biti modrih not.");
+                }
+                
                 this.questionState.check = "wrong";
                 setTimeout(function() {
 
+                    if(outside.questionState.statistics.surrendered){
+                        outside.questionState.check = "next";
+                        outside.check();
+                        return;
+                    }
+
                     // Watch out, could happen when next question is already loaded
                     outside.questionState.check = "no";
-                    // If 
 
                     if(status.overcheck || status.timeout){
                         outside.questionState.check = "next";
@@ -738,7 +757,8 @@ export default {
             // Update statistics
             this.questionState.statistics.nChecks += 1;
 
-            let status = util.check_notes_equal(this.questionState.exercise.notes, this.notes.notes);
+            let canSubmit = this.notes.canSubmit();
+            let status = util.check_notes_equal(this.questionState.exercise.notes, this.notes.notes) && canSubmit;
             let time = ((new Date()).getTime() - this.questionState.statistics.startTime);
             this.questionState.check = "waiting";
 
@@ -750,6 +770,7 @@ export default {
             let timeout = this.questionState.statistics.duration >= this.questionState.maxSeconds;
 
             let checkStatus = {
+                canSubmit,
                 timeout, 
                 overcheck: this.questionState.maxChecks <= this.questionState.statistics.nChecks,
                 success: status

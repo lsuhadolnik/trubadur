@@ -28,9 +28,9 @@ var RhythmRenderUtilities = function(){
         
         // var beams = VF.Beam.applyAndGetBeams(voice);
         var beams = VF.Beam.generateBeams(voice.getTickables(), {
-            beam_rests: true,
-            //beam_middle_only: true,
-            show_stemlets: true,
+            // beam_rests: true,
+            beam_middle_only: true,
+            show_stemlets: false,
             secondary_breaks: '8',
             groups: this._get_beam_grouping(info.bar)
         });

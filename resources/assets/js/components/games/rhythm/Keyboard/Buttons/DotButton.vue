@@ -2,7 +2,7 @@
     
     <sexy-button color="green">
         <div class="rhythmKeyboard__dotButton">
-            j
+            &#x002E;
         </div>
     </sexy-button>
 
@@ -28,6 +28,8 @@ export default {
         line-height: 0; 
         padding: 0 0 10px 10px;
         font-family: MusiSync !important;
+        margin-bottom: 33px;
+        margin-left: -5px;
     }
     
 </style>

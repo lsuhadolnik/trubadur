@@ -3753,18 +3753,27 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         var n = this.cursor.position;
 
-        // Don't do anything if this is the first or very last note...
-        if (n <= 0 || n >= this.notes.length) {
+        // Don't do anything if this is the first note
+        if (n <= 0) {
             return;
         }
 
-        debugger;
         for (var i = n; i < this.notes.length; i++) {
+            if (this.notes[i].type == "blindtie") {
+                this.notes.splice(i, 1);
+                return;
+            }
             if (this.notes[i].type != "bar") {
                 this.notes[i].tie = !this.notes[i].tie;
                 return;
             }
         }
+
+        // Reached past the end...
+        // Add a "blind" tie
+        this.addNote({
+            type: "blindtie"
+        });
     };
 
     this.add_dot = function () {
@@ -3835,7 +3844,15 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
     this.addNote = function (event) {
 
         var i = this.cursor.position;
-        this.notes.splice(i, 0, event);
+
+        var numDel = 0;
+        if (this.notes[i] && this.notes[i].type == "blindtie" && event.type != "bar") {
+
+            numDel = 1;
+            event.tie = true;
+        }
+
+        this.notes.splice(i, numDel, event);
     };
 
     this.deletePreviousNote = function () {
@@ -3862,6 +3879,19 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
         return null;
     };
 
+    this.canSubmit = function () {
+
+        // Check for blindties
+        for (var i = 0; i < this.notes.length; i++) {
+            var note = this.notes[i];
+            if (note.type == "blindtie") {
+                return false;
+            }
+        }
+
+        return true;
+    };
+
     this.handle_add_note_button = function (event) {
 
         // Check if in tuplet
@@ -3872,6 +3902,11 @@ var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
         if (event.type != "bar" && !this._is_supported_length(event)) {
             return;
+        }
+
+        var n = this.cursor.position - 1;
+        if (this.notes[n] && this.notes[n].type == "blindtie") {
+            this.cursor.position--;
         }
 
         this._remove_tie_at_cursor();
@@ -53026,7 +53061,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n#first-row[data-v-5a6b0eb1] {\n      display: none;\n}\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 176px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 95px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 100px;\n}\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(1.5) translate(16.65%);\n  transform: scale(1.5) translate(16.65%);\n}\n", ""]);
+exports.push([module.i, "\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n#first-row[data-v-5a6b0eb1] {\n      display: none;\n}\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 116px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 95px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 100px;\n}\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(1.5) translate(16.65%);\n  transform: scale(1.5) translate(16.65%);\n}\n", ""]);
 
 // exports
 
@@ -53530,6 +53565,8 @@ var Tuplet = VF.Tuplet;
                 var newNote = null;
                 if (thisNote.type == "bar") {
                     newNote = new StaveNote({ clef: "treble", keys: ["g/4"], duration: "1r" });
+                } else if (thisNote.type == "blindtie") {
+                    newNote = new StaveNote({ clef: "treble", keys: ["g/4"], duration: "4" });
                 } else {
                     newNote = new StaveNote({ clef: "treble", keys: ["g/4"], duration: symbol });
                 }
@@ -53553,7 +53590,7 @@ var Tuplet = VF.Tuplet;
 
                 // Handle dots
                 if (thisNote.dot) {
-                    newNote.addDot(0); // enako je tudi newNote.addDotToAll()
+                    newNote.addDot(0);
                 }
 
                 // Get the note the cursor will stick to
@@ -53566,9 +53603,15 @@ var Tuplet = VF.Tuplet;
                     renderQueue.push(newNote);
                 }
 
-                if (thisNote.tie && i > 0) {
+                if (thisNote.type == "blindtie") {
+                    newNote.setStyle({
+                        fillStyle: "blue",
+                        strokeStyle: "blue",
+                        opacity: 0.5
+                    });
+                }
 
-                    //debugger;
+                if ((thisNote.tie || thisNote.type == "blindtie") && i > 0) {
 
                     var allLen = allStaveNotes.length;
 
@@ -53893,9 +53936,9 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
 
         // var beams = VF.Beam.applyAndGetBeams(voice);
         var beams = VF.Beam.generateBeams(voice.getTickables(), {
-            beam_rests: true,
-            //beam_middle_only: true,
-            show_stemlets: true,
+            // beam_rests: true,
+            beam_middle_only: true,
+            show_stemlets: false,
             secondary_breaks: '8',
             groups: this._get_beam_grouping(info.bar)
         });
@@ -55366,7 +55409,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n  -webkit-touch-action: manipulation;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n}\n.button__percentIndicator[data-v-be802b54] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button__blue[data-v-be802b54] {\n  background-color: rgba(0, 0, 255, 0.4);\n}\n.button__border_green[data-v-be802b54] {\n  border-color: #33966D;\n}\n.button__border_orange[data-v-be802b54] {\n  border-color: #EB7D3D;\n}\n.button__border_red[data-v-be802b54] {\n  border-color: #fe664e;\n}\n.button__border_cabaret[data-v-be802b54] {\n  border-color: #D2495F;\n}\n.button__border_sunglow[data-v-be802b54] {\n  border-color: #FDBB2F;\n}\n.button__border_blue[data-v-be802b54] {\n  border-color: rgba(0, 0, 255, 0.4);\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n@media only screen and (min-device-width: 768px) {\n.button_1_col[data-v-be802b54] {\n      width: 70px !important;\n      height: 70px !important;\n}\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n.button_3_col[data-v-be802b54] {\n  width: 170px;\n}\n", ""]);
+exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n  -webkit-touch-action: manipulation;\n  overflow: hidden;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n  overflow: hidden;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n  overflow: hidden;\n}\n.button__percentIndicator[data-v-be802b54] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button__blue[data-v-be802b54] {\n  background-color: rgba(0, 0, 255, 0.4);\n}\n.button__border_green[data-v-be802b54] {\n  border-color: #33966D;\n}\n.button__border_orange[data-v-be802b54] {\n  border-color: #EB7D3D;\n}\n.button__border_red[data-v-be802b54] {\n  border-color: #fe664e;\n}\n.button__border_cabaret[data-v-be802b54] {\n  border-color: #D2495F;\n}\n.button__border_sunglow[data-v-be802b54] {\n  border-color: #FDBB2F;\n}\n.button__border_blue[data-v-be802b54] {\n  border-color: rgba(0, 0, 255, 0.4);\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n@media only screen and (min-device-width: 768px) {\n.button_1_col[data-v-be802b54] {\n      width: 70px !important;\n      height: 70px !important;\n}\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n.button_3_col[data-v-be802b54] {\n  width: 170px;\n}\n", ""]);
 
 // exports
 
@@ -55378,6 +55421,9 @@ exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    positi
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
+//
+//
+//
 //
 //
 //
@@ -56499,7 +56545,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythmKeyboard__dotButton[data-v-3fcdaa09] {\n  font-size: 53px;\n  line-height: 0;\n  padding: 0 0 10px 10px;\n  font-family: MusiSync !important;\n}\n", ""]);
+exports.push([module.i, "\n.rhythmKeyboard__dotButton[data-v-3fcdaa09] {\n  font-size: 53px;\n  line-height: 0;\n  padding: 0 0 10px 10px;\n  font-family: MusiSync !important;\n  margin-bottom: 33px;\n  margin-left: -5px;\n}\n", ""]);
 
 // exports
 
@@ -56543,7 +56589,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("sexy-button", { attrs: { color: "green" } }, [
     _c("div", { staticClass: "rhythmKeyboard__dotButton" }, [
-      _vm._v("\n        j\n    ")
+      _vm._v("\n        .\n    ")
     ])
   ])
 }
@@ -62562,7 +62608,7 @@ var util = __webpack_require__(10);
                 check: "no", // "no", "correct", "wrong", "next", "waiting"
                 wasCorrect: false,
 
-                maxChecks: 10,
+                maxChecks: 12,
                 maxSeconds: 60 * 10, // 10 minut
 
                 num_beats: "x",
@@ -62573,7 +62619,8 @@ var util = __webpack_require__(10);
                     nAdditions: 1, nDeletions: 1,
                     nPlaybacks: 1, nNoteTaps: 1,
                     nChecks: 1, startTime: 1,
-                    duration: 0
+                    duration: 0,
+                    surrendered: false
                 }
             },
 
@@ -62698,6 +62745,12 @@ var util = __webpack_require__(10);
             }
             if (event.type == "feedback") {
                 this.openFeedbackWindow();
+            }
+            if (event.type == "surrender") {
+
+                this.questionState.statistics.nChecks = this.questionState.maxChecks - 1;
+                this.questionState.statistics.surrendered = true;
+                this.check();
             }
             if (event.type == "submit") {
 
@@ -62843,6 +62896,7 @@ var util = __webpack_require__(10);
             this.questionState.statistics.nChecks = 1;
             this.questionState.statistics.startTime = 1;
             this.questionState.statistics.duration = 1;
+            this.questionState.statistics.surrendered = false;
 
             clearInterval(this.countdownInterval);
         },
@@ -62980,12 +63034,22 @@ var util = __webpack_require__(10);
                     // outside.check();
                 }, changeTimeout);
             } else {
+
+                if (status.canSubmit === false && !status.overcheck && !status.timeout) {
+                    alert("Poglej znova. Na črtovju ne sme biti modrih not.");
+                }
+
                 this.questionState.check = "wrong";
                 setTimeout(function () {
 
+                    if (outside.questionState.statistics.surrendered) {
+                        outside.questionState.check = "next";
+                        outside.check();
+                        return;
+                    }
+
                     // Watch out, could happen when next question is already loaded
                     outside.questionState.check = "no";
-                    // If 
 
                     if (status.overcheck || status.timeout) {
                         outside.questionState.check = "next";
@@ -63008,7 +63072,8 @@ var util = __webpack_require__(10);
             // Update statistics
             this.questionState.statistics.nChecks += 1;
 
-            var status = util.check_notes_equal(this.questionState.exercise.notes, this.notes.notes);
+            var canSubmit = this.notes.canSubmit();
+            var status = util.check_notes_equal(this.questionState.exercise.notes, this.notes.notes) && canSubmit;
             var time = new Date().getTime() - this.questionState.statistics.startTime;
             this.questionState.check = "waiting";
 
@@ -63019,6 +63084,7 @@ var util = __webpack_require__(10);
             var timeout = this.questionState.statistics.duration >= this.questionState.maxSeconds;
 
             var checkStatus = {
+                canSubmit: canSubmit,
                 timeout: timeout,
                 overcheck: this.questionState.maxChecks <= this.questionState.statistics.nChecks,
                 success: status
@@ -63533,7 +63599,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 163px;\n  overflow-y: hidden;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n      height: 150px;\n}\n}\n#diff-zoom-view1[data-v-0556eb24], #diff-zoom-view2[data-v-0556eb24] {\n  -webkit-transform: scale(2) translate(25%, 25%);\n  transform: scale(2) translate(25%, 25%);\n}\n.diff-prompt[data-v-0556eb24] {\n  padding: 0px;\n  margin: 10px 0 0 0;\n  font-size: 26px;\n  text-align: center;\n}\n.button-holder[data-v-0556eb24] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  width: 100%;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.feedbackButton[data-v-0556eb24] {\n  margin-left: 15px;\n}\n", ""]);
+exports.push([module.i, "\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 110px;\n  overflow-y: hidden;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n      height: 150px;\n}\n}\n#diff-zoom-view1[data-v-0556eb24], #diff-zoom-view2[data-v-0556eb24] {\n  -webkit-transform: scale(1.5) translate(16.65%);\n  transform: scale(1.5) translate(16.65%);\n}\n.diff-prompt[data-v-0556eb24] {\n  padding: 0px;\n  margin: 10px 0 0 0;\n  font-size: 26px;\n  text-align: center;\n}\n.button-holder[data-v-0556eb24] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  width: 100%;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.feedbackButton[data-v-0556eb24] {\n  margin-left: 15px;\n}\n", ""]);
 
 // exports
 
@@ -63551,6 +63617,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(4);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
 //
 //
 //
@@ -64316,6 +64385,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -64365,6 +64438,12 @@ var Fraction = __webpack_require__(7);
                 hide_settings: function hide_settings() {
 
                         this.settingsVisible = false;
+                },
+                surrender: function surrender() {
+
+                        this.key_callback({
+                                type: "surrender"
+                        });
                 },
                 toggleMenu: function toggleMenu() {
 
@@ -65384,6 +65463,23 @@ var render = function() {
             [
               _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
                 _vm._v("Odpri Zapri Meni")
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "sexy-button",
+            {
+              attrs: { color: "cabaret" },
+              nativeOn: {
+                click: function($event) {
+                  return _vm.surrender()
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "tiny-tajni-pici-mici-font" }, [
+                _vm._v("Udam se")
               ])
             ]
           )

@@ -29,7 +29,7 @@
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
-        height: 176px;
+        height: 116px;
 
         @include breakpoint-small-phone-landscape { height: 95px; }
         @include breakpoint-small-phone-portrait { height: 100px; }
@@ -511,7 +511,11 @@ export default {
                 let newNote = null;
                 if(thisNote.type == "bar"){
                     newNote = new StaveNote({ clef: "treble", keys: ["g/4"], duration: "1r" });
-                }else {
+                }
+                else if(thisNote.type == "blindtie") {
+                    newNote = new StaveNote({ clef: "treble", keys: ["g/4"], duration: "4"})
+                }
+                else {
                     newNote = new StaveNote({ clef: "treble", keys: ["g/4"], duration: symbol });
                 }
 
@@ -527,7 +531,7 @@ export default {
 
                 // Handle dots
                 if(thisNote.dot){
-                    newNote.addDot(0); // enako je tudi newNote.addDotToAll()
+                    newNote.addDot(0);
                 }
                 
                 // Get the note the cursor will stick to
@@ -540,10 +544,16 @@ export default {
                     renderQueue.push(newNote);    
                 }
 
-                
-                if(thisNote.tie && i > 0){
+                if(thisNote.type == "blindtie") {
+                    newNote.setStyle({
+                        fillStyle: "blue", 
+                        strokeStyle: "blue",
+                        opacity: 0.5
+                    });
+                }
 
-                    //debugger;
+                
+                if((thisNote.tie || thisNote.type == "blindtie") && i > 0){
 
                     let allLen = allStaveNotes.length;
 

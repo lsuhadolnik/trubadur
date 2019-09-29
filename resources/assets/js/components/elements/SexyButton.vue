@@ -67,6 +67,7 @@
     transition : filter $button-transition-time linear;
     touch-action: manipulation;
     -webkit-touch-action: manipulation;
+    overflow: hidden;
 
     &:hover { filter: brightness(0.85); }
 }
@@ -91,6 +92,7 @@
     justify-content : center;
     text-align      : center;
     z-index         : 1;
+    overflow        : hidden;
 }
 
 .button__full {
@@ -100,6 +102,7 @@
     width         : 95%;
     height        : 96%;
     border-radius : 6px;
+    overflow      : hidden;
 }
 
 .button__percentIndicator{

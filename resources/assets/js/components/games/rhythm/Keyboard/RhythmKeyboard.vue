@@ -123,6 +123,10 @@
                     <div class="tiny-tajni-pici-mici-font">Odpri Zapri Meni</div>
                 </sexy-button>
 
+                <sexy-button @click.native="surrender()" color="cabaret">
+                    <div class="tiny-tajni-pici-mici-font">Udam se</div>
+                </sexy-button>
+
             </div>
             
 
@@ -420,6 +424,14 @@ export default {
         hide_settings() {
 
             this.settingsVisible = false;
+        },
+
+        surrender() {
+
+            this.key_callback({
+                type: "surrender"
+            });
+
         },
 
         toggleMenu() {

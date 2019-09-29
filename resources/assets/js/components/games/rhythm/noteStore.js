@@ -512,18 +512,27 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
         let n = this.cursor.position;
 
-        // Don't do anything if this is the first or very last note...
-        if(n <= 0 || n >= this.notes.length) {
+        // Don't do anything if this is the first note
+        if(n <= 0) {
             return;
         }
 
-        debugger;
         for(let i = n; i < this.notes.length; i++){
+            if(this.notes[i].type == "blindtie") {
+                this.notes.splice(i, 1);
+                return;
+            }
             if(this.notes[i].type != "bar"){
                 this.notes[i].tie = !this.notes[i].tie;
                 return;
             }
         }
+
+        // Reached past the end...
+        // Add a "blind" tie
+        this.addNote({
+            type: "blindtie"
+        });
         
     }
 
@@ -604,7 +613,15 @@ var NoteStore = function(bar, cursor, render_function, info) {
     this.addNote = function(event){
 
         let i = this.cursor.position;
-        this.notes.splice(i, 0, event);
+
+        let numDel = 0;
+        if(this.notes[i] && this.notes[i].type == "blindtie" && event.type != "bar"){
+
+            numDel = 1;
+            event.tie = true;
+        }
+
+        this.notes.splice(i, numDel, event);
 
     }
 
@@ -635,6 +652,20 @@ var NoteStore = function(bar, cursor, render_function, info) {
         return null;
     }
 
+    this.canSubmit = function() {
+        
+        // Check for blindties
+        for (let i = 0; i < this.notes.length; i++) {
+            const note = this.notes[i];
+            if(note.type == "blindtie"){
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
     this.handle_add_note_button = function(event) {
 
         // Check if in tuplet
@@ -645,6 +676,11 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
         if(event.type != "bar" && !this._is_supported_length(event)){
             return;
+        }
+
+        let n = this.cursor.position - 1;
+        if(this.notes[n] && this.notes[n].type == "blindtie"){
+            this.cursor.position--;
         }
 
         this._remove_tie_at_cursor();

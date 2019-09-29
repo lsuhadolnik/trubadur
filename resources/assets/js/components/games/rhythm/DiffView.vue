@@ -36,15 +36,18 @@
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
-        height: 163px;
+        height: 110px;
         overflow-y: hidden;
 
         @include breakpoint-phone-landscape { height: 150px; }
     }
 
+    $zoomviewScale: 1.5; 
+    $zoomviewTranslate: 16.65%; 
+
     #diff-zoom-view1, #diff-zoom-view2 {
-        -webkit-transform: scale(2) translate(25%, 25%);
-        transform: scale(2) translate(25%, 25%);
+        -webkit-transform: scale($zoomviewScale) translate($zoomviewTranslate);
+        transform: scale($zoomviewScale) translate($zoomviewTranslate);
     }
 
     .diff-prompt{
