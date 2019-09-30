@@ -111,9 +111,20 @@ class LevelController extends Controller
         }
 
         $rating = $request->get('rating');
+
+        $minLevel = Level::orderBy('min_rating', 'asc')->first();
+        if ($rating < $minLevel->min_rating) {
+            return response()->json($minLevel, 200);
+        }
+
+        $maxLevel = Level::orderBy('min_rating', 'desc')->first();
+        if ($rating > $maxLevel->max_rating) {
+            return response()->json($maxLevel, 200);
+        }
+
         $level = Level::where([['min_rating', '<=', $rating], ['max_rating', '>', $rating]])->first();
         if (!$level) {
-            response()->json("Level not found for the given 'rating'.", 404);
+            return response()->json("Level not found for the given 'rating'.", 404);
         }
 
         return response()->json($level, 200);

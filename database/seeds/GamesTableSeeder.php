@@ -69,7 +69,7 @@ class GamesTableSeeder extends DatabaseSeeder
                 $finished = (rand(0, 100) / 100) < 0.8;
                 $game->users()->attach($userId, [
                     'instrument' => $instrument,
-                    'points'     => $finished ? rand(0, 20) : -5,
+                    'points'     => $finished ? rand(0, 250) : 0,
                     'finished'   => $finished
                 ]);
 
@@ -79,11 +79,11 @@ class GamesTableSeeder extends DatabaseSeeder
                     $answer->game_id = $game->id;
                     $answer->user_id = $userId;
                     $answer->question()->associate($question);
-                    $answer->success = (rand(0, 100) / 100) < 0.7;
+                    $answer->success = (rand(0, 100) / 100) < 0.8;
                     $answer->time = $answer->success ? rand(10000, 120000) : 120000;
-                    $answer->n_additions = rand($difficulty->max_notes - 1, 30);
+                    $answer->n_additions = rand($difficulty->max_notes - 1, 10);
                     $answer->n_deletions = rand($answer->n_additions - 3, $answer->n_additions);
-                    $answer->n_playbacks = rand(0, 10);
+                    $answer->n_playbacks = rand(0, 5);
                     $answer->n_answers = rand(1, 5);
 
                     $answer->saveOrFail();

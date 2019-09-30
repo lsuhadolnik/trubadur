@@ -63,14 +63,20 @@ $instructions-height: 290px;
     &:last-child { text-align : right; }
 }
 
-.leaderboard__table-column--1 { width : 10%; }
-.leaderboard__table-column--2 { width : 20%; }
-.leaderboard__table-column--3 { width : 40%; }
-.leaderboard__table-column--4 { width : 20%; }
+.leaderboard__table-column--1 { width     : 10vw; }
+.leaderboard__table-column--2 { width     : 20vw; }
+.leaderboard__table-column--3 { max-width : 45vw; }
+.leaderboard__table-column--4 { width     : 20vw; }
 
 .leaderboard__avatar {
     width  : 50px;
     height : 50px;
+}
+
+.leaderboard__name {
+    white-space   : nowrap;
+    overflow      : hidden;
+    text-overflow : ellipsis;
 }
 
 .leaderboard__pagination {
@@ -121,7 +127,7 @@ $instructions-height: 290px;
                         <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--2">
                             <img class="leaderboard__avatar" :id="'avatar_' + i"/>
                         </td>
-                        <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--3">{{ users[i - 1].name }}</td>
+                        <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--3 leaderboard__name">{{ users[i - 1].name }}</td>
                         <td class="leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--4">{{ users[i - 1].rating }}</td>
                     </tr>
                 </tbody>

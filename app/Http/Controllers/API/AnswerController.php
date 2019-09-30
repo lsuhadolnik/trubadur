@@ -54,7 +54,7 @@ class AnswerController extends Controller
             'n_additions' => 'required|numeric|min:1',
             'n_deletions' => 'required|numeric|min:0',
             'n_playbacks' => 'required|numeric|min:1',
-            'n_answers'   => 'required|numeric|min:1',
+            'n_answers'   => 'required|numeric|min:0',
             'success'     => 'required|boolean'
         ];
 

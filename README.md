@@ -7,7 +7,7 @@ Trubadur - quiz-like music learning web application.
 - Set up MySQL
 	- Create a new user trubadur with password Trubadur!123
 	- Create a new database named trubadur and grant all privileges to trubadur user
-- Set up NginX
+- Set up nginx
 - Set up PHP
 
 - Clone Git repo

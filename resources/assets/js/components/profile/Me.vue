@@ -263,7 +263,7 @@
             <div class="me__level-progress-wrapper" @click="openTab('levels')">
                 <label class="me__level-progress-label">KJE SEM</label>
                 <div class="me__level-progress-bar">
-                    <div class="me__level-progress-bar-overlay" :style="{ 'width': (100 - progressBarPercentage) + '%', 'margin-left': progressBarPercentage + '%' }"></div>
+                    <div class="me__level-progress-bar-overlay" :style="progressBarOverlayStyle"></div>
                     <div class="me__level-progress-bar-cover"></div>
                 </div>
                 <div class="me__level-progress-bar-labels">
@@ -278,7 +278,7 @@
                 </div>
                 <div class="me__latest-badges" @click="openTab('badges')">
                     <img class="me__latest-badge-image" :id="'latest_badge_' + n" v-for="n in nLatestBadges"/>
-                    <label class="me__latest-badges-label" v-if="!hasLatestBadges">Niste še osvojili nobenega dosežka.</label>
+                    <label class="me__latest-badges-label" v-if="!hasLatestBadges">{{ owner ? 'Niste še osvojili nobenega dosežka.' : 'Ni osvojil/-a še nobenega dosežka.' }}</label>
                 </div>
             </div>
 
@@ -418,7 +418,13 @@ export default {
             return this.userBadges.length > 0
         },
         progressBarPercentage () {
-            return (this.rating - this.levelMinRating) * 100 / (this.levelMaxRating - this.levelMinRating)
+            return this.rating > this.levelMaxRating ? 100 : ((this.rating - this.levelMinRating) * 100 / (this.levelMaxRating - this.levelMinRating))
+        },
+        progressBarOverlayStyle () {
+            return {
+                'width': (100 - this.progressBarPercentage) + '%',
+                'margin-left': this.progressBarPercentage + '%'
+            }
         }
     },
     methods: {

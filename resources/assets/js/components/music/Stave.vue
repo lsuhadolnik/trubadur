@@ -2,13 +2,18 @@
 @import '../../../sass/variables/index';
 
 .stave__svg {
-    width    : 45vw;
-    height   : 13.5vw;
+    width    : 60vw;
+    height   : 18vw;
     overflow : visible;
 
     @include breakpoint-portrait {
         width  : 95vw;
         height : 28.5vw;
+    }
+
+    @include breakpoint-large-phone-landscape {
+        width  : 50vw;
+        height : 15vw;
     }
 }
 
