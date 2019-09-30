@@ -11,6 +11,7 @@ import GameModes from '../components/GameModes.vue'
 import GameStatistics from '../components/GameStatistics.vue'
 import GameTypes from '../components/GameTypes.vue'
 import HeaderMenu from '../components/HeaderMenu.vue'
+import RhythmLevelSelect from '../components/games/rhythm/LevelSelect.vue'
 
 import AdminGames from '../components/admin/AdminGames.vue'
 import AdminPlayers from '../components/admin/AdminPlayers.vue'
@@ -20,6 +21,8 @@ import AdminExercise from '../components/admin/AdminExerciseView.vue'
 
 import Intervals from '../components/Intervals.vue'
 import Rhythm from '../components/games/rhythm/Rhythm.vue'
+
+
 
 import PlaybackTest from '../components/PlaybackTest.vue'
 
@@ -79,6 +82,12 @@ export default new VueRouter({
             name: 'rhythm',
             path: '/game/rhythm/:exerciseId?',
             component: Rhythm,
+            props: true
+        },
+        {
+            name: 'rhythmLevelSelect',
+            path: '/game/level/rhythm',
+            component: RhythmLevelSelect,
             props: true
         },
         {

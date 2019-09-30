@@ -143,10 +143,8 @@ export default {
 
             } else if(this.type == 'rhythm') {
 
-                let out = this;
-
-                diffPromise = new Promise((resolve, reject) => {resolve(out.me.rhythm_level);});
-
+                this.reroute('rhythmLevelSelect', {type: this.type, mode: mode});
+                return;
             }
             
             diffPromise.then((difficulty) => {
