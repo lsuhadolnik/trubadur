@@ -168,12 +168,23 @@
 
                 <div v-if="settingsVisible" style="display: inline-block" class="rhythm-game__keyboard-row">
                     
-                    <b-p-m-text-button 
-                        v-for="i in [60, 70, 80, 90]"  :key="i" 
-                        @click.native="setBPM(i, true)" :text="i" 
-                        :selected="playbackStatus.BPM == i" />
+                    <sexy-button color="sunglow" @click.native="decrease_selected_BPM()">
+                        <icon name="minus" />
+                    </sexy-button>
 
-                    <sexy-button :color="playbackStatus.metronome ? 'sunglow' : 'cabaret'" @click.native="toggleMetronome()">
+                    <b-p-m-text-button 
+                        @click.native="setBPM(i, true)" 
+                        :text="selectedBPM"  />
+
+                    <sexy-button color="sunglow" @click.native="increase_selected_BPM()">
+                        <icon name="plus" />
+                    </sexy-button>
+
+                    <sexy-button :color="selectedBPM == playbackStatus.BPM ? 'sunglow' : 'green'" @click.native="set_selected_BPM()">
+                        <div class="normal-font">Potrdi BPM</div>
+                    </sexy-button>
+
+                    <sexy-button :color="playbackStatus.metronome ? 'sunglow' : 'cabaret'" @click.native="playbackStatus.toggleMetronome(true)">
                         <div v-if="playbackStatus.metronome" class="normal-font">IZKLJUČI METRO<br>NOM</div>
                         <div v-else class="normal-font">VKLJUČI METRO<br>NOM</div>
                     </sexy-button>

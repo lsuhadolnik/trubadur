@@ -92,7 +92,7 @@ export default {
             modes: [
                 { name: 'vaja', mode: 'practice', image: 'practice' },
                 { name: '1 igralec', mode: 'single', image: 'single' },
-                { name: 'več igralcev', mode: 'multi', image: 'multi' }
+                //{ name: 'več igralcev', mode: 'multi', image: 'multi' }
             ]
         }
     },

@@ -215,7 +215,10 @@
         </div>
 
         <div class="game-statistics__content" v-if="!loading">
-            <element-title text="statistika"></element-title>
+            
+            <sexy-button :cols="3" color="green" style="margin-bottom: 20px;" @click.native="$router.push({name:'gameTypes'})">Naslednja igra</sexy-button>
+            <element-title text="statistika po koncu igre"></element-title>
+            
             <table class="game-statistics__table">
                 <thead>
                     <tr class="game-statistics__table-row game-statistics__table-row--header">
@@ -268,10 +271,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
+
+import SexyButton from "./elements/SexyButton.vue"
 
 export default {
     props: ['id'],
+    components: { SexyButton },
     data () {
         return {
             loading: true,
@@ -280,6 +286,9 @@ export default {
 
             achievments: []
         }
+    },
+    computed: {
+        ...mapState(['me']),
     },
     created () {
         this.fetchGameStatistics(this.id).then((data) => {
@@ -293,6 +302,20 @@ export default {
     },
     methods: {
         ...mapActions(['fetchGameStatistics']),
+        
+        getMyScore() {
+            
+            for(let i = 0; i < this.users.length; i++){
+                let user = this.users[i];
+                if(user.id == this.me.id) {
+                    return points;
+                }
+            }
+
+            return "Nisi del te igre";
+
+        },
+
         reroute (name, params = {}) {
             this.$router.push({ name: name, params: params })
         },
@@ -304,7 +327,7 @@ export default {
         },
         formatNumber (number, nDecimals = 1) {
             if (number == null) return -1;
-
+            
             return number.toFixed(nDecimals)
         },
         formatTime (time, nDecimals = 1) {

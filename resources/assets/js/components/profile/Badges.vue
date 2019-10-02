@@ -49,9 +49,9 @@
         <loader v-show="loading"></loader>
         <div class="badges__content" v-show="!loading">
             <div class="badges__grid">
-                <div class="badges__badge" v-for="(badge, index) in badges">
+                <div class="badges__badge" v-for="(badge, index) in badges" :key="badge.id">
                     <img class="badges__image" :id="'badge_' + index"/>
-                    <div class="badges__name">{{ badge.name | uppercase }}</div>
+                    <div class="badges__name">{{ badge.name  }}</div>
                     <div class="badges__description">{{ badge.description }}</div>
                 </div>
             </div>
@@ -78,7 +78,8 @@ export default {
                     this.user = user
 
                     this.fetchUserBadges({ per_page: 0, order_by: 'completed,updated_at', order_direction: 'desc,asc', filter_user_id: this.user.id }).then((userBadges) => {
-                        this.userBadges = userBadges
+                        
+                        this.userBadges = userBadges.data;
 
                         this.$nextTick(() => {
                             this.loadImages()
@@ -91,12 +92,13 @@ export default {
     computed: {
         ...mapState(['me']),
         badges () {
-            return this.userBadges.length > 0 ? this.userBadges.map(userBadge => userBadge.badge) : []
+            return this.userBadges;
         }
     },
     methods: {
         ...mapActions(['fetchMe', 'fetchUser', 'fetchUserBadges']),
         loadImages () {
+
             const context = this
 
             let nLoaded = 0
@@ -104,13 +106,17 @@ export default {
 
             for (let i = 0; i < this.userBadges.length; i++) {
                 const badge = this.$el.querySelector('#badge_' + i)
+                
+                
                 badge.onload = () => {
+                    
                     if (++nLoaded === nTotal) {
+
                         context.loading = false
                     }
                 }
                 if (this.userBadges[i].completed) {
-                    badge.src = this.userBadges[i].badge.image
+                    badge.src = this.userBadges[i].image
                 } else {
                     badge.src = '/images/badges/locked.svg'
                 }

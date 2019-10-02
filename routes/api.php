@@ -32,7 +32,7 @@ Route::middleware('auth:api')->resource('users', 'API\UserController', ['except'
 Route::middleware('auth:api')->put('users/{userId}/complete', 'API\UserController@complete')
     ->where(['userId' => '[0-9]+']);
 
-Route::middleware('auth:api')->get('badgeuser', 'API\BadgeUserController@index');
+Route::middleware('auth:api')->get('badgeuser/{userId}', 'API\BadgeUserController@index');
 Route::middleware('auth:api')->post('badgeuser', 'API\BadgeUserController@store');
 Route::middleware('auth:api')->get('badgeuser/{badgeId}/{userId}', 'API\BadgeUserController@show')
     ->where(['badgeId' => '[0-9]+', 'userId' => '[0-9]+']);

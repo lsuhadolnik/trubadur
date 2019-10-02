@@ -109,6 +109,31 @@
     width: 40px;
     height: 40px;
 }
+
+.game-modes__title {
+
+    @include breakpoint-small-phone-landscape {
+        display: none;
+    }
+}
+
+.game-modes__items-wrap {
+
+    @include breakpoint-small-phone-landscape {
+        margin-right: 25px;
+    }
+
+}
+
+.game-modes__content {
+
+    @include breakpoint-small-phone-landscape {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+}
 </style>
 
 <template>
@@ -124,7 +149,7 @@
                     </div>
                 </div>
             </div>
-            <SexyButton style="margin-top: 17px;" text="Nadaljuj" @click.native="createGame()" :cols="2" color="green"/>
+            <SexyButton style="margin-top: 17px;" text="Izberi nivo" @click.native="createGame()" :cols="2" color="green"/>
         </div>
     </div>
 </template>
@@ -160,7 +185,7 @@ export default {
         }
 
         this.$nextTick(() => {
-            this.fetchMe().then(() => {
+            this.fetchMe(true).then(() => {
                 this.userLevel = this.me.rhythm_level;
                 //this.userLevel = 14;
                 

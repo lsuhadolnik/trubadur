@@ -14,6 +14,7 @@ use App\Badge;
 use App\BadgeUser;
 use App\Game;
 use App\GameUser;
+use App\User;
 
 class UserController extends Controller
 {
@@ -235,7 +236,7 @@ class UserController extends Controller
 
                 default:
 
-                    $this->testForRhythmBadges($badge, $userId, $userRhythmLevel);
+                    $this->testForRhythmBadges($badge, $userId, $userRhythmLevel, $game_id);
 
                 break;
             }
@@ -246,39 +247,41 @@ class UserController extends Controller
         return response()->json([], 204);
     }
 
-    private function testForRhythmBadges($badge, $userId, $userRhythmLevel){
+    private function testForRhythmBadges($badge, $userId, $userRhythmLevel, $game_id){
 
         $rhythmBadges = [
-            "Znam uporabljati ritmične vaje" => [11, 10],
-            "Uspešni prvi koraki" => [12, 20],
-            "Zdaj pa že znam" => [13, 20],
-            "Napredovanje v drugi letnik" => [14, 20],
-            "Dober začetek" => [21, 20],
-            "Nič me ne more ustaviti" => [22, 25],
-            "Triole so mačji kašelj" => [23, 25],
-            "Napredovanje v tretji letnik" => [24, 30],
-            "Vajenec ritmičnega čarovnika" => [31, 30],
-            "Na poti do slave" => [32, 30],
-            "Sanjam šestnajstinke" => [33, 35],
-            "Napredovanje v četrti letnik" => [34, 35],
-            "Ritmični čarovnik" => [41, 40],
-            "Kralj ritma" => [42, 40],
-            "Profesorjev asistent" => [43, 40],
-            "Ritmični genij" => [44, 40]
+            "Znam uporabljati ritmične vaje" => [11, 10, 12],
+            "Uspešni prvi koraki"            => [12, 20, 13],
+            "Zdaj pa že znam"                => [13, 20, 14],
+            "Napredovanje v drugi letnik"    => [14, 20, 21],
+            "Dober začetek"                  => [21, 20, 22],
+            "Nič me ne more ustaviti"        => [22, 25, 23],
+            "Triole so mačji kašelj"         => [23, 25, 24],
+            "Napredovanje v tretji letnik"   => [24, 30, 31],
+            "Vajenec ritmičnega čarovnika"   => [31, 30, 32],
+            "Na poti do slave"               => [32, 30, 33],
+            "Sanjam šestnajstinke"           => [33, 35, 34],
+            "Napredovanje v četrti letnik"   => [34, 35, 41],
+            "Ritmični čarovnik"              => [41, 40, 42],
+            "Kralj ritma"                    => [42, 40, 43],
+            "Profesorjev asistent"           => [43, 40, 44],
+            "Ritmični genij"                 => [44, 40, -1]
         ];
 
         if(isset($rhythmBadges[$badge->name])){
 
             $level = $rhythmBadges[$badge->name][0];
             $n = $rhythmBadges[$badge->name][1];
+            $nextLevel = $rhythmBadges[$badge->name][2];
 
             if($this->hasFinishedNRhythmExercisesOfLevel($userId, $level, $n)){
 
                 $this->badge_claimed($badge->id, $userId, $game_id);
 
                 // Advance in rhythm level
-                if($userRhythmLevel < $level && $level < 45){
-                    User::find($userId)->update(['rhythm_level', $level]);
+                if( $nextLevel > 0 && $userRhythmLevel < $nextLevel  &&  $nextLevel < 21 ) {
+                    
+                    User::where(['id' => $userId])->update(['rhythm_level' => $nextLevel]);
                 }
             }
         }
@@ -318,15 +321,15 @@ class UserController extends Controller
     private function hasFinishedNRhythmExercisesOfLevel($userId, $level, $n) {
 
         $coll = DB::select("SELECT count(*) as k from (
-            SELECT game_id
-                from trubadur.games g
-                JOIN trubadur.answers a on a.game_id = g.id 
-                where success = 1 
-                    and mode = 'single' 
-                    and user_id = ?
-                    and rhythm_level = ? 
-                group by game_id
-        ) vv;", [$userId, $level]);
+            select 
+                q.id as question_id
+            from answers a 
+                join questions q on q.id = a.question_id 
+                join games g on g.id = q.game_id and g.type = 'rhythm' and g.mode != 'practice'
+                join rhythm_exercises ex on ex.id = q.content and ex.rhythm_level = ?
+            where a.user_id = ?  and success = 1   
+            group by question_id
+            ) vv;", [$level, $userId ]);
 
         return $coll[0]->k >= $n;
     }

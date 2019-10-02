@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class BadgeUserController extends Controller
 {
@@ -28,9 +30,29 @@ class BadgeUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $userId)
     {
-        return $this->prepareAndExecuteIndexQuery($request, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+
+        $filter_completed = Input::get('filter_completed') === '1';
+
+        $sql = "SELECT 
+        b.id as id, 
+        b.image as image,
+        b.name as name, 
+        b.description as description,
+        ifnull(bu.completed, 0) as completed
+        from badges b left join badge_user bu on b.id = bu.badge_id and bu.user_id = ? 
+        ";
+
+        if($filter_completed) {
+            $sql .= "WHERE bu.completed = 1 
+            ";
+        }
+
+        $sql .= "order by b.created_at, bu.completed desc";
+
+        //return $this->prepareAndExecuteIndexQuery($request, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        return ['data' => DB::select($sql, [$userId])];
     }
 
     /**

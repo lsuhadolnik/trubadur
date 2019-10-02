@@ -747,6 +747,10 @@ export default {
 
         check(){
 
+            if(this.playbackStatus.sound.stop()) {
+               this.playbackStatus.sound.stop();
+            }
+
             if(this.questionState.check == "next"){
                 this.showDiff();
                 return;

@@ -221,7 +221,7 @@ export default new Vuex.Store({
         },
         fetchUserBadges ({ state }, params = { }) {
             return new Promise((resolve, reject) => {
-                axios.get('/api/badgeuser', { params: params })
+                axios.get('/api/badgeuser/'+params.filter_user_id, { params: params })
                     .then(response => {
                         resolve(response.data)
                     })

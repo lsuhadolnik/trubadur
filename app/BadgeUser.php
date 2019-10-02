@@ -29,7 +29,7 @@ class BadgeUser extends Pivot
      * @var array
      */
     protected $fillable = [
-        'badge_id', 'user_id', 'completed',
+        'badge_id', 'user_id', 'completed', 'game_id'
     ];
 
     /**

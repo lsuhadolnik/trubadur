@@ -370,6 +370,7 @@ export default {
                         this.fetchUserBadges({ per_page: this.nLatestBadges, page: 1, order_by: 'updated_at', order_direction: 'desc', filter_user_id: this.user.id, filter_completed: 1 }).then((data) => {
                             this.userBadges = data.data
 
+
                             if (this.owner) {
                                 this.fetchSchools().then(() => {
                                     this.fetchGrades().then(() => {
@@ -430,6 +431,8 @@ export default {
     methods: {
         ...mapActions(['fetchMe', 'updateMe', 'fetchUser', 'fetchLevel', 'fetchUserBadges', 'fetchSchools', 'fetchGrades']),
         loadImages () {
+
+
             const context = this
 
             let nLoaded = 0
@@ -453,7 +456,7 @@ export default {
                             context.loading = false
                         }
                     }
-                    badge.src = this.userBadges[i].badge.image
+                    badge.src = this.userBadges[i].image
                     badge.style.display = 'block'
                 } else {
                     badge.style.display = 'none'

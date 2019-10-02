@@ -1565,13 +1565,13 @@ var index_esm = {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(132)
+  __webpack_require__(112)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(134)
+var __vue_script__ = __webpack_require__(114)
 /* template */
-var __vue_template__ = __webpack_require__(135)
+var __vue_template__ = __webpack_require__(115)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -46169,11 +46169,11 @@ Vue.directive('touch-outside', {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_GameModes_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_GameModes_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_GameStatistics_vue__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_GameStatistics_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_GameStatistics_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_GameTypes_vue__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_GameTypes_vue__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_GameTypes_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_GameTypes_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_HeaderMenu_vue__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_HeaderMenu_vue__ = __webpack_require__(124);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_HeaderMenu_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_HeaderMenu_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_games_rhythm_LevelSelect_vue__ = __webpack_require__(127);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_games_rhythm_LevelSelect_vue__ = __webpack_require__(131);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_games_rhythm_LevelSelect_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_games_rhythm_LevelSelect_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_admin_AdminGames_vue__ = __webpack_require__(137);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_admin_AdminGames_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_admin_AdminGames_vue__);
@@ -49755,7 +49755,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     _this.user = user;
 
                     _this.fetchUserBadges({ per_page: 0, order_by: 'completed,updated_at', order_direction: 'desc,asc', filter_user_id: _this.user.id }).then(function (userBadges) {
-                        _this.userBadges = userBadges;
+
+                        _this.userBadges = userBadges.data;
 
                         _this.$nextTick(function () {
                             _this.loadImages();
@@ -49768,13 +49769,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["e" /* mapState */])(['me']), {
         badges: function badges() {
-            return this.userBadges.length > 0 ? this.userBadges.map(function (userBadge) {
-                return userBadge.badge;
-            }) : [];
+            return this.userBadges;
         }
     }),
     methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'fetchUser', 'fetchUserBadges']), {
         loadImages: function loadImages() {
+
             var context = this;
 
             var nLoaded = 0;
@@ -49782,13 +49782,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             for (var i = 0; i < this.userBadges.length; i++) {
                 var badge = this.$el.querySelector('#badge_' + i);
+
                 badge.onload = function () {
+
                     if (++nLoaded === nTotal) {
+
                         context.loading = false;
                     }
                 };
                 if (this.userBadges[i].completed) {
-                    badge.src = this.userBadges[i].badge.image;
+                    badge.src = this.userBadges[i].image;
                 } else {
                     badge.src = '/images/badges/locked.svg';
                 }
@@ -49838,20 +49841,24 @@ var render = function() {
             "div",
             { staticClass: "badges__grid" },
             _vm._l(_vm.badges, function(badge, index) {
-              return _c("div", { staticClass: "badges__badge" }, [
-                _c("img", {
-                  staticClass: "badges__image",
-                  attrs: { id: "badge_" + index }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "badges__name" }, [
-                  _vm._v(_vm._s(_vm._f("uppercase")(badge.name)))
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "badges__description" }, [
-                  _vm._v(_vm._s(badge.description))
-                ])
-              ])
+              return _c(
+                "div",
+                { key: badge.id, staticClass: "badges__badge" },
+                [
+                  _c("img", {
+                    staticClass: "badges__image",
+                    attrs: { id: "badge_" + index }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "badges__name" }, [
+                    _vm._v(_vm._s(badge.name))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "badges__description" }, [
+                    _vm._v(_vm._s(badge.description))
+                  ])
+                ]
+              )
             }),
             0
           )
@@ -50601,7 +50608,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     data: function data() {
         return {
             loading: true,
-            modes: [{ name: 'vaja', mode: 'practice', image: 'practice' }, { name: '1 igralec', mode: 'single', image: 'single' }, { name: 'več igralcev', mode: 'multi', image: 'multi' }]
+            modes: [{ name: 'vaja', mode: 'practice', image: 'practice' }, { name: '1 igralec', mode: 'single', image: 'single' }]
         };
     },
     mounted: function mounted() {
@@ -50808,7 +50815,7 @@ var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(111)
 /* template */
-var __vue_template__ = __webpack_require__(112)
+var __vue_template__ = __webpack_require__(116)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -50893,6 +50900,8 @@ exports.push([module.i, "\n.game-statistics[data-v-ad6b13a8] {\n  width: 100%;\n
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -51164,11 +51173,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['id'],
+    components: { SexyButton: __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue___default.a },
     data: function data() {
         return {
             loading: true,
@@ -51178,6 +51193,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             achievments: []
         };
     },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["e" /* mapState */])(['me'])),
     created: function created() {
         var _this = this;
 
@@ -51192,6 +51209,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchGameStatistics']), {
+        getMyScore: function getMyScore() {
+
+            for (var i = 0; i < this.users.length; i++) {
+                var user = this.users[i];
+                if (user.id == this.me.id) {
+                    return points;
+                }
+            }
+
+            return "Nisi del te igre";
+        },
         reroute: function reroute(name) {
             var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
@@ -51225,6 +51253,362 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 /* 112 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(113);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("229ec4c4", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-be802b54\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SexyButton.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-be802b54\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SexyButton.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 113 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n  -webkit-touch-action: manipulation;\n  overflow: hidden;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n  overflow: hidden;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n  overflow: hidden;\n}\n.button__percentIndicator[data-v-be802b54] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button__blue[data-v-be802b54] {\n  background-color: rgba(0, 0, 255, 0.4);\n}\n.button__border_green[data-v-be802b54] {\n  border-color: #33966D;\n}\n.button__border_orange[data-v-be802b54] {\n  border-color: #EB7D3D;\n}\n.button__border_red[data-v-be802b54] {\n  border-color: #fe664e;\n}\n.button__border_cabaret[data-v-be802b54] {\n  border-color: #D2495F;\n}\n.button__border_sunglow[data-v-be802b54] {\n  border-color: #FDBB2F;\n}\n.button__border_blue[data-v-be802b54] {\n  border-color: rgba(0, 0, 255, 0.4);\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n@media only screen and (min-device-width: 768px) {\n.button_1_col[data-v-be802b54] {\n      width: 70px !important;\n      height: 70px !important;\n}\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n.button_3_col[data-v-be802b54] {\n  width: 170px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 114 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    methods: {},
+
+    computed: {
+
+        theClass: function theClass() {
+            var k = "";
+
+            if (this.disable) {
+                k += 'button--disabled ';
+            }
+
+            if (this.hidden) {
+                k += 'button__hidden';
+            }
+
+            if (this.customClass != null) {
+                k += ' ' + this.customClass;
+            }
+
+            if (this.cols) {
+                switch (this.cols) {
+                    case 1:
+                        k += " button_1_col";
+                        break;
+
+                    case 2:
+                        k += " button_2_col";
+                        break;
+
+                    case 3:
+                        k += " button_3_col";
+                        break;
+
+                }
+            }
+
+            return k;
+        }
+
+    },
+
+    props: {
+        text: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
+        disable: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["a" /* booleanProp */])(false),
+        customClass: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
+        color: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
+        borderColor: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
+        hidden: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["a" /* booleanProp */])(false),
+        percents: {
+            type: Number,
+            required: false,
+            default: 0
+        },
+        cols: {
+            type: Number,
+            required: false,
+            default: 1
+        }
+    }
+});
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "button", class: _vm.theClass }, [
+    _c(
+      "div",
+      { class: ["button__hollow", _vm.customClass] },
+      [
+        _vm._v("\n        " + _vm._s(_vm.text) + "\n        "),
+        _vm._t("default")
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "button__hollow button__percentIndicator",
+        style: { width: _vm.percents + "%" }
+      },
+      [_vm._v(" ")]
+    ),
+    _vm._v(" "),
+    _c("div", {
+      staticClass: "button__full",
+      class: {
+        button__green: _vm.color == "green",
+        button__orange: _vm.color == "orange",
+        button__red: _vm.color == "red",
+        button__cabaret: _vm.color == "cabaret",
+        button__sunglow: _vm.color == "sunglow",
+        button__blue: _vm.color == "blue",
+
+        button__border_green: _vm.borderColor == "green",
+        button__border_orange: _vm.borderColor == "orange",
+        button__border_red: _vm.borderColor == "red",
+        button__border_cabaret: _vm.borderColor == "cabaret",
+        button__border_sunglow: _vm.borderColor == "sunglow",
+        button__border_blue: _vm.borderColor == "blue"
+      }
+    })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-be802b54", module.exports)
+  }
+}
+
+/***/ }),
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -51310,7 +51694,23 @@ var render = function() {
             "div",
             { staticClass: "game-statistics__content" },
             [
-              _c("element-title", { attrs: { text: "statistika" } }),
+              _c(
+                "sexy-button",
+                {
+                  staticStyle: { "margin-bottom": "20px" },
+                  attrs: { cols: 3, color: "green" },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.$router.push({ name: "gameTypes" })
+                    }
+                  }
+                },
+                [_vm._v("Naslednja igra")]
+              ),
+              _vm._v(" "),
+              _c("element-title", {
+                attrs: { text: "statistika po koncu igre" }
+              }),
               _vm._v(" "),
               _c("table", { staticClass: "game-statistics__table" }, [
                 _vm._m(1),
@@ -51601,20 +52001,20 @@ if (false) {
 }
 
 /***/ }),
-/* 113 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(114)
-  __webpack_require__(116)
+  __webpack_require__(118)
+  __webpack_require__(120)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(118)
+var __vue_script__ = __webpack_require__(122)
 /* template */
-var __vue_template__ = __webpack_require__(119)
+var __vue_template__ = __webpack_require__(123)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -51653,13 +52053,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 114 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(115);
+var content = __webpack_require__(119);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -51679,7 +52079,7 @@ if(false) {
 }
 
 /***/ }),
-/* 115 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -51693,13 +52093,13 @@ exports.push([module.i, "\n.game-types[data-v-f0355000] {\n  width: 100%;\n}\n.g
 
 
 /***/ }),
-/* 116 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(117);
+var content = __webpack_require__(121);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -51719,7 +52119,7 @@ if(false) {
 }
 
 /***/ }),
-/* 117 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -51733,7 +52133,7 @@ exports.push([module.i, "\n.game-types__choose .title {\n  font-size: 25px;\n}\n
 
 
 /***/ }),
-/* 118 */
+/* 122 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51871,7 +52271,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 119 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -51977,19 +52377,19 @@ if (false) {
 }
 
 /***/ }),
-/* 120 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(121)
+  __webpack_require__(125)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(123)
+var __vue_script__ = __webpack_require__(127)
 /* template */
-var __vue_template__ = __webpack_require__(126)
+var __vue_template__ = __webpack_require__(130)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52028,13 +52428,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 121 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(122);
+var content = __webpack_require__(126);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -52054,7 +52454,7 @@ if(false) {
 }
 
 /***/ }),
-/* 122 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -52068,13 +52468,13 @@ exports.push([module.i, "\n.header[data-v-11ef0503] {\n  width: 100%;\n  height:
 
 
 /***/ }),
-/* 123 */
+/* 127 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_icons_bars__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_awesome_icons_sign_out__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_icons_bars__ = __webpack_require__(128);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_awesome_icons_sign_out__ = __webpack_require__(129);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(4);
 var _extends2;
 
@@ -52446,7 +52846,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 });
 
 /***/ }),
-/* 124 */
+/* 128 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52458,7 +52858,7 @@ __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"bars":{"
 
 
 /***/ }),
-/* 125 */
+/* 129 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52470,7 +52870,7 @@ __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"sign-out
 
 
 /***/ }),
-/* 126 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -52595,17 +52995,17 @@ if (false) {
 }
 
 /***/ }),
-/* 127 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(128)
+  __webpack_require__(132)
 }
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(130)
+var __vue_script__ = __webpack_require__(134)
 /* template */
 var __vue_template__ = __webpack_require__(136)
 /* template functional */
@@ -52646,13 +53046,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 128 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(129);
+var content = __webpack_require__(133);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -52672,7 +53072,7 @@ if(false) {
 }
 
 /***/ }),
-/* 129 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(false);
@@ -52680,23 +53080,48 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.game-modes[data-v-0c8c342c] {\n  width: 100%;\n}\n.game-modes__content[data-v-0c8c342c] {\n  width: 100%;\n  height: calc(100vh - 70px);\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.game-modes__items-wrap[data-v-0c8c342c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  border: 6px rgba(0, 0, 0, 0.1) solid;\n  border-radius: 9px;\n}\n.game-modes__item-row[data-v-0c8c342c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n.game-modes__item[data-v-0c8c342c] {\n  width: 100%;\n  padding: 20px;\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.game-modes__item[data-v-0c8c342c] {\n      padding: 40px;\n}\n}\n.game-modes__item[data-v-0c8c342c] {\n  width: 65px;\n  height: 65px;\n}\n.game-modes__items-wrap:nth-child(even) .game-modes__item-row[data-v-0c8c342c]:nth-child(even) {\n  background-color: #FFD15E;\n}\n.game-modes__items-wrap:nth-child(even) .game-modes__item-row[data-v-0c8c342c]:nth-child(odd) {\n  background-color: #FDBB2F;\n}\n.game-modes__items-wrap:nth-child(odd) .game-modes__item-row[data-v-0c8c342c]:nth-child(even) {\n  background-color: #FFD15E;\n}\n.game-modes__items-wrap:nth-child(odd) .game-modes__item-row[data-v-0c8c342c]:nth-child(odd) {\n  background-color: #FDBB2F;\n}\n.game-modes__image[data-v-0c8c342c] {\n  width: 100px;\n  height: 100px;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.game-modes__image[data-v-0c8c342c] {\n      width: 150px;\n      height: 150px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape) {\n.game-modes__image[data-v-0c8c342c] {\n      width: 85px;\n      height: 85px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.game-modes__image[data-v-0c8c342c] {\n      width: 85px;\n      height: 85px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-modes__image[data-v-0c8c342c] {\n      width: 70px;\n      height: 70px;\n}\n}\n.game-modes__label[data-v-0c8c342c] {\n  font-size: 20px;\n  text-align: center;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.game-modes__label[data-v-0c8c342c] {\n      font-size: 40px;\n}\n}\n.game-modes__arrow[data-v-0c8c342c] {\n  width: 30px;\n  height: 30px;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.game-modes__arrow[data-v-0c8c342c] {\n      width: 50px;\n      height: 50px;\n}\n}\n.selected[data-v-0c8c342c] {\n  background: rgba(0, 0, 0, 0.6);\n  color: white;\n  padding: 12px;\n  border-radius: 41px;\n  width: 40px;\n  height: 40px;\n}\n", ""]);
+exports.push([module.i, "\n.game-modes[data-v-0c8c342c] {\n  width: 100%;\n}\n.game-modes__content[data-v-0c8c342c] {\n  width: 100%;\n  height: calc(100vh - 70px);\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.game-modes__items-wrap[data-v-0c8c342c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  border: 6px rgba(0, 0, 0, 0.1) solid;\n  border-radius: 9px;\n}\n.game-modes__item-row[data-v-0c8c342c] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n}\n.game-modes__item[data-v-0c8c342c] {\n  width: 100%;\n  padding: 20px;\n  -webkit-box-flex: 1;\n      -ms-flex: 1;\n          flex: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.game-modes__item[data-v-0c8c342c] {\n      padding: 40px;\n}\n}\n.game-modes__item[data-v-0c8c342c] {\n  width: 65px;\n  height: 65px;\n}\n.game-modes__items-wrap:nth-child(even) .game-modes__item-row[data-v-0c8c342c]:nth-child(even) {\n  background-color: #FFD15E;\n}\n.game-modes__items-wrap:nth-child(even) .game-modes__item-row[data-v-0c8c342c]:nth-child(odd) {\n  background-color: #FDBB2F;\n}\n.game-modes__items-wrap:nth-child(odd) .game-modes__item-row[data-v-0c8c342c]:nth-child(even) {\n  background-color: #FFD15E;\n}\n.game-modes__items-wrap:nth-child(odd) .game-modes__item-row[data-v-0c8c342c]:nth-child(odd) {\n  background-color: #FDBB2F;\n}\n.game-modes__image[data-v-0c8c342c] {\n  width: 100px;\n  height: 100px;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.game-modes__image[data-v-0c8c342c] {\n      width: 150px;\n      height: 150px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape) {\n.game-modes__image[data-v-0c8c342c] {\n      width: 85px;\n      height: 85px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.game-modes__image[data-v-0c8c342c] {\n      width: 85px;\n      height: 85px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-modes__image[data-v-0c8c342c] {\n      width: 70px;\n      height: 70px;\n}\n}\n.game-modes__label[data-v-0c8c342c] {\n  font-size: 20px;\n  text-align: center;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.game-modes__label[data-v-0c8c342c] {\n      font-size: 40px;\n}\n}\n.game-modes__arrow[data-v-0c8c342c] {\n  width: 30px;\n  height: 30px;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.game-modes__arrow[data-v-0c8c342c] {\n      width: 50px;\n      height: 50px;\n}\n}\n.selected[data-v-0c8c342c] {\n  background: rgba(0, 0, 0, 0.6);\n  color: white;\n  padding: 12px;\n  border-radius: 41px;\n  width: 40px;\n  height: 40px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-modes__title[data-v-0c8c342c] {\n    display: none;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-modes__items-wrap[data-v-0c8c342c] {\n    margin-right: 25px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-modes__content[data-v-0c8c342c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n}\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 130 */
+/* 134 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_awesome_icons_lock__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_awesome_icons_lock__ = __webpack_require__(135);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_SexyButton_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__elements_SexyButton_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -52856,7 +53281,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
 
         this.$nextTick(function () {
-            _this.fetchMe().then(function () {
+            _this.fetchMe(true).then(function () {
                 _this.userLevel = _this.me.rhythm_level;
                 //this.userLevel = 14;
 
@@ -52898,7 +53323,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 131 */
+/* 135 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52908,362 +53333,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"lock":{"width":1152,"height":1792,"paths":[{"d":"M320 768h512v-192q0-106-75-181t-181-75-181 75-75 181v192zM1152 864v576q0 40-28 68t-68 28h-960q-40 0-68-28t-28-68v-576q0-40 28-68t68-28h32v-192q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z"}]}})
 
-
-/***/ }),
-/* 132 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(133);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("229ec4c4", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-be802b54\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SexyButton.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-be802b54\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SexyButton.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 133 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    position: relative;\r\n}\r\n\r\n.button__hollow {\r\n    position: relative;\r\n    z-index: 100;\r\n    display: inline-block;\r\n    border-radius: 6px;\r\n    border: 3px solid $black;\r\n    text-align: center;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n    vertical-align: middle;\r\n}\r\n\r\n.button__full {\r\n    z-index: 50;\r\n    position: absolute;\r\n    top: 6px;\r\n    left: 6px;\r\n    display: inline-block;\r\n    background: $sea-green;\r\n    color: $sea-green;\r\n    border-radius: 6px;\r\n    min-width: 50px;\r\n    min-height: 50px;\r\n}*/\n.button[data-v-be802b54] {\n  display: inline-block;\n  position: relative;\n  width: 50px;\n  height: 50px;\n  cursor: pointer;\n  -webkit-transition: -webkit-filter 0.1s linear;\n  transition: -webkit-filter 0.1s linear;\n  transition: filter 0.1s linear;\n  transition: filter 0.1s linear, -webkit-filter 0.1s linear;\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n  -webkit-touch-action: manipulation;\n  overflow: hidden;\n}\n.button[data-v-be802b54]:hover {\n    -webkit-filter: brightness(0.85);\n            filter: brightness(0.85);\n}\n.button--disabled[data-v-be802b54] {\n  cursor: not-allowed;\n  pointer-events: none;\n}\n.button__hidden[data-v-be802b54] {\n  visibility: hidden;\n}\n.button__hollow[data-v-be802b54] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  border: 3px solid #000000;\n  border-radius: 6px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  z-index: 1;\n  overflow: hidden;\n}\n.button__full[data-v-be802b54] {\n  position: absolute;\n  top: 3px;\n  left: 3px;\n  width: 95%;\n  height: 96%;\n  border-radius: 6px;\n  overflow: hidden;\n}\n.button__percentIndicator[data-v-be802b54] {\n  background: rgba(0, 0, 0, 0.2);\n  width: 0;\n  border: transparent;\n}\n.button__green[data-v-be802b54] {\n  background-color: #33966D;\n}\n.button__orange[data-v-be802b54] {\n  background-color: #EB7D3D;\n}\n.button__red[data-v-be802b54] {\n  background-color: #fe664e;\n}\n.button__cabaret[data-v-be802b54] {\n  background-color: #D2495F;\n}\n.button__sunglow[data-v-be802b54] {\n  background-color: #FDBB2F;\n}\n.button__blue[data-v-be802b54] {\n  background-color: rgba(0, 0, 255, 0.4);\n}\n.button__border_green[data-v-be802b54] {\n  border-color: #33966D;\n}\n.button__border_orange[data-v-be802b54] {\n  border-color: #EB7D3D;\n}\n.button__border_red[data-v-be802b54] {\n  border-color: #fe664e;\n}\n.button__border_cabaret[data-v-be802b54] {\n  border-color: #D2495F;\n}\n.button__border_sunglow[data-v-be802b54] {\n  border-color: #FDBB2F;\n}\n.button__border_blue[data-v-be802b54] {\n  border-color: rgba(0, 0, 255, 0.4);\n}\n.button_1_col[data-v-be802b54] {\n  width: 50px;\n}\n@media only screen and (min-device-width: 768px) {\n.button_1_col[data-v-be802b54] {\n      width: 70px !important;\n      height: 70px !important;\n}\n}\n.button_2_col[data-v-be802b54] {\n  width: 110px;\n}\n.button_3_col[data-v-be802b54] {\n  width: 170px;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 134 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-
-    methods: {},
-
-    computed: {
-
-        theClass: function theClass() {
-            var k = "";
-
-            if (this.disable) {
-                k += 'button--disabled ';
-            }
-
-            if (this.hidden) {
-                k += 'button__hidden';
-            }
-
-            if (this.customClass != null) {
-                k += ' ' + this.customClass;
-            }
-
-            if (this.cols) {
-                switch (this.cols) {
-                    case 1:
-                        k += " button_1_col";
-                        break;
-
-                    case 2:
-                        k += " button_2_col";
-                        break;
-
-                    case 3:
-                        k += " button_3_col";
-                        break;
-
-                }
-            }
-
-            return k;
-        }
-
-    },
-
-    props: {
-        text: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
-        disable: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["a" /* booleanProp */])(false),
-        customClass: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
-        color: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
-        borderColor: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(false),
-        hidden: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["a" /* booleanProp */])(false),
-        percents: {
-            type: Number,
-            required: false,
-            default: 0
-        },
-        cols: {
-            type: Number,
-            required: false,
-            default: 1
-        }
-    }
-});
-
-/***/ }),
-/* 135 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "button", class: _vm.theClass }, [
-    _c(
-      "div",
-      { class: ["button__hollow", _vm.customClass] },
-      [
-        _vm._v("\n        " + _vm._s(_vm.text) + "\n        "),
-        _vm._t("default")
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "button__hollow button__percentIndicator",
-        style: { width: _vm.percents + "%" }
-      },
-      [_vm._v(" ")]
-    ),
-    _vm._v(" "),
-    _c("div", {
-      staticClass: "button__full",
-      class: {
-        button__green: _vm.color == "green",
-        button__orange: _vm.color == "orange",
-        button__red: _vm.color == "red",
-        button__cabaret: _vm.color == "cabaret",
-        button__sunglow: _vm.color == "sunglow",
-        button__blue: _vm.color == "blue",
-
-        button__border_green: _vm.borderColor == "green",
-        button__border_orange: _vm.borderColor == "orange",
-        button__border_red: _vm.borderColor == "red",
-        button__border_cabaret: _vm.borderColor == "cabaret",
-        button__border_sunglow: _vm.borderColor == "sunglow",
-        button__border_blue: _vm.borderColor == "blue"
-      }
-    })
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-be802b54", module.exports)
-  }
-}
 
 /***/ }),
 /* 136 */
@@ -53348,7 +53417,7 @@ var render = function() {
           _vm._v(" "),
           _c("SexyButton", {
             staticStyle: { "margin-top": "17px" },
-            attrs: { text: "Nadaljuj", cols: 2, color: "green" },
+            attrs: { text: "Izberi nivo", cols: 2, color: "green" },
             nativeOn: {
               click: function($event) {
                 return _vm.createGame()
@@ -63515,6 +63584,10 @@ var util = __webpack_require__(10);
         },
         check: function check() {
 
+            if (this.playbackStatus.sound.stop()) {
+                this.playbackStatus.sound.stop();
+            }
+
             if (this.questionState.check == "next") {
                 this.showDiff();
                 return;
@@ -64474,6 +64547,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_vue_awesome_icons_refresh__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25_vue_awesome_icons_exclamation_circle__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26_vue_awesome_icons_cog__ = __webpack_require__(255);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -66257,20 +66341,64 @@ var render = function() {
                     staticStyle: { display: "inline-block" }
                   },
                   [
-                    _vm._l([60, 70, 80, 90], function(i) {
-                      return _c("b-p-m-text-button", {
-                        key: i,
+                    _c(
+                      "sexy-button",
+                      {
+                        attrs: { color: "sunglow" },
+                        nativeOn: {
+                          click: function($event) {
+                            return _vm.decrease_selected_BPM()
+                          }
+                        }
+                      },
+                      [_c("icon", { attrs: { name: "minus" } })],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("b-p-m-text-button", {
+                      attrs: { text: _vm.selectedBPM },
+                      nativeOn: {
+                        click: function($event) {
+                          return _vm.setBPM(_vm.i, true)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "sexy-button",
+                      {
+                        attrs: { color: "sunglow" },
+                        nativeOn: {
+                          click: function($event) {
+                            return _vm.increase_selected_BPM()
+                          }
+                        }
+                      },
+                      [_c("icon", { attrs: { name: "plus" } })],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "sexy-button",
+                      {
                         attrs: {
-                          text: i,
-                          selected: _vm.playbackStatus.BPM == i
+                          color:
+                            _vm.selectedBPM == _vm.playbackStatus.BPM
+                              ? "sunglow"
+                              : "green"
                         },
                         nativeOn: {
                           click: function($event) {
-                            return _vm.setBPM(i, true)
+                            return _vm.set_selected_BPM()
                           }
                         }
-                      })
-                    }),
+                      },
+                      [
+                        _c("div", { staticClass: "normal-font" }, [
+                          _vm._v("Potrdi BPM")
+                        ])
+                      ]
+                    ),
                     _vm._v(" "),
                     _c(
                       "sexy-button",
@@ -66282,7 +66410,7 @@ var render = function() {
                         },
                         nativeOn: {
                           click: function($event) {
-                            return _vm.toggleMetronome()
+                            return _vm.playbackStatus.toggleMetronome(true)
                           }
                         }
                       },
@@ -66301,7 +66429,7 @@ var render = function() {
                       ]
                     )
                   ],
-                  2
+                  1
                 )
               : _vm._e(),
             _vm._v(" "),
@@ -75649,7 +75777,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                             context.loading = false;
                         }
                     };
-                    badge.src = this.userBadges[i].badge.image;
+                    badge.src = this.userBadges[i].image;
                     badge.style.display = 'block';
                 } else {
                     badge.style.display = 'none';
@@ -79092,7 +79220,7 @@ function handleError(error) {
             var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
             return new Promise(function (resolve, reject) {
-                axios.get('/api/badgeuser', { params: params }).then(function (response) {
+                axios.get('/api/badgeuser/' + params.filter_user_id, { params: params }).then(function (response) {
                     resolve(response.data);
                 }).catch(function (error) {
                     handleError(error);
