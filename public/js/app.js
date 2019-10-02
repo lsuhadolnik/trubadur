@@ -55714,8 +55714,9 @@ var utils = __webpack_require__(10);
     mounted: function mounted() {
 
         var vue = this;
-        window.addEventListener('resize', this.$refs.staff_view.viewportResized);
-        window.addEventListener('orientationchange', this.$refs.staff_view.viewportResized);
+        //window.addEventListener('resize', this.$refs.staff_view.viewportResized);
+        //window.addEventListener('orientationchange', this.$refs.staff_view.viewportResized);
+
 
         this.loadBarsPage();
     }

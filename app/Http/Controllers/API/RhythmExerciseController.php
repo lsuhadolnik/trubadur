@@ -402,7 +402,7 @@ class RhythmExerciseController extends Controller
             $f = $featureTypes->obligatory[0];
             
             // Choose bar
-            $bar = $this->chooseFeatureBar($f->id, $spaceLeft[$obligatoryFill]);
+            $bar = $this->chooseFeatureBar($f, $lengths[$currentBar]);
             
             // Find its place
             $idx = $this->getFirstFreeBar($bar->length, $lengths, $currentBar);
@@ -413,12 +413,13 @@ class RhythmExerciseController extends Controller
 
             // Add bar to result
             $result[$idx][] = $bar->id;
-    
+            $lengths[$idx] -= $bar->length;
+
             // Increment and remove if there are enough bas of this type
             $this->incrementArrayValue($featureUseCounter, $f->id);                
             if($featureUseCounter[$f->id] >= $f->min){
                 
-                if(isset($f->max) && $f->max > $f->min){
+                if(!isset($f->max) || ($f->max > $f->min)){
                     $featureTypes->other[] = $featureTypes->obligatory[0];
                 }
 
