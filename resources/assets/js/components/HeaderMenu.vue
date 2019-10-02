@@ -212,7 +212,7 @@
             <div class="header__title">TRUBADUR</div>
         </div>
         <div class="menu" :class="{ 'menu--open': isMenuInitialized && isMenuOpened, 'menu--close': isMenuInitialized && !isMenuOpened }" v-click-outside="clickedOutsideMenu" v-touch-outside="clickedOutsideMenu">
-            <div class="menu__item" :class="{ 'menu-item--active': isItemActive(item) }" v-for="item in menuItems" @click="open($event, item)">
+            <div class="menu__item" :class="{ 'menu-item--active': isItemActive(item) }" v-for="item in menuItems" :key="item.text" @click="open($event, item)">
                 <img v-if="item.image" class="menu__image" :src="'/images/menu/' + item.image + '.svg'"></img>
                 <div v-else class="menu__image_text">{{item.text}}</div>
                 <label class="menu__label">{{ item.name | uppercase }}</label>
@@ -307,6 +307,9 @@ export default {
 
             this.isHeaderSticky = this.isMenuOpened ? true : window.pageYOffset > 0
             this.$emit('sticky-header', this.isHeaderSticky)
+
+        },
+
         hideHeader () {
             this.isHeaderHidden = window.innerHeight < window.innerWidth && this.$route.path === '/game/intervals'
         },

@@ -44,7 +44,7 @@
         "eslint": "^4.11.0",
         "eslint-config-standard": "^10.2.1",
         "fraction.js": "^4.0.10",
-        "howler": "^2.1.2",
+        "howler-laravel-csrf": "^2.1.2",
         "jquery": "^3.2.1",
         "laravel-mix": "^2.1.14",
         "lodash": "^4.17.11",

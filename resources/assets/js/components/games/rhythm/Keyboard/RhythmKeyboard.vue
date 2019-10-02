@@ -75,10 +75,21 @@
 
                 <div v-if="settingsVisible" class="jcsb">
                     
+                    <sexy-button color="sunglow" @click.native="decrease_selected_BPM()">
+                        <icon name="minus" />
+                    </sexy-button>
+
                     <b-p-m-text-button 
-                        v-for="i in [60, 70, 80, 90]"  :key="i" 
-                        @click.native="setBPM(i, true)" :text="i" 
-                        :selected="playbackStatus.BPM == i" />
+                        @click.native="setBPM(i, true)" 
+                        :text="selectedBPM"  />
+
+                    <sexy-button color="sunglow" @click.native="increase_selected_BPM()">
+                        <icon name="plus" />
+                    </sexy-button>
+
+                    <sexy-button :color="selectedBPM == playbackStatus.BPM ? 'sunglow' : 'green'" @click.native="set_selected_BPM()">
+                        <div class="normal-font">Potrdi BPM</div>
+                    </sexy-button>
 
                     <sexy-button :color="playbackStatus.metronome ? 'sunglow' : 'cabaret'" @click.native="playbackStatus.toggleMetronome(true)">
                         <div v-if="playbackStatus.metronome" class="normal-font">IZKLJUČI METRO<br>NOM</div>
@@ -386,6 +397,8 @@ import BPMSlider from "./Buttons/BPMSlider.vue"
 import BPMTextButton from "./Buttons/BPMTextButton.vue"
 import CheckButton from "./Buttons/CheckButton.vue"
 
+import 'vue-awesome/icons/plus'
+import 'vue-awesome/icons/minus'
 import 'vue-awesome/icons/repeat'
 import 'vue-awesome/icons/trash'
 import 'vue-awesome/icons/play'
@@ -406,6 +419,29 @@ var Fraction = require('fraction.js');
 export default {
     
     methods: {
+
+        increase_selected_BPM() {
+
+            if (this.selectedBPM + 10 < 1000) {
+                this.selectedBPM += 10;
+            }
+        },
+
+        decrease_selected_BPM() {
+
+            if (this.selectedBPM - 10 > 10) {
+                this.selectedBPM -= 10;
+            }
+        },
+
+        set_selected_BPM() {
+
+            if(this.selectedBPM != this.playbackStatus.BPM) {
+                this.setBPM(this.selectedBPM, true);
+            }
+
+            this.settingsVisible = false;
+        },
 
         note(num) {
 
@@ -667,6 +703,8 @@ export default {
             buttons: false,
 
             settingsVisible: false,
+
+            selectedBPM: 60,
 
             bpm_slider: {
                 value: 10

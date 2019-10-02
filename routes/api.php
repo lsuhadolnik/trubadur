@@ -90,4 +90,4 @@ Route::middleware('auth:api')->delete('rhythmFeatures/{fid}/occurrences/{level}/
 Route::middleware('auth:api')->resource('rhythmExerciseFeedback', 'API\RhythmExerciseFeedbackController', ['except' => ['create', 'edit']]);
 
 // Howler.js cannot make authenticated requests and it's not so 
-Route::get('sound/{exId}', 'Utils\Midi\MidiNotes@GetExercise');
+Route::middleware('auth:api')->get('sound/{exId}', 'Utils\Midi\MidiNotes@GetExercise');

@@ -170,7 +170,6 @@ class MidiNotes {
         return $countInNotes;
     }
     
-
     public function GetMIDIData($midi, $notes, $info, $trackInfo) {
 
         $durs = MusiSONUtils::toDurations($notes);
@@ -197,7 +196,7 @@ class MidiNotes {
                     $currentTime,  // Timestamp
                     $trackInfo->trackId,  // Channel
                     $sPitch, // Note
-                    $this->noteForce  // Kok useka
+                    $trackInfo->noteForce  // Kok useka
                 ));
 
                 $midi->addMsg($trackInfo->trackId, MSG::Off(
@@ -224,12 +223,11 @@ class MidiNotes {
 
     public function NotesToSound($notes, $info, $convertToMP3) {
 
-        /*$userID = Auth::user();
+        $userID = Auth::user();
         if(!$userID) {
             throw new Exception("No user logged in.");
         }
-        $userID = $userID->id;*/
-        $userID = 1;
+        $userID = $userID->id;
 
         $countinNotes = $this->GetMetronomeNotes($info->bar,   1);
         $countinPitch = $this->GetMetronomePitches($info->bar, 1);
@@ -248,7 +246,8 @@ class MidiNotes {
             "trackId" => 2,
             "pitch" => $countinPitch,
             "currentTime" => 0,
-            "constDuration" => 0.2
+            "constDuration" => 0.2,
+            "noteForce" => 80,
         ]);
         
 
@@ -258,7 +257,8 @@ class MidiNotes {
             "trackId" => 1,
             "pitch" => $info->pitch->exercise,
             "currentTime" => $timeDiff,
-            "constDuration" => null
+            "constDuration" => null,
+            "noteForce" => 50,
         ]);
 
         // Metronome
@@ -268,7 +268,8 @@ class MidiNotes {
                 "trackId" => 2,
                 "pitch" => $metronomePitch,
                 "currentTime" => $timeDiff,
-                "constDuration" => 0.2
+                "constDuration" => 0.2,
+                "noteForce" => 90,
             ]);
         }
         

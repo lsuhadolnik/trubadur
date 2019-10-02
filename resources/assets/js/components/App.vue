@@ -24,6 +24,9 @@ export default {
             isHeaderSticky: false
         }
     },
+    mounted () {
+        document.title = "Trubadur ritem";
+    },
     methods: {
         setStickyHeader (value) {
             this.isHeaderSticky = value

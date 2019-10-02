@@ -197,7 +197,7 @@ import NoteStore from "./noteStore"
 
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
-import { Howl, Howler } from 'howler';
+import { Howl, Howler } from 'howler-laravel-csrf';
 
 const util = require('./rhythmUtilities');
 
@@ -868,6 +868,7 @@ export default {
         if(this.isExerciseTest()){
             // Override - show certain exercise and quit
 
+            debugger;
             this.fetchMe()
             .then(() => { return this.loadExerciseWithId(out.$route.params.exerciseId); })
             .then(() => { this.displayState = "instructions"; return false;});
