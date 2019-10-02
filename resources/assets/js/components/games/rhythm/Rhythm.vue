@@ -331,7 +331,7 @@ export default {
         toggleMetronome(reload) {
             this.playbackStatus.metronome = !this.playbackStatus.metronome;
             if(reload) {
-                this.reloadAudio();
+                this.reloadAudio(true);
             }
             
         },
@@ -339,15 +339,17 @@ export default {
         setBPM(val, reload) {
             this.playbackStatus.BPM = val;
             if(reload) {
-                this.reloadAudio();
+                this.reloadAudio(true);
             }
             
         },
 
-        reloadAudio() {
+        reloadAudio(play) {
+
+            this.playbackStatus.sound.stop();
 
             let out = this;
-            this.loadAudio().then(() => {
+            this.loadAudio(play).then(() => {
                 out.displayState = "ready";
             });
         },

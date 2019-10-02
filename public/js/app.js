@@ -1556,7 +1556,7 @@ var index_esm = {
 /* harmony default export */ __webpack_exports__["a"] = (index_esm);
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
 
 /***/ }),
 /* 5 */
@@ -2762,6 +2762,33 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2840,7 +2867,7 @@ function functionProp() {
 }
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //
@@ -3166,33 +3193,6 @@ var utilities = {
 module.exports = utilities;
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3302,7 +3302,7 @@ module.exports = Component.exports
 //import { util } from "node-forge";
 
 var Fraction = __webpack_require__(7);
-var util = __webpack_require__(9);
+var util = __webpack_require__(10);
 
 var NoteStore = function NoteStore(bar, cursor, render_function, info) {
 
@@ -5257,7 +5257,7 @@ __WEBPACK_IMPORTED_MODULE_0__components_Icon_vue___default.a.register({"exclamat
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(47);
-module.exports = __webpack_require__(334);
+module.exports = __webpack_require__(335);
 
 
 /***/ }),
@@ -5271,7 +5271,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__utils_vueHelpers__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router__ = __webpack_require__(74);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(334);
 
 
 
@@ -22402,7 +22402,7 @@ new Vue({ // eslint-disable-line no-new
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(23)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(23)(module)))
 
 /***/ }),
 /* 49 */
@@ -44964,7 +44964,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(52).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(52).setImmediate))
 
 /***/ }),
 /* 52 */
@@ -45034,7 +45034,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
 /* 53 */
@@ -45227,7 +45227,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), __webpack_require__(24)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(24)))
 
 /***/ }),
 /* 54 */
@@ -46189,29 +46189,29 @@ Vue.directive('touch-outside', {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_Intervals_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_Intervals_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_games_rhythm_Rhythm_vue__ = __webpack_require__(224);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_games_rhythm_Rhythm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_games_rhythm_Rhythm_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_PlaybackTest_vue__ = __webpack_require__(263);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_PlaybackTest_vue__ = __webpack_require__(264);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_PlaybackTest_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_PlaybackTest_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_music_Keyboard_vue__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_music_Keyboard_vue__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_music_Keyboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__components_music_Keyboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_Leaderboard_vue__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_Leaderboard_vue__ = __webpack_require__(278);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_Leaderboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__components_Leaderboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_profile_Levels_vue__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_profile_Levels_vue__ = __webpack_require__(285);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_profile_Levels_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__components_profile_Levels_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_elements_Loader_vue__ = __webpack_require__(289);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_elements_Loader_vue__ = __webpack_require__(290);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_elements_Loader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23__components_elements_Loader_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_profile_Me_vue__ = __webpack_require__(294);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_profile_Me_vue__ = __webpack_require__(295);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_profile_Me_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24__components_profile_Me_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_music_Note_vue__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_music_Note_vue__ = __webpack_require__(302);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_music_Note_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_25__components_music_Note_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_PageNotFound_vue__ = __webpack_require__(306);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_PageNotFound_vue__ = __webpack_require__(307);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_PageNotFound_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26__components_PageNotFound_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_Profile_vue__ = __webpack_require__(311);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_Profile_vue__ = __webpack_require__(312);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_27__components_Profile_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_Settings_vue__ = __webpack_require__(316);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_Settings_vue__ = __webpack_require__(317);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_Settings_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_28__components_Settings_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_music_Stave_vue__ = __webpack_require__(323);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_music_Stave_vue__ = __webpack_require__(324);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_music_Stave_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_29__components_music_Stave_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_elements_Title_vue__ = __webpack_require__(328);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_elements_Title_vue__ = __webpack_require__(329);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_elements_Title_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_30__components_elements_Title_vue__);
 
 
@@ -49968,7 +49968,7 @@ exports.push([module.i, "\n.button[data-v-52b0fda3] {\n  position: relative;\n  
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
 //
 //
 //
@@ -52955,7 +52955,7 @@ exports.push([module.i, "/*.button {\r\n    display: inline-block;\r\n    positi
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
 //
 //
 //
@@ -53931,7 +53931,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var RU = new __WEBPACK_IMPORTED_MODULE_1__rhythmRenderUtilities__["a" /* default */]();
 
-var util = __webpack_require__(9);
+var util = __webpack_require__(10);
 
 var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
 var StaveNote = VF.StaveNote;
@@ -55294,7 +55294,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 var Fraction = __webpack_require__(7);
-var utils = __webpack_require__(9);
+var utils = __webpack_require__(10);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -56224,7 +56224,7 @@ exports.push([module.i, "\n.button[data-v-656066f6] {\n  display: inline-block;\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
 //
 //
 //
@@ -60622,7 +60622,7 @@ if (false) {
 /* WEBPACK VAR INJECTION */(function(global) {!function(){"use strict";var t=function(t,e,s,n,r,i,a,o){const l=("function"==typeof s?s.options:s)||{};return l.__file="vue-datatable-cell.vue",l.render||(l.render=t.render,l.staticRenderFns=t.staticRenderFns,l._compiled=!0,r&&(l.functional=!0)),l._scopeId=n,l}({render:function(){var t=this,e=t.$createElement,s=t._self._c||e;return s("td",{style:{"text-align":t.column.align}},[t.column.component?s(t.column.component,{tag:"component",attrs:{row:t.row,column:t.column}}):t.column.interpolate?s("span",{domProps:{innerHTML:t._s(t.content)}}):s("span",[t._v(t._s(t.content))])],1)},staticRenderFns:[]},0,{props:{column:[Object,Array],row:[Object,Array]},computed:{content(){return this.column.getRepresentation(this.row)}}},void 0,!1);var e=function(t,e,s,n,r,i,a,o){const l=("function"==typeof s?s.options:s)||{};return l.__file="vue-datatable-header.vue",l.render||(l.render=t.render,l.staticRenderFns=t.staticRenderFns,l._compiled=!0,r&&(l.functional=!0)),l._scopeId=n,l}({render:function(){var t=this,e=t.$createElement,s=t._self._c||e;return s("th",{class:t.column.headerClass,style:{"text-align":t.column.align}},[t.column.headerComponent?s(t.column.headerComponent,{tag:"component",attrs:{column:t.column}}):s("span",[t._v(t._s(t.column.label))]),t._v(" "),t.column.sortable?s("span",{class:t.classes,on:{click:t.toggleSort}}):t._e()],1)},staticRenderFns:[]},0,{props:{model:{prop:"direction",event:"change"},column:[Object,Array],settings:Object,direction:{type:String,default:null}},computed:{canSort(){return this.column.sortable},is_sorted_ascending(){return"asc"===this.direction},is_sorted_descending(){return"desc"===this.direction},is_sorted(){return this.is_sorted_descending||this.is_sorted_ascending},classes(){var t=this.settings.get("table.sorting.classes"),e=t.canSort;return this.canSort?this.is_sorted?(this.is_sorted_ascending&&(e=e.concat(t.sortAsc)),this.is_sorted_descending&&(e=e.concat(t.sortDesc)),this.joinClasses(e)):(e=e.concat(t.sortNone),this.joinClasses(e)):""}},methods:{joinClasses(t){return this.unique(t).join(" ")},toggleSort(){this.direction&&null!==this.direction?"asc"===this.direction?this.$emit("change","desc",this.column):this.$emit("change",null,this.column):this.$emit("change","asc",this.column)},unique(t){var e={};return t.filter(function(t){return!e.hasOwnProperty(t)&&(e[t]=!0)})}}},void 0,!1);"undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self&&self;var s,n=(function(t){t.exports=function(){var t=Object.prototype.toString;function e(t,e){return null!=t&&Object.prototype.hasOwnProperty.call(t,e)}function s(t){if(!t)return!0;if(r(t)&&0===t.length)return!0;if("string"!=typeof t){for(var s in t)if(e(t,s))return!1;return!0}return!1}function n(e){return t.call(e)}var r=Array.isArray||function(e){return"[object Array]"===t.call(e)};function i(t){var e=parseInt(t);return e.toString()===t?e:t}function a(t){t=t||{};var a=function(t){return Object.keys(a).reduce(function(e,s){return"create"===s?e:("function"==typeof a[s]&&(e[s]=a[s].bind(a,t)),e)},{})};function o(s,n){return t.includeInheritedProps||"number"==typeof n&&Array.isArray(s)||e(s,n)}function l(t,e){if(o(t,e))return t[e]}function c(t,e,s,n){if("number"==typeof e&&(e=[e]),!e||0===e.length)return t;if("string"==typeof e)return c(t,e.split(".").map(i),s,n);var r=e[0],a=l(t,r);return 1===e.length?(void 0!==a&&n||(t[r]=s),a):(void 0===a&&("number"==typeof e[1]?t[r]=[]:t[r]={}),c(t[r],e.slice(1),s,n))}return a.has=function(s,n){if("number"==typeof n?n=[n]:"string"==typeof n&&(n=n.split(".")),!n||0===n.length)return!!s;for(var a=0;a<n.length;a++){var o=i(n[a]);if(!("number"==typeof o&&r(s)&&o<s.length||(t.includeInheritedProps?o in Object(s):e(s,o))))return!1;s=s[o]}return!0},a.ensureExists=function(t,e,s){return c(t,e,s,!0)},a.set=function(t,e,s,n){return c(t,e,s,n)},a.insert=function(t,e,s,n){var i=a.get(t,e);n=~~n,r(i)||(i=[],a.set(t,e,i)),i.splice(n,0,s)},a.empty=function(t,e){var i,l;if(!s(e)&&null!=t&&(i=a.get(t,e))){if("string"==typeof i)return a.set(t,e,"");if(function(t){return"boolean"==typeof t||"[object Boolean]"===n(t)}(i))return a.set(t,e,!1);if("number"==typeof i)return a.set(t,e,0);if(r(i))i.length=0;else{if(!function(t){return"object"==typeof t&&"[object Object]"===n(t)}(i))return a.set(t,e,null);for(l in i)o(i,l)&&delete i[l]}}},a.push=function(t,e){var s=a.get(t,e);r(s)||(s=[],a.set(t,e,s)),s.push.apply(s,Array.prototype.slice.call(arguments,2))},a.coalesce=function(t,e,s){for(var n,r=0,i=e.length;r<i;r++)if(void 0!==(n=a.get(t,e[r])))return n;return s},a.get=function(t,e,s){if("number"==typeof e&&(e=[e]),!e||0===e.length)return t;if(null==t)return s;if("string"==typeof e)return a.get(t,e.split("."),s);var n=i(e[0]),r=l(t,n);return void 0===r?s:1===e.length?r:a.get(t[n],e.slice(1),s)},a.del=function(t,e){if("number"==typeof e&&(e=[e]),null==t)return t;if(s(e))return t;if("string"==typeof e)return a.del(t,e.split("."));var n=i(e[0]);return o(t,n)?1!==e.length?a.del(t[n],e.slice(1)):(r(t)?t.splice(n,1):delete t[n],t):t},a}var o=a();return o.create=a,o.withInheritedProps=a({includeInheritedProps:!0}),o}()}(s={exports:{}},s.exports),s.exports),r=n.get,i=n.set;class a{constructor(){this.properties={table:{class:"table table-hover table-striped",row:{classes:[""]},sorting:{classes:{canSort:["sort"],sortNone:["glyphicon","glyphicon-sort"],sortAsc:["glyphicon","glyphicon-sort-by-alphabet"],sortDesc:["glyphicon","glyphicon-sort-by-alphabet-alt"]}}},pager:{classes:{pager:"pagination",li:"",a:"",selected:"active",disabled:"disabled"},icons:{previous:"&lt;",next:"&gt;"}}}}get(t){return r(this.properties,t)}set(t,e){return i(this.properties,t,e),this}merge(t){return this.properties=this._mergeObjects(this.properties,t),this}_mergeObjects(t,e){for(var s in e)null!==e[s]?"object"!=typeof e[s]?t[s]=e[s]:t[s]=this._mergeObjects(t[s],e[s]):t[s]=e[s];return t}}var o=function(t,e,s,n,r,i,a,o){const l=("function"==typeof s?s.options:s)||{};return l.__file="vue-datatable-pager-button.vue",l.render||(l.render=t.render,l.staticRenderFns=t.staticRenderFns,l._compiled=!0,r&&(l.functional=!0)),l._scopeId=n,l}({render:function(){var t=this.$createElement,e=this._self._c||t;return e("li",{class:this.li_classes},[e("a",{class:this.a_classes,attrs:{href:"javascript: void(0);"},on:{click:this.sendClick}},[this._t("default",[this._v(this._s(this.value))])],2)])},staticRenderFns:[]},0,{props:{disabled:{type:Boolean,default:!1},selected:{type:Boolean,default:!1},value:{type:Number,default:null}},computed:{li_classes(){var t=[];return this.settings.get("pager.classes.li")&&t.push(this.settings.get("pager.classes.li")),this.disabled&&t.push(this.settings.get("pager.classes.disabled")),this.selected&&t.push(this.settings.get("pager.classes.selected")),t.join(" ")},a_classes(){var t=[];return this.settings.get("pager.classes.a")&&t.push(this.settings.get("pager.classes.a")),t.join(" ")},settings(){return this.$parent.settings}},methods:{sendClick(){this.disabled||this.$emit("click",this.value)}}},void 0,!1);class l{constructor(t){this.setAlignment(t.align),this.label=t.label||"",this.field=t.field||null,this.representedAs=t.representedAs||null,this.component=t.component||null,this.interpolate=t.interpolate||!1,this.headerComponent=t.headerComponent||null,this.sortable=this.isSortable(t),this.filterable=this.isFilterable(t),this.headerClass=t.headerClass||""}setAlignment(t){return t&&"string"==typeof t?"center"===t.toLowerCase()?(this.align="center",this):"right"===t.toLowerCase()?(this.align="right",this):(this.align="left",this):(this.align="left",this)}isFilterable(t){return!1!==t.filterable&&(!(!t.field&&!t.representedAs)&&!(this.component&&!this.representedAs&&!this.field))}isSortable(t){return!1!==t.sortable&&(!(!t.field&&!t.representedAs)&&!(this.component&&!this.representedAs&&!this.field))}getRepresentation(t){return this.representedAs&&"function"==typeof this.representedAs?this.representedAs(t):this.component&&this.filterable?this.plain_text_function(t,this):r(t,this.field)}getValue(t){return this.getRepresentation(t)}matches(t,e){return-1!==(""+this.getRepresentation(t)).toLowerCase().indexOf(e.toLowerCase())}}var c=function(t,e,s,n,r,i,a,o){const l=("function"==typeof s?s.options:s)||{};return l.__file="vue-datatable.vue",l.render||(l.render=t.render,l.staticRenderFns=t.staticRenderFns,l._compiled=!0,r&&(l.functional=!0)),l._scopeId=n,l}({render:function(){var t=this,e=t.$createElement,s=t._self._c||e;return s("table",{class:t.table_class},[s("thead",[s("tr",t._l(t.normalized_columns,function(e,n){return s("datatable-header",{key:n,attrs:{column:e,settings:t.settings,direction:t.getSortDirectionForColumn(e)},on:{change:t.setSortDirectionForColumn}})}))]),t._v(" "),s("tbody",[t._l(t.processed_rows,function(e,n){return t._t("default",[s("tr",{key:n,class:t.getRowClasses(e)},t._l(t.normalized_columns,function(t,n){return s("datatable-cell",{key:n,attrs:{column:t,row:e}})}))],{row:e,columns:t.normalized_columns})}),t._v(" "),0==t.processed_rows.length?s("tr",[s("td",{attrs:{colspan:t.normalized_columns.length}},[t._t("no-results")],2)]):t._e()],2),t._v(" "),t.$slots.footer||t.$scopedSlots.footer?s("tfoot",[t._t("footer",null,{rows:t.processed_rows})],2):t._e()])},staticRenderFns:[]},0,{props:{name:{type:String,default:"default"},columns:[Object,Array],data:[Object,Array,String,Function],filterBy:{type:[String,Array],default:null},rowClasses:{type:[String,Array,Object,Function],default:null}},data:()=>({sort_by:null,sort_dir:null,total_rows:0,page:1,per_page:null,processed_rows:[]}),computed:{rows(){return this.data.slice(0)},settings(){return this.$options.settings},handler(){return this.$options.handler},normalized_columns(){return this.columns.map(function(t){return new l(t)})},table_class(){return this.settings.get("table.class")}},methods:{getSortDirectionForColumn(t){return this.sort_by!==t?null:this.sort_dir},setSortDirectionForColumn(t,e){this.sort_by=e,this.sort_dir=t},processRows(){if("function"==typeof this.data){let t={filter:this.filterBy,sort_by:this.sort_by?this.sort_by.field:null,sort_dir:this.sort_dir,page_length:this.per_page,page_number:this.page};this.data(t,function(t,e){this.setRows(t),this.setTotalRowCount(e)}.bind(this));return}let t=this.handler.filterHandler(this.rows,this.filterBy,this.normalized_columns),e=this.handler.sortHandler(t,this.sort_by,this.sort_dir),s=this.handler.paginateHandler(e,this.per_page,this.page);this.handler.displayHandler(s,{filtered_data:t,sorted_data:e,paged_data:s},this.setRows,this.setTotalRowCount)},setRows(t){this.processed_rows=t},setTotalRowCount(t){this.total_rows=t},getRowClasses(t){var e=this.rowClasses;return null===e&&(e=this.settings.get("table.row.classes")),"function"==typeof e?e(t):e}},created(){this.$datatables[this.name]=this,this.$root.$emit("table.ready",this.name),this.$watch(function(){return this.data}.bind(this),this.processRows,{deep:!0}),this.$watch("columns",this.processRows),this.$watch(function(){return this.filterBy+this.per_page+this.page+this.sort_by+this.sort_dir}.bind(this),this.processRows),this.processRows()},handler:null,settings:null},void 0,!1);var u=function(t,e,s,n,r,i,a,o){const l=("function"==typeof s?s.options:s)||{};return l.__file="vue-datatable-pager.vue",l.render||(l.render=t.render,l.staticRenderFns=t.staticRenderFns,l._compiled=!0,r&&(l.functional=!0)),l._scopeId=n,l}({render:function(){var t=this,e=t.$createElement,s=t._self._c||e;return t.show?s("nav",["abbreviated"===t.type?s("ul",{class:t.pagination_class},[t.page-3>=1?s("datatable-button",{attrs:{value:1},on:{click:t.setPageNum}}):t._e(),t._v(" "),t.page-4>=1?s("datatable-button",{attrs:{disabled:""}},[t._v("...")]):t._e(),t._v(" "),t.page-2>=1?s("datatable-button",{attrs:{value:t.page-2},on:{click:t.setPageNum}}):t._e(),t._v(" "),t.page-1>=1?s("datatable-button",{attrs:{value:t.page-1},on:{click:t.setPageNum}}):t._e(),t._v(" "),s("datatable-button",{attrs:{value:t.page,selected:""}}),t._v(" "),t.page+1<=t.total_pages?s("datatable-button",{attrs:{value:t.page+1},on:{click:t.setPageNum}}):t._e(),t._v(" "),t.page+2<=t.total_pages?s("datatable-button",{attrs:{value:t.page+2},on:{click:t.setPageNum}}):t._e(),t._v(" "),t.page+4<=t.total_pages?s("datatable-button",{attrs:{disabled:""}},[t._v("...")]):t._e(),t._v(" "),t.page+3<=t.total_pages?s("datatable-button",{attrs:{value:t.total_pages},on:{click:t.setPageNum}}):t._e()],1):"long"===t.type?s("ul",{class:t.pagination_class},t._l(t.total_pages,function(e){return s("datatable-button",{key:e,attrs:{value:e,selected:e===t.page},on:{click:t.setPageNum}})})):"short"===t.type?s("ul",{class:t.pagination_class},[s("datatable-button",{attrs:{disabled:t.page-1<1,value:t.page-1},on:{click:t.setPageNum}},[s("span",{domProps:{innerHTML:t._s(t.previous_icon)}})]),t._v(" "),s("datatable-button",{attrs:{value:t.page,selected:""}}),t._v(" "),s("datatable-button",{attrs:{disabled:t.page+1>t.total_pages,value:t.page+1},on:{click:t.setPageNum}},[s("span",{domProps:{innerHTML:t._s(t.next_icon)}})])],1):t._e()]):t._e()},staticRenderFns:[]},0,{model:{prop:"page",event:"change"},props:{table:{type:String,default:"default"},type:{type:String,default:"long"},perPage:{type:Number,default:10},page:{type:Number,default:1}},data:()=>({table_instance:null}),computed:{show(){return this.table_instance&&this.total_rows>0},total_rows(){return this.table_instance?this.table_instance.total_rows:0},pagination_class(){return this.settings.get("pager.classes.pager")},disabled_class(){return this.settings.get("pager.classes.disabled")},previous_link_classes(){return this.page-1<1?this.settings.get("pager.classes.disabled"):""},next_link_classes(){return this.page+1>this.total_pages?this.settings.get("pager.classes.disabled"):""},total_pages(){return this.total_rows>0?Math.ceil(this.total_rows/this.perPage):0},previous_icon(){return this.settings.get("pager.icons.previous")},next_icon(){return this.settings.get("pager.icons.next")},settings(){return this.$options.settings}},methods:{setPageNum(t){this.table_instance.page=t,this.table_instance.per_page=this.perPage,this.$emit("change",t)},getClassForPage(t){return this.page==t?this.settings.get("pager.classes.selected"):""}},watch:{total_rows(){this.page>this.total_pages&&this.setPageNum(this.total_pages)},perPage(){var t=this.page;t>this.total_pages&&(t=this.total_pages),this.setPageNum(t)}},created(){if(this.$datatables[this.table])return this.table_instance=this.$datatables[this.table],void(this.table_instance.per_page=this.perPage);this.$root.$on("table.ready",function(t){t===this.table&&(this.table_instance=this.$datatables[this.table],this.table_instance.per_page=this.perPage)}.bind(this))},settings:null},void 0,!1);class h{constructor(){this.filterHandler=this.handleFilter,this.sortHandler=this.handleSort,this.paginateHandler=this.handlePaginate,this.displayHandler=this.handleDisplay}handleFilter(t,e,s){return e?(Array.isArray(e)||(e=[e]),t.filter(function(t){for(var n in e){let i=e[n].split(/\s/),a=!0;for(var r in i)this.rowMatches(t,i[r],s)||(a=!1);if(a)return!0}return!1}.bind(this))):t}rowMatches(t,e,s){for(var n in s)if(s[n].matches(t,e))return!0;return!1}handleSort(t,e,s){return e&&null!==s?t.sort(function(t,n){var r=e.getRepresentation(t),i=e.getRepresentation(n);if(r==i)return 0;var a=r>i?1:-1;return"desc"===s&&(a*=-1),a}):t}handlePaginate(t,e,s){if(!e)return t;s<1&&(s=1);let n=(s-1)*e,r=s*e;return t.slice(n,r)}handleDisplay(t,e,s,n){s(t),n(e.filtered_data.length)}}class d{constructor(t){this.id=t,this.handler=new h,this.settings=new a}getId(){return this.id}setFilterHandler(t){return this.handler.filterHandler=t,this}setSortHandler(t){return this.handler.sortHandler=t,this}setPaginateHandler(t){return this.handler.paginateHandler=t,this}setDisplayHandler(t){return this.handler.displayHandler=t,this}setting(t,e){return void 0===e?this.settings.get(t):(this.settings.set(t,e),this)}mergeSettings(t){return this.settings.merge(t),this}getTableDefinition(){let t=this.clone(c);return t.handler=this.handler,t.settings=this.settings,t.name=this.id,t}getPagerDefinition(){let t=this.clone(u);return t.settings=this.settings,t.name=this.id,t}clone(t){var e;if(null===t||"object"!=typeof t)return t;if(t instanceof Array){e=[];for(var s=0;s<t.length;s++)e[s]=this.clone(t[s]);return e}if(t instanceof Object){for(var n in e={},t)t.hasOwnProperty(n)&&(e[n]=this.clone(t[n]));return e}throw new Error("Unable to copy obj! Its type isn't supported.")}}var p=new class{constructor(){this.table_types=[],this.use_default_type=!0,this.default_table_settings=new a}useDefaultType(t){return this.use_default_type=!!t,this}registerTableType(t,e){let s=new d(t);return this.table_types.push(s),e&&"function"==typeof e&&e(s),this}install(s){for(var n in s.prototype.$datatables={},s.component("datatable-cell",t),s.component("datatable-header",e),s.component("datatable-button",o),this.use_default_type&&this.registerTableType("datatable",function(t){t.mergeSettings(this.default_table_settings.properties)}.bind(this)),this.table_types)this.installTableType(this.table_types[n].getId(),this.table_types[n],s)}installTableType(t,e,s){s.component(t,e.getTableDefinition()),s.component(t+"-pager",e.getPagerDefinition())}};window.Vue.use(p)}();
 //# sourceMappingURL=vuejs-datatable.js.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
 /* 206 */
@@ -62734,7 +62734,7 @@ var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(227)
 /* template */
-var __vue_template__ = __webpack_require__(262)
+var __vue_template__ = __webpack_require__(263)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -62834,7 +62834,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Keyboard_KeyboardHelp_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__Keyboard_KeyboardHelp_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__noteStore__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vuex__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_howler_laravel_csrf__ = __webpack_require__(338);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_howler_laravel_csrf__ = __webpack_require__(262);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_howler_laravel_csrf___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_howler_laravel_csrf__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -63039,7 +63039,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 
-var util = __webpack_require__(9);
+var util = __webpack_require__(10);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 
@@ -63157,19 +63157,21 @@ var util = __webpack_require__(9);
         toggleMetronome: function toggleMetronome(reload) {
             this.playbackStatus.metronome = !this.playbackStatus.metronome;
             if (reload) {
-                this.reloadAudio();
+                this.reloadAudio(true);
             }
         },
         setBPM: function setBPM(val, reload) {
             this.playbackStatus.BPM = val;
             if (reload) {
-                this.reloadAudio();
+                this.reloadAudio(true);
             }
         },
-        reloadAudio: function reloadAudio() {
+        reloadAudio: function reloadAudio(play) {
+
+            this.playbackStatus.sound.stop();
 
             var out = this;
-            this.loadAudio().then(function () {
+            this.loadAudio(play).then(function () {
                 out.displayState = "ready";
             });
         },
@@ -64899,6 +64901,11 @@ var Fraction = __webpack_require__(7);
                                 this.selectedBPM += 10;
                         }
                 },
+                toggleMetronome: function toggleMetronome() {
+
+                        this.hide_settings();
+                        playbackStatus.toggleMetronome(true);
+                },
                 decrease_selected_BPM: function decrease_selected_BPM() {
 
                         if (this.selectedBPM - 10 > 10) {
@@ -64911,7 +64918,7 @@ var Fraction = __webpack_require__(7);
                                 this.setBPM(this.selectedBPM, true);
                         }
 
-                        this.settingsVisible = false;
+                        this.hide_settings();
                 },
                 note: function note(num) {
 
@@ -65177,8 +65184,10 @@ var Fraction = __webpack_require__(7);
                         if (this.cursor.selectionMode) return "blue";
                         return "green";
                 }
+        },
+        mounted: function mounted() {
+                this.selectedBPM = this.playbackStatus.BPM;
         }
-
 });
 
 /***/ }),
@@ -66273,7 +66282,7 @@ var render = function() {
                         },
                         nativeOn: {
                           click: function($event) {
-                            return _vm.playbackStatus.toggleMetronome(true)
+                            return _vm.toggleMetronome()
                           }
                         }
                       },
@@ -67965,8302 +67974,6 @@ if (false) {
 
 /***/ }),
 /* 262 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "rhythm-game__wrap" },
-    [
-      _c("loader", {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.displayState == "loading",
-            expression: "displayState == 'loading'"
-          }
-        ]
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.displayState == "instructions",
-              expression: "displayState == 'instructions'"
-            }
-          ],
-          staticClass: "rhythm__instructions"
-        },
-        [
-          _c(
-            "SexyButton",
-            {
-              attrs: { color: "green", cols: 3 },
-              nativeOn: {
-                click: function($event) {
-                  return _vm.startGame()
-                }
-              }
-            },
-            [_vm._v("Začni")]
-          ),
-          _vm._v(" "),
-          _c("ul", { staticClass: "rhythm__instructions-list" }, [
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v("Preizkusil se boš v ritmičnem nareku.")
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v(
-                "Vaja bo v " +
-                  _vm._s(_vm.bar.num_beats) +
-                  "/" +
-                  _vm._s(_vm.bar.base_note) +
-                  " taktu."
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v("Slišal boš " + _vm._s(_vm.num_beats_text) + ".")
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v("Na začetku bo metronom izvajal en takt.")
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v(
-                "Tempo bo " +
-                  _vm._s(
-                    _vm.questionState.exercise != null
-                      ? _vm.questionState.exercise.BPM
-                      : "??"
-                  ) +
-                  " udarcev na minuto."
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v(
-                "Za reševanje imaš na voljo " +
-                  _vm._s(_vm.questionState.maxSeconds) +
-                  " sekund."
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v(
-                "Odgovor lahko preveriš največ " +
-                  _vm._s(_vm.questionState.maxChecks) +
-                  "-krat."
-              )
-            ]),
-            _vm._v(" "),
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "li",
-              {
-                staticClass: "rhythm__instructions-list-item",
-                staticStyle: { "list-style-type": "none" }
-              },
-              [
-                _c("sexy-button", {
-                  attrs: {
-                    text: _vm.metronomeButtonText,
-                    color: _vm.metronomeButtonColor,
-                    cols: 3
-                  },
-                  nativeOn: {
-                    click: function($event) {
-                      return _vm.toggleMetronome()
-                    }
-                  }
-                })
-              ],
-              1
-            )
-          ])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.displayState == "ready",
-              expression: "displayState == 'ready'"
-            }
-          ],
-          staticClass: "ready-rhythm-game-view"
-        },
-        [
-          _c("div", { staticClass: "staff_view_wrap" }, [
-            _c(
-              "div",
-              { staticClass: "staff_view_contents" },
-              [
-                _c(
-                  "StaffView",
-                  {
-                    ref: "staff_view",
-                    attrs: {
-                      bar: _vm.bar,
-                      enabledContexts: ["minimap", "zoomview"]
-                    }
-                  },
-                  [
-                    _c(
-                      "div",
-                      { staticClass: "rhythm-game__staff__first-row" },
-                      [_c("div", { attrs: { id: "first-row" } })]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "rhythm-game__staff__second-row" },
-                      [_c("div", { attrs: { id: "second-row" } })]
-                    )
-                  ]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "staff_view_time_slider",
-                style: { width: _vm.timeLeftPercents }
-              },
-              [_vm._v(" ")]
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "Keyboard",
-            _vm._b(
-              {
-                ref: "keyboard",
-                attrs: {
-                  playbackStatus: _vm.playbackStatus,
-                  question: _vm.questionState,
-                  say: _vm.showError
-                }
-              },
-              "Keyboard",
-              { key_callback: _vm.keyboard_click },
-              false
-            )
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.errorMessage,
-                  expression: "errorMessage"
-                }
-              ],
-              staticClass: "error"
-            },
-            [_vm._v(_vm._s(_vm.errorMessage))]
-          ),
-          _vm._v(" "),
-          _vm.showHelp
-            ? _c("KeyboardHelp", { attrs: { hide: _vm.hideHelp } })
-            : _vm._e(),
-          _vm._v(" "),
-          ["wrong", "correct", "waiting"].indexOf(_vm.questionState.check) > -1
-            ? _c(
-                "div",
-                { staticClass: "ready-rhythm-game-view__checkOverlay" },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "ready-rhythm-game-view__checkOverlay__center"
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "ready-rhythm-game-view__checkOverlay__center_bubble"
-                        },
-                        [
-                          _vm.questionState.check == "wrong"
-                            ? _c(
-                                "div",
-                                {},
-                                [
-                                  _c("icon", {
-                                    attrs: { name: "times", scale: "4" }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.questionState.check == "wrong"
-                            ? _c("div", { staticClass: "timesLeft" }, [
-                                _vm._v(
-                                  "\n                        " +
-                                    _vm._s(
-                                      _vm.questionState.statistics.nChecks +
-                                        "/" +
-                                        _vm.questionState.maxChecks
-                                    ) +
-                                    "\n                    "
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.questionState.check == "correct"
-                            ? _c("icon", {
-                                attrs: { name: "check", scale: "4" }
-                              })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.questionState.check == "waiting"
-                            ? _c("icon", {
-                                attrs: { name: "refresh", scale: "4", spin: "" }
-                              })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.questionState.check == "error"
-                            ? _c("icon", {
-                                attrs: { name: "exclamation-circle" }
-                              })
-                            : _vm._e()
-                        ],
-                        1
-                      )
-                    ]
-                  )
-                ]
-              )
-            : _vm._e()
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "audio",
-        {
-          ref: "rhythmAudio",
-          on: {
-            loadedmetadata: function($event) {
-              return _vm.showMetadataAlert()
-            },
-            play: function($event) {
-              return _vm.setPlaying(true)
-            },
-            ended: function($event) {
-              return _vm.setPlaying(false)
-            },
-            pause: function($event) {
-              return _vm.setPlaying(false)
-            }
-          }
-        },
-        [
-          _c("source", {
-            attrs: { src: _vm.rhythmAudioSource, type: "audio/mpeg" }
-          }),
-          _vm._v("\n        I hate Internet explorer.\n    ")
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.displayState == "diff",
-              expression: "displayState == 'diff'"
-            }
-          ],
-          staticClass: "rhythm-diff-check-view"
-        },
-        [
-          _c("DiffView", {
-            ref: "diff_view",
-            attrs: {
-              success: _vm.questionState.wasCorrect,
-              dismiss: _vm.continueGame,
-              bar: _vm.bar
-            }
-          })
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-      _vm._v("Če ne veš, kako deluje kakšen gumb, pritisni gumb Pomoč."),
-      _c("br"),
-      _vm._v("Dobro je, da si Pomoč ogledaš pred prvo igro.")
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5e41cbba", module.exports)
-  }
-}
-
-/***/ }),
-/* 263 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(264)
-/* template */
-var __vue_template__ = __webpack_require__(271)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/PlaybackTest.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7c75ac84", Component.options)
-  } else {
-    hotAPI.reload("data-v-7c75ac84", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 264 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__games_rhythm_noteStore__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__games_rhythm_exerciseGenerator__ = __webpack_require__(265);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__games_rhythm_rhythmPlaybackEngine__ = __webpack_require__(267);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuex__ = __webpack_require__(4);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-
-
-
-
-
-var util = __webpack_require__(9);
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-
-    components: {
-        StaffView: __WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue___default.a, SexyButton: __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue___default.a
-    },
-
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_5_vuex__["b" /* mapActions */])(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi']), {
-        play: function play() {
-
-            var durs = util.generate_playback_durations(this.notes.notes);
-            var start = 0;
-            for (var i = 0; i < durs.length; i++) {
-
-                var d = durs[i];
-                var _actualDuration = Math.abs(d.valueOf()) * this.bar.base_note * (60 / this.BPM);
-
-                if (d > 0) {
-
-                    this.MIDISources.push(MIDI.noteOn(5, 65, 127, start, _actualDuration));
-                    MIDI.noteOff(5, 65, start + _actualDuration - 0.1);
-                }
-
-                start += _actualDuration;
-            }
-        },
-        stop: function stop() {
-            this.MIDISources.forEach(function (s) {
-                s.stop();
-            });
-
-            this.MIDISources = [];
-        },
-        playNote: function playNote(d) {
-
-            actualDuration = dur.valueOf() * this.bar.base_note * (60 / this.BPM);
-
-            // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
-            // Lahko bi kdaj v prihodnosti dodali melodično-ritmični narek...
-            // S tem Math.min sem hotel tudi povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
-            var sPitch = this.pitch[Math.min(this.pitch.length - 1, this.currentNoteID - 1)];
-
-            // Zaigraj, ustavi se samodejno.
-            this.midi.noteOn(this.channel, sPitch, this.intensity, 0);
-            this.midi.noteOff(this.channel, sPitch, actualDuration);
-        },
-        loadQuestion: function loadQuestion() {
-            var _this = this;
-
-            var out = this;
-
-            out.playback = new __WEBPACK_IMPORTED_MODULE_4__games_rhythm_rhythmPlaybackEngine__["a" /* default */](MIDI);
-
-            return this.generateQuestion({
-                game_id: 163,
-                number: 1,
-                chapter: 1
-            }).then(function (question) {
-
-                var exercise = question.content;
-
-                var exid = exercise.id;
-                _this.audioSource = "/api/sound/" + exid;
-
-                _this.$refs.rhythmAudio.pause();
-                _this.$refs.rhythmAudio.load();
-                _this.$refs.rhythmAudio.addEventListener('canplaythrough', function (e) {
-
-                    _this.$refs.rhythmAudio.play();
-                }, false);
-
-                out.notes = new __WEBPACK_IMPORTED_MODULE_2__games_rhythm_noteStore__["a" /* default */](exercise.bar, null, out.$refs.staff_view.render);
-
-                out.notes.notes = exercise.notes;
-                out.BPM = exercise.BPM;
-
-                out.notes._call_render();
-
-                out.playback.setBPM(exercise.BPM);
-                out.playback.setBar(exercise.bar);
-
-                out.playback.load(exercise.notes);
-                console.log(util.generate_playback_durations(exercise.notes));
-            });
-        }
-    }),
-
-    data: function data() {
-        return {
-
-            audioSource: "",
-
-            offsetConstant: 0.195,
-
-            MIDISources: [],
-
-            playback: null,
-
-            notes: null,
-            bar: {
-                num_beats: 4,
-                base_note: 4
-            },
-            BPM: 60,
-            cursor: {
-                position: 0,
-                x: 0,
-                in_tuplet: false,
-
-                cursor_moved: this.cursor_moved,
-
-                selection: null,
-                selectionMode: false,
-                selectionSelected: false,
-
-                clearSelection: this.clearSelection,
-                toggleSelectionMode: this.toggleSelectionMode,
-
-                editing_tuplet: false,
-                editing_tuplet_index: -1
-            }
-        };
-    },
-    mounted: function mounted() {
-
-        this.$refs.staff_view.init({ cursor: { enabled: false } });
-
-        // Init MIDI
-        var instruments = [{
-            channel: 5,
-            soundfont: 'trumpet',
-            colume: 127
-        }, {
-            channel: 6,
-            soundfont: 'xylophone',
-            volume: 200
-        }];
-
-        var out = this;
-
-        MIDI.loadPlugin({
-            soundfontUrl: '/soundfonts/',
-            instruments: instruments.map(function (e) {
-                return e.soundfont;
-            }),
-            targetFormat: 'mp3',
-            onsuccess: function onsuccess() {
-                for (var i = 0; i < instruments.length; i++) {
-                    var instrument = instruments[i];
-                    MIDI.setVolume(instrument.channel, instrument.volume);
-                    MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
-                }
-
-                out.loadQuestion();
-
-                /*
-                  let v = require('./games/rhythm/vaje.json');
-                out.notes.notes = v[0].notes;
-                out.notes._call_render();
-                out.playback = new RhythmPlaybackEngine(MIDI);
-                out.playback.BPM = v[0].BPM;
-                out.playback.bar_info = v[0].bar;
-                  out.playback.setBPM(v[0].BPM);
-                out.playback.setBar(v[0].bar);
-                  out.playback.load(v[0].notes);
-                console.log(util.generate_playback_durations(v[0].notes));
-                  */
-            }
-        });
-    }
-});
-
-/***/ }),
-/* 265 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var Fraction = __webpack_require__(7);
-
-var RhythmUtilities = __webpack_require__(9);
-
-var ExerciseGenerator = function ExerciseGenerator() {
-
-    var examples = __webpack_require__(266);
-
-    this.currentExercise = null;
-    this.currentExerciseInfo = null;
-
-    this.currentExampleNumber = -1;
-    this.generatorSequence = [];
-
-    this.generate = function (numGen) {
-
-        var number = Math.floor(Math.random() * (examples.length - 1));
-
-        this.currentExerciseInfo = examples[number];
-        this.currentExercise = examples[number].notes;
-
-        return examples[number];
-    };
-
-    this.check = function (value) {
-
-        var soundsLikeFunc = RhythmUtilities.generate_playback_durations;
-
-        // Return string fractions
-        var ex = soundsLikeFunc(this.currentExercise, true);
-        var us = soundsLikeFunc(value, true);
-
-        return _.isEqual(ex, us);
-    };
-
-    this.get_bar_count = function () {
-
-        return RhythmUtilities.get_bar_count(this.currentExercise);
-    };
-};
-
-/* unused harmony default export */ var _unused_webpack_default_export = (ExerciseGenerator);
-
-/***/ }),
-/* 266 */
-/***/ (function(module, exports) {
-
-module.exports = [{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  1/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"notes":[{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4}]},{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  2/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"notes":[{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4}]}]
-
-/***/ }),
-/* 267 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var Channel = __webpack_require__(268);
-var util = __webpack_require__(9);
-var Instruments = __webpack_require__(269);
-
-var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
-
-    if (!window.___player) window.___player = [];
-    window.___player.push(this);
-
-    this.metronome = true;
-
-    this.lastNotes = [];
-    this.BPM = 120;
-    this.bar = {};
-
-    this.playing = false;
-
-    var player = new Instruments();
-
-    var metronomeConfig = {
-        program: 4,
-        channel: 1,
-        intensity: 3,
-        constantDuration: 0.001
-    };
-
-    var trackConfig = {
-        program: 18,
-        channel: 0,
-        intensity: 20
-    };
-
-    var out = this;
-
-    this.metronomeChannel = new Channel(player, metronomeConfig, function () {});
-    this.trackChannel = new Channel(player, trackConfig, function () {
-        out.playing = false;
-    });
-
-    this.percentPlayed = function () {
-        return currentNoteID / this.lastNotes.length;
-    }, this.playCountIn = function (bar, BPM, num_beats) {
-
-        var countinPitches = util.get_countin_pitches(bar, num_beats);
-        var countinNotes = util.get_countin_notes(bar, num_beats);
-        var countInDurations = util.generate_playback_durations(countinNotes);
-
-        var out = this;
-
-        return new Promise(function (resolve, reject) {
-            out.metronomeChannel.play(BPM, bar, countinPitches, countInDurations, function () {
-                resolve();
-            }, null);
-        });
-    };
-
-    this.play = function (bar, BPM, values) {
-
-        this.stop();
-
-        this.playing = true;
-
-        if (!bar) {
-            bar = this.bar;
-        }
-
-        if (!BPM) {
-            BPM = this.BPM;
-        }
-
-        if (!values) {
-            values = this.lastNotes;
-        } else {
-            this.lastNotes = values;
-        }
-
-        var defaultPitch = [67];
-        var notes = util.generate_playback_durations(values);
-
-        var o2 = this;
-        return this.playCountIn(bar, BPM, 1).then(function () {
-
-            if (o2.metronome) {
-                o2.playCountIn.apply(o2, [bar, BPM, 2]); // static num_bars...
-            }
-
-            return new Promise(function (resolve, reject) {
-                o2.trackChannel.play(BPM, bar, defaultPitch, notes, resolve);
-            });
-        });
-    };
-
-    this.stop = function () {
-        this.metronomeChannel.stop();
-        this.trackChannel.stop();
-    };
-
-    this.load = function (notes) {
-        this.lastNotes = notes;
-    };
-
-    this.setBar = function (newBar) {
-
-        this.bar.num_beats = newBar.num_beats;
-        this.bar.base_note = newBar.base_note;
-        if (newBar.subdivisions) {
-            this.bar.subdivisions = newBar.subdivisions;
-        } else {
-            this.bar.subdivisions = null;
-        }
-    };
-
-    this.setBPM = function (newBPM) {
-        this.BPM = newBPM;
-    };
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (RhythmPlaybackEngine);
-
-/***/ }),
-/* 268 */
-/***/ (function(module, exports) {
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-module.exports = function (player, conf, playingStopped) {
-
-    var defaultConfig = {
-        program: 4,
-        channel: 1,
-        intensity: 10,
-        constantDuration: null
-    };
-
-    var currentNoteID = 0;
-
-    // Setup default config
-    conf = _extends({}, defaultConfig, conf);
-
-    var playing = false;
-    var currentTimeout = null;
-
-    var playerContext = this;
-
-    var _playNote = function _playNote(BPM, bar, pitch, notes, endCallback, noteCallback) {
-
-        if (!playing || notes == null || notes.length <= currentNoteID) {
-            if (endCallback) {
-                endCallback();
-            }
-
-            this.stop();
-            return;
-        }
-
-        // Current duration
-        var dur = notes[currentNoteID];
-
-        // BPM logic
-        // Brez spreminjanja trajanja velja, da je celinka dolga 1s
-        // torej je vsaka četrtinka dolga 0,25s, kar je 4 BPS, kar je 240 BPM
-        // realDuration = koliko sekund naj traja nota...
-        var realDuration = dur.valueOf() * bar.base_note * (60 / BPM);
-
-        if (dur > 0) {
-
-            // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
-            // Lahko bi kdaj v prihodnosti dodali melodično-ritmični narek...
-            // S tem Math.min sem hotel tudi povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
-            var sPitch = pitch[Math.min(pitch.length - 1, currentNoteID)];
-
-            var engineDuration = realDuration - 0.15;
-            if (conf.constantDuration != null) {
-                engineDuration = conf.constantDuration;
-            }
-
-            player.play(conf.program, // instrument: 24 is "Acoustic Guitar (nylon)"
-            sPitch, // note: midi number or frequency in Hz (if > 127)
-            1, // velocity: 0..1
-            0, // delay in seconds
-            engineDuration, // Duration in seconds
-            conf.channel // Channel
-            );
-        } else {
-            // Rest or unknown
-            realDuration = -realDuration;
-        }
-
-        var milliseconds = realDuration * 1000;
-
-        currentTimeout = setTimeout(function () {
-
-            if (noteCallback) {
-                noteCallback();
-            }
-
-            _playNote.apply(playerContext, [BPM, bar, pitch, notes, endCallback, noteCallback]);
-        }, milliseconds);
-
-        currentNoteID++;
-    };
-
-    this.play = function (BPM, bar, pitch, notes, endCallback, noteCallback) {
-        playing = true;
-        currentNoteID = 0;
-
-        _playNote(BPM, bar, pitch, notes, endCallback, noteCallback);
-    };
-
-    this.stop = function () {
-
-        if (playingStopped) {
-            playingStopped();
-        }
-
-        playing = false;
-
-        if (currentTimeout) {
-            clearTimeout(currentTimeout);
-        }
-        currentTimeout = null;
-    };
-};
-
-/***/ }),
-/* 269 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Synth = __webpack_require__(270)
-
-module.exports = Player
-
-
-function Player(audioContext, destination) {
-
-
-    // params
-    var instMin = 0
-    var instMax = 127
-    var drumMin = 35
-    var drumMax = 81
-
-
-
-    // internals
-    var synth = new Synth({
-        useReverb: 1,
-        quality: 1,
-        voices: 32,
-    })
-
-    if (audioContext) {
-        synth.setAudioContext(audioContext, destination)
-    }
-
-
-
-    // merge instruments and drums into one big list
-    var instCt = instMax - instMin + 1
-    var drumCt = drumMax - drumMin + 1
-    var names = []
-    for (var i = 0; i < instCt; i++) names.push(synth.getTimbreName(0, i + instMin))
-    for (var j = 0; j < drumCt; j++) names.push(synth.getTimbreName(1, j + drumMin))
-
-
-
-
-    // Properties
-    this._synth = synth
-    this.names = names
-
-
-
-
-    // API
-
-    this.setQuality = function (q) {
-        synth.setQuality(q ? 1 : 0)
-    }
-
-    this.getCurrentTime = function () {
-        return synth.actx.currentTime
-    }
-
-    this.play = function (inst, note, vel, delay, duration, channel, attack) {
-        inst = inst || 0
-        if (inst < 0 || inst > instMax + drumCt) throw 'Invalid instrument'
-        note = note || 60
-        delay = delay || 0
-        if (isNaN(vel)) vel = 0.5
-        if (isNaN(duration)) duration = 0.5
-        if (delay < 0) delay = 0
-        play_impl(inst, note, vel, delay, duration, channel, attack)
-    }
-
-
-    function play_impl(inst, note, vel, delay, duration, channel, attack) {
-        var isDrums = (inst >= instCt)
-        // use passed-in channel value, defaulting to 0
-        channel = channel | 0
-        if (isDrums) {
-            // drums use channel 9, and determine instrument based on the note
-            channel = 9
-            note = inst + drumMin - instCt
-        } else {
-            inst -= instMin
-            synth.setProgram(channel, inst)
-        }
-        // play the note
-        var t = synth.actx.currentTime
-        var intVel = (127 * vel) | 0
-
-        // console.log([
-        //     'playing: ch=', channel,
-        //     '   inst=', inst,
-        //     '   note=', note,
-        //     '   intVel=', intVel,
-        //     '   delay=', delay,
-        // ].join(''))
-
-        var prog = synth.program[synth.pg[channel]].p
-
-        if (note > 127) {
-            // assume note is a frequency in Hz if it's above 127
-            overrideParameter(prog, 'f', note)
-            overrideParameter(prog, 't', 0)
-        }
-        if (attack) overrideParameter(prog, 'a', attack)
-
-        // actual play command
-        synth.noteOn(channel, note, intVel, t + delay)
-        synth.noteOff(channel, note, t + delay + duration)
-
-        // undo overrides
-        if (note > 127) {
-            undoOverride(prog, 'f')
-            undoOverride(prog, 't')
-        }
-        if (attack) undoOverride(prog, 'a')
-
-    }
-
-
-
-
-
-    // temporarily override a program's parameters, for *source* oscillators
-    // e.g. override(0, 'f', 500) sets oscillator.f = 500 
-    // for all (oscillator.g==0), and caches overriden values
-
-    function overrideParameter(prog, param, value) {
-        var cache = overridden[param] || [0, 0, 0, 0, 0]
-        for (var i = 0; i < prog.length; i++) {
-            var osc = prog[i]
-            if (osc.g !== 0) continue
-            cache[i] = osc[param]
-            osc[param] = value
-        }
-        overridden[param] = cache
-    }
-    var overridden = {}
-
-    // undoes previous
-    function undoOverride(prog, param) {
-        var cache = overridden[param]
-        for (var i = 0; i < prog.length; i++) {
-            var osc = prog[i]
-            if (osc.g !== 0) continue
-            osc[param] = cache[i]
-        }
-    }
-
-
-
-
-
-}
-
-
-
-
-
-
-/***/ }),
-/* 270 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(module) {
-function WebAudioTinySynth(opt){
-  this.__proto__ = this.sy =
-  /* webaudio-tynysynth core object */
-  {
-    is:"webaudio-tinysynth",
-    properties:{
-      masterVol:  {type:Number, value:0.5, observer:"setMasterVol"},
-      reverbLev:  {type:Number, value:0.3, observer:"setReverbLev"},
-      quality:    {type:Number, value:1, observer:"setQuality"},
-      debug:      {type:Number, value:0},
-      src:        {type:String, value:null, observer:"loadMIDIUrl"},
-      loop:       {type:Number, value:0},
-      internalcontext: {type:Number, value:1},
-      tsmode:     {type:Number, value:0},
-      voices:     {type:Number, value:64},
-      useReverb:  {type:Number, value:1},
-      /**/
-    },
-    /**/
-    program:[
-// 1-8 : Piano
-      {name:"Acoustic Grand Piano"},    {name:"Bright Acoustic Piano"},
-      {name:"Electric Grand Piano"},    {name:"Honky-tonk Piano"},
-      {name:"Electric Piano 1"},        {name:"Electric Piano 2"},
-      {name:"Harpsichord"},             {name:"Clavi"},
-/* 9-16 : Chromatic Perc*/
-      {name:"Celesta"},                 {name:"Glockenspiel"},
-      {name:"Music Box"},               {name:"Vibraphone"},
-      {name:"Marimba"},                 {name:"Xylophone"},
-      {name:"Tubular Bells"},           {name:"Dulcimer"},
-/* 17-24 : Organ */
-      {name:"Drawbar Organ"},           {name:"Percussive Organ"},
-      {name:"Rock Organ"},              {name:"Church Organ"},
-      {name:"Reed Organ"},              {name:"Accordion"},
-      {name:"Harmonica"},               {name:"Tango Accordion"},
-/* 25-32 : Guitar */
-      {name:"Acoustic Guitar (nylon)"}, {name:"Acoustic Guitar (steel)"},
-      {name:"Electric Guitar (jazz)"},  {name:"Electric Guitar (clean)"},
-      {name:"Electric Guitar (muted)"}, {name:"Overdriven Guitar"},
-      {name:"Distortion Guitar"},       {name:"Guitar harmonics"},
-/* 33-40 : Bass */
-      {name:"Acoustic Bass"},           {name:"Electric Bass (finger)"},
-      {name:"Electric Bass (pick)"},    {name:"Fretless Bass"},
-      {name:"Slap Bass 1"},             {name:"Slap Bass 2"},
-      {name:"Synth Bass 1"},            {name:"Synth Bass 2"},
-/* 41-48 : Strings */
-      {name:"Violin"},                  {name:"Viola"},
-      {name:"Cello"},                   {name:"Contrabass"},
-      {name:"Tremolo Strings"},         {name:"Pizzicato Strings"},
-      {name:"Orchestral Harp"},         {name:"Timpani"},
-/* 49-56 : Ensamble */
-      {name:"String Ensemble 1"},       {name:"String Ensemble 2"},
-      {name:"SynthStrings 1"},          {name:"SynthStrings 2"},
-      {name:"Choir Aahs"},              {name:"Voice Oohs"},
-      {name:"Synth Voice"},             {name:"Orchestra Hit"},
-/* 57-64 : Brass */
-      {name:"Trumpet"},                 {name:"Trombone"},
-      {name:"Tuba"},                    {name:"Muted Trumpet"},
-      {name:"French Horn"},             {name:"Brass Section"},
-      {name:"SynthBrass 1"},            {name:"SynthBrass 2"},
-/* 65-72 : Reed */
-      {name:"Soprano Sax"},             {name:"Alto Sax"},
-      {name:"Tenor Sax"},               {name:"Baritone Sax"},
-      {name:"Oboe"},                    {name:"English Horn"},
-      {name:"Bassoon"},                 {name:"Clarinet"},
-/* 73-80 : Pipe */
-      {name:"Piccolo"},                 {name:"Flute"},
-      {name:"Recorder"},                {name:"Pan Flute"},
-      {name:"Blown Bottle"},            {name:"Shakuhachi"},
-      {name:"Whistle"},                 {name:"Ocarina"},
-/* 81-88 : SynthLead */
-      {name:"Lead 1 (square)"},         {name:"Lead 2 (sawtooth)"},
-      {name:"Lead 3 (calliope)"},       {name:"Lead 4 (chiff)"},
-      {name:"Lead 5 (charang)"},        {name:"Lead 6 (voice)"},
-      {name:"Lead 7 (fifths)"},         {name:"Lead 8 (bass + lead)"},
-/* 89-96 : SynthPad */
-      {name:"Pad 1 (new age)"},         {name:"Pad 2 (warm)"},
-      {name:"Pad 3 (polysynth)"},       {name:"Pad 4 (choir)"},
-      {name:"Pad 5 (bowed)"},           {name:"Pad 6 (metallic)"},
-      {name:"Pad 7 (halo)"},            {name:"Pad 8 (sweep)"},
-/* 97-104 : FX */
-      {name:"FX 1 (rain)"},             {name:"FX 2 (soundtrack)"},
-      {name:"FX 3 (crystal)"},          {name:"FX 4 (atmosphere)"},
-      {name:"FX 5 (brightness)"},       {name:"FX 6 (goblins)"},
-      {name:"FX 7 (echoes)"},           {name:"FX 8 (sci-fi)"},
-/* 105-112 : Ethnic */
-      {name:"Sitar"},                   {name:"Banjo"},
-      {name:"Shamisen"},                {name:"Koto"},
-      {name:"Kalimba"},                 {name:"Bag pipe"},
-      {name:"Fiddle"},                  {name:"Shanai"},
-/* 113-120 : Percussive */
-      {name:"Tinkle Bell"},             {name:"Agogo"},
-      {name:"Steel Drums"},             {name:"Woodblock"},
-      {name:"Taiko Drum"},              {name:"Melodic Tom"},
-      {name:"Synth Drum"},              {name:"Reverse Cymbal"},
-/* 121-128 : SE */
-      {name:"Guitar Fret Noise"},       {name:"Breath Noise"},
-      {name:"Seashore"},                {name:"Bird Tweet"},
-      {name:"Telephone Ring"},          {name:"Helicopter"},
-      {name:"Applause"},                {name:"Gunshot"},
-    ],
-    drummap:[
-// 35
-      {name:"Acoustic Bass Drum"},  {name:"Bass Drum 1"},      {name:"Side Stick"},     {name:"Acoustic Snare"},
-      {name:"Hand Clap"},           {name:"Electric Snare"},   {name:"Low Floor Tom"},  {name:"Closed Hi Hat"},
-      {name:"High Floor Tom"},      {name:"Pedal Hi-Hat"},     {name:"Low Tom"},        {name:"Open Hi-Hat"},
-      {name:"Low-Mid Tom"},         {name:"Hi-Mid Tom"},       {name:"Crash Cymbal 1"}, {name:"High Tom"},
-      {name:"Ride Cymbal 1"},       {name:"Chinese Cymbal"},   {name:"Ride Bell"},      {name:"Tambourine"},
-      {name:"Splash Cymbal"},       {name:"Cowbell"},          {name:"Crash Cymbal 2"}, {name:"Vibraslap"},
-      {name:"Ride Cymbal 2"},       {name:"Hi Bongo"},         {name:"Low Bongo"},      {name:"Mute Hi Conga"},
-      {name:"Open Hi Conga"},       {name:"Low Conga"},        {name:"High Timbale"},   {name:"Low Timbale"},
-      {name:"High Agogo"},          {name:"Low Agogo"},        {name:"Cabasa"},         {name:"Maracas"},
-      {name:"Short Whistle"},       {name:"Long Whistle"},     {name:"Short Guiro"},    {name:"Long Guiro"},
-      {name:"Claves"},              {name:"Hi Wood Block"},    {name:"Low Wood Block"}, {name:"Mute Cuica"},
-      {name:"Open Cuica"},          {name:"Mute Triangle"},    {name:"Open Triangle"},
-    ],
-    program1:[
-      // 1-8 : Piano
-      [{w:"sine",v:.4,d:0.7,r:0.1,},{w:"triangle",v:3,d:0.7,s:0.1,g:1,a:0.01,k:-1.2}],
-      [{w:"triangle",v:0.4,d:0.7,r:0.1,},{w:"triangle",v:4,t:3,d:0.4,s:0.1,g:1,k:-1,a:0.01,}],
-      [{w:"sine",d:0.7,r:0.1,},{w:"triangle",v:4,f:2,d:0.5,s:0.5,g:1,k:-1}],
-      [{w:"sine",d:0.7,v:0.2,},{w:"triangle",v:4,t:3,f:2,d:0.3,g:1,k:-1,a:0.01,s:0.5,}],
-      [{w:"sine",v:0.35,d:0.7,},{w:"sine",v:3,t:7,f:1,d:1,s:1,g:1,k:-.7}],
-      [{w:"sine",v:0.35,d:0.7,},{w:"sine",v:8,t:7,f:1,d:0.5,s:1,g:1,k:-.7}],
-      [{w:"sawtooth",v:0.34,d:2,},{w:"sine",v:8,f:0.1,d:2,s:1,r:2,g:1,}],
-      [{w:"triangle",v:0.34,d:1.5,},{w:"square",v:6,f:0.1,d:1.5,s:0.5,r:2,g:1,}],
-      /* 9-16 : Chromatic Perc*/
-      [{w:"sine",d:0.3,r:0.3,},{w:"sine",v:7,t:11,d:0.03,g:1,}],
-      [{w:"sine",d:0.3,r:0.3,},{w:"sine",v:11,t:6,d:0.2,s:0.4,g:1,}],
-      [{w:"sine",v:0.2,d:0.3,r:0.3,},{w:"sine",v:11,t:5,d:0.1,s:0.4,g:1,}],
-      [{w:"sine",v:0.2,d:0.6,r:0.6,},{w:"triangle",v:11,t:5,f:1,s:0.5,g:1,}],
-      [{w:"sine",v:0.3,d:0.2,r:0.2,},{w:"sine",v:6,t:5,d:0.02,g:1,}],
-      [{w:"sine",v:0.3,d:0.2,r:0.2,},{w:"sine",v:7,t:11,d:0.03,g:1,}],
-      [{w:"sine",v:0.2,d:1,r:1,},{w:"sine",v:11,t:3.5,d:1,r:1,g:1,}],
-      [{w:"triangle",v:0.2,d:0.5,r:0.2,},{w:"sine",v:6,t:2.5,d:0.2,s:0.1,r:0.2,g:1,}],
-      /* 17-24 : Organ */
-      [{w:"w9999",v:0.22,s:0.9,},{w:"w9999",v:0.22,t:2,f:2,s:0.9,}],
-      [{w:"w9999",v:0.2,s:1,},{w:"sine",v:11,t:6,f:2,s:0.1,g:1,h:0.006,r:0.002,d:0.002,},{w:"w9999",v:0.2,t:2,f:1,h:0,s:1,}],
-      [{w:"w9999",v:0.2,d:0.1,s:0.9,},{w:"w9999",v:0.25,t:4,f:2,s:0.5,}],
-      [{w:"w9999",v:0.3,a:0.04,s:0.9,},{w:"w9999",v:0.2,t:8,f:2,a:0.04,s:0.9,}],
-      [{w:"sine",v:0.2,a:0.02,d:0.05,s:1,},{w:"sine",v:6,t:3,f:1,a:0.02,d:0.05,s:1,g:1,}],
-      [{w:"triangle",v:0.2,a:0.02,d:0.05,s:0.8,},{w:"square",v:7,t:3,f:1,d:0.05,s:1.5,g:1,}],
-      [{w:"square",v:0.2,a:0.02,d:0.2,s:0.5,},{w:"square",v:1,d:0.03,s:2,g:1,}],
-      [{w:"square",v:0.2,a:0.02,d:0.1,s:0.8,},{w:"square",v:1,a:0.3,d:0.1,s:2,g:1,}],
-      /* 25-32 : Guitar */
-      [{w:"sine",v:0.3,d:0.5,f:1,},{w:"triangle",v:5,t:3,f:-1,d:1,s:0.1,g:1,}],
-      [{w:"sine",v:0.4,d:0.6,f:1,},{w:"triangle",v:12,t:3,d:0.6,s:0.1,g:1,f:-1,}],
-      [{w:"triangle",v:0.3,d:1,f:1,},{w:"triangle",v:6,f:-1,d:0.4,s:0.5,g:1,t:3,}],
-      [{w:"sine",v:0.3,d:1,f:-1,},{w:"triangle",v:11,f:1,d:0.4,s:0.5,g:1,t:3,}],
-      [{w:"sine",v:0.4,d:0.1,r:0.01},{w:"sine",v:7,g:1,}],
-      [{w:"triangle",v:0.4,d:1,f:1,},{w:"square",v:4,f:-1,d:1,s:0.7,g:1,}],//[{w:"triangle",v:0.35,d:1,f:1,},{w:"square",v:7,f:-1,d:0.3,s:0.5,g:1,}],
-      [{w:"triangle",v:0.35,d:1,f:1,},{w:"square",v:7,f:-1,d:0.3,s:0.5,g:1,}],//[{w:"triangle",v:0.4,d:1,f:1,},{w:"square",v:4,f:-1,d:1,s:0.7,g:1,}],//[{w:"triangle",v:0.4,d:1,},{w:"square",v:4,f:2,d:1,s:0.7,g:1,}],
-      [{w:"sine",v:0.2,t:1.5,a:0.005,h:0.2,d:0.6,},{w:"sine",v:11,t:5,f:2,d:1,s:0.5,g:1,}],
-      /* 33-40 : Bass */
-      [{w:"sine",d:0.3,},{w:"sine",v:4,t:3,d:1,s:1,g:1,}],
-      [{w:"sine",d:0.3,},{w:"sine",v:4,t:3,d:1,s:1,g:1,}],
-      [{w:"w9999",d:0.3,v:0.7,s:0.5,},{w:"sawtooth",v:1.2,d:0.02,s:0.5,g:1,h:0,r:0.02,}],
-      [{w:"sine",d:0.3,},{w:"sine",v:4,t:3,d:1,s:1,g:1,}],
-      [{w:"triangle",v:0.3,t:2,d:1,},{w:"triangle",v:15,t:2.5,d:0.04,s:0.1,g:1,}],
-      [{w:"triangle",v:0.3,t:2,d:1,},{w:"triangle",v:15,t:2.5,d:0.04,s:0.1,g:1,}],
-      [{w:"triangle",d:0.7,},{w:"square",v:0.4,t:0.5,f:1,d:0.2,s:10,g:1,}],
-      [{w:"triangle",d:0.7,},{w:"square",v:0.4,t:0.5,f:1,d:0.2,s:10,g:1,}],
-      /* 41-48 : Strings */
-      [{w:"sawtooth",v:0.4,a:0.1,d:11,},{w:"sine",v:5,d:11,s:0.2,g:1,}],
-      [{w:"sawtooth",v:0.4,a:0.1,d:11,},{w:"sine",v:5,d:11,s:0.2,g:1,}],
-      [{w:"sawtooth",v:0.4,a:0.1,d:11,},{w:"sine",v:5,t:0.5,d:11,s:0.2,g:1,}],
-      [{w:"sawtooth",v:0.4,a:0.1,d:11,},{w:"sine",v:5,t:0.5,d:11,s:0.2,g:1,}],
-      [{w:"sine",v:0.4,a:0.1,d:11,},{w:"sine",v:6,f:2.5,d:0.05,s:1.1,g:1,}],
-      [{w:"sine",v:0.3,d:0.1,r:0.1,},{w:"square",v:4,t:3,d:1,s:0.2,g:1,}],
-      [{w:"sine",v:0.3,d:0.5,r:0.5,},{w:"sine",v:7,t:2,f:2,d:1,r:1,g:1,}],
-      [{w:"triangle",v:0.6,h:0.03,d:0.3,r:0.3,t:0.5,},{w:"n0",v:8,t:1.5,d:0.08,r:0.08,g:1,}],
-      /* 49-56 : Ensamble */
-      [{w:"sawtooth",v:0.3,a:0.03,s:0.5,},{w:"sawtooth",v:0.2,t:2,f:2,d:1,s:2,}],
-      [{w:"sawtooth",v:0.3,f:-2,a:0.03,s:0.5,},{w:"sawtooth",v:0.2,t:2,f:2,d:1,s:2,}],
-      [{w:"sawtooth",v:0.2,a:0.02,s:1,},{w:"sawtooth",v:0.2,t:2,f:2,a:1,d:1,s:1,}],
-      [{w:"sawtooth",v:0.2,a:0.02,s:1,},{w:"sawtooth",v:0.2,f:2,a:0.02,d:1,s:1,}],
-      [{w:"triangle",v:0.3,a:0.03,s:1,},{w:"sine",v:3,t:5,f:1,d:1,s:1,g:1,}],
-      [{w:"sine",v:0.4,a:0.03,s:0.9,},{w:"sine",v:1,t:2,f:3,d:0.03,s:0.2,g:1,}],
-      [{w:"triangle",v:0.6,a:0.05,s:0.5,},{w:"sine",v:1,f:0.8,d:0.2,s:0.2,g:1,}],
-      [{w:"square",v:0.15,a:0.01,d:0.2,r:0.2,t:0.5,h:0.03,},{w:"square",v:4,f:0.5,d:0.2,r:11,a:0.01,g:1,h:0.02,},{w:"square",v:0.15,t:4,f:1,a:0.02,d:0.15,r:0.15,h:0.03,},{g:3,w:"square",v:4,f:-0.5,a:0.01,h:0.02,d:0.15,r:11,}],
-      /* 57-64 : Brass */
-      [{w:"square",v:0.2,a:0.01,d:1,s:0.6,r:0.04,},{w:"sine",v:1,d:0.1,s:4,g:1,}],
-      [{w:"square",v:0.2,a:0.02,d:1,s:0.5,r:0.08,},{w:"sine",v:1,d:0.1,s:4,g:1,}],
-      [{w:"square",v:0.2,a:0.04,d:1,s:0.4,r:0.08,},{w:"sine",v:1,d:0.1,s:4,g:1,}],
-      [{w:"square",v:0.15,a:0.04,s:1,},{w:"sine",v:2,d:0.1,g:1,}],
-      [{w:"square",v:0.2,a:0.02,d:1,s:0.5,r:0.08,},{w:"sine",v:1,d:0.1,s:4,g:1,}],
-      [{w:"square",v:0.2,a:0.02,d:1,s:0.6,r:0.08,},{w:"sine",v:1,f:0.2,d:0.1,s:4,g:1,}],
-      [{w:"square",v:0.2,a:0.02,d:0.5,s:0.7,r:0.08,},{w:"sine",v:1,d:0.1,s:4,g:1,}],
-      [{w:"square",v:0.2,a:0.02,d:1,s:0.5,r:0.08,},{w:"sine",v:1,d:0.1,s:4,g:1,}],
-      /* 65-72 : Reed */
-      [{w:"square",v:0.2,a:0.02,d:2,s:0.6,},{w:"sine",v:2,d:1,g:1,}],
-      [{w:"square",v:0.2,a:0.02,d:2,s:0.6,},{w:"sine",v:2,d:1,g:1,}],
-      [{w:"square",v:0.2,a:0.02,d:1,s:0.6,},{w:"sine",v:2,d:1,g:1,}],
-      [{w:"square",v:0.2,a:0.02,d:1,s:0.6,},{w:"sine",v:2,d:1,g:1,}],
-      [{w:"sine",v:0.4,a:0.02,d:0.7,s:0.5,},{w:"square",v:5,t:2,d:0.2,s:0.5,g:1,}],
-      [{w:"sine",v:0.3,a:0.05,d:0.2,s:0.8,},{w:"sawtooth",v:6,f:0.1,d:0.1,s:0.3,g:1,}],
-      [{w:"sine",v:0.3,a:0.03,d:0.2,s:0.4,},{w:"square",v:7,f:0.2,d:1,s:0.1,g:1,}],
-      [{w:"square",v:0.2,a:0.05,d:0.1,s:0.8,},{w:"square",v:4,d:0.1,s:1.1,g:1,}],
-      /* 73-80 : Pipe */
-      [{w:"sine",a:0.02,d:2,},{w:"sine",v:6,t:2,d:0.04,g:1,}],
-      [{w:"sine",v:0.7,a:0.03,d:0.4,s:0.4,},{w:"sine",v:4,t:2,f:0.2,d:0.4,g:1,}],
-      [{w:"sine",v:0.7,a:0.02,d:0.4,s:0.6,},{w:"sine",v:3,t:2,d:0,s:1,g:1,}],
-      [{w:"sine",v:0.4,a:0.06,d:0.3,s:0.3,},{w:"sine",v:7,t:2,d:0.2,s:0.2,g:1,}],
-      [{w:"sine",a:0.02,d:0.3,s:0.3,},{w:"sawtooth",v:3,t:2,d:0.3,g:1,}],
-      [{w:"sine",v:0.4,a:0.02,d:2,s:0.1,},{w:"sawtooth",v:8,t:2,f:1,d:0.5,g:1,}],
-      [{w:"sine",v:0.7,a:0.03,d:0.5,s:0.3,},{w:"sine",v:0.003,t:0,f:4,d:0.1,s:0.002,g:1,}],
-      [{w:"sine",v:0.7,a:0.02,d:2,},{w:"sine",v:1,t:2,f:1,d:0.02,g:1,}],
-      /* 81-88 : SynthLead */
-      [{w:"square",v:0.3,d:1,s:0.5,},{w:"square",v:1,f:0.2,d:1,s:0.5,g:1,}],
-      [{w:"sawtooth",v:0.3,d:2,s:0.5,},{w:"square",v:2,f:0.1,s:0.5,g:1,}],
-      [{w:"triangle",v:0.5,a:0.05,d:2,s:0.6,},{w:"sine",v:4,t:2,g:1,}],
-      [{w:"triangle",v:0.3,a:0.01,d:2,s:0.3,},{w:"sine",v:22,t:2,f:1,d:0.03,s:0.2,g:1,}],
-      [{w:"sawtooth",v:0.3,d:1,s:0.5,},{w:"sine",v:11,t:11,a:0.2,d:0.05,s:0.3,g:1,}],
-      [{w:"sine",v:0.3,a:0.06,d:1,s:0.5,},{w:"sine",v:7,f:1,d:1,s:0.2,g:1,}],
-      [{w:"sawtooth",v:0.3,a:0.03,d:0.7,s:0.3,r:0.2,},{w:"sawtooth",v:0.3,t:0.75,d:0.7,a:0.1,s:0.3,r:0.2,}],
-      [{w:"triangle",v:0.3,a:0.01,d:0.7,s:0.5,},{w:"square",v:5,t:0.5,d:0.7,s:0.5,g:1,}],
-      /* 89-96 : SynthPad */
-      [{w:"triangle",v:0.3,a:0.02,d:0.3,s:0.3,r:0.3,},{w:"square",v:3,t:4,f:1,a:0.02,d:0.1,s:1,g:1,},{w:"triangle",v:0.08,t:0.5,a:0.1,h:0,d:0.1,s:0.5,r:0.1,b:0,c:0,}],
-      [{w:"sine",v:0.3,a:0.05,d:1,s:0.7,r:0.3,},{w:"sine",v:2,f:1,d:0.3,s:1,g:1,}],
-      [{w:"square",v:0.3,a:0.03,d:0.5,s:0.3,r:0.1,},{w:"square",v:4,f:1,a:0.03,d:0.1,g:1,}],
-      [{w:"triangle",v:0.3,a:0.08,d:1,s:0.3,r:0.1,},{w:"square",v:2,f:1,d:0.3,s:0.3,g:1,t:4,a:0.08,}],
-      [{w:"sine",v:0.3,a:0.05,d:1,s:0.3,r:0.1,},{w:"sine",v:0.1,t:2.001,f:1,d:1,s:50,g:1,}],
-      [{w:"triangle",v:0.3,a:0.03,d:0.7,s:0.3,r:0.2,},{w:"sine",v:12,t:7,f:1,d:0.5,s:1.7,g:1,}],
-      [{w:"sine",v:0.3,a:0.05,d:1,s:0.3,r:0.1,},{w:"sawtooth",v:22,t:6,d:0.06,s:0.3,g:1,}],
-      [{w:"triangle",v:0.3,a:0.05,d:11,r:0.3,},{w:"triangle",v:1,d:1,s:8,g:1,}],
-      /* 97-104 : FX */
-      [{w:"sawtooth",v:0.3,d:4,s:0.8,r:0.1,},{w:"square",v:1,t:2,f:8,a:1,d:1,s:1,r:0.1,g:1,}],
-      [{w:"triangle",v:0.3,d:1,s:0.5,t:0.8,a:0.2,p:1.25,q:0.2,},{w:"sawtooth",v:0.2,a:0.2,d:0.3,s:1,t:1.2,p:1.25,q:0.2,}],
-      [{w:"sine",v:0.3,d:1,s:0.3,},{w:"square",v:22,t:11,d:0.5,s:0.1,g:1,}],
-      [{w:"sawtooth",v:0.3,a:0.04,d:1,s:0.8,r:0.1,},{w:"square",v:1,t:0.5,d:1,s:2,g:1,}],
-      [{w:"triangle",v:0.3,d:1,s:0.3,},{w:"sine",v:22,t:6,d:0.6,s:0.05,g:1,}],
-      [{w:"sine",v:0.6,a:0.1,d:0.05,s:0.4,},{w:"sine",v:5,t:5,f:1,d:0.05,s:0.3,g:1,}],
-      [{w:"sine",a:0.1,d:0.05,s:0.4,v:0.8,},{w:"sine",v:5,t:5,f:1,d:0.05,s:0.3,g:1,}],
-      [{w:"square",v:0.3,a:0.1,d:0.1,s:0.4,},{w:"square",v:1,f:1,d:0.3,s:0.1,g:1,}],
-      /* 105-112 : Ethnic */
-      [{w:"sawtooth",v:0.3,d:0.5,r:0.5,},{w:"sawtooth",v:11,t:5,d:0.05,g:1,}],
-      [{w:"square",v:0.3,d:0.2,r:0.2,},{w:"square",v:7,t:3,d:0.05,g:1,}],
-      [{w:"triangle",d:0.2,r:0.2,},{w:"square",v:9,t:3,d:0.1,r:0.1,g:1,}],
-      [{w:"triangle",d:0.3,r:0.3,},{w:"square",v:6,t:3,d:1,r:1,g:1,}],
-      [{w:"triangle",v:0.4,d:0.2,r:0.2,},{w:"square",v:22,t:12,d:0.1,r:0.1,g:1,}],
-      [{w:"sine",v:0.25,a:0.02,d:0.05,s:0.8,},{w:"square",v:1,t:2,d:0.03,s:11,g:1,}],
-      [{w:"sine",v:0.3,a:0.05,d:11,},{w:"square",v:7,t:3,f:1,s:0.7,g:1,}],
-      [{w:"square",v:0.3,a:0.05,d:0.1,s:0.8,},{w:"square",v:4,d:0.1,s:1.1,g:1,}],
-      /* 113-120 : Percussive */
-      [{w:"sine",v:0.4,d:0.3,r:0.3,},{w:"sine",v:7,t:9,d:0.1,r:0.1,g:1,}],
-      [{w:"sine",v:0.7,d:0.1,r:0.1,},{w:"sine",v:22,t:7,d:0.05,g:1,}],
-      [{w:"sine",v:0.6,d:0.15,r:0.15,},{w:"square",v:11,t:3.2,d:0.1,r:0.1,g:1,}],
-      [{w:"sine",v:0.8,d:0.07,r:0.07,},{w:"square",v:11,t:7,r:0.01,g:1,}],
-      [{w:"triangle",v:0.7,t:0.5,d:0.2,r:0.2,p:0.95,},{w:"n0",v:9,g:1,d:0.2,r:0.2,}],
-      [{w:"sine",v:0.7,d:0.1,r:0.1,p:0.9,},{w:"square",v:14,t:2,d:0.005,r:0.005,g:1,}],
-      [{w:"square",d:0.15,r:0.15,p:0.5,},{w:"square",v:4,t:5,d:0.001,r:0.001,g:1,}],
-      [{w:"n1",v:0.3,a:1,s:1,d:0.15,r:0,t:0.5,}],
-      /* 121-128 : SE */
-      [{w:"sine",t:12.5,d:0,r:0,p:0.5,v:0.3,h:0.2,q:0.5,},{g:1,w:"sine",v:1,t:2,d:0,r:0,s:1,},{g:1,w:"n0",v:0.2,t:2,a:0.6,h:0,d:0.1,r:0.1,b:0,c:0,}],
-      [{w:"n0",v:0.2,a:0.05,h:0.02,d:0.02,r:0.02,}],
-      [{w:"n0",v:0.4,a:1,d:1,t:0.25,}],
-      [{w:"sine",v:0.3,a:0.1,d:1,s:0.5,},{w:"sine",v:4,t:0,f:1.5,d:1,s:1,r:0.1,g:1,},{g:1,w:"sine",v:4,t:0,f:2,a:0.6,h:0,d:0.1,s:1,r:0.1,b:0,c:0,}],
-      [{w:"square",v:0.3,t:0.25,d:11,s:1,},{w:"square",v:12,t:0,f:8,d:1,s:1,r:11,g:1,}],
-      [{w:"n0",v:0.4,t:0.5,a:1,d:11,s:1,r:0.5,},{w:"square",v:1,t:0,f:14,d:1,s:1,r:11,g:1,}],
-      [{w:"sine",t:0,f:1221,a:0.2,d:1,r:0.25,s:1,},{g:1,w:"n0",v:3,t:0.5,d:1,s:1,r:1,}],
-      [{w:"sine",d:0.4,r:0.4,p:0.1,t:2.5,v:1,},{w:"n0",v:12,t:2,d:1,r:1,g:1,}],
-    ],
-    program0:[
-// 1-8 : Piano
-      [{w:"triangle",v:.5,d:.7}],                   [{w:"triangle",v:.5,d:.7}],
-      [{w:"triangle",v:.5,d:.7}],                   [{w:"triangle",v:.5,d:.7}],
-      [{w:"triangle",v:.5,d:.7}],                   [{w:"triangle",v:.5,d:.7}],
-      [{w:"sawtooth",v:.3,d:.7}],                   [{w:"sawtooth",v:.3,d:.7}],
-/* 9-16 : Chromatic Perc*/
-      [{w:"sine",v:.5,d:.3,r:.3}],                  [{w:"triangle",v:.5,d:.3,r:.3}],
-      [{w:"square",v:.2,d:.3,r:.3}],                [{w:"square",v:.2,d:.3,r:.3}],
-      [{w:"sine",v:.5,d:.1,r:.1}],                  [{w:"sine",v:.5,d:.1,r:.1}],
-      [{w:"square",v:.2,d:1,r:1}],                  [{w:"sawtooth",v:.3,d:.7,r:.7}],
-/* 17-24 : Organ */
-      [{w:"sine",v:0.5,a:0.01,s:1}],                [{w:"sine",v:0.7,d:0.02,s:0.7}],
-      [{w:"square",v:.2,s:1}],                      [{w:"triangle",v:.5,a:.01,s:1}],
-      [{w:"square",v:.2,a:.02,s:1}],                [{w:"square",v:0.2,a:0.02,s:1}],
-      [{w:"square",v:0.2,a:0.02,s:1}],              [{w:"square",v:.2,a:.05,s:1}],
-/* 25-32 : Guitar */
-      [{w:"triangle",v:.5,d:.5}],                   [{w:"square",v:.2,d:.6}],
-      [{w:"square",v:.2,d:.6}],                     [{w:"triangle",v:.8,d:.6}],
-      [{w:"triangle",v:.4,d:.05}],                  [{w:"square",v:.2,d:1}],
-      [{w:"square",v:.2,d:1}],                      [{w:"sine",v:.4,d:.6}],
-/* 33-40 : Bass */
-      [{w:"triangle",v:.7,d:.4}],                   [{w:"triangle",v:.7,d:.7}],
-      [{w:"triangle",v:.7,d:.7}],                   [{w:"triangle",v:.7,d:.7}],
-      [{w:"square",v:.3,d:.2}],                     [{w:"square",v:.3,d:.2}],
-      [{w:"square",v:.3,d:.1,s:.2}],                [{w:"sawtooth",v:.4,d:.1,s:.2}],
-/* 41-48 : Strings */
-      [{w:"sawtooth",v:.2,a:.02,s:1}],              [{w:"sawtooth",v:.2,a:.02,s:1}],
-      [{w:"sawtooth",v:.2,a:.02,s:1}],              [{w:"sawtooth",v:.2,a:.02,s:1}],
-      [{w:"sawtooth",v:.2,a:.02,s:1}],              [{w:"sawtooth",v:.3,d:.1}],
-      [{w:"sawtooth",v:.3,d:.5,r:.5}],              [{w:"triangle",v:.6,d:.1,r:.1,h:0.03,p:0.8}],
-/* 49-56 : Ensamble */
-      [{w:"sawtooth",v:.2,a:.02,s:1}],              [{w:"sawtooth",v:.2,a:.02,s:1}],
-      [{w:"sawtooth",v:.2,a:.02,s:1}],              [{w:"sawtooth",v:.2,a:.02,s:1}],
-      [{w:"triangle",v:.3,a:.03,s:1}],              [{w:"sine",v:.3,a:.03,s:1}],
-      [{w:"triangle",v:.3,a:.05,s:1}],              [{w:"sawtooth",v:.5,a:.01,d:.1}],
-/* 57-64 : Brass */
-      [{w:"square",v:.3,a:.05,d:.2,s:.6}],          [{w:"square",v:.3,a:.05,d:.2,s:.6}],
-      [{w:"square",v:.3,a:.05,d:.2,s:.6}],          [{w:"square",v:0.2,a:.05,d:0.01,s:1}],
-      [{w:"square",v:.3,a:.05,s:1}],                [{w:"square",v:.3,s:.7}],
-      [{w:"square",v:.3,s:.7}],                     [{w:"square",v:.3,s:.7}],
-/* 65-72 : Reed */
-      [{w:"square",v:.3,a:.02,d:2}],                [{w:"square",v:.3,a:.02,d:2}],
-      [{w:"square",v:.3,a:.03,d:2}],                [{w:"square",v:.3,a:.04,d:2}],
-      [{w:"square",v:.3,a:.02,d:2}],                [{w:"square",v:.3,a:.05,d:2}],
-      [{w:"square",v:.3,a:.03,d:2}],                [{w:"square",v:.3,a:.03,d:2}],
-/* 73-80 : Pipe */
-      [{w:"sine",v:.7,a:.02,d:2}],                  [{w:"sine",v:.7,a:.02,d:2}],
-      [{w:"sine",v:.7,a:.02,d:2}],                  [{w:"sine",v:.7,a:.02,d:2}],
-      [{w:"sine",v:.7,a:.02,d:2}],                  [{w:"sine",v:.7,a:.02,d:2}],
-      [{w:"sine",v:.7,a:.02,d:2}],                  [{w:"sine",v:.7,a:.02,d:2}],
-/* 81-88 : SynthLead */
-      [{w:"square",v:.3,s:.7}],                     [{w:"sawtooth",v:.4,s:.7}],
-      [{w:"triangle",v:.5,s:.7}],                   [{w:"sawtooth",v:.4,s:.7}],
-      [{w:"sawtooth",v:.4,d:12}],                   [{w:"sine",v:.4,a:.06,d:12}],
-      [{w:"sawtooth",v:.4,d:12}],                   [{w:"sawtooth",v:.4,d:12}],
-/* 89-96 : SynthPad */
-      [{w:"sawtooth",v:.3,d:12}],                   [{w:"triangle",v:.5,d:12}],
-      [{w:"square",v:.3,d:12}],                     [{w:"triangle",v:.5,a:.08,d:11}],
-      [{w:"sawtooth",v:.5,a:.05,d:11}],             [{w:"sawtooth",v:.5,d:11}],
-      [{w:"triangle",v:.5,d:11}],                   [{w:"triangle",v:.5,d:11}],
-/* 97-104 : FX */
-      [{w:"triangle",v:.5,d:11}],                   [{w:"triangle",v:.5,d:11}],
-      [{w:"square",v:.3,d:11}],                     [{w:"sawtooth",v:0.5,a:0.04,d:11}],
-      [{w:"sawtooth",v:.5,d:11}],                   [{w:"triangle",v:.5,a:.8,d:11}],
-      [{w:"triangle",v:.5,d:11}],                   [{w:"square",v:.3,d:11}],
-/* 105-112 : Ethnic */
-      [{w:"sawtooth",v:.3,d:1,r:1}],                [{w:"sawtooth",v:.5,d:.3}],
-      [{w:"sawtooth",v:.5,d:.3,r:.3}],              [{w:"sawtooth",v:.5,d:.3,r:.3}],
-      [{w:"square",v:.3,d:.2,r:.2}],                [{w:"square",v:.3,a:.02,d:2}],
-      [{w:"sawtooth",v:.2,a:.02,d:.7}],             [{w:"triangle",v:.5,d:1}],
-/* 113-120 : Percussive */
-      [{w:"sawtooth",v:.3,d:.3,r:.3}],              [{w:"sine",v:.8,d:.1,r:.1}],
-      [{w:"square",v:.2,d:.1,r:.1,p:1.05}],         [{w:"sine",v:.8,d:.05,r:.05}],
-      [{w:"triangle",v:0.5,d:0.1,r:0.1,p:0.96}],    [{w:"triangle",v:0.5,d:0.1,r:0.1,p:0.97}],
-      [{w:"square",v:.3,d:.1,r:.1,}],               [{w:"n1",v:0.3,a:1,s:1,d:0.15,r:0,t:0.5,}],
-/* 121-128 : SE */
-      [{w:"triangle",v:0.5,d:0.03,t:0,f:1332,r:0.001,p:1.1}],
-      [{w:"n0",v:0.2,t:0.1,d:0.02,a:0.05,h:0.02,r:0.02}],
-      [{w:"n0",v:0.4,a:1,d:1,t:0.25,}],
-      [{w:"sine",v:0.3,a:0.8,d:1,t:0,f:1832}],
-      [{w:"triangle",d:0.5,t:0,f:444,s:1,}],
-      [{w:"n0",v:0.4,d:1,t:0,f:22,s:1,}],
-      [{w:"n0",v:0.5,a:0.2,d:11,t:0,f:44}],
-      [{w:"n0",v:0.5,t:0.25,d:0.4,r:0.4}],
-    ],
-    drummap1:[
-/*35*/  [{w:"triangle",t:0,f:70,v:1,d:0.05,h:0.03,p:0.9,q:0.1,},{w:"n0",g:1,t:6,v:17,r:0.01,h:0,p:0,}],
-        [{w:"triangle",t:0,f:88,v:1,d:0.05,h:0.03,p:0.5,q:0.1,},{w:"n0",g:1,t:5,v:42,r:0.01,h:0,p:0,}],
-        [{w:"n0",f:222,p:0,t:0,r:0.01,h:0,}],
-        [{w:"triangle",v:0.3,f:180,d:0.05,t:0,h:0.03,p:0.9,q:0.1,},{w:"n0",v:0.6,t:0,f:70,h:0.02,r:0.01,p:0,},{g:1,w:"square",v:2,t:0,f:360,r:0.01,b:0,c:0,}],
-        [{w:"square",f:1150,v:0.34,t:0,r:0.03,h:0.025,d:0.03,},{g:1,w:"n0",t:0,f:13,h:0.025,d:0.1,s:1,r:0.1,v:1,}],
-/*40*/  [{w:"triangle",f:200,v:1,d:0.06,t:0,r:0.06,},{w:"n0",g:1,t:0,f:400,v:12,r:0.02,d:0.02,}],
-        [{w:"triangle",f:100,v:0.9,d:0.12,h:0.02,p:0.5,t:0,r:0.12,},{g:1,w:"n0",v:5,t:0.4,h:0.015,d:0.005,r:0.005,}],
-        [{w:"n1",f:390,v:0.25,r:0.01,t:0,}],
-        [{w:"triangle",f:120,v:0.9,d:0.12,h:0.02,p:0.5,t:0,r:0.12,},{g:1,w:"n0",v:5,t:0.5,h:0.015,d:0.005,r:0.005,}],
-        [{w:"n1",v:0.25,f:390,r:0.03,t:0,h:0.005,d:0.03,}],
-/*45*/  [{w:"triangle",f:140,v:0.9,d:0.12,h:0.02,p:0.5,t:0,r:0.12,},{g:1,w:"n0",v:5,t:0.3,h:0.015,d:0.005,r:0.005,}],
-        [{w:"n1",v:0.25,f:390,t:0,d:0.2,r:0.2,},{w:"n0",v:0.3,t:0,c:0,f:440,h:0.005,d:0.05,}],
-        [{w:"triangle",f:155,v:0.9,d:0.12,h:0.02,p:0.5,t:0,r:0.12,},{g:1,w:"n0",v:5,t:0.3,h:0.015,d:0.005,r:0.005,}],
-        [{w:"triangle",f:180,v:0.9,d:0.12,h:0.02,p:0.5,t:0,r:0.12,},{g:1,w:"n0",v:5,t:0.3,h:0.015,d:0.005,r:0.005,}],
-        [{w:"n1",v:0.3,f:1200,d:0.2,r:0.2,h:0.05,t:0,},{w:"n1",t:0,v:1,d:0.1,r:0.1,p:1.2,f:440,}],
-/*50*/  [{w:"triangle",f:220,v:0.9,d:0.12,h:0.02,p:0.5,t:0,r:0.12,},{g:1,w:"n0",v:5,t:0.3,h:0.015,d:0.005,r:0.005,}],
-        [{w:"n1",f:500,v:0.15,d:0.4,r:0.4,h:0,t:0,},{w:"n0",v:0.1,t:0,r:0.01,f:440,}],
-        [{w:"n1",v:0.3,f:800,d:0.2,r:0.2,h:0.05,t:0,},{w:"square",t:0,v:1,d:0.1,r:0.1,p:0.1,f:220,g:1,}],
-        [{w:"sine",f:1651,v:0.15,d:0.2,r:0.2,h:0,t:0,},{w:"sawtooth",g:1,t:1.21,v:7.2,d:0.1,r:11,h:1,},{g:1,w:"n0",v:3.1,t:0.152,d:0.002,r:0.002,}],
-        null,
-/*55*/  [{w:"n1",v:.3,f:1200,d:0.2,r:0.2,h:0.05,t:0,},{w:"n1",t:0,v:1,d:0.1,r:0.1,p:1.2,f:440,}],
-        null,
-        [{w:"n1",v:0.3,f:555,d:0.25,r:0.25,h:0.05,t:0,},{w:"n1",t:0,v:1,d:0.1,r:0.1,f:440,a:0.005,h:0.02,}],
-        [{w:"sawtooth",f:776,v:0.2,d:0.3,t:0,r:0.3,},{g:1,w:"n0",v:2,t:0,f:776,a:0.005,h:0.02,d:0.1,s:1,r:0.1,c:0,},{g:11,w:"sine",v:0.1,t:0,f:22,d:0.3,r:0.3,b:0,c:0,}],
-        [{w:"n1",f:440,v:0.15,d:0.4,r:0.4,h:0,t:0,},{w:"n0",v:0.4,t:0,r:0.01,f:440,}],
-/*60*/  null,null,null,null,null,
-/*65*/  null,null,null,null,null,
-/*70*/  null,null,null,null,null,
-/*75*/  null,null,null,null,null,
-/*80*/  [{w:"sine",f:1720,v:0.3,d:0.02,t:0,r:0.02,},{w:"square",g:1,t:0,f:2876,v:6,d:0.2,s:1,r:0.2,}],
-        [{w:"sine",f:1720,v:0.3,d:0.25,t:0,r:0.25,},{w:"square",g:1,t:0,f:2876,v:6,d:0.2,s:1,r:0.2,}],
-    ],
-    drummap0:[
-/*35*/[{w:"triangle",t:0,f:110,v:1,d:0.05,h:0.02,p:0.1,}],
-      [{w:"triangle",t:0,f:150,v:0.8,d:0.1,p:0.1,h:0.02,r:0.01,}],
-      [{w:"n0",f:392,v:0.5,d:0.01,p:0,t:0,r:0.05}],
-      [{w:"n0",f:33,d:0.05,t:0,}],
-      [{w:"n0",f:100,v:0.7,d:0.03,t:0,r:0.03,h:0.02,}],
-/*40*/[{w:"n0",f:44,v:0.7,d:0.02,p:0.1,t:0,h:0.02,}],
-      [{w:"triangle",f:240,v:0.9,d:0.1,h:0.02,p:0.1,t:0,}],
-      [{w:"n0",f:440,v:0.2,r:0.01,t:0,}],
-      [{w:"triangle",f:270,v:0.9,d:0.1,h:0.02,p:0.1,t:0,}],
-      [{w:"n0",f:440,v:0.2,d:0.04,r:0.04,t:0,}],
-/*45*/[{w:"triangle",f:300,v:0.9,d:0.1,h:0.02,p:0.1,t:0,}],
-      [{w:"n0",f:440,v:0.2,d:0.1,r:0.1,h:0.02,t:0,}],
-      [{w:"triangle",f:320,v:0.9,d:0.1,h:0.02,p:0.1,t:0,}],
-      [{w:"triangle",f:360,v:0.9,d:0.1,h:0.02,p:0.1,t:0,}],
-      [{w:"n0",f:150,v:0.2,d:0.1,r:0.1,h:0.05,t:0,p:0.1,}],
-/*50*/[{w:"triangle",f:400,v:0.9,d:0.1,h:0.02,p:0.1,t:0,}],
-      [{w:"n0",f:150,v:0.2,d:0.1,r:0.01,h:0.05,t:0,p:0.1}],
-      [{w:"n0",f:150,v:0.2,d:0.1,r:0.01,h:0.05,t:0,p:0.1}],
-      [{w:"n0",f:440,v:0.3,d:0.1,p:0.9,t:0,r:0.1,}],
-      [{w:"n0",f:200,v:0.2,d:0.05,p:0.9,t:0,}],
-/*55*/[{w:"n0",f:440,v:0.3,d:0.12,p:0.9,t:0,}],
-      [{w:"sine",f:800,v:0.4,d:0.06,t:0,}],
-      [{w:"n0",f:150,v:0.2,d:0.1,r:0.01,h:0.05,t:0,p:0.1}],
-      [{w:"n0",f:33,v:0.3,d:0.2,p:0.9,t:0,}],
-      [{w:"n0",f:300,v:0.3,d:0.14,p:0.9,t:0,}],
-/*60*/[{w:"sine",f:200,d:0.06,t:0,}],
-      [{w:"sine",f:150,d:0.06,t:0,}],
-      [{w:"sine",f:300,t:0,}],
-      [{w:"sine",f:300,d:0.06,t:0,}],
-      [{w:"sine",f:250,d:0.06,t:0,}],
-/*65*/[{w:"square",f:300,v:.3,d:.06,p:.8,t:0,}],
-      [{w:"square",f:260,v:.3,d:.06,p:.8,t:0,}],
-      [{w:"sine",f:850,v:.5,d:.07,t:0,}],
-      [{w:"sine",f:790,v:.5,d:.07,t:0,}],
-      [{w:"n0",f:440,v:0.3,a:0.05,t:0,}],
-/*70*/[{w:"n0",f:440,v:0.3,a:0.05,t:0,}],
-      [{w:"triangle",f:1800,v:0.4,p:0.9,t:0,h:0.03,}],
-      [{w:"triangle",f:1800,v:0.3,p:0.9,t:0,h:0.13,}],
-      [{w:"n0",f:330,v:0.3,a:0.02,t:0,r:0.01,}],
-      [{w:"n0",f:330,v:0.3,a:0.02,t:0,h:0.04,r:0.01,}],
-/*75*/[{w:"n0",f:440,v:0.3,t:0,}],
-      [{w:"sine",f:800,t:0,}],
-      [{w:"sine",f:700,t:0,}],
-      [{w:"n0",f:330,v:0.3,t:0,}],
-      [{w:"n0",f:330,v:0.3,t:0,h:0.1,r:0.01,p:0.7,}],
-/*80*/[{w:"sine",t:0,f:1200,v:0.3,r:0.01,}],
-      [{w:"sine",t:0,f:1200,v:0.3,d:0.2,r:0.2,}],
-
-    ],
-    /**/
-    ready:function(){
-      var i;
-      this.pg=[]; this.vol=[]; this.ex=[]; this.bend=[]; this.rpnidx=[]; this.brange=[];
-      this.sustain=[]; this.notetab=[]; this.rhythm=[];
-      this.maxTick=0, this.playTick=0, this.playing=0; this.releaseRatio=3.5;
-      for(var i=0;i<16;++i){
-        this.pg[i]=0; this.vol[i]=3*100*100/(127*127);
-        this.bend[i]=0; this.brange[i]=0x100;
-        this.rhythm[i]=0;
-      }
-      this.rhythm[9]=1;
-      /**/
-      this.preroll=0.2;
-      this.relcnt=0;
-      setInterval(
-        function(){
-          if(++this.relcnt>=3){
-            this.relcnt=0;
-            for(var i=this.notetab.length-1;i>=0;--i){
-              var nt=this.notetab[i];
-              if(this.actx.currentTime>nt.e){
-                this._pruneNote(nt);
-                this.notetab.splice(i,1);
-              }
-            }
-            /**/
-          }
-          if(this.playing && this.song.ev.length>0){
-            var e=this.song.ev[this.playIndex];
-            while(this.actx.currentTime+this.preroll>this.playTime){
-              if(e.m[0]==0xff51){
-                this.song.tempo=e.m[1];
-                this.tick2Time=4*60/this.song.tempo/this.song.timebase;
-              }
-              else
-                this.send(e.m,this.playTime);
-              ++this.playIndex;
-              if(this.playIndex>=this.song.ev.length){
-                if(this.loop){
-                  e=this.song.ev[this.playIndex=0];
-                  this.playTick=e.t;
-                }
-                else{
-                  this.playTick=this.maxTick;
-                  this.playing=0;
-                  break;
-                }
-              }
-              else{
-                e=this.song.ev[this.playIndex];
-                this.playTime+=(e.t-this.playTick)*this.tick2Time;
-                this.playTick=e.t;
-              }
-            }
-          }
-        }.bind(this),60
-      );
-      // console.log("internalcontext:"+this.internalcontext)
-      if(this.internalcontext){
-        window.AudioContext = window.AudioContext || window.webkitAudioContext;
-        this.setAudioContext(new AudioContext());
-      }
-      this.isReady=1;
-    },
-    setMasterVol:function(v){
-      if(v!=undefined)
-        this.masterVol=v;
-      if(this.out)
-        this.out.gain.value=this.masterVol;
-    },
-    setReverbLev:function(v){
-      if(v!=undefined)
-        this.reverbLev=v;
-      var r=parseFloat(this.reverbLev);
-      if(this.rev&&!isNaN(r))
-        this.rev.gain.value=r*8;
-    },
-    setLoop:function(f){
-      this.loop=f;
-    },
-    setVoices:function(v){
-      this.voices=v;
-    },
-    getPlayStatus:function(){
-      return {play:this.playing, maxTick:this.maxTick, curTick:this.playTick};
-    },
-    locateMIDI:function(tick){
-      var i,p=this.playing;
-      this.stopMIDI();
-      for(i=0;i<this.song.ev.length && tick>this.song.ev[i].t;++i){
-        var m=this.song.ev[i];
-        var ch=m.m[0]&0xf;
-        switch(m.m[0]&0xf0){
-        case 0xb0:
-          switch(m.m[1]){
-          case 1:  this.setModulation(ch,m.m[2]); break;
-          case 7:  this.setChVol(ch,m.m[2]); break;
-          case 10: this.setPan(ch,m.m[2]); break;
-          case 11: this.setExpression(ch,m.m[2]); break;
-          case 64: this.setSustain(ch,m.m[2]); break;
-          }
-          break;
-        case 0xc0: this.pg[m.m[0]&0x0f]=m.m[1]; break;
-        }
-        if(m.m[0]==0xff51)
-          this.song.tempo=m.m[1];
-      }
-      if(!this.song.ev[i]){
-        this.playIndex=0;
-        this.playTick=this.maxTick;
-      }
-      else{
-        this.playIndex=i;
-        this.playTick=this.song.ev[i].t;
-      }
-      if(p)
-        this.playMIDI();
-    },
-    getTimbreName:function(m,n){
-      if(m==0)
-        return this.program[n].name;
-      else
-        return this.drummap[n-35].name;
-    },
-    loadMIDIUrl:function(url){
-      if(!url)
-        return;
-      var xhr=new XMLHttpRequest();
-      xhr.open("GET",url,true);
-      xhr.responseType="arraybuffer";
-      xhr.loadMIDI=this.loadMIDI.bind(this);
-      xhr.onload=function(e){
-        if(this.status==200){
-          this.loadMIDI(this.response);
-        }
-      };
-      xhr.send();
-    },
-    reset:function(){
-      for(var i=0;i<16;++i){
-        this.setProgram(i,0);
-        this.setBendRange(i,0x100);
-        this.setChVol(i,100);
-        this.setPan(i,64);
-        this.resetAllControllers(i);
-        this.allSoundOff(i);
-        this.rhythm[i]=0;
-      }
-      this.rhythm[9]=1;
-    },
-    stopMIDI:function(){
-      this.playing=0;
-      for(var i=0;i<16;++i)
-        this.allSoundOff(i);
-    },
-    playMIDI:function(){
-      if(!this.song)
-        return;
-      var dummy=this.actx.createOscillator();
-      dummy.connect(this.actx.destination);
-      dummy.frequency.value=0;
-      dummy.start(0);
-      dummy.stop(this.actx.currentTime+0.001);
-      if(this.playTick>=this.maxTick)
-        this.playTick=0,this.playIndex=0;
-      this.playTime=this.actx.currentTime+.1;
-      this.tick2Time=4*60/this.song.tempo/this.song.timebase;
-      this.playing=1;
-    },
-    loadMIDI:function(data){
-      function Get2(s, i) { return (s[i]<<8) + s[i+1]; }
-      function Get3(s, i) { return (s[i]<<16) + (s[i+1]<<8) + s[i+2]; }
-      function Get4(s, i) { return (s[i]<<24) + (s[i+1]<<16) + (s[i+2]<<8) + s[i+3]; }
-      function GetStr(s, i, len) {
-        return String.fromCharCode.apply(null,s.slice(i,i+len));
-      }
-      function Delta(s, i) {
-        var v, d;
-        v = 0;
-        datalen = 1;
-        while((d = s[i]) & 0x80) {
-          v = (v<<7) + (d&0x7f);
-          ++datalen;
-          ++i;
-        }
-        return (v<<7)+d;
-      }
-      function Msg(song,tick,s,i){
-        var v=s[i];
-        datalen=1;
-        if((v&0x80)==0)
-          v=runst,datalen=0;
-        runst=v;
-        switch(v&0xf0){
-        case 0xc0: case 0xd0:
-          song.ev.push({t:tick,m:[v,s[i+datalen]]});
-          datalen+=1;
-          break;
-        case 0xf0:
-          switch(v) {
-          case 0xf0:
-          case 0xf7:
-            var len=Delta(s,i+1);
-            datastart=1+datalen;
-            var exd=Array.from(s.slice(i+datastart,i+datastart+len));
-            exd.unshift(0xf0);
-            song.ev.push({t:tick,m:exd});
-/*
-            var sysex=[];
-            for(var jj=0;jj<len;++jj)
-              sysex.push(s[i+datastart+jj].toString(16));
-            console.log(sysex);
-*/
-            datalen+=len+1;
-            break;
-          case 0xff:
-            var len = Delta(s, i + 2);
-            datastart = 2+datalen;
-            datalen = len+datalen+2;
-            switch(s[i+1]) {
-            case 0x02: song.copyright+=GetStr(s, i + datastart, datalen - 3); break;
-            case 0x01: case 0x03: case 0x04: case 0x09:
-              song.text=GetStr(s, i + datastart, datalen - datastart);
-              break;
-            case 0x2f:
-              return 1;
-            case 0x51:
-              var val = Math.floor(60000000 / Get3(s, i + 3));
-              song.ev.push({t:tick, m:[0xff51, val]});
-              break;
-            }
-            break;
-          }
-          break;
-        default:
-          song.ev.push({t:tick,m:[v,s[i+datalen],s[i+datalen+1]]});
-          datalen+=2;
-        }
-        return 0;
-      }
-      this.stopMIDI();
-      var s=new Uint8Array(data);
-      var datalen = 0, datastart = 0, runst = 0x90;
-      var idx = 0;
-      var hd = s.slice(0,  4);
-      if(hd.toString()!="77,84,104,100")  //MThd
-        return;
-      var len = Get4(s, 4);
-      var fmt = Get2(s, 8);
-      var numtrk = Get2(s, 10);
-      this.maxTick=0;
-      var tb = Get2(s, 12)*4;
-      idx = (len + 8);
-      this.song={copyright:"",text:"",tempo:120,timebase:tb,ev:[]};
-      for(var tr=0;tr<numtrk;++tr){
-        hd=s.slice(idx, idx+4);
-        len=Get4(s, idx+4);
-        if(hd.toString()=="77,84,114,107") {//MTrk
-          var tick = 0;
-          var j = 0;
-          this.notetab.length = 0;
-          for(;;) {
-            tick += Delta(s, idx + 8 + j);
-            j += datalen;
-            var e = Msg(this.song, tick, s, idx + 8 + j);
-            j += datalen;
-            if(e)
-              break;
-          }
-          if(tick>this.maxTick)
-            this.maxTick=tick;
-        }
-        idx += (len+8);
-      }
-      this.song.ev.sort(function(x,y){return x.t-y.t});
-      this.reset();
-      this.locateMIDI(0);
-    },
-    setQuality:function(q){
-      var i,k,n,p;
-      if(q!=undefined)
-        this.quality=q;
-      for(i=0;i<128;++i)
-        this.setTimbre(0,i,this.program0[i]);
-      for(i=0;i<this.drummap0.length;++i)
-        this.setTimbre(1,i+35,this.drummap0[i]);
-      if(this.quality){
-        for(i=0;i<this.program1.length;++i)
-          this.setTimbre(0,i,this.program1[i]);
-        for(i=0;i<this.drummap.length;++i){
-          if(this.drummap1[i])
-            this.setTimbre(1,i+35,this.drummap1[i]);
-        }
-      }
-    },
-    setTimbre:function(m,n,p){
-      var defp={g:0,w:"sine",t:1,f:0,v:0.5,a:0,h:0.01,d:0.01,s:0,r:0.05,p:1,q:1,k:0};
-      function filldef(p){
-        for(n=0;n<p.length;++n){
-          for(k in defp){
-            if(!p[n].hasOwnProperty(k) || typeof(p[n][k])=="undefined")
-              p[n][k]=defp[k];
-          }
-        }
-        return p;
-      }
-      if(m && n>=35 && n<=81)
-        this.drummap[n-35].p=filldef(p);
-      if(m==0 && n>=0 && n<=127)
-        this.program[n].p=filldef(p);
-    },
-    _pruneNote:function(nt){
-      for(var k=nt.o.length-1;k>=0;--k){
-        if(nt.o[k].frequency)
-          this.chmod[nt.ch].disconnect(nt.o[k].detune);
-        nt.o[k].disconnect();
-        if(nt.o[k].frequency)
-          nt.o[k].frequency.cancelScheduledValues(0);
-        else
-          nt.o[k].playbackRate.cancelScheduledValues(0);
-        nt.o[k].stop(0);
-      }
-      for(var k=nt.g.length-1;k>=0;--k){
-        nt.g[k].disconnect();
-        nt.g[k].gain.cancelScheduledValues(0);
-      }
-    },
-    _limitVoices:function(ch,n){
-      this.notetab.sort(function(n1,n2){
-        if(n1.f!=n2.f) return n1.f-n2.f;
-        if(n1.e!=n2.e) return n2.e-n1.e;
-        return n2.t-n1.t;
-      });
-      for(var i=this.notetab.length-1;i>=0;--i){
-        var nt=this.notetab[i];
-        if(this.actx.currentTime>nt.e || i>=(this.voices-1)){
-          this._pruneNote(nt);
-          this.notetab.splice(i,1);
-        }
-      }
-    },
-    _note:function(t,ch,n,v,p){
-      var o=[],g=[],vp=[],fp=[],r=[],i,out,sc,pn;
-      var f=440*Math.pow(2,(n-69)/12);
-      this._limitVoices(ch,n);
-      for(i=0;i<p.length;++i){
-        pn=p[i];
-        var dt=t+pn.a+pn.h;
-        if(pn.g==0)
-          out=this.chvol[ch], sc=v*v/16384, fp[i]=f*pn.t+pn.f;
-        else if(pn.g>10)
-          out=g[pn.g-11].gain, sc=1, fp[i]=fp[pn.g-11]*pn.t+pn.f;
-        else if(o[pn.g-1].frequency)
-          out=o[pn.g-1].frequency, sc=fp[pn.g-1], fp[i]=fp[pn.g-1]*pn.t+pn.f;
-        else
-          out=o[pn.g-1].playbackRate, sc=fp[pn.g-1]/440, fp[i]=fp[pn.g-1]*pn.t+pn.f;
-        switch(pn.w[0]){
-        case "n":
-          o[i]=this.actx.createBufferSource();
-          o[i].buffer=this.noiseBuf[pn.w];
-          o[i].loop=true;
-          o[i].playbackRate.value=fp[i]/440;
-          if(pn.p!=1)
-            this._setParamTarget(o[i].playbackRate,fp[i]/440*pn.p,t,pn.q);
-          break;
-        default:
-          o[i]=this.actx.createOscillator();
-          o[i].frequency.value=fp[i];
-          if(pn.p!=1)
-            this._setParamTarget(o[i].frequency,fp[i]*pn.p,t,pn.q);
-          if(pn.w[0]=="w")
-            o[i].setPeriodicWave(this.wave[pn.w]);
-          else
-            o[i].type=pn.w;
-          this.chmod[ch].connect(o[i].detune);
-          o[i].detune.value=this.bend[ch];
-          break;
-        }
-        g[i]=this.actx.createGain();
-        r[i]=pn.r;
-        o[i].connect(g[i]); g[i].connect(out);
-        vp[i]=sc*pn.v;
-        if(pn.k)
-          vp[i]*=Math.pow(2,(n-60)/12*pn.k);
-        if(pn.a){
-          g[i].gain.value=0;
-          g[i].gain.setValueAtTime(0,t);
-          g[i].gain.linearRampToValueAtTime(vp[i],t+pn.a);
-        }
-        else
-          g[i].gain.setValueAtTime(vp[i],t);
-        this._setParamTarget(g[i].gain,pn.s*vp[i],dt,pn.d);
-        o[i].start(t);
-        if(this.rhythm[ch])
-          o[i].stop(t+p[0].d*this.releaseRatio);
-      }
-      if(!this.rhythm[ch])
-        this.notetab.push({t:t,e:99999,ch:ch,n:n,o:o,g:g,t2:t+pn.a,v:vp,r:r,f:0});
-    },
-    _setParamTarget:function(p,v,t,d){
-      if(d!=0)
-        p.setTargetAtTime(v,t,d);
-      else
-        p.setValueAtTime(v,t);
-    },
-    _releaseNote:function(nt,t){
-      if(nt.ch!=9){
-        for(var k=nt.g.length-1;k>=0;--k){
-          nt.g[k].gain.cancelScheduledValues(t);
-          if(t==nt.t2)
-            nt.g[k].gain.setValueAtTime(nt.v[k],t);
-          else if(t<nt.t2)
-            nt.g[k].gain.setValueAtTime(nt.v[k]*(t-nt.t)/(nt.t2-nt.t),t);
-          this._setParamTarget(nt.g[k].gain,0,t,nt.r[k]);
-        }
-      }
-      nt.e=t+nt.r[0]*this.releaseRatio;
-      nt.f=1;
-    },
-    setModulation:function(ch,v,t){
-      this.chmod[ch].gain.setValueAtTime(v*100/127,this._tsConv(t));
-    },
-    setChVol:function(ch,v,t){
-      this.vol[ch]=3*v*v/(127*127);
-      this.chvol[ch].gain.setValueAtTime(this.vol[ch]*this.ex[ch],this._tsConv(t));
-    },
-    setPan:function(ch,v,t){
-      if(this.chpan[ch])
-        this.chpan[ch].pan.setValueAtTime((v-64)/64,this._tsConv(t));
-    },
-    setExpression:function(ch,v,t){
-      this.ex[ch]=v*v/(127*127);
-      this.chvol[ch].gain.setValueAtTime(this.vol[ch]*this.ex[ch],this._tsConv(t));
-    },
-    setSustain:function(ch,v,t){
-      this.sustain[ch]=v;
-      t=this._tsConv(t);
-      if(v<64){
-        for(var i=this.notetab.length-1;i>=0;--i){
-          var nt=this.notetab[i];
-          if(t>=nt.t && nt.ch==ch && nt.f==1)
-            this._releaseNote(nt,t);
-        }
-      }
-    },
-    allSoundOff:function(ch){
-      for(var i=this.notetab.length-1;i>=0;--i){
-        var nt=this.notetab[i];
-        if(nt.ch==ch){
-          this._pruneNote(nt);
-          this.notetab.splice(i,1);
-        }
-      }
-    },
-    resetAllControllers:function(ch){
-      this.bend[ch]=0; this.ex[ch]=1.0;
-      this.rpnidx[ch]=0x3fff; this.sustain[ch]=0;
-      if(this.chvol[ch]){
-        this.chvol[ch].gain.value=this.vol[ch]*this.ex[ch];
-        this.chmod[ch].gain.value=0;
-      }
-    },
-    setBendRange:function(ch,v){
-      this.brange[ch]=v;
-    },
-    setProgram:function(ch,v){
-      if(this.debug)
-        console.log("Pg("+ch+")="+v);
-      this.pg[ch]=v;
-    },
-    setBend:function(ch,v,t){
-      t=this._tsConv(t);
-      var br=this.brange[ch]*100/127;
-      this.bend[ch]=(v-8192)*br/8192;
-      for(var i=this.notetab.length-1;i>=0;--i){
-        var nt=this.notetab[i];
-        if(nt.ch==ch){
-          for(var k=nt.o.length-1;k>=0;--k){
-            if(nt.o[k].frequency)
-              nt.o[k].detune.setValueAtTime(this.bend[ch],t);
-          }
-        }
-      }
-    },
-    noteOn:function(ch,n,v,t){
-      if(v==0){
-        this.noteOff(ch,n,t);
-        return;
-      }
-      t=this._tsConv(t);
-      if(this.rhythm[ch]){
-        if(n>=35&&n<=81)
-          this._note(t,ch,n,v,this.drummap[n-35].p);
-        return;
-      }
-      this._note(t,ch,n,v,this.program[this.pg[ch]].p);
-    },
-    noteOff:function(ch,n,t){
-      if(this.rhythm[ch])
-        return;
-      t=this._tsConv(t);
-      for(var i=this.notetab.length-1;i>=0;--i){
-        var nt=this.notetab[i];
-        if(t>=nt.t && nt.ch==ch && nt.n==n && nt.f==0){
-          nt.f=1;
-          if(this.sustain[ch]<64)
-            this._releaseNote(nt,t);
-        }
-      }
-    },
-    _tsConv:function(t){
-      if(t==undefined||t<=0){
-        t=0;
-        if(this.actx)
-          t=this.actx.currentTime;
-      }
-      else{
-        if(this.tsmode)
-          t=t*.001-this.tsdiff;
-      }
-      return t;
-    },
-    setTsMode:function(tsmode){
-      this.tsmode=tsmode;
-    },
-    send:function(msg,t){    /* send midi message */
-      var ch=msg[0]&0xf;
-      var cmd=msg[0]&~0xf;
-      if(cmd<0x80||cmd>=0x100)
-        return;
-      switch(cmd){
-      case 0xb0:  /* ctl change */
-        switch(msg[1]){
-        case 1:  this.setModulation(ch,msg[2],t); break;
-        case 7:  this.setChVol(ch,msg[2],t); break;
-        case 10: this.setPan(ch,msg[2],t); break;
-        case 11: this.setExpression(ch,msg[2],t); break;
-        case 64: this.setSustain(ch,msg[2],t); break;
-        case 98:  case 98: this.rpnidx[ch]=0x3fff; break; /* nrpn lsb/msb */
-        case 100: this.rpnidx[ch]=(this.rpnidx[ch]&0x380)|msg[2]; break; /* rpn lsb */
-        case 101: this.rpnidx[ch]=(this.rpnidx[ch]&0x7f)|(msg[2]<<7); break; /* rpn msb */
-        case 6:  /* data entry msb */
-          if(this.rpnidx[ch]==0)
-            this.brange[ch]=(msg[2]<<7)+(this.brange[ch]&0x7f);
-          break;
-        case 38:  /* data entry lsb */
-          if(this.rpnidx[ch]==0)
-            this.brange[ch]=(this.brange[ch]&0x380)|msg[2];
-          break;
-        case 120:  /* all sound off */
-        case 123:  /* all notes off */
-        case 124: case 125: case 126: case 127: /* omni off/on mono/poly */
-          this.allSoundOff(ch);
-          break;
-        case 121: this.resetAllControllers(ch); break;
-        }
-        break;
-      case 0xc0: this.setProgram(ch,msg[1]); break;
-      case 0xe0: this.setBend(ch,(msg[1]+(msg[2]<<7)),t); break;
-      case 0x90: this.noteOn(ch,msg[1],msg[2],t); break;
-      case 0x80: this.noteOff(ch,msg[1],t); break;
-      case 0xf0:
-        if(msg[0]!=254 && this.debug){
-          var ds=[];
-          for(var ii=0;ii<msg.length;++ii)
-            ds.push(msg[ii].toString(16));
-          console.log(ds);
-        }
-        if(msg[1]==0x41&&msg[2]==0x10&&msg[3]==0x42&&msg[4]==0x12&&msg[5]==0x40){
-          if((msg[6]&0xf0)==0x10&&msg[7]==0x15){
-            var ch=[9,0,1,2,3,4,5,6,7,8,10,11,12,13,14,15][msg[6]&0xf];
-            this.rhythm[ch]=msg[8];
-//            console.log("UseForRhythmPart("+ch+")="+msg[8]);
-          }
-        }
-        break;
-      }
-    },
-    _createWave:function(w){
-      var imag=new Float32Array(w.length);
-      var real=new Float32Array(w.length);
-      for(var i=1;i<w.length;++i)
-        imag[i]=w[i];
-      return this.actx.createPeriodicWave(real,imag);
-    },
-    getAudioContext:function(){
-      return this.actx;
-    },
-    setAudioContext:function(actx,dest){
-      this.audioContext=this.actx=actx;
-      this.dest=dest;
-      if(!dest)
-        this.dest=actx.destination;
-      this.tsdiff=performance.now()*.001-this.actx.currentTime;
-      // console.log("TSDiff:"+this.tsdiff);
-      this.out=this.actx.createGain();
-      this.comp=this.actx.createDynamicsCompressor();
-      var blen=this.actx.sampleRate*.5|0;
-      this.convBuf=this.actx.createBuffer(2,blen,this.actx.sampleRate);
-      this.noiseBuf={};
-      this.noiseBuf.n0=this.actx.createBuffer(1,blen,this.actx.sampleRate);
-      this.noiseBuf.n1=this.actx.createBuffer(1,blen,this.actx.sampleRate);
-      var d1=this.convBuf.getChannelData(0);
-      var d2=this.convBuf.getChannelData(1);
-      var dn=this.noiseBuf.n0.getChannelData(0);
-      var dr=this.noiseBuf.n1.getChannelData(0);
-      for(var i=0;i<blen;++i){
-        if(i/blen<Math.random()){
-          d1[i]=Math.exp(-3*i/blen)*(Math.random()-.5)*.5;
-          d2[i]=Math.exp(-3*i/blen)*(Math.random()-.5)*.5;
-        }
-        dn[i]=Math.random()*2-1;
-      }
-      for(var jj=0;jj<64;++jj){
-        var r1=Math.random()*10+1;
-        var r2=Math.random()*10+1;
-        for(i=0;i<blen;++i){
-          var dd=Math.sin((i/blen)*2*Math.PI*440*r1)*Math.sin((i/blen)*2*Math.PI*440*r2);
-          dr[i]+=dd/8;
-        }
-      }
-      if(this.useReverb){
-        this.conv=this.actx.createConvolver();
-        this.conv.buffer=this.convBuf;
-        this.rev=this.actx.createGain();
-        this.rev.gain.value=this.reverbLev;
-        this.out.connect(this.conv);
-        this.conv.connect(this.rev);
-        this.rev.connect(this.comp);
-      }
-      this.setMasterVol();
-      this.out.connect(this.comp);
-      this.comp.connect(this.dest);
-      this.chvol=[]; this.chmod=[]; this.chpan=[];
-      this.wave={"w9999":this._createWave("w9999")};
-      this.lfo=this.actx.createOscillator();
-      this.lfo.frequency.value=5;
-      this.lfo.start(0);
-      for(i=0;i<16;++i){
-        this.chvol[i]=this.actx.createGain();
-        if(this.actx.createStereoPanner){
-          this.chpan[i]=this.actx.createStereoPanner();
-          this.chvol[i].connect(this.chpan[i]);
-          this.chpan[i].connect(this.out);
-        }
-        else{
-          this.chpan[i]=null;
-          this.chvol[i].connect(this.out);
-        }
-        this.chmod[i]=this.actx.createGain();
-        this.lfo.connect(this.chmod[i]);
-        this.pg[i]=0;
-        this.resetAllControllers(i);
-      }
-      this.setReverbLev();
-      this.reset();
-      this.send([0x90,60,1]);
-      this.send([0x90,60,0]);
-    },
-  }
-/* webaudio-tinysynth coreobject */
-
-;
-  for(var k in this.sy.properties)
-    this[k]=this.sy.properties[k].value;
-  this.setQuality(1);
-  if(opt){
-    if(opt.useReverb!=undefined)
-      this.useReverb=opt.useReverb;
-    if(opt.quality!=undefined)
-      this.setQuality(opt.quality);
-    if(opt.voices!=undefined)
-      this.setVoices(opt.voices);
-  }
-  this.ready();
-}
-
-
-if (module) module.exports = WebAudioTinySynth
-// Original source: https://raw.githubusercontent.com/g200kg/webaudio-tinysynth/master/webaudio-tinysynth.js
-
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)(module)))
-
-/***/ }),
-/* 271 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "StaffView",
-        {
-          ref: "staff_view",
-          attrs: {
-            bar: _vm.bar,
-            cursor: _vm.cursor,
-            enabledContexts: ["zoomview"]
-          }
-        },
-        [
-          _c("div", { staticClass: "rhythm-game__staff__second-row" }, [
-            _c("div", { attrs: { id: "second-row" } })
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("SexyButton", {
-        attrs: { cols: 3, color: "green", text: "Predvajaj" },
-        nativeOn: {
-          click: function($event) {
-            return _vm.play($event)
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c("SexyButton", {
-        attrs: { cols: 3, color: "cabaret", text: "Ustavi" },
-        nativeOn: {
-          click: function($event) {
-            return _vm.stop($event)
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.offsetConstant,
-            expression: "offsetConstant"
-          }
-        ],
-        attrs: {
-          type: "range",
-          step: "0.001",
-          min: "0.195",
-          max: "0.5",
-          width: "200"
-        },
-        domProps: { value: _vm.offsetConstant },
-        on: {
-          __r: function($event) {
-            _vm.offsetConstant = $event.target.value
-          }
-        }
-      }),
-      _vm._v(" " + _vm._s(_vm.offsetConstant) + "\n\n\n    "),
-      _c("audio", { ref: "rhythmAudio", attrs: { controls: "" } }, [
-        _c("source", { attrs: { src: _vm.audioSource, type: "audio/mpeg" } })
-      ])
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7c75ac84", module.exports)
-  }
-}
-
-/***/ }),
-/* 272 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(273)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(275)
-/* template */
-var __vue_template__ = __webpack_require__(276)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-1d2aae08"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/music/Keyboard.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1d2aae08", Component.options)
-  } else {
-    hotAPI.reload("data-v-1d2aae08", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 273 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(274);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("a6d0ffc0", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1d2aae08\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Keyboard.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1d2aae08\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Keyboard.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 274 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.keyboard[data-v-1d2aae08] {\n  width: 60vw;\n  height: 18vw;\n}\n@media only screen and (orientation: portrait) {\n.keyboard[data-v-1d2aae08] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape) {\n.keyboard[data-v-1d2aae08] {\n      width: 50vw;\n      height: 15vw;\n}\n}\n.keyboard__key[data-v-1d2aae08] {\n  cursor: pointer;\n}\n.keyboard__key--white[data-v-1d2aae08] {\n  fill: #ffffff;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n.keyboard__key--black[data-v-1d2aae08] {\n  fill: #000000;\n}\n.keyboard__key--correct[data-v-1d2aae08] {\n  fill: #64ee8a;\n}\n.keyboard__key--incorrect[data-v-1d2aae08] {\n  fill: #D2495F;\n}\n.keyboard__key-text[data-v-1d2aae08] {\n  font-family: \"GothamRounded-Book\";\n  pointer-events: none;\n  text-anchor: middle;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n.keyboard__key-text--white[data-v-1d2aae08] {\n  fill: #000000;\n  font-size: 4px;\n}\n.keyboard__key-text--black[data-v-1d2aae08] {\n  fill: #ffffff;\n  font-size: 3px;\n}\n.keyboard__frame[data-v-1d2aae08] {\n  width: 100px;\n  height: 100px;\n  fill: none;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 275 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        channel: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["c" /* numberProp */])(),
-        midi: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["d" /* objectNullProp */])()
-    },
-    data: function data() {
-        return {
-            keys: {
-                white: [{ pitch: 'A3', midiPitch: 57, code: 81, name: 'Q', correct: false, incorrect: false }, { pitch: 'B3', midiPitch: 59, code: 87, name: 'W', correct: false, incorrect: false }, { pitch: 'C4', midiPitch: 60, code: 69, name: 'E', correct: false, incorrect: false }, { pitch: 'D4', midiPitch: 62, code: 82, name: 'R', correct: false, incorrect: false }, { pitch: 'E4', midiPitch: 64, code: 84, name: 'T', correct: false, incorrect: false }, { pitch: 'F4', midiPitch: 65, code: 89, name: 'Z', correct: false, incorrect: false }, { pitch: 'G4', midiPitch: 67, code: 85, name: 'U', correct: false, incorrect: false }, { pitch: 'A4', midiPitch: 69, code: 73, name: 'I', correct: false, incorrect: false }, { pitch: 'B4', midiPitch: 71, code: 79, name: 'O', correct: false, incorrect: false }, { pitch: 'C5', midiPitch: 72, code: 80, name: 'P', correct: false, incorrect: false }, { pitch: 'D5', midiPitch: 74, code: 219, name: 'Š', correct: false, incorrect: false }],
-                black: [{ midiPitch: -1, code: -1 }, { pitch: 'Bb3', midiPitch: 58, code: 50, name: '2', correct: false, incorrect: false }, { midiPitch: -1, code: -1 }, { pitch: 'Db4', midiPitch: 61, code: 52, name: '4', correct: false, incorrect: false }, { pitch: 'Eb4', midiPitch: 63, code: 53, name: '5', correct: false, incorrect: false }, { midiPitch: -1, code: -1 }, { pitch: 'Gb4', midiPitch: 66, code: 55, name: '7', correct: false, incorrect: false }, { pitch: 'Ab4', midiPitch: 68, code: 56, name: '8', correct: false, incorrect: false }, { pitch: 'Bb4', midiPitch: 70, code: 57, name: '9', correct: false, incorrect: false }, { midiPitch: -1, code: -1 }, { pitch: 'Db5', midiPitch: 73, code: 189, name: '?', correct: false, incorrect: false }, { midiPitch: -1, code: -1 }]
-            },
-            pitchMap: {
-                'A#3': 'Bb3',
-                'B#3': 'C4',
-                'Cb4': 'B3',
-                'C#4': 'Db4',
-                'D#4': 'Eb4',
-                'E#4': 'F4',
-                'Fb4': 'E4',
-                'F#4': 'Gb4',
-                'G#4': 'Ab4',
-                'A#4': 'Bb4',
-                'B#4': 'C5',
-                'Cb5': 'B4',
-                'C#5': 'Db5'
-            },
-            helperTextVisible: false
-        };
-    },
-    created: function created() {
-        this.$parent.$on('play-note', this.playNote);
-        this.$parent.$on('color-key', this.colorKey);
-    },
-    mounted: function mounted() {
-        var _this = this;
-
-        this.$nextTick(function () {
-            window.addEventListener('keydown', _this.keydown);
-            window.addEventListener('keyup', _this.keyup);
-        });
-    },
-    beforeDestroy: function beforeDestroy() {
-        this.$parent.$off('play-note', this.playNote);
-        this.$parent.$off('color-key', this.colorKey);
-        window.removeEventListener('keydown', this.keydown);
-        window.removeEventListener('keyup', this.keyup);
-    },
-
-    computed: {
-        nKeys: function nKeys() {
-            return this.keys.white.length;
-        }
-    },
-    methods: {
-        getKeyByCode: function getKeyByCode(keyCode) {
-            var keys = [].concat(_toConsumableArray(this.keys.white.filter(function (key) {
-                return key.code === keyCode;
-            })), _toConsumableArray(this.keys.black.filter(function (key) {
-                return key.code === keyCode;
-            })));
-            return keys.length > 0 ? keys[0] : null;
-        },
-        getKeyByPitch: function getKeyByPitch(pitch) {
-            pitch = pitch in this.pitchMap ? this.pitchMap[pitch] : pitch;
-            var keys = [].concat(_toConsumableArray(this.keys.white.filter(function (key) {
-                return key.pitch === pitch;
-            })), _toConsumableArray(this.keys.black.filter(function (key) {
-                return key.pitch === pitch;
-            })));
-            return keys.length > 0 ? keys[0] : null;
-        },
-        mousedown: function mousedown(event, key) {
-            event.preventDefault();
-            this.$emit('key-pressed', key.pitch);
-        },
-        mouseup: function mouseup(event, key) {
-            event.preventDefault();
-            key.correct = false;
-            key.incorrect = false;
-            this.noteOff(key.midiPitch);
-            this.$emit('note-played', key.pitch);
-        },
-        keydown: function keydown(event) {
-            event.preventDefault();
-            var key = this.getKeyByCode(event.keyCode);
-            if (key && !(key.correct || key.incorrect)) {
-                this.$emit('key-pressed', key.pitch);
-            }
-        },
-        keyup: function keyup(event) {
-            event.preventDefault();
-            var key = this.getKeyByCode(event.keyCode);
-            if (key && (key.correct || key.incorrect)) {
-                key.correct = false;
-                key.incorrect = false;
-                this.noteOff(key.midiPitch);
-                this.$emit('note-played', key.pitch);
-            }
-        },
-        noteOn: function noteOn(midiPitch) {
-            // channel id, note number, velocity, delay
-            this.midi.noteOn(this.channel, midiPitch, 32, 0);
-        },
-        noteOff: function noteOff(midiPitch) {
-            // channel id, note number, delay
-            this.midi.noteOff(this.channel, midiPitch, 0.2);
-        },
-        playNote: function playNote(pitch, delay) {
-            var _this2 = this;
-
-            var key = this.getKeyByPitch(pitch);
-            this.noteOn(key.midiPitch);
-            setTimeout(function () {
-                return _this2.noteOff(key.midiPitch);
-            }, 500);
-        },
-        colorKey: function colorKey(_ref) {
-            var pitch = _ref.pitch,
-                correct = _ref.correct;
-
-            var key = this.getKeyByPitch(pitch);
-            var which = correct ? 'correct' : 'incorrect';
-            key[which] = true;
-            this.noteOn(key.midiPitch);
-        }
-    }
-});
-
-/***/ }),
-/* 276 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "svg",
-    {
-      staticClass: "keyboard",
-      attrs: {
-        viewBox: "0 0 100 30",
-        preserveAspectRatio: "xMidYMid meet",
-        xmlns: "http://www.w3.org/2000/svg",
-        version: "1.1"
-      }
-    },
-    [
-      _vm._l(_vm.keys.white, function(key, index) {
-        return _c("rect", {
-          staticClass: "keyboard__key keyboard__key--white",
-          class: {
-            "keyboard__key--correct": key.correct,
-            "keyboard__key--incorrect": key.incorrect
-          },
-          attrs: {
-            x: (100 / _vm.nKeys) * index + "%",
-            y: "0%",
-            width: 100 / _vm.nKeys + "%",
-            height: "100%"
-          },
-          on: {
-            mousedown: function($event) {
-              return _vm.mousedown($event, key)
-            },
-            mouseup: function($event) {
-              return _vm.mouseup($event, key)
-            },
-            touchstart: function($event) {
-              return _vm.mousedown($event, key)
-            },
-            touchend: function($event) {
-              return _vm.mouseup($event, key)
-            }
-          }
-        })
-      }),
-      _vm._v(" "),
-      _vm._l(_vm.keys.black, function(key, index) {
-        return key.midiPitch !== -1
-          ? _c("rect", {
-              staticClass: "keyboard__key keyboard__key--black",
-              class: {
-                "keyboard__key--correct": key.correct,
-                "keyboard__key--incorrect": key.incorrect
-              },
-              attrs: {
-                x: (100 / _vm.nKeys) * (0.666 + index - 1) + "%",
-                y: "0%",
-                width: (100 / _vm.nKeys) * 0.666 + "%",
-                height: "66.6%"
-              },
-              on: {
-                mousedown: function($event) {
-                  return _vm.mousedown($event, key)
-                },
-                mouseup: function($event) {
-                  return _vm.mouseup($event, key)
-                },
-                touchstart: function($event) {
-                  return _vm.mousedown($event, key)
-                },
-                touchend: function($event) {
-                  return _vm.mouseup($event, key)
-                }
-              }
-            })
-          : _vm._e()
-      }),
-      _vm._v(" "),
-      _c(
-        "g",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.helperTextVisible,
-              expression: "helperTextVisible"
-            }
-          ]
-        },
-        [
-          _vm._l(_vm.keys.white, function(key, index) {
-            return _c(
-              "text",
-              {
-                staticClass: "keyboard__key-text keyboard__key-text--white",
-                attrs: { x: (100 / _vm.nKeys) * (0.5 + index) + "%", y: "90%" }
-              },
-              [_vm._v(_vm._s(key.name))]
-            )
-          }),
-          _vm._v(" "),
-          _vm._l(_vm.keys.black, function(key, index) {
-            return _vm.keys.midiPitch !== -1
-              ? _c(
-                  "text",
-                  {
-                    staticClass: "keyboard__key-text keyboard__key-text--black",
-                    attrs: { x: (100 / _vm.nKeys) * index + "%", y: "20%" }
-                  },
-                  [_vm._v(_vm._s(key.name))]
-                )
-              : _vm._e()
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("rect", { staticClass: "keyboard__frame" })
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-1d2aae08", module.exports)
-  }
-}
-
-/***/ }),
-/* 277 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(278)
-  __webpack_require__(280)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(282)
-/* template */
-var __vue_template__ = __webpack_require__(283)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-19d0d496"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Leaderboard.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-19d0d496", Component.options)
-  } else {
-    hotAPI.reload("data-v-19d0d496", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 278 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(279);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("0c694268", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19d0d496\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Leaderboard.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19d0d496\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Leaderboard.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 279 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.leaderboard[data-v-19d0d496] {\n  width: 100%;\n}\n.leaderboard__content[data-v-19d0d496] {\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.leaderboard__instructions[data-v-19d0d496] {\n  width: 100%;\n  height: 290px;\n  padding-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.leaderboard__image[data-v-19d0d496] {\n  width: 120px;\n  height: 120px;\n  margin-bottom: 10px;\n}\n.leaderboard__label[data-v-19d0d496] {\n  margin: 20px 0 25px 0;\n}\n.leaderboard__arrow[data-v-19d0d496] {\n  width: 30px;\n  height: 30px;\n}\n.leaderboard__table[data-v-19d0d496] {\n  width: 100%;\n  margin-top: 20px;\n  border-collapse: collapse;\n}\n.leaderboard__table-row--header[data-v-19d0d496] {\n  height: 30px;\n  background-color: #72B7AE;\n  color: #2D514D;\n}\n.leaderboard__table-row--body[data-v-19d0d496] {\n  height: 65px;\n  cursor: pointer;\n}\n.leaderboard__table-row--body[data-v-19d0d496]:nth-child(odd) {\n    background-color: #BFE3D3;\n}\n.leaderboard__table-row--body[data-v-19d0d496]:nth-child(even) {\n    background-color: #72B7AE;\n}\n.leaderboard__table-column[data-v-19d0d496] {\n  padding: 5px 10px;\n  text-align: left;\n}\n.leaderboard__table-column[data-v-19d0d496]:last-child {\n    text-align: right;\n}\n.leaderboard__table-column--1[data-v-19d0d496] {\n  width: 10vw;\n}\n.leaderboard__table-column--2[data-v-19d0d496] {\n  width: 20vw;\n}\n.leaderboard__table-column--3[data-v-19d0d496] {\n  max-width: 45vw;\n}\n.leaderboard__table-column--4[data-v-19d0d496] {\n  width: 20vw;\n}\n.leaderboard__avatar[data-v-19d0d496] {\n  width: 50px;\n  height: 50px;\n}\n.leaderboard__name[data-v-19d0d496] {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.leaderboard__pagination[data-v-19d0d496] {\n  width: 100px;\n  margin-top: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.leaderboard__pagination-arrow[data-v-19d0d496] {\n  width: 55px;\n  height: 55px;\n  padding: 10px;\n  cursor: pointer;\n}\n.leaderboard__pagination-arrow--disabled[data-v-19d0d496] {\n  opacity: 0;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 280 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(281);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("4e99e730", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19d0d496\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./Leaderboard.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19d0d496\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./Leaderboard.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 281 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.leaderboard__instructions .title {\n  font-size: 25px;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 282 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            loading: true,
-            perPage: 10,
-            data: null
-        };
-    },
-    mounted: function mounted() {
-        var _this = this;
-
-        this.$nextTick(function () {
-            _this.fetchUsers({ per_page: _this.perPage, page: 1, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then(function (data) {
-                _this.data = data;
-
-                _this.$nextTick(function () {
-                    _this.loadImages();
-                });
-            });
-        });
-    },
-
-    computed: {
-        users: function users() {
-            return this.data ? this.data.data : [];
-        },
-        numbers: function numbers() {
-            var numbers = [];
-            if (this.data) {
-                for (var i = this.data.from; i <= this.data.to; i++) {
-                    numbers.push(i);
-                }
-            }
-            return numbers;
-        },
-        hasLess: function hasLess() {
-            return this.data ? this.data.current_page > 1 : false;
-        },
-        hasMore: function hasMore() {
-            return this.data ? this.data.current_page < Math.round(this.data.total / this.data.per_page) : false;
-        }
-    },
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchUsers']), {
-        loadImages: function loadImages() {
-            var context = this;
-
-            var nLoaded = 0;
-            var nTotal = this.users.length + 4;
-
-            var image = this.$el.querySelector('#image');
-            image.onload = function () {
-                if (++nLoaded === nTotal) {
-                    context.loading = false;
-                }
-            };
-            image.src = '/images/leaderboard/leaderboard.svg';
-
-            var arrow = this.$el.querySelector('#arrow');
-            arrow.onload = function () {
-                if (++nLoaded === nTotal) {
-                    context.loading = false;
-                }
-            };
-            arrow.src = '/images/arrows/down.svg';
-
-            var arrowPaginationLeft = this.$el.querySelector('#arrow_pagination_left');
-            arrowPaginationLeft.onload = function () {
-                if (++nLoaded === nTotal) {
-                    context.loading = false;
-                }
-            };
-            arrowPaginationLeft.src = '/images/arrows/left.svg';
-
-            var arrowPaginationRight = this.$el.querySelector('#arrow_pagination_right');
-            arrowPaginationRight.onload = function () {
-                if (++nLoaded === nTotal) {
-                    context.loading = false;
-                }
-            };
-            arrowPaginationRight.src = '/images/arrows/right.svg';
-
-            for (var i = 0; i < this.users.length; i++) {
-                var avatar = this.$el.querySelector('#avatar_' + (i + 1));
-                avatar.onload = function () {
-                    if (++nLoaded === nTotal) {
-                        context.loading = false;
-                    }
-                };
-                avatar.src = this.users[i].avatar;
-            }
-        },
-        previousPage: function previousPage() {
-            this.repaginate(this.data.current_page - 1);
-        },
-        nextPage: function nextPage() {
-            this.repaginate(this.data.current_page + 1);
-        },
-        repaginate: function repaginate(page) {
-            var _this2 = this;
-
-            this.loading = true;
-
-            this.fetchUsers({ per_page: this.perPage, page: page, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then(function (data) {
-                _this2.data = data;
-
-                _this2.$nextTick(function () {
-                    var context = _this2;
-
-                    // TODO: fix the issue of loader not disappearing on mobile production
-                    var nLoaded = 0; // eslint-disable-line no-unused-vars
-                    var nTotal = _this2.users.length; // eslint-disable-line no-unused-vars
-
-                    var image = new Image(); // eslint-disable-line no-undef
-                    image.onload = function () {
-                        context.loading = false;
-                    };
-                    image.src = _this2.users[0].avatar;
-
-                    for (var i = 0; i < _this2.users.length; i++) {
-                        var avatar = _this2.$el.querySelector('#avatar_' + (i + 1));
-                        avatar.src = _this2.users[i].avatar;
-                    }
-                });
-            });
-        },
-        reroute: function reroute(name) {
-            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-            this.$router.push({ name: name, params: params });
-        }
-    })
-});
-
-/***/ }),
-/* 283 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "leaderboard" },
-    [
-      _c("loader", {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.loading,
-            expression: "loading"
-          }
-        ]
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: !_vm.loading,
-              expression: "!loading"
-            }
-          ],
-          staticClass: "leaderboard__content"
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "leaderboard__instructions" },
-            [
-              _c("img", {
-                staticClass: "leaderboard__image",
-                attrs: { id: "image" }
-              }),
-              _vm._v(" "),
-              _c("element-title", { attrs: { text: "lestvica" } }),
-              _vm._v(" "),
-              _c("label", { staticClass: "leaderboard__label" }, [
-                _vm._v("Poglej, kako visoko se uvrščaš.")
-              ]),
-              _vm._v(" "),
-              _c("img", {
-                staticClass: "leaderboard__arrow",
-                attrs: { id: "arrow" }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("table", { staticClass: "leaderboard__table" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.users.length, function(i) {
-                return _c(
-                  "tr",
-                  {
-                    staticClass:
-                      "leaderboard__table-row leaderboard__table-row--body",
-                    on: {
-                      click: function($event) {
-                        return _vm.reroute("profile", {
-                          id: _vm.users[i - 1].id
-                        })
-                      }
-                    }
-                  },
-                  [
-                    _c(
-                      "td",
-                      {
-                        staticClass:
-                          "leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--1"
-                      },
-                      [_vm._v(_vm._s(_vm.numbers[i - 1]))]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      {
-                        staticClass:
-                          "leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--2"
-                      },
-                      [
-                        _c("img", {
-                          staticClass: "leaderboard__avatar",
-                          attrs: { id: "avatar_" + i }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      {
-                        staticClass:
-                          "leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--3 leaderboard__name"
-                      },
-                      [_vm._v(_vm._s(_vm.users[i - 1].name))]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      {
-                        staticClass:
-                          "leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--4"
-                      },
-                      [_vm._v(_vm._s(_vm.users[i - 1].rating))]
-                    )
-                  ]
-                )
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.hasLess || _vm.hasMore,
-                  expression: "hasLess || hasMore"
-                }
-              ],
-              staticClass: "leaderboard__pagination"
-            },
-            [
-              _c("img", {
-                staticClass: "leaderboard__pagination-arrow",
-                class: {
-                  "leaderboard__pagination-arrow--disabled": !_vm.hasLess
-                },
-                attrs: { id: "arrow_pagination_left" },
-                on: {
-                  click: function($event) {
-                    return _vm.previousPage()
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                staticClass: "leaderboard__pagination-arrow",
-                class: {
-                  "leaderboard__pagination-arrow--disabled": !_vm.hasMore
-                },
-                attrs: { id: "arrow_pagination_right" },
-                on: {
-                  click: function($event) {
-                    return _vm.nextPage()
-                  }
-                }
-              })
-            ]
-          )
-        ]
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c(
-        "tr",
-        {
-          staticClass: "leaderboard__table-row leaderboard__table-row--header"
-        },
-        [
-          _c(
-            "th",
-            {
-              staticClass:
-                "leaderboard__table-column leaderboard__table-column--header",
-              attrs: { colspan: "2" }
-            },
-            [_vm._v("MESTO")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "leaderboard__table-column leaderboard__table-column--header",
-              attrs: { colspan: "1" }
-            },
-            [_vm._v("IME")]
-          ),
-          _vm._v(" "),
-          _c(
-            "th",
-            {
-              staticClass:
-                "leaderboard__table-column leaderboard__table-column--header",
-              attrs: { colspan: "1" }
-            },
-            [_vm._v("TOČKE")]
-          )
-        ]
-      )
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-19d0d496", module.exports)
-  }
-}
-
-/***/ }),
-/* 284 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(285)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(287)
-/* template */
-var __vue_template__ = __webpack_require__(288)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-5b057fe8"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/profile/Levels.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5b057fe8", Component.options)
-  } else {
-    hotAPI.reload("data-v-5b057fe8", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 285 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(286);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("c74f38dc", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5b057fe8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Levels.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5b057fe8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Levels.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 286 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.levels[data-v-5b057fe8] {\n  width: 100%;\n}\n.levels__content[data-v-5b057fe8] {\n  width: 100%;\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #BFE3D3;\n}\n.levels__area[data-v-5b057fe8] {\n  width: 100%;\n  padding: 0 5%;\n}\n.levels__level[data-v-5b057fe8] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.levels__label-wrapper[data-v-5b057fe8] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.levels__label-wrapper--level[data-v-5b057fe8] {\n  width: 20%;\n  padding-right: 10px;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n}\n.levels__label-wrapper--label[data-v-5b057fe8] {\n  width: 45%;\n  padding-left: 10px;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n}\n.levels__label[data-v-5b057fe8] {\n  font-size: 13px;\n}\n.levels__label--level[data-v-5b057fe8] {\n  text-align: right;\n}\n.levels__label--label[data-v-5b057fe8] {\n  text-align: left;\n}\n.levels__image-wrapper[data-v-5b057fe8] {\n  width: 35%;\n  max-width: 120px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.levels__image[data-v-5b057fe8] {\n  width: 100%;\n  height: 100%;\n}\n.levels__line-wrapper[data-v-5b057fe8] {\n  width: 35%;\n  height: 100px;\n  margin-left: 20%;\n  vertical-align: top;\n}\n.levels__line[data-v-5b057fe8] {\n  stroke: #000000;\n  stroke-width: 5px;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 287 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['id'],
-    data: function data() {
-        return {
-            loading: true,
-            user: null,
-            levels: []
-        };
-    },
-    mounted: function mounted() {
-        var _this = this;
-
-        this.$nextTick(function () {
-            _this.fetchUser(_this.id).then(function (user) {
-                _this.user = user;
-
-                _this.fetchLevels({ per_page: 0 }).then(function (levels) {
-                    _this.levels = levels;
-
-                    _this.$nextTick(function () {
-                        _this.loadImages();
-                    });
-                });
-            });
-        });
-    },
-
-    computed: {
-        levelsWithLabel: function levelsWithLabel() {
-            return this.levels.length > 0 ? this.levels.filter(function (level) {
-                return level.label !== null;
-            }) : [];
-        }
-    },
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchUser', 'fetchLevels']), {
-        loadImages: function loadImages() {
-            var context = this;
-
-            var nLoaded = 0;
-            var nTotal = this.levelsWithLabel.length;
-
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = this.levelsWithLabel[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var level = _step.value;
-
-                    var image = this.$el.querySelector('#level_' + level.level);
-                    image.onload = function () {
-                        if (++nLoaded === nTotal) {
-                            context.loading = false;
-                        }
-                    };
-                    image.src = this.user.rating >= level.min_rating ? level.image : '/images/levels/locked.svg';
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-        }
-    })
-});
-
-/***/ }),
-/* 288 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "levels" },
-    [
-      _c("loader", {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.loading,
-            expression: "loading"
-          }
-        ]
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: !_vm.loading,
-              expression: "!loading"
-            }
-          ],
-          staticClass: "levels__content"
-        },
-        _vm._l(_vm.levelsWithLabel, function(level) {
-          return _c("div", { staticClass: "levels__area" }, [
-            _c("div", { staticClass: "levels__level" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "levels__label-wrapper levels__label-wrapper--level"
-                },
-                [
-                  _c(
-                    "label",
-                    { staticClass: "levels__label levels__label--level" },
-                    [_vm._v("NIVO " + _vm._s(level.level))]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "levels__image-wrapper" }, [
-                _c("img", {
-                  staticClass: "levels__image",
-                  attrs: { id: "level_" + level.level }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "levels__label-wrapper levels__label-wrapper--label"
-                },
-                [
-                  _c(
-                    "label",
-                    { staticClass: "levels__label levels__label--label" },
-                    [_vm._v(_vm._s(_vm._f("uppercase")(level.label)))]
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            level.id !== _vm.levelsWithLabel[_vm.levelsWithLabel.length - 1].id
-              ? _c("svg", { staticClass: "levels__line-wrapper" }, [
-                  _c("line", {
-                    staticClass: "levels__line",
-                    attrs: { x1: "50%", y1: "0", x2: "50%", y2: "100%" }
-                  })
-                ])
-              : _vm._e()
-          ])
-        }),
-        0
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5b057fe8", module.exports)
-  }
-}
-
-/***/ }),
-/* 289 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(290)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(292)
-/* template */
-var __vue_template__ = __webpack_require__(293)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-4f02ae04"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/elements/Loader.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4f02ae04", Component.options)
-  } else {
-    hotAPI.reload("data-v-4f02ae04", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 290 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(291);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("66cd2d68", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4f02ae04\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Loader.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4f02ae04\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Loader.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 291 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.loader[data-v-4f02ae04] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  width: 100px;\n  height: 100px;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.loader[data-v-4f02ae04] {\n      width: 75px;\n      height: 75px;\n}\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 292 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({});
-
-/***/ }),
-/* 293 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("img", {
-    staticClass: "loader",
-    attrs: { src: "/images/loader.svg" }
-  })
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-4f02ae04", module.exports)
-  }
-}
-
-/***/ }),
-/* 294 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(295)
-  __webpack_require__(297)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(299)
-/* template */
-var __vue_template__ = __webpack_require__(300)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-7cb87396"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/profile/Me.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7cb87396", Component.options)
-  } else {
-    hotAPI.reload("data-v-7cb87396", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 295 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(296);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("c0a46c2a", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7cb87396\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Me.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7cb87396\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Me.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 296 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.me[data-v-7cb87396] {\n  width: 100%;\n}\n.me__content[data-v-7cb87396] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.me__user-info[data-v-7cb87396] {\n  width: 100%;\n  padding: 20px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #F8A16E;\n}\n.me__avatar[data-v-7cb87396] {\n  width: 120px;\n  height: 120px;\n}\n.me__name[data-v-7cb87396] {\n  width: 100%;\n  padding: 5px 0;\n  text-align: center;\n  font-size: 25px;\n}\n.me__level-rating-wrapper[data-v-7cb87396] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.me__level-rating[data-v-7cb87396] {\n  width: 100px;\n  height: 35px;\n  border-radius: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n}\n.me__level[data-v-7cb87396] {\n  background-color: #72B7AE;\n}\n.me__rating[data-v-7cb87396] {\n  background-color: #D2495F;\n}\n.me__level-progress-wrapper[data-v-7cb87396] {\n  width: 100%;\n  padding: 25px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #EB7D3D;\n}\n.me__level-progress-label[data-v-7cb87396] {\n  color: #66361B;\n  font-size: 15px;\n}\n.me__level-progress-bar[data-v-7cb87396] {\n  position: relative;\n  width: 100%;\n  height: 25px;\n  margin-top: 20px;\n  border-radius: 10px;\n  background-image: url(\"/images/backgrounds/progress.png\");\n  background-repeat: repeat;\n  background-size: contain;\n  background-color: #FFD15E;\n  overflow: hidden;\n}\n.me__level-progress-bar-overlay[data-v-7cb87396] {\n  position: absolute;\n  height: 25px;\n  background-color: #F8A16E;\n}\n.me__level-progress-bar-labels[data-v-7cb87396] {\n  width: 100%;\n  margin-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.me__latest-badges-wrapper[data-v-7cb87396] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.me__latest-badges-label-wrapper[data-v-7cb87396] {\n  width: 100%;\n  padding: 5px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #EB7D3D;\n}\n.me__latest-badges-label[data-v-7cb87396] {\n  color: #66361B;\n  font-size: 15px;\n  text-align: center;\n}\n.me__latest-badges[data-v-7cb87396] {\n  width: 100%;\n  min-height: 100px;\n  padding: 10px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  background-color: #A4D395;\n  cursor: pointer;\n}\n.me__latest-badge-image[data-v-7cb87396] {\n  width: calc(100% / 3);\n  height: 100%;\n  max-height: 150px;\n}\n.me__elements[data-v-7cb87396] {\n  width: 100%;\n  padding: 40px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #EB7D3D;\n}\n.me__element-label-wrapper[data-v-7cb87396] {\n  width: 100%;\n  margin-bottom: 5px;\n  padding-left: 2px;\n}\n.me__element-label[data-v-7cb87396] {\n  color: #66361B;\n  font-size: 15px;\n}\n.me__element[data-v-7cb87396] {\n  width: 100%;\n  margin-bottom: 20px;\n}\n.me__text-label[data-v-7cb87396] {\n  font-size: 18px;\n}\n.me__input[data-v-7cb87396] {\n  width: 100%;\n  height: 41px;\n  padding: 0 10px;\n  border: none;\n  border-radius: 0;\n  caret-color: #000000;\n  background-color: #F8A16E;\n  color: #000000;\n  font-size: 18px;\n  font-family: \"GothamRounded-Bold\", sans-serif;\n  outline: none;\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n.me__input[data-v-7cb87396]:-webkit-autofill, .me__input[data-v-7cb87396]:-webkit-autofill:hover, .me__input[data-v-7cb87396]:-webkit-autofill:focus {\n    -webkit-box-shadow: 0 0 0 100px #F8A16E inset !important;\n}\n.me__select-wrapper[data-v-7cb87396] {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  cursor: pointer;\n}\n.me__select-wrapper[data-v-7cb87396]:after {\n    content: '';\n    position: absolute;\n    top: 0;\n    right: 0;\n    width: 45px;\n    height: 100%;\n    background-color: #F4945D;\n    pointer-events: none;\n}\n.me__select[data-v-7cb87396] {\n  width: 100%;\n  height: 100%;\n  padding: 10px 30px 10px 10px;\n  border: none;\n  border-radius: 0;\n  background-color: #F8A16E;\n  font-size: 18px;\n  font-family: \"GothamRounded-Bold\", sans-serif;\n  overflow: hidden;\n  outline: none;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  appearance: none;\n  cursor: pointer;\n}\n.me__select-arrow[data-v-7cb87396] {\n  position: absolute;\n  top: 17px;\n  right: -8px;\n  width: 40px;\n  height: 40px;\n  fill: #66361B;\n  z-index: 1;\n  pointer-events: none;\n}\n.me__commands[data-v-7cb87396] {\n  width: 100%;\n  margin-top: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.me__command--save[data-v-7cb87396] {\n  margin-top: 15px;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 297 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(298);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("c8ab9e5a", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7cb87396\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./Me.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7cb87396\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./Me.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 298 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.me__commands .me__command--edit .button .button__full {\n  background-color: #F8A16E;\n}\n.me__commands .me__command--cancel .button .button__full {\n  background-color: #D2495F;\n}\n.me__commands .me__command--save .button .button__full {\n  background-color: #6CC075;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 299 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['id'],
-    data: function data() {
-        return {
-            loading: true,
-            editing: false,
-            owner: false,
-            user: null,
-            level: null,
-            nLatestBadges: 3,
-            userBadges: [],
-            selectedName: '',
-            selectedSchool: null,
-            selectedGrade: null,
-            filteredGrades: []
-        };
-    },
-    mounted: function mounted() {
-        var _this = this;
-
-        this.$nextTick(function () {
-            _this.fetchMe().then(function () {
-                _this.fetchUser(_this.id).then(function (user) {
-                    _this.user = user;
-                    _this.owner = _this.me.id === _this.user.id;
-
-                    _this.fetchLevel({ rating: _this.user.rating }).then(function (level) {
-                        _this.level = level;
-
-                        _this.fetchUserBadges({ per_page: _this.nLatestBadges, page: 1, order_by: 'updated_at', order_direction: 'desc', filter_user_id: _this.user.id, filter_completed: 1 }).then(function (data) {
-                            _this.userBadges = data.data;
-
-                            if (_this.owner) {
-                                _this.fetchSchools().then(function () {
-                                    _this.fetchGrades().then(function () {
-                                        _this.loadImages();
-                                    });
-                                });
-                            } else {
-                                _this.loadImages();
-                            }
-                        });
-                    });
-                });
-            });
-        });
-    },
-
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["e" /* mapState */])(['me', 'schools', 'grades']), {
-        name: function name() {
-            return this.user ? this.user.name : '';
-        },
-        email: function email() {
-            return this.user ? this.user.email : '';
-        },
-        rating: function rating() {
-            return this.user ? this.user.rating : 0;
-        },
-        instrument: function instrument() {
-            return this.user ? this.user.instrument : '';
-        },
-        school: function school() {
-            return this.user ? this.user.school.name : '';
-        },
-        grade: function grade() {
-            return this.user ? this.user.grade.grade : '';
-        },
-        levelLevel: function levelLevel() {
-            return this.level ? this.level.level : 0;
-        },
-        levelMinRating: function levelMinRating() {
-            return this.level ? this.level.min_rating : 0;
-        },
-        levelMaxRating: function levelMaxRating() {
-            return this.level ? this.level.max_rating : 0;
-        },
-        hasLatestBadges: function hasLatestBadges() {
-            return this.userBadges.length > 0;
-        },
-        progressBarPercentage: function progressBarPercentage() {
-            return this.rating > this.levelMaxRating ? 100 : (this.rating - this.levelMinRating) * 100 / (this.levelMaxRating - this.levelMinRating);
-        },
-        progressBarOverlayStyle: function progressBarOverlayStyle() {
-            return {
-                'width': 100 - this.progressBarPercentage + '%',
-                'margin-left': this.progressBarPercentage + '%'
-            };
-        }
-    }),
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'updateMe', 'fetchUser', 'fetchLevel', 'fetchUserBadges', 'fetchSchools', 'fetchGrades']), {
-        loadImages: function loadImages() {
-            var _this2 = this;
-
-            var context = this;
-
-            var nLoaded = 0;
-            var nTotal = 2 + this.userBadges.length;
-
-            var avatar = this.$el.querySelector('#avatar');
-            avatar.onload = function () {
-                if (++nLoaded === nTotal) {
-                    _this2.loadAdditionalImages();
-                    context.loading = false;
-                }
-            };
-            avatar.src = this.user.avatar;
-
-            for (var i = 0; i < this.nLatestBadges; i++) {
-                var badge = this.$el.querySelector('#latest_badge_' + (i + 1));
-                if (i < this.userBadges.length) {
-                    badge.onload = function () {
-                        if (++nLoaded === nTotal) {
-                            _this2.loadAdditionalImages();
-                            context.loading = false;
-                        }
-                    };
-                    badge.src = this.userBadges[i].badge.image;
-                    badge.style.display = 'block';
-                } else {
-                    badge.style.display = 'none';
-                }
-            }
-
-            var arrow = new Image(); // eslint-disable-line no-undef
-            arrow.onload = function () {
-                if (++nLoaded === nTotal) {
-                    _this2.loadAdditionalImages();
-                    context.loading = false;
-                }
-            };
-            arrow.src = '/images/arrows/down.svg';
-        },
-        loadAdditionalImages: function loadAdditionalImages() {
-            var arrowSchool = this.$el.querySelector('#arrow_school');
-            arrowSchool.href.baseVal = '/images/arrows/down.svg#element';
-
-            var arrowGrade = this.$el.querySelector('#arrow_grade');
-            arrowGrade.href.baseVal = '/images/arrows/down.svg#element';
-        },
-        filterGrades: function filterGrades() {
-            var _this3 = this;
-
-            this.filteredGrades = this.grades.filter(function (grade) {
-                return _this3.selectedSchool.grades.indexOf(grade.id) >= 0;
-            });
-        },
-        onSchoolSelected: function onSchoolSelected() {
-            this.filterGrades();
-            this.selectedGrade = this.filteredGrades[0];
-        },
-        edit: function edit() {
-            var _this4 = this;
-
-            this.selectedName = this.user.name;
-            this.selectedSchool = this.schools.filter(function (school) {
-                return school.id === _this4.user.school.id;
-            })[0];
-            this.selectedGrade = this.grades.filter(function (grade) {
-                return grade.id === _this4.user.grade.id;
-            })[0];
-            this.filterGrades();
-
-            this.editing = true;
-        },
-        cancel: function cancel() {
-            this.editing = false;
-        },
-        update: function update() {
-            var _this5 = this;
-
-            var data = {};
-
-            if (this.selectedName !== this.user.name) {
-                data['name'] = this.selectedName;
-            }
-
-            if (this.selectedSchool.id !== this.user.school.id) {
-                data['school_id'] = this.selectedSchool.id;
-            }
-
-            if (this.selectedGrade.id !== this.user.grade.id) {
-                data['grade_id'] = this.selectedGrade.id;
-            }
-
-            this.editing = false;
-
-            if (Object.keys(data).length > 0) {
-                this.loading = true;
-                this.updateMe(data).then(function () {
-                    _this5.fetchUser(_this5.user.id).then(function (user) {
-                        _this5.user = user;
-                        _this5.loading = false;
-                    });
-                });
-            }
-        },
-        openTab: function openTab(tab) {
-            this.$emit('open-tab', tab);
-        }
-    })
-});
-
-/***/ }),
-/* 300 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "me" },
-    [
-      _c("loader", {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.loading,
-            expression: "loading"
-          }
-        ]
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: !_vm.loading,
-              expression: "!loading"
-            }
-          ],
-          staticClass: "me__content"
-        },
-        [
-          _c("div", { staticClass: "me__user-info" }, [
-            _c("img", { staticClass: "me__avatar", attrs: { id: "avatar" } }),
-            _vm._v(" "),
-            _c("label", { staticClass: "me__name" }, [
-              _vm._v(_vm._s(_vm.name))
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "me__level-rating-wrapper" }, [
-              _c("div", { staticClass: "me__level-rating me__level" }, [
-                _vm._v("NIVO " + _vm._s(_vm.levelLevel))
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "me__level-rating me__rating" }, [
-                _vm._v(_vm._s(_vm.rating))
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "me__level-progress-wrapper",
-              on: {
-                click: function($event) {
-                  return _vm.openTab("levels")
-                }
-              }
-            },
-            [
-              _c("label", { staticClass: "me__level-progress-label" }, [
-                _vm._v("KJE SEM")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "me__level-progress-bar" }, [
-                _c("div", {
-                  staticClass: "me__level-progress-bar-overlay",
-                  style: _vm.progressBarOverlayStyle
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "me__level-progress-bar-cover" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "me__level-progress-bar-labels" }, [
-                _c("label", { staticClass: "me__level-progress-label" }, [
-                  _vm._v("NIVO " + _vm._s(_vm.levelLevel))
-                ]),
-                _vm._v(" "),
-                _c("label", { staticClass: "me__level-progress-label" }, [
-                  _vm._v("NIVO " + _vm._s(_vm.levelLevel + 1))
-                ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "me__latest-badges-wrapper" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "me__latest-badges",
-                on: {
-                  click: function($event) {
-                    return _vm.openTab("badges")
-                  }
-                }
-              },
-              [
-                _vm._l(_vm.nLatestBadges, function(n) {
-                  return _c("img", {
-                    staticClass: "me__latest-badge-image",
-                    attrs: { id: "latest_badge_" + n }
-                  })
-                }),
-                _vm._v(" "),
-                !_vm.hasLatestBadges
-                  ? _c("label", { staticClass: "me__latest-badges-label" }, [
-                      _vm._v(
-                        _vm._s(
-                          _vm.owner
-                            ? "Niste še osvojili nobenega dosežka."
-                            : "Ni osvojil/-a še nobenega dosežka."
-                        )
-                      )
-                    ])
-                  : _vm._e()
-              ],
-              2
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "me__elements" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: !_vm.editing,
-                    expression: "!editing"
-                  }
-                ],
-                staticClass: "me__element"
-              },
-              [
-                _c("label", { staticClass: "me__text-label" }, [
-                  _vm._v(_vm._s(_vm.name))
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.selectedName,
-                  expression: "selectedName"
-                },
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.editing,
-                  expression: "editing"
-                }
-              ],
-              staticClass: "me__element me__input",
-              attrs: { type: "text" },
-              domProps: { value: _vm.selectedName },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.selectedName = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _vm._m(2),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: !_vm.editing,
-                    expression: "!editing"
-                  }
-                ],
-                staticClass: "me__element"
-              },
-              [
-                _c("label", { staticClass: "me__text-label" }, [
-                  _vm._v(_vm._s(_vm.school))
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.editing,
-                    expression: "editing"
-                  }
-                ],
-                staticClass: "me__element me__select-wrapper"
-              },
-              [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selectedSchool,
-                        expression: "selectedSchool"
-                      }
-                    ],
-                    staticClass: "me__select",
-                    on: {
-                      change: [
-                        function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.selectedSchool = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        },
-                        function($event) {
-                          return _vm.onSchoolSelected()
-                        }
-                      ]
-                    }
-                  },
-                  _vm._l(_vm.schools, function(school) {
-                    return _c(
-                      "option",
-                      {
-                        staticClass: "me__option",
-                        domProps: { value: school }
-                      },
-                      [_vm._v(_vm._s(school.name))]
-                    )
-                  }),
-                  0
-                ),
-                _vm._v(" "),
-                _c(
-                  "svg",
-                  {
-                    staticClass: "me__select-arrow",
-                    attrs: { viewBox: "0 0 100 100" }
-                  },
-                  [_c("use", { attrs: { id: "arrow_school" } })]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _vm._m(3),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: !_vm.editing,
-                    expression: "!editing"
-                  }
-                ],
-                staticClass: "me__element"
-              },
-              [
-                _c("label", { staticClass: "me__text-label" }, [
-                  _vm._v(_vm._s(_vm.grade) + ".")
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.editing,
-                    expression: "editing"
-                  }
-                ],
-                staticClass: "me__element me__select-wrapper"
-              },
-              [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selectedGrade,
-                        expression: "selectedGrade"
-                      }
-                    ],
-                    staticClass: "me__select",
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.selectedGrade = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  _vm._l(_vm.filteredGrades, function(grade) {
-                    return _c(
-                      "option",
-                      { staticClass: "me__option", domProps: { value: grade } },
-                      [_vm._v(_vm._s(grade.grade))]
-                    )
-                  }),
-                  0
-                ),
-                _vm._v(" "),
-                _c(
-                  "svg",
-                  {
-                    staticClass: "me__select-arrow",
-                    attrs: { viewBox: "0 0 100 100" }
-                  },
-                  [_c("use", { attrs: { id: "arrow_grade" } })]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _vm.owner
-              ? _c("div", { staticClass: "me__commands" }, [
-                  _c(
-                    "div",
-                    { staticClass: "me__command--edit" },
-                    [
-                      _c("element-button", {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: !_vm.editing,
-                            expression: "!editing"
-                          }
-                        ],
-                        attrs: { text: "uredi" },
-                        nativeOn: {
-                          click: function($event) {
-                            return _vm.edit()
-                          }
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "me__command--cancel" },
-                    [
-                      _c("element-button", {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.editing,
-                            expression: "editing"
-                          }
-                        ],
-                        attrs: { text: "prekliči" },
-                        nativeOn: {
-                          click: function($event) {
-                            return _vm.cancel()
-                          }
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "me__command--save" },
-                    [
-                      _c("element-button", {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.editing,
-                            expression: "editing"
-                          }
-                        ],
-                        attrs: { text: "shrani" },
-                        nativeOn: {
-                          click: function($event) {
-                            return _vm.update()
-                          }
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ])
-              : _vm._e()
-          ])
-        ]
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "me__latest-badges-label-wrapper" }, [
-      _c("label", { staticClass: "me__latest-badges-label" }, [
-        _vm._v("ZADNJI DOSEŽKI")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "me__element-label-wrapper" }, [
-      _c("label", { staticClass: "me__element-label" }, [
-        _vm._v("UPORABNIŠKO IME")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "me__element-label-wrapper" }, [
-      _c("label", { staticClass: "me__element-label" }, [_vm._v("ŠOLA")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "me__element-label-wrapper" }, [
-      _c("label", { staticClass: "me__element-label" }, [_vm._v("LETNIK")])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7cb87396", module.exports)
-  }
-}
-
-/***/ }),
-/* 301 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(302)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(304)
-/* template */
-var __vue_template__ = __webpack_require__(305)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-443c4dda"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/music/Note.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-443c4dda", Component.options)
-  } else {
-    hotAPI.reload("data-v-443c4dda", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 302 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(303);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("0dac3fc5", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-443c4dda\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Note.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-443c4dda\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Note.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 303 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.note__hidden[data-v-443c4dda] {\n  display: none;\n}\n.note__ledger-line[data-v-443c4dda] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 304 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        delay: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["c" /* numberProp */])(),
-        pitch: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(),
-        previousPitch: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(),
-        type: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(),
-        count: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["c" /* numberProp */])()
-    },
-    data: function data() {
-        return {
-            heights: {
-                'A3': 0,
-                'A#3': 0,
-                'Bb3': 1,
-                'B3': 1,
-                'B#3': 1,
-                'Cb4': 2,
-                'C4': 2,
-                'C#4': 2,
-                'Db4': 3,
-                'D4': 3,
-                'D#4': 3,
-                'Eb4': 4,
-                'E4': 4,
-                'E#4': 4,
-                'Fb4': 5,
-                'F4': 5,
-                'F#4': 5,
-                'Gb4': 6,
-                'G4': 6,
-                'G#4': 6,
-                'Ab4': 7,
-                'A4': 7,
-                'A#4': 7,
-                'Bb4': 8,
-                'B4': 8,
-                'B#4': 8,
-                'Cb5': 9,
-                'C5': 9,
-                'C#5': 9,
-                'Db5': 10,
-                'D5': 10
-            }
-        };
-    },
-    mounted: function mounted() {
-        var _this = this;
-
-        this.$nextTick(function () {
-            _this.shapeNote();
-        });
-    },
-
-    computed: {
-        hasPrevious: function hasPrevious() {
-            return this.previousPitch !== '';
-        },
-        sharpPrevious: function sharpPrevious() {
-            return this.hasPrevious && this.previousPitch.indexOf('#') >= 0;
-        },
-        flatPrevious: function flatPrevious() {
-            return this.hasPrevious && this.previousPitch.indexOf('b') >= 0;
-        },
-        sharp: function sharp() {
-            return this.pitch.indexOf('#') >= 0;
-        },
-        flat: function flat() {
-            return this.pitch.indexOf('b') >= 0;
-        },
-        natural: function natural() {
-            return (!this.sharp && this.sharpPrevious || !this.flat && this.flatPrevious) && this.heights[this.pitch] === this.heights[this.previousPitch];
-        },
-        noPrefix: function noPrefix() {
-            return (this.sharp && this.sharpPrevious || this.flat && this.flatPrevious) && this.heights[this.pitch] === this.heights[this.previousPitch];
-        },
-        pitches: function pitches() {
-            return Object.keys(this.heights);
-        },
-        pitchIndex: function pitchIndex() {
-            return this.pitches.indexOf(this.pitch);
-        },
-        up: function up() {
-            return this.pitchIndex < this.pitches.indexOf('Bb4');
-        },
-        needsLedgerLines: function needsLedgerLines() {
-            return this.pitchIndex <= this.pitches.indexOf('C#4');
-        },
-        ledgerLineCount: function ledgerLineCount() {
-            return this.needsLedgerLines ? Math.floor((2 - this.heights[this.pitch]) / 2) + 1 : 0;
-        },
-        position: function position() {
-            var pos = {
-                x: 15 + this.delay * (85 / this.count),
-                y: 13 - 1.5 * this.heights[this.pitch]
-            };
-            if (!this.up) {
-                pos.y += 8.6;
-            }
-            return pos;
-        }
-    },
-    methods: {
-        shapeNote: function shapeNote() {
-            switch (this.type) {
-                case 'whole':
-                    $(this.$el.querySelector('#head-whole')).show();
-                    break;
-                case 'half':
-                    $(this.$el.querySelector('#stem')).show();
-                    $(this.$el.querySelector('#head-half')).show();
-                    break;
-                case 'quarter':
-                    $(this.$el.querySelector('#stem')).show();
-                    $(this.$el.querySelector('#head')).show();
-                    break;
-                case 'eighth':
-                    $(this.$el.querySelector('#stem')).show();
-                    $(this.$el.querySelector('#head')).show();
-                    $(this.$el.querySelector('#flag-eighth')).show();
-                    break;
-                case 'sixteenth':
-                    $(this.$el.querySelector('#stem')).show();
-                    $(this.$el.querySelector('#head')).show();
-                    $(this.$el.querySelector('#flag-sixteenth')).show();
-                    break;
-            }
-
-            if (!this.noPrefix) {
-                if (this.sharp) {
-                    var selector = this.type === 'whole' ? '#sharp-whole' : '#sharp';
-                    $(this.$el.querySelector(selector)).show();
-                } else if (this.flat) {
-                    var _selector = this.type === 'whole' ? '#flat-whole' : '#flat';
-                    $(this.$el.querySelector(_selector)).show();
-                } else if (this.natural) {
-                    var _selector2 = this.type === 'whole' ? '#natural-whole' : '#natural';
-                    $(this.$el.querySelector(_selector2)).show();
-                }
-            }
-        }
-    }
-});
-
-/***/ }),
-/* 305 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "g",
-    [
-      _c(
-        "g",
-        {
-          attrs: {
-            transform:
-              "translate(" +
-              _vm.position.x +
-              ", " +
-              _vm.position.y +
-              ") scale(0.28)",
-            stroke: "none",
-            "stroke-width": "1",
-            fill: "none",
-            "fill-rule": "evenodd"
-          }
-        },
-        [
-          _vm.up
-            ? _c(
-                "g",
-                {
-                  attrs: {
-                    id: "note-up",
-                    "fill-rule": "nonzero",
-                    fill: "#000000"
-                  }
-                },
-                [
-                  _c(
-                    "g",
-                    {
-                      attrs: {
-                        id: "dots-whole",
-                        transform: "translate(33.750000, 47.500000)"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
-                          id: "dot2-whole"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
-                          id: "dot1-whole"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "g",
-                    {
-                      attrs: {
-                        id: "dots",
-                        transform: "translate(27.000000, 47.500000)"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
-                          id: "dot2"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
-                          id: "dot1"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "g",
-                    {
-                      attrs: {
-                        id: "signature-whole",
-                        transform: "translate(0.000000, 31.000000)"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M7.76948144,11.2849869 L7.76948144,33.7700005 L6.54519952,33.7700005 L6.54519952,25.3430427 L0,26.7606617 L0,4 L1.17719416,4 L1.17719416,12.7813626 L7.76948144,11.2849869 Z M1.17719416,16.5616801 L1.17719416,22.7440744 L6.54519952,21.5627251 L6.54519952,15.3803309 L1.17719416,16.5616801 Z",
-                          id: "natural-whole"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
-                          id: "flat-whole",
-                          transform:
-                            "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
-                          id: "sharp-whole"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "g",
-                    {
-                      attrs: {
-                        id: "signature",
-                        transform: "translate(0.000000, 31.000000)"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M7.76948144,11.2849869 L7.76948144,33.7700005 L6.54519952,33.7700005 L6.54519952,25.3430427 L0,26.7606617 L0,4 L1.17719416,4 L1.17719416,12.7813626 L7.76948144,11.2849869 Z M1.17719416,16.5616801 L1.17719416,22.7440744 L6.54519952,21.5627251 L6.54519952,15.3803309 L1.17719416,16.5616801 Z",
-                          id: "natural"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
-                          id: "flat",
-                          transform:
-                            "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
-                          id: "sharp"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "g",
-                    {
-                      attrs: {
-                        id: "note",
-                        transform: "translate(11.000000, 0.000000)"
-                      }
-                    },
-                    [
-                      _c(
-                        "g",
-                        {
-                          attrs: {
-                            id: "flags",
-                            transform: "translate(12.000000, 0.000000)"
-                          }
-                        },
-                        [
-                          _c("path", {
-                            staticClass: "note__hidden",
-                            attrs: {
-                              d:
-                                "M1.162,35.4800031 C1.162,28.3600031 9.282,23.8000031 9.282,16.6800031 C9.282,15.3600031 8.922,14.0800031 8.362,12.8800031 C9.082,11.4000031 9.522,9.8800031 9.522,8.2000031 C9.522,5.6800031 8.882,3.2000031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.5600031 7.842,5.8800031 7.842,8.2000031 C7.842,12.0800031 4.042,15.8400031 1.162,18.4800031 L1.162,15.4800031 L0.522,15.4800031 L0.522,35.4800031 L1.162,35.4800031 Z M7.282,14.8000031 C7.482,15.4000031 7.562,16.0400031 7.562,16.6800031 C7.562,20.5200031 3.922,24.2800031 1.162,26.9600031 C1.162,22.2400031 4.802,18.7200031 7.282,14.8000031 Z",
-                              id: "flag-sixteenth",
-                              transform:
-                                "translate(5.522000, 17.940003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -17.940003) "
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("path", {
-                            staticClass: "note__hidden",
-                            attrs: {
-                              d:
-                                "M1.162,30.4800031 C1.162,22.5600031 9.522,17.0800031 9.522,9.1600031 C9.522,6.3200031 8.882,3.5200031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.9200031 7.842,6.5200031 7.842,9.1600031 C7.842,13.3200031 4.042,17.4800031 1.162,20.4800031 L0.522,20.4800031 L0.522,30.4800031 L1.162,30.4800031 Z",
-                              id: "flag-eighth",
-                              transform:
-                                "translate(5.522000, 15.440003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -15.440003) "
-                            }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("rect", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          id: "stem",
-                          x: "11.862",
-                          y: "0",
-                          width: "1.29999995",
-                          height: "48.122001"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "g",
-                        {
-                          attrs: {
-                            id: "heads",
-                            transform: "translate(0.000000, 44.000000)"
-                          }
-                        },
-                        [
-                          _c("path", {
-                            staticClass: "note__hidden",
-                            attrs: {
-                              d:
-                                "M8.56884077,10.46377 C6.5760871,10.46377 5.81884071,8.7500019 5.81884071,6.9565236 C5.81884071,3.8876829 8.09057989,1.5362336 11.1594205,1.5362336 C13.1521742,1.5362336 13.9094206,3.2500018 13.9094206,5.0434801 C13.9094206,8.1123207 11.6376814,10.46377 8.56884077,10.46377 Z M19.7282613,6.0000018 C19.7282613,4.2862337 18.3333337,2.9710162 16.8188409,2.1340597 C14.7065221,0.9384075 12.3152177,0.5000017 9.88405819,0.5000017 C7.45289871,0.5000017 5.02173924,0.9384075 2.90942035,2.1340597 C1.39492757,2.9710162 0,4.2862337 0,6.0000018 C0,7.71377 1.39492757,9.0289874 2.90942035,9.8659439 C5.02173924,11.0615961 7.45289871,11.5000019 9.88405819,11.5000019 C12.3152177,11.5000019 14.7065221,11.0615961 16.8188409,9.8659439 C18.3333337,9.0289874 19.7282613,7.71377 19.7282613,6.0000018 Z",
-                              id: "head-whole",
-                              transform:
-                                "translate(9.864131, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-9.864131, -6.000002) "
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("path", {
-                            staticClass: "note__hidden",
-                            attrs: {
-                              d:
-                                "M11.9827094,8.6200019 C11.9827094,9.5800019 11.1838621,10.2600019 10.3850148,10.2600019 C10.2328534,10.2600019 10.080692,10.2600019 9.92853065,10.2200019 C8.74927989,9.8600019 6.99942391,8.6200019 5.59193106,7.6600018 C4.18443821,6.7000018 2.39654188,5.5400018 1.63573494,4.5400018 C1.3694525,4.2200018 1.21729111,3.8200018 1.21729111,3.4200018 C1.21729111,2.4600017 2.01613841,1.7800017 2.8149857,1.7800017 C2.96714709,1.7800017 3.11930848,1.7800017 3.27146987,1.8200017 C4.45072064,2.1800017 6.23861696,3.4200018 7.64610981,4.3800018 C9.05360267,5.3400018 10.841499,6.5000018 11.6023059,7.5000018 C11.8685884,7.8200019 11.9827094,8.2200019 11.9827094,8.6200019 Z M10.0426517,11.5000019 C11.830548,11.5000019 13.2000005,10.6600019 13.2000005,8.6200019 C13.2000005,7.8600019 13.0478391,7.1400018 12.8195971,6.3800018 C12.3631129,4.8600018 11.6023059,3.4200018 10.3469745,2.5400017 C8.29279572,1.1000017 6.04841523,0.5000017 3.19538918,0.5000017 C1.40749285,0.5000017 0,1.3800017 0,3.4200018 C0,4.1800018 0.190201737,4.9000018 0.418443821,5.6600018 C0.874927989,7.1800018 1.59769459,8.6200019 2.85302605,9.5000019 C4.90720481,10.9400019 7.18962565,11.5000019 10.0426517,11.5000019 Z",
-                              id: "head-half",
-                              transform:
-                                "translate(6.600000, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-6.600000, -6.000002) "
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("path", {
-                            staticClass: "note__hidden",
-                            attrs: {
-                              d:
-                                "M8.8,11.520003 C11.04,11.520003 13.16,10.360003 13.16,7.880003 C13.16,5.000003 10.92,3.040003 9.04,1.920003 C7.6,1.080003 6,0.480003 4.36,0.480003 C2.12,0.480003 0,1.640003 0,4.120003 C0,7.000003 2.24,8.960003 4.12,10.080003 C5.56,10.920003 7.16,11.520003 8.8,11.520003 Z",
-                              id: "head",
-                              transform:
-                                "translate(6.580000, 6.000003) scale(-1, 1) rotate(-180.000000) translate(-6.580000, -6.000003) "
-                            }
-                          })
-                        ]
-                      )
-                    ]
-                  )
-                ]
-              )
-            : _c(
-                "g",
-                {
-                  attrs: {
-                    id: "note-down",
-                    "fill-rule": "nonzero",
-                    fill: "#000000"
-                  }
-                },
-                [
-                  _c(
-                    "g",
-                    {
-                      attrs: {
-                        id: "dots-whole",
-                        transform: "translate(34.000000, 16.500000)"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
-                          id: "dot2-whole"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
-                          id: "dot1-whole"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "g",
-                    {
-                      attrs: {
-                        id: "dots",
-                        transform: "translate(34.000000, 16.500000)"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
-                          id: "dot2"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
-                          id: "dot1"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("g", { attrs: { id: "signature-whole" } }, [
-                    _c("path", {
-                      staticClass: "note__hidden",
-                      attrs: {
-                        d:
-                          "M8.76948144,11.2849869 L8.76948144,33.7700005 L7.54519952,33.7700005 L7.54519952,25.3430427 L1,26.7606617 L1,4 L2.17719416,4 L2.17719416,12.7813626 L8.76948144,11.2849869 Z M2.17719416,16.5616801 L2.17719416,22.7440744 L7.54519952,21.5627251 L7.54519952,15.3803309 L2.17719416,16.5616801 Z",
-                        id: "natural-whole"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("path", {
-                      staticClass: "note__hidden",
-                      attrs: {
-                        d:
-                          "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
-                        id: "flat-whole",
-                        transform:
-                          "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("path", {
-                      staticClass: "note__hidden",
-                      attrs: {
-                        d:
-                          "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
-                        id: "sharp-whole"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "g",
-                    {
-                      attrs: {
-                        id: "signature",
-                        transform: "translate(7.000000, 0.000000)"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M8.76948144,11.2849869 L8.76948144,33.7700005 L7.54519952,33.7700005 L7.54519952,25.3430427 L1,26.7606617 L1,4 L2.17719416,4 L2.17719416,12.7813626 L8.76948144,11.2849869 Z M2.17719416,16.5616801 L2.17719416,22.7440744 L7.54519952,21.5627251 L7.54519952,15.3803309 L2.17719416,16.5616801 Z",
-                          id: "natural"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
-                          id: "flat",
-                          transform:
-                            "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          d:
-                            "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
-                          id: "sharp"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "g",
-                    {
-                      attrs: {
-                        id: "note",
-                        transform:
-                          "translate(19.500000, 41.000000) scale(-1, -1) translate(-19.500000, -41.000000) translate(8.000000, 13.000000)"
-                      }
-                    },
-                    [
-                      _c(
-                        "g",
-                        {
-                          attrs: {
-                            id: "flags",
-                            transform: "translate(12.000000, 0.000000)"
-                          }
-                        },
-                        [
-                          _c("path", {
-                            staticClass: "note__hidden",
-                            attrs: {
-                              d:
-                                "M1.162,35.4800031 C1.162,28.3600031 9.282,23.8000031 9.282,16.6800031 C9.282,15.3600031 8.922,14.0800031 8.362,12.8800031 C9.082,11.4000031 9.522,9.8800031 9.522,8.2000031 C9.522,5.6800031 8.882,3.2000031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.5600031 7.842,5.8800031 7.842,8.2000031 C7.842,12.0800031 4.042,15.8400031 1.162,18.4800031 L1.162,15.4800031 L0.522,15.4800031 L0.522,35.4800031 L1.162,35.4800031 Z M7.282,14.8000031 C7.482,15.4000031 7.562,16.0400031 7.562,16.6800031 C7.562,20.5200031 3.922,24.2800031 1.162,26.9600031 C1.162,22.2400031 4.802,18.7200031 7.282,14.8000031 Z",
-                              id: "flag-sixteenth",
-                              transform:
-                                "translate(5.522000, 17.940003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -17.940003) "
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("path", {
-                            staticClass: "note__hidden",
-                            attrs: {
-                              d:
-                                "M1.162,30.4800031 C1.162,22.5600031 9.522,17.0800031 9.522,9.1600031 C9.522,6.3200031 8.882,3.5200031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.9200031 7.842,6.5200031 7.842,9.1600031 C7.842,13.3200031 4.042,17.4800031 1.162,20.4800031 L0.522,20.4800031 L0.522,30.4800031 L1.162,30.4800031 Z",
-                              id: "flag-eighth",
-                              transform:
-                                "translate(5.522000, 15.440003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -15.440003) "
-                            }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("rect", {
-                        staticClass: "note__hidden",
-                        attrs: {
-                          id: "stem",
-                          x: "11.862",
-                          y: "0",
-                          width: "1.29999995",
-                          height: "48.122001"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "g",
-                        {
-                          attrs: {
-                            id: "heads",
-                            transform: "translate(0.000000, 44.000000)"
-                          }
-                        },
-                        [
-                          _c("path", {
-                            staticClass: "note__hidden",
-                            attrs: {
-                              d:
-                                "M8.56884077,10.46377 C6.5760871,10.46377 5.81884071,8.7500019 5.81884071,6.9565236 C5.81884071,3.8876829 8.09057989,1.5362336 11.1594205,1.5362336 C13.1521742,1.5362336 13.9094206,3.2500018 13.9094206,5.0434801 C13.9094206,8.1123207 11.6376814,10.46377 8.56884077,10.46377 Z M19.7282613,6.0000018 C19.7282613,4.2862337 18.3333337,2.9710162 16.8188409,2.1340597 C14.7065221,0.9384075 12.3152177,0.5000017 9.88405819,0.5000017 C7.45289871,0.5000017 5.02173924,0.9384075 2.90942035,2.1340597 C1.39492757,2.9710162 0,4.2862337 0,6.0000018 C0,7.71377 1.39492757,9.0289874 2.90942035,9.8659439 C5.02173924,11.0615961 7.45289871,11.5000019 9.88405819,11.5000019 C12.3152177,11.5000019 14.7065221,11.0615961 16.8188409,9.8659439 C18.3333337,9.0289874 19.7282613,7.71377 19.7282613,6.0000018 Z",
-                              id: "head-whole",
-                              transform:
-                                "translate(9.864131, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-9.864131, -6.000002) "
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("path", {
-                            staticClass: "note__hidden",
-                            attrs: {
-                              d:
-                                "M11.9827094,8.6200019 C11.9827094,9.5800019 11.1838621,10.2600019 10.3850148,10.2600019 C10.2328534,10.2600019 10.080692,10.2600019 9.92853065,10.2200019 C8.74927989,9.8600019 6.99942391,8.6200019 5.59193106,7.6600018 C4.18443821,6.7000018 2.39654188,5.5400018 1.63573494,4.5400018 C1.3694525,4.2200018 1.21729111,3.8200018 1.21729111,3.4200018 C1.21729111,2.4600017 2.01613841,1.7800017 2.8149857,1.7800017 C2.96714709,1.7800017 3.11930848,1.7800017 3.27146987,1.8200017 C4.45072064,2.1800017 6.23861696,3.4200018 7.64610981,4.3800018 C9.05360267,5.3400018 10.841499,6.5000018 11.6023059,7.5000018 C11.8685884,7.8200019 11.9827094,8.2200019 11.9827094,8.6200019 Z M10.0426517,11.5000019 C11.830548,11.5000019 13.2000005,10.6600019 13.2000005,8.6200019 C13.2000005,7.8600019 13.0478391,7.1400018 12.8195971,6.3800018 C12.3631129,4.8600018 11.6023059,3.4200018 10.3469745,2.5400017 C8.29279572,1.1000017 6.04841523,0.5000017 3.19538918,0.5000017 C1.40749285,0.5000017 0,1.3800017 0,3.4200018 C0,4.1800018 0.190201737,4.9000018 0.418443821,5.6600018 C0.874927989,7.1800018 1.59769459,8.6200019 2.85302605,9.5000019 C4.90720481,10.9400019 7.18962565,11.5000019 10.0426517,11.5000019 Z",
-                              id: "head-half",
-                              transform:
-                                "translate(6.600000, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-6.600000, -6.000002) "
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("path", {
-                            staticClass: "note__hidden",
-                            attrs: {
-                              d:
-                                "M8.8,11.520003 C11.04,11.520003 13.16,10.360003 13.16,7.880003 C13.16,5.000003 10.92,3.040003 9.04,1.920003 C7.6,1.080003 6,0.480003 4.36,0.480003 C2.12,0.480003 0,1.640003 0,4.120003 C0,7.000003 2.24,8.960003 4.12,10.080003 C5.56,10.920003 7.16,11.520003 8.8,11.520003 Z",
-                              id: "head",
-                              transform:
-                                "translate(6.580000, 6.000003) scale(-1, 1) rotate(-180.000000) translate(-6.580000, -6.000003) "
-                            }
-                          })
-                        ]
-                      )
-                    ]
-                  )
-                ]
-              )
-        ]
-      ),
-      _vm._v(" "),
-      _vm._l(_vm.ledgerLineCount, function(n) {
-        return _c("line", {
-          key: n,
-          staticClass: "note__ledger-line",
-          attrs: {
-            id: "ledger-line",
-            x1: _vm.position.x + (_vm.type === "whole" ? 2.5 : 2.375) + "%",
-            y1: 70 + n * 10 + "%",
-            x2: _vm.position.x + (_vm.type === "whole" ? 9.5 : 7.625) + "%",
-            y2: 70 + n * 10 + "%"
-          }
-        })
-      })
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-443c4dda", module.exports)
-  }
-}
-
-/***/ }),
-/* 306 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(307)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(309)
-/* template */
-var __vue_template__ = __webpack_require__(310)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-4f553a56"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/PageNotFound.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4f553a56", Component.options)
-  } else {
-    hotAPI.reload("data-v-4f553a56", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 307 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(308);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("d53f7784", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4f553a56\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PageNotFound.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4f553a56\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PageNotFound.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 308 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.page-not-found[data-v-4f553a56] {\n  width: 100%;\n}\n.page-not-found__content[data-v-4f553a56] {\n  width: 100%;\n  height: calc(100vh - 70px);\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.page-not-found__notification[data-v-4f553a56] {\n  font-size: 20px;\n}\n.page-not-found__redirect[data-v-4f553a56] {\n  margin: 0;\n  font-size: 17px;\n  font-family: \"GothamRounded-Book\";\n}\n.page-not-found__redirect--dynamic[data-v-4f553a56] {\n  width: 180px;\n}\n.page-not-found__link[data-v-4f553a56] {\n  text-decoration: underline;\n  cursor: pointer;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 309 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            interval: 1000,
-            time: 5000
-        };
-    },
-    created: function created() {
-        var _this = this;
-
-        var intervalId = setInterval(function () {
-            _this.time -= _this.interval;
-            if (_this.time === 0) {
-                clearInterval(intervalId);
-                _this.reroute('dashboard');
-            }
-        }, this.interval);
-    },
-
-    methods: {
-        reroute: function reroute(name) {
-            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-            this.$router.push({ name: name, params: params });
-        }
-    }
-});
-
-/***/ }),
-/* 310 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "page-not-found" }, [
-    _c("div", { staticClass: "page-not-found__content" }, [
-      _c("h2", { staticClass: "page-not-found__notification" }, [
-        _vm._v("\n            Iskana stran ne obstaja.\n        ")
-      ]),
-      _vm._v(" "),
-      _c("h3", { staticClass: "page-not-found__redirect" }, [
-        _vm._v("\n            Preusmeritev na\n        ")
-      ]),
-      _vm._v(" "),
-      _c(
-        "h3",
-        {
-          staticClass:
-            "page-not-found__redirect page-not-found__redirect--dynamic"
-        },
-        [
-          _c(
-            "span",
-            {
-              staticClass: "page-not-found__link",
-              on: {
-                click: function($event) {
-                  return _vm.reroute("dashboard")
-                }
-              }
-            },
-            [_vm._v("domačo stran")]
-          ),
-          _vm._v(" v " + _vm._s(_vm.time / 1000) + " s...\n        ")
-        ]
-      )
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-4f553a56", module.exports)
-  }
-}
-
-/***/ }),
-/* 311 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(312)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(314)
-/* template */
-var __vue_template__ = __webpack_require__(315)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-4bdda942"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Profile.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4bdda942", Component.options)
-  } else {
-    hotAPI.reload("data-v-4bdda942", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 312 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(313);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("8eb77762", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4bdda942\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4bdda942\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 313 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.profile[data-v-4bdda942] {\n  width: 100%;\n}\n.profile__content[data-v-4bdda942] {\n  width: 100%;\n  padding: 20px 0 50px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.profile__tabs[data-v-4bdda942] {\n  width: 100%;\n  padding: 0 5%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.profile__tab[data-v-4bdda942] {\n  width: calc(100% / 3);\n  height: 50px;\n  border-radius: 10px 10px 0 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  cursor: pointer;\n}\n.profile__tab[data-v-4bdda942]:nth-child(2) {\n    margin: 0 5%;\n}\n.profile__tab--me[data-v-4bdda942] {\n  background-color: #EB7D3D;\n}\n.profile__tab--levels[data-v-4bdda942] {\n  background-color: #72B7AE;\n}\n.profile__tab--badges[data-v-4bdda942] {\n  background-color: #6CC075;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 314 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['id'],
-    data: function data() {
-        return {
-            openedTab: 'me'
-        };
-    },
-
-    methods: {
-        openTab: function openTab(tab) {
-            this.openedTab = tab;
-        }
-    }
-});
-
-/***/ }),
-/* 315 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "profile" }, [
-    _c(
-      "div",
-      { staticClass: "profile__content" },
-      [
-        _c("div", { staticClass: "profile__tabs" }, [
-          _c(
-            "div",
-            {
-              staticClass: "profile__tab profile__tab--me",
-              on: {
-                click: function($event) {
-                  return _vm.openTab("me")
-                }
-              }
-            },
-            [_vm._v("JAZ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "profile__tab profile__tab--levels",
-              on: {
-                click: function($event) {
-                  return _vm.openTab("levels")
-                }
-              }
-            },
-            [_vm._v("NIVOJI")]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "profile__tab profile__tab--badges",
-              on: {
-                click: function($event) {
-                  return _vm.openTab("badges")
-                }
-              }
-            },
-            [_vm._v("DOSEŽKI")]
-          )
-        ]),
-        _vm._v(" "),
-        _vm.openedTab === "me"
-          ? _c("profile-me", {
-              attrs: { id: _vm.id },
-              on: { "open-tab": _vm.openTab }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.openedTab === "levels"
-          ? _c("profile-levels", { attrs: { id: _vm.id } })
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.openedTab === "badges"
-          ? _c("profile-badges", { attrs: { id: _vm.id } })
-          : _vm._e()
-      ],
-      1
-    )
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-4bdda942", module.exports)
-  }
-}
-
-/***/ }),
-/* 316 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(317)
-  __webpack_require__(319)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(321)
-/* template */
-var __vue_template__ = __webpack_require__(322)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-095e6bda"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Settings.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-095e6bda", Component.options)
-  } else {
-    hotAPI.reload("data-v-095e6bda", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 317 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(318);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("407028ee", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-095e6bda\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Settings.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-095e6bda\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Settings.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 318 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.settings[data-v-095e6bda] {\n  width: 100%;\n}\n.settings__content[data-v-095e6bda] {\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.settings__instructions[data-v-095e6bda] {\n  width: 100%;\n  height: 290px;\n  padding-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.settings__image[data-v-095e6bda] {\n  width: 120px;\n  height: 120px;\n  margin-bottom: 10px;\n}\n.settings__label[data-v-095e6bda] {\n  margin: 20px 0 25px 0;\n}\n.settings__arrow[data-v-095e6bda] {\n  width: 30px;\n  height: 30px;\n}\n.settings__elements[data-v-095e6bda] {\n  width: 100%;\n  margin-top: 20px;\n  padding: 40px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #EB7D3D;\n}\n.settings__element-label-wrapper[data-v-095e6bda] {\n  width: 100%;\n  margin-bottom: 5px;\n  padding-left: 2px;\n}\n.settings__element-label[data-v-095e6bda] {\n  color: #66361B;\n  font-size: 15px;\n}\n.settings__element[data-v-095e6bda] {\n  margin-bottom: 20px;\n}\n.settings__select-wrapper[data-v-095e6bda] {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  cursor: pointer;\n}\n.settings__select-wrapper[data-v-095e6bda]:after {\n    content: '';\n    position: absolute;\n    top: 0;\n    right: 0;\n    width: 45px;\n    height: 100%;\n    background-color: #F4945D;\n    pointer-events: none;\n}\n.settings__select[data-v-095e6bda] {\n  width: 100%;\n  height: 100%;\n  padding: 10px 30px 10px 10px;\n  border: none;\n  border-radius: 0;\n  background-color: #F8A16E;\n  font-size: 18px;\n  font-family: \"GothamRounded-Bold\", sans-serif;\n  overflow: hidden;\n  outline: none;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  appearance: none;\n  cursor: pointer;\n}\n.settings__select-arrow[data-v-095e6bda] {\n  position: absolute;\n  top: 17px;\n  right: -8px;\n  width: 40px;\n  height: 40px;\n  fill: #66361B;\n  z-index: 1;\n  pointer-events: none;\n}\n.settings__slider-wrapper[data-v-095e6bda] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.settings__slider-label[data-v-095e6bda] {\n  width: 60px;\n}\n.settings__slider[data-v-095e6bda] {\n  width: calc(100% - 60px);\n  height: 15px;\n  border-radius: 5px;\n  background-color: #F8A16E;\n  opacity: 0.7;\n  outline: none;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  appearance: none;\n  cursor: pointer;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.settings__slider[data-v-095e6bda] {\n      opacity: 1;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.settings__slider[data-v-095e6bda] {\n      opacity: 1;\n}\n}\n.settings__slider[data-v-095e6bda]:hover {\n    opacity: 1;\n}\n.settings__slider[data-v-095e6bda]::-webkit-slider-thumb {\n    width: 25px;\n    height: 25px;\n    border-radius: 50%;\n    background-color: #66361B;\n    -moz-appearance: none;\n    -webkit-appearance: none;\n    appearance: none;\n    cursor: pointer;\n}\n.settings__slider[data-v-095e6bda]::-moz-range-thumb {\n    width: 25px;\n    height: 25px;\n    border-radius: 50%;\n    background-color: #66361B;\n    cursor: pointer;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 319 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(320);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("3a5da303", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-095e6bda\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./Settings.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-095e6bda\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./Settings.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 320 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.settings__elements .button {\n  margin-top: 50px;\n}\n.settings__elements .button .button__full {\n    background-color: #F8A16E;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 321 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            loading: true,
-            instruments: {
-                guitar: 'Kitara',
-                clarinet: 'Klarinet',
-                piano: 'Klavir',
-                trumpet: 'Trobenta',
-                violin: 'Violina'
-            },
-            selectedInstrument: null,
-            clefs: {
-                violin: 'Violinski',
-                bass: 'Basovski'
-            },
-            selectedClef: null,
-            selectedNotePlaybackDelay: 1,
-            minPlaybackDelay: 1.5,
-            maxPlaybackDelay: 5,
-            metronome: true
-        };
-    },
-    mounted: function mounted() {
-        var _this = this;
-
-        this.$nextTick(function () {
-            _this.fetchMe().then(function () {
-                _this.selectedInstrument = _this.me.instrument;
-                _this.selectedClef = _this.me.clef;
-                _this.selectedNotePlaybackDelay = _this.me.note_playback_delay / 1000;
-
-                _this.loadImages();
-            });
-        });
-    },
-
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["e" /* mapState */])(['me'])),
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'updateMe']), {
-        loadImages: function loadImages() {
-            var _this2 = this;
-
-            var context = this;
-
-            var nLoaded = 0;
-            var nTotal = 2;
-
-            var image = this.$el.querySelector('#image');
-            image.onload = function () {
-                if (++nLoaded === nTotal) {
-                    _this2.loadAdditionalImages();
-                    context.loading = false;
-                }
-            };
-            image.src = '/images/settings/settings.svg';
-
-            var arrow = this.$el.querySelector('#arrow');
-            arrow.onload = function () {
-                if (++nLoaded === nTotal) {
-                    _this2.loadAdditionalImages();
-                    context.loading = false;
-                }
-            };
-            arrow.src = '/images/arrows/down.svg';
-        },
-        loadAdditionalImages: function loadAdditionalImages() {
-            var arrowInstrument = this.$el.querySelector('#arrow_instrument');
-            arrowInstrument.href.baseVal = '/images/arrows/down.svg#element';
-
-            var arrowClef = this.$el.querySelector('#arrow_clef');
-            arrowClef.href.baseVal = '/images/arrows/down.svg#element';
-        },
-        save: function save() {
-            var _this3 = this;
-
-            var data = {};
-
-            if (this.selectedInstrument !== this.me.instrument) {
-                data['instrument'] = this.selectedInstrument;
-            }
-
-            if (this.selectedClef !== this.me.clef) {
-                data['clef'] = this.selectedClef;
-            }
-
-            if (this.selectedNotePlaybackDelay !== this.me.note_playback_delay) {
-                data['note_playback_delay'] = parseFloat(this.selectedNotePlaybackDelay) * 1000;
-            }
-
-            data.metronome = this.metronome;
-
-            if (Object.keys(data).length > 0) {
-                this.loading = true;
-                this.updateMe(data).then(function () {
-                    _this3.loading = false;
-                });
-            }
-        }
-    })
-});
-
-/***/ }),
-/* 322 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "settings" },
-    [
-      _c("loader", {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.loading,
-            expression: "loading"
-          }
-        ]
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: !_vm.loading,
-              expression: "!loading"
-            }
-          ],
-          staticClass: "settings__content"
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "settings__instructions" },
-            [
-              _c("img", {
-                staticClass: "settings__image",
-                attrs: { id: "image" }
-              }),
-              _vm._v(" "),
-              _c("element-title", { attrs: { text: "nastavitve" } }),
-              _vm._v(" "),
-              _c("label", { staticClass: "settings__label" }, [
-                _vm._v("Uredi svoje nastavitve za igro.")
-              ]),
-              _vm._v(" "),
-              _c("img", {
-                staticClass: "settings__arrow",
-                attrs: { id: "arrow" }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "settings__elements" },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "settings__element settings__select-wrapper" },
-                [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.selectedInstrument,
-                          expression: "selectedInstrument"
-                        }
-                      ],
-                      staticClass: "settings__select",
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.selectedInstrument = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        }
-                      }
-                    },
-                    _vm._l(_vm.instruments, function(value, key) {
-                      return _c(
-                        "option",
-                        {
-                          staticClass: "settings__option",
-                          domProps: { value: key }
-                        },
-                        [_vm._v(_vm._s(value))]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "settings__select-arrow",
-                      attrs: { viewBox: "0 0 100 100" }
-                    },
-                    [_c("use", { attrs: { id: "arrow_instrument" } })]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _vm._m(1),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "settings__element settings__select-wrapper" },
-                [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.selectedClef,
-                          expression: "selectedClef"
-                        }
-                      ],
-                      staticClass: "settings__select",
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.selectedClef = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        }
-                      }
-                    },
-                    _vm._l(_vm.clefs, function(value, key) {
-                      return _c(
-                        "option",
-                        {
-                          staticClass: "settings__option",
-                          domProps: { value: key }
-                        },
-                        [_vm._v(_vm._s(value))]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "settings__select-arrow",
-                      attrs: { viewBox: "0 0 100 100" }
-                    },
-                    [_c("use", { attrs: { id: "arrow_clef" } })]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _vm._m(2),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "settings__element settings__slider-wrapper" },
-                [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "settings__slider-label",
-                      attrs: { for: "notePlaybackDelay" }
-                    },
-                    [_vm._v(_vm._s(_vm.selectedNotePlaybackDelay) + " s")]
-                  ),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selectedNotePlaybackDelay,
-                        expression: "selectedNotePlaybackDelay"
-                      }
-                    ],
-                    staticClass: "settings__slider",
-                    attrs: {
-                      type: "range",
-                      id: "notePlaybackDelay",
-                      min: _vm.minPlaybackDelay,
-                      max: _vm.maxPlaybackDelay,
-                      step: "0.1"
-                    },
-                    domProps: { value: _vm.selectedNotePlaybackDelay },
-                    on: {
-                      __r: function($event) {
-                        _vm.selectedNotePlaybackDelay = $event.target.value
-                      }
-                    }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _vm._m(3),
-              _vm._v(" "),
-              _c("element-button", {
-                attrs: { text: "shrani" },
-                nativeOn: {
-                  click: function($event) {
-                    return _vm.save()
-                  }
-                }
-              })
-            ],
-            1
-          )
-        ]
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "settings__element-label-wrapper" }, [
-      _c("label", { staticClass: "settings__element-label" }, [
-        _vm._v("INŠTRUMENT")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "settings__element-label-wrapper" }, [
-      _c("label", { staticClass: "settings__element-label" }, [_vm._v("KLJUČ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "settings__element-label-wrapper" }, [
-      _c("label", { staticClass: "settings__element-label" }, [
-        _vm._v("PAVZA MED PREDVAJANIMI TONI")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "auth__form-group auth__form-group--checkbox" },
-      [
-        _c("label", { staticClass: "auth__form-checkbox-label" }, [
-          _vm._v("PRIVZETO VKLJUČI METRONOM\n                    "),
-          _c("input", {
-            staticClass: "auth__form-checkbox",
-            attrs: { type: "checkbox", name: "metronom" }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "auth__form-checkbox-checkmark" })
-        ])
-      ]
-    )
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-095e6bda", module.exports)
-  }
-}
-
-/***/ }),
-/* 323 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(324)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(326)
-/* template */
-var __vue_template__ = __webpack_require__(327)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-0430ad04"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/music/Stave.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0430ad04", Component.options)
-  } else {
-    hotAPI.reload("data-v-0430ad04", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 324 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(325);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("58d07fc8", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0430ad04\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Stave.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0430ad04\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Stave.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 325 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.stave__svg[data-v-0430ad04] {\n  width: 60vw;\n  height: 18vw;\n  overflow: visible;\n}\n@media only screen and (orientation: portrait) {\n.stave__svg[data-v-0430ad04] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape) {\n.stave__svg[data-v-0430ad04] {\n      width: 50vw;\n      height: 15vw;\n}\n}\n.stave__line[data-v-0430ad04] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n}\n.stave__rect[data-v-0430ad04] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n  fill: none;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 326 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        nNotes: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["c" /* numberProp */])(),
-        noteType: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(),
-        clef: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(),
-        sharpFlatMap: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["e" /* objectProp */])()
-    },
-    data: function data() {
-        return {
-            notes: [],
-            helperLinesVisible: false
-        };
-    },
-    created: function created() {
-        this.$parent.$on('add-note', this.drawNote);
-        this.$parent.$on('remove-note', this.eraseNote);
-        this.$parent.$on('clear-notes', this.eraseAllNotes);
-    },
-    mounted: function mounted() {
-        var _this = this;
-
-        this.$nextTick(function () {
-            window.addEventListener('keydown', function (event) {
-                return _this.keydown(event);
-            });
-        });
-    },
-    destroyed: function destroyed() {
-        var _this2 = this;
-
-        window.removeEventListener('keydown', function (event) {
-            return _this2.keydown(event);
-        });
-    },
-
-    methods: {
-        drawNote: function drawNote(pitch) {
-            if (this.notes.length < this.nNotes) {
-                if (this.notes.length > 0) {
-                    var index = this.notes.length;
-                    var previousPitch = this.notes[index - 1].pitch;
-                    if (this.isSharp(previousPitch) && this.isFlat(pitch) || this.isFlat(previousPitch) && this.isSharp(pitch)) {
-                        pitch = this.sharpFlatMap[pitch];
-                    } else if (this.isNatural(previousPitch) && (this.isSharp(pitch) || this.isFlat(pitch))) {
-                        var pitches = [pitch, this.sharpFlatMap[pitch]];
-                        pitch = pitches[Math.round(Math.random())];
-                    }
-                }
-                this.notes.push({ delay: this.notes.length, pitch: pitch, type: this.noteType });
-                this.$emit('notes-changed', this.notes);
-            }
-        },
-        eraseNote: function eraseNote() {
-            this.notes.pop();
-            this.$emit('notes-changed', this.notes);
-        },
-        eraseAllNotes: function eraseAllNotes() {
-            this.notes = [];
-            this.$emit('notes-changed', this.notes);
-        },
-        keydown: function keydown(event) {
-            switch (event.keyCode) {
-                // backspace & delete
-                case 8:
-                case 46:
-                    this.eraseNote();
-                    break;
-            }
-        },
-        getPreviousNotePitch: function getPreviousNotePitch(index) {
-            return index > 0 ? this.notes[index - 1].pitch : '';
-        },
-        isSharp: function isSharp(pitch) {
-            return pitch.indexOf('#') >= 0;
-        },
-        isFlat: function isFlat(pitch) {
-            return pitch.indexOf('b') >= 0;
-        },
-        isNatural: function isNatural(pitch) {
-            return !this.isSharp(pitch) && !this.isFlat(pitch);
-        }
-    }
-});
-
-/***/ }),
-/* 327 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "svg",
-    {
-      staticClass: "stave__svg",
-      attrs: {
-        viewBox: "0 0 100 30",
-        preserveAspectRatio: "xMidYMid meet",
-        xmlns: "http://www.w3.org/2000/svg",
-        version: "1.1"
-      }
-    },
-    [
-      _c("rect", {
-        staticClass: "stave__rect",
-        attrs: { x: "0", y: "30%", width: "100%", height: "40%" }
-      }),
-      _vm._v(" "),
-      _vm._l(3, function(n) {
-        return _c("line", {
-          key: n,
-          staticClass: "stave__line",
-          attrs: {
-            x1: "0",
-            y1: 30 + n * 10 + "%",
-            x2: "100%",
-            y2: 30 + n * 10 + "%"
-          }
-        })
-      }),
-      _vm._v(" "),
-      _c("g", { attrs: { transform: "translate(-9, 3.3) scale(0.32)" } }, [
-        _c("path", {
-          staticStyle: {
-            fill: "black",
-            "fill-opacity": "1",
-            "fill-rule": "nonzero",
-            stroke: "black",
-            "stroke-width": "0.1",
-            "stroke-linecap": "butt",
-            "stroke-linejoin": "miter",
-            "stroke-miterlimit": "4",
-            "stroke-dasharray": "none",
-            "stroke-opacity": "1"
-          },
-          attrs: {
-            "sodipodi:nodetypes": "cssssssssscsssssssssc",
-            d:
-              "M 39.708934,63.678683 C 39.317094,65.77065 41.499606,70.115061 45.890584,70.256984 C 51.19892,70.428558 54.590321,66.367906 53.010333,59.740875 L 45.086538,23.171517 C 44.143281,18.81826 44.851281,16.457097 45.354941,15.049945 C 46.698676,11.295749 50.055822,9.7473042 50.873134,10.949208 C 51.339763,11.635413 52.468042,14.844006 49.256275,20.590821 C 46.751378,25.072835 35.096985,30.950138 34.2417,41.468011 C 33.501282,50.614249 43.075689,57.369301 51.339266,54.71374 C 56.825686,52.950639 59.653965,44.62402 56.258057,40.328987 C 47.29624,28.994371 32.923702,46.341263 46.846564,51.0935 C 45.332604,49.90238 44.300646,48.980054 44.1085,47.852721 C 42.237755,36.876941 58.741182,39.774741 54.294493,50.18735 C 52.466001,54.469045 45.080341,55.297323 40.874269,51.477433 C 37.350853,48.277521 35.787387,42.113231 39.708327,37.687888 C 45.018831,31.694223 51.288782,26.31366 52.954064,18.108736 C 54.923313,8.4061491 48.493821,0.84188926 44.429027,10.385835 C 43.065093,13.588288 42.557016,16.803074 43.863006,22.963534 L 51.780549,60.311215 C 52.347386,62.985028 51.967911,66.664419 49.472374,68.355474 C 48.236187,69.193154 43.861784,69.769668 42.791575,67.770092"
-          }
-        }),
-        _vm._v(" "),
-        _c("path", {
-          staticStyle: {
-            fill: "black",
-            "fill-opacity": "1",
-            stroke: "black",
-            "stroke-width": "0.09213948",
-            "stroke-miterlimit": "4",
-            "stroke-dasharray": "none",
-            "stroke-opacity": "1"
-          },
-          attrs: {
-            transform:
-              "matrix(-1.08512,-2.036848e-2,2.036848e-2,-1.08512,90.68868,135.0572)",
-            d:
-              "M 48.24903 64.584198 A 3.439605 3.4987047 0 1 1  41.36982,64.584198 A 3.439605 3.4987047 0 1 1  48.24903 64.584198 z",
-            "sodipodi:ry": "3.4987047",
-            "sodipodi:rx": "3.439605",
-            "sodipodi:cy": "64.584198",
-            "sodipodi:cx": "44.809425",
-            "sodipodi:type": "arc"
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _vm._l(_vm.notes, function(note, index) {
-        return _c("note", {
-          key: index,
-          attrs: {
-            delay: note.delay,
-            pitch: note.pitch,
-            "previous-pitch": _vm.getPreviousNotePitch(index),
-            type: note.type,
-            count: _vm.nNotes
-          }
-        })
-      }),
-      _vm._v(" "),
-      _vm.helperLinesVisible
-        ? _c(
-            "g",
-            [
-              _c("line", {
-                staticClass: "stave__line",
-                attrs: { x1: "15%", y1: "0", x2: "15%", y2: "100%" }
-              }),
-              _vm._v(" "),
-              _vm._l(_vm.nNotes, function(n) {
-                return _c("line", {
-                  staticClass: "stave__line",
-                  attrs: {
-                    x1: 15 + n * (85 / _vm.nNotes) + "%",
-                    y1: "0",
-                    x2: 15 + n * (85 / _vm.nNotes) + "%",
-                    y2: "100%"
-                  }
-                })
-              })
-            ],
-            2
-          )
-        : _vm._e()
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0430ad04", module.exports)
-  }
-}
-
-/***/ }),
-/* 328 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(329)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(331)
-/* template */
-var __vue_template__ = __webpack_require__(332)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-76a54612"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/elements/Title.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-76a54612", Component.options)
-  } else {
-    hotAPI.reload("data-v-76a54612", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 329 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(330);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("55fbca8e", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-76a54612\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Title.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-76a54612\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Title.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 330 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.title[data-v-76a54612] {\n  padding: 10px 20px;\n  border-radius: 6px;\n  background-color: #000000;\n  color: #FFD15E;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 331 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(8);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        text: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])()
-    }
-});
-
-/***/ }),
-/* 332 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "title" }, [
-    _vm._v(_vm._s(_vm._f("uppercase")(_vm.text)))
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-76a54612", module.exports)
-  }
-}
-
-/***/ }),
-/* 333 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-
-
-
-
-Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
-
-function handleError(error) {
-    switch (error.response.status) {
-        case 401:
-            window.location.href = '/login';
-            break;
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
-    state: {
-        me: null,
-        schools: null,
-        grades: null,
-        instruments: {
-            clarinet: {
-                channel: 0,
-                soundfont: 'clarinet'
-            },
-            guitar: {
-                channel: 1,
-                soundfont: 'acoustic_guitar_nylon'
-            },
-            piano: {
-                channel: 2,
-                soundfont: 'acoustic_grand_piano'
-            },
-            trumpet: {
-                channel: 3,
-                soundfont: 'trumpet'
-            },
-            violin: {
-                channel: 4,
-                soundfont: 'violin'
-            },
-            percussive_organ: {
-                channel: 5,
-                soundfont: 'percussive_organ',
-                volume: 127
-            },
-            xylophone: {
-                channel: 6,
-                soundfont: 'xylophone',
-                volume: 200
-            }
-        },
-        currentInstruments: new Set([]),
-        midi: null,
-
-        headerMenuDisabled: false
-    },
-    getters: {
-        getInstrumentChannel: function getInstrumentChannel(state) {
-            return function (name) {
-                return state.instruments[name].channel;
-            };
-        }
-    },
-    mutations: {
-        setMe: function setMe(state, me) {
-            state.me = me;
-        },
-        setSchools: function setSchools(state, schools) {
-            state.schools = schools;
-        },
-        setGrades: function setGrades(state, grades) {
-            state.grades = grades;
-        },
-        setMidi: function setMidi(state, midi) {
-            state.midi = midi;
-        },
-        addToCurrentInstruments: function addToCurrentInstruments(state, name) {
-            state.currentInstruments.add(name);
-        },
-        setHeaderMenuDisabled: function setHeaderMenuDisabled(state, v) {
-            state.headerMenuDisabled = v;
-        },
-        toggleHeaderMenuDisabled: function toggleHeaderMenuDisabled(state) {
-            state.headerMenuDisabled = !state.headerMenuDisabled;
-        }
-    },
-    actions: {
-        fetchMe: function fetchMe(_ref) {
-            var commit = _ref.commit,
-                state = _ref.state;
-            var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-            return new Promise(function (resolve, reject) {
-                if (!force && state.me) {
-                    resolve();
-                } else {
-                    axios.get('/api/users/0').then(function (response) {
-                        commit('setMe', response.data);
-                        resolve();
-                    }).catch(function (error) {
-                        handleError(error);
-                        reject(error);
-                    });
-                }
-            });
-        },
-        updateMe: function updateMe(_ref2, data) {
-            var dispatch = _ref2.dispatch,
-                commit = _ref2.commit,
-                state = _ref2.state;
-
-            var changeInstrument = state.me.instrument !== data.instrument;
-            return new Promise(function (resolve, reject) {
-                axios.put('/api/users/' + state.me.id, data).then(function (response) {
-                    dispatch('fetchMe', true).then(function () {
-                        if (changeInstrument) {
-                            dispatch('setupMidi', true).then(function () {
-                                resolve();
-                            });
-                        } else {
-                            resolve();
-                        }
-                    });
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        fetchUser: function fetchUser(_ref3, id) {
-            var state = _ref3.state;
-
-            return new Promise(function (resolve, reject) {
-                if (state.me && state.me.id === id) {
-                    resolve(state.me);
-                } else {
-                    axios.get('/api/users/' + id).then(function (response) {
-                        resolve(response.data);
-                    }).catch(function (error) {
-                        handleError(error);
-                        reject(error);
-                    });
-                }
-            });
-        },
-        fetchUsers: function fetchUsers(_ref4) {
-            var state = _ref4.state;
-            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-            return new Promise(function (resolve, reject) {
-                axios.get('/api/users', { params: params }).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        fetchLevel: function fetchLevel(_ref5) {
-            var state = _ref5.state;
-            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-            return new Promise(function (resolve, reject) {
-                axios.get('/api/levels/find', { params: params }).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        fetchSchools: function fetchSchools(_ref6) {
-            var commit = _ref6.commit,
-                state = _ref6.state;
-            var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-            return new Promise(function (resolve, reject) {
-                if (!force && state.schools) {
-                    resolve();
-                } else {
-                    axios.get('/api/schools', { params: { per_page: 0 } }).then(function (response) {
-                        commit('setSchools', response.data);
-                        resolve();
-                    }).catch(function (error) {
-                        handleError(error);
-                        reject(error);
-                    });
-                }
-            });
-        },
-        fetchGrades: function fetchGrades(_ref7) {
-            var commit = _ref7.commit,
-                state = _ref7.state;
-            var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-            return new Promise(function (resolve, reject) {
-                if (!force && state.grades) {
-                    resolve();
-                } else {
-                    axios.get('/api/grades', { params: { per_page: 0 } }).then(function (response) {
-                        commit('setGrades', response.data);
-                        resolve();
-                    }).catch(function (error) {
-                        handleError(error);
-                        reject(error);
-                    });
-                }
-            });
-        },
-        fetchDifficulty: function fetchDifficulty(_ref8, _ref9) {
-            var state = _ref8.state;
-            var gradeId = _ref9.gradeId,
-                schoolId = _ref9.schoolId;
-
-            return new Promise(function (resolve, reject) {
-                axios.get('/api/gradeschool/' + gradeId + '/' + schoolId).then(function (response) {
-                    resolve(response.data.difficulty);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        fetchRhythmDifficulty: function fetchRhythmDifficulty(_ref10, _ref11) {
-            var state = _ref10.state;
-            var gradeId = _ref11.gradeId;
-
-            return new Promise(function (resolve, reject) {
-                axios.get('/api/rhythmdifficulty/' + gradeId).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        fetchUserBadges: function fetchUserBadges(_ref12) {
-            var state = _ref12.state;
-            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-            return new Promise(function (resolve, reject) {
-                axios.get('/api/badgeuser', { params: params }).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        fetchLevels: function fetchLevels(_ref13) {
-            var state = _ref13.state;
-            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-            return new Promise(function (resolve, reject) {
-                axios.get('/api/levels', { params: params }).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        storeGame: function storeGame(_ref14, data) {
-            var state = _ref14.state;
-
-            return new Promise(function (resolve, reject) {
-                axios.post('/api/games', data).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        generate10Exercises: function generate10Exercises(_ref15, data) {
-            var state = _ref15.state;
-
-            return new Promise(function (resolve, reject) {
-                axios.post('/api/rhythmExercise/generate/10/' + data, {}).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        updateGameUser: function updateGameUser(_ref16, _ref17) {
-            var state = _ref16.state;
-            var gameId = _ref17.gameId,
-                userId = _ref17.userId,
-                data = _ref17.data;
-
-            return new Promise(function (resolve, reject) {
-                axios.put('/api/gameuser/' + gameId + '/' + userId, data).then(function (response) {
-                    resolve();
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        finishGameUser: function finishGameUser(_ref18, _ref19) {
-            var state = _ref18.state;
-            var gameId = _ref19.gameId,
-                userId = _ref19.userId;
-
-            return new Promise(function (resolve, reject) {
-                axios.put('/api/gameuser/' + gameId + '/' + userId + '/finish').then(function (response) {
-                    resolve();
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        completeBadges: function completeBadges(_ref20, userId) {
-            var state = _ref20.state;
-
-            return new Promise(function (resolve, reject) {
-                axios.put('/api/users/' + userId + '/complete').then(function (response) {
-                    resolve();
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        generateQuestion: function generateQuestion(_ref21, data) {
-            var state = _ref21.state;
-
-            return new Promise(function (resolve, reject) {
-                axios.post('/api/questions/generate', data).then(function (response) {
-                    console.log(response.data);
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        storeAnswer: function storeAnswer(_ref22, data) {
-            var state = _ref22.state;
-
-            return new Promise(function (resolve, reject) {
-                axios.post('/api/answers', data).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        fetchGameStatistics: function fetchGameStatistics(_ref23, id) {
-            var state = _ref23.state;
-
-            return new Promise(function (resolve, reject) {
-                axios.get('/api/games/' + id + '/statistics').then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        setupMidi: function setupMidi(_ref24) {
-            var commit = _ref24.commit,
-                state = _ref24.state;
-            var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-            return new Promise(function (resolve, reject) {
-                if (!force && state.midi) {
-                    resolve();
-                } else {
-                    commit('addToCurrentInstruments', state.me.instrument);
-                    var currentInstruments = [].concat(_toConsumableArray(state.currentInstruments));
-
-                    if (force && force.length > 0) {
-                        currentInstruments = currentInstruments.concat(force);
-                    }
-
-                    MIDI.loadPlugin({
-                        soundfontUrl: '/soundfonts/',
-                        instruments: currentInstruments.map(function (name) {
-                            return state.instruments[name].soundfont;
-                        }),
-                        targetFormat: 'mp3',
-                        onsuccess: function onsuccess() {
-                            var _iteratorNormalCompletion = true;
-                            var _didIteratorError = false;
-                            var _iteratorError = undefined;
-
-                            try {
-                                for (var _iterator = currentInstruments[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                                    var name = _step.value;
-
-                                    var instrument = state.instruments[name];
-                                    MIDI.setVolume(instrument.channel, 127);
-                                    MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
-                                }
-                            } catch (err) {
-                                _didIteratorError = true;
-                                _iteratorError = err;
-                            } finally {
-                                try {
-                                    if (!_iteratorNormalCompletion && _iterator.return) {
-                                        _iterator.return();
-                                    }
-                                } finally {
-                                    if (_didIteratorError) {
-                                        throw _iteratorError;
-                                    }
-                                }
-                            }
-
-                            commit('setMidi', MIDI);
-                            resolve();
-                        }
-                    });
-                }
-            });
-        },
-        fetchRhythmBars: function fetchRhythmBars(_ref25, data) {
-            var state = _ref25.state;
-
-
-            var paging = "";
-            if (data && data.pageNum) {
-                paging = "?page=" + data.pageNum;
-            }
-
-            return new Promise(function (resolve, reject) {
-                axios.get('/api/rhythmBars' + paging).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        fetchRhythmBarOccurrences: function fetchRhythmBarOccurrences(_ref26, data) {
-            var state = _ref26.state;
-
-
-            return new Promise(function (resolve, reject) {
-                axios.get('/api/rhythmBar/' + data + '/occurrences').then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        fetchRhythmExercise: function fetchRhythmExercise(_ref27, id) {
-            var state = _ref27.state;
-
-
-            return new Promise(function (resolve, reject) {
-                axios.get('/api/rhythmExercise/' + id).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        createRhythmExerciseFeedback: function createRhythmExerciseFeedback(_ref28, data) {
-            var state = _ref28.state;
-
-
-            return new Promise(function (resolve, reject) {
-                axios.post('/api/rhythmExerciseFeedback', data).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        createRhythmBarOccurrence: function createRhythmBarOccurrence(_ref29, data) {
-            var state = _ref29.state;
-
-
-            return new Promise(function (resolve, reject) {
-                axios.post('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences', data).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        deleteRhythmBarOccurrence: function deleteRhythmBarOccurrence(_ref30, data) {
-            var state = _ref30.state;
-
-
-            return new Promise(function (resolve, reject) {
-                axios.delete('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences/' + data.rhythm_feature_id, data).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        updateRhythmBarOccurrence: function updateRhythmBarOccurrence(_ref31, data) {
-            var state = _ref31.state;
-
-
-            return new Promise(function (resolve, reject) {
-                axios.delete('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences/' + data.rhythm_feature_id, data).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        updateRhythmFeatureOccurrence: function updateRhythmFeatureOccurrence(_ref32, data) {
-            var state = _ref32.state;
-
-
-            return new Promise(function (resolve, reject) {
-                axios.delete('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences/' + data.rhythm_feature_id, data).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        deleteRhythmBar: function deleteRhythmBar(_ref33, data) {
-            var state = _ref33.state;
-
-
-            if (!data || !data.id) return;
-
-            return new Promise(function (resolve, reject) {
-                axios.delete('/api/rhythmBars/' + data.id).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        createRhythmBar: function createRhythmBar(_ref34, data) {
-            var state = _ref34.state;
-
-
-            if (!data || !data.bar) return;
-
-            return new Promise(function (resolve, reject) {
-                axios.post('/api/rhythmBars', data.bar).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        saveRhythmBar: function saveRhythmBar(_ref35, data) {
-            var state = _ref35.state;
-
-
-            if (!data || !data.bar || !data.bar.id) return;
-
-            return new Promise(function (resolve, reject) {
-                axios.patch('/api/rhythmBars/' + data.bar.id, data.bar).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        }
-    }
-}));
-
-/***/ }),
-/* 334 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 335 */,
-/* 336 */,
-/* 337 */,
-/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -79427,7 +71140,8300 @@ function handleError(error) {
   };
 })();
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+
+/***/ }),
+/* 263 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "rhythm-game__wrap" },
+    [
+      _c("loader", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.displayState == "loading",
+            expression: "displayState == 'loading'"
+          }
+        ]
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.displayState == "instructions",
+              expression: "displayState == 'instructions'"
+            }
+          ],
+          staticClass: "rhythm__instructions"
+        },
+        [
+          _c(
+            "SexyButton",
+            {
+              attrs: { color: "green", cols: 3 },
+              nativeOn: {
+                click: function($event) {
+                  return _vm.startGame()
+                }
+              }
+            },
+            [_vm._v("Začni")]
+          ),
+          _vm._v(" "),
+          _c("ul", { staticClass: "rhythm__instructions-list" }, [
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v("Preizkusil se boš v ritmičnem nareku.")
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v(
+                "Vaja bo v " +
+                  _vm._s(_vm.bar.num_beats) +
+                  "/" +
+                  _vm._s(_vm.bar.base_note) +
+                  " taktu."
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v("Slišal boš " + _vm._s(_vm.num_beats_text) + ".")
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v("Na začetku bo metronom izvajal en takt.")
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v(
+                "Tempo bo " +
+                  _vm._s(
+                    _vm.questionState.exercise != null
+                      ? _vm.questionState.exercise.BPM
+                      : "??"
+                  ) +
+                  " udarcev na minuto."
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v(
+                "Za reševanje imaš na voljo " +
+                  _vm._s(_vm.questionState.maxSeconds) +
+                  " sekund."
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+              _vm._v(
+                "Odgovor lahko preveriš največ " +
+                  _vm._s(_vm.questionState.maxChecks) +
+                  "-krat."
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "rhythm__instructions-list-item",
+                staticStyle: { "list-style-type": "none" }
+              },
+              [
+                _c("sexy-button", {
+                  attrs: {
+                    text: _vm.metronomeButtonText,
+                    color: _vm.metronomeButtonColor,
+                    cols: 3
+                  },
+                  nativeOn: {
+                    click: function($event) {
+                      return _vm.toggleMetronome()
+                    }
+                  }
+                })
+              ],
+              1
+            )
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.displayState == "ready",
+              expression: "displayState == 'ready'"
+            }
+          ],
+          staticClass: "ready-rhythm-game-view"
+        },
+        [
+          _c("div", { staticClass: "staff_view_wrap" }, [
+            _c(
+              "div",
+              { staticClass: "staff_view_contents" },
+              [
+                _c(
+                  "StaffView",
+                  {
+                    ref: "staff_view",
+                    attrs: {
+                      bar: _vm.bar,
+                      enabledContexts: ["minimap", "zoomview"]
+                    }
+                  },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "rhythm-game__staff__first-row" },
+                      [_c("div", { attrs: { id: "first-row" } })]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "rhythm-game__staff__second-row" },
+                      [_c("div", { attrs: { id: "second-row" } })]
+                    )
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "staff_view_time_slider",
+                style: { width: _vm.timeLeftPercents }
+              },
+              [_vm._v(" ")]
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "Keyboard",
+            _vm._b(
+              {
+                ref: "keyboard",
+                attrs: {
+                  playbackStatus: _vm.playbackStatus,
+                  question: _vm.questionState,
+                  say: _vm.showError
+                }
+              },
+              "Keyboard",
+              { key_callback: _vm.keyboard_click },
+              false
+            )
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errorMessage,
+                  expression: "errorMessage"
+                }
+              ],
+              staticClass: "error"
+            },
+            [_vm._v(_vm._s(_vm.errorMessage))]
+          ),
+          _vm._v(" "),
+          _vm.showHelp
+            ? _c("KeyboardHelp", { attrs: { hide: _vm.hideHelp } })
+            : _vm._e(),
+          _vm._v(" "),
+          ["wrong", "correct", "waiting"].indexOf(_vm.questionState.check) > -1
+            ? _c(
+                "div",
+                { staticClass: "ready-rhythm-game-view__checkOverlay" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "ready-rhythm-game-view__checkOverlay__center"
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "ready-rhythm-game-view__checkOverlay__center_bubble"
+                        },
+                        [
+                          _vm.questionState.check == "wrong"
+                            ? _c(
+                                "div",
+                                {},
+                                [
+                                  _c("icon", {
+                                    attrs: { name: "times", scale: "4" }
+                                  })
+                                ],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.questionState.check == "wrong"
+                            ? _c("div", { staticClass: "timesLeft" }, [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(
+                                      _vm.questionState.statistics.nChecks +
+                                        "/" +
+                                        _vm.questionState.maxChecks
+                                    ) +
+                                    "\n                    "
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.questionState.check == "correct"
+                            ? _c("icon", {
+                                attrs: { name: "check", scale: "4" }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.questionState.check == "waiting"
+                            ? _c("icon", {
+                                attrs: { name: "refresh", scale: "4", spin: "" }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.questionState.check == "error"
+                            ? _c("icon", {
+                                attrs: { name: "exclamation-circle" }
+                              })
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                ]
+              )
+            : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "audio",
+        {
+          ref: "rhythmAudio",
+          on: {
+            loadedmetadata: function($event) {
+              return _vm.showMetadataAlert()
+            },
+            play: function($event) {
+              return _vm.setPlaying(true)
+            },
+            ended: function($event) {
+              return _vm.setPlaying(false)
+            },
+            pause: function($event) {
+              return _vm.setPlaying(false)
+            }
+          }
+        },
+        [
+          _c("source", {
+            attrs: { src: _vm.rhythmAudioSource, type: "audio/mpeg" }
+          }),
+          _vm._v("\n        I hate Internet explorer.\n    ")
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.displayState == "diff",
+              expression: "displayState == 'diff'"
+            }
+          ],
+          staticClass: "rhythm-diff-check-view"
+        },
+        [
+          _c("DiffView", {
+            ref: "diff_view",
+            attrs: {
+              success: _vm.questionState.wasCorrect,
+              dismiss: _vm.continueGame,
+              bar: _vm.bar
+            }
+          })
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "rhythm__instructions-list-item" }, [
+      _vm._v("Če ne veš, kako deluje kakšen gumb, pritisni gumb Pomoč."),
+      _c("br"),
+      _vm._v("Dobro je, da si Pomoč ogledaš pred prvo igro.")
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5e41cbba", module.exports)
+  }
+}
+
+/***/ }),
+/* 264 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(265)
+/* template */
+var __vue_template__ = __webpack_require__(272)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/PlaybackTest.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7c75ac84", Component.options)
+  } else {
+    hotAPI.reload("data-v-7c75ac84", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 265 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__games_rhythm_noteStore__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__games_rhythm_exerciseGenerator__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__games_rhythm_rhythmPlaybackEngine__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuex__ = __webpack_require__(4);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+
+
+
+var util = __webpack_require__(10);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    components: {
+        StaffView: __WEBPACK_IMPORTED_MODULE_0__games_rhythm_StaffView_vue___default.a, SexyButton: __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue___default.a
+    },
+
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_5_vuex__["b" /* mapActions */])(['fetchMe', 'finishGameUser', 'completeBadges', 'generateQuestion', 'storeAnswer', 'setupMidi']), {
+        play: function play() {
+
+            var durs = util.generate_playback_durations(this.notes.notes);
+            var start = 0;
+            for (var i = 0; i < durs.length; i++) {
+
+                var d = durs[i];
+                var _actualDuration = Math.abs(d.valueOf()) * this.bar.base_note * (60 / this.BPM);
+
+                if (d > 0) {
+
+                    this.MIDISources.push(MIDI.noteOn(5, 65, 127, start, _actualDuration));
+                    MIDI.noteOff(5, 65, start + _actualDuration - 0.1);
+                }
+
+                start += _actualDuration;
+            }
+        },
+        stop: function stop() {
+            this.MIDISources.forEach(function (s) {
+                s.stop();
+            });
+
+            this.MIDISources = [];
+        },
+        playNote: function playNote(d) {
+
+            actualDuration = dur.valueOf() * this.bar.base_note * (60 / this.BPM);
+
+            // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
+            // Lahko bi kdaj v prihodnosti dodali melodično-ritmični narek...
+            // S tem Math.min sem hotel tudi povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
+            var sPitch = this.pitch[Math.min(this.pitch.length - 1, this.currentNoteID - 1)];
+
+            // Zaigraj, ustavi se samodejno.
+            this.midi.noteOn(this.channel, sPitch, this.intensity, 0);
+            this.midi.noteOff(this.channel, sPitch, actualDuration);
+        },
+        loadQuestion: function loadQuestion() {
+            var _this = this;
+
+            var out = this;
+
+            out.playback = new __WEBPACK_IMPORTED_MODULE_4__games_rhythm_rhythmPlaybackEngine__["a" /* default */](MIDI);
+
+            return this.generateQuestion({
+                game_id: 163,
+                number: 1,
+                chapter: 1
+            }).then(function (question) {
+
+                var exercise = question.content;
+
+                var exid = exercise.id;
+                _this.audioSource = "/api/sound/" + exid;
+
+                _this.$refs.rhythmAudio.pause();
+                _this.$refs.rhythmAudio.load();
+                _this.$refs.rhythmAudio.addEventListener('canplaythrough', function (e) {
+
+                    _this.$refs.rhythmAudio.play();
+                }, false);
+
+                out.notes = new __WEBPACK_IMPORTED_MODULE_2__games_rhythm_noteStore__["a" /* default */](exercise.bar, null, out.$refs.staff_view.render);
+
+                out.notes.notes = exercise.notes;
+                out.BPM = exercise.BPM;
+
+                out.notes._call_render();
+
+                out.playback.setBPM(exercise.BPM);
+                out.playback.setBar(exercise.bar);
+
+                out.playback.load(exercise.notes);
+                console.log(util.generate_playback_durations(exercise.notes));
+            });
+        }
+    }),
+
+    data: function data() {
+        return {
+
+            audioSource: "",
+
+            offsetConstant: 0.195,
+
+            MIDISources: [],
+
+            playback: null,
+
+            notes: null,
+            bar: {
+                num_beats: 4,
+                base_note: 4
+            },
+            BPM: 60,
+            cursor: {
+                position: 0,
+                x: 0,
+                in_tuplet: false,
+
+                cursor_moved: this.cursor_moved,
+
+                selection: null,
+                selectionMode: false,
+                selectionSelected: false,
+
+                clearSelection: this.clearSelection,
+                toggleSelectionMode: this.toggleSelectionMode,
+
+                editing_tuplet: false,
+                editing_tuplet_index: -1
+            }
+        };
+    },
+    mounted: function mounted() {
+
+        this.$refs.staff_view.init({ cursor: { enabled: false } });
+
+        // Init MIDI
+        var instruments = [{
+            channel: 5,
+            soundfont: 'trumpet',
+            colume: 127
+        }, {
+            channel: 6,
+            soundfont: 'xylophone',
+            volume: 200
+        }];
+
+        var out = this;
+
+        MIDI.loadPlugin({
+            soundfontUrl: '/soundfonts/',
+            instruments: instruments.map(function (e) {
+                return e.soundfont;
+            }),
+            targetFormat: 'mp3',
+            onsuccess: function onsuccess() {
+                for (var i = 0; i < instruments.length; i++) {
+                    var instrument = instruments[i];
+                    MIDI.setVolume(instrument.channel, instrument.volume);
+                    MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
+                }
+
+                out.loadQuestion();
+
+                /*
+                  let v = require('./games/rhythm/vaje.json');
+                out.notes.notes = v[0].notes;
+                out.notes._call_render();
+                out.playback = new RhythmPlaybackEngine(MIDI);
+                out.playback.BPM = v[0].BPM;
+                out.playback.bar_info = v[0].bar;
+                  out.playback.setBPM(v[0].BPM);
+                out.playback.setBar(v[0].bar);
+                  out.playback.load(v[0].notes);
+                console.log(util.generate_playback_durations(v[0].notes));
+                  */
+            }
+        });
+    }
+});
+
+/***/ }),
+/* 266 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var Fraction = __webpack_require__(7);
+
+var RhythmUtilities = __webpack_require__(10);
+
+var ExerciseGenerator = function ExerciseGenerator() {
+
+    var examples = __webpack_require__(267);
+
+    this.currentExercise = null;
+    this.currentExerciseInfo = null;
+
+    this.currentExampleNumber = -1;
+    this.generatorSequence = [];
+
+    this.generate = function (numGen) {
+
+        var number = Math.floor(Math.random() * (examples.length - 1));
+
+        this.currentExerciseInfo = examples[number];
+        this.currentExercise = examples[number].notes;
+
+        return examples[number];
+    };
+
+    this.check = function (value) {
+
+        var soundsLikeFunc = RhythmUtilities.generate_playback_durations;
+
+        // Return string fractions
+        var ex = soundsLikeFunc(this.currentExercise, true);
+        var us = soundsLikeFunc(value, true);
+
+        return _.isEqual(ex, us);
+    };
+
+    this.get_bar_count = function () {
+
+        return RhythmUtilities.get_bar_count(this.currentExercise);
+    };
+};
+
+/* unused harmony default export */ var _unused_webpack_default_export = (ExerciseGenerator);
+
+/***/ }),
+/* 267 */
+/***/ (function(module, exports) {
+
+module.exports = [{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  1/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"notes":[{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4}]},{"BPM":200,"name":"mešatni takt. načini, vaja 1 k Lekciji 20  2/2","bar":{"num_beats":5,"base_note":4,"subdivisions":[{"n":3,"d":4},{"n":2,"d":4}]},"notes":[{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":2,"dot":true},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":2},{"type":"bar","value":4},{"type":"r","value":2,"dot":true},{"type":"r","value":4},{"type":"n","value":4},{"type":"bar","value":4},{"type":"n","value":4},{"type":"n","value":2},{"type":"n","value":4},{"type":"n","value":4}]}]
+
+/***/ }),
+/* 268 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var Channel = __webpack_require__(269);
+var util = __webpack_require__(10);
+var Instruments = __webpack_require__(270);
+
+var RhythmPlaybackEngine = function RhythmPlaybackEngine() {
+
+    if (!window.___player) window.___player = [];
+    window.___player.push(this);
+
+    this.metronome = true;
+
+    this.lastNotes = [];
+    this.BPM = 120;
+    this.bar = {};
+
+    this.playing = false;
+
+    var player = new Instruments();
+
+    var metronomeConfig = {
+        program: 4,
+        channel: 1,
+        intensity: 3,
+        constantDuration: 0.001
+    };
+
+    var trackConfig = {
+        program: 18,
+        channel: 0,
+        intensity: 20
+    };
+
+    var out = this;
+
+    this.metronomeChannel = new Channel(player, metronomeConfig, function () {});
+    this.trackChannel = new Channel(player, trackConfig, function () {
+        out.playing = false;
+    });
+
+    this.percentPlayed = function () {
+        return currentNoteID / this.lastNotes.length;
+    }, this.playCountIn = function (bar, BPM, num_beats) {
+
+        var countinPitches = util.get_countin_pitches(bar, num_beats);
+        var countinNotes = util.get_countin_notes(bar, num_beats);
+        var countInDurations = util.generate_playback_durations(countinNotes);
+
+        var out = this;
+
+        return new Promise(function (resolve, reject) {
+            out.metronomeChannel.play(BPM, bar, countinPitches, countInDurations, function () {
+                resolve();
+            }, null);
+        });
+    };
+
+    this.play = function (bar, BPM, values) {
+
+        this.stop();
+
+        this.playing = true;
+
+        if (!bar) {
+            bar = this.bar;
+        }
+
+        if (!BPM) {
+            BPM = this.BPM;
+        }
+
+        if (!values) {
+            values = this.lastNotes;
+        } else {
+            this.lastNotes = values;
+        }
+
+        var defaultPitch = [67];
+        var notes = util.generate_playback_durations(values);
+
+        var o2 = this;
+        return this.playCountIn(bar, BPM, 1).then(function () {
+
+            if (o2.metronome) {
+                o2.playCountIn.apply(o2, [bar, BPM, 2]); // static num_bars...
+            }
+
+            return new Promise(function (resolve, reject) {
+                o2.trackChannel.play(BPM, bar, defaultPitch, notes, resolve);
+            });
+        });
+    };
+
+    this.stop = function () {
+        this.metronomeChannel.stop();
+        this.trackChannel.stop();
+    };
+
+    this.load = function (notes) {
+        this.lastNotes = notes;
+    };
+
+    this.setBar = function (newBar) {
+
+        this.bar.num_beats = newBar.num_beats;
+        this.bar.base_note = newBar.base_note;
+        if (newBar.subdivisions) {
+            this.bar.subdivisions = newBar.subdivisions;
+        } else {
+            this.bar.subdivisions = null;
+        }
+    };
+
+    this.setBPM = function (newBPM) {
+        this.BPM = newBPM;
+    };
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (RhythmPlaybackEngine);
+
+/***/ }),
+/* 269 */
+/***/ (function(module, exports) {
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+module.exports = function (player, conf, playingStopped) {
+
+    var defaultConfig = {
+        program: 4,
+        channel: 1,
+        intensity: 10,
+        constantDuration: null
+    };
+
+    var currentNoteID = 0;
+
+    // Setup default config
+    conf = _extends({}, defaultConfig, conf);
+
+    var playing = false;
+    var currentTimeout = null;
+
+    var playerContext = this;
+
+    var _playNote = function _playNote(BPM, bar, pitch, notes, endCallback, noteCallback) {
+
+        if (!playing || notes == null || notes.length <= currentNoteID) {
+            if (endCallback) {
+                endCallback();
+            }
+
+            this.stop();
+            return;
+        }
+
+        // Current duration
+        var dur = notes[currentNoteID];
+
+        // BPM logic
+        // Brez spreminjanja trajanja velja, da je celinka dolga 1s
+        // torej je vsaka četrtinka dolga 0,25s, kar je 4 BPS, kar je 240 BPM
+        // realDuration = koliko sekund naj traja nota...
+        var realDuration = dur.valueOf() * bar.base_note * (60 / BPM);
+
+        if (dur > 0) {
+
+            // Tole sem naredil samo zato, da prvo noto pri count-inu drugače zapoje
+            // Lahko bi kdaj v prihodnosti dodali melodično-ritmični narek...
+            // S tem Math.min sem hotel tudi povedati, da naj se ustavi na zadnjem pitchu, ki je podan.
+            var sPitch = pitch[Math.min(pitch.length - 1, currentNoteID)];
+
+            var engineDuration = realDuration - 0.15;
+            if (conf.constantDuration != null) {
+                engineDuration = conf.constantDuration;
+            }
+
+            player.play(conf.program, // instrument: 24 is "Acoustic Guitar (nylon)"
+            sPitch, // note: midi number or frequency in Hz (if > 127)
+            1, // velocity: 0..1
+            0, // delay in seconds
+            engineDuration, // Duration in seconds
+            conf.channel // Channel
+            );
+        } else {
+            // Rest or unknown
+            realDuration = -realDuration;
+        }
+
+        var milliseconds = realDuration * 1000;
+
+        currentTimeout = setTimeout(function () {
+
+            if (noteCallback) {
+                noteCallback();
+            }
+
+            _playNote.apply(playerContext, [BPM, bar, pitch, notes, endCallback, noteCallback]);
+        }, milliseconds);
+
+        currentNoteID++;
+    };
+
+    this.play = function (BPM, bar, pitch, notes, endCallback, noteCallback) {
+        playing = true;
+        currentNoteID = 0;
+
+        _playNote(BPM, bar, pitch, notes, endCallback, noteCallback);
+    };
+
+    this.stop = function () {
+
+        if (playingStopped) {
+            playingStopped();
+        }
+
+        playing = false;
+
+        if (currentTimeout) {
+            clearTimeout(currentTimeout);
+        }
+        currentTimeout = null;
+    };
+};
+
+/***/ }),
+/* 270 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Synth = __webpack_require__(271)
+
+module.exports = Player
+
+
+function Player(audioContext, destination) {
+
+
+    // params
+    var instMin = 0
+    var instMax = 127
+    var drumMin = 35
+    var drumMax = 81
+
+
+
+    // internals
+    var synth = new Synth({
+        useReverb: 1,
+        quality: 1,
+        voices: 32,
+    })
+
+    if (audioContext) {
+        synth.setAudioContext(audioContext, destination)
+    }
+
+
+
+    // merge instruments and drums into one big list
+    var instCt = instMax - instMin + 1
+    var drumCt = drumMax - drumMin + 1
+    var names = []
+    for (var i = 0; i < instCt; i++) names.push(synth.getTimbreName(0, i + instMin))
+    for (var j = 0; j < drumCt; j++) names.push(synth.getTimbreName(1, j + drumMin))
+
+
+
+
+    // Properties
+    this._synth = synth
+    this.names = names
+
+
+
+
+    // API
+
+    this.setQuality = function (q) {
+        synth.setQuality(q ? 1 : 0)
+    }
+
+    this.getCurrentTime = function () {
+        return synth.actx.currentTime
+    }
+
+    this.play = function (inst, note, vel, delay, duration, channel, attack) {
+        inst = inst || 0
+        if (inst < 0 || inst > instMax + drumCt) throw 'Invalid instrument'
+        note = note || 60
+        delay = delay || 0
+        if (isNaN(vel)) vel = 0.5
+        if (isNaN(duration)) duration = 0.5
+        if (delay < 0) delay = 0
+        play_impl(inst, note, vel, delay, duration, channel, attack)
+    }
+
+
+    function play_impl(inst, note, vel, delay, duration, channel, attack) {
+        var isDrums = (inst >= instCt)
+        // use passed-in channel value, defaulting to 0
+        channel = channel | 0
+        if (isDrums) {
+            // drums use channel 9, and determine instrument based on the note
+            channel = 9
+            note = inst + drumMin - instCt
+        } else {
+            inst -= instMin
+            synth.setProgram(channel, inst)
+        }
+        // play the note
+        var t = synth.actx.currentTime
+        var intVel = (127 * vel) | 0
+
+        // console.log([
+        //     'playing: ch=', channel,
+        //     '   inst=', inst,
+        //     '   note=', note,
+        //     '   intVel=', intVel,
+        //     '   delay=', delay,
+        // ].join(''))
+
+        var prog = synth.program[synth.pg[channel]].p
+
+        if (note > 127) {
+            // assume note is a frequency in Hz if it's above 127
+            overrideParameter(prog, 'f', note)
+            overrideParameter(prog, 't', 0)
+        }
+        if (attack) overrideParameter(prog, 'a', attack)
+
+        // actual play command
+        synth.noteOn(channel, note, intVel, t + delay)
+        synth.noteOff(channel, note, t + delay + duration)
+
+        // undo overrides
+        if (note > 127) {
+            undoOverride(prog, 'f')
+            undoOverride(prog, 't')
+        }
+        if (attack) undoOverride(prog, 'a')
+
+    }
+
+
+
+
+
+    // temporarily override a program's parameters, for *source* oscillators
+    // e.g. override(0, 'f', 500) sets oscillator.f = 500 
+    // for all (oscillator.g==0), and caches overriden values
+
+    function overrideParameter(prog, param, value) {
+        var cache = overridden[param] || [0, 0, 0, 0, 0]
+        for (var i = 0; i < prog.length; i++) {
+            var osc = prog[i]
+            if (osc.g !== 0) continue
+            cache[i] = osc[param]
+            osc[param] = value
+        }
+        overridden[param] = cache
+    }
+    var overridden = {}
+
+    // undoes previous
+    function undoOverride(prog, param) {
+        var cache = overridden[param]
+        for (var i = 0; i < prog.length; i++) {
+            var osc = prog[i]
+            if (osc.g !== 0) continue
+            osc[param] = cache[i]
+        }
+    }
+
+
+
+
+
+}
+
+
+
+
+
+
+/***/ }),
+/* 271 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+function WebAudioTinySynth(opt){
+  this.__proto__ = this.sy =
+  /* webaudio-tynysynth core object */
+  {
+    is:"webaudio-tinysynth",
+    properties:{
+      masterVol:  {type:Number, value:0.5, observer:"setMasterVol"},
+      reverbLev:  {type:Number, value:0.3, observer:"setReverbLev"},
+      quality:    {type:Number, value:1, observer:"setQuality"},
+      debug:      {type:Number, value:0},
+      src:        {type:String, value:null, observer:"loadMIDIUrl"},
+      loop:       {type:Number, value:0},
+      internalcontext: {type:Number, value:1},
+      tsmode:     {type:Number, value:0},
+      voices:     {type:Number, value:64},
+      useReverb:  {type:Number, value:1},
+      /**/
+    },
+    /**/
+    program:[
+// 1-8 : Piano
+      {name:"Acoustic Grand Piano"},    {name:"Bright Acoustic Piano"},
+      {name:"Electric Grand Piano"},    {name:"Honky-tonk Piano"},
+      {name:"Electric Piano 1"},        {name:"Electric Piano 2"},
+      {name:"Harpsichord"},             {name:"Clavi"},
+/* 9-16 : Chromatic Perc*/
+      {name:"Celesta"},                 {name:"Glockenspiel"},
+      {name:"Music Box"},               {name:"Vibraphone"},
+      {name:"Marimba"},                 {name:"Xylophone"},
+      {name:"Tubular Bells"},           {name:"Dulcimer"},
+/* 17-24 : Organ */
+      {name:"Drawbar Organ"},           {name:"Percussive Organ"},
+      {name:"Rock Organ"},              {name:"Church Organ"},
+      {name:"Reed Organ"},              {name:"Accordion"},
+      {name:"Harmonica"},               {name:"Tango Accordion"},
+/* 25-32 : Guitar */
+      {name:"Acoustic Guitar (nylon)"}, {name:"Acoustic Guitar (steel)"},
+      {name:"Electric Guitar (jazz)"},  {name:"Electric Guitar (clean)"},
+      {name:"Electric Guitar (muted)"}, {name:"Overdriven Guitar"},
+      {name:"Distortion Guitar"},       {name:"Guitar harmonics"},
+/* 33-40 : Bass */
+      {name:"Acoustic Bass"},           {name:"Electric Bass (finger)"},
+      {name:"Electric Bass (pick)"},    {name:"Fretless Bass"},
+      {name:"Slap Bass 1"},             {name:"Slap Bass 2"},
+      {name:"Synth Bass 1"},            {name:"Synth Bass 2"},
+/* 41-48 : Strings */
+      {name:"Violin"},                  {name:"Viola"},
+      {name:"Cello"},                   {name:"Contrabass"},
+      {name:"Tremolo Strings"},         {name:"Pizzicato Strings"},
+      {name:"Orchestral Harp"},         {name:"Timpani"},
+/* 49-56 : Ensamble */
+      {name:"String Ensemble 1"},       {name:"String Ensemble 2"},
+      {name:"SynthStrings 1"},          {name:"SynthStrings 2"},
+      {name:"Choir Aahs"},              {name:"Voice Oohs"},
+      {name:"Synth Voice"},             {name:"Orchestra Hit"},
+/* 57-64 : Brass */
+      {name:"Trumpet"},                 {name:"Trombone"},
+      {name:"Tuba"},                    {name:"Muted Trumpet"},
+      {name:"French Horn"},             {name:"Brass Section"},
+      {name:"SynthBrass 1"},            {name:"SynthBrass 2"},
+/* 65-72 : Reed */
+      {name:"Soprano Sax"},             {name:"Alto Sax"},
+      {name:"Tenor Sax"},               {name:"Baritone Sax"},
+      {name:"Oboe"},                    {name:"English Horn"},
+      {name:"Bassoon"},                 {name:"Clarinet"},
+/* 73-80 : Pipe */
+      {name:"Piccolo"},                 {name:"Flute"},
+      {name:"Recorder"},                {name:"Pan Flute"},
+      {name:"Blown Bottle"},            {name:"Shakuhachi"},
+      {name:"Whistle"},                 {name:"Ocarina"},
+/* 81-88 : SynthLead */
+      {name:"Lead 1 (square)"},         {name:"Lead 2 (sawtooth)"},
+      {name:"Lead 3 (calliope)"},       {name:"Lead 4 (chiff)"},
+      {name:"Lead 5 (charang)"},        {name:"Lead 6 (voice)"},
+      {name:"Lead 7 (fifths)"},         {name:"Lead 8 (bass + lead)"},
+/* 89-96 : SynthPad */
+      {name:"Pad 1 (new age)"},         {name:"Pad 2 (warm)"},
+      {name:"Pad 3 (polysynth)"},       {name:"Pad 4 (choir)"},
+      {name:"Pad 5 (bowed)"},           {name:"Pad 6 (metallic)"},
+      {name:"Pad 7 (halo)"},            {name:"Pad 8 (sweep)"},
+/* 97-104 : FX */
+      {name:"FX 1 (rain)"},             {name:"FX 2 (soundtrack)"},
+      {name:"FX 3 (crystal)"},          {name:"FX 4 (atmosphere)"},
+      {name:"FX 5 (brightness)"},       {name:"FX 6 (goblins)"},
+      {name:"FX 7 (echoes)"},           {name:"FX 8 (sci-fi)"},
+/* 105-112 : Ethnic */
+      {name:"Sitar"},                   {name:"Banjo"},
+      {name:"Shamisen"},                {name:"Koto"},
+      {name:"Kalimba"},                 {name:"Bag pipe"},
+      {name:"Fiddle"},                  {name:"Shanai"},
+/* 113-120 : Percussive */
+      {name:"Tinkle Bell"},             {name:"Agogo"},
+      {name:"Steel Drums"},             {name:"Woodblock"},
+      {name:"Taiko Drum"},              {name:"Melodic Tom"},
+      {name:"Synth Drum"},              {name:"Reverse Cymbal"},
+/* 121-128 : SE */
+      {name:"Guitar Fret Noise"},       {name:"Breath Noise"},
+      {name:"Seashore"},                {name:"Bird Tweet"},
+      {name:"Telephone Ring"},          {name:"Helicopter"},
+      {name:"Applause"},                {name:"Gunshot"},
+    ],
+    drummap:[
+// 35
+      {name:"Acoustic Bass Drum"},  {name:"Bass Drum 1"},      {name:"Side Stick"},     {name:"Acoustic Snare"},
+      {name:"Hand Clap"},           {name:"Electric Snare"},   {name:"Low Floor Tom"},  {name:"Closed Hi Hat"},
+      {name:"High Floor Tom"},      {name:"Pedal Hi-Hat"},     {name:"Low Tom"},        {name:"Open Hi-Hat"},
+      {name:"Low-Mid Tom"},         {name:"Hi-Mid Tom"},       {name:"Crash Cymbal 1"}, {name:"High Tom"},
+      {name:"Ride Cymbal 1"},       {name:"Chinese Cymbal"},   {name:"Ride Bell"},      {name:"Tambourine"},
+      {name:"Splash Cymbal"},       {name:"Cowbell"},          {name:"Crash Cymbal 2"}, {name:"Vibraslap"},
+      {name:"Ride Cymbal 2"},       {name:"Hi Bongo"},         {name:"Low Bongo"},      {name:"Mute Hi Conga"},
+      {name:"Open Hi Conga"},       {name:"Low Conga"},        {name:"High Timbale"},   {name:"Low Timbale"},
+      {name:"High Agogo"},          {name:"Low Agogo"},        {name:"Cabasa"},         {name:"Maracas"},
+      {name:"Short Whistle"},       {name:"Long Whistle"},     {name:"Short Guiro"},    {name:"Long Guiro"},
+      {name:"Claves"},              {name:"Hi Wood Block"},    {name:"Low Wood Block"}, {name:"Mute Cuica"},
+      {name:"Open Cuica"},          {name:"Mute Triangle"},    {name:"Open Triangle"},
+    ],
+    program1:[
+      // 1-8 : Piano
+      [{w:"sine",v:.4,d:0.7,r:0.1,},{w:"triangle",v:3,d:0.7,s:0.1,g:1,a:0.01,k:-1.2}],
+      [{w:"triangle",v:0.4,d:0.7,r:0.1,},{w:"triangle",v:4,t:3,d:0.4,s:0.1,g:1,k:-1,a:0.01,}],
+      [{w:"sine",d:0.7,r:0.1,},{w:"triangle",v:4,f:2,d:0.5,s:0.5,g:1,k:-1}],
+      [{w:"sine",d:0.7,v:0.2,},{w:"triangle",v:4,t:3,f:2,d:0.3,g:1,k:-1,a:0.01,s:0.5,}],
+      [{w:"sine",v:0.35,d:0.7,},{w:"sine",v:3,t:7,f:1,d:1,s:1,g:1,k:-.7}],
+      [{w:"sine",v:0.35,d:0.7,},{w:"sine",v:8,t:7,f:1,d:0.5,s:1,g:1,k:-.7}],
+      [{w:"sawtooth",v:0.34,d:2,},{w:"sine",v:8,f:0.1,d:2,s:1,r:2,g:1,}],
+      [{w:"triangle",v:0.34,d:1.5,},{w:"square",v:6,f:0.1,d:1.5,s:0.5,r:2,g:1,}],
+      /* 9-16 : Chromatic Perc*/
+      [{w:"sine",d:0.3,r:0.3,},{w:"sine",v:7,t:11,d:0.03,g:1,}],
+      [{w:"sine",d:0.3,r:0.3,},{w:"sine",v:11,t:6,d:0.2,s:0.4,g:1,}],
+      [{w:"sine",v:0.2,d:0.3,r:0.3,},{w:"sine",v:11,t:5,d:0.1,s:0.4,g:1,}],
+      [{w:"sine",v:0.2,d:0.6,r:0.6,},{w:"triangle",v:11,t:5,f:1,s:0.5,g:1,}],
+      [{w:"sine",v:0.3,d:0.2,r:0.2,},{w:"sine",v:6,t:5,d:0.02,g:1,}],
+      [{w:"sine",v:0.3,d:0.2,r:0.2,},{w:"sine",v:7,t:11,d:0.03,g:1,}],
+      [{w:"sine",v:0.2,d:1,r:1,},{w:"sine",v:11,t:3.5,d:1,r:1,g:1,}],
+      [{w:"triangle",v:0.2,d:0.5,r:0.2,},{w:"sine",v:6,t:2.5,d:0.2,s:0.1,r:0.2,g:1,}],
+      /* 17-24 : Organ */
+      [{w:"w9999",v:0.22,s:0.9,},{w:"w9999",v:0.22,t:2,f:2,s:0.9,}],
+      [{w:"w9999",v:0.2,s:1,},{w:"sine",v:11,t:6,f:2,s:0.1,g:1,h:0.006,r:0.002,d:0.002,},{w:"w9999",v:0.2,t:2,f:1,h:0,s:1,}],
+      [{w:"w9999",v:0.2,d:0.1,s:0.9,},{w:"w9999",v:0.25,t:4,f:2,s:0.5,}],
+      [{w:"w9999",v:0.3,a:0.04,s:0.9,},{w:"w9999",v:0.2,t:8,f:2,a:0.04,s:0.9,}],
+      [{w:"sine",v:0.2,a:0.02,d:0.05,s:1,},{w:"sine",v:6,t:3,f:1,a:0.02,d:0.05,s:1,g:1,}],
+      [{w:"triangle",v:0.2,a:0.02,d:0.05,s:0.8,},{w:"square",v:7,t:3,f:1,d:0.05,s:1.5,g:1,}],
+      [{w:"square",v:0.2,a:0.02,d:0.2,s:0.5,},{w:"square",v:1,d:0.03,s:2,g:1,}],
+      [{w:"square",v:0.2,a:0.02,d:0.1,s:0.8,},{w:"square",v:1,a:0.3,d:0.1,s:2,g:1,}],
+      /* 25-32 : Guitar */
+      [{w:"sine",v:0.3,d:0.5,f:1,},{w:"triangle",v:5,t:3,f:-1,d:1,s:0.1,g:1,}],
+      [{w:"sine",v:0.4,d:0.6,f:1,},{w:"triangle",v:12,t:3,d:0.6,s:0.1,g:1,f:-1,}],
+      [{w:"triangle",v:0.3,d:1,f:1,},{w:"triangle",v:6,f:-1,d:0.4,s:0.5,g:1,t:3,}],
+      [{w:"sine",v:0.3,d:1,f:-1,},{w:"triangle",v:11,f:1,d:0.4,s:0.5,g:1,t:3,}],
+      [{w:"sine",v:0.4,d:0.1,r:0.01},{w:"sine",v:7,g:1,}],
+      [{w:"triangle",v:0.4,d:1,f:1,},{w:"square",v:4,f:-1,d:1,s:0.7,g:1,}],//[{w:"triangle",v:0.35,d:1,f:1,},{w:"square",v:7,f:-1,d:0.3,s:0.5,g:1,}],
+      [{w:"triangle",v:0.35,d:1,f:1,},{w:"square",v:7,f:-1,d:0.3,s:0.5,g:1,}],//[{w:"triangle",v:0.4,d:1,f:1,},{w:"square",v:4,f:-1,d:1,s:0.7,g:1,}],//[{w:"triangle",v:0.4,d:1,},{w:"square",v:4,f:2,d:1,s:0.7,g:1,}],
+      [{w:"sine",v:0.2,t:1.5,a:0.005,h:0.2,d:0.6,},{w:"sine",v:11,t:5,f:2,d:1,s:0.5,g:1,}],
+      /* 33-40 : Bass */
+      [{w:"sine",d:0.3,},{w:"sine",v:4,t:3,d:1,s:1,g:1,}],
+      [{w:"sine",d:0.3,},{w:"sine",v:4,t:3,d:1,s:1,g:1,}],
+      [{w:"w9999",d:0.3,v:0.7,s:0.5,},{w:"sawtooth",v:1.2,d:0.02,s:0.5,g:1,h:0,r:0.02,}],
+      [{w:"sine",d:0.3,},{w:"sine",v:4,t:3,d:1,s:1,g:1,}],
+      [{w:"triangle",v:0.3,t:2,d:1,},{w:"triangle",v:15,t:2.5,d:0.04,s:0.1,g:1,}],
+      [{w:"triangle",v:0.3,t:2,d:1,},{w:"triangle",v:15,t:2.5,d:0.04,s:0.1,g:1,}],
+      [{w:"triangle",d:0.7,},{w:"square",v:0.4,t:0.5,f:1,d:0.2,s:10,g:1,}],
+      [{w:"triangle",d:0.7,},{w:"square",v:0.4,t:0.5,f:1,d:0.2,s:10,g:1,}],
+      /* 41-48 : Strings */
+      [{w:"sawtooth",v:0.4,a:0.1,d:11,},{w:"sine",v:5,d:11,s:0.2,g:1,}],
+      [{w:"sawtooth",v:0.4,a:0.1,d:11,},{w:"sine",v:5,d:11,s:0.2,g:1,}],
+      [{w:"sawtooth",v:0.4,a:0.1,d:11,},{w:"sine",v:5,t:0.5,d:11,s:0.2,g:1,}],
+      [{w:"sawtooth",v:0.4,a:0.1,d:11,},{w:"sine",v:5,t:0.5,d:11,s:0.2,g:1,}],
+      [{w:"sine",v:0.4,a:0.1,d:11,},{w:"sine",v:6,f:2.5,d:0.05,s:1.1,g:1,}],
+      [{w:"sine",v:0.3,d:0.1,r:0.1,},{w:"square",v:4,t:3,d:1,s:0.2,g:1,}],
+      [{w:"sine",v:0.3,d:0.5,r:0.5,},{w:"sine",v:7,t:2,f:2,d:1,r:1,g:1,}],
+      [{w:"triangle",v:0.6,h:0.03,d:0.3,r:0.3,t:0.5,},{w:"n0",v:8,t:1.5,d:0.08,r:0.08,g:1,}],
+      /* 49-56 : Ensamble */
+      [{w:"sawtooth",v:0.3,a:0.03,s:0.5,},{w:"sawtooth",v:0.2,t:2,f:2,d:1,s:2,}],
+      [{w:"sawtooth",v:0.3,f:-2,a:0.03,s:0.5,},{w:"sawtooth",v:0.2,t:2,f:2,d:1,s:2,}],
+      [{w:"sawtooth",v:0.2,a:0.02,s:1,},{w:"sawtooth",v:0.2,t:2,f:2,a:1,d:1,s:1,}],
+      [{w:"sawtooth",v:0.2,a:0.02,s:1,},{w:"sawtooth",v:0.2,f:2,a:0.02,d:1,s:1,}],
+      [{w:"triangle",v:0.3,a:0.03,s:1,},{w:"sine",v:3,t:5,f:1,d:1,s:1,g:1,}],
+      [{w:"sine",v:0.4,a:0.03,s:0.9,},{w:"sine",v:1,t:2,f:3,d:0.03,s:0.2,g:1,}],
+      [{w:"triangle",v:0.6,a:0.05,s:0.5,},{w:"sine",v:1,f:0.8,d:0.2,s:0.2,g:1,}],
+      [{w:"square",v:0.15,a:0.01,d:0.2,r:0.2,t:0.5,h:0.03,},{w:"square",v:4,f:0.5,d:0.2,r:11,a:0.01,g:1,h:0.02,},{w:"square",v:0.15,t:4,f:1,a:0.02,d:0.15,r:0.15,h:0.03,},{g:3,w:"square",v:4,f:-0.5,a:0.01,h:0.02,d:0.15,r:11,}],
+      /* 57-64 : Brass */
+      [{w:"square",v:0.2,a:0.01,d:1,s:0.6,r:0.04,},{w:"sine",v:1,d:0.1,s:4,g:1,}],
+      [{w:"square",v:0.2,a:0.02,d:1,s:0.5,r:0.08,},{w:"sine",v:1,d:0.1,s:4,g:1,}],
+      [{w:"square",v:0.2,a:0.04,d:1,s:0.4,r:0.08,},{w:"sine",v:1,d:0.1,s:4,g:1,}],
+      [{w:"square",v:0.15,a:0.04,s:1,},{w:"sine",v:2,d:0.1,g:1,}],
+      [{w:"square",v:0.2,a:0.02,d:1,s:0.5,r:0.08,},{w:"sine",v:1,d:0.1,s:4,g:1,}],
+      [{w:"square",v:0.2,a:0.02,d:1,s:0.6,r:0.08,},{w:"sine",v:1,f:0.2,d:0.1,s:4,g:1,}],
+      [{w:"square",v:0.2,a:0.02,d:0.5,s:0.7,r:0.08,},{w:"sine",v:1,d:0.1,s:4,g:1,}],
+      [{w:"square",v:0.2,a:0.02,d:1,s:0.5,r:0.08,},{w:"sine",v:1,d:0.1,s:4,g:1,}],
+      /* 65-72 : Reed */
+      [{w:"square",v:0.2,a:0.02,d:2,s:0.6,},{w:"sine",v:2,d:1,g:1,}],
+      [{w:"square",v:0.2,a:0.02,d:2,s:0.6,},{w:"sine",v:2,d:1,g:1,}],
+      [{w:"square",v:0.2,a:0.02,d:1,s:0.6,},{w:"sine",v:2,d:1,g:1,}],
+      [{w:"square",v:0.2,a:0.02,d:1,s:0.6,},{w:"sine",v:2,d:1,g:1,}],
+      [{w:"sine",v:0.4,a:0.02,d:0.7,s:0.5,},{w:"square",v:5,t:2,d:0.2,s:0.5,g:1,}],
+      [{w:"sine",v:0.3,a:0.05,d:0.2,s:0.8,},{w:"sawtooth",v:6,f:0.1,d:0.1,s:0.3,g:1,}],
+      [{w:"sine",v:0.3,a:0.03,d:0.2,s:0.4,},{w:"square",v:7,f:0.2,d:1,s:0.1,g:1,}],
+      [{w:"square",v:0.2,a:0.05,d:0.1,s:0.8,},{w:"square",v:4,d:0.1,s:1.1,g:1,}],
+      /* 73-80 : Pipe */
+      [{w:"sine",a:0.02,d:2,},{w:"sine",v:6,t:2,d:0.04,g:1,}],
+      [{w:"sine",v:0.7,a:0.03,d:0.4,s:0.4,},{w:"sine",v:4,t:2,f:0.2,d:0.4,g:1,}],
+      [{w:"sine",v:0.7,a:0.02,d:0.4,s:0.6,},{w:"sine",v:3,t:2,d:0,s:1,g:1,}],
+      [{w:"sine",v:0.4,a:0.06,d:0.3,s:0.3,},{w:"sine",v:7,t:2,d:0.2,s:0.2,g:1,}],
+      [{w:"sine",a:0.02,d:0.3,s:0.3,},{w:"sawtooth",v:3,t:2,d:0.3,g:1,}],
+      [{w:"sine",v:0.4,a:0.02,d:2,s:0.1,},{w:"sawtooth",v:8,t:2,f:1,d:0.5,g:1,}],
+      [{w:"sine",v:0.7,a:0.03,d:0.5,s:0.3,},{w:"sine",v:0.003,t:0,f:4,d:0.1,s:0.002,g:1,}],
+      [{w:"sine",v:0.7,a:0.02,d:2,},{w:"sine",v:1,t:2,f:1,d:0.02,g:1,}],
+      /* 81-88 : SynthLead */
+      [{w:"square",v:0.3,d:1,s:0.5,},{w:"square",v:1,f:0.2,d:1,s:0.5,g:1,}],
+      [{w:"sawtooth",v:0.3,d:2,s:0.5,},{w:"square",v:2,f:0.1,s:0.5,g:1,}],
+      [{w:"triangle",v:0.5,a:0.05,d:2,s:0.6,},{w:"sine",v:4,t:2,g:1,}],
+      [{w:"triangle",v:0.3,a:0.01,d:2,s:0.3,},{w:"sine",v:22,t:2,f:1,d:0.03,s:0.2,g:1,}],
+      [{w:"sawtooth",v:0.3,d:1,s:0.5,},{w:"sine",v:11,t:11,a:0.2,d:0.05,s:0.3,g:1,}],
+      [{w:"sine",v:0.3,a:0.06,d:1,s:0.5,},{w:"sine",v:7,f:1,d:1,s:0.2,g:1,}],
+      [{w:"sawtooth",v:0.3,a:0.03,d:0.7,s:0.3,r:0.2,},{w:"sawtooth",v:0.3,t:0.75,d:0.7,a:0.1,s:0.3,r:0.2,}],
+      [{w:"triangle",v:0.3,a:0.01,d:0.7,s:0.5,},{w:"square",v:5,t:0.5,d:0.7,s:0.5,g:1,}],
+      /* 89-96 : SynthPad */
+      [{w:"triangle",v:0.3,a:0.02,d:0.3,s:0.3,r:0.3,},{w:"square",v:3,t:4,f:1,a:0.02,d:0.1,s:1,g:1,},{w:"triangle",v:0.08,t:0.5,a:0.1,h:0,d:0.1,s:0.5,r:0.1,b:0,c:0,}],
+      [{w:"sine",v:0.3,a:0.05,d:1,s:0.7,r:0.3,},{w:"sine",v:2,f:1,d:0.3,s:1,g:1,}],
+      [{w:"square",v:0.3,a:0.03,d:0.5,s:0.3,r:0.1,},{w:"square",v:4,f:1,a:0.03,d:0.1,g:1,}],
+      [{w:"triangle",v:0.3,a:0.08,d:1,s:0.3,r:0.1,},{w:"square",v:2,f:1,d:0.3,s:0.3,g:1,t:4,a:0.08,}],
+      [{w:"sine",v:0.3,a:0.05,d:1,s:0.3,r:0.1,},{w:"sine",v:0.1,t:2.001,f:1,d:1,s:50,g:1,}],
+      [{w:"triangle",v:0.3,a:0.03,d:0.7,s:0.3,r:0.2,},{w:"sine",v:12,t:7,f:1,d:0.5,s:1.7,g:1,}],
+      [{w:"sine",v:0.3,a:0.05,d:1,s:0.3,r:0.1,},{w:"sawtooth",v:22,t:6,d:0.06,s:0.3,g:1,}],
+      [{w:"triangle",v:0.3,a:0.05,d:11,r:0.3,},{w:"triangle",v:1,d:1,s:8,g:1,}],
+      /* 97-104 : FX */
+      [{w:"sawtooth",v:0.3,d:4,s:0.8,r:0.1,},{w:"square",v:1,t:2,f:8,a:1,d:1,s:1,r:0.1,g:1,}],
+      [{w:"triangle",v:0.3,d:1,s:0.5,t:0.8,a:0.2,p:1.25,q:0.2,},{w:"sawtooth",v:0.2,a:0.2,d:0.3,s:1,t:1.2,p:1.25,q:0.2,}],
+      [{w:"sine",v:0.3,d:1,s:0.3,},{w:"square",v:22,t:11,d:0.5,s:0.1,g:1,}],
+      [{w:"sawtooth",v:0.3,a:0.04,d:1,s:0.8,r:0.1,},{w:"square",v:1,t:0.5,d:1,s:2,g:1,}],
+      [{w:"triangle",v:0.3,d:1,s:0.3,},{w:"sine",v:22,t:6,d:0.6,s:0.05,g:1,}],
+      [{w:"sine",v:0.6,a:0.1,d:0.05,s:0.4,},{w:"sine",v:5,t:5,f:1,d:0.05,s:0.3,g:1,}],
+      [{w:"sine",a:0.1,d:0.05,s:0.4,v:0.8,},{w:"sine",v:5,t:5,f:1,d:0.05,s:0.3,g:1,}],
+      [{w:"square",v:0.3,a:0.1,d:0.1,s:0.4,},{w:"square",v:1,f:1,d:0.3,s:0.1,g:1,}],
+      /* 105-112 : Ethnic */
+      [{w:"sawtooth",v:0.3,d:0.5,r:0.5,},{w:"sawtooth",v:11,t:5,d:0.05,g:1,}],
+      [{w:"square",v:0.3,d:0.2,r:0.2,},{w:"square",v:7,t:3,d:0.05,g:1,}],
+      [{w:"triangle",d:0.2,r:0.2,},{w:"square",v:9,t:3,d:0.1,r:0.1,g:1,}],
+      [{w:"triangle",d:0.3,r:0.3,},{w:"square",v:6,t:3,d:1,r:1,g:1,}],
+      [{w:"triangle",v:0.4,d:0.2,r:0.2,},{w:"square",v:22,t:12,d:0.1,r:0.1,g:1,}],
+      [{w:"sine",v:0.25,a:0.02,d:0.05,s:0.8,},{w:"square",v:1,t:2,d:0.03,s:11,g:1,}],
+      [{w:"sine",v:0.3,a:0.05,d:11,},{w:"square",v:7,t:3,f:1,s:0.7,g:1,}],
+      [{w:"square",v:0.3,a:0.05,d:0.1,s:0.8,},{w:"square",v:4,d:0.1,s:1.1,g:1,}],
+      /* 113-120 : Percussive */
+      [{w:"sine",v:0.4,d:0.3,r:0.3,},{w:"sine",v:7,t:9,d:0.1,r:0.1,g:1,}],
+      [{w:"sine",v:0.7,d:0.1,r:0.1,},{w:"sine",v:22,t:7,d:0.05,g:1,}],
+      [{w:"sine",v:0.6,d:0.15,r:0.15,},{w:"square",v:11,t:3.2,d:0.1,r:0.1,g:1,}],
+      [{w:"sine",v:0.8,d:0.07,r:0.07,},{w:"square",v:11,t:7,r:0.01,g:1,}],
+      [{w:"triangle",v:0.7,t:0.5,d:0.2,r:0.2,p:0.95,},{w:"n0",v:9,g:1,d:0.2,r:0.2,}],
+      [{w:"sine",v:0.7,d:0.1,r:0.1,p:0.9,},{w:"square",v:14,t:2,d:0.005,r:0.005,g:1,}],
+      [{w:"square",d:0.15,r:0.15,p:0.5,},{w:"square",v:4,t:5,d:0.001,r:0.001,g:1,}],
+      [{w:"n1",v:0.3,a:1,s:1,d:0.15,r:0,t:0.5,}],
+      /* 121-128 : SE */
+      [{w:"sine",t:12.5,d:0,r:0,p:0.5,v:0.3,h:0.2,q:0.5,},{g:1,w:"sine",v:1,t:2,d:0,r:0,s:1,},{g:1,w:"n0",v:0.2,t:2,a:0.6,h:0,d:0.1,r:0.1,b:0,c:0,}],
+      [{w:"n0",v:0.2,a:0.05,h:0.02,d:0.02,r:0.02,}],
+      [{w:"n0",v:0.4,a:1,d:1,t:0.25,}],
+      [{w:"sine",v:0.3,a:0.1,d:1,s:0.5,},{w:"sine",v:4,t:0,f:1.5,d:1,s:1,r:0.1,g:1,},{g:1,w:"sine",v:4,t:0,f:2,a:0.6,h:0,d:0.1,s:1,r:0.1,b:0,c:0,}],
+      [{w:"square",v:0.3,t:0.25,d:11,s:1,},{w:"square",v:12,t:0,f:8,d:1,s:1,r:11,g:1,}],
+      [{w:"n0",v:0.4,t:0.5,a:1,d:11,s:1,r:0.5,},{w:"square",v:1,t:0,f:14,d:1,s:1,r:11,g:1,}],
+      [{w:"sine",t:0,f:1221,a:0.2,d:1,r:0.25,s:1,},{g:1,w:"n0",v:3,t:0.5,d:1,s:1,r:1,}],
+      [{w:"sine",d:0.4,r:0.4,p:0.1,t:2.5,v:1,},{w:"n0",v:12,t:2,d:1,r:1,g:1,}],
+    ],
+    program0:[
+// 1-8 : Piano
+      [{w:"triangle",v:.5,d:.7}],                   [{w:"triangle",v:.5,d:.7}],
+      [{w:"triangle",v:.5,d:.7}],                   [{w:"triangle",v:.5,d:.7}],
+      [{w:"triangle",v:.5,d:.7}],                   [{w:"triangle",v:.5,d:.7}],
+      [{w:"sawtooth",v:.3,d:.7}],                   [{w:"sawtooth",v:.3,d:.7}],
+/* 9-16 : Chromatic Perc*/
+      [{w:"sine",v:.5,d:.3,r:.3}],                  [{w:"triangle",v:.5,d:.3,r:.3}],
+      [{w:"square",v:.2,d:.3,r:.3}],                [{w:"square",v:.2,d:.3,r:.3}],
+      [{w:"sine",v:.5,d:.1,r:.1}],                  [{w:"sine",v:.5,d:.1,r:.1}],
+      [{w:"square",v:.2,d:1,r:1}],                  [{w:"sawtooth",v:.3,d:.7,r:.7}],
+/* 17-24 : Organ */
+      [{w:"sine",v:0.5,a:0.01,s:1}],                [{w:"sine",v:0.7,d:0.02,s:0.7}],
+      [{w:"square",v:.2,s:1}],                      [{w:"triangle",v:.5,a:.01,s:1}],
+      [{w:"square",v:.2,a:.02,s:1}],                [{w:"square",v:0.2,a:0.02,s:1}],
+      [{w:"square",v:0.2,a:0.02,s:1}],              [{w:"square",v:.2,a:.05,s:1}],
+/* 25-32 : Guitar */
+      [{w:"triangle",v:.5,d:.5}],                   [{w:"square",v:.2,d:.6}],
+      [{w:"square",v:.2,d:.6}],                     [{w:"triangle",v:.8,d:.6}],
+      [{w:"triangle",v:.4,d:.05}],                  [{w:"square",v:.2,d:1}],
+      [{w:"square",v:.2,d:1}],                      [{w:"sine",v:.4,d:.6}],
+/* 33-40 : Bass */
+      [{w:"triangle",v:.7,d:.4}],                   [{w:"triangle",v:.7,d:.7}],
+      [{w:"triangle",v:.7,d:.7}],                   [{w:"triangle",v:.7,d:.7}],
+      [{w:"square",v:.3,d:.2}],                     [{w:"square",v:.3,d:.2}],
+      [{w:"square",v:.3,d:.1,s:.2}],                [{w:"sawtooth",v:.4,d:.1,s:.2}],
+/* 41-48 : Strings */
+      [{w:"sawtooth",v:.2,a:.02,s:1}],              [{w:"sawtooth",v:.2,a:.02,s:1}],
+      [{w:"sawtooth",v:.2,a:.02,s:1}],              [{w:"sawtooth",v:.2,a:.02,s:1}],
+      [{w:"sawtooth",v:.2,a:.02,s:1}],              [{w:"sawtooth",v:.3,d:.1}],
+      [{w:"sawtooth",v:.3,d:.5,r:.5}],              [{w:"triangle",v:.6,d:.1,r:.1,h:0.03,p:0.8}],
+/* 49-56 : Ensamble */
+      [{w:"sawtooth",v:.2,a:.02,s:1}],              [{w:"sawtooth",v:.2,a:.02,s:1}],
+      [{w:"sawtooth",v:.2,a:.02,s:1}],              [{w:"sawtooth",v:.2,a:.02,s:1}],
+      [{w:"triangle",v:.3,a:.03,s:1}],              [{w:"sine",v:.3,a:.03,s:1}],
+      [{w:"triangle",v:.3,a:.05,s:1}],              [{w:"sawtooth",v:.5,a:.01,d:.1}],
+/* 57-64 : Brass */
+      [{w:"square",v:.3,a:.05,d:.2,s:.6}],          [{w:"square",v:.3,a:.05,d:.2,s:.6}],
+      [{w:"square",v:.3,a:.05,d:.2,s:.6}],          [{w:"square",v:0.2,a:.05,d:0.01,s:1}],
+      [{w:"square",v:.3,a:.05,s:1}],                [{w:"square",v:.3,s:.7}],
+      [{w:"square",v:.3,s:.7}],                     [{w:"square",v:.3,s:.7}],
+/* 65-72 : Reed */
+      [{w:"square",v:.3,a:.02,d:2}],                [{w:"square",v:.3,a:.02,d:2}],
+      [{w:"square",v:.3,a:.03,d:2}],                [{w:"square",v:.3,a:.04,d:2}],
+      [{w:"square",v:.3,a:.02,d:2}],                [{w:"square",v:.3,a:.05,d:2}],
+      [{w:"square",v:.3,a:.03,d:2}],                [{w:"square",v:.3,a:.03,d:2}],
+/* 73-80 : Pipe */
+      [{w:"sine",v:.7,a:.02,d:2}],                  [{w:"sine",v:.7,a:.02,d:2}],
+      [{w:"sine",v:.7,a:.02,d:2}],                  [{w:"sine",v:.7,a:.02,d:2}],
+      [{w:"sine",v:.7,a:.02,d:2}],                  [{w:"sine",v:.7,a:.02,d:2}],
+      [{w:"sine",v:.7,a:.02,d:2}],                  [{w:"sine",v:.7,a:.02,d:2}],
+/* 81-88 : SynthLead */
+      [{w:"square",v:.3,s:.7}],                     [{w:"sawtooth",v:.4,s:.7}],
+      [{w:"triangle",v:.5,s:.7}],                   [{w:"sawtooth",v:.4,s:.7}],
+      [{w:"sawtooth",v:.4,d:12}],                   [{w:"sine",v:.4,a:.06,d:12}],
+      [{w:"sawtooth",v:.4,d:12}],                   [{w:"sawtooth",v:.4,d:12}],
+/* 89-96 : SynthPad */
+      [{w:"sawtooth",v:.3,d:12}],                   [{w:"triangle",v:.5,d:12}],
+      [{w:"square",v:.3,d:12}],                     [{w:"triangle",v:.5,a:.08,d:11}],
+      [{w:"sawtooth",v:.5,a:.05,d:11}],             [{w:"sawtooth",v:.5,d:11}],
+      [{w:"triangle",v:.5,d:11}],                   [{w:"triangle",v:.5,d:11}],
+/* 97-104 : FX */
+      [{w:"triangle",v:.5,d:11}],                   [{w:"triangle",v:.5,d:11}],
+      [{w:"square",v:.3,d:11}],                     [{w:"sawtooth",v:0.5,a:0.04,d:11}],
+      [{w:"sawtooth",v:.5,d:11}],                   [{w:"triangle",v:.5,a:.8,d:11}],
+      [{w:"triangle",v:.5,d:11}],                   [{w:"square",v:.3,d:11}],
+/* 105-112 : Ethnic */
+      [{w:"sawtooth",v:.3,d:1,r:1}],                [{w:"sawtooth",v:.5,d:.3}],
+      [{w:"sawtooth",v:.5,d:.3,r:.3}],              [{w:"sawtooth",v:.5,d:.3,r:.3}],
+      [{w:"square",v:.3,d:.2,r:.2}],                [{w:"square",v:.3,a:.02,d:2}],
+      [{w:"sawtooth",v:.2,a:.02,d:.7}],             [{w:"triangle",v:.5,d:1}],
+/* 113-120 : Percussive */
+      [{w:"sawtooth",v:.3,d:.3,r:.3}],              [{w:"sine",v:.8,d:.1,r:.1}],
+      [{w:"square",v:.2,d:.1,r:.1,p:1.05}],         [{w:"sine",v:.8,d:.05,r:.05}],
+      [{w:"triangle",v:0.5,d:0.1,r:0.1,p:0.96}],    [{w:"triangle",v:0.5,d:0.1,r:0.1,p:0.97}],
+      [{w:"square",v:.3,d:.1,r:.1,}],               [{w:"n1",v:0.3,a:1,s:1,d:0.15,r:0,t:0.5,}],
+/* 121-128 : SE */
+      [{w:"triangle",v:0.5,d:0.03,t:0,f:1332,r:0.001,p:1.1}],
+      [{w:"n0",v:0.2,t:0.1,d:0.02,a:0.05,h:0.02,r:0.02}],
+      [{w:"n0",v:0.4,a:1,d:1,t:0.25,}],
+      [{w:"sine",v:0.3,a:0.8,d:1,t:0,f:1832}],
+      [{w:"triangle",d:0.5,t:0,f:444,s:1,}],
+      [{w:"n0",v:0.4,d:1,t:0,f:22,s:1,}],
+      [{w:"n0",v:0.5,a:0.2,d:11,t:0,f:44}],
+      [{w:"n0",v:0.5,t:0.25,d:0.4,r:0.4}],
+    ],
+    drummap1:[
+/*35*/  [{w:"triangle",t:0,f:70,v:1,d:0.05,h:0.03,p:0.9,q:0.1,},{w:"n0",g:1,t:6,v:17,r:0.01,h:0,p:0,}],
+        [{w:"triangle",t:0,f:88,v:1,d:0.05,h:0.03,p:0.5,q:0.1,},{w:"n0",g:1,t:5,v:42,r:0.01,h:0,p:0,}],
+        [{w:"n0",f:222,p:0,t:0,r:0.01,h:0,}],
+        [{w:"triangle",v:0.3,f:180,d:0.05,t:0,h:0.03,p:0.9,q:0.1,},{w:"n0",v:0.6,t:0,f:70,h:0.02,r:0.01,p:0,},{g:1,w:"square",v:2,t:0,f:360,r:0.01,b:0,c:0,}],
+        [{w:"square",f:1150,v:0.34,t:0,r:0.03,h:0.025,d:0.03,},{g:1,w:"n0",t:0,f:13,h:0.025,d:0.1,s:1,r:0.1,v:1,}],
+/*40*/  [{w:"triangle",f:200,v:1,d:0.06,t:0,r:0.06,},{w:"n0",g:1,t:0,f:400,v:12,r:0.02,d:0.02,}],
+        [{w:"triangle",f:100,v:0.9,d:0.12,h:0.02,p:0.5,t:0,r:0.12,},{g:1,w:"n0",v:5,t:0.4,h:0.015,d:0.005,r:0.005,}],
+        [{w:"n1",f:390,v:0.25,r:0.01,t:0,}],
+        [{w:"triangle",f:120,v:0.9,d:0.12,h:0.02,p:0.5,t:0,r:0.12,},{g:1,w:"n0",v:5,t:0.5,h:0.015,d:0.005,r:0.005,}],
+        [{w:"n1",v:0.25,f:390,r:0.03,t:0,h:0.005,d:0.03,}],
+/*45*/  [{w:"triangle",f:140,v:0.9,d:0.12,h:0.02,p:0.5,t:0,r:0.12,},{g:1,w:"n0",v:5,t:0.3,h:0.015,d:0.005,r:0.005,}],
+        [{w:"n1",v:0.25,f:390,t:0,d:0.2,r:0.2,},{w:"n0",v:0.3,t:0,c:0,f:440,h:0.005,d:0.05,}],
+        [{w:"triangle",f:155,v:0.9,d:0.12,h:0.02,p:0.5,t:0,r:0.12,},{g:1,w:"n0",v:5,t:0.3,h:0.015,d:0.005,r:0.005,}],
+        [{w:"triangle",f:180,v:0.9,d:0.12,h:0.02,p:0.5,t:0,r:0.12,},{g:1,w:"n0",v:5,t:0.3,h:0.015,d:0.005,r:0.005,}],
+        [{w:"n1",v:0.3,f:1200,d:0.2,r:0.2,h:0.05,t:0,},{w:"n1",t:0,v:1,d:0.1,r:0.1,p:1.2,f:440,}],
+/*50*/  [{w:"triangle",f:220,v:0.9,d:0.12,h:0.02,p:0.5,t:0,r:0.12,},{g:1,w:"n0",v:5,t:0.3,h:0.015,d:0.005,r:0.005,}],
+        [{w:"n1",f:500,v:0.15,d:0.4,r:0.4,h:0,t:0,},{w:"n0",v:0.1,t:0,r:0.01,f:440,}],
+        [{w:"n1",v:0.3,f:800,d:0.2,r:0.2,h:0.05,t:0,},{w:"square",t:0,v:1,d:0.1,r:0.1,p:0.1,f:220,g:1,}],
+        [{w:"sine",f:1651,v:0.15,d:0.2,r:0.2,h:0,t:0,},{w:"sawtooth",g:1,t:1.21,v:7.2,d:0.1,r:11,h:1,},{g:1,w:"n0",v:3.1,t:0.152,d:0.002,r:0.002,}],
+        null,
+/*55*/  [{w:"n1",v:.3,f:1200,d:0.2,r:0.2,h:0.05,t:0,},{w:"n1",t:0,v:1,d:0.1,r:0.1,p:1.2,f:440,}],
+        null,
+        [{w:"n1",v:0.3,f:555,d:0.25,r:0.25,h:0.05,t:0,},{w:"n1",t:0,v:1,d:0.1,r:0.1,f:440,a:0.005,h:0.02,}],
+        [{w:"sawtooth",f:776,v:0.2,d:0.3,t:0,r:0.3,},{g:1,w:"n0",v:2,t:0,f:776,a:0.005,h:0.02,d:0.1,s:1,r:0.1,c:0,},{g:11,w:"sine",v:0.1,t:0,f:22,d:0.3,r:0.3,b:0,c:0,}],
+        [{w:"n1",f:440,v:0.15,d:0.4,r:0.4,h:0,t:0,},{w:"n0",v:0.4,t:0,r:0.01,f:440,}],
+/*60*/  null,null,null,null,null,
+/*65*/  null,null,null,null,null,
+/*70*/  null,null,null,null,null,
+/*75*/  null,null,null,null,null,
+/*80*/  [{w:"sine",f:1720,v:0.3,d:0.02,t:0,r:0.02,},{w:"square",g:1,t:0,f:2876,v:6,d:0.2,s:1,r:0.2,}],
+        [{w:"sine",f:1720,v:0.3,d:0.25,t:0,r:0.25,},{w:"square",g:1,t:0,f:2876,v:6,d:0.2,s:1,r:0.2,}],
+    ],
+    drummap0:[
+/*35*/[{w:"triangle",t:0,f:110,v:1,d:0.05,h:0.02,p:0.1,}],
+      [{w:"triangle",t:0,f:150,v:0.8,d:0.1,p:0.1,h:0.02,r:0.01,}],
+      [{w:"n0",f:392,v:0.5,d:0.01,p:0,t:0,r:0.05}],
+      [{w:"n0",f:33,d:0.05,t:0,}],
+      [{w:"n0",f:100,v:0.7,d:0.03,t:0,r:0.03,h:0.02,}],
+/*40*/[{w:"n0",f:44,v:0.7,d:0.02,p:0.1,t:0,h:0.02,}],
+      [{w:"triangle",f:240,v:0.9,d:0.1,h:0.02,p:0.1,t:0,}],
+      [{w:"n0",f:440,v:0.2,r:0.01,t:0,}],
+      [{w:"triangle",f:270,v:0.9,d:0.1,h:0.02,p:0.1,t:0,}],
+      [{w:"n0",f:440,v:0.2,d:0.04,r:0.04,t:0,}],
+/*45*/[{w:"triangle",f:300,v:0.9,d:0.1,h:0.02,p:0.1,t:0,}],
+      [{w:"n0",f:440,v:0.2,d:0.1,r:0.1,h:0.02,t:0,}],
+      [{w:"triangle",f:320,v:0.9,d:0.1,h:0.02,p:0.1,t:0,}],
+      [{w:"triangle",f:360,v:0.9,d:0.1,h:0.02,p:0.1,t:0,}],
+      [{w:"n0",f:150,v:0.2,d:0.1,r:0.1,h:0.05,t:0,p:0.1,}],
+/*50*/[{w:"triangle",f:400,v:0.9,d:0.1,h:0.02,p:0.1,t:0,}],
+      [{w:"n0",f:150,v:0.2,d:0.1,r:0.01,h:0.05,t:0,p:0.1}],
+      [{w:"n0",f:150,v:0.2,d:0.1,r:0.01,h:0.05,t:0,p:0.1}],
+      [{w:"n0",f:440,v:0.3,d:0.1,p:0.9,t:0,r:0.1,}],
+      [{w:"n0",f:200,v:0.2,d:0.05,p:0.9,t:0,}],
+/*55*/[{w:"n0",f:440,v:0.3,d:0.12,p:0.9,t:0,}],
+      [{w:"sine",f:800,v:0.4,d:0.06,t:0,}],
+      [{w:"n0",f:150,v:0.2,d:0.1,r:0.01,h:0.05,t:0,p:0.1}],
+      [{w:"n0",f:33,v:0.3,d:0.2,p:0.9,t:0,}],
+      [{w:"n0",f:300,v:0.3,d:0.14,p:0.9,t:0,}],
+/*60*/[{w:"sine",f:200,d:0.06,t:0,}],
+      [{w:"sine",f:150,d:0.06,t:0,}],
+      [{w:"sine",f:300,t:0,}],
+      [{w:"sine",f:300,d:0.06,t:0,}],
+      [{w:"sine",f:250,d:0.06,t:0,}],
+/*65*/[{w:"square",f:300,v:.3,d:.06,p:.8,t:0,}],
+      [{w:"square",f:260,v:.3,d:.06,p:.8,t:0,}],
+      [{w:"sine",f:850,v:.5,d:.07,t:0,}],
+      [{w:"sine",f:790,v:.5,d:.07,t:0,}],
+      [{w:"n0",f:440,v:0.3,a:0.05,t:0,}],
+/*70*/[{w:"n0",f:440,v:0.3,a:0.05,t:0,}],
+      [{w:"triangle",f:1800,v:0.4,p:0.9,t:0,h:0.03,}],
+      [{w:"triangle",f:1800,v:0.3,p:0.9,t:0,h:0.13,}],
+      [{w:"n0",f:330,v:0.3,a:0.02,t:0,r:0.01,}],
+      [{w:"n0",f:330,v:0.3,a:0.02,t:0,h:0.04,r:0.01,}],
+/*75*/[{w:"n0",f:440,v:0.3,t:0,}],
+      [{w:"sine",f:800,t:0,}],
+      [{w:"sine",f:700,t:0,}],
+      [{w:"n0",f:330,v:0.3,t:0,}],
+      [{w:"n0",f:330,v:0.3,t:0,h:0.1,r:0.01,p:0.7,}],
+/*80*/[{w:"sine",t:0,f:1200,v:0.3,r:0.01,}],
+      [{w:"sine",t:0,f:1200,v:0.3,d:0.2,r:0.2,}],
+
+    ],
+    /**/
+    ready:function(){
+      var i;
+      this.pg=[]; this.vol=[]; this.ex=[]; this.bend=[]; this.rpnidx=[]; this.brange=[];
+      this.sustain=[]; this.notetab=[]; this.rhythm=[];
+      this.maxTick=0, this.playTick=0, this.playing=0; this.releaseRatio=3.5;
+      for(var i=0;i<16;++i){
+        this.pg[i]=0; this.vol[i]=3*100*100/(127*127);
+        this.bend[i]=0; this.brange[i]=0x100;
+        this.rhythm[i]=0;
+      }
+      this.rhythm[9]=1;
+      /**/
+      this.preroll=0.2;
+      this.relcnt=0;
+      setInterval(
+        function(){
+          if(++this.relcnt>=3){
+            this.relcnt=0;
+            for(var i=this.notetab.length-1;i>=0;--i){
+              var nt=this.notetab[i];
+              if(this.actx.currentTime>nt.e){
+                this._pruneNote(nt);
+                this.notetab.splice(i,1);
+              }
+            }
+            /**/
+          }
+          if(this.playing && this.song.ev.length>0){
+            var e=this.song.ev[this.playIndex];
+            while(this.actx.currentTime+this.preroll>this.playTime){
+              if(e.m[0]==0xff51){
+                this.song.tempo=e.m[1];
+                this.tick2Time=4*60/this.song.tempo/this.song.timebase;
+              }
+              else
+                this.send(e.m,this.playTime);
+              ++this.playIndex;
+              if(this.playIndex>=this.song.ev.length){
+                if(this.loop){
+                  e=this.song.ev[this.playIndex=0];
+                  this.playTick=e.t;
+                }
+                else{
+                  this.playTick=this.maxTick;
+                  this.playing=0;
+                  break;
+                }
+              }
+              else{
+                e=this.song.ev[this.playIndex];
+                this.playTime+=(e.t-this.playTick)*this.tick2Time;
+                this.playTick=e.t;
+              }
+            }
+          }
+        }.bind(this),60
+      );
+      // console.log("internalcontext:"+this.internalcontext)
+      if(this.internalcontext){
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        this.setAudioContext(new AudioContext());
+      }
+      this.isReady=1;
+    },
+    setMasterVol:function(v){
+      if(v!=undefined)
+        this.masterVol=v;
+      if(this.out)
+        this.out.gain.value=this.masterVol;
+    },
+    setReverbLev:function(v){
+      if(v!=undefined)
+        this.reverbLev=v;
+      var r=parseFloat(this.reverbLev);
+      if(this.rev&&!isNaN(r))
+        this.rev.gain.value=r*8;
+    },
+    setLoop:function(f){
+      this.loop=f;
+    },
+    setVoices:function(v){
+      this.voices=v;
+    },
+    getPlayStatus:function(){
+      return {play:this.playing, maxTick:this.maxTick, curTick:this.playTick};
+    },
+    locateMIDI:function(tick){
+      var i,p=this.playing;
+      this.stopMIDI();
+      for(i=0;i<this.song.ev.length && tick>this.song.ev[i].t;++i){
+        var m=this.song.ev[i];
+        var ch=m.m[0]&0xf;
+        switch(m.m[0]&0xf0){
+        case 0xb0:
+          switch(m.m[1]){
+          case 1:  this.setModulation(ch,m.m[2]); break;
+          case 7:  this.setChVol(ch,m.m[2]); break;
+          case 10: this.setPan(ch,m.m[2]); break;
+          case 11: this.setExpression(ch,m.m[2]); break;
+          case 64: this.setSustain(ch,m.m[2]); break;
+          }
+          break;
+        case 0xc0: this.pg[m.m[0]&0x0f]=m.m[1]; break;
+        }
+        if(m.m[0]==0xff51)
+          this.song.tempo=m.m[1];
+      }
+      if(!this.song.ev[i]){
+        this.playIndex=0;
+        this.playTick=this.maxTick;
+      }
+      else{
+        this.playIndex=i;
+        this.playTick=this.song.ev[i].t;
+      }
+      if(p)
+        this.playMIDI();
+    },
+    getTimbreName:function(m,n){
+      if(m==0)
+        return this.program[n].name;
+      else
+        return this.drummap[n-35].name;
+    },
+    loadMIDIUrl:function(url){
+      if(!url)
+        return;
+      var xhr=new XMLHttpRequest();
+      xhr.open("GET",url,true);
+      xhr.responseType="arraybuffer";
+      xhr.loadMIDI=this.loadMIDI.bind(this);
+      xhr.onload=function(e){
+        if(this.status==200){
+          this.loadMIDI(this.response);
+        }
+      };
+      xhr.send();
+    },
+    reset:function(){
+      for(var i=0;i<16;++i){
+        this.setProgram(i,0);
+        this.setBendRange(i,0x100);
+        this.setChVol(i,100);
+        this.setPan(i,64);
+        this.resetAllControllers(i);
+        this.allSoundOff(i);
+        this.rhythm[i]=0;
+      }
+      this.rhythm[9]=1;
+    },
+    stopMIDI:function(){
+      this.playing=0;
+      for(var i=0;i<16;++i)
+        this.allSoundOff(i);
+    },
+    playMIDI:function(){
+      if(!this.song)
+        return;
+      var dummy=this.actx.createOscillator();
+      dummy.connect(this.actx.destination);
+      dummy.frequency.value=0;
+      dummy.start(0);
+      dummy.stop(this.actx.currentTime+0.001);
+      if(this.playTick>=this.maxTick)
+        this.playTick=0,this.playIndex=0;
+      this.playTime=this.actx.currentTime+.1;
+      this.tick2Time=4*60/this.song.tempo/this.song.timebase;
+      this.playing=1;
+    },
+    loadMIDI:function(data){
+      function Get2(s, i) { return (s[i]<<8) + s[i+1]; }
+      function Get3(s, i) { return (s[i]<<16) + (s[i+1]<<8) + s[i+2]; }
+      function Get4(s, i) { return (s[i]<<24) + (s[i+1]<<16) + (s[i+2]<<8) + s[i+3]; }
+      function GetStr(s, i, len) {
+        return String.fromCharCode.apply(null,s.slice(i,i+len));
+      }
+      function Delta(s, i) {
+        var v, d;
+        v = 0;
+        datalen = 1;
+        while((d = s[i]) & 0x80) {
+          v = (v<<7) + (d&0x7f);
+          ++datalen;
+          ++i;
+        }
+        return (v<<7)+d;
+      }
+      function Msg(song,tick,s,i){
+        var v=s[i];
+        datalen=1;
+        if((v&0x80)==0)
+          v=runst,datalen=0;
+        runst=v;
+        switch(v&0xf0){
+        case 0xc0: case 0xd0:
+          song.ev.push({t:tick,m:[v,s[i+datalen]]});
+          datalen+=1;
+          break;
+        case 0xf0:
+          switch(v) {
+          case 0xf0:
+          case 0xf7:
+            var len=Delta(s,i+1);
+            datastart=1+datalen;
+            var exd=Array.from(s.slice(i+datastart,i+datastart+len));
+            exd.unshift(0xf0);
+            song.ev.push({t:tick,m:exd});
+/*
+            var sysex=[];
+            for(var jj=0;jj<len;++jj)
+              sysex.push(s[i+datastart+jj].toString(16));
+            console.log(sysex);
+*/
+            datalen+=len+1;
+            break;
+          case 0xff:
+            var len = Delta(s, i + 2);
+            datastart = 2+datalen;
+            datalen = len+datalen+2;
+            switch(s[i+1]) {
+            case 0x02: song.copyright+=GetStr(s, i + datastart, datalen - 3); break;
+            case 0x01: case 0x03: case 0x04: case 0x09:
+              song.text=GetStr(s, i + datastart, datalen - datastart);
+              break;
+            case 0x2f:
+              return 1;
+            case 0x51:
+              var val = Math.floor(60000000 / Get3(s, i + 3));
+              song.ev.push({t:tick, m:[0xff51, val]});
+              break;
+            }
+            break;
+          }
+          break;
+        default:
+          song.ev.push({t:tick,m:[v,s[i+datalen],s[i+datalen+1]]});
+          datalen+=2;
+        }
+        return 0;
+      }
+      this.stopMIDI();
+      var s=new Uint8Array(data);
+      var datalen = 0, datastart = 0, runst = 0x90;
+      var idx = 0;
+      var hd = s.slice(0,  4);
+      if(hd.toString()!="77,84,104,100")  //MThd
+        return;
+      var len = Get4(s, 4);
+      var fmt = Get2(s, 8);
+      var numtrk = Get2(s, 10);
+      this.maxTick=0;
+      var tb = Get2(s, 12)*4;
+      idx = (len + 8);
+      this.song={copyright:"",text:"",tempo:120,timebase:tb,ev:[]};
+      for(var tr=0;tr<numtrk;++tr){
+        hd=s.slice(idx, idx+4);
+        len=Get4(s, idx+4);
+        if(hd.toString()=="77,84,114,107") {//MTrk
+          var tick = 0;
+          var j = 0;
+          this.notetab.length = 0;
+          for(;;) {
+            tick += Delta(s, idx + 8 + j);
+            j += datalen;
+            var e = Msg(this.song, tick, s, idx + 8 + j);
+            j += datalen;
+            if(e)
+              break;
+          }
+          if(tick>this.maxTick)
+            this.maxTick=tick;
+        }
+        idx += (len+8);
+      }
+      this.song.ev.sort(function(x,y){return x.t-y.t});
+      this.reset();
+      this.locateMIDI(0);
+    },
+    setQuality:function(q){
+      var i,k,n,p;
+      if(q!=undefined)
+        this.quality=q;
+      for(i=0;i<128;++i)
+        this.setTimbre(0,i,this.program0[i]);
+      for(i=0;i<this.drummap0.length;++i)
+        this.setTimbre(1,i+35,this.drummap0[i]);
+      if(this.quality){
+        for(i=0;i<this.program1.length;++i)
+          this.setTimbre(0,i,this.program1[i]);
+        for(i=0;i<this.drummap.length;++i){
+          if(this.drummap1[i])
+            this.setTimbre(1,i+35,this.drummap1[i]);
+        }
+      }
+    },
+    setTimbre:function(m,n,p){
+      var defp={g:0,w:"sine",t:1,f:0,v:0.5,a:0,h:0.01,d:0.01,s:0,r:0.05,p:1,q:1,k:0};
+      function filldef(p){
+        for(n=0;n<p.length;++n){
+          for(k in defp){
+            if(!p[n].hasOwnProperty(k) || typeof(p[n][k])=="undefined")
+              p[n][k]=defp[k];
+          }
+        }
+        return p;
+      }
+      if(m && n>=35 && n<=81)
+        this.drummap[n-35].p=filldef(p);
+      if(m==0 && n>=0 && n<=127)
+        this.program[n].p=filldef(p);
+    },
+    _pruneNote:function(nt){
+      for(var k=nt.o.length-1;k>=0;--k){
+        if(nt.o[k].frequency)
+          this.chmod[nt.ch].disconnect(nt.o[k].detune);
+        nt.o[k].disconnect();
+        if(nt.o[k].frequency)
+          nt.o[k].frequency.cancelScheduledValues(0);
+        else
+          nt.o[k].playbackRate.cancelScheduledValues(0);
+        nt.o[k].stop(0);
+      }
+      for(var k=nt.g.length-1;k>=0;--k){
+        nt.g[k].disconnect();
+        nt.g[k].gain.cancelScheduledValues(0);
+      }
+    },
+    _limitVoices:function(ch,n){
+      this.notetab.sort(function(n1,n2){
+        if(n1.f!=n2.f) return n1.f-n2.f;
+        if(n1.e!=n2.e) return n2.e-n1.e;
+        return n2.t-n1.t;
+      });
+      for(var i=this.notetab.length-1;i>=0;--i){
+        var nt=this.notetab[i];
+        if(this.actx.currentTime>nt.e || i>=(this.voices-1)){
+          this._pruneNote(nt);
+          this.notetab.splice(i,1);
+        }
+      }
+    },
+    _note:function(t,ch,n,v,p){
+      var o=[],g=[],vp=[],fp=[],r=[],i,out,sc,pn;
+      var f=440*Math.pow(2,(n-69)/12);
+      this._limitVoices(ch,n);
+      for(i=0;i<p.length;++i){
+        pn=p[i];
+        var dt=t+pn.a+pn.h;
+        if(pn.g==0)
+          out=this.chvol[ch], sc=v*v/16384, fp[i]=f*pn.t+pn.f;
+        else if(pn.g>10)
+          out=g[pn.g-11].gain, sc=1, fp[i]=fp[pn.g-11]*pn.t+pn.f;
+        else if(o[pn.g-1].frequency)
+          out=o[pn.g-1].frequency, sc=fp[pn.g-1], fp[i]=fp[pn.g-1]*pn.t+pn.f;
+        else
+          out=o[pn.g-1].playbackRate, sc=fp[pn.g-1]/440, fp[i]=fp[pn.g-1]*pn.t+pn.f;
+        switch(pn.w[0]){
+        case "n":
+          o[i]=this.actx.createBufferSource();
+          o[i].buffer=this.noiseBuf[pn.w];
+          o[i].loop=true;
+          o[i].playbackRate.value=fp[i]/440;
+          if(pn.p!=1)
+            this._setParamTarget(o[i].playbackRate,fp[i]/440*pn.p,t,pn.q);
+          break;
+        default:
+          o[i]=this.actx.createOscillator();
+          o[i].frequency.value=fp[i];
+          if(pn.p!=1)
+            this._setParamTarget(o[i].frequency,fp[i]*pn.p,t,pn.q);
+          if(pn.w[0]=="w")
+            o[i].setPeriodicWave(this.wave[pn.w]);
+          else
+            o[i].type=pn.w;
+          this.chmod[ch].connect(o[i].detune);
+          o[i].detune.value=this.bend[ch];
+          break;
+        }
+        g[i]=this.actx.createGain();
+        r[i]=pn.r;
+        o[i].connect(g[i]); g[i].connect(out);
+        vp[i]=sc*pn.v;
+        if(pn.k)
+          vp[i]*=Math.pow(2,(n-60)/12*pn.k);
+        if(pn.a){
+          g[i].gain.value=0;
+          g[i].gain.setValueAtTime(0,t);
+          g[i].gain.linearRampToValueAtTime(vp[i],t+pn.a);
+        }
+        else
+          g[i].gain.setValueAtTime(vp[i],t);
+        this._setParamTarget(g[i].gain,pn.s*vp[i],dt,pn.d);
+        o[i].start(t);
+        if(this.rhythm[ch])
+          o[i].stop(t+p[0].d*this.releaseRatio);
+      }
+      if(!this.rhythm[ch])
+        this.notetab.push({t:t,e:99999,ch:ch,n:n,o:o,g:g,t2:t+pn.a,v:vp,r:r,f:0});
+    },
+    _setParamTarget:function(p,v,t,d){
+      if(d!=0)
+        p.setTargetAtTime(v,t,d);
+      else
+        p.setValueAtTime(v,t);
+    },
+    _releaseNote:function(nt,t){
+      if(nt.ch!=9){
+        for(var k=nt.g.length-1;k>=0;--k){
+          nt.g[k].gain.cancelScheduledValues(t);
+          if(t==nt.t2)
+            nt.g[k].gain.setValueAtTime(nt.v[k],t);
+          else if(t<nt.t2)
+            nt.g[k].gain.setValueAtTime(nt.v[k]*(t-nt.t)/(nt.t2-nt.t),t);
+          this._setParamTarget(nt.g[k].gain,0,t,nt.r[k]);
+        }
+      }
+      nt.e=t+nt.r[0]*this.releaseRatio;
+      nt.f=1;
+    },
+    setModulation:function(ch,v,t){
+      this.chmod[ch].gain.setValueAtTime(v*100/127,this._tsConv(t));
+    },
+    setChVol:function(ch,v,t){
+      this.vol[ch]=3*v*v/(127*127);
+      this.chvol[ch].gain.setValueAtTime(this.vol[ch]*this.ex[ch],this._tsConv(t));
+    },
+    setPan:function(ch,v,t){
+      if(this.chpan[ch])
+        this.chpan[ch].pan.setValueAtTime((v-64)/64,this._tsConv(t));
+    },
+    setExpression:function(ch,v,t){
+      this.ex[ch]=v*v/(127*127);
+      this.chvol[ch].gain.setValueAtTime(this.vol[ch]*this.ex[ch],this._tsConv(t));
+    },
+    setSustain:function(ch,v,t){
+      this.sustain[ch]=v;
+      t=this._tsConv(t);
+      if(v<64){
+        for(var i=this.notetab.length-1;i>=0;--i){
+          var nt=this.notetab[i];
+          if(t>=nt.t && nt.ch==ch && nt.f==1)
+            this._releaseNote(nt,t);
+        }
+      }
+    },
+    allSoundOff:function(ch){
+      for(var i=this.notetab.length-1;i>=0;--i){
+        var nt=this.notetab[i];
+        if(nt.ch==ch){
+          this._pruneNote(nt);
+          this.notetab.splice(i,1);
+        }
+      }
+    },
+    resetAllControllers:function(ch){
+      this.bend[ch]=0; this.ex[ch]=1.0;
+      this.rpnidx[ch]=0x3fff; this.sustain[ch]=0;
+      if(this.chvol[ch]){
+        this.chvol[ch].gain.value=this.vol[ch]*this.ex[ch];
+        this.chmod[ch].gain.value=0;
+      }
+    },
+    setBendRange:function(ch,v){
+      this.brange[ch]=v;
+    },
+    setProgram:function(ch,v){
+      if(this.debug)
+        console.log("Pg("+ch+")="+v);
+      this.pg[ch]=v;
+    },
+    setBend:function(ch,v,t){
+      t=this._tsConv(t);
+      var br=this.brange[ch]*100/127;
+      this.bend[ch]=(v-8192)*br/8192;
+      for(var i=this.notetab.length-1;i>=0;--i){
+        var nt=this.notetab[i];
+        if(nt.ch==ch){
+          for(var k=nt.o.length-1;k>=0;--k){
+            if(nt.o[k].frequency)
+              nt.o[k].detune.setValueAtTime(this.bend[ch],t);
+          }
+        }
+      }
+    },
+    noteOn:function(ch,n,v,t){
+      if(v==0){
+        this.noteOff(ch,n,t);
+        return;
+      }
+      t=this._tsConv(t);
+      if(this.rhythm[ch]){
+        if(n>=35&&n<=81)
+          this._note(t,ch,n,v,this.drummap[n-35].p);
+        return;
+      }
+      this._note(t,ch,n,v,this.program[this.pg[ch]].p);
+    },
+    noteOff:function(ch,n,t){
+      if(this.rhythm[ch])
+        return;
+      t=this._tsConv(t);
+      for(var i=this.notetab.length-1;i>=0;--i){
+        var nt=this.notetab[i];
+        if(t>=nt.t && nt.ch==ch && nt.n==n && nt.f==0){
+          nt.f=1;
+          if(this.sustain[ch]<64)
+            this._releaseNote(nt,t);
+        }
+      }
+    },
+    _tsConv:function(t){
+      if(t==undefined||t<=0){
+        t=0;
+        if(this.actx)
+          t=this.actx.currentTime;
+      }
+      else{
+        if(this.tsmode)
+          t=t*.001-this.tsdiff;
+      }
+      return t;
+    },
+    setTsMode:function(tsmode){
+      this.tsmode=tsmode;
+    },
+    send:function(msg,t){    /* send midi message */
+      var ch=msg[0]&0xf;
+      var cmd=msg[0]&~0xf;
+      if(cmd<0x80||cmd>=0x100)
+        return;
+      switch(cmd){
+      case 0xb0:  /* ctl change */
+        switch(msg[1]){
+        case 1:  this.setModulation(ch,msg[2],t); break;
+        case 7:  this.setChVol(ch,msg[2],t); break;
+        case 10: this.setPan(ch,msg[2],t); break;
+        case 11: this.setExpression(ch,msg[2],t); break;
+        case 64: this.setSustain(ch,msg[2],t); break;
+        case 98:  case 98: this.rpnidx[ch]=0x3fff; break; /* nrpn lsb/msb */
+        case 100: this.rpnidx[ch]=(this.rpnidx[ch]&0x380)|msg[2]; break; /* rpn lsb */
+        case 101: this.rpnidx[ch]=(this.rpnidx[ch]&0x7f)|(msg[2]<<7); break; /* rpn msb */
+        case 6:  /* data entry msb */
+          if(this.rpnidx[ch]==0)
+            this.brange[ch]=(msg[2]<<7)+(this.brange[ch]&0x7f);
+          break;
+        case 38:  /* data entry lsb */
+          if(this.rpnidx[ch]==0)
+            this.brange[ch]=(this.brange[ch]&0x380)|msg[2];
+          break;
+        case 120:  /* all sound off */
+        case 123:  /* all notes off */
+        case 124: case 125: case 126: case 127: /* omni off/on mono/poly */
+          this.allSoundOff(ch);
+          break;
+        case 121: this.resetAllControllers(ch); break;
+        }
+        break;
+      case 0xc0: this.setProgram(ch,msg[1]); break;
+      case 0xe0: this.setBend(ch,(msg[1]+(msg[2]<<7)),t); break;
+      case 0x90: this.noteOn(ch,msg[1],msg[2],t); break;
+      case 0x80: this.noteOff(ch,msg[1],t); break;
+      case 0xf0:
+        if(msg[0]!=254 && this.debug){
+          var ds=[];
+          for(var ii=0;ii<msg.length;++ii)
+            ds.push(msg[ii].toString(16));
+          console.log(ds);
+        }
+        if(msg[1]==0x41&&msg[2]==0x10&&msg[3]==0x42&&msg[4]==0x12&&msg[5]==0x40){
+          if((msg[6]&0xf0)==0x10&&msg[7]==0x15){
+            var ch=[9,0,1,2,3,4,5,6,7,8,10,11,12,13,14,15][msg[6]&0xf];
+            this.rhythm[ch]=msg[8];
+//            console.log("UseForRhythmPart("+ch+")="+msg[8]);
+          }
+        }
+        break;
+      }
+    },
+    _createWave:function(w){
+      var imag=new Float32Array(w.length);
+      var real=new Float32Array(w.length);
+      for(var i=1;i<w.length;++i)
+        imag[i]=w[i];
+      return this.actx.createPeriodicWave(real,imag);
+    },
+    getAudioContext:function(){
+      return this.actx;
+    },
+    setAudioContext:function(actx,dest){
+      this.audioContext=this.actx=actx;
+      this.dest=dest;
+      if(!dest)
+        this.dest=actx.destination;
+      this.tsdiff=performance.now()*.001-this.actx.currentTime;
+      // console.log("TSDiff:"+this.tsdiff);
+      this.out=this.actx.createGain();
+      this.comp=this.actx.createDynamicsCompressor();
+      var blen=this.actx.sampleRate*.5|0;
+      this.convBuf=this.actx.createBuffer(2,blen,this.actx.sampleRate);
+      this.noiseBuf={};
+      this.noiseBuf.n0=this.actx.createBuffer(1,blen,this.actx.sampleRate);
+      this.noiseBuf.n1=this.actx.createBuffer(1,blen,this.actx.sampleRate);
+      var d1=this.convBuf.getChannelData(0);
+      var d2=this.convBuf.getChannelData(1);
+      var dn=this.noiseBuf.n0.getChannelData(0);
+      var dr=this.noiseBuf.n1.getChannelData(0);
+      for(var i=0;i<blen;++i){
+        if(i/blen<Math.random()){
+          d1[i]=Math.exp(-3*i/blen)*(Math.random()-.5)*.5;
+          d2[i]=Math.exp(-3*i/blen)*(Math.random()-.5)*.5;
+        }
+        dn[i]=Math.random()*2-1;
+      }
+      for(var jj=0;jj<64;++jj){
+        var r1=Math.random()*10+1;
+        var r2=Math.random()*10+1;
+        for(i=0;i<blen;++i){
+          var dd=Math.sin((i/blen)*2*Math.PI*440*r1)*Math.sin((i/blen)*2*Math.PI*440*r2);
+          dr[i]+=dd/8;
+        }
+      }
+      if(this.useReverb){
+        this.conv=this.actx.createConvolver();
+        this.conv.buffer=this.convBuf;
+        this.rev=this.actx.createGain();
+        this.rev.gain.value=this.reverbLev;
+        this.out.connect(this.conv);
+        this.conv.connect(this.rev);
+        this.rev.connect(this.comp);
+      }
+      this.setMasterVol();
+      this.out.connect(this.comp);
+      this.comp.connect(this.dest);
+      this.chvol=[]; this.chmod=[]; this.chpan=[];
+      this.wave={"w9999":this._createWave("w9999")};
+      this.lfo=this.actx.createOscillator();
+      this.lfo.frequency.value=5;
+      this.lfo.start(0);
+      for(i=0;i<16;++i){
+        this.chvol[i]=this.actx.createGain();
+        if(this.actx.createStereoPanner){
+          this.chpan[i]=this.actx.createStereoPanner();
+          this.chvol[i].connect(this.chpan[i]);
+          this.chpan[i].connect(this.out);
+        }
+        else{
+          this.chpan[i]=null;
+          this.chvol[i].connect(this.out);
+        }
+        this.chmod[i]=this.actx.createGain();
+        this.lfo.connect(this.chmod[i]);
+        this.pg[i]=0;
+        this.resetAllControllers(i);
+      }
+      this.setReverbLev();
+      this.reset();
+      this.send([0x90,60,1]);
+      this.send([0x90,60,0]);
+    },
+  }
+/* webaudio-tinysynth coreobject */
+
+;
+  for(var k in this.sy.properties)
+    this[k]=this.sy.properties[k].value;
+  this.setQuality(1);
+  if(opt){
+    if(opt.useReverb!=undefined)
+      this.useReverb=opt.useReverb;
+    if(opt.quality!=undefined)
+      this.setQuality(opt.quality);
+    if(opt.voices!=undefined)
+      this.setVoices(opt.voices);
+  }
+  this.ready();
+}
+
+
+if (module) module.exports = WebAudioTinySynth
+// Original source: https://raw.githubusercontent.com/g200kg/webaudio-tinysynth/master/webaudio-tinysynth.js
+
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)(module)))
+
+/***/ }),
+/* 272 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "StaffView",
+        {
+          ref: "staff_view",
+          attrs: {
+            bar: _vm.bar,
+            cursor: _vm.cursor,
+            enabledContexts: ["zoomview"]
+          }
+        },
+        [
+          _c("div", { staticClass: "rhythm-game__staff__second-row" }, [
+            _c("div", { attrs: { id: "second-row" } })
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("SexyButton", {
+        attrs: { cols: 3, color: "green", text: "Predvajaj" },
+        nativeOn: {
+          click: function($event) {
+            return _vm.play($event)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("SexyButton", {
+        attrs: { cols: 3, color: "cabaret", text: "Ustavi" },
+        nativeOn: {
+          click: function($event) {
+            return _vm.stop($event)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.offsetConstant,
+            expression: "offsetConstant"
+          }
+        ],
+        attrs: {
+          type: "range",
+          step: "0.001",
+          min: "0.195",
+          max: "0.5",
+          width: "200"
+        },
+        domProps: { value: _vm.offsetConstant },
+        on: {
+          __r: function($event) {
+            _vm.offsetConstant = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" " + _vm._s(_vm.offsetConstant) + "\n\n\n    "),
+      _c("audio", { ref: "rhythmAudio", attrs: { controls: "" } }, [
+        _c("source", { attrs: { src: _vm.audioSource, type: "audio/mpeg" } })
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7c75ac84", module.exports)
+  }
+}
+
+/***/ }),
+/* 273 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(274)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(276)
+/* template */
+var __vue_template__ = __webpack_require__(277)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-1d2aae08"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/music/Keyboard.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1d2aae08", Component.options)
+  } else {
+    hotAPI.reload("data-v-1d2aae08", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 274 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(275);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("a6d0ffc0", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1d2aae08\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Keyboard.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1d2aae08\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Keyboard.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 275 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.keyboard[data-v-1d2aae08] {\n  width: 60vw;\n  height: 18vw;\n}\n@media only screen and (orientation: portrait) {\n.keyboard[data-v-1d2aae08] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape) {\n.keyboard[data-v-1d2aae08] {\n      width: 50vw;\n      height: 15vw;\n}\n}\n.keyboard__key[data-v-1d2aae08] {\n  cursor: pointer;\n}\n.keyboard__key--white[data-v-1d2aae08] {\n  fill: #ffffff;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n.keyboard__key--black[data-v-1d2aae08] {\n  fill: #000000;\n}\n.keyboard__key--correct[data-v-1d2aae08] {\n  fill: #64ee8a;\n}\n.keyboard__key--incorrect[data-v-1d2aae08] {\n  fill: #D2495F;\n}\n.keyboard__key-text[data-v-1d2aae08] {\n  font-family: \"GothamRounded-Book\";\n  pointer-events: none;\n  text-anchor: middle;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.keyboard__key-text[data-v-1d2aae08] {\n      display: none;\n}\n}\n.keyboard__key-text--white[data-v-1d2aae08] {\n  fill: #000000;\n  font-size: 4px;\n}\n.keyboard__key-text--black[data-v-1d2aae08] {\n  fill: #ffffff;\n  font-size: 3px;\n}\n.keyboard__frame[data-v-1d2aae08] {\n  width: 100px;\n  height: 100px;\n  fill: none;\n  stroke: #000000;\n  stroke-width: 1px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 276 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        channel: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["c" /* numberProp */])(),
+        midi: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["d" /* objectNullProp */])()
+    },
+    data: function data() {
+        return {
+            keys: {
+                white: [{ pitch: 'A3', midiPitch: 57, code: 81, name: 'Q', correct: false, incorrect: false }, { pitch: 'B3', midiPitch: 59, code: 87, name: 'W', correct: false, incorrect: false }, { pitch: 'C4', midiPitch: 60, code: 69, name: 'E', correct: false, incorrect: false }, { pitch: 'D4', midiPitch: 62, code: 82, name: 'R', correct: false, incorrect: false }, { pitch: 'E4', midiPitch: 64, code: 84, name: 'T', correct: false, incorrect: false }, { pitch: 'F4', midiPitch: 65, code: 89, name: 'Z', correct: false, incorrect: false }, { pitch: 'G4', midiPitch: 67, code: 85, name: 'U', correct: false, incorrect: false }, { pitch: 'A4', midiPitch: 69, code: 73, name: 'I', correct: false, incorrect: false }, { pitch: 'B4', midiPitch: 71, code: 79, name: 'O', correct: false, incorrect: false }, { pitch: 'C5', midiPitch: 72, code: 80, name: 'P', correct: false, incorrect: false }, { pitch: 'D5', midiPitch: 74, code: 219, name: 'Š', correct: false, incorrect: false }],
+                black: [{ midiPitch: -1, code: -1 }, { pitch: 'Bb3', midiPitch: 58, code: 50, name: '2', correct: false, incorrect: false }, { midiPitch: -1, code: -1 }, { pitch: 'Db4', midiPitch: 61, code: 52, name: '4', correct: false, incorrect: false }, { pitch: 'Eb4', midiPitch: 63, code: 53, name: '5', correct: false, incorrect: false }, { midiPitch: -1, code: -1 }, { pitch: 'Gb4', midiPitch: 66, code: 55, name: '7', correct: false, incorrect: false }, { pitch: 'Ab4', midiPitch: 68, code: 56, name: '8', correct: false, incorrect: false }, { pitch: 'Bb4', midiPitch: 70, code: 57, name: '9', correct: false, incorrect: false }, { midiPitch: -1, code: -1 }, { pitch: 'Db5', midiPitch: 73, code: 189, name: '?', correct: false, incorrect: false }, { midiPitch: -1, code: -1 }]
+            },
+            pitchMap: {
+                'A#3': 'Bb3',
+                'B#3': 'C4',
+                'Cb4': 'B3',
+                'C#4': 'Db4',
+                'D#4': 'Eb4',
+                'E#4': 'F4',
+                'Fb4': 'E4',
+                'F#4': 'Gb4',
+                'G#4': 'Ab4',
+                'A#4': 'Bb4',
+                'B#4': 'C5',
+                'Cb5': 'B4',
+                'C#5': 'Db5'
+            },
+            helperTextVisible: false
+        };
+    },
+    created: function created() {
+        this.$parent.$on('play-note', this.playNote);
+        this.$parent.$on('color-key', this.colorKey);
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        this.$nextTick(function () {
+            window.addEventListener('keydown', _this.keydown);
+            window.addEventListener('keyup', _this.keyup);
+        });
+    },
+    beforeDestroy: function beforeDestroy() {
+        this.$parent.$off('play-note', this.playNote);
+        this.$parent.$off('color-key', this.colorKey);
+        window.removeEventListener('keydown', this.keydown);
+        window.removeEventListener('keyup', this.keyup);
+    },
+
+    computed: {
+        nKeys: function nKeys() {
+            return this.keys.white.length;
+        }
+    },
+    methods: {
+        getKeyByCode: function getKeyByCode(keyCode) {
+            var keys = [].concat(_toConsumableArray(this.keys.white.filter(function (key) {
+                return key.code === keyCode;
+            })), _toConsumableArray(this.keys.black.filter(function (key) {
+                return key.code === keyCode;
+            })));
+            return keys.length > 0 ? keys[0] : null;
+        },
+        getKeyByPitch: function getKeyByPitch(pitch) {
+            pitch = pitch in this.pitchMap ? this.pitchMap[pitch] : pitch;
+            var keys = [].concat(_toConsumableArray(this.keys.white.filter(function (key) {
+                return key.pitch === pitch;
+            })), _toConsumableArray(this.keys.black.filter(function (key) {
+                return key.pitch === pitch;
+            })));
+            return keys.length > 0 ? keys[0] : null;
+        },
+        mousedown: function mousedown(event, key) {
+            event.preventDefault();
+            this.$emit('key-pressed', key.pitch);
+        },
+        mouseup: function mouseup(event, key) {
+            event.preventDefault();
+            key.correct = false;
+            key.incorrect = false;
+            this.noteOff(key.midiPitch);
+            this.$emit('note-played', key.pitch);
+        },
+        keydown: function keydown(event) {
+            event.preventDefault();
+            var key = this.getKeyByCode(event.keyCode);
+            if (key && !(key.correct || key.incorrect)) {
+                this.$emit('key-pressed', key.pitch);
+            }
+        },
+        keyup: function keyup(event) {
+            event.preventDefault();
+            var key = this.getKeyByCode(event.keyCode);
+            if (key && (key.correct || key.incorrect)) {
+                key.correct = false;
+                key.incorrect = false;
+                this.noteOff(key.midiPitch);
+                this.$emit('note-played', key.pitch);
+            }
+        },
+        noteOn: function noteOn(midiPitch) {
+            // channel id, note number, velocity, delay
+            this.midi.noteOn(this.channel, midiPitch, 32, 0);
+        },
+        noteOff: function noteOff(midiPitch) {
+            // channel id, note number, delay
+            this.midi.noteOff(this.channel, midiPitch, 0.2);
+        },
+        playNote: function playNote(pitch, delay) {
+            var _this2 = this;
+
+            var key = this.getKeyByPitch(pitch);
+            this.noteOn(key.midiPitch);
+            setTimeout(function () {
+                return _this2.noteOff(key.midiPitch);
+            }, 500);
+        },
+        colorKey: function colorKey(_ref) {
+            var pitch = _ref.pitch,
+                correct = _ref.correct;
+
+            var key = this.getKeyByPitch(pitch);
+            var which = correct ? 'correct' : 'incorrect';
+            key[which] = true;
+            this.noteOn(key.midiPitch);
+        }
+    }
+});
+
+/***/ }),
+/* 277 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "svg",
+    {
+      staticClass: "keyboard",
+      attrs: {
+        viewBox: "0 0 100 30",
+        preserveAspectRatio: "xMidYMid meet",
+        xmlns: "http://www.w3.org/2000/svg",
+        version: "1.1"
+      }
+    },
+    [
+      _vm._l(_vm.keys.white, function(key, index) {
+        return _c("rect", {
+          staticClass: "keyboard__key keyboard__key--white",
+          class: {
+            "keyboard__key--correct": key.correct,
+            "keyboard__key--incorrect": key.incorrect
+          },
+          attrs: {
+            x: (100 / _vm.nKeys) * index + "%",
+            y: "0%",
+            width: 100 / _vm.nKeys + "%",
+            height: "100%"
+          },
+          on: {
+            mousedown: function($event) {
+              return _vm.mousedown($event, key)
+            },
+            mouseup: function($event) {
+              return _vm.mouseup($event, key)
+            },
+            touchstart: function($event) {
+              return _vm.mousedown($event, key)
+            },
+            touchend: function($event) {
+              return _vm.mouseup($event, key)
+            }
+          }
+        })
+      }),
+      _vm._v(" "),
+      _vm._l(_vm.keys.black, function(key, index) {
+        return key.midiPitch !== -1
+          ? _c("rect", {
+              staticClass: "keyboard__key keyboard__key--black",
+              class: {
+                "keyboard__key--correct": key.correct,
+                "keyboard__key--incorrect": key.incorrect
+              },
+              attrs: {
+                x: (100 / _vm.nKeys) * (0.666 + index - 1) + "%",
+                y: "0%",
+                width: (100 / _vm.nKeys) * 0.666 + "%",
+                height: "66.6%"
+              },
+              on: {
+                mousedown: function($event) {
+                  return _vm.mousedown($event, key)
+                },
+                mouseup: function($event) {
+                  return _vm.mouseup($event, key)
+                },
+                touchstart: function($event) {
+                  return _vm.mousedown($event, key)
+                },
+                touchend: function($event) {
+                  return _vm.mouseup($event, key)
+                }
+              }
+            })
+          : _vm._e()
+      }),
+      _vm._v(" "),
+      _c(
+        "g",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.helperTextVisible,
+              expression: "helperTextVisible"
+            }
+          ]
+        },
+        [
+          _vm._l(_vm.keys.white, function(key, index) {
+            return _c(
+              "text",
+              {
+                staticClass: "keyboard__key-text keyboard__key-text--white",
+                attrs: { x: (100 / _vm.nKeys) * (0.5 + index) + "%", y: "90%" }
+              },
+              [_vm._v(_vm._s(key.name))]
+            )
+          }),
+          _vm._v(" "),
+          _vm._l(_vm.keys.black, function(key, index) {
+            return _vm.keys.midiPitch !== -1
+              ? _c(
+                  "text",
+                  {
+                    staticClass: "keyboard__key-text keyboard__key-text--black",
+                    attrs: { x: (100 / _vm.nKeys) * index + "%", y: "20%" }
+                  },
+                  [_vm._v(_vm._s(key.name))]
+                )
+              : _vm._e()
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("rect", { staticClass: "keyboard__frame" })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1d2aae08", module.exports)
+  }
+}
+
+/***/ }),
+/* 278 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(279)
+  __webpack_require__(281)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(283)
+/* template */
+var __vue_template__ = __webpack_require__(284)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-19d0d496"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Leaderboard.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-19d0d496", Component.options)
+  } else {
+    hotAPI.reload("data-v-19d0d496", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 279 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(280);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("0c694268", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19d0d496\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Leaderboard.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19d0d496\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Leaderboard.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 280 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.leaderboard[data-v-19d0d496] {\n  width: 100%;\n}\n.leaderboard__content[data-v-19d0d496] {\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.leaderboard__instructions[data-v-19d0d496] {\n  width: 100%;\n  height: 290px;\n  padding-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.leaderboard__image[data-v-19d0d496] {\n  width: 120px;\n  height: 120px;\n  margin-bottom: 10px;\n}\n.leaderboard__label[data-v-19d0d496] {\n  margin: 20px 0 25px 0;\n}\n.leaderboard__arrow[data-v-19d0d496] {\n  width: 30px;\n  height: 30px;\n}\n.leaderboard__table[data-v-19d0d496] {\n  width: 100%;\n  margin-top: 20px;\n  border-collapse: collapse;\n}\n.leaderboard__table-row--header[data-v-19d0d496] {\n  height: 30px;\n  background-color: #72B7AE;\n  color: #2D514D;\n}\n.leaderboard__table-row--body[data-v-19d0d496] {\n  height: 65px;\n  cursor: pointer;\n}\n.leaderboard__table-row--body[data-v-19d0d496]:nth-child(odd) {\n    background-color: #BFE3D3;\n}\n.leaderboard__table-row--body[data-v-19d0d496]:nth-child(even) {\n    background-color: #72B7AE;\n}\n.leaderboard__table-column[data-v-19d0d496] {\n  padding: 5px 10px;\n  text-align: left;\n}\n.leaderboard__table-column[data-v-19d0d496]:last-child {\n    text-align: right;\n}\n.leaderboard__table-column--1[data-v-19d0d496] {\n  width: 10vw;\n}\n.leaderboard__table-column--2[data-v-19d0d496] {\n  width: 20vw;\n}\n.leaderboard__table-column--3[data-v-19d0d496] {\n  max-width: 45vw;\n}\n.leaderboard__table-column--4[data-v-19d0d496] {\n  width: 20vw;\n}\n.leaderboard__avatar[data-v-19d0d496] {\n  width: 50px;\n  height: 50px;\n}\n.leaderboard__name[data-v-19d0d496] {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.leaderboard__pagination[data-v-19d0d496] {\n  width: 100px;\n  margin-top: 30px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.leaderboard__pagination-arrow[data-v-19d0d496] {\n  width: 55px;\n  height: 55px;\n  padding: 10px;\n  cursor: pointer;\n}\n.leaderboard__pagination-arrow--disabled[data-v-19d0d496] {\n  opacity: 0;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 281 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(282);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("4e99e730", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19d0d496\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./Leaderboard.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19d0d496\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./Leaderboard.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 282 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.leaderboard__instructions .title {\n  font-size: 25px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 283 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            loading: true,
+            perPage: 10,
+            data: null
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        this.$nextTick(function () {
+            _this.fetchUsers({ per_page: _this.perPage, page: 1, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then(function (data) {
+                _this.data = data;
+
+                _this.$nextTick(function () {
+                    _this.loadImages();
+                });
+            });
+        });
+    },
+
+    computed: {
+        users: function users() {
+            return this.data ? this.data.data : [];
+        },
+        numbers: function numbers() {
+            var numbers = [];
+            if (this.data) {
+                for (var i = this.data.from; i <= this.data.to; i++) {
+                    numbers.push(i);
+                }
+            }
+            return numbers;
+        },
+        hasLess: function hasLess() {
+            return this.data ? this.data.current_page > 1 : false;
+        },
+        hasMore: function hasMore() {
+            return this.data ? this.data.current_page < Math.round(this.data.total / this.data.per_page) : false;
+        }
+    },
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchUsers']), {
+        loadImages: function loadImages() {
+            var context = this;
+
+            var nLoaded = 0;
+            var nTotal = this.users.length + 4;
+
+            var image = this.$el.querySelector('#image');
+            image.onload = function () {
+                if (++nLoaded === nTotal) {
+                    context.loading = false;
+                }
+            };
+            image.src = '/images/leaderboard/leaderboard.svg';
+
+            var arrow = this.$el.querySelector('#arrow');
+            arrow.onload = function () {
+                if (++nLoaded === nTotal) {
+                    context.loading = false;
+                }
+            };
+            arrow.src = '/images/arrows/down.svg';
+
+            var arrowPaginationLeft = this.$el.querySelector('#arrow_pagination_left');
+            arrowPaginationLeft.onload = function () {
+                if (++nLoaded === nTotal) {
+                    context.loading = false;
+                }
+            };
+            arrowPaginationLeft.src = '/images/arrows/left.svg';
+
+            var arrowPaginationRight = this.$el.querySelector('#arrow_pagination_right');
+            arrowPaginationRight.onload = function () {
+                if (++nLoaded === nTotal) {
+                    context.loading = false;
+                }
+            };
+            arrowPaginationRight.src = '/images/arrows/right.svg';
+
+            for (var i = 0; i < this.users.length; i++) {
+                var avatar = this.$el.querySelector('#avatar_' + (i + 1));
+                avatar.onload = function () {
+                    if (++nLoaded === nTotal) {
+                        context.loading = false;
+                    }
+                };
+                avatar.src = this.users[i].avatar;
+            }
+        },
+        previousPage: function previousPage() {
+            this.repaginate(this.data.current_page - 1);
+        },
+        nextPage: function nextPage() {
+            this.repaginate(this.data.current_page + 1);
+        },
+        repaginate: function repaginate(page) {
+            var _this2 = this;
+
+            this.loading = true;
+
+            this.fetchUsers({ per_page: this.perPage, page: page, fields: 'id,name,rating,avatar', order_by: 'rating', order_direction: 'desc' }).then(function (data) {
+                _this2.data = data;
+
+                _this2.$nextTick(function () {
+                    var context = _this2;
+
+                    // TODO: fix the issue of loader not disappearing on mobile production
+                    var nLoaded = 0; // eslint-disable-line no-unused-vars
+                    var nTotal = _this2.users.length; // eslint-disable-line no-unused-vars
+
+                    var image = new Image(); // eslint-disable-line no-undef
+                    image.onload = function () {
+                        context.loading = false;
+                    };
+                    image.src = _this2.users[0].avatar;
+
+                    for (var i = 0; i < _this2.users.length; i++) {
+                        var avatar = _this2.$el.querySelector('#avatar_' + (i + 1));
+                        avatar.src = _this2.users[i].avatar;
+                    }
+                });
+            });
+        },
+        reroute: function reroute(name) {
+            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            this.$router.push({ name: name, params: params });
+        }
+    })
+});
+
+/***/ }),
+/* 284 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "leaderboard" },
+    [
+      _c("loader", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.loading,
+            expression: "loading"
+          }
+        ]
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: !_vm.loading,
+              expression: "!loading"
+            }
+          ],
+          staticClass: "leaderboard__content"
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "leaderboard__instructions" },
+            [
+              _c("img", {
+                staticClass: "leaderboard__image",
+                attrs: { id: "image" }
+              }),
+              _vm._v(" "),
+              _c("element-title", { attrs: { text: "lestvica" } }),
+              _vm._v(" "),
+              _c("label", { staticClass: "leaderboard__label" }, [
+                _vm._v("Poglej, kako visoko se uvrščaš.")
+              ]),
+              _vm._v(" "),
+              _c("img", {
+                staticClass: "leaderboard__arrow",
+                attrs: { id: "arrow" }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("table", { staticClass: "leaderboard__table" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.users.length, function(i) {
+                return _c(
+                  "tr",
+                  {
+                    staticClass:
+                      "leaderboard__table-row leaderboard__table-row--body",
+                    on: {
+                      click: function($event) {
+                        return _vm.reroute("profile", {
+                          id: _vm.users[i - 1].id
+                        })
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "td",
+                      {
+                        staticClass:
+                          "leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--1"
+                      },
+                      [_vm._v(_vm._s(_vm.numbers[i - 1]))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        staticClass:
+                          "leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--2"
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "leaderboard__avatar",
+                          attrs: { id: "avatar_" + i }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        staticClass:
+                          "leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--3 leaderboard__name"
+                      },
+                      [_vm._v(_vm._s(_vm.users[i - 1].name))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        staticClass:
+                          "leaderboard__table-column leaderboard__table-column--body leaderboard__table-column--4"
+                      },
+                      [_vm._v(_vm._s(_vm.users[i - 1].rating))]
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.hasLess || _vm.hasMore,
+                  expression: "hasLess || hasMore"
+                }
+              ],
+              staticClass: "leaderboard__pagination"
+            },
+            [
+              _c("img", {
+                staticClass: "leaderboard__pagination-arrow",
+                class: {
+                  "leaderboard__pagination-arrow--disabled": !_vm.hasLess
+                },
+                attrs: { id: "arrow_pagination_left" },
+                on: {
+                  click: function($event) {
+                    return _vm.previousPage()
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("img", {
+                staticClass: "leaderboard__pagination-arrow",
+                class: {
+                  "leaderboard__pagination-arrow--disabled": !_vm.hasMore
+                },
+                attrs: { id: "arrow_pagination_right" },
+                on: {
+                  click: function($event) {
+                    return _vm.nextPage()
+                  }
+                }
+              })
+            ]
+          )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c(
+        "tr",
+        {
+          staticClass: "leaderboard__table-row leaderboard__table-row--header"
+        },
+        [
+          _c(
+            "th",
+            {
+              staticClass:
+                "leaderboard__table-column leaderboard__table-column--header",
+              attrs: { colspan: "2" }
+            },
+            [_vm._v("MESTO")]
+          ),
+          _vm._v(" "),
+          _c(
+            "th",
+            {
+              staticClass:
+                "leaderboard__table-column leaderboard__table-column--header",
+              attrs: { colspan: "1" }
+            },
+            [_vm._v("IME")]
+          ),
+          _vm._v(" "),
+          _c(
+            "th",
+            {
+              staticClass:
+                "leaderboard__table-column leaderboard__table-column--header",
+              attrs: { colspan: "1" }
+            },
+            [_vm._v("TOČKE")]
+          )
+        ]
+      )
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-19d0d496", module.exports)
+  }
+}
+
+/***/ }),
+/* 285 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(286)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(288)
+/* template */
+var __vue_template__ = __webpack_require__(289)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-5b057fe8"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/profile/Levels.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5b057fe8", Component.options)
+  } else {
+    hotAPI.reload("data-v-5b057fe8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 286 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(287);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("c74f38dc", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5b057fe8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Levels.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5b057fe8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Levels.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 287 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.levels[data-v-5b057fe8] {\n  width: 100%;\n}\n.levels__content[data-v-5b057fe8] {\n  width: 100%;\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #BFE3D3;\n}\n.levels__area[data-v-5b057fe8] {\n  width: 100%;\n  padding: 0 5%;\n}\n.levels__level[data-v-5b057fe8] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.levels__label-wrapper[data-v-5b057fe8] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.levels__label-wrapper--level[data-v-5b057fe8] {\n  width: 20%;\n  padding-right: 10px;\n  -webkit-box-pack: end;\n      -ms-flex-pack: end;\n          justify-content: flex-end;\n}\n.levels__label-wrapper--label[data-v-5b057fe8] {\n  width: 45%;\n  padding-left: 10px;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n}\n.levels__label[data-v-5b057fe8] {\n  font-size: 13px;\n}\n.levels__label--level[data-v-5b057fe8] {\n  text-align: right;\n}\n.levels__label--label[data-v-5b057fe8] {\n  text-align: left;\n}\n.levels__image-wrapper[data-v-5b057fe8] {\n  width: 35%;\n  max-width: 120px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.levels__image[data-v-5b057fe8] {\n  width: 100%;\n  height: 100%;\n}\n.levels__line-wrapper[data-v-5b057fe8] {\n  width: 35%;\n  height: 100px;\n  margin-left: 20%;\n  vertical-align: top;\n}\n.levels__line[data-v-5b057fe8] {\n  stroke: #000000;\n  stroke-width: 5px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 288 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['id'],
+    data: function data() {
+        return {
+            loading: true,
+            user: null,
+            levels: []
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        this.$nextTick(function () {
+            _this.fetchUser(_this.id).then(function (user) {
+                _this.user = user;
+
+                _this.fetchLevels({ per_page: 0 }).then(function (levels) {
+                    _this.levels = levels;
+
+                    _this.$nextTick(function () {
+                        _this.loadImages();
+                    });
+                });
+            });
+        });
+    },
+
+    computed: {
+        levelsWithLabel: function levelsWithLabel() {
+            return this.levels.length > 0 ? this.levels.filter(function (level) {
+                return level.label !== null;
+            }) : [];
+        }
+    },
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchUser', 'fetchLevels']), {
+        loadImages: function loadImages() {
+            var context = this;
+
+            var nLoaded = 0;
+            var nTotal = this.levelsWithLabel.length;
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = this.levelsWithLabel[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var level = _step.value;
+
+                    var image = this.$el.querySelector('#level_' + level.level);
+                    image.onload = function () {
+                        if (++nLoaded === nTotal) {
+                            context.loading = false;
+                        }
+                    };
+                    image.src = this.user.rating >= level.min_rating ? level.image : '/images/levels/locked.svg';
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+        }
+    })
+});
+
+/***/ }),
+/* 289 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "levels" },
+    [
+      _c("loader", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.loading,
+            expression: "loading"
+          }
+        ]
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: !_vm.loading,
+              expression: "!loading"
+            }
+          ],
+          staticClass: "levels__content"
+        },
+        _vm._l(_vm.levelsWithLabel, function(level) {
+          return _c("div", { staticClass: "levels__area" }, [
+            _c("div", { staticClass: "levels__level" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "levels__label-wrapper levels__label-wrapper--level"
+                },
+                [
+                  _c(
+                    "label",
+                    { staticClass: "levels__label levels__label--level" },
+                    [_vm._v("NIVO " + _vm._s(level.level))]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "levels__image-wrapper" }, [
+                _c("img", {
+                  staticClass: "levels__image",
+                  attrs: { id: "level_" + level.level }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "levels__label-wrapper levels__label-wrapper--label"
+                },
+                [
+                  _c(
+                    "label",
+                    { staticClass: "levels__label levels__label--label" },
+                    [_vm._v(_vm._s(_vm._f("uppercase")(level.label)))]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            level.id !== _vm.levelsWithLabel[_vm.levelsWithLabel.length - 1].id
+              ? _c("svg", { staticClass: "levels__line-wrapper" }, [
+                  _c("line", {
+                    staticClass: "levels__line",
+                    attrs: { x1: "50%", y1: "0", x2: "50%", y2: "100%" }
+                  })
+                ])
+              : _vm._e()
+          ])
+        }),
+        0
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5b057fe8", module.exports)
+  }
+}
+
+/***/ }),
+/* 290 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(291)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(293)
+/* template */
+var __vue_template__ = __webpack_require__(294)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-4f02ae04"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/elements/Loader.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4f02ae04", Component.options)
+  } else {
+    hotAPI.reload("data-v-4f02ae04", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 291 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(292);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("66cd2d68", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4f02ae04\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Loader.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4f02ae04\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Loader.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 292 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.loader[data-v-4f02ae04] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  width: 100px;\n  height: 100px;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.loader[data-v-4f02ae04] {\n      width: 75px;\n      height: 75px;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 293 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+/* 294 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("img", {
+    staticClass: "loader",
+    attrs: { src: "/images/loader.svg" }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4f02ae04", module.exports)
+  }
+}
+
+/***/ }),
+/* 295 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(296)
+  __webpack_require__(298)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(300)
+/* template */
+var __vue_template__ = __webpack_require__(301)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-7cb87396"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/profile/Me.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7cb87396", Component.options)
+  } else {
+    hotAPI.reload("data-v-7cb87396", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 296 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(297);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("c0a46c2a", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7cb87396\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Me.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7cb87396\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Me.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 297 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.me[data-v-7cb87396] {\n  width: 100%;\n}\n.me__content[data-v-7cb87396] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.me__user-info[data-v-7cb87396] {\n  width: 100%;\n  padding: 20px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #F8A16E;\n}\n.me__avatar[data-v-7cb87396] {\n  width: 120px;\n  height: 120px;\n}\n.me__name[data-v-7cb87396] {\n  width: 100%;\n  padding: 5px 0;\n  text-align: center;\n  font-size: 25px;\n}\n.me__level-rating-wrapper[data-v-7cb87396] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.me__level-rating[data-v-7cb87396] {\n  width: 100px;\n  height: 35px;\n  border-radius: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n}\n.me__level[data-v-7cb87396] {\n  background-color: #72B7AE;\n}\n.me__rating[data-v-7cb87396] {\n  background-color: #D2495F;\n}\n.me__level-progress-wrapper[data-v-7cb87396] {\n  width: 100%;\n  padding: 25px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #EB7D3D;\n}\n.me__level-progress-label[data-v-7cb87396] {\n  color: #66361B;\n  font-size: 15px;\n}\n.me__level-progress-bar[data-v-7cb87396] {\n  position: relative;\n  width: 100%;\n  height: 25px;\n  margin-top: 20px;\n  border-radius: 10px;\n  background-image: url(\"/images/backgrounds/progress.png\");\n  background-repeat: repeat;\n  background-size: contain;\n  background-color: #FFD15E;\n  overflow: hidden;\n}\n.me__level-progress-bar-overlay[data-v-7cb87396] {\n  position: absolute;\n  height: 25px;\n  background-color: #F8A16E;\n}\n.me__level-progress-bar-labels[data-v-7cb87396] {\n  width: 100%;\n  margin-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n.me__latest-badges-wrapper[data-v-7cb87396] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.me__latest-badges-label-wrapper[data-v-7cb87396] {\n  width: 100%;\n  padding: 5px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  background-color: #EB7D3D;\n}\n.me__latest-badges-label[data-v-7cb87396] {\n  color: #66361B;\n  font-size: 15px;\n  text-align: center;\n}\n.me__latest-badges[data-v-7cb87396] {\n  width: 100%;\n  min-height: 100px;\n  padding: 10px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  background-color: #A4D395;\n  cursor: pointer;\n}\n.me__latest-badge-image[data-v-7cb87396] {\n  width: calc(100% / 3);\n  height: 100%;\n  max-height: 150px;\n}\n.me__elements[data-v-7cb87396] {\n  width: 100%;\n  padding: 40px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #EB7D3D;\n}\n.me__element-label-wrapper[data-v-7cb87396] {\n  width: 100%;\n  margin-bottom: 5px;\n  padding-left: 2px;\n}\n.me__element-label[data-v-7cb87396] {\n  color: #66361B;\n  font-size: 15px;\n}\n.me__element[data-v-7cb87396] {\n  width: 100%;\n  margin-bottom: 20px;\n}\n.me__text-label[data-v-7cb87396] {\n  font-size: 18px;\n}\n.me__input[data-v-7cb87396] {\n  width: 100%;\n  height: 41px;\n  padding: 0 10px;\n  border: none;\n  border-radius: 0;\n  caret-color: #000000;\n  background-color: #F8A16E;\n  color: #000000;\n  font-size: 18px;\n  font-family: \"GothamRounded-Bold\", sans-serif;\n  outline: none;\n  -webkit-user-select: auto;\n  -moz-user-select: auto;\n  -ms-user-select: auto;\n  user-select: auto;\n}\n.me__input[data-v-7cb87396]:-webkit-autofill, .me__input[data-v-7cb87396]:-webkit-autofill:hover, .me__input[data-v-7cb87396]:-webkit-autofill:focus {\n    -webkit-box-shadow: 0 0 0 100px #F8A16E inset !important;\n}\n.me__select-wrapper[data-v-7cb87396] {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  cursor: pointer;\n}\n.me__select-wrapper[data-v-7cb87396]:after {\n    content: '';\n    position: absolute;\n    top: 0;\n    right: 0;\n    width: 45px;\n    height: 100%;\n    background-color: #F4945D;\n    pointer-events: none;\n}\n.me__select[data-v-7cb87396] {\n  width: 100%;\n  height: 100%;\n  padding: 10px 30px 10px 10px;\n  border: none;\n  border-radius: 0;\n  background-color: #F8A16E;\n  font-size: 18px;\n  font-family: \"GothamRounded-Bold\", sans-serif;\n  overflow: hidden;\n  outline: none;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  appearance: none;\n  cursor: pointer;\n}\n.me__select-arrow[data-v-7cb87396] {\n  position: absolute;\n  top: 17px;\n  right: -8px;\n  width: 40px;\n  height: 40px;\n  fill: #66361B;\n  z-index: 1;\n  pointer-events: none;\n}\n.me__commands[data-v-7cb87396] {\n  width: 100%;\n  margin-top: 20px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.me__command--save[data-v-7cb87396] {\n  margin-top: 15px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 298 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(299);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("c8ab9e5a", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7cb87396\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./Me.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7cb87396\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./Me.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 299 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.me__commands .me__command--edit .button .button__full {\n  background-color: #F8A16E;\n}\n.me__commands .me__command--cancel .button .button__full {\n  background-color: #D2495F;\n}\n.me__commands .me__command--save .button .button__full {\n  background-color: #6CC075;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 300 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['id'],
+    data: function data() {
+        return {
+            loading: true,
+            editing: false,
+            owner: false,
+            user: null,
+            level: null,
+            nLatestBadges: 3,
+            userBadges: [],
+            selectedName: '',
+            selectedSchool: null,
+            selectedGrade: null,
+            filteredGrades: []
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        this.$nextTick(function () {
+            _this.fetchMe().then(function () {
+                _this.fetchUser(_this.id).then(function (user) {
+                    _this.user = user;
+                    _this.owner = _this.me.id === _this.user.id;
+
+                    _this.fetchLevel({ rating: _this.user.rating }).then(function (level) {
+                        _this.level = level;
+
+                        _this.fetchUserBadges({ per_page: _this.nLatestBadges, page: 1, order_by: 'updated_at', order_direction: 'desc', filter_user_id: _this.user.id, filter_completed: 1 }).then(function (data) {
+                            _this.userBadges = data.data;
+
+                            if (_this.owner) {
+                                _this.fetchSchools().then(function () {
+                                    _this.fetchGrades().then(function () {
+                                        _this.loadImages();
+                                    });
+                                });
+                            } else {
+                                _this.loadImages();
+                            }
+                        });
+                    });
+                });
+            });
+        });
+    },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["e" /* mapState */])(['me', 'schools', 'grades']), {
+        name: function name() {
+            return this.user ? this.user.name : '';
+        },
+        email: function email() {
+            return this.user ? this.user.email : '';
+        },
+        rating: function rating() {
+            return this.user ? this.user.rating : 0;
+        },
+        instrument: function instrument() {
+            return this.user ? this.user.instrument : '';
+        },
+        school: function school() {
+            return this.user ? this.user.school.name : '';
+        },
+        grade: function grade() {
+            return this.user ? this.user.grade.grade : '';
+        },
+        levelLevel: function levelLevel() {
+            return this.level ? this.level.level : 0;
+        },
+        levelMinRating: function levelMinRating() {
+            return this.level ? this.level.min_rating : 0;
+        },
+        levelMaxRating: function levelMaxRating() {
+            return this.level ? this.level.max_rating : 0;
+        },
+        hasLatestBadges: function hasLatestBadges() {
+            return this.userBadges.length > 0;
+        },
+        progressBarPercentage: function progressBarPercentage() {
+            return this.rating > this.levelMaxRating ? 100 : (this.rating - this.levelMinRating) * 100 / (this.levelMaxRating - this.levelMinRating);
+        },
+        progressBarOverlayStyle: function progressBarOverlayStyle() {
+            return {
+                'width': 100 - this.progressBarPercentage + '%',
+                'margin-left': this.progressBarPercentage + '%'
+            };
+        }
+    }),
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'updateMe', 'fetchUser', 'fetchLevel', 'fetchUserBadges', 'fetchSchools', 'fetchGrades']), {
+        loadImages: function loadImages() {
+            var _this2 = this;
+
+            var context = this;
+
+            var nLoaded = 0;
+            var nTotal = 2 + this.userBadges.length;
+
+            var avatar = this.$el.querySelector('#avatar');
+            avatar.onload = function () {
+                if (++nLoaded === nTotal) {
+                    _this2.loadAdditionalImages();
+                    context.loading = false;
+                }
+            };
+            avatar.src = this.user.avatar;
+
+            for (var i = 0; i < this.nLatestBadges; i++) {
+                var badge = this.$el.querySelector('#latest_badge_' + (i + 1));
+                if (i < this.userBadges.length) {
+                    badge.onload = function () {
+                        if (++nLoaded === nTotal) {
+                            _this2.loadAdditionalImages();
+                            context.loading = false;
+                        }
+                    };
+                    badge.src = this.userBadges[i].badge.image;
+                    badge.style.display = 'block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+
+            var arrow = new Image(); // eslint-disable-line no-undef
+            arrow.onload = function () {
+                if (++nLoaded === nTotal) {
+                    _this2.loadAdditionalImages();
+                    context.loading = false;
+                }
+            };
+            arrow.src = '/images/arrows/down.svg';
+        },
+        loadAdditionalImages: function loadAdditionalImages() {
+            var arrowSchool = this.$el.querySelector('#arrow_school');
+            arrowSchool.href.baseVal = '/images/arrows/down.svg#element';
+
+            var arrowGrade = this.$el.querySelector('#arrow_grade');
+            arrowGrade.href.baseVal = '/images/arrows/down.svg#element';
+        },
+        filterGrades: function filterGrades() {
+            var _this3 = this;
+
+            this.filteredGrades = this.grades.filter(function (grade) {
+                return _this3.selectedSchool.grades.indexOf(grade.id) >= 0;
+            });
+        },
+        onSchoolSelected: function onSchoolSelected() {
+            this.filterGrades();
+            this.selectedGrade = this.filteredGrades[0];
+        },
+        edit: function edit() {
+            var _this4 = this;
+
+            this.selectedName = this.user.name;
+            this.selectedSchool = this.schools.filter(function (school) {
+                return school.id === _this4.user.school.id;
+            })[0];
+            this.selectedGrade = this.grades.filter(function (grade) {
+                return grade.id === _this4.user.grade.id;
+            })[0];
+            this.filterGrades();
+
+            this.editing = true;
+        },
+        cancel: function cancel() {
+            this.editing = false;
+        },
+        update: function update() {
+            var _this5 = this;
+
+            var data = {};
+
+            if (this.selectedName !== this.user.name) {
+                data['name'] = this.selectedName;
+            }
+
+            if (this.selectedSchool.id !== this.user.school.id) {
+                data['school_id'] = this.selectedSchool.id;
+            }
+
+            if (this.selectedGrade.id !== this.user.grade.id) {
+                data['grade_id'] = this.selectedGrade.id;
+            }
+
+            this.editing = false;
+
+            if (Object.keys(data).length > 0) {
+                this.loading = true;
+                this.updateMe(data).then(function () {
+                    _this5.fetchUser(_this5.user.id).then(function (user) {
+                        _this5.user = user;
+                        _this5.loading = false;
+                    });
+                });
+            }
+        },
+        openTab: function openTab(tab) {
+            this.$emit('open-tab', tab);
+        }
+    })
+});
+
+/***/ }),
+/* 301 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "me" },
+    [
+      _c("loader", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.loading,
+            expression: "loading"
+          }
+        ]
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: !_vm.loading,
+              expression: "!loading"
+            }
+          ],
+          staticClass: "me__content"
+        },
+        [
+          _c("div", { staticClass: "me__user-info" }, [
+            _c("img", { staticClass: "me__avatar", attrs: { id: "avatar" } }),
+            _vm._v(" "),
+            _c("label", { staticClass: "me__name" }, [
+              _vm._v(_vm._s(_vm.name))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "me__level-rating-wrapper" }, [
+              _c("div", { staticClass: "me__level-rating me__level" }, [
+                _vm._v("NIVO " + _vm._s(_vm.levelLevel))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "me__level-rating me__rating" }, [
+                _vm._v(_vm._s(_vm.rating))
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "me__level-progress-wrapper",
+              on: {
+                click: function($event) {
+                  return _vm.openTab("levels")
+                }
+              }
+            },
+            [
+              _c("label", { staticClass: "me__level-progress-label" }, [
+                _vm._v("KJE SEM")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "me__level-progress-bar" }, [
+                _c("div", {
+                  staticClass: "me__level-progress-bar-overlay",
+                  style: _vm.progressBarOverlayStyle
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "me__level-progress-bar-cover" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "me__level-progress-bar-labels" }, [
+                _c("label", { staticClass: "me__level-progress-label" }, [
+                  _vm._v("NIVO " + _vm._s(_vm.levelLevel))
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "me__level-progress-label" }, [
+                  _vm._v("NIVO " + _vm._s(_vm.levelLevel + 1))
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "me__latest-badges-wrapper" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "me__latest-badges",
+                on: {
+                  click: function($event) {
+                    return _vm.openTab("badges")
+                  }
+                }
+              },
+              [
+                _vm._l(_vm.nLatestBadges, function(n) {
+                  return _c("img", {
+                    staticClass: "me__latest-badge-image",
+                    attrs: { id: "latest_badge_" + n }
+                  })
+                }),
+                _vm._v(" "),
+                !_vm.hasLatestBadges
+                  ? _c("label", { staticClass: "me__latest-badges-label" }, [
+                      _vm._v(
+                        _vm._s(
+                          _vm.owner
+                            ? "Niste še osvojili nobenega dosežka."
+                            : "Ni osvojil/-a še nobenega dosežka."
+                        )
+                      )
+                    ])
+                  : _vm._e()
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "me__elements" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.editing,
+                    expression: "!editing"
+                  }
+                ],
+                staticClass: "me__element"
+              },
+              [
+                _c("label", { staticClass: "me__text-label" }, [
+                  _vm._v(_vm._s(_vm.name))
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selectedName,
+                  expression: "selectedName"
+                },
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.editing,
+                  expression: "editing"
+                }
+              ],
+              staticClass: "me__element me__input",
+              attrs: { type: "text" },
+              domProps: { value: _vm.selectedName },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.selectedName = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.editing,
+                    expression: "!editing"
+                  }
+                ],
+                staticClass: "me__element"
+              },
+              [
+                _c("label", { staticClass: "me__text-label" }, [
+                  _vm._v(_vm._s(_vm.school))
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.editing,
+                    expression: "editing"
+                  }
+                ],
+                staticClass: "me__element me__select-wrapper"
+              },
+              [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectedSchool,
+                        expression: "selectedSchool"
+                      }
+                    ],
+                    staticClass: "me__select",
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selectedSchool = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        function($event) {
+                          return _vm.onSchoolSelected()
+                        }
+                      ]
+                    }
+                  },
+                  _vm._l(_vm.schools, function(school) {
+                    return _c(
+                      "option",
+                      {
+                        staticClass: "me__option",
+                        domProps: { value: school }
+                      },
+                      [_vm._v(_vm._s(school.name))]
+                    )
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _c(
+                  "svg",
+                  {
+                    staticClass: "me__select-arrow",
+                    attrs: { viewBox: "0 0 100 100" }
+                  },
+                  [_c("use", { attrs: { id: "arrow_school" } })]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.editing,
+                    expression: "!editing"
+                  }
+                ],
+                staticClass: "me__element"
+              },
+              [
+                _c("label", { staticClass: "me__text-label" }, [
+                  _vm._v(_vm._s(_vm.grade) + ".")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.editing,
+                    expression: "editing"
+                  }
+                ],
+                staticClass: "me__element me__select-wrapper"
+              },
+              [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectedGrade,
+                        expression: "selectedGrade"
+                      }
+                    ],
+                    staticClass: "me__select",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.selectedGrade = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  _vm._l(_vm.filteredGrades, function(grade) {
+                    return _c(
+                      "option",
+                      { staticClass: "me__option", domProps: { value: grade } },
+                      [_vm._v(_vm._s(grade.grade))]
+                    )
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _c(
+                  "svg",
+                  {
+                    staticClass: "me__select-arrow",
+                    attrs: { viewBox: "0 0 100 100" }
+                  },
+                  [_c("use", { attrs: { id: "arrow_grade" } })]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm.owner
+              ? _c("div", { staticClass: "me__commands" }, [
+                  _c(
+                    "div",
+                    { staticClass: "me__command--edit" },
+                    [
+                      _c("element-button", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editing,
+                            expression: "!editing"
+                          }
+                        ],
+                        attrs: { text: "uredi" },
+                        nativeOn: {
+                          click: function($event) {
+                            return _vm.edit()
+                          }
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "me__command--cancel" },
+                    [
+                      _c("element-button", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editing,
+                            expression: "editing"
+                          }
+                        ],
+                        attrs: { text: "prekliči" },
+                        nativeOn: {
+                          click: function($event) {
+                            return _vm.cancel()
+                          }
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "me__command--save" },
+                    [
+                      _c("element-button", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editing,
+                            expression: "editing"
+                          }
+                        ],
+                        attrs: { text: "shrani" },
+                        nativeOn: {
+                          click: function($event) {
+                            return _vm.update()
+                          }
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e()
+          ])
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "me__latest-badges-label-wrapper" }, [
+      _c("label", { staticClass: "me__latest-badges-label" }, [
+        _vm._v("ZADNJI DOSEŽKI")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "me__element-label-wrapper" }, [
+      _c("label", { staticClass: "me__element-label" }, [
+        _vm._v("UPORABNIŠKO IME")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "me__element-label-wrapper" }, [
+      _c("label", { staticClass: "me__element-label" }, [_vm._v("ŠOLA")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "me__element-label-wrapper" }, [
+      _c("label", { staticClass: "me__element-label" }, [_vm._v("LETNIK")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7cb87396", module.exports)
+  }
+}
+
+/***/ }),
+/* 302 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(303)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(305)
+/* template */
+var __vue_template__ = __webpack_require__(306)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-443c4dda"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/music/Note.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-443c4dda", Component.options)
+  } else {
+    hotAPI.reload("data-v-443c4dda", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 303 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(304);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("0dac3fc5", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-443c4dda\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Note.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-443c4dda\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Note.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 304 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.note__hidden[data-v-443c4dda] {\n  display: none;\n}\n.note__ledger-line[data-v-443c4dda] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 305 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        delay: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["c" /* numberProp */])(),
+        pitch: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(),
+        previousPitch: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(),
+        type: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(),
+        count: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["c" /* numberProp */])()
+    },
+    data: function data() {
+        return {
+            heights: {
+                'A3': 0,
+                'A#3': 0,
+                'Bb3': 1,
+                'B3': 1,
+                'B#3': 1,
+                'Cb4': 2,
+                'C4': 2,
+                'C#4': 2,
+                'Db4': 3,
+                'D4': 3,
+                'D#4': 3,
+                'Eb4': 4,
+                'E4': 4,
+                'E#4': 4,
+                'Fb4': 5,
+                'F4': 5,
+                'F#4': 5,
+                'Gb4': 6,
+                'G4': 6,
+                'G#4': 6,
+                'Ab4': 7,
+                'A4': 7,
+                'A#4': 7,
+                'Bb4': 8,
+                'B4': 8,
+                'B#4': 8,
+                'Cb5': 9,
+                'C5': 9,
+                'C#5': 9,
+                'Db5': 10,
+                'D5': 10
+            }
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        this.$nextTick(function () {
+            _this.shapeNote();
+        });
+    },
+
+    computed: {
+        hasPrevious: function hasPrevious() {
+            return this.previousPitch !== '';
+        },
+        sharpPrevious: function sharpPrevious() {
+            return this.hasPrevious && this.previousPitch.indexOf('#') >= 0;
+        },
+        flatPrevious: function flatPrevious() {
+            return this.hasPrevious && this.previousPitch.indexOf('b') >= 0;
+        },
+        sharp: function sharp() {
+            return this.pitch.indexOf('#') >= 0;
+        },
+        flat: function flat() {
+            return this.pitch.indexOf('b') >= 0;
+        },
+        natural: function natural() {
+            return (!this.sharp && this.sharpPrevious || !this.flat && this.flatPrevious) && this.heights[this.pitch] === this.heights[this.previousPitch];
+        },
+        noPrefix: function noPrefix() {
+            return (this.sharp && this.sharpPrevious || this.flat && this.flatPrevious) && this.heights[this.pitch] === this.heights[this.previousPitch];
+        },
+        pitches: function pitches() {
+            return Object.keys(this.heights);
+        },
+        pitchIndex: function pitchIndex() {
+            return this.pitches.indexOf(this.pitch);
+        },
+        up: function up() {
+            return this.pitchIndex < this.pitches.indexOf('Bb4');
+        },
+        needsLedgerLines: function needsLedgerLines() {
+            return this.pitchIndex <= this.pitches.indexOf('C#4');
+        },
+        ledgerLineCount: function ledgerLineCount() {
+            return this.needsLedgerLines ? Math.floor((2 - this.heights[this.pitch]) / 2) + 1 : 0;
+        },
+        position: function position() {
+            var pos = {
+                x: 15 + this.delay * (85 / this.count),
+                y: 13 - 1.5 * this.heights[this.pitch]
+            };
+            if (!this.up) {
+                pos.y += 8.6;
+            }
+            return pos;
+        }
+    },
+    methods: {
+        shapeNote: function shapeNote() {
+            switch (this.type) {
+                case 'whole':
+                    $(this.$el.querySelector('#head-whole')).show();
+                    break;
+                case 'half':
+                    $(this.$el.querySelector('#stem')).show();
+                    $(this.$el.querySelector('#head-half')).show();
+                    break;
+                case 'quarter':
+                    $(this.$el.querySelector('#stem')).show();
+                    $(this.$el.querySelector('#head')).show();
+                    break;
+                case 'eighth':
+                    $(this.$el.querySelector('#stem')).show();
+                    $(this.$el.querySelector('#head')).show();
+                    $(this.$el.querySelector('#flag-eighth')).show();
+                    break;
+                case 'sixteenth':
+                    $(this.$el.querySelector('#stem')).show();
+                    $(this.$el.querySelector('#head')).show();
+                    $(this.$el.querySelector('#flag-sixteenth')).show();
+                    break;
+            }
+
+            if (!this.noPrefix) {
+                if (this.sharp) {
+                    var selector = this.type === 'whole' ? '#sharp-whole' : '#sharp';
+                    $(this.$el.querySelector(selector)).show();
+                } else if (this.flat) {
+                    var _selector = this.type === 'whole' ? '#flat-whole' : '#flat';
+                    $(this.$el.querySelector(_selector)).show();
+                } else if (this.natural) {
+                    var _selector2 = this.type === 'whole' ? '#natural-whole' : '#natural';
+                    $(this.$el.querySelector(_selector2)).show();
+                }
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 306 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "g",
+    [
+      _c(
+        "g",
+        {
+          attrs: {
+            transform:
+              "translate(" +
+              _vm.position.x +
+              ", " +
+              _vm.position.y +
+              ") scale(0.28)",
+            stroke: "none",
+            "stroke-width": "1",
+            fill: "none",
+            "fill-rule": "evenodd"
+          }
+        },
+        [
+          _vm.up
+            ? _c(
+                "g",
+                {
+                  attrs: {
+                    id: "note-up",
+                    "fill-rule": "nonzero",
+                    fill: "#000000"
+                  }
+                },
+                [
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "dots-whole",
+                        transform: "translate(33.750000, 47.500000)"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
+                          id: "dot2-whole"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
+                          id: "dot1-whole"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "dots",
+                        transform: "translate(27.000000, 47.500000)"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
+                          id: "dot2"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
+                          id: "dot1"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "signature-whole",
+                        transform: "translate(0.000000, 31.000000)"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M7.76948144,11.2849869 L7.76948144,33.7700005 L6.54519952,33.7700005 L6.54519952,25.3430427 L0,26.7606617 L0,4 L1.17719416,4 L1.17719416,12.7813626 L7.76948144,11.2849869 Z M1.17719416,16.5616801 L1.17719416,22.7440744 L6.54519952,21.5627251 L6.54519952,15.3803309 L1.17719416,16.5616801 Z",
+                          id: "natural-whole"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
+                          id: "flat-whole",
+                          transform:
+                            "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
+                          id: "sharp-whole"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "signature",
+                        transform: "translate(0.000000, 31.000000)"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M7.76948144,11.2849869 L7.76948144,33.7700005 L6.54519952,33.7700005 L6.54519952,25.3430427 L0,26.7606617 L0,4 L1.17719416,4 L1.17719416,12.7813626 L7.76948144,11.2849869 Z M1.17719416,16.5616801 L1.17719416,22.7440744 L6.54519952,21.5627251 L6.54519952,15.3803309 L1.17719416,16.5616801 Z",
+                          id: "natural"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
+                          id: "flat",
+                          transform:
+                            "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
+                          id: "sharp"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "note",
+                        transform: "translate(11.000000, 0.000000)"
+                      }
+                    },
+                    [
+                      _c(
+                        "g",
+                        {
+                          attrs: {
+                            id: "flags",
+                            transform: "translate(12.000000, 0.000000)"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M1.162,35.4800031 C1.162,28.3600031 9.282,23.8000031 9.282,16.6800031 C9.282,15.3600031 8.922,14.0800031 8.362,12.8800031 C9.082,11.4000031 9.522,9.8800031 9.522,8.2000031 C9.522,5.6800031 8.882,3.2000031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.5600031 7.842,5.8800031 7.842,8.2000031 C7.842,12.0800031 4.042,15.8400031 1.162,18.4800031 L1.162,15.4800031 L0.522,15.4800031 L0.522,35.4800031 L1.162,35.4800031 Z M7.282,14.8000031 C7.482,15.4000031 7.562,16.0400031 7.562,16.6800031 C7.562,20.5200031 3.922,24.2800031 1.162,26.9600031 C1.162,22.2400031 4.802,18.7200031 7.282,14.8000031 Z",
+                              id: "flag-sixteenth",
+                              transform:
+                                "translate(5.522000, 17.940003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -17.940003) "
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M1.162,30.4800031 C1.162,22.5600031 9.522,17.0800031 9.522,9.1600031 C9.522,6.3200031 8.882,3.5200031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.9200031 7.842,6.5200031 7.842,9.1600031 C7.842,13.3200031 4.042,17.4800031 1.162,20.4800031 L0.522,20.4800031 L0.522,30.4800031 L1.162,30.4800031 Z",
+                              id: "flag-eighth",
+                              transform:
+                                "translate(5.522000, 15.440003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -15.440003) "
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("rect", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          id: "stem",
+                          x: "11.862",
+                          y: "0",
+                          width: "1.29999995",
+                          height: "48.122001"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "g",
+                        {
+                          attrs: {
+                            id: "heads",
+                            transform: "translate(0.000000, 44.000000)"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M8.56884077,10.46377 C6.5760871,10.46377 5.81884071,8.7500019 5.81884071,6.9565236 C5.81884071,3.8876829 8.09057989,1.5362336 11.1594205,1.5362336 C13.1521742,1.5362336 13.9094206,3.2500018 13.9094206,5.0434801 C13.9094206,8.1123207 11.6376814,10.46377 8.56884077,10.46377 Z M19.7282613,6.0000018 C19.7282613,4.2862337 18.3333337,2.9710162 16.8188409,2.1340597 C14.7065221,0.9384075 12.3152177,0.5000017 9.88405819,0.5000017 C7.45289871,0.5000017 5.02173924,0.9384075 2.90942035,2.1340597 C1.39492757,2.9710162 0,4.2862337 0,6.0000018 C0,7.71377 1.39492757,9.0289874 2.90942035,9.8659439 C5.02173924,11.0615961 7.45289871,11.5000019 9.88405819,11.5000019 C12.3152177,11.5000019 14.7065221,11.0615961 16.8188409,9.8659439 C18.3333337,9.0289874 19.7282613,7.71377 19.7282613,6.0000018 Z",
+                              id: "head-whole",
+                              transform:
+                                "translate(9.864131, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-9.864131, -6.000002) "
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M11.9827094,8.6200019 C11.9827094,9.5800019 11.1838621,10.2600019 10.3850148,10.2600019 C10.2328534,10.2600019 10.080692,10.2600019 9.92853065,10.2200019 C8.74927989,9.8600019 6.99942391,8.6200019 5.59193106,7.6600018 C4.18443821,6.7000018 2.39654188,5.5400018 1.63573494,4.5400018 C1.3694525,4.2200018 1.21729111,3.8200018 1.21729111,3.4200018 C1.21729111,2.4600017 2.01613841,1.7800017 2.8149857,1.7800017 C2.96714709,1.7800017 3.11930848,1.7800017 3.27146987,1.8200017 C4.45072064,2.1800017 6.23861696,3.4200018 7.64610981,4.3800018 C9.05360267,5.3400018 10.841499,6.5000018 11.6023059,7.5000018 C11.8685884,7.8200019 11.9827094,8.2200019 11.9827094,8.6200019 Z M10.0426517,11.5000019 C11.830548,11.5000019 13.2000005,10.6600019 13.2000005,8.6200019 C13.2000005,7.8600019 13.0478391,7.1400018 12.8195971,6.3800018 C12.3631129,4.8600018 11.6023059,3.4200018 10.3469745,2.5400017 C8.29279572,1.1000017 6.04841523,0.5000017 3.19538918,0.5000017 C1.40749285,0.5000017 0,1.3800017 0,3.4200018 C0,4.1800018 0.190201737,4.9000018 0.418443821,5.6600018 C0.874927989,7.1800018 1.59769459,8.6200019 2.85302605,9.5000019 C4.90720481,10.9400019 7.18962565,11.5000019 10.0426517,11.5000019 Z",
+                              id: "head-half",
+                              transform:
+                                "translate(6.600000, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-6.600000, -6.000002) "
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M8.8,11.520003 C11.04,11.520003 13.16,10.360003 13.16,7.880003 C13.16,5.000003 10.92,3.040003 9.04,1.920003 C7.6,1.080003 6,0.480003 4.36,0.480003 C2.12,0.480003 0,1.640003 0,4.120003 C0,7.000003 2.24,8.960003 4.12,10.080003 C5.56,10.920003 7.16,11.520003 8.8,11.520003 Z",
+                              id: "head",
+                              transform:
+                                "translate(6.580000, 6.000003) scale(-1, 1) rotate(-180.000000) translate(-6.580000, -6.000003) "
+                            }
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                ]
+              )
+            : _c(
+                "g",
+                {
+                  attrs: {
+                    id: "note-down",
+                    "fill-rule": "nonzero",
+                    fill: "#000000"
+                  }
+                },
+                [
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "dots-whole",
+                        transform: "translate(34.000000, 16.500000)"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
+                          id: "dot2-whole"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
+                          id: "dot1-whole"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "dots",
+                        transform: "translate(34.000000, 16.500000)"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M6,2.24 C6,3.48 7,4.48 8.24,4.48 C9.48,4.48 10.48,3.48 10.48,2.24 C10.48,1 9.48,0 8.24,0 C7,0 6,1 6,2.24 Z",
+                          id: "dot2"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M0,2.24 C0,3.48 1,4.48 2.24,4.48 C3.48,4.48 4.48,3.48 4.48,2.24 C4.48,1 3.48,0 2.24,0 C1,0 0,1 0,2.24 Z",
+                          id: "dot1"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("g", { attrs: { id: "signature-whole" } }, [
+                    _c("path", {
+                      staticClass: "note__hidden",
+                      attrs: {
+                        d:
+                          "M8.76948144,11.2849869 L8.76948144,33.7700005 L7.54519952,33.7700005 L7.54519952,25.3430427 L1,26.7606617 L1,4 L2.17719416,4 L2.17719416,12.7813626 L8.76948144,11.2849869 Z M2.17719416,16.5616801 L2.17719416,22.7440744 L7.54519952,21.5627251 L7.54519952,15.3803309 L2.17719416,16.5616801 Z",
+                        id: "natural-whole"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      staticClass: "note__hidden",
+                      attrs: {
+                        d:
+                          "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
+                        id: "flat-whole",
+                        transform:
+                          "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("path", {
+                      staticClass: "note__hidden",
+                      attrs: {
+                        d:
+                          "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
+                        id: "sharp-whole"
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "signature",
+                        transform: "translate(7.000000, 0.000000)"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M8.76948144,11.2849869 L8.76948144,33.7700005 L7.54519952,33.7700005 L7.54519952,25.3430427 L1,26.7606617 L1,4 L2.17719416,4 L2.17719416,12.7813626 L8.76948144,11.2849869 Z M2.17719416,16.5616801 L2.17719416,22.7440744 L7.54519952,21.5627251 L7.54519952,15.3803309 L2.17719416,16.5616801 Z",
+                          id: "natural"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M2.14096916,8.98810535 L2.10132159,6.37136526 L2.10132159,5.93524191 C2.10132159,5.06299521 2.14096916,4.19074852 2.25991189,3.31850182 C4.04405286,4.82510975 5.94713656,6.49030799 5.94713656,8.82951504 C5.94713656,10.1378851 5.39207048,11.4859027 4.24229075,11.4859027 C3.01321586,11.4859027 2.18061674,10.2964754 2.14096916,8.98810535 Z M0.475770925,1.89118905 L1.77635684e-15,25.4814974 C0.317180617,25.6797353 0.713656388,25.798678 1.07048458,25.798678 C1.42731278,25.798678 1.82378855,25.6797353 2.14096916,25.4814974 L1.86343612,11.8030833 C2.85462555,12.6356824 4.16299559,13.1511009 5.47136564,13.1511009 C7.53303965,13.1511009 9,11.2480172 9,9.10704808 C9,5.93524191 5.59030837,4.46828156 3.17180617,2.40660755 C2.57709251,1.89118905 2.22026432,0.899999619 1.3876652,0.899999619 C0.872246696,0.899999619 0.475770925,1.33612297 0.475770925,1.89118905 Z",
+                          id: "flat",
+                          transform:
+                            "translate(4.500000, 13.349339) scale(-1, 1) rotate(-180.000000) translate(-4.500000, -13.349339) "
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("path", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          d:
+                            "M2.859,23.231 L2.859,16.175 L5.859,15.347 L5.859,22.367 L2.859,23.231 Z M8.766,21.524 L6.7035,22.115 L6.7035,15.095 L8.766,14.519 L8.766,11.603 L6.7035,12.179 L6.7035,5.006345 L5.859,5.006345 L5.859,12.3965 L2.859,13.259 L2.859,6.284345 L2.0625,6.284345 L2.0625,13.5245 L0,14.102 L0,17.024 L2.0625,16.448 L2.0625,23.4545 L0,24.029 L0,26.939 L2.0625,26.363 L2.0625,33.495155 L2.859,33.495155 L2.859,26.108 L5.859,25.283 L5.859,32.221655 L6.7035,32.221655 L6.7035,25.022 L8.766,24.4445 L8.766,21.524 Z",
+                          id: "sharp"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "g",
+                    {
+                      attrs: {
+                        id: "note",
+                        transform:
+                          "translate(19.500000, 41.000000) scale(-1, -1) translate(-19.500000, -41.000000) translate(8.000000, 13.000000)"
+                      }
+                    },
+                    [
+                      _c(
+                        "g",
+                        {
+                          attrs: {
+                            id: "flags",
+                            transform: "translate(12.000000, 0.000000)"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M1.162,35.4800031 C1.162,28.3600031 9.282,23.8000031 9.282,16.6800031 C9.282,15.3600031 8.922,14.0800031 8.362,12.8800031 C9.082,11.4000031 9.522,9.8800031 9.522,8.2000031 C9.522,5.6800031 8.882,3.2000031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.5600031 7.842,5.8800031 7.842,8.2000031 C7.842,12.0800031 4.042,15.8400031 1.162,18.4800031 L1.162,15.4800031 L0.522,15.4800031 L0.522,35.4800031 L1.162,35.4800031 Z M7.282,14.8000031 C7.482,15.4000031 7.562,16.0400031 7.562,16.6800031 C7.562,20.5200031 3.922,24.2800031 1.162,26.9600031 C1.162,22.2400031 4.802,18.7200031 7.282,14.8000031 Z",
+                              id: "flag-sixteenth",
+                              transform:
+                                "translate(5.522000, 17.940003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -17.940003) "
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M1.162,30.4800031 C1.162,22.5600031 9.522,17.0800031 9.522,9.1600031 C9.522,6.3200031 8.882,3.5200031 7.842,0.8800031 C7.642,0.5600031 7.362,0.4000031 7.082,0.4000031 C6.562,0.4000031 6.042,0.8400031 6.162,1.4800031 C7.202,3.9200031 7.842,6.5200031 7.842,9.1600031 C7.842,13.3200031 4.042,17.4800031 1.162,20.4800031 L0.522,20.4800031 L0.522,30.4800031 L1.162,30.4800031 Z",
+                              id: "flag-eighth",
+                              transform:
+                                "translate(5.522000, 15.440003) scale(-1, 1) rotate(-180.000000) translate(-5.522000, -15.440003) "
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("rect", {
+                        staticClass: "note__hidden",
+                        attrs: {
+                          id: "stem",
+                          x: "11.862",
+                          y: "0",
+                          width: "1.29999995",
+                          height: "48.122001"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "g",
+                        {
+                          attrs: {
+                            id: "heads",
+                            transform: "translate(0.000000, 44.000000)"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M8.56884077,10.46377 C6.5760871,10.46377 5.81884071,8.7500019 5.81884071,6.9565236 C5.81884071,3.8876829 8.09057989,1.5362336 11.1594205,1.5362336 C13.1521742,1.5362336 13.9094206,3.2500018 13.9094206,5.0434801 C13.9094206,8.1123207 11.6376814,10.46377 8.56884077,10.46377 Z M19.7282613,6.0000018 C19.7282613,4.2862337 18.3333337,2.9710162 16.8188409,2.1340597 C14.7065221,0.9384075 12.3152177,0.5000017 9.88405819,0.5000017 C7.45289871,0.5000017 5.02173924,0.9384075 2.90942035,2.1340597 C1.39492757,2.9710162 0,4.2862337 0,6.0000018 C0,7.71377 1.39492757,9.0289874 2.90942035,9.8659439 C5.02173924,11.0615961 7.45289871,11.5000019 9.88405819,11.5000019 C12.3152177,11.5000019 14.7065221,11.0615961 16.8188409,9.8659439 C18.3333337,9.0289874 19.7282613,7.71377 19.7282613,6.0000018 Z",
+                              id: "head-whole",
+                              transform:
+                                "translate(9.864131, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-9.864131, -6.000002) "
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M11.9827094,8.6200019 C11.9827094,9.5800019 11.1838621,10.2600019 10.3850148,10.2600019 C10.2328534,10.2600019 10.080692,10.2600019 9.92853065,10.2200019 C8.74927989,9.8600019 6.99942391,8.6200019 5.59193106,7.6600018 C4.18443821,6.7000018 2.39654188,5.5400018 1.63573494,4.5400018 C1.3694525,4.2200018 1.21729111,3.8200018 1.21729111,3.4200018 C1.21729111,2.4600017 2.01613841,1.7800017 2.8149857,1.7800017 C2.96714709,1.7800017 3.11930848,1.7800017 3.27146987,1.8200017 C4.45072064,2.1800017 6.23861696,3.4200018 7.64610981,4.3800018 C9.05360267,5.3400018 10.841499,6.5000018 11.6023059,7.5000018 C11.8685884,7.8200019 11.9827094,8.2200019 11.9827094,8.6200019 Z M10.0426517,11.5000019 C11.830548,11.5000019 13.2000005,10.6600019 13.2000005,8.6200019 C13.2000005,7.8600019 13.0478391,7.1400018 12.8195971,6.3800018 C12.3631129,4.8600018 11.6023059,3.4200018 10.3469745,2.5400017 C8.29279572,1.1000017 6.04841523,0.5000017 3.19538918,0.5000017 C1.40749285,0.5000017 0,1.3800017 0,3.4200018 C0,4.1800018 0.190201737,4.9000018 0.418443821,5.6600018 C0.874927989,7.1800018 1.59769459,8.6200019 2.85302605,9.5000019 C4.90720481,10.9400019 7.18962565,11.5000019 10.0426517,11.5000019 Z",
+                              id: "head-half",
+                              transform:
+                                "translate(6.600000, 6.000002) scale(-1, 1) rotate(-180.000000) translate(-6.600000, -6.000002) "
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            staticClass: "note__hidden",
+                            attrs: {
+                              d:
+                                "M8.8,11.520003 C11.04,11.520003 13.16,10.360003 13.16,7.880003 C13.16,5.000003 10.92,3.040003 9.04,1.920003 C7.6,1.080003 6,0.480003 4.36,0.480003 C2.12,0.480003 0,1.640003 0,4.120003 C0,7.000003 2.24,8.960003 4.12,10.080003 C5.56,10.920003 7.16,11.520003 8.8,11.520003 Z",
+                              id: "head",
+                              transform:
+                                "translate(6.580000, 6.000003) scale(-1, 1) rotate(-180.000000) translate(-6.580000, -6.000003) "
+                            }
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                ]
+              )
+        ]
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.ledgerLineCount, function(n) {
+        return _c("line", {
+          key: n,
+          staticClass: "note__ledger-line",
+          attrs: {
+            id: "ledger-line",
+            x1: _vm.position.x + (_vm.type === "whole" ? 2.5 : 2.375) + "%",
+            y1: 70 + n * 10 + "%",
+            x2: _vm.position.x + (_vm.type === "whole" ? 9.5 : 7.625) + "%",
+            y2: 70 + n * 10 + "%"
+          }
+        })
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-443c4dda", module.exports)
+  }
+}
+
+/***/ }),
+/* 307 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(308)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(310)
+/* template */
+var __vue_template__ = __webpack_require__(311)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-4f553a56"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/PageNotFound.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4f553a56", Component.options)
+  } else {
+    hotAPI.reload("data-v-4f553a56", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 308 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(309);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("d53f7784", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4f553a56\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PageNotFound.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4f553a56\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PageNotFound.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 309 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.page-not-found[data-v-4f553a56] {\n  width: 100%;\n}\n.page-not-found__content[data-v-4f553a56] {\n  width: 100%;\n  height: calc(100vh - 70px);\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.page-not-found__notification[data-v-4f553a56] {\n  font-size: 20px;\n}\n.page-not-found__redirect[data-v-4f553a56] {\n  margin: 0;\n  font-size: 17px;\n  font-family: \"GothamRounded-Book\";\n}\n.page-not-found__redirect--dynamic[data-v-4f553a56] {\n  width: 180px;\n}\n.page-not-found__link[data-v-4f553a56] {\n  text-decoration: underline;\n  cursor: pointer;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 310 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            interval: 1000,
+            time: 5000
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        var intervalId = setInterval(function () {
+            _this.time -= _this.interval;
+            if (_this.time === 0) {
+                clearInterval(intervalId);
+                _this.reroute('dashboard');
+            }
+        }, this.interval);
+    },
+
+    methods: {
+        reroute: function reroute(name) {
+            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            this.$router.push({ name: name, params: params });
+        }
+    }
+});
+
+/***/ }),
+/* 311 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "page-not-found" }, [
+    _c("div", { staticClass: "page-not-found__content" }, [
+      _c("h2", { staticClass: "page-not-found__notification" }, [
+        _vm._v("\n            Iskana stran ne obstaja.\n        ")
+      ]),
+      _vm._v(" "),
+      _c("h3", { staticClass: "page-not-found__redirect" }, [
+        _vm._v("\n            Preusmeritev na\n        ")
+      ]),
+      _vm._v(" "),
+      _c(
+        "h3",
+        {
+          staticClass:
+            "page-not-found__redirect page-not-found__redirect--dynamic"
+        },
+        [
+          _c(
+            "span",
+            {
+              staticClass: "page-not-found__link",
+              on: {
+                click: function($event) {
+                  return _vm.reroute("dashboard")
+                }
+              }
+            },
+            [_vm._v("domačo stran")]
+          ),
+          _vm._v(" v " + _vm._s(_vm.time / 1000) + " s...\n        ")
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4f553a56", module.exports)
+  }
+}
+
+/***/ }),
+/* 312 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(313)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(315)
+/* template */
+var __vue_template__ = __webpack_require__(316)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-4bdda942"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Profile.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4bdda942", Component.options)
+  } else {
+    hotAPI.reload("data-v-4bdda942", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 313 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(314);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("8eb77762", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4bdda942\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4bdda942\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 314 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.profile[data-v-4bdda942] {\n  width: 100%;\n}\n.profile__content[data-v-4bdda942] {\n  width: 100%;\n  padding: 20px 0 50px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.profile__tabs[data-v-4bdda942] {\n  width: 100%;\n  padding: 0 5%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.profile__tab[data-v-4bdda942] {\n  width: calc(100% / 3);\n  height: 50px;\n  border-radius: 10px 10px 0 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  text-align: center;\n  cursor: pointer;\n}\n.profile__tab[data-v-4bdda942]:nth-child(2) {\n    margin: 0 5%;\n}\n.profile__tab--me[data-v-4bdda942] {\n  background-color: #EB7D3D;\n}\n.profile__tab--levels[data-v-4bdda942] {\n  background-color: #72B7AE;\n}\n.profile__tab--badges[data-v-4bdda942] {\n  background-color: #6CC075;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 315 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['id'],
+    data: function data() {
+        return {
+            openedTab: 'me'
+        };
+    },
+
+    methods: {
+        openTab: function openTab(tab) {
+            this.openedTab = tab;
+        }
+    }
+});
+
+/***/ }),
+/* 316 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "profile" }, [
+    _c(
+      "div",
+      { staticClass: "profile__content" },
+      [
+        _c("div", { staticClass: "profile__tabs" }, [
+          _c(
+            "div",
+            {
+              staticClass: "profile__tab profile__tab--me",
+              on: {
+                click: function($event) {
+                  return _vm.openTab("me")
+                }
+              }
+            },
+            [_vm._v("JAZ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "profile__tab profile__tab--levels",
+              on: {
+                click: function($event) {
+                  return _vm.openTab("levels")
+                }
+              }
+            },
+            [_vm._v("NIVOJI")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "profile__tab profile__tab--badges",
+              on: {
+                click: function($event) {
+                  return _vm.openTab("badges")
+                }
+              }
+            },
+            [_vm._v("DOSEŽKI")]
+          )
+        ]),
+        _vm._v(" "),
+        _vm.openedTab === "me"
+          ? _c("profile-me", {
+              attrs: { id: _vm.id },
+              on: { "open-tab": _vm.openTab }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.openedTab === "levels"
+          ? _c("profile-levels", { attrs: { id: _vm.id } })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.openedTab === "badges"
+          ? _c("profile-badges", { attrs: { id: _vm.id } })
+          : _vm._e()
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4bdda942", module.exports)
+  }
+}
+
+/***/ }),
+/* 317 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(318)
+  __webpack_require__(320)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(322)
+/* template */
+var __vue_template__ = __webpack_require__(323)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-095e6bda"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Settings.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-095e6bda", Component.options)
+  } else {
+    hotAPI.reload("data-v-095e6bda", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 318 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(319);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("407028ee", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-095e6bda\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Settings.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-095e6bda\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Settings.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 319 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.settings[data-v-095e6bda] {\n  width: 100%;\n}\n.settings__content[data-v-095e6bda] {\n  width: 100%;\n  height: 100%;\n  padding-bottom: 50px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.settings__instructions[data-v-095e6bda] {\n  width: 100%;\n  height: 290px;\n  padding-top: 10px;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.settings__image[data-v-095e6bda] {\n  width: 120px;\n  height: 120px;\n  margin-bottom: 10px;\n}\n.settings__label[data-v-095e6bda] {\n  margin: 20px 0 25px 0;\n}\n.settings__arrow[data-v-095e6bda] {\n  width: 30px;\n  height: 30px;\n}\n.settings__elements[data-v-095e6bda] {\n  width: 100%;\n  margin-top: 20px;\n  padding: 40px 10%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background-color: #EB7D3D;\n}\n.settings__element-label-wrapper[data-v-095e6bda] {\n  width: 100%;\n  margin-bottom: 5px;\n  padding-left: 2px;\n}\n.settings__element-label[data-v-095e6bda] {\n  color: #66361B;\n  font-size: 15px;\n}\n.settings__element[data-v-095e6bda] {\n  margin-bottom: 20px;\n}\n.settings__select-wrapper[data-v-095e6bda] {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  cursor: pointer;\n}\n.settings__select-wrapper[data-v-095e6bda]:after {\n    content: '';\n    position: absolute;\n    top: 0;\n    right: 0;\n    width: 45px;\n    height: 100%;\n    background-color: #F4945D;\n    pointer-events: none;\n}\n.settings__select[data-v-095e6bda] {\n  width: 100%;\n  height: 100%;\n  padding: 10px 30px 10px 10px;\n  border: none;\n  border-radius: 0;\n  background-color: #F8A16E;\n  font-size: 18px;\n  font-family: \"GothamRounded-Bold\", sans-serif;\n  overflow: hidden;\n  outline: none;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  appearance: none;\n  cursor: pointer;\n}\n.settings__select-arrow[data-v-095e6bda] {\n  position: absolute;\n  top: 17px;\n  right: -8px;\n  width: 40px;\n  height: 40px;\n  fill: #66361B;\n  z-index: 1;\n  pointer-events: none;\n}\n.settings__slider-wrapper[data-v-095e6bda] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.settings__slider-label[data-v-095e6bda] {\n  width: 60px;\n}\n.settings__slider[data-v-095e6bda] {\n  width: calc(100% - 60px);\n  height: 15px;\n  border-radius: 5px;\n  background-color: #F8A16E;\n  opacity: 0.7;\n  outline: none;\n  -moz-appearance: none;\n  -webkit-appearance: none;\n  appearance: none;\n  cursor: pointer;\n}\n@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {\n.settings__slider[data-v-095e6bda] {\n      opacity: 1;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) {\n.settings__slider[data-v-095e6bda] {\n      opacity: 1;\n}\n}\n.settings__slider[data-v-095e6bda]:hover {\n    opacity: 1;\n}\n.settings__slider[data-v-095e6bda]::-webkit-slider-thumb {\n    width: 25px;\n    height: 25px;\n    border-radius: 50%;\n    background-color: #66361B;\n    -moz-appearance: none;\n    -webkit-appearance: none;\n    appearance: none;\n    cursor: pointer;\n}\n.settings__slider[data-v-095e6bda]::-moz-range-thumb {\n    width: 25px;\n    height: 25px;\n    border-radius: 50%;\n    background-color: #66361B;\n    cursor: pointer;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 320 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(321);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("3a5da303", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-095e6bda\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./Settings.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-095e6bda\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./Settings.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 321 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.settings__elements .button {\n  margin-top: 50px;\n}\n.settings__elements .button .button__full {\n    background-color: #F8A16E;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 322 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            loading: true,
+            instruments: {
+                guitar: 'Kitara',
+                clarinet: 'Klarinet',
+                piano: 'Klavir',
+                trumpet: 'Trobenta',
+                violin: 'Violina'
+            },
+            selectedInstrument: null,
+            clefs: {
+                violin: 'Violinski',
+                bass: 'Basovski'
+            },
+            selectedClef: null,
+            selectedNotePlaybackDelay: 1,
+            minPlaybackDelay: 1.5,
+            maxPlaybackDelay: 5,
+            metronome: true
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        this.$nextTick(function () {
+            _this.fetchMe().then(function () {
+                _this.selectedInstrument = _this.me.instrument;
+                _this.selectedClef = _this.me.clef;
+                _this.selectedNotePlaybackDelay = _this.me.note_playback_delay / 1000;
+
+                _this.loadImages();
+            });
+        });
+    },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["e" /* mapState */])(['me'])),
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'updateMe']), {
+        loadImages: function loadImages() {
+            var _this2 = this;
+
+            var context = this;
+
+            var nLoaded = 0;
+            var nTotal = 2;
+
+            var image = this.$el.querySelector('#image');
+            image.onload = function () {
+                if (++nLoaded === nTotal) {
+                    _this2.loadAdditionalImages();
+                    context.loading = false;
+                }
+            };
+            image.src = '/images/settings/settings.svg';
+
+            var arrow = this.$el.querySelector('#arrow');
+            arrow.onload = function () {
+                if (++nLoaded === nTotal) {
+                    _this2.loadAdditionalImages();
+                    context.loading = false;
+                }
+            };
+            arrow.src = '/images/arrows/down.svg';
+        },
+        loadAdditionalImages: function loadAdditionalImages() {
+            var arrowInstrument = this.$el.querySelector('#arrow_instrument');
+            arrowInstrument.href.baseVal = '/images/arrows/down.svg#element';
+
+            var arrowClef = this.$el.querySelector('#arrow_clef');
+            arrowClef.href.baseVal = '/images/arrows/down.svg#element';
+        },
+        save: function save() {
+            var _this3 = this;
+
+            var data = {};
+
+            if (this.selectedInstrument !== this.me.instrument) {
+                data['instrument'] = this.selectedInstrument;
+            }
+
+            if (this.selectedClef !== this.me.clef) {
+                data['clef'] = this.selectedClef;
+            }
+
+            if (this.selectedNotePlaybackDelay !== this.me.note_playback_delay) {
+                data['note_playback_delay'] = parseFloat(this.selectedNotePlaybackDelay) * 1000;
+            }
+
+            data.metronome = this.metronome;
+
+            if (Object.keys(data).length > 0) {
+                this.loading = true;
+                this.updateMe(data).then(function () {
+                    _this3.loading = false;
+                });
+            }
+        }
+    })
+});
+
+/***/ }),
+/* 323 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "settings" },
+    [
+      _c("loader", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.loading,
+            expression: "loading"
+          }
+        ]
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: !_vm.loading,
+              expression: "!loading"
+            }
+          ],
+          staticClass: "settings__content"
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "settings__instructions" },
+            [
+              _c("img", {
+                staticClass: "settings__image",
+                attrs: { id: "image" }
+              }),
+              _vm._v(" "),
+              _c("element-title", { attrs: { text: "nastavitve" } }),
+              _vm._v(" "),
+              _c("label", { staticClass: "settings__label" }, [
+                _vm._v("Uredi svoje nastavitve za igro.")
+              ]),
+              _vm._v(" "),
+              _c("img", {
+                staticClass: "settings__arrow",
+                attrs: { id: "arrow" }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "settings__elements" },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "settings__element settings__select-wrapper" },
+                [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectedInstrument,
+                          expression: "selectedInstrument"
+                        }
+                      ],
+                      staticClass: "settings__select",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selectedInstrument = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    _vm._l(_vm.instruments, function(value, key) {
+                      return _c(
+                        "option",
+                        {
+                          staticClass: "settings__option",
+                          domProps: { value: key }
+                        },
+                        [_vm._v(_vm._s(value))]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "settings__select-arrow",
+                      attrs: { viewBox: "0 0 100 100" }
+                    },
+                    [_c("use", { attrs: { id: "arrow_instrument" } })]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "settings__element settings__select-wrapper" },
+                [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectedClef,
+                          expression: "selectedClef"
+                        }
+                      ],
+                      staticClass: "settings__select",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selectedClef = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    _vm._l(_vm.clefs, function(value, key) {
+                      return _c(
+                        "option",
+                        {
+                          staticClass: "settings__option",
+                          domProps: { value: key }
+                        },
+                        [_vm._v(_vm._s(value))]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "settings__select-arrow",
+                      attrs: { viewBox: "0 0 100 100" }
+                    },
+                    [_c("use", { attrs: { id: "arrow_clef" } })]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "settings__element settings__slider-wrapper" },
+                [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "settings__slider-label",
+                      attrs: { for: "notePlaybackDelay" }
+                    },
+                    [_vm._v(_vm._s(_vm.selectedNotePlaybackDelay) + " s")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectedNotePlaybackDelay,
+                        expression: "selectedNotePlaybackDelay"
+                      }
+                    ],
+                    staticClass: "settings__slider",
+                    attrs: {
+                      type: "range",
+                      id: "notePlaybackDelay",
+                      min: _vm.minPlaybackDelay,
+                      max: _vm.maxPlaybackDelay,
+                      step: "0.1"
+                    },
+                    domProps: { value: _vm.selectedNotePlaybackDelay },
+                    on: {
+                      __r: function($event) {
+                        _vm.selectedNotePlaybackDelay = $event.target.value
+                      }
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _vm._m(3),
+              _vm._v(" "),
+              _c("element-button", {
+                attrs: { text: "shrani" },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.save()
+                  }
+                }
+              })
+            ],
+            1
+          )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "settings__element-label-wrapper" }, [
+      _c("label", { staticClass: "settings__element-label" }, [
+        _vm._v("INŠTRUMENT")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "settings__element-label-wrapper" }, [
+      _c("label", { staticClass: "settings__element-label" }, [_vm._v("KLJUČ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "settings__element-label-wrapper" }, [
+      _c("label", { staticClass: "settings__element-label" }, [
+        _vm._v("PAVZA MED PREDVAJANIMI TONI")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "auth__form-group auth__form-group--checkbox" },
+      [
+        _c("label", { staticClass: "auth__form-checkbox-label" }, [
+          _vm._v("PRIVZETO VKLJUČI METRONOM\n                    "),
+          _c("input", {
+            staticClass: "auth__form-checkbox",
+            attrs: { type: "checkbox", name: "metronom" }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "auth__form-checkbox-checkmark" })
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-095e6bda", module.exports)
+  }
+}
+
+/***/ }),
+/* 324 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(325)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(327)
+/* template */
+var __vue_template__ = __webpack_require__(328)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-0430ad04"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/music/Stave.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0430ad04", Component.options)
+  } else {
+    hotAPI.reload("data-v-0430ad04", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 325 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(326);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("58d07fc8", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0430ad04\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Stave.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0430ad04\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Stave.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 326 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.stave__svg[data-v-0430ad04] {\n  width: 60vw;\n  height: 18vw;\n  overflow: visible;\n}\n@media only screen and (orientation: portrait) {\n.stave__svg[data-v-0430ad04] {\n      width: 95vw;\n      height: 28.5vw;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape) {\n.stave__svg[data-v-0430ad04] {\n      width: 50vw;\n      height: 15vw;\n}\n}\n.stave__line[data-v-0430ad04] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n}\n.stave__rect[data-v-0430ad04] {\n  stroke: #000000;\n  stroke-width: 0.2%;\n  fill: none;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 327 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        nNotes: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["c" /* numberProp */])(),
+        noteType: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(),
+        clef: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])(),
+        sharpFlatMap: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["e" /* objectProp */])()
+    },
+    data: function data() {
+        return {
+            notes: [],
+            helperLinesVisible: false
+        };
+    },
+    created: function created() {
+        this.$parent.$on('add-note', this.drawNote);
+        this.$parent.$on('remove-note', this.eraseNote);
+        this.$parent.$on('clear-notes', this.eraseAllNotes);
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        this.$nextTick(function () {
+            window.addEventListener('keydown', function (event) {
+                return _this.keydown(event);
+            });
+        });
+    },
+    destroyed: function destroyed() {
+        var _this2 = this;
+
+        window.removeEventListener('keydown', function (event) {
+            return _this2.keydown(event);
+        });
+    },
+
+    methods: {
+        drawNote: function drawNote(pitch) {
+            if (this.notes.length < this.nNotes) {
+                if (this.notes.length > 0) {
+                    var index = this.notes.length;
+                    var previousPitch = this.notes[index - 1].pitch;
+                    if (this.isSharp(previousPitch) && this.isFlat(pitch) || this.isFlat(previousPitch) && this.isSharp(pitch)) {
+                        pitch = this.sharpFlatMap[pitch];
+                    } else if (this.isNatural(previousPitch) && (this.isSharp(pitch) || this.isFlat(pitch))) {
+                        var pitches = [pitch, this.sharpFlatMap[pitch]];
+                        pitch = pitches[Math.round(Math.random())];
+                    }
+                }
+                this.notes.push({ delay: this.notes.length, pitch: pitch, type: this.noteType });
+                this.$emit('notes-changed', this.notes);
+            }
+        },
+        eraseNote: function eraseNote() {
+            this.notes.pop();
+            this.$emit('notes-changed', this.notes);
+        },
+        eraseAllNotes: function eraseAllNotes() {
+            this.notes = [];
+            this.$emit('notes-changed', this.notes);
+        },
+        keydown: function keydown(event) {
+            switch (event.keyCode) {
+                // backspace & delete
+                case 8:
+                case 46:
+                    this.eraseNote();
+                    break;
+            }
+        },
+        getPreviousNotePitch: function getPreviousNotePitch(index) {
+            return index > 0 ? this.notes[index - 1].pitch : '';
+        },
+        isSharp: function isSharp(pitch) {
+            return pitch.indexOf('#') >= 0;
+        },
+        isFlat: function isFlat(pitch) {
+            return pitch.indexOf('b') >= 0;
+        },
+        isNatural: function isNatural(pitch) {
+            return !this.isSharp(pitch) && !this.isFlat(pitch);
+        }
+    }
+});
+
+/***/ }),
+/* 328 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "svg",
+    {
+      staticClass: "stave__svg",
+      attrs: {
+        viewBox: "0 0 100 30",
+        preserveAspectRatio: "xMidYMid meet",
+        xmlns: "http://www.w3.org/2000/svg",
+        version: "1.1"
+      }
+    },
+    [
+      _c("rect", {
+        staticClass: "stave__rect",
+        attrs: { x: "0", y: "30%", width: "100%", height: "40%" }
+      }),
+      _vm._v(" "),
+      _vm._l(3, function(n) {
+        return _c("line", {
+          key: n,
+          staticClass: "stave__line",
+          attrs: {
+            x1: "0",
+            y1: 30 + n * 10 + "%",
+            x2: "100%",
+            y2: 30 + n * 10 + "%"
+          }
+        })
+      }),
+      _vm._v(" "),
+      _c("g", { attrs: { transform: "translate(-9, 3.3) scale(0.32)" } }, [
+        _c("path", {
+          staticStyle: {
+            fill: "black",
+            "fill-opacity": "1",
+            "fill-rule": "nonzero",
+            stroke: "black",
+            "stroke-width": "0.1",
+            "stroke-linecap": "butt",
+            "stroke-linejoin": "miter",
+            "stroke-miterlimit": "4",
+            "stroke-dasharray": "none",
+            "stroke-opacity": "1"
+          },
+          attrs: {
+            "sodipodi:nodetypes": "cssssssssscsssssssssc",
+            d:
+              "M 39.708934,63.678683 C 39.317094,65.77065 41.499606,70.115061 45.890584,70.256984 C 51.19892,70.428558 54.590321,66.367906 53.010333,59.740875 L 45.086538,23.171517 C 44.143281,18.81826 44.851281,16.457097 45.354941,15.049945 C 46.698676,11.295749 50.055822,9.7473042 50.873134,10.949208 C 51.339763,11.635413 52.468042,14.844006 49.256275,20.590821 C 46.751378,25.072835 35.096985,30.950138 34.2417,41.468011 C 33.501282,50.614249 43.075689,57.369301 51.339266,54.71374 C 56.825686,52.950639 59.653965,44.62402 56.258057,40.328987 C 47.29624,28.994371 32.923702,46.341263 46.846564,51.0935 C 45.332604,49.90238 44.300646,48.980054 44.1085,47.852721 C 42.237755,36.876941 58.741182,39.774741 54.294493,50.18735 C 52.466001,54.469045 45.080341,55.297323 40.874269,51.477433 C 37.350853,48.277521 35.787387,42.113231 39.708327,37.687888 C 45.018831,31.694223 51.288782,26.31366 52.954064,18.108736 C 54.923313,8.4061491 48.493821,0.84188926 44.429027,10.385835 C 43.065093,13.588288 42.557016,16.803074 43.863006,22.963534 L 51.780549,60.311215 C 52.347386,62.985028 51.967911,66.664419 49.472374,68.355474 C 48.236187,69.193154 43.861784,69.769668 42.791575,67.770092"
+          }
+        }),
+        _vm._v(" "),
+        _c("path", {
+          staticStyle: {
+            fill: "black",
+            "fill-opacity": "1",
+            stroke: "black",
+            "stroke-width": "0.09213948",
+            "stroke-miterlimit": "4",
+            "stroke-dasharray": "none",
+            "stroke-opacity": "1"
+          },
+          attrs: {
+            transform:
+              "matrix(-1.08512,-2.036848e-2,2.036848e-2,-1.08512,90.68868,135.0572)",
+            d:
+              "M 48.24903 64.584198 A 3.439605 3.4987047 0 1 1  41.36982,64.584198 A 3.439605 3.4987047 0 1 1  48.24903 64.584198 z",
+            "sodipodi:ry": "3.4987047",
+            "sodipodi:rx": "3.439605",
+            "sodipodi:cy": "64.584198",
+            "sodipodi:cx": "44.809425",
+            "sodipodi:type": "arc"
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.notes, function(note, index) {
+        return _c("note", {
+          key: index,
+          attrs: {
+            delay: note.delay,
+            pitch: note.pitch,
+            "previous-pitch": _vm.getPreviousNotePitch(index),
+            type: note.type,
+            count: _vm.nNotes
+          }
+        })
+      }),
+      _vm._v(" "),
+      _vm.helperLinesVisible
+        ? _c(
+            "g",
+            [
+              _c("line", {
+                staticClass: "stave__line",
+                attrs: { x1: "15%", y1: "0", x2: "15%", y2: "100%" }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.nNotes, function(n) {
+                return _c("line", {
+                  staticClass: "stave__line",
+                  attrs: {
+                    x1: 15 + n * (85 / _vm.nNotes) + "%",
+                    y1: "0",
+                    x2: 15 + n * (85 / _vm.nNotes) + "%",
+                    y2: "100%"
+                  }
+                })
+              })
+            ],
+            2
+          )
+        : _vm._e()
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0430ad04", module.exports)
+  }
+}
+
+/***/ }),
+/* 329 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(330)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(332)
+/* template */
+var __vue_template__ = __webpack_require__(333)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-76a54612"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/elements/Title.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-76a54612", Component.options)
+  } else {
+    hotAPI.reload("data-v-76a54612", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 330 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(331);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("55fbca8e", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-76a54612\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Title.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-76a54612\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Title.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 331 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.title[data-v-76a54612] {\n  padding: 10px 20px;\n  border-radius: 6px;\n  background-color: #000000;\n  color: #FFD15E;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 332 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_propValidators__ = __webpack_require__(9);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        text: Object(__WEBPACK_IMPORTED_MODULE_0__utils_propValidators__["f" /* stringProp */])()
+    }
+});
+
+/***/ }),
+/* 333 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "title" }, [
+    _vm._v(_vm._s(_vm._f("uppercase")(_vm.text)))
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-76a54612", module.exports)
+  }
+}
+
+/***/ }),
+/* 334 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bootstrap__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+
+
+
+
+Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
+
+function handleError(error) {
+    switch (error.response.status) {
+        case 401:
+            window.location.href = '/login';
+            break;
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
+    state: {
+        me: null,
+        schools: null,
+        grades: null,
+        instruments: {
+            clarinet: {
+                channel: 0,
+                soundfont: 'clarinet'
+            },
+            guitar: {
+                channel: 1,
+                soundfont: 'acoustic_guitar_nylon'
+            },
+            piano: {
+                channel: 2,
+                soundfont: 'acoustic_grand_piano'
+            },
+            trumpet: {
+                channel: 3,
+                soundfont: 'trumpet'
+            },
+            violin: {
+                channel: 4,
+                soundfont: 'violin'
+            },
+            percussive_organ: {
+                channel: 5,
+                soundfont: 'percussive_organ',
+                volume: 127
+            },
+            xylophone: {
+                channel: 6,
+                soundfont: 'xylophone',
+                volume: 200
+            }
+        },
+        currentInstruments: new Set([]),
+        midi: null,
+
+        headerMenuDisabled: false
+    },
+    getters: {
+        getInstrumentChannel: function getInstrumentChannel(state) {
+            return function (name) {
+                return state.instruments[name].channel;
+            };
+        }
+    },
+    mutations: {
+        setMe: function setMe(state, me) {
+            state.me = me;
+        },
+        setSchools: function setSchools(state, schools) {
+            state.schools = schools;
+        },
+        setGrades: function setGrades(state, grades) {
+            state.grades = grades;
+        },
+        setMidi: function setMidi(state, midi) {
+            state.midi = midi;
+        },
+        addToCurrentInstruments: function addToCurrentInstruments(state, name) {
+            state.currentInstruments.add(name);
+        },
+        setHeaderMenuDisabled: function setHeaderMenuDisabled(state, v) {
+            state.headerMenuDisabled = v;
+        },
+        toggleHeaderMenuDisabled: function toggleHeaderMenuDisabled(state) {
+            state.headerMenuDisabled = !state.headerMenuDisabled;
+        }
+    },
+    actions: {
+        fetchMe: function fetchMe(_ref) {
+            var commit = _ref.commit,
+                state = _ref.state;
+            var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            return new Promise(function (resolve, reject) {
+                if (!force && state.me) {
+                    resolve();
+                } else {
+                    axios.get('/api/users/0').then(function (response) {
+                        commit('setMe', response.data);
+                        resolve();
+                    }).catch(function (error) {
+                        handleError(error);
+                        reject(error);
+                    });
+                }
+            });
+        },
+        updateMe: function updateMe(_ref2, data) {
+            var dispatch = _ref2.dispatch,
+                commit = _ref2.commit,
+                state = _ref2.state;
+
+            var changeInstrument = state.me.instrument !== data.instrument;
+            return new Promise(function (resolve, reject) {
+                axios.put('/api/users/' + state.me.id, data).then(function (response) {
+                    dispatch('fetchMe', true).then(function () {
+                        if (changeInstrument) {
+                            dispatch('setupMidi', true).then(function () {
+                                resolve();
+                            });
+                        } else {
+                            resolve();
+                        }
+                    });
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        fetchUser: function fetchUser(_ref3, id) {
+            var state = _ref3.state;
+
+            return new Promise(function (resolve, reject) {
+                if (state.me && state.me.id === id) {
+                    resolve(state.me);
+                } else {
+                    axios.get('/api/users/' + id).then(function (response) {
+                        resolve(response.data);
+                    }).catch(function (error) {
+                        handleError(error);
+                        reject(error);
+                    });
+                }
+            });
+        },
+        fetchUsers: function fetchUsers(_ref4) {
+            var state = _ref4.state;
+            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            return new Promise(function (resolve, reject) {
+                axios.get('/api/users', { params: params }).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        fetchLevel: function fetchLevel(_ref5) {
+            var state = _ref5.state;
+            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            return new Promise(function (resolve, reject) {
+                axios.get('/api/levels/find', { params: params }).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        fetchSchools: function fetchSchools(_ref6) {
+            var commit = _ref6.commit,
+                state = _ref6.state;
+            var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            return new Promise(function (resolve, reject) {
+                if (!force && state.schools) {
+                    resolve();
+                } else {
+                    axios.get('/api/schools', { params: { per_page: 0 } }).then(function (response) {
+                        commit('setSchools', response.data);
+                        resolve();
+                    }).catch(function (error) {
+                        handleError(error);
+                        reject(error);
+                    });
+                }
+            });
+        },
+        fetchGrades: function fetchGrades(_ref7) {
+            var commit = _ref7.commit,
+                state = _ref7.state;
+            var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            return new Promise(function (resolve, reject) {
+                if (!force && state.grades) {
+                    resolve();
+                } else {
+                    axios.get('/api/grades', { params: { per_page: 0 } }).then(function (response) {
+                        commit('setGrades', response.data);
+                        resolve();
+                    }).catch(function (error) {
+                        handleError(error);
+                        reject(error);
+                    });
+                }
+            });
+        },
+        fetchDifficulty: function fetchDifficulty(_ref8, _ref9) {
+            var state = _ref8.state;
+            var gradeId = _ref9.gradeId,
+                schoolId = _ref9.schoolId;
+
+            return new Promise(function (resolve, reject) {
+                axios.get('/api/gradeschool/' + gradeId + '/' + schoolId).then(function (response) {
+                    resolve(response.data.difficulty);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        fetchRhythmDifficulty: function fetchRhythmDifficulty(_ref10, _ref11) {
+            var state = _ref10.state;
+            var gradeId = _ref11.gradeId;
+
+            return new Promise(function (resolve, reject) {
+                axios.get('/api/rhythmdifficulty/' + gradeId).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        fetchUserBadges: function fetchUserBadges(_ref12) {
+            var state = _ref12.state;
+            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            return new Promise(function (resolve, reject) {
+                axios.get('/api/badgeuser', { params: params }).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        fetchLevels: function fetchLevels(_ref13) {
+            var state = _ref13.state;
+            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            return new Promise(function (resolve, reject) {
+                axios.get('/api/levels', { params: params }).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        storeGame: function storeGame(_ref14, data) {
+            var state = _ref14.state;
+
+            return new Promise(function (resolve, reject) {
+                axios.post('/api/games', data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        generate10Exercises: function generate10Exercises(_ref15, data) {
+            var state = _ref15.state;
+
+            return new Promise(function (resolve, reject) {
+                axios.post('/api/rhythmExercise/generate/10/' + data, {}).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        updateGameUser: function updateGameUser(_ref16, _ref17) {
+            var state = _ref16.state;
+            var gameId = _ref17.gameId,
+                userId = _ref17.userId,
+                data = _ref17.data;
+
+            return new Promise(function (resolve, reject) {
+                axios.put('/api/gameuser/' + gameId + '/' + userId, data).then(function (response) {
+                    resolve();
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        finishGameUser: function finishGameUser(_ref18, _ref19) {
+            var state = _ref18.state;
+            var gameId = _ref19.gameId,
+                userId = _ref19.userId;
+
+            return new Promise(function (resolve, reject) {
+                axios.put('/api/gameuser/' + gameId + '/' + userId + '/finish').then(function (response) {
+                    resolve();
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        completeBadges: function completeBadges(_ref20, userId) {
+            var state = _ref20.state;
+
+            return new Promise(function (resolve, reject) {
+                axios.put('/api/users/' + userId + '/complete').then(function (response) {
+                    resolve();
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        generateQuestion: function generateQuestion(_ref21, data) {
+            var state = _ref21.state;
+
+            return new Promise(function (resolve, reject) {
+                axios.post('/api/questions/generate', data).then(function (response) {
+                    console.log(response.data);
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        storeAnswer: function storeAnswer(_ref22, data) {
+            var state = _ref22.state;
+
+            return new Promise(function (resolve, reject) {
+                axios.post('/api/answers', data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        fetchGameStatistics: function fetchGameStatistics(_ref23, id) {
+            var state = _ref23.state;
+
+            return new Promise(function (resolve, reject) {
+                axios.get('/api/games/' + id + '/statistics').then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        setupMidi: function setupMidi(_ref24) {
+            var commit = _ref24.commit,
+                state = _ref24.state;
+            var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            return new Promise(function (resolve, reject) {
+                if (!force && state.midi) {
+                    resolve();
+                } else {
+                    commit('addToCurrentInstruments', state.me.instrument);
+                    var currentInstruments = [].concat(_toConsumableArray(state.currentInstruments));
+
+                    if (force && force.length > 0) {
+                        currentInstruments = currentInstruments.concat(force);
+                    }
+
+                    MIDI.loadPlugin({
+                        soundfontUrl: '/soundfonts/',
+                        instruments: currentInstruments.map(function (name) {
+                            return state.instruments[name].soundfont;
+                        }),
+                        targetFormat: 'mp3',
+                        onsuccess: function onsuccess() {
+                            var _iteratorNormalCompletion = true;
+                            var _didIteratorError = false;
+                            var _iteratorError = undefined;
+
+                            try {
+                                for (var _iterator = currentInstruments[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                                    var name = _step.value;
+
+                                    var instrument = state.instruments[name];
+                                    MIDI.setVolume(instrument.channel, 127);
+                                    MIDI.programChange(instrument.channel, MIDI.GM.byName[instrument.soundfont].number);
+                                }
+                            } catch (err) {
+                                _didIteratorError = true;
+                                _iteratorError = err;
+                            } finally {
+                                try {
+                                    if (!_iteratorNormalCompletion && _iterator.return) {
+                                        _iterator.return();
+                                    }
+                                } finally {
+                                    if (_didIteratorError) {
+                                        throw _iteratorError;
+                                    }
+                                }
+                            }
+
+                            commit('setMidi', MIDI);
+                            resolve();
+                        }
+                    });
+                }
+            });
+        },
+        fetchRhythmBars: function fetchRhythmBars(_ref25, data) {
+            var state = _ref25.state;
+
+
+            var paging = "";
+            if (data && data.pageNum) {
+                paging = "?page=" + data.pageNum;
+            }
+
+            return new Promise(function (resolve, reject) {
+                axios.get('/api/rhythmBars' + paging).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        fetchRhythmBarOccurrences: function fetchRhythmBarOccurrences(_ref26, data) {
+            var state = _ref26.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.get('/api/rhythmBar/' + data + '/occurrences').then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        fetchRhythmExercise: function fetchRhythmExercise(_ref27, id) {
+            var state = _ref27.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.get('/api/rhythmExercise/' + id).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        createRhythmExerciseFeedback: function createRhythmExerciseFeedback(_ref28, data) {
+            var state = _ref28.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.post('/api/rhythmExerciseFeedback', data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        createRhythmBarOccurrence: function createRhythmBarOccurrence(_ref29, data) {
+            var state = _ref29.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.post('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences', data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        deleteRhythmBarOccurrence: function deleteRhythmBarOccurrence(_ref30, data) {
+            var state = _ref30.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.delete('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences/' + data.rhythm_feature_id, data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        updateRhythmBarOccurrence: function updateRhythmBarOccurrence(_ref31, data) {
+            var state = _ref31.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.delete('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences/' + data.rhythm_feature_id, data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        updateRhythmFeatureOccurrence: function updateRhythmFeatureOccurrence(_ref32, data) {
+            var state = _ref32.state;
+
+
+            return new Promise(function (resolve, reject) {
+                axios.delete('/api/rhythmBar/' + data.rhythm_bar_id + '/occurrences/' + data.rhythm_feature_id, data).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        deleteRhythmBar: function deleteRhythmBar(_ref33, data) {
+            var state = _ref33.state;
+
+
+            if (!data || !data.id) return;
+
+            return new Promise(function (resolve, reject) {
+                axios.delete('/api/rhythmBars/' + data.id).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        createRhythmBar: function createRhythmBar(_ref34, data) {
+            var state = _ref34.state;
+
+
+            if (!data || !data.bar) return;
+
+            return new Promise(function (resolve, reject) {
+                axios.post('/api/rhythmBars', data.bar).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        },
+        saveRhythmBar: function saveRhythmBar(_ref35, data) {
+            var state = _ref35.state;
+
+
+            if (!data || !data.bar || !data.bar.id) return;
+
+            return new Promise(function (resolve, reject) {
+                axios.patch('/api/rhythmBars/' + data.bar.id, data.bar).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (error) {
+                    handleError(error);
+                    reject(error);
+                });
+            });
+        }
+    }
+}));
+
+/***/ }),
+/* 335 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

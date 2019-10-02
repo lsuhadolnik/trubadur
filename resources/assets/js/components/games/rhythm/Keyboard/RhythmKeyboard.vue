@@ -173,7 +173,7 @@
                         @click.native="setBPM(i, true)" :text="i" 
                         :selected="playbackStatus.BPM == i" />
 
-                    <sexy-button :color="playbackStatus.metronome ? 'sunglow' : 'cabaret'" @click.native="playbackStatus.toggleMetronome(true)">
+                    <sexy-button :color="playbackStatus.metronome ? 'sunglow' : 'cabaret'" @click.native="toggleMetronome()">
                         <div v-if="playbackStatus.metronome" class="normal-font">IZKLJUČI METRO<br>NOM</div>
                         <div v-else class="normal-font">VKLJUČI METRO<br>NOM</div>
                     </sexy-button>
@@ -427,6 +427,14 @@ export default {
             }
         },
 
+        toggleMetronome() {
+
+            this.hide_settings();
+            playbackStatus.toggleMetronome(true);
+            
+
+        },
+
         decrease_selected_BPM() {
 
             if (this.selectedBPM - 10 > 10) {
@@ -440,7 +448,7 @@ export default {
                 this.setBPM(this.selectedBPM, true);
             }
 
-            this.settingsVisible = false;
+            this.hide_settings();
         },
 
         note(num) {
@@ -780,6 +788,9 @@ export default {
 
        
 
+    },
+    mounted() {
+        this.selectedBPM = this.playbackStatus.BPM;
     }
 
 }
