@@ -29,10 +29,12 @@
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
-        height: 116px;
+        
+        height: 140px;
+        overflow-y: hidden;
 
-        @include breakpoint-small-phone-landscape { height: 95px; }
-        @include breakpoint-small-phone-portrait { height: 100px; }
+        @include breakpoint-small-phone-landscape { height: 115px; }
+        @include breakpoint-small-phone-portrait  { height: 115px; }
     }
 
     #second-row {
@@ -72,7 +74,6 @@ export default {
 
             info: {
                 width: 2*(window.innerWidth),
-                height: 75,
                 barWidth: window.innerWidth,
                 barHeight: 75,
                 barOffsetY: 16,
@@ -123,6 +124,7 @@ export default {
 
             CTX: {
                 minimap: {
+                    height: 75,
                     id: "first-row",
                     role: "minimap",
                     viewHeight: 60,
@@ -164,6 +166,8 @@ export default {
                     }
                 }, 
                 zoomview: {
+                    height: 75,
+                    svgHeight: 120,
                     id: "second-row",
                     role: "zoomview",
                     scale: 1.5,
@@ -727,18 +731,16 @@ export default {
                     view.style.height = ctx.viewHeight+"px";
                 }
 
-                if(window.innerHeight <= 600){
-                    // Size the svg: - PLEASE MOVE THIS LOGIC SOMEWHERE ELSE! THANKS!
-                    ctx.renderer.resize(
-                        this.info.width,
-                        65,
-                    );
-                }else {
-                    // Size our svg:
-                    ctx.renderer.resize(
-                        this.info.width,
-                        this.info.height,
-                    );
+                // Size our svg:
+                ctx.renderer.resize(
+                    this.info.width,
+                    ctx.height,
+                );
+
+                if(ctx.svgHeight) {
+
+                    ctx.el.firstElementChild.style.height = ctx.svgHeight + "px";
+
                 }
 
                 this._render_context(ctx, this.tempNotes);

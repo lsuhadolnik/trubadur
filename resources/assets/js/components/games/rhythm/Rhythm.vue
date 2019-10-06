@@ -5,19 +5,22 @@
         <div class="rhythm__instructions" v-show="displayState == 'instructions'">
             <SexyButton @click.native="startGame()" color="green" :cols="3">Začni</SexyButton>
             <ul class="rhythm__instructions-list">
-                <li class="rhythm__instructions-list-item">Preizkusil se boš v ritmičnem nareku.</li>
+                <li class="rhythm__instructions-list-item">Preizkusil/a se boš v ritmičnem nareku.</li>
                 <li class="rhythm__instructions-list-item">Vaja bo v {{bar.num_beats}}/{{bar.base_note}} taktu.</li>
-                <li class="rhythm__instructions-list-item">Slišal boš {{num_beats_text}}.</li>
+                <li class="rhythm__instructions-list-item">Slišal/a boš {{num_beats_text}}.</li>
                 <li class="rhythm__instructions-list-item">Na začetku bo metronom izvajal en takt.</li>
                 <li class="rhythm__instructions-list-item">Tempo bo {{questionState.exercise != null ? questionState.exercise.BPM : "??" }} udarcev na minuto.</li>
                 <li class="rhythm__instructions-list-item">Za reševanje imaš na voljo {{questionState.maxSeconds}} sekund.</li>
                 <li class="rhythm__instructions-list-item">Odgovor lahko preveriš največ {{questionState.maxChecks}}-krat.</li>
-                <li class="rhythm__instructions-list-item">Če ne veš, kako deluje kakšen gumb, pritisni gumb Pomoč.<br>Dobro je, da si Pomoč ogledaš pred prvo igro.</li>
+                <li class="rhythm__instructions-list-item">Če apliakcijo uporabljaš prvič, ali če ne veš, kako deluje kakšen gumb, pritisni gumb Pomoč.<br>Dobro je, da si Pomoč ogledaš pred prvo igro.<br>Med igro si pomoč lahko ogledaš s pritiskom na gumb Pomoč na tipkovnici.</li>
                 <li class="rhythm__instructions-list-item" style="list-style-type: none;">
                     <sexy-button :text="metronomeButtonText" :color="metronomeButtonColor" :cols="3" @click.native="toggleMetronome()"/>
+                    <sexy-button text="Pomoč" color="sunglow" :cols="3" @click.native="showHelp = true" />
                 </li>
             </ul>
         </div>
+
+        <KeyboardHelp v-if="showHelp" :hide="hideHelp" />
 
         <div class="ready-rhythm-game-view" v-show="displayState == 'ready'">
 
@@ -41,8 +44,6 @@
             <Keyboard ref="keyboard" v-bind="{key_callback: keyboard_click}" :playbackStatus="playbackStatus" :question="questionState" :say="showError" />
 
             <div class="error" v-show="errorMessage">{{errorMessage}}</div>
-
-            <KeyboardHelp v-if="showHelp" :hide="hideHelp" />
 
             <div class="ready-rhythm-game-view__checkOverlay" v-if="['wrong', 'correct', 'waiting'].indexOf(questionState.check) > -1">
                 <div class="ready-rhythm-game-view__checkOverlay__center" >

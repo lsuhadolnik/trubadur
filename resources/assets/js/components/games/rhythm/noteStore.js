@@ -68,6 +68,11 @@ var NoteStore = function(bar, cursor, render_function, info) {
 
     this.handle_button = function(event) {
 
+        let n = this.cursor.position - 1;
+        if(this.notes[n] && this.notes[n].type == "blindtie" && this.cursor.position > 0){
+            this.cursor.position--;
+        }
+
         if(this.cursor.editing_tuplet){
             this.tupletEditing_buttonHandler(event);
             return;
@@ -678,12 +683,7 @@ var NoteStore = function(bar, cursor, render_function, info) {
             return;
         }
 
-        let n = this.cursor.position - 1;
-        if(this.notes[n] && this.notes[n].type == "blindtie"){
-            this.cursor.position--;
-        }
-
-        this._remove_tie_at_cursor();
+        // this._remove_tie_at_cursor();
 
         // Add the note
         // Add the new note to the current position (at the cursor)
@@ -698,6 +698,14 @@ var NoteStore = function(bar, cursor, render_function, info) {
     this._remove_tie_at_cursor = function() {
 
         let pos = this.cursor.position;
+
+        if(this.notes.length > pos && this.notes[pos].type == "blindtie"){
+            this.notes.splice(pos, 1);
+        }
+
+        if(this.notes.length > pos + 1 && this.notes[pos + 1].type == "blindtie"){
+            this.notes.splice(pos + 1, 1);
+        }
 
         if(this.notes.length > pos && this.notes[pos].tie){
             delete this.notes[pos].tie;

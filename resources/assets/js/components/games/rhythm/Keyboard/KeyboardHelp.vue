@@ -8,6 +8,7 @@
             <div class="row">
                 <div class="col-md-6">
 
+
                     <!-- BASICS -->
                     <div class="helpView__view view-1" v-if="view == 1">
 
@@ -34,26 +35,94 @@
                             <bar-button />
                         </div>
 
-                        <div class="helpView__text-line">Ta pa piko k trenutni noti:</div>
+                        <div class="helpView__text-line">Ta pa piko k trenutni noti, ki je pod kazalnikom:</div>
                         <div class="helpView__buttons musisync-row">
                             <dot-button />
                         </div>
-
-                    </div>
-
-                    <!-- TIE, DELETE -->
-                    <div class="helpView__view view-2" v-if="view == 2">
-
-                        <div class="helpView__text-line">Ta gumb z vezajem poveže noto pod kazalnikom in noto, ki ji sledi:</div>
-                        <sexy-button customClass="musisync" color="green">
-                            <span class="tie-text">u</span>
-                        </sexy-button>
 
                         <div class="helpView__text-line">Če se zmotiš, lahko noto pobrišeš s tem gumbom:</div>
                         <div class="helpView__buttons musisync-row">
                             <sexy-button color="cabaret">
                                 <icon name="trash" scale="2" />
                             </sexy-button>
+                        </div>
+                        <div class="helpView__text-line">Gumb briše tudi vezaje in poddelitve.</div>
+
+                    </div>
+
+                    <!-- TIE, DELETE -->
+                    <div class="helpView__view view-2" v-if="view == 2">
+
+                        <div class="helpView__text-line">S tem gumbom ustvariš vezaj</div>
+                        <sexy-button customClass="musisync" color="green">
+                            <span class="tie-text">u</span>
+                        </sexy-button>
+                        <div class="helpView__text-line">Kako deluje? Vezaj lahko narediš na dva načina:</div>
+                        <div class="helpView__text-line">Lahko se postaviš med dve noti in pritisneš ta gumb. </div>
+                        <div class="helpView__text-line">
+                            <div class="helpView__cursor musisync" style="display: inline-block; width: 99px;">
+                                <div class="helpView__cursor__lines">&#x00A9;&#x00A9;</div>
+                                <div class="helpView__cursor__notes " style="">q</div>
+                                <div class="helpView__cursor__cursor" style="left: 9px;">&#x2019;</div>
+                                <div class="helpView__cursor__notes " style="left: 48px;">q</div>
+                            </div>
+                            <div class="helpView__arrows helpView__arrowRight"><div class="helpView__arrows__wrap">&rarr;</div></div>
+                            <sexy-button customClass="musisync" color="green">
+                                <span class="tie-text">u</span>
+                            </sexy-button>
+                            <div class="helpView__arrows helpView__arrowRight"><div class="helpView__arrows__wrap">&rarr;</div></div>
+                            <div class="helpView__cursor musisync" style="display: inline-block; width: 99px;">
+                                <div class="helpView__cursor__lines">&#x00A9;&#x00A9;</div>
+                                <div class="helpView__cursor__notes " style="">q</div>
+                                <div class="helpView__cursor__cursor" style="left: 9px;">&#x2019;</div>
+                                <div class="helpView__cursor__notes " style="left: 48px;">q</div>
+                                <div class="helpView__cursor__notes helpView__tie" style="left: 16px; font-size: 52px; top: 60px !important;">U</div>
+                            </div>
+                        </div>
+
+                        <div class="helpView__text-line">Drugi način pa je vezaj "na slepo" </div>
+                        <div class="helpView__text-line">Ko si čisto na zadnji noti, pritisni vezaj. </div>
+                        <div class="helpView__text-line">Pokazala se bo nova, modra nota.</div>
+                        <div class="helpView__text-line">Potem vpiši naslednjo noto, ki jo želiš povezati in ta bo nadomestila modro noto.</div>
+                        <div class="helpView__text-line">
+                            <div class="helpView__cursor musisync" style="display: inline-block; width: 162px;">
+                                <div class="helpView__cursor__lines">&#x00A9;&#x00A9;&#x00A9;&#x00A9;</div>
+                                <div class="helpView__cursor__notes " style="">qq</div>
+                                <div class="helpView__cursor__cursor" style="left: 56px;">&#x2019;</div>
+                                <div class="helpView__cursor__notes " style="left: 48px;">q</div>
+                            </div>
+                            <div class="helpView__arrows helpView__arrowRight"><div class="helpView__arrows__wrap">&rarr;</div></div>
+                            
+                            
+                            
+                            <sexy-button customClass="musisync" color="green">
+                                <span class="tie-text">u</span>
+                            </sexy-button>
+                            
+                            
+                            <div class="helpView__arrows helpView__arrowRight"><div class="helpView__arrows__wrap">&rarr;</div></div>
+                            <div class="helpView__cursor musisync" style="display: inline-block; width: 162px;">
+                                <div class="helpView__cursor__lines">&#x00A9;&#x00A9;&#x00A9;&#x00A9;</div>
+                                <div class="helpView__cursor__notes " style="">qq</div>
+                                <div class="helpView__cursor__cursor" style="left: 106px;">&#x2019;</div>
+                                <div class="helpView__cursor__notes " style="left: 97px; color: blue;">q</div>
+                                <div class="helpView__cursor__notes helpView__tie" style="left: 61px; font-size: 52px; top: 60px !important;">U</div>
+                            </div>
+                            <div class="helpView__arrows helpView__arrowRight"><div class="helpView__arrows__wrap">&rarr;</div></div>
+                            
+                            
+                            
+                            <sexy-button color="green"><div class="norfolk-note-padding norfolk" style="font-size: 32px;">&#x0068;</div></sexy-button>
+                            
+                            
+                            <div class="helpView__arrows helpView__arrowRight"><div class="helpView__arrows__wrap">&rarr;</div></div>
+                            <div class="helpView__cursor musisync" style="display: inline-block; width: 162px;">
+                                <div class="helpView__cursor__lines">&#x00A9;&#x00A9;&#x00A9;&#x00A9;</div>
+                                <div class="helpView__cursor__notes " style="">qq</div>
+                                <div class="helpView__cursor__cursor" style="left: 106px;">&#x2019;</div>
+                                <div class="helpView__cursor__notes " style="left: 97px;">h</div>
+                                <div class="helpView__cursor__notes helpView__tie" style="left: 61px; font-size: 52px; top: 60px !important;">U</div>
+                            </div>
                         </div>
 
                     </div>
@@ -97,22 +166,48 @@
                         <h2>Posebni gumbi, metronom</h2>
                         <div class="helpView__text-line">Če želiš znova predvajati vajo, pritisni ta gumb:</div>
                         <div class="helpView__buttons">
-                            <sexy-button color="sunglow"><div class="tiny-tajni-pici-mici-font">Ponovi vajo</div></sexy-button>
+                            <sexy-button color="sunglow"><div class="tiny-tajni-pici-mici-font">Ponovi<br>vajo</div></sexy-button>
                         </div>
                         <div class="helpView__text-line">Večkrat kot predvajaš vajo, manj točk dobiš.</div>
+                        
+                        <div class="helpView__text-line">Če pritisneš ta gumb, se pojavijo novi gumbi, s katerimi lahko nastaviš tempo in vključiš ali izključiš metronom.</div>
+                        <div class="helpView__text-line">
+                            <sexy-button color="sunglow"><icon name="cog" scale="2" /></sexy-button>
+                        </div>
 
+                        <div class="helpView__text-line">Z gumboma + in - povečaš in zmanjšaš tempo.</div>
                         <div class="helpView__text-line">
-                            S tem gumbom spreminjaš hitrost predvajanja v udarcih na minuto (BPM = beats per minute).<br>
-                            Dotakni se ga in podrsaj levo ali desno.<br>
-                            Če pritisneš samo enkrat, vključiš ali izključiš metronom.<br>
-                            Lahko poskusiš na tem spodnjem gumbu.
+                            
+                            <sexy-button color="sunglow">
+                                <icon name="minus" />
+                            </sexy-button>
+
+                            <b-p-m-text-button text="60" />
+
+                            <sexy-button color="sunglow">
+                                <icon name="plus" />
+                            </sexy-button>
                         </div>
+                        <div class="helpView__text-line">Ko nastaviš tempo, pritisni gumb s kljukico.</div>
                         <div class="helpView__text-line">
-                            Če je gumb zelene barve, pomeni, da je metronom vključen, sicer je izključen.
+                            <sexy-button color="green" >
+                                <icon name="check" scale="2" />
+                            </sexy-button>
                         </div>
-                        <div class="helpView__buttons helpView__buttons-center">
-                            <b-p-m-slider :bpmObject="{BPM: 20, metronome: false}" valueKey="BPM" />
+
+
+                        <div class="helpView__text-line">S tem gumbom izključiš ali vključiš metronom.</div>
+                        <div class="helpView__text-line">
+                            <sexy-button color="cabaret">
+                                <div class="normal-font">IZKLJUČI METRO<br>NOM</div>
+                            </sexy-button>
+
+                            <sexy-button color="sunglow">
+                                <div class="normal-font">VKLJUČI METRO<br>NOM</div>
+                            </sexy-button>
                         </div>
+
+                        
 
                     </div>
 
@@ -153,7 +248,7 @@
                             <div class="helpView__arrows helpView__arrowRight"><div class="helpView__arrows__wrap">&rarr;</div></div>
                             <selection-button color="blue" />
                         </div>
-                        <div class="helpView__text-line">Gumb se bo obarval vijolično, na črtovju se bo prikazal kvadrat s poudarjenima robovoma.</div>
+                        <div class="helpView__text-line">Gumb se bo obarval vijolično, na črtovju se bo prikazal pravokotnik s poudarjenima robovoma.</div>
                         <div class="helpView__text-line">Označila se bo prva nota pred kazalnikom. Potem lahko pritisneš na katerokoli drugo noto.</div>
                         <div class="helpView__cursor musisync">
                             <div class="helpView__cursor__lines">&#x00A9;&#x00A9;&#x00A9;&#x00A9;&#x00A9;&#x00A9;&#x00A9;</div>
@@ -185,7 +280,7 @@
                             <sexy-button color="green"><TupletSign num="?:?" bg="green" /></sexy-button>
                         </div>
                         <div class="helpView__text-line">Program te bo vprašal, kakšno poddelitev želiš ustvariti.</div>
-                        <div class="helpView__text-line">Ne preverja se, ali je triola smiselna, za to moraš poskrbeti sam 🙂💪</div>
+                        <div class="helpView__text-line">Ne preverja se, ali je triola smiselna, za to moraš poskrbeti sam/a 🙂💪</div>
                     </div>
 
                     <!-- TUPLET DELETE -->
@@ -201,7 +296,30 @@
                                 <icon name="ban" scale="2" class="alert"></icon>
                             </sexy-button>
                         </div>
-                        <div class="helpView__text-line">S tem gumbom izbrišeš vse poddelitve, ki so v izbirnem kvadratu. Tudi če označiš samo del poddelitve, se bo izbrisala cela.</div>
+                        <div class="helpView__text-line">S tem gumbom izbrišeš vse poddelitve, ki so v izbirnem pravokotniku. Tudi če označiš samo del poddelitve, se bo izbrisala cela.</div>
+                    </div>
+
+                    <!-- SPECIAL 2 -->
+                    <div class="helpView__view view-5" v-if="view == 10">
+
+                        <h2>Pomožni gumbi</h2>
+                        <div class="helpView__text-line">Če opaziš, da v programu kaj ne deluje ali če se ti zdi da je bila vaja pretežka, pritisni ta gumb in napiši sporočilo.</div>
+                        <div class="helpView__buttons">
+                            <sexy-button color="cabaret"><div class="tiny-tajni-pici-mici-font">Povratne<br>informacije</div></sexy-button>
+                        </div>
+
+                        <div class="helpView__text-line">Če imaš manjši telefon in ti zmanjkuje prostora, lahko pritisneš ta gumb, s katerim skriješ zgornji rumeni meni.</div>
+                        <div class="helpView__buttons">
+                            <sexy-button ><div class="tiny-tajni-pici-mici-font">Odpri<br>zapri<br>meni</div></sexy-button>
+                        </div>
+
+
+                        <div class="helpView__text-line">Če se ti zdi, da nikakor ne moreš rešiti te vaje, lahko pritisneš gumb vdam se. Ta ti bo takoj pokazal, kakšna je bila vaja. Žal pa za to ne dobiš pozitivnih točk.</div>
+                        <div class="helpView__text-line">
+                            <sexy-button color="cabaret"><div class="tiny-tajni-pici-mici-font">Vdam<br>se</div></sexy-button>
+                        </div>
+
+                        
                     </div>
 
                 </div>
@@ -210,7 +328,7 @@
         </div>
 
         <div class="helpView__bottom-nav">
-            <div class="helpView__bottomNav__button helpView__bottomNav__closeButton" @click="hide">Zapri</div>
+            <div class="helpView__bottomNav__button helpView__bottomNav__closeButton" @click="doHide()">Zapri</div>
             <div class="helpView__bottomNav__button helpView__bottomNav__closeButton" v-bind:class="{ dimButton: view == numViews}" @click="nextView">Naprej</div>
             
             <div class="helpView__bottomNav__button helpView__bottomNav__closeButton" v-bind:class="{ dimButton: view == 1 }"  @click="prevView">Nazaj</div>
@@ -438,6 +556,7 @@ import BarButton from "./Buttons/BarButton.vue"
 import DotButton from "./Buttons/DotButton.vue"
 import SelectionButton from "./Buttons/SelectionButton.vue"
 import BPMSlider from "./Buttons/BPMSlider.vue"
+import BPMTextButton from "./Buttons/BPMTextButton.vue"
 
 
 export default {
@@ -449,20 +568,27 @@ export default {
         TestBPM: {BPM: 0},
 
         view: 1,
-        numViews: 9
+        numViews: 10
 
     }},
 
     components: {
         SexyButton, SexySlider, TupletSign,
         
-        ThitryTwoButton, BarButton, DotButton, SelectionButton, BPMSlider
+        ThitryTwoButton, BarButton, DotButton, SelectionButton, BPMSlider, BPMTextButton
     },
 
     mounted() {
     },
 
     methods: {
+
+        doHide() {
+
+            this.view = 1;
+
+            this.hide();
+        },
 
         prevView() {
 
