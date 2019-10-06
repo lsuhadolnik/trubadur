@@ -55,6 +55,7 @@ class AnswerController extends Controller
             'n_deletions' => 'required|numeric|min:0',
             'n_playbacks' => 'required|numeric|min:1',
             'n_answers'   => 'required|numeric|min:0',
+            'metronome'   => 'boolean',
             'success'     => 'required|boolean'
         ];
 
@@ -100,6 +101,7 @@ class AnswerController extends Controller
             'n_deletions' => 'numeric|min:0',
             'n_playbacks' => 'numeric|min:1',
             'n_answers'   => 'numeric|min:1',
+            'metronome'   => 'boolean',
             'success'     => 'boolean'
         ];
 

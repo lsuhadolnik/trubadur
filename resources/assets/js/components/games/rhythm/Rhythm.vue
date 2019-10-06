@@ -63,11 +63,6 @@
 
         </div>
 
-        <audio ref="rhythmAudio" @loadedmetadata="showMetadataAlert()" @play="setPlaying(true)" @ended="setPlaying(false)" @pause="setPlaying(false)">
-            <source :src="rhythmAudioSource" type="audio/mpeg" />
-            I hate Internet explorer.
-        </audio>
-
         
 
         <div class="rhythm-diff-check-view" v-show="displayState == 'diff'">
@@ -236,6 +231,7 @@ export default {
                     nChecks: 1, startTime: 1,
                     duration: 0,
                     surrendered: false,
+                    initialMetronome: true,
                 }
             },
 
@@ -527,6 +523,10 @@ export default {
             .then(()=> {
 
                 this.questionState.wasCorrect = false;
+                
+                // Nastavi statistiko metronoma na začetno vrednost, ki jo je uporabnik nastavil pri navodilih
+                this.questionState.statistics.initialMetronome = this.playbackStatus.metronome;
+
                 this.questionState.statistics.startTime = (new Date()).getTime();
                 this.startCountdownInterval();
 
@@ -561,6 +561,7 @@ export default {
             this.questionState.statistics.startTime = 1;
             this.questionState.statistics.duration = 1;
             this.questionState.statistics.surrendered = false;
+            this.questionState.statistics.metronome = true;
 
             clearInterval(this.countdownInterval);
         },
@@ -698,6 +699,7 @@ export default {
                     n_deletions: this.questionState.statistics.nDeletions, 
                     n_playbacks: this.questionState.statistics.nPlaybacks, 
                     n_answers:   this.questionState.statistics.nChecks, 
+                    metronome:   this.questionState.statistics.initialMetronome,
                     success:  info.status})
                 .catch(() => {
 

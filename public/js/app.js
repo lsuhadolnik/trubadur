@@ -63151,11 +63151,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -63207,7 +63202,8 @@ var util = __webpack_require__(10);
                     nPlaybacks: 1, nNoteTaps: 1,
                     nChecks: 1, startTime: 1,
                     duration: 0,
-                    surrendered: false
+                    surrendered: false,
+                    initialMetronome: true
                 }
             },
 
@@ -63457,6 +63453,10 @@ var util = __webpack_require__(10);
             return this.loadAudio().then(function () {
 
                 _this3.questionState.wasCorrect = false;
+
+                // Nastavi statistiko metronoma na začetno vrednost, ki jo je uporabnik nastavil pri navodilih
+                _this3.questionState.statistics.initialMetronome = _this3.playbackStatus.metronome;
+
                 _this3.questionState.statistics.startTime = new Date().getTime();
                 _this3.startCountdownInterval();
 
@@ -63486,6 +63486,7 @@ var util = __webpack_require__(10);
             this.questionState.statistics.startTime = 1;
             this.questionState.statistics.duration = 1;
             this.questionState.statistics.surrendered = false;
+            this.questionState.statistics.metronome = true;
 
             clearInterval(this.countdownInterval);
         },
@@ -63605,6 +63606,7 @@ var util = __webpack_require__(10);
                 n_deletions: this.questionState.statistics.nDeletions,
                 n_playbacks: this.questionState.statistics.nPlaybacks,
                 n_answers: this.questionState.statistics.nChecks,
+                metronome: this.questionState.statistics.initialMetronome,
                 success: info.status }).catch(function () {
 
                 _this8.questionState.check = "error";
@@ -72179,33 +72181,6 @@ var render = function() {
             : _vm._e()
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "audio",
-        {
-          ref: "rhythmAudio",
-          on: {
-            loadedmetadata: function($event) {
-              return _vm.showMetadataAlert()
-            },
-            play: function($event) {
-              return _vm.setPlaying(true)
-            },
-            ended: function($event) {
-              return _vm.setPlaying(false)
-            },
-            pause: function($event) {
-              return _vm.setPlaying(false)
-            }
-          }
-        },
-        [
-          _c("source", {
-            attrs: { src: _vm.rhythmAudioSource, type: "audio/mpeg" }
-          }),
-          _vm._v("\n        I hate Internet explorer.\n    ")
-        ]
       ),
       _vm._v(" "),
       _c(

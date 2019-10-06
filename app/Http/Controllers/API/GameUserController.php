@@ -179,16 +179,60 @@ class GameUserController extends Controller
         
             $noteCount = $this->getPerfectSolverRhythmGameActionCount($answer->question);
 
-            $points += 
+            $p =  
               $this->getRhythmExerciseDifficultyFactor($answer->question, $answer->success)
-            * $this->getTimeFactor($answer->time, $answer->success)
-            * $this->getAdditionsDeletionsFactor($noteCount, $answer->nAdditions, $answer->nDeletions, $answer->success)
-            * $this->getSuccessFactor($answer->success);
+            * $this->getRhythmTimeFactor($answer->time, $answer->success)
+            * $this->getRhythmAdditionsDeletionsFactor($noteCount, $answer->nAdditions, $answer->nDeletions, $answer->success)
+            * $this->getSuccessFactor($answer->success)
+            * $this->getMetronomeFactor($answer)
+            * $this->getNumChecksFactor($answer);
+
+            $points += $p;
 
         }
 
         return $points;
 
+    }
+
+    private function getNumChecksFactor($answer) {
+
+        $checks = 12;
+        if(isset($answer->nChecks)){
+            $checks = $answer->nChecks;
+        }
+
+        if($checks == 1) {
+            return 2;
+        } else if ($checks > 1 && $checks <= 3) {
+            return 1.5;
+        } else if ($checks > 3 && $checks <= 5) {
+            return 1.25;
+        } else if ($checks > 5 && $checks <= 8) {
+            return 1.1;
+        }
+
+        return 1;
+
+
+    }
+
+    private function getMetronomeFactor($answer) {
+
+
+        $metronome = true;
+        if(isset($answer->metronome)) {
+            $metronome = $answer->metronome;
+        }
+
+        if(!$metronome) 
+        {    
+            return 1.25;
+        }
+        else 
+        {
+            return 1;
+        }
     }
 
     
@@ -197,7 +241,7 @@ class GameUserController extends Controller
         if($success) {
             return 1;
         } else {
-            return -0.75;
+            return -0.4;
         }
     }
 
@@ -279,6 +323,38 @@ class GameUserController extends Controller
 
     }
 
+    private function getRhythmTimeFactor($time, $success)
+    {
+
+        $time = $time / (1000 * 60);
+
+        if (!$success) {
+            return 1.5;
+        }
+
+        if ($time <= 1) {
+            return 3;
+        } else if ($time < 1.5) {
+            return 2.5;
+        } else if ($time < 2) {
+            return 2;
+        } else if ($time < 3) {
+            return 1.5;
+        } else if ($time < 5) {
+            return 1.25;
+        } else if ($time < 6) {
+            return 1;
+        } else if ($time < 7) {
+            return 0.75;
+        } else if ($time < 8) {
+            return 0.5;
+        } else if ($time < 9) {
+            return 0.25;
+        } else {
+            return 0.1;
+        }
+    }
+
     /**
      * Determines the time factor used for calculating the points contribution of a single answer.
      *
@@ -318,13 +394,29 @@ class GameUserController extends Controller
      * @param  boolean  $success
      * @return float
      */
-    private function getAdditionsDeletionsFactor($noteCount, $nAdditions, $nDeletions, $success)
+    private function getRhythmAdditionsDeletionsFactor($noteCount, $nAdditions, $nDeletions, $success)
     {
+
+        $nTotal = $nAdditions + $nDeletions - ($noteCount - 1);
+
         if (!$success) {
+
+            $nTotal = ($nAdditions - $nDeletions) / ($noteCount - 1);
+
+            if ($nTotal < 0 || $nTotal > 2) {
+                return 3;
+            } else if ($nTotal > 0 && $nTotal <= 1.5) {
+                return 1.5;
+            } else if ($nTotal > 0 && $nTotal <= 1) {
+                return 1;
+            } else if ($nTotal == 1) {
+                return 0.5;
+            }
+
             return 3;
         }
 
-        $nTotal = $nAdditions + $nDeletions - ($noteCount - 1);
+        
 
         if ($nTotal <= 2) {
             return 2;
@@ -338,6 +430,27 @@ class GameUserController extends Controller
             return 0.33;
         } else {
             return 0.1;
+        }
+    }
+
+    private function getAdditionsDeletionsFactor($noteCount, $nAdditions, $nDeletions, $success)
+    {
+        if (!$success) {
+            return 3;
+        }
+
+        $nTotal = $nAdditions + $nDeletions - ($noteCount - 1);
+
+        if ($nTotal <= 5) {
+            return 2;
+        } else if ($nTotal > 5 && $nTotal <= 8) {
+            return 1.5;
+        } else if ($nTotal > 8 && $nTotal <= 10) {
+            return 1;
+        } else if ($nTotal > 10 && $nTotal <= 20) {
+            return 0.75;
+        } else {
+            return 0.33;
         }
     }
 }
