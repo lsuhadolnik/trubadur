@@ -509,12 +509,13 @@ export default {
 
                 // Handle notes and rests
                 let symbol = thisNote.value + "";
-                if(thisNote.dot) {
-                    symbol += "d";
-                }
                 if(thisNote.type == "r"){
                     symbol += "r";
                 }
+                if(thisNote.dot) {
+                    symbol += "d";
+                }
+                
 
                 let newNote = null;
                 if(thisNote.type == "bar"){

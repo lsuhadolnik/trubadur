@@ -54496,11 +54496,11 @@ var Tuplet = VF.Tuplet;
 
                 // Handle notes and rests
                 var symbol = thisNote.value + "";
-                if (thisNote.dot) {
-                    symbol += "d";
-                }
                 if (thisNote.type == "r") {
                     symbol += "r";
+                }
+                if (thisNote.dot) {
+                    symbol += "d";
                 }
 
                 var newNote = null;
