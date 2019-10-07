@@ -54496,7 +54496,12 @@ var Tuplet = VF.Tuplet;
 
                 // Handle notes and rests
                 var symbol = thisNote.value + "";
-                if (thisNote.type == "r") symbol += "r";
+                if (thisNote.dot) {
+                    symbol += "d";
+                }
+                if (thisNote.type == "r") {
+                    symbol += "r";
+                }
 
                 var newNote = null;
                 if (thisNote.type == "bar") {
@@ -54893,7 +54898,10 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
         this._vex_draw_optionals(context, beams);
     }, this._get_beam_grouping = function (bar) {
 
-        if (parseInt(bar.num_beats) == 6 && parseInt(bar.base_note) == 8) {
+        var num_beats = parseInt(bar.num_beats);
+        var base_note = parseInt(bar.base_note);
+
+        if (num_beats == 6 && base_note == 8) {
             return [new VF.Fraction(3, 8)]; // Naj se note grupirajo po četrtinki s piko
         }
 

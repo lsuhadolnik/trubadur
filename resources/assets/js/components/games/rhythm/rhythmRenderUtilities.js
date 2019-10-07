@@ -52,7 +52,10 @@ var RhythmRenderUtilities = function(){
 
     this._get_beam_grouping = function(bar){
 
-        if (parseInt(bar.num_beats) == 6 && parseInt(bar.base_note) == 8){
+        let num_beats = parseInt(bar.num_beats);
+        let base_note = parseInt(bar.base_note);
+
+        if (num_beats == 6 && base_note == 8) {
             return [new VF.Fraction(3, 8)]; // Naj se note grupirajo po četrtinki s piko
         }
 
@@ -199,7 +202,7 @@ var RhythmRenderUtilities = function(){
         
         // Draw ties and tuplets
         optionals.forEach(opt => {
-            this._vex_draw_optionals(context, opt);    
+            this._vex_draw_optionals(context, opt);
         });
 
     };
