@@ -4,7 +4,7 @@ DELETE FROM rhythm_bar_occurrences     WHERE rhythm_bar_id > 0;
 DELETE FROM rhythm_feature_occurrences WHERE rhythm_feature_id > 0;
 DELETE FROM rhythm_features            WHERE id > 0;
 
---- INSERT IGNORE rhythm_bars
+/* INSERT IGNORE rhythm_bars */
 INSERT  IGNORE INTO `rhythm_bars` VALUES (1,'[{\"type\": \"bar\"}]',0,0,NULL);
 INSERT  IGNORE INTO `rhythm_bars` VALUES (2,'[{\"type\": \"n\", \"value\": 4}]',1,0,NULL);
 INSERT  IGNORE INTO `rhythm_bars` VALUES (3,'[{\"type\": \"r\", \"value\": 4}]',1,0,NULL);
@@ -71,14 +71,14 @@ INSERT  IGNORE INTO `rhythm_bars` VALUES (63,'[{\"dot\": true, \"type\": \"n\", 
 INSERT  IGNORE INTO `rhythm_bars` VALUES (64,'[{\"type\": \"n\", \"value\": 16}, {\"type\": \"n\", \"value\": 16}, {\"type\": \"n\", \"value\": 16}, {\"type\": \"n\", \"value\": 16}, {\"type\": \"n\", \"value\": 8}]',1.5,NULL,NULL);
 INSERT  IGNORE INTO `rhythm_bars` VALUES (65,'[{\"type\": \"n\", \"value\": 4}, {\"type\": \"n\", \"value\": 8}, {\"type\": \"bar\"}, {\"tie\": true, \"type\": \"n\", \"value\": 8}, {\"type\": \"n\", \"value\": 16}, {\"type\": \"n\", \"value\": 16}, {\"type\": \"n\", \"value\": 16}, {\"type\": \"n\", \"value\": 16}]',3,1.5,NULL);
 
---- INSERT IGNORE bar_infos
+/* INSERT IGNORE bar_infos */
 INSERT  IGNORE INTO `bar_infos` VALUES (1,'{\"base_note\": 4, \"num_beats\": 4}',11,0.6);
 INSERT  IGNORE INTO `bar_infos` VALUES (2,'{\"base_note\": 4, \"num_beats\": 3}',11,0.6);
 INSERT  IGNORE INTO `bar_infos` VALUES (3,'{\"base_note\": 8, \"num_beats\": 6}',11,0.6);
 INSERT  IGNORE INTO `bar_infos` VALUES (4,'{\"base_note\": 4, \"num_beats\": 5, \"subdivisions\": [{\"d\": 4, \"n\": 3}, {\"d\": 4, \"n\": 2}]}',11,0.2);
 INSERT  IGNORE INTO `bar_infos` VALUES (5,'{\"base_note\": 4, \"num_beats\": 5, \"subdivisions\": [{\"d\": 4, \"n\": 2}, {\"d\": 4, \"n\": 3}]}',11,0.2);
 
---- INSERT rhythm_features
+/*  INSERT rhythm_features */
 INSERT INTO `rhythm_features` VALUES (1,'Level 11 (4/4) (3/4)',NULL,NULL,0);
 INSERT INTO `rhythm_features` VALUES (2,'Level 12 (4/4)',NULL,NULL,0);
 INSERT INTO `rhythm_features` VALUES (3,'Level 13 (4/4)(3/4)(mešano)',NULL,NULL,0);
@@ -106,7 +106,7 @@ INSERT INTO `rhythm_features` VALUES (28,'F3 8',NULL,NULL,0);
 INSERT INTO `rhythm_features` VALUES (29,'F4N 8',1,NULL,0);
 INSERT INTO `rhythm_features` VALUES (30,'F4R 8',NULL,NULL,0);
 
---- INSERT rhythm_feature_occurrences
+/*  INSERT rhythm_feature_occurrences */
 INSERT INTO `rhythm_feature_occurrences` VALUES (11,18,1,1);
 INSERT INTO `rhythm_feature_occurrences` VALUES (11,18,2,1);
 INSERT INTO `rhythm_feature_occurrences` VALUES (11,18,3,1);
@@ -136,7 +136,7 @@ INSERT INTO `rhythm_feature_occurrences` VALUES (14,25,2,0.6);
 INSERT INTO `rhythm_feature_occurrences` VALUES (14,29,3,0.3);
 INSERT INTO `rhythm_feature_occurrences` VALUES (14,30,3,0.7);
 
---- INSERT rhythm_bar_occurrences
+/*  INSERT rhythm_bar_occurrences */
 INSERT INTO `rhythm_bar_occurrences` VALUES (2,21,0.8);
 INSERT INTO `rhythm_bar_occurrences` VALUES (2,22,0.5);
 INSERT INTO `rhythm_bar_occurrences` VALUES (2,23,0.2);
@@ -165,7 +165,7 @@ INSERT INTO `rhythm_bar_occurrences` VALUES (8,24,0.2);
 INSERT INTO `rhythm_bar_occurrences` VALUES (9,22,0.15);
 INSERT INTO `rhythm_bar_occurrences` VALUES (9,23,0.2);
 INSERT INTO `rhythm_bar_occurrences` VALUES (9,24,0.2);
-INSERT INTO `rhythm_bar_occurrences` VALUES (10,23,0.15);
+INSERT INTO `rhythm_bar_occurrences` VALUES (10,23,0.14);
 INSERT INTO `rhythm_bar_occurrences` VALUES (11,22,0.3);
 INSERT INTO `rhythm_bar_occurrences` VALUES (13,23,0.5);
 INSERT INTO `rhythm_bar_occurrences` VALUES (14,25,0.5);

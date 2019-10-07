@@ -16,7 +16,7 @@ tables_ign="rhythm_bars bar_infos"
 for table in $tables_ign
 do
 
-    echo "--- INSERT IGNORE $table" >> $filename
+    echo "/* INSERT IGNORE $table */" >> $filename
 
     mysqldump \
 	--skip-comments \
@@ -42,7 +42,7 @@ tables_normal="rhythm_features rhythm_feature_occurrences rhythm_bar_occurrences
 for table in $tables_normal;
 do
 
-    echo "--- INSERT $table" >> $filename
+    echo "/*  INSERT $table */" >> $filename
 
     mysqldump \
         --skip-comments \
