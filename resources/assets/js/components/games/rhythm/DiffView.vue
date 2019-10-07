@@ -2,7 +2,7 @@
 
     <div class="rhythm-game__diff">
         
-        <h1 style="text-align: center;font-size: 40px;">{{playfulTitle}}</h1>
+        <h1 class="diff-view-playful-title" style="text-align: center;font-size: 40px;">{{playfulTitle}}</h1>
 
         <h1 class="diff-prompt">Taka je bila vaja:</h1>
         <StaffView ref="staff_view1" :bar="bar" :enabledContexts="['zoomview']" >
@@ -36,10 +36,19 @@
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
         overflow-scrolling: touch;
-        height: 110px;
+        height: 140px;
         overflow-y: hidden;
 
-        @include breakpoint-phone-landscape { height: 150px; }
+        @include breakpoint-small-phone-portrait  { height: 150px; }
+        @include breakpoint-small-phone-landscape { height: 128px; }
+
+        @include breakpoint-phone-portrait  { height: 150px; }
+        @include breakpoint-phone-landscape { height: 128px; }
+    }
+
+    .diff-view-playful-title {
+        @include breakpoint-small-phone-landscape { display: none; }
+        @include breakpoint-phone-landscape { display: none; }
     }
 
     $zoomviewScale: 1.5; 
@@ -55,6 +64,19 @@
         margin: 10px 0 0 0;
         font-size: 26px;
         text-align: center;
+
+        @include breakpoint-small-phone-landscape {
+            position: absolute;
+            font-size: 14px;
+            padding-left: 10px;
+        }
+
+        @include breakpoint-phone-landscape {
+            position: absolute;
+            font-size: 14px;
+            padding-left: 10px;
+        }
+
     }
 
     .button-holder{
@@ -76,7 +98,7 @@
 import StaffView from "./StaffView.vue"
 
 import SexyButton from "../../elements/SexyButton.vue"
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
 
 export default {
@@ -117,11 +139,22 @@ export default {
     methods: {
 
         ...mapActions(['createRhythmExerciseFeedback']),
+        ...mapMutations(['setHeaderMenuDisabled', 'toggleHeaderMenuDisabled']),
 
         render(exerciseNotes, userNotes) {
 
             this.$refs.staff_view1.render(exerciseNotes);
             this.$refs.staff_view2.render(userNotes);    
+        },
+
+        checkIsSmallPhone(){
+
+            let width  = window.screen.width;
+            let height = window.screen.height;
+
+            // and (min-device-width: 320px)
+            // and (max-device-width: 568px)
+            this.setHeaderMenuDisabled(width < 568 || height < 568);
         },
 
         feedback() {
@@ -144,7 +177,17 @@ export default {
         }
 
     },
+    beforeDestroy() {
+
+        this.setHeaderMenuDisabled(false);
+        window.removeEventListener('resize', this.checkIsSmallPhone);
+
+    },
     mounted(){
+
+        this.checkIsSmallPhone();
+        window.addEventListener('resize', this.checkIsSmallPhone);
+
 
         let out = this;
         let z1 = document.getElementById("diff-zoom-view1");

@@ -64203,7 +64203,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 110px;\n  overflow-y: hidden;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n      height: 150px;\n}\n}\n#diff-zoom-view1[data-v-0556eb24], #diff-zoom-view2[data-v-0556eb24] {\n  -webkit-transform: scale(1.5) translate(16.65%);\n  transform: scale(1.5) translate(16.65%);\n}\n.diff-prompt[data-v-0556eb24] {\n  padding: 0px;\n  margin: 10px 0 0 0;\n  font-size: 26px;\n  text-align: center;\n}\n.button-holder[data-v-0556eb24] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  width: 100%;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.feedbackButton[data-v-0556eb24] {\n  margin-left: 15px;\n}\n", ""]);
+exports.push([module.i, "\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 140px;\n  overflow-y: hidden;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n      height: 150px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n      height: 128px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: portrait) {\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n      height: 150px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.rhythm-game__diff__zoomview1[data-v-0556eb24], .rhythm-game__diff__zoomview2[data-v-0556eb24] {\n      height: 128px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.diff-view-playful-title[data-v-0556eb24] {\n    display: none;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.diff-view-playful-title[data-v-0556eb24] {\n    display: none;\n}\n}\n#diff-zoom-view1[data-v-0556eb24], #diff-zoom-view2[data-v-0556eb24] {\n  -webkit-transform: scale(1.5) translate(16.65%);\n  transform: scale(1.5) translate(16.65%);\n}\n.diff-prompt[data-v-0556eb24] {\n  padding: 0px;\n  margin: 10px 0 0 0;\n  font-size: 26px;\n  text-align: center;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.diff-prompt[data-v-0556eb24] {\n      position: absolute;\n      font-size: 14px;\n      padding-left: 10px;\n}\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.diff-prompt[data-v-0556eb24] {\n      position: absolute;\n      font-size: 14px;\n      padding-left: 10px;\n}\n}\n.button-holder[data-v-0556eb24] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  width: 100%;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n}\n.feedbackButton[data-v-0556eb24] {\n  margin-left: 15px;\n}\n", ""]);
 
 // exports
 
@@ -64221,6 +64221,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(4);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -64331,11 +64353,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     },
 
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])(['createRhythmExerciseFeedback']), {
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])(['createRhythmExerciseFeedback']), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])(['setHeaderMenuDisabled', 'toggleHeaderMenuDisabled']), {
         render: function render(exerciseNotes, userNotes) {
 
             this.$refs.staff_view1.render(exerciseNotes);
             this.$refs.staff_view2.render(userNotes);
+        },
+        checkIsSmallPhone: function checkIsSmallPhone() {
+
+            var width = window.screen.width;
+            var height = window.screen.height;
+
+            // and (min-device-width: 320px)
+            // and (max-device-width: 568px)
+            this.setHeaderMenuDisabled(width < 568 || height < 568);
         },
         feedback: function feedback() {
 
@@ -64354,7 +64385,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         }
     }),
+    beforeDestroy: function beforeDestroy() {
+
+        this.setHeaderMenuDisabled(false);
+        window.removeEventListener('resize', this.checkIsSmallPhone);
+    },
     mounted: function mounted() {
+
+        this.checkIsSmallPhone();
+        window.addEventListener('resize', this.checkIsSmallPhone);
 
         var out = this;
         var z1 = document.getElementById("diff-zoom-view1");
@@ -64401,7 +64440,10 @@ var render = function() {
     [
       _c(
         "h1",
-        { staticStyle: { "text-align": "center", "font-size": "40px" } },
+        {
+          staticClass: "diff-view-playful-title",
+          staticStyle: { "text-align": "center", "font-size": "40px" }
+        },
         [_vm._v(_vm._s(_vm.playfulTitle))]
       ),
       _vm._v(" "),
