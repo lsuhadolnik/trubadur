@@ -39,7 +39,7 @@ class ImportUsers extends Command
         }
 
         for($i = 0; $i < 3; $i++){
-            $pass .= rand(0, 9);
+            $pass .= rand(1, 9);
         }
 
         return $pass;
