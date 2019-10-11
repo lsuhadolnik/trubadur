@@ -34,6 +34,16 @@
     </sexy-button>
 </template>
 
+<style lang="scss" scoped>
+
+    @import '../../../../../../sass/variables/index';
+
+    .rhythmKeyboard__selectionButton {
+        @include breakpoint-small-phone-landscape { margin-bottom: -20px; }
+    }
+
+</style>
+
 <script>
 import SexyButton from "../../../../elements/SexyButton.vue";
 

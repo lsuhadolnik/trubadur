@@ -29,10 +29,10 @@ var RhythmRenderUtilities = function(){
         // var beams = VF.Beam.applyAndGetBeams(voice);
         var beams = VF.Beam.generateBeams(voice.getTickables(), {
             // beam_rests: true,
-            beam_middle_only: true,
-            show_stemlets: false,
-            secondary_breaks: '8',
-            groups: this._get_beam_grouping(info.bar)
+            // beam_middle_only: true,
+            // show_stemlets: true,
+            // secondary_breaks: '8',
+            // groups: this._get_beam_grouping(info.bar)
         });
 
         let voiceOffset = 0;
@@ -60,7 +60,13 @@ var RhythmRenderUtilities = function(){
         }
 
         if(!bar.subdivisions){
-            return [new VF.Fraction(1, 4)];
+
+            // Inicializiraj velikost grupe na 1/base_note
+            // Pojdi po notah
+            // Si pri noti - odštej min(velikost grupe, trajanje note) od velikosti grupe in velikosti note
+            // Če je velikost grupe 0
+
+            return [new VF.Fraction(1, 4), new VF.Fraction(1, 4), new VF.Fraction(1, 4), new VF.Fraction(1, 4)];
         } 
         else {
             return bar.subdivisions.map((s) => {
