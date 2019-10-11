@@ -3140,6 +3140,48 @@ function _get_bar_length_properties(notes) {
     return { length: length };
 }
 
+function _split_notes_by_bars(notes) {
+
+    var groups = [];
+    var currentGroup = [];
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = notes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var note = _step.value;
+
+
+            if (note.type == 'bar') {
+                groups.push(currentGroup);
+                currentGroup = [];
+                continue;
+            } else {
+                currentGroup.push(note);
+            }
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+
+    groups.push(currentGroup);
+
+    return groups;
+}
+
 var utilities = {
 
     generate_playback_durations: _generate_playback_durations,
@@ -3181,11 +3223,26 @@ var utilities = {
 
         var soundsLikeFunc = _generate_playback_durations;
 
-        // Return string fractions
-        var ex = soundsLikeFunc(exerciseNotes);
-        var us = soundsLikeFunc(userNotes);
+        var gEX = _split_notes_by_bars(exerciseNotes);
+        var gUN = _split_notes_by_bars(userNotes);
 
-        return _.isEqual(ex, us);
+        // Različno število taktov
+        if (gEX.length != gUN.length) {
+            return false;
+        }
+
+        for (var i = 0; i < gEX.length; i++) {
+
+            // Return string fractions
+            var ex = soundsLikeFunc(gEX[i]);
+            var us = soundsLikeFunc(gUN[i]);
+
+            if (!_.isEqual(ex, us)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 };
@@ -50955,7 +51012,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.game-statistics[data-v-ad6b13a8] {\n  width: 100%;\n}\n.game-statistics__content[data-v-ad6b13a8] {\n  width: 100%;\n  height: 100%;\n  padding: 20px 0 50px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.game-statistics__table[data-v-ad6b13a8] {\n  width: 100%;\n  border-collapse: collapse;\n}\n.game-statistics__table-row[data-v-ad6b13a8] {\n  height: 50px;\n}\n.game-statistics__table-row--header[data-v-ad6b13a8] {\n  border-bottom: 1px solid #777780;\n}\n.game-statistics__table-row--body[data-v-ad6b13a8] {\n  border-bottom: 1px solid rgba(119, 119, 128, 0.33);\n  cursor: pointer;\n  -webkit-transition: background-color 0.1s linear;\n  transition: background-color 0.1s linear;\n}\n.game-statistics__table-row--body[data-v-ad6b13a8]:hover {\n    background-color: rgba(119, 119, 128, 0.33);\n}\n.game-statistics__table-column[data-v-ad6b13a8] {\n  padding: 5px 10px;\n  text-align: left;\n}\n.game-statistics__table-column[data-v-ad6b13a8]:last-child {\n    width: 25%;\n    text-align: right;\n}\n.game-statistics__avatar[data-v-ad6b13a8] {\n  width: 40px;\n  height: 40px;\n}\n.game-statistics__info[data-v-ad6b13a8] {\n  margin: 20px 0;\n  padding: 10px 0;\n}\n.game-statistics__line[data-v-ad6b13a8] {\n  border-bottom: 1px solid rgba(119, 119, 128, 0.33);\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-wrap[data-v-ad6b13a8] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n}\n}\n.game-statistics__achievment-title[data-v-ad6b13a8] {\n  font-weight: bold;\n  text-align: center;\n  font-size: 65px;\n  margin-top: 27px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.game-statistics__achievment-title[data-v-ad6b13a8] {\n      font-size: 41px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-title[data-v-ad6b13a8] {\n      font-size: 41px;\n      margin-left: 25px;\n}\n}\n.game-statistics__achievment-subtitle[data-v-ad6b13a8] {\n  text-align: center;\n  font-size: 18px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.game-statistics__achievment-subtitle[data-v-ad6b13a8] {\n      font-size: 17px;\n      padding: 0 10px 0 10px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-subtitle[data-v-ad6b13a8] {\n      font-size: 15px;\n      margin-left: 28px;\n}\n}\n.game-statistics__achievment-image[data-v-ad6b13a8] {\n  text-align: center;\n  margin-top: 19px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.game-statistics__achievment-image[data-v-ad6b13a8] {\n      margin-top: 0px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.game-statistics__achievment-image-img[data-v-ad6b13a8] {\n    width: 100px;\n}\n}\n.game-statistics__achievments[data-v-ad6b13a8] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  margin-top: 25px;\n  margin-bottom: 42px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievments[data-v-ad6b13a8] {\n      margin-top: 0;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievments[data-v-ad6b13a8] {\n      width: 60%;\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: center;\n          -ms-flex-pack: center;\n              justify-content: center;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-title-side[data-v-ad6b13a8] {\n    height: 78vh;\n    width: 40%;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n}\n}\n.game-statistics__achievment-badge-title[data-v-ad6b13a8] {\n  text-align: center;\n  font-size: 21px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-badge-title[data-v-ad6b13a8] {\n      font-size: 20px;\n}\n}\n.game-statistics__achievment-badge-description[data-v-ad6b13a8] {\n  margin-top: 13px;\n  text-align: center;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-badge-description[data-v-ad6b13a8] {\n      font-size: 11px;\n      margin-top: 0;\n}\n}\n.game-statistics__achievment[data-v-ad6b13a8] {\n  margin-top: 18px;\n  display: inline-block;\n  width: 260px;\n  background: aliceblue;\n  border-radius: 8px;\n  padding: 15px;\n  margin-bottom: 10px;\n  margin-right: 12px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.game-statistics__achievment[data-v-ad6b13a8] {\n      margin-top: 0px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.text-center[data-v-ad6b13a8] {\n  text-align: center;\n}\n.game-statistics[data-v-ad6b13a8] {\n  width: 100%;\n}\n.game-statistics__content[data-v-ad6b13a8] {\n  width: 100%;\n  height: 100%;\n  padding: 20px 0 50px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.game-statistics__table[data-v-ad6b13a8] {\n  width: 100%;\n  border-collapse: collapse;\n}\n.game-statistics__table-row[data-v-ad6b13a8] {\n  height: 50px;\n}\n.game-statistics__table-row--header[data-v-ad6b13a8] {\n  border-bottom: 1px solid #777780;\n}\n.game-statistics__table-row--body[data-v-ad6b13a8] {\n  border-bottom: 1px solid rgba(119, 119, 128, 0.33);\n  cursor: pointer;\n  -webkit-transition: background-color 0.1s linear;\n  transition: background-color 0.1s linear;\n}\n.game-statistics__table-row--body[data-v-ad6b13a8]:hover {\n    background-color: rgba(119, 119, 128, 0.33);\n}\n.game-statistics__table-column[data-v-ad6b13a8] {\n  padding: 5px 10px;\n  text-align: left;\n}\n.game-statistics__table-column[data-v-ad6b13a8]:last-child {\n    width: 25%;\n    text-align: right;\n}\n.game-statistics__avatar[data-v-ad6b13a8] {\n  width: 40px;\n  height: 40px;\n}\n.game-statistics__info[data-v-ad6b13a8] {\n  margin: 20px 0;\n  padding: 10px 0;\n}\n.game-statistics__line[data-v-ad6b13a8] {\n  border-bottom: 1px solid rgba(119, 119, 128, 0.33);\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-wrap[data-v-ad6b13a8] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.statistics-title[data-v-ad6b13a8] {\n    display: none;\n}\n}\n.game-statistics__achievment-title[data-v-ad6b13a8] {\n  font-weight: bold;\n  text-align: center;\n  font-size: 65px;\n  margin-top: 27px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.game-statistics__achievment-title[data-v-ad6b13a8] {\n      font-size: 41px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-title[data-v-ad6b13a8] {\n      font-size: 41px;\n      margin-left: 25px;\n}\n}\n.game-statistics__achievment-subtitle[data-v-ad6b13a8] {\n  text-align: center;\n  font-size: 18px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.game-statistics__achievment-subtitle[data-v-ad6b13a8] {\n      font-size: 17px;\n      padding: 0 10px 0 10px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-subtitle[data-v-ad6b13a8] {\n      font-size: 15px;\n      margin-left: 28px;\n}\n}\n.game-statistics__achievment-image[data-v-ad6b13a8] {\n  text-align: center;\n  margin-top: 19px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.game-statistics__achievment-image[data-v-ad6b13a8] {\n      margin-top: 0px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.game-statistics__achievment-image-img[data-v-ad6b13a8] {\n    width: 100px;\n}\n}\n.game-statistics__achievments[data-v-ad6b13a8] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  margin-top: 25px;\n  margin-bottom: 42px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievments[data-v-ad6b13a8] {\n      margin-top: 0;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievments[data-v-ad6b13a8] {\n      width: 60%;\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: center;\n          -ms-flex-pack: center;\n              justify-content: center;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-title-side[data-v-ad6b13a8] {\n    height: 78vh;\n    width: 40%;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n}\n}\n.game-statistics__achievment-badge-title[data-v-ad6b13a8] {\n  text-align: center;\n  font-size: 21px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-badge-title[data-v-ad6b13a8] {\n      font-size: 20px;\n}\n}\n.game-statistics__achievment-badge-description[data-v-ad6b13a8] {\n  margin-top: 13px;\n  text-align: center;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.game-statistics__achievment-badge-description[data-v-ad6b13a8] {\n      font-size: 11px;\n      margin-top: 0;\n}\n}\n.game-statistics__achievment[data-v-ad6b13a8] {\n  margin-top: 18px;\n  display: inline-block;\n  width: 260px;\n  background: aliceblue;\n  border-radius: 8px;\n  padding: 15px;\n  margin-bottom: 10px;\n  margin-right: 12px;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.game-statistics__achievment[data-v-ad6b13a8] {\n      margin-top: 0px;\n}\n}\n.redRow[data-v-ad6b13a8] {\n  background: #D2495F;\n}\n", ""]);
 
 // exports
 
@@ -50969,8 +51026,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__elements_SexyButton_vue__);
+var _extends2;
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -51257,7 +51329,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             users: [],
             statistics: null,
 
-            achievments: []
+            achievments: [],
+            leaderboard: [],
+            thisGame: {},
+
+            didNotParticipate: false
         };
     },
 
@@ -51267,15 +51343,57 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
         this.fetchGameStatistics(this.id).then(function (data) {
 
+            if (data.error && data.error == 'DIDNTPARTICIPATE') {
+
+                _this.didNotParticipate = true;
+                _this.loading = false;
+                return;
+            }
+
             _this.users = data.users;
             _this.statistics = data.statistics;
             _this.achievments = data.achievments;
+            _this.leaderboard = data.leaderboard;
+            _this.thisGame = data.thisGame;
 
             _this.loading = false;
         });
     },
 
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchGameStatistics']), {
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchGameStatistics', 'storeGame', 'updateGameUser']), (_extends2 = {
+        newGame: function newGame() {
+            this.$router.push({ name: 'gameModes', params: { type: 'rhythm' } });
+        },
+        continueGameType: function continueGameType() {
+            var _this2 = this;
+
+            this.loading = true;
+
+            var gameObj = this.thisGame;
+
+            var diff = this.thisGame.difficulty_id || this.thisGame.rhythm_level;
+            if (!diff) {
+                diff = 1;
+            }
+
+            gameObj.difficulty_id = diff;
+
+            this.storeGame(gameObj).then(function (game) {
+                _this2.updateGameUser({
+                    gameId: game.id,
+                    userId: _this2.thisGame.users[0],
+                    data: { instrument: _this2.me.instrument }
+                }).then(function () {
+
+                    _this2.reroute(_this2.thisGame.type, { game: game, difficulty: diff });
+                });
+            });
+        },
+        reroute: function reroute(name) {
+            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            this.$router.push({ name: name, params: params });
+        },
         getMyScore: function getMyScore() {
 
             for (var i = 0; i < this.users.length; i++) {
@@ -51286,36 +51404,34 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
 
             return "Nisi del te igre";
-        },
-        reroute: function reroute(name) {
-            var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-            this.$router.push({ name: name, params: params });
-        },
-        formatPoints: function formatPoints(points) {
-            return (points > 0 ? '+' : '') + points;
-        },
-        formatSuccess: function formatSuccess(success) {
-            return success ? 'Pravilno' : 'Nepravilno';
-        },
-        formatNumber: function formatNumber(number) {
-            var nDecimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-
-            if (number == null) return -1;
-
-            return number.toFixed(nDecimals);
-        },
-        formatTime: function formatTime(time) {
-            var nDecimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-
-            return this.formatNumber(time / 1000, nDecimals) + 's';
-        },
-        formatPercent: function formatPercent(fraction) {
-            var nDecimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-
-            return this.formatNumber(fraction * 100, nDecimals) + '%';
         }
-    })
+    }, _defineProperty(_extends2, 'reroute', function reroute(name) {
+        var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+        this.$router.push({ name: name, params: params });
+    }), _defineProperty(_extends2, 'formatPoints', function formatPoints(points) {
+        if (!points || points == 0) {
+            return '';
+        }
+
+        return (points > 0 ? '+' : '') + points;
+    }), _defineProperty(_extends2, 'formatSuccess', function formatSuccess(success) {
+        return success ? 'Pravilno' : 'Nepravilno';
+    }), _defineProperty(_extends2, 'formatNumber', function formatNumber(number) {
+        var nDecimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+        if (number == null) return -1;
+
+        return number.toFixed(nDecimals);
+    }), _defineProperty(_extends2, 'formatTime', function formatTime(time) {
+        var nDecimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+        return this.formatNumber(time / 1000, nDecimals) + 's';
+    }), _defineProperty(_extends2, 'formatPercent', function formatPercent(fraction) {
+        var nDecimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+        return this.formatNumber(fraction * 100, nDecimals) + '%';
+    }), _extends2))
 });
 
 /***/ }),
@@ -51697,283 +51813,220 @@ var render = function() {
         ]
       }),
       _vm._v(" "),
-      _vm.achievments.length > 0
-        ? _c("div", { staticClass: "game-statistics__achievment-wrap" }, [
-            _vm._m(0),
+      !_vm.didNotParticipate
+        ? _c("div", {}, [
+            _vm.achievments.length > 0
+              ? _c("div", { staticClass: "game-statistics__achievment-wrap" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "game-statistics__achievments" },
+                    _vm._l(_vm.achievments, function(a) {
+                      return _c(
+                        "div",
+                        {
+                          key: a.id,
+                          staticClass: "game-statistics__achievment"
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "game-statistics__achievment-image"
+                            },
+                            [
+                              _c("img", {
+                                staticClass:
+                                  "game-statistics__achievment-image-img",
+                                attrs: { src: a.image }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "game-statistics__achievment-badge-title"
+                            },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(a.title) +
+                                  "\n                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "game-statistics__achievment-badge-description"
+                            },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(a.description) +
+                                  "\n                    "
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "game-statistics__achievments" },
-              _vm._l(_vm.achievments, function(a) {
-                return _c(
+            !_vm.loading
+              ? _c(
                   "div",
-                  { key: a.id, staticClass: "game-statistics__achievment" },
+                  { staticClass: "game-statistics__content" },
                   [
                     _c(
-                      "div",
-                      { staticClass: "game-statistics__achievment-image" },
-                      [
-                        _c("img", {
-                          staticClass: "game-statistics__achievment-image-img",
-                          attrs: { src: a.image }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
+                      "sexy-button",
                       {
-                        staticClass: "game-statistics__achievment-badge-title"
-                      },
-                      [
-                        _vm._v(
-                          "\n                    " +
-                            _vm._s(a.title) +
-                            "\n                "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "game-statistics__achievment-badge-description"
-                      },
-                      [
-                        _vm._v(
-                          "\n                    " +
-                            _vm._s(a.description) +
-                            "\n                "
-                        )
-                      ]
-                    )
-                  ]
-                )
-              }),
-              0
-            )
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      !_vm.loading
-        ? _c(
-            "div",
-            { staticClass: "game-statistics__content" },
-            [
-              _c(
-                "sexy-button",
-                {
-                  staticStyle: { "margin-bottom": "20px" },
-                  attrs: { cols: 3, color: "green" },
-                  nativeOn: {
-                    click: function($event) {
-                      return _vm.$router.push({ name: "gameTypes" })
-                    }
-                  }
-                },
-                [_vm._v("Naslednja igra")]
-              ),
-              _vm._v(" "),
-              _c("element-title", {
-                attrs: { text: "statistika po koncu igre" }
-              }),
-              _vm._v(" "),
-              _c("table", { staticClass: "game-statistics__table" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.users, function(user, index) {
-                    return _c(
-                      "tr",
-                      {
-                        staticClass:
-                          "game-statistics__table-row game-statistics__table-row--body",
-                        on: {
+                        staticStyle: { "margin-bottom": "20px" },
+                        attrs: { cols: 3, color: "green" },
+                        nativeOn: {
                           click: function($event) {
-                            return _vm.reroute("profile", { id: user.id })
+                            return _vm.continueGameType()
                           }
                         }
                       },
+                      [_vm._v("Nadaljuj")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "sexy-button",
+                      {
+                        staticStyle: { "margin-bottom": "20px" },
+                        attrs: { cols: 3, color: "cabaret" },
+                        nativeOn: {
+                          click: function($event) {
+                            return _vm.newGame()
+                          }
+                        }
+                      },
+                      [_vm._v(" Nova igra")]
+                    ),
+                    _vm._v(" "),
+                    _c("element-title", {
+                      staticClass: "statistics-title",
+                      attrs: { text: "Lestvica" }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "table",
+                      {
+                        staticClass: "game-statistics__table",
+                        staticStyle: {
+                          "margin-top": "20px",
+                          background: "azure"
+                        }
+                      },
                       [
-                        _c(
-                          "td",
-                          {
-                            staticClass:
-                              "game-statistics__table-column game-statistics__table-column--body"
-                          },
-                          [_vm._v(_vm._s(index + 1))]
-                        ),
+                        _vm._m(1),
                         _vm._v(" "),
                         _c(
-                          "td",
-                          {
-                            staticClass:
-                              "game-statistics__table-column game-statistics__table-column--body"
-                          },
-                          [
-                            _c("img", {
-                              staticClass: "game-statistics__avatar",
-                              attrs: { src: user.avatar }
-                            })
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          {
-                            staticClass:
-                              "game-statistics__table-column game-statistics__table-column--body"
-                          },
-                          [_vm._v(_vm._s(user.name))]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          {
-                            staticClass:
-                              "game-statistics__table-column game-statistics__table-column--body"
-                          },
-                          [_vm._v(_vm._s(_vm.formatPoints(user.points)))]
+                          "tbody",
+                          _vm._l(_vm.leaderboard, function(user, index) {
+                            return _c(
+                              "tr",
+                              {
+                                key: user.id,
+                                staticClass:
+                                  "game-statistics__table-row game-statistics__table-row--body",
+                                class: { redRow: user.thisUser },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.reroute("profile", {
+                                      id: user.id
+                                    })
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "td",
+                                  {
+                                    staticClass:
+                                      "game-statistics__table-column game-statistics__table-column--body"
+                                  },
+                                  [_vm._v(_vm._s(user.leaderboard))]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  {
+                                    staticClass:
+                                      "game-statistics__table-column game-statistics__table-column--body"
+                                  },
+                                  [
+                                    _c("img", {
+                                      staticClass: "game-statistics__avatar",
+                                      attrs: { src: user.avatar }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  {
+                                    staticClass:
+                                      "game-statistics__table-column game-statistics__table-column--body"
+                                  },
+                                  [_vm._v(_vm._s(user.name))]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  {
+                                    staticClass:
+                                      "game-statistics__table-column game-statistics__table-column--body"
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.formatPoints(user.points))
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  {
+                                    staticClass:
+                                      "game-statistics__table-column game-statistics__table-column--body"
+                                  },
+                                  [_vm._v(_vm._s(user.rating))]
+                                )
+                              ]
+                            )
+                          }),
+                          0
                         )
                       ]
                     )
-                  }),
-                  0
+                  ],
+                  1
                 )
-              ]),
-              _vm._v(" "),
-              _vm.statistics
-                ? _c(
-                    "div",
-                    { staticClass: "game-statistics__details" },
-                    [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c(
-                        "ul",
-                        { staticClass: "game-statistics__answer-list" },
-                        [
-                          _c("li", [
-                            _c("i", [_vm._v("Povprečen čas:")]),
-                            _vm._v(
-                              " " +
-                                _vm._s(_vm.formatTime(_vm.statistics.timeAvg))
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c("i", [_vm._v("Povprečno št. dodanih not:")]),
-                            _vm._v(
-                              " " +
-                                _vm._s(
-                                  _vm.formatNumber(_vm.statistics.nAdditionsAvg)
-                                )
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c("i", [_vm._v("Povprečno št. izbrisanih not:")]),
-                            _vm._v(
-                              " " +
-                                _vm._s(
-                                  _vm.formatNumber(_vm.statistics.nDeletionsAvg)
-                                )
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c("i", [_vm._v("Povprečno št. predvajanj:")]),
-                            _vm._v(
-                              " " +
-                                _vm._s(
-                                  _vm.formatNumber(_vm.statistics.nPlaybacksAvg)
-                                )
-                            )
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm._l(3, function(n) {
-                        return _c(
-                          "div",
-                          { staticClass: "game-statistics__chapter" },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "game-statistics__info game-statistics__line"
-                              },
-                              [
-                                _c("strong", [
-                                  _vm._v(
-                                    "Poglavje " + _vm._s("1 + " + (n + 2)) + ":"
-                                  )
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "ul",
-                              { staticClass: "game-statistics__success-list" },
-                              _vm._l(
-                                _vm.statistics.successByChapter[n],
-                                function(success, index) {
-                                  return _c("li", [
-                                    _vm._v(
-                                      "\n                        " +
-                                        _vm._s(index + 1) +
-                                        ". " +
-                                        _vm._s(_vm.formatSuccess(success)) +
-                                        "\n                    "
-                                    )
-                                  ])
-                                }
-                              ),
-                              0
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "game-statistics__success-chapter"
-                              },
-                              [
-                                _c("i", [_vm._v("Povprečje")]),
-                                _vm._v(
-                                  ": " +
-                                    _vm._s(
-                                      _vm.formatPercent(
-                                        _vm.statistics.successAvgByChapter[n]
-                                      )
-                                    ) +
-                                    "\n                "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "game-statistics__info" }, [
-                        _c("strong", [_vm._v("Skupno povprečje")]),
-                        _vm._v(
-                          ": " +
-                            _vm._s(
-                              _vm.formatPercent(_vm.statistics.successAvg)
-                            ) +
-                            "\n            "
-                        )
-                      ])
-                    ],
-                    2
-                  )
-                : _vm._e()
-            ],
-            1
-          )
+              : _vm._e()
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.didNotParticipate
+        ? _c("div", {}, [
+            _c("h1", { staticClass: "text-center" }, [
+              _vm._v("Nisi igral/a te igre.")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-center" }, [
+              _vm._v("Žal ne moreš dostopati do teh podatkov.")
+            ])
+          ])
         : _vm._e()
     ],
     1
@@ -51989,12 +52042,12 @@ var staticRenderFns = [
       { staticClass: "game-statistics__achievment-title-side" },
       [
         _c("div", { staticClass: "game-statistics__achievment-title" }, [
-          _vm._v("\n                Čestitam!\n            ")
+          _vm._v("\n                    Čestitam!\n                ")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "game-statistics__achievment-subtitle" }, [
           _vm._v(
-            "\n                Napredoval/a si do novega dosežka v igri!\n            "
+            "\n                    Napredoval/a si do novega dosežka v igri!\n                "
           )
         ])
       ]
@@ -52041,21 +52094,20 @@ var staticRenderFns = [
               staticClass:
                 "game-statistics__table-column game-statistics__table-column--header"
             },
-            [_vm._v("Št. točk")]
+            [_vm._v("V tej igri")]
+          ),
+          _vm._v(" "),
+          _c(
+            "th",
+            {
+              staticClass:
+                "game-statistics__table-column game-statistics__table-column--header"
+            },
+            [_vm._v("Skupaj točk")]
           )
         ]
       )
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "game-statistics__info game-statistics__line" },
-      [_c("strong", [_vm._v("Statistika odgovorov:")])]
-    )
   }
 ]
 render._withStripped = true
@@ -63012,7 +63064,7 @@ exports = module.exports = __webpack_require__(0)(false);
 
 
 // module
-exports.push([module.i, "\n.rhythm__instructions[data-v-5e41cbba] {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.rhythm__instructions-list-item[data-v-5e41cbba] {\n  padding: 8px 20px 8px 3px;\n}\n.rhythm-game__wrap[data-v-5e41cbba] {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.staff_view_wrap[data-v-5e41cbba] {\n  position: relative;\n}\n.staff_view_contents[data-v-5e41cbba] {\n  position: relative;\n  z-index: 1;\n}\n.staff_view_time_slider[data-v-5e41cbba] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background: rgba(112, 100, 67, 0.2);\n  width: 100%;\n  height: 100%;\n  -webkit-transition: width .1s ease-in;\n  transition: width .1s ease-in;\n}\n.ready-rhythm-game-view__checkOverlay[data-v-5e41cbba] {\n  position: absolute;\n  display: block;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  background: rgba(0, 0, 0, 0.3);\n  z-index: 100;\n}\n.ready-rhythm-game-view__checkOverlay__center[data-v-5e41cbba] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 100%;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.ready-rhythm-game-view__checkOverlay__center_bubble[data-v-5e41cbba] {\n  width: 160px;\n  height: 160px;\n  background-color: rgba(0, 0, 0, 0.6);\n  border-radius: 5px;\n  color: white;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.error[data-v-5e41cbba] {\n  text-align: center;\n  text-transform: uppercase;\n  color: #fe664e;\n  background: black;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.app[data-v-5e41cbba] {\n    padding-bottom: 0px !important;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.header-menu[data-v-5e41cbba] {\n    display: none !important;\n    position: static !important;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.header-menu[data-v-5e41cbba] {\n    display: none !important;\n    position: static !important;\n}\n}\n.app--sticky[data-v-5e41cbba] {\n  padding: 0px !important;\n}\n", ""]);
+exports.push([module.i, "\n.rhythm__fact-sheet[data-v-5e41cbba] {\n  list-style-type: none;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  padding: 0 0 0 0 !important;\n}\n.rhythm__fact-wrap[data-v-5e41cbba] {\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.instructions__title[data-v-5e41cbba] {\n  margin: 20px 0 20px 0;\n}\n.rhythm__fact-sheet__fact-top[data-v-5e41cbba] {\n  font-size: 26px;\n  text-align: center;\n}\n.rhythm__fact-sheet__fact-bottom[data-v-5e41cbba] {\n  text-align: center;\n}\n.rhythm__fact[data-v-5e41cbba] {\n  width: 50%;\n  margin-bottom: 21px;\n}\n.rhythm__instructions[data-v-5e41cbba] {\n  padding: 20px 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.rhythm__instructions-list-item[data-v-5e41cbba] {\n  padding: 8px 20px 8px 3px;\n}\n.rhythm-game__wrap[data-v-5e41cbba] {\n  -ms-touch-action: manipulation;\n      touch-action: manipulation;\n}\n.staff_view_wrap[data-v-5e41cbba] {\n  position: relative;\n}\n.staff_view_contents[data-v-5e41cbba] {\n  position: relative;\n  z-index: 1;\n}\n.staff_view_time_slider[data-v-5e41cbba] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background: rgba(112, 100, 67, 0.2);\n  width: 100%;\n  height: 100%;\n  -webkit-transition: width .1s ease-in;\n  transition: width .1s ease-in;\n}\n.ready-rhythm-game-view__checkOverlay[data-v-5e41cbba] {\n  position: absolute;\n  display: block;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  background: rgba(0, 0, 0, 0.3);\n  z-index: 100;\n}\n.ready-rhythm-game-view__checkOverlay__center[data-v-5e41cbba] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  height: 100%;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.ready-rhythm-game-view__checkOverlay__center_bubble[data-v-5e41cbba] {\n  width: 160px;\n  height: 160px;\n  background-color: rgba(0, 0, 0, 0.6);\n  border-radius: 5px;\n  color: white;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.error[data-v-5e41cbba] {\n  text-align: center;\n  text-transform: uppercase;\n  color: #fe664e;\n  background: black;\n}\n@media only screen and (min-device-width: 375px) and (max-device-width: 767px) and (orientation: landscape) {\n.app[data-v-5e41cbba] {\n    padding-bottom: 0px !important;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {\n.header-menu[data-v-5e41cbba] {\n    display: none !important;\n    position: static !important;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.header-menu[data-v-5e41cbba] {\n    display: none !important;\n    position: static !important;\n}\n}\n.app--sticky[data-v-5e41cbba] {\n  padding: 0px !important;\n}\n", ""]);
 
 // exports
 
@@ -63043,6 +63095,76 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_howler_laravel_csrf___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_howler_laravel_csrf__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -63311,15 +63433,15 @@ var util = __webpack_require__(10);
         num_beats_text: function num_beats_text() {
             switch (this.questionState.num_beats) {
                 case 1:
-                    return "en takt";
+                    return "takt";
                 case 2:
-                    return "dva takta";
+                    return "takta";
                 case 3:
-                    return "tri takte";
+                    return "takti";
                 case 4:
-                    return "štiri takte";
+                    return "takti";
                 default:
-                    return this.questionState.num_beats + " taktov";
+                    return "taktov";
             }
         },
         metronomeButtonText: function metronomeButtonText() {
@@ -72040,58 +72162,88 @@ var render = function() {
             [_vm._v("Začni")]
           ),
           _vm._v(" "),
+          _c("element-title", {
+            staticClass: "instructions__title",
+            attrs: { text: "Ritmični narek" }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "rhythm__fact-sheet" }, [
+            _c("div", { staticClass: "rhythm__fact-wrap" }, [
+              _c("div", { staticClass: "rhythm__fact" }, [
+                _c("div", { staticClass: "rhythm__fact-sheet__fact-top" }, [
+                  _vm._v(
+                    _vm._s(_vm.bar.num_beats) + "/" + _vm._s(_vm.bar.base_note)
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "rhythm__fact-sheet__fact-bottom" }, [
+                  _vm._v("takt. nač.")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "rhythm__fact" }, [
+                _c("div", { staticClass: "rhythm__fact-sheet__fact-top" }, [
+                  _vm._v(_vm._s(this.questionState.num_beats))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "rhythm__fact-sheet__fact-bottom" }, [
+                  _vm._v(_vm._s(_vm.num_beats_text))
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "rhythm__fact-wrap" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "rhythm__fact" }, [
+                _c("div", { staticClass: "rhythm__fact-sheet__fact-top" }, [
+                  _vm._v(
+                    _vm._s(
+                      _vm.questionState.exercise != null
+                        ? _vm.questionState.exercise.BPM
+                        : "??"
+                    ) + " "
+                  ),
+                  _c("span", { staticStyle: { "font-size": "19px" } }, [
+                    _vm._v("bpm")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "rhythm__fact-sheet__fact-bottom" }, [
+                  _vm._v("tempo")
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "rhythm__fact-wrap" }, [
+              _c("div", { staticClass: "rhythm__fact" }, [
+                _c("div", { staticClass: "rhythm__fact-sheet__fact-top" }, [
+                  _vm._v(_vm._s(_vm.questionState.maxSeconds))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "rhythm__fact-sheet__fact-bottom" }, [
+                  _vm._v("sekund")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "rhythm__fact" }, [
+                _c("div", { staticClass: "rhythm__fact-sheet__fact-top" }, [
+                  _vm._v(_vm._s(_vm.questionState.maxChecks))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "rhythm__fact-sheet__fact-bottom" }, [
+                  _vm._v("poskusov")
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
           _c("ul", { staticClass: "rhythm__instructions-list" }, [
             _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v("Preizkusil/a se boš v ritmičnem nareku.")
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
               _vm._v(
-                "Vaja bo v " +
-                  _vm._s(_vm.bar.num_beats) +
-                  "/" +
-                  _vm._s(_vm.bar.base_note) +
-                  " taktu."
+                "Če ne veš, kako uporabljati aplikacijo, pritisni gumb Pomoč."
               )
             ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v("Slišal/a boš " + _vm._s(_vm.num_beats_text) + ".")
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v("Na začetku bo metronom izvajal en takt.")
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v(
-                "Tempo bo " +
-                  _vm._s(
-                    _vm.questionState.exercise != null
-                      ? _vm.questionState.exercise.BPM
-                      : "??"
-                  ) +
-                  " udarcev na minuto."
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v(
-                "Za reševanje imaš na voljo " +
-                  _vm._s(_vm.questionState.maxSeconds) +
-                  " sekund."
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v(
-                "Odgovor lahko preveriš največ " +
-                  _vm._s(_vm.questionState.maxChecks) +
-                  "-krat."
-              )
-            ]),
-            _vm._v(" "),
-            _vm._m(0),
             _vm._v(" "),
             _c(
               "li",
@@ -72331,16 +72483,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-      _vm._v(
-        "Če apliakcijo uporabljaš prvič, ali če ne veš, kako deluje kakšen gumb, pritisni gumb Pomoč."
-      ),
-      _c("br"),
-      _vm._v("Dobro je, da si Pomoč ogledaš pred prvo igro."),
-      _c("br"),
-      _vm._v(
-        "Med igro si pomoč lahko ogledaš s pritiskom na gumb Pomoč na tipkovnici."
-      )
+    return _c("div", { staticClass: "rhythm__fact" }, [
+      _c("div", { staticClass: "rhythm__fact-sheet__fact-top" }, [
+        _vm._v("1 takt")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "rhythm__fact-sheet__fact-bottom" }, [
+        _vm._v("metronoma")
+      ])
     ])
   }
 ]

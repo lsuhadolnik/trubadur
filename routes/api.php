@@ -49,9 +49,8 @@ Route::middleware('auth:api')->put('gameuser/{gameId}/{userId}', 'API\GameUserCo
     ->where(['gameId' => '[0-9]+', 'userId' => '[0-9]+']);
 Route::middleware('auth:api')->delete('gameuser/{gameId}/{userId}', 'API\GameUserController@destroy')
     ->where(['gameId' => '[0-9]+', 'userId' => '[0-9]+']);
-
-    /// DANGER!!!!
-    Route::middleware('auth:api')->put('gameuser/{gameId}/{userId}/finish', 'API\GameUserController@finish')
+    
+Route::middleware('auth:api')->put('gameuser/{gameId}/{userId}/finish', 'API\GameUserController@finish')
     ->where(['gameId' => '[0-9]+', 'userId' => '[0-9]+']);
 
 Route::middleware('auth:api')->get('gradeschool', 'API\GradeSchoolController@index');
@@ -63,13 +62,9 @@ Route::middleware('auth:api')->put('gradeschool/{gradeId}/{schoolId}', 'API\Grad
 Route::middleware('auth:api')->delete('gradeschool/{gradeId}/{schoolId}', 'API\GradeSchoolController@destroy')
     ->where(['gradeId' => '[0-9]+', 'schoolId' => '[0-9]+']);
 
-
-// DANGER!! 
 Route::middleware('auth:api')->resource('rhythmBars', 'API\RhythmBarController', ['except' => ['create', 'edit']]);
-//Route::middleware('auth:api')->resource('rhythm_exercise', 'API\RhythmExerciseController', ['except' => ['create', 'edit']]);
 
-// DANGER
-//Route::post('rhythm_exercise_bar', 'API\RhythmExerciseBar', ['except' => ['create', 'edit']]);
+
 Route::middleware('auth:api')->post('rhythmExerciseBar/import/musicXML', 'API\RhythmBarController@importMusicXML');
 Route::middleware('auth:api')->post('rhythmExercise/generate/{n}/{level}', 'API\RhythmExerciseController@generateNForLevel');
 Route::middleware('auth:api')->get('rhythmExercise/{id}', 'API\RhythmExerciseController@resolve');
@@ -89,5 +84,4 @@ Route::middleware('auth:api')->put('rhythmFeatures/{fid}/occurrences', 'API\Rhyt
 Route::middleware('auth:api')->delete('rhythmFeatures/{fid}/occurrences/{level}/{bar}', 'API\RhythmFeatureOccurrenceController@destroy');
 Route::middleware('auth:api')->resource('rhythmExerciseFeedback', 'API\RhythmExerciseFeedbackController', ['except' => ['create', 'edit']]);
 
-// Howler.js cannot make authenticated requests and it's not so 
 Route::middleware('auth:api')->get('sound/{exId}', 'Utils\Midi\MidiNotes@GetExercise');

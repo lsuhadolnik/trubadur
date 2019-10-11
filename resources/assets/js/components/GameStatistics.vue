@@ -1,6 +1,10 @@
 <style lang="scss" scoped>
 @import '../../sass/variables/index';
 
+.text-center {
+    text-align: center;
+}
+
 .game-statistics { width: 100%; }
 
 .game-statistics__content {
@@ -56,6 +60,12 @@
 .game-statistics__achievment-wrap {
     @include breakpoint-small-phone-landscape {
         display: flex;
+    }
+}
+
+.statistics-title {
+    @include breakpoint-small-phone-landscape {
+        display: none;
     }
 }
 
@@ -176,6 +186,10 @@
 
 }
 
+.redRow {
+    background: $cabaret;
+}
+
 
 </style>
 
@@ -183,89 +197,86 @@
     <div class="game-statistics">
         <loader v-show="loading"></loader>
 
-        <div class="game-statistics__achievment-wrap" v-if="achievments.length > 0">
+        <div class="" v-if="!didNotParticipate">
 
-            <div class="game-statistics__achievment-title-side">
-                <div class="game-statistics__achievment-title">
-                    Čestitam!
+            <div class="game-statistics__achievment-wrap" v-if="achievments.length > 0">
+
+                <div class="game-statistics__achievment-title-side">
+                    <div class="game-statistics__achievment-title">
+                        Čestitam!
+                    </div>
+                    <div class="game-statistics__achievment-subtitle">
+                        Napredoval/a si do novega dosežka v igri!
+                    </div>
                 </div>
-                <div class="game-statistics__achievment-subtitle">
-                    Napredoval/a si do novega dosežka v igri!
-                </div>
+
+                <div class="game-statistics__achievments">
+                    <div class="game-statistics__achievment" v-for="a in achievments" :key="a.id">
+
+                        <div class="game-statistics__achievment-image">
+                            <img :src="a.image" class="game-statistics__achievment-image-img">
+                        </div>
+
+                        <div class="game-statistics__achievment-badge-title">
+                            {{a.title}}
+                        </div>
+
+                        <div class="game-statistics__achievment-badge-description">
+                            {{a.description}}
+                        </div>
+
+                    </div>
+                </div>  
+
             </div>
 
-            <div class="game-statistics__achievments">
-                <div class="game-statistics__achievment" v-for="a in achievments" :key="a.id">
+            <div class="game-statistics__content" v-if="!loading">
+                
+                <sexy-button 
+                    :cols="3" 
+                    color="green" 
+                    style="margin-bottom: 20px;" 
+                    @click.native="continueGameType()">Nadaljuj</sexy-button>
+                
 
-                    <div class="game-statistics__achievment-image">
-                        <img :src="a.image" class="game-statistics__achievment-image-img">
-                    </div>
+                <sexy-button 
+                    :cols="3" 
+                    color="cabaret" 
+                    style="margin-bottom: 20px;" 
+                    @click.native="newGame()"> Nova igra</sexy-button>
+                
 
-                    <div class="game-statistics__achievment-badge-title">
-                        {{a.title}}
-                    </div>
 
-                    <div class="game-statistics__achievment-badge-description">
-                        {{a.description}}
-                    </div>
-
-                </div>
-            </div>  
-
+                <element-title class="statistics-title" text="Lestvica"></element-title>
+                
+                <table class="game-statistics__table" style="margin-top: 20px; background: azure;">
+                    <thead>
+                        <tr class="game-statistics__table-row game-statistics__table-row--header">
+                            <th class="game-statistics__table-column game-statistics__table-column--header">#</th>
+                            <th class="game-statistics__table-column game-statistics__table-column--header"></th>
+                            <th class="game-statistics__table-column game-statistics__table-column--header">Ime</th>
+                            <th class="game-statistics__table-column game-statistics__table-column--header">V tej igri</th>
+                            <th class="game-statistics__table-column game-statistics__table-column--header">Skupaj točk</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="game-statistics__table-row game-statistics__table-row--body" :class="{redRow: user.thisUser }" @click="reroute('profile', { id: user.id })" v-for="(user, index) in leaderboard" :key="user.id">
+                            <td class="game-statistics__table-column game-statistics__table-column--body">{{ user.leaderboard }}</td>
+                            <td class="game-statistics__table-column game-statistics__table-column--body">
+                                <img class="game-statistics__avatar" :src="user.avatar"/>
+                            </td>
+                            <td class="game-statistics__table-column game-statistics__table-column--body">{{ user.name }}</td>
+                            <td class="game-statistics__table-column game-statistics__table-column--body">{{ formatPoints(user.points) }}</td>
+                            <td class="game-statistics__table-column game-statistics__table-column--body">{{ user.rating }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <div class="game-statistics__content" v-if="!loading">
-            
-            <sexy-button :cols="3" color="green" style="margin-bottom: 20px;" @click.native="$router.push({name:'gameTypes'})">Naslednja igra</sexy-button>
-            <element-title text="statistika po koncu igre"></element-title>
-            
-            <table class="game-statistics__table">
-                <thead>
-                    <tr class="game-statistics__table-row game-statistics__table-row--header">
-                        <th class="game-statistics__table-column game-statistics__table-column--header">#</th>
-                        <th class="game-statistics__table-column game-statistics__table-column--header"></th>
-                        <th class="game-statistics__table-column game-statistics__table-column--header">Ime</th>
-                        <th class="game-statistics__table-column game-statistics__table-column--header">Št. točk</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="game-statistics__table-row game-statistics__table-row--body" @click="reroute('profile', { id: user.id })" v-for="(user, index) in users">
-                        <td class="game-statistics__table-column game-statistics__table-column--body">{{ index + 1 }}</td>
-                        <td class="game-statistics__table-column game-statistics__table-column--body">
-                            <img class="game-statistics__avatar" :src="user.avatar"/>
-                        </td>
-                        <td class="game-statistics__table-column game-statistics__table-column--body">{{ user.name }}</td>
-                        <td class="game-statistics__table-column game-statistics__table-column--body">{{ formatPoints(user.points) }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="game-statistics__details" v-if="statistics">
-                <div class="game-statistics__info game-statistics__line">
-                    <strong>Statistika odgovorov:</strong>
-                </div>
-                <ul class="game-statistics__answer-list">
-                    <li><i>Povprečen čas:</i> {{ formatTime(statistics.timeAvg) }}</li>
-                    <li><i>Povprečno št. dodanih not:</i> {{ formatNumber(statistics.nAdditionsAvg) }}</li>
-                    <li><i>Povprečno št. izbrisanih not:</i> {{ formatNumber(statistics.nDeletionsAvg) }}</li>
-                    <li><i>Povprečno št. predvajanj:</i> {{ formatNumber(statistics.nPlaybacksAvg) }}</li>
-                </ul>
-                <div class="game-statistics__chapter" v-for="n in 3">
-                    <div class="game-statistics__info game-statistics__line">
-                        <strong>Poglavje {{ '1 + ' + (n + 2) }}:</strong>
-                    </div>
-                    <ul class="game-statistics__success-list">
-                        <li v-for="(success, index) in statistics.successByChapter[n]">
-                            {{ index + 1 }}. {{ formatSuccess(success) }}
-                        </li>
-                    </ul>
-                    <div class="game-statistics__success-chapter">
-                        <i>Povprečje</i>: {{ formatPercent(statistics.successAvgByChapter[n]) }}
-                    </div>
-                </div>
-                <div class="game-statistics__info">
-                    <strong>Skupno povprečje</strong>: {{ formatPercent(statistics.successAvg) }}
-                </div>
-            </div>
+        <div class="" v-if="didNotParticipate">
+            <h1 class="text-center">Nisi igral/a te igre.</h1>
+            <p class="text-center">Žal ne moreš dostopati do teh podatkov.</p>
         </div>
     </div>
 </template>
@@ -284,7 +295,11 @@ export default {
             users: [],
             statistics: null,
 
-            achievments: []
+            achievments: [],
+            leaderboard: [],
+            thisGame: {},
+
+            didNotParticipate: false,
         }
     },
     computed: {
@@ -293,16 +308,60 @@ export default {
     created () {
         this.fetchGameStatistics(this.id).then((data) => {
 
+            if(data.error && data.error == 'DIDNTPARTICIPATE'){
+                
+                this.didNotParticipate = true;
+                this.loading = false;
+                return;
+            }
+
             this.users = data.users
             this.statistics = data.statistics
             this.achievments = data.achievments;
+            this.leaderboard = data.leaderboard;
+            this.thisGame = data.thisGame;
             
             this.loading = false
         });
     },
     methods: {
-        ...mapActions(['fetchGameStatistics']),
+        ...mapActions(['fetchGameStatistics', 'storeGame', 'updateGameUser']),
         
+        newGame() {
+            this.$router.push({name:'gameModes', params: {type: 'rhythm'}});
+        },
+
+        continueGameType() {
+
+            this.loading = true
+
+            let gameObj = this.thisGame;
+
+            let diff = this.thisGame.difficulty_id || this.thisGame.rhythm_level;
+            if(!diff) {
+                diff = 1;   
+            }
+
+
+            gameObj.difficulty_id = diff;
+
+            this.storeGame(gameObj).then((game) => {
+                this.updateGameUser({ 
+                        gameId: game.id, 
+                        userId: this.thisGame.users[0], 
+                        data: { instrument: this.me.instrument } 
+                    }).then(() => {
+
+
+                        this.reroute(this.thisGame.type, { game: game, difficulty: diff });
+                })
+            })
+        },
+
+        reroute (name, params = {}) {
+            this.$router.push({ name: name, params: params })
+        },
+
         getMyScore() {
             
             for(let i = 0; i < this.users.length; i++){
@@ -320,6 +379,10 @@ export default {
             this.$router.push({ name: name, params: params })
         },
         formatPoints (points) {
+            if(!points || points == 0) {
+                return '';
+            }
+
             return (points > 0 ? '+' : '') + points
         },
         formatSuccess (success) {

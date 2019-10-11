@@ -44,6 +44,7 @@ class Kernel extends HttpKernel
             'bindings',
             'locale:en',
             'https',
+            // 'logRequest' // That would be very slow.
         ],
     ];
 
@@ -64,5 +65,6 @@ class Kernel extends HttpKernel
         'locale'     => \App\Http\Middleware\SetLocale::class,
         'https'      => \App\Http\Middleware\ForceHttps::class,
         'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        // 'logRequest' => \App\Http\Middleware\LogRequest::class,
     ];
 }

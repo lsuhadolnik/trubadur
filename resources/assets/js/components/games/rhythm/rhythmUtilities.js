@@ -295,6 +295,27 @@ function _get_bar_length_properties(notes) {
 
 }
 
+function _split_notes_by_bars(notes) {
+    
+    let groups = [];
+    let currentGroup = [];
+
+    for(const note of notes) {
+
+        if(note.type == 'bar') {
+            groups.push(currentGroup);
+            currentGroup = [];
+            continue;
+        } else {
+            currentGroup.push(note);
+        }
+    }
+
+    groups.push(currentGroup);
+
+    return groups;
+}
+
 var utilities = {
 
     generate_playback_durations: _generate_playback_durations,
@@ -334,13 +355,27 @@ var utilities = {
 
     check_notes_equal: function(exerciseNotes, userNotes){
 
-        var soundsLikeFunc = _generate_playback_durations;
+        let soundsLikeFunc = _generate_playback_durations;
 
-        // Return string fractions
-        let ex = soundsLikeFunc(exerciseNotes);
-        let us = soundsLikeFunc(userNotes);
+        let gEX = _split_notes_by_bars(exerciseNotes);
+        let gUN = _split_notes_by_bars(userNotes);
 
-        return _.isEqual(ex, us);
+        // Različno število taktov
+        if(gEX.length != gUN.length) {
+            return false;
+        }
+
+        for(let i = 0; i < gEX.length; i++) {
+
+            // Return string fractions
+            let ex = soundsLikeFunc(gEX[i]);
+            let us = soundsLikeFunc(gUN[i]);
+
+            if(!_.isEqual(ex, us)){ return false }
+        }
+
+        return true;
+
     },
 
 }

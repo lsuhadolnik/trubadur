@@ -4,7 +4,7 @@
         <loader v-show="displayState == 'loading'"></loader>
         <div class="rhythm__instructions" v-show="displayState == 'instructions'">
             <SexyButton @click.native="startGame()" color="green" :cols="3">Začni</SexyButton>
-            <ul class="rhythm__instructions-list">
+            <!--<ul class="rhythm__instructions-list">
                 <li class="rhythm__instructions-list-item">Preizkusil/a se boš v ritmičnem nareku.</li>
                 <li class="rhythm__instructions-list-item">Vaja bo v {{bar.num_beats}}/{{bar.base_note}} taktu.</li>
                 <li class="rhythm__instructions-list-item">Slišal/a boš {{num_beats_text}}.</li>
@@ -12,7 +12,47 @@
                 <li class="rhythm__instructions-list-item">Tempo bo {{questionState.exercise != null ? questionState.exercise.BPM : "??" }} udarcev na minuto.</li>
                 <li class="rhythm__instructions-list-item">Za reševanje imaš na voljo {{questionState.maxSeconds}} sekund.</li>
                 <li class="rhythm__instructions-list-item">Odgovor lahko preveriš največ {{questionState.maxChecks}}-krat.</li>
-                <li class="rhythm__instructions-list-item">Če apliakcijo uporabljaš prvič, ali če ne veš, kako deluje kakšen gumb, pritisni gumb Pomoč.<br>Dobro je, da si Pomoč ogledaš pred prvo igro.<br>Med igro si pomoč lahko ogledaš s pritiskom na gumb Pomoč na tipkovnici.</li>
+                <li class="rhythm__instructions-list-item">Če aplikacijo uporabljaš prvič, ali če ne veš, kako deluje kakšen gumb, pritisni gumb Pomoč.<br>Dobro je, da si Pomoč ogledaš pred prvo igro.<br>Med igro si pomoč lahko ogledaš s pritiskom na gumb Pomoč na tipkovnici.</li>
+                <li class="rhythm__instructions-list-item" style="list-style-type: none;">
+                    <sexy-button :text="metronomeButtonText" :color="metronomeButtonColor" :cols="3" @click.native="toggleMetronome()"/>
+                    <sexy-button text="Pomoč" color="sunglow" :cols="3" @click.native="showHelp = true" />
+                </li>
+            </ul>-->
+            <element-title class="instructions__title" text="Ritmični narek"></element-title>
+            <div class="rhythm__fact-sheet">
+                <div class="rhythm__fact-wrap">
+                    <div class="rhythm__fact">
+                        <div class="rhythm__fact-sheet__fact-top">{{bar.num_beats}}/{{bar.base_note}}</div>
+                        <div class="rhythm__fact-sheet__fact-bottom">takt. nač.</div>
+                    </div>
+                    <div class="rhythm__fact">
+                        <div class="rhythm__fact-sheet__fact-top">{{this.questionState.num_beats}}</div>
+                        <div class="rhythm__fact-sheet__fact-bottom">{{num_beats_text}}</div>
+                    </div>
+                </div>
+                <div class="rhythm__fact-wrap">
+                    <div class="rhythm__fact">
+                        <div class="rhythm__fact-sheet__fact-top">1 takt</div>
+                        <div class="rhythm__fact-sheet__fact-bottom">metronoma</div>
+                    </div>
+                    <div class="rhythm__fact">
+                        <div class="rhythm__fact-sheet__fact-top">{{questionState.exercise != null ? questionState.exercise.BPM : "??" }} <span style="font-size: 19px;">bpm</span></div>
+                        <div class="rhythm__fact-sheet__fact-bottom">tempo</div>
+                    </div>
+                </div>
+                <div class="rhythm__fact-wrap">
+                    <div class="rhythm__fact">
+                        <div class="rhythm__fact-sheet__fact-top">{{questionState.maxSeconds}}</div>
+                        <div class="rhythm__fact-sheet__fact-bottom">sekund</div>
+                    </div>
+                    <div class="rhythm__fact">
+                        <div class="rhythm__fact-sheet__fact-top">{{questionState.maxChecks}}</div>
+                        <div class="rhythm__fact-sheet__fact-bottom">poskusov</div>
+                    </div>
+                </div>
+            </div>
+            <ul class="rhythm__instructions-list">
+                <li class="rhythm__instructions-list-item">Če ne veš, kako uporabljati aplikacijo, pritisni gumb Pomoč.</li>
                 <li class="rhythm__instructions-list-item" style="list-style-type: none;">
                     <sexy-button :text="metronomeButtonText" :color="metronomeButtonColor" :cols="3" @click.native="toggleMetronome()"/>
                     <sexy-button text="Pomoč" color="sunglow" :cols="3" @click.native="showHelp = true" />
@@ -77,6 +117,36 @@
 <style lang="scss" scoped>
 
     @import '../../../../sass/variables/index';
+
+    .rhythm__fact-sheet {
+        list-style-type: none;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0 0 0 0 !important;
+    }
+
+    .rhythm__fact-wrap {
+        width: 100%;
+        display: flex;
+    }
+
+    .instructions__title {
+        margin: 20px 0 20px 0;
+    }
+
+    .rhythm__fact-sheet__fact-top {
+        font-size: 26px;
+        text-align: center;
+    }
+
+    .rhythm__fact-sheet__fact-bottom {
+        text-align: center;
+    }
+
+    .rhythm__fact {
+        width: 50%;
+        margin-bottom: 21px;
+    }
 
     .rhythm__instructions {
         padding        : 20px 0;
@@ -189,6 +259,8 @@ import DiffView from "./DiffView.vue"
 import Keyboard from "./Keyboard/RhythmKeyboard.vue"
 import KeyboardHelp from "./Keyboard/KeyboardHelp.vue"
 
+
+
 import NoteStore from "./noteStore"
 
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
@@ -269,15 +341,15 @@ export default {
         num_beats_text() {
             switch(this.questionState.num_beats){
                 case 1:
-                    return "en takt";
+                    return "takt";
                 case 2:
-                    return "dva takta";
+                    return "takta";
                 case 3:
-                    return "tri takte";
+                    return "takti";
                 case 4:
-                    return "štiri takte";
+                    return "takti";
                 default:
-                    return this.questionState.num_beats+ " taktov";
+                    return "taktov";
             }
         },
 

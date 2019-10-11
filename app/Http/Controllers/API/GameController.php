@@ -128,6 +128,12 @@ class GameController extends Controller
             }
         }
 
+        if(!$participated) {
+            return response()->json([
+                'error' => 'DIDNTPARTICIPATE'
+            ], 200);
+        }
+
         $statistics = null;
 
         if ($participated) {
@@ -161,6 +167,18 @@ class GameController extends Controller
             join games g on g.id = bu.game_id
             where bu.user_id = ? and g.id = ?", [$userId, $game->id]);
 
+        DB::statement(DB::raw("SET @userid = ?"), [$userId]);
+        DB::statement(DB::raw("SET @gameid = ?"), [$game->id]);
+        DB::statement(DB::raw("SET @row_number = 0;"));
+        DB::statement(DB::raw("SET @userrating = (SELECT rating from users where id = @userid)"));
+
+        $userLeaderboard = DB::select("SELECT * from(
+            SELECT * from (
+            SELECT (@row_number:=@row_number + 1) AS leaderboard, id, name, rating, avatar, gu.points, id = @userid as thisUser  
+                from users u 
+                left join game_user gu on u.id = gu.user_id and game_id = @gameid 
+                order by rating desc) t order by abs(rating - @userrating) limit 3) t2 order by rating desc;",
+        [$userId, $game->id]);
 
         if(count($badges) > 0){
             $achievments = $badges;
@@ -170,7 +188,15 @@ class GameController extends Controller
             'users'      => $users,
             'difficulty' => $game->difficulty,
             'statistics' => $statistics,
-            'achievments' => $achievments
+            'achievments' => $achievments,
+            'leaderboard' => $userLeaderboard,
+            'thisGame' => [
+                'mode' => $game->mode,
+                'type' => $game->type,
+                'rhythm_level' => $game->rhythm_level,
+                'difficulty_id' => $game->difficulty_id,
+                'users' => [$userId]
+            ]
         ], 200);
     }
 }
