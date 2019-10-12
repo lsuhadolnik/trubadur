@@ -104,6 +104,13 @@
                     <icon name="exclamation-circle" v-if="buttonState.deleteBar == 'error'" />
                 </sexy-button>
 
+                <sexy-button color="green" :cols="1"  @click.native="findBar()"  >
+                    <div v-if="buttonState.findBar == 'normal'" class="tiny-tajni-pici-mici-font">Poišči v bazi</div>
+                    <icon name="check" v-if="buttonState.findBar == 'ok'"/>
+                    <icon name="refresh" v-if="buttonState.findBar == 'loading'" spin />
+                    <icon name="exclamation-circle" v-if="buttonState.findBar == 'error'" />
+                </sexy-button>
+
             </div>
 
             <div class="row rhythm-game__keyboard-row row-5 show-normal">
@@ -453,6 +460,15 @@ export default {
             });
 
         },
+
+        findBar() {
+
+            
+
+            this.key_callback({
+                type: 'findBar'
+            });
+        }
 
 
 

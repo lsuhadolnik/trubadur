@@ -41,6 +41,18 @@ class RhythmBarController extends Controller
         return $this->prepareAndExecuteIndexQuery($request, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
     }
 
+    public function find(Request $r) {
+
+        $notes = $r->input('notes')['notes'];
+
+        $ids = DB::select("SELECT id from rhythm_bars where JSON_CONTAINS(content, ?)", [json_encode($notes)]);
+
+        
+
+        return response()->json(array_map(function($a) {return $a->id;}, $ids));
+
+    }
+
     /**
      * Store a newly created resource in storage.
      * Accepts one or multiple rhythm bars - JSON array

@@ -533,6 +533,22 @@ export default new Vuex.Store({
                     reject(error)
                 })
             });
+        },
+
+        findRhythmBar ({state}, data) {
+
+            if(!data) return;
+
+            return new Promise((resolve, reject) => {
+                axios.post('/api/find/rhythmBar', {notes: data.notes})
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            });
         }
     }
 })

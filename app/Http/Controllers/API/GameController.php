@@ -170,14 +170,22 @@ class GameController extends Controller
         DB::statement(DB::raw("SET @userid = ?"), [$userId]);
         DB::statement(DB::raw("SET @gameid = ?"), [$game->id]);
         DB::statement(DB::raw("SET @row_number = 0;"));
-        DB::statement(DB::raw("SET @userrating = (SELECT rating from users where id = @userid)"));
+        
+        DB::statement(DB::raw("SET @uleaderboard = (SELECT t.leaderboard
+        from users u
+        join (SELECT rating, (@row_number:=@row_number + 1) AS leaderboard from users u group by rating) t on t.rating = u.rating
+        where u.id = @userid);"));
+        
+        DB::statement(DB::raw("SET @row_number = 0;"));
 
-        $userLeaderboard = DB::select("SELECT * from(
-            SELECT * from (
-            SELECT (@row_number:=@row_number + 1) AS leaderboard, id, name, rating, avatar, gu.points, id = @userid as thisUser  
-                from users u 
+        $userLeaderboard = DB::select("SELECT * from (
+            SELECT *, @uleaderboard, abs(@uleaderboard - leaderboard)  from (
+            SELECT id, t.rating, t.leaderboard, name, avatar, gu.points, id = @userid as thisUser  
+                from users u
+                join (SELECT rating, (@row_number:=@row_number + 1) AS leaderboard from users u group by rating) t on t.rating = u.rating
                 left join game_user gu on u.id = gu.user_id and game_id = @gameid 
-                order by rating desc) t order by abs(rating - @userrating) limit 3) t2 order by rating desc;",
+                order by rating desc) v order by thisUser desc, abs(@uleaderboard - leaderboard) limit 4
+            ) uu order by leaderboard",
         [$userId, $game->id]);
 
         if(count($badges) > 0){

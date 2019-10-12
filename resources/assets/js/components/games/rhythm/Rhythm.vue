@@ -2,6 +2,16 @@
     <div class="rhythm-game__wrap">
         
         <loader v-show="displayState == 'loading'"></loader>
+
+        <div class="window-resize__notification" v-if="opts.windowResizedNotify">
+            <div class="window-resize__notification-title">
+                Samo trenutek...
+            </div>
+            <div class="window-resize__notification-subtitle">
+                <sexy-button text="OK" color="green" @click.native="rerenderStaffs" />
+            </div>
+        </div>
+
         <div class="rhythm__instructions" v-show="displayState == 'instructions'">
             <SexyButton @click.native="startGame()" color="green" :cols="3">Začni</SexyButton>
             <!--<ul class="rhythm__instructions-list">
@@ -66,7 +76,7 @@
 
             <div class="staff_view_wrap">
                 <div class="staff_view_contents">
-                    <StaffView ref="staff_view" :bar="bar" :enabledContexts="['minimap', 'zoomview']" >
+                    <StaffView ref="staff_view" :opts="opts" :bar="bar" :enabledContexts="['minimap', 'zoomview']" >
 
                         <div class="rhythm-game__staff__first-row">
                             <div id="first-row"></div>
@@ -124,6 +134,27 @@
         flex-wrap: wrap;
         padding: 0 0 0 0 !important;
     }
+
+    .window-resize__notification {
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: $golden-tainoi;
+        z-index: 10;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .window-resize__notification-title {
+        font-size: 30px;
+        margin-bottom: 34px;
+    }
+
+
 
     .rhythm__fact-wrap {
         width: 100%;
@@ -305,6 +336,11 @@ export default {
                     surrendered: false,
                     initialMetronome: true,
                 }
+            },
+
+            opts: {
+                windowResizedNotify: false,
+                resizeTimeout: null,
             },
 
             countdownInterval: null,
@@ -516,6 +552,19 @@ export default {
                 }
             }
     
+        },
+
+        rerenderStaffs() {
+            // alert("RERENDERING!");
+            if(this.opts.resizeTimeout) {
+                clearTimeout(this.opts.resizeTimeout);
+            }
+
+            if(this.notes) {
+                this.notes._call_render();
+            }
+            
+            this.opts.windowResizedNotify = false;
         },
 
         loadAudio(play){
@@ -925,7 +974,16 @@ export default {
             }
             
 
-        }
+        },
+
+        resizeNotify() { 
+            this.opts.windowResizedNotify = true;
+            if(this.opts.resizeTimeout){
+                clearTimeout(this.opts.resizeTimeout);
+            }
+            this.opts.resizeTimeout = setTimeout(this.rerenderStaffs, 250);
+        },
+        
 
 },
 
@@ -933,6 +991,9 @@ export default {
 
         this.setHeaderMenuDisabled(false);
         window.removeEventListener('resize', this.checkIsSmallPhone);
+        window.removeEventListener("resize", this.resizeNotify, false);
+        window.removeEventListener("orientationchange", this.resizeNotify, false);
+        
 
     },
 
@@ -973,7 +1034,9 @@ export default {
         this.checkIsSmallPhone();
 
         window.addEventListener('resize', this.checkIsSmallPhone);
-        
+
+        window.addEventListener("resize", this.resizeNotify, false);
+        window.addEventListener("orientationchange", this.resizeNotify, false);
 
     },
     

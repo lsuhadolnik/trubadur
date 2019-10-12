@@ -1,27 +1,6 @@
 <template>
     <div class="admin__rhythmBars">
 
-        <div class="admin_rhythmBars_masterView" >
-
-            <div class="admin_rhythmBars_masterView_header" >
-                <div class="headerPrompt"> Gradbeni elementi ({{allBarsCount}})</div>
-                <div class="addNewBarButton" @click="addEmpty()">Dodaj novega</div>
-            </div>
-
-            <div ref="barsScroll" class="admin_rhythmBars_masterView_body">
-                <RhythmBarInfo v-for="item in bars" ref="renderedBar" v-bind:key="item.id" :info="item" :hideTimeSignature="true" @mousedown.native="barSelected(item)" />
-                <div v-if="allPages > currentPage" class="loadMore" @click="loadMore()">Naloži več...</div>
-            </div>
-
-            <div class="admin_rhythmBars_masterView_footer">
-                <!-- <div class="button1 importMusicXML" style="font-size: 10px;"> -->
-                <upload-file text="Uvozi MusicXML" :onFileUploaded="musicXmlImported" />
-                <!--<div class="button1 importJSON" style="font-size: 10px;">Uvozi JSON</div>-->
-            </div>
-
-
-        </div>
-
         <div class="admin_rhythmBars_detailView" >
 
             
@@ -108,8 +87,7 @@ export default {
 
             buttonState: {
                 save: 'normal', // 'loading' | 'done'
-                deleteBar: 'normal', // 'loading' | 'done'
-                findBar: 'normal'
+                deleteBar: 'normal' // 'loading' | 'done'
             },
 
             initialized: false
@@ -133,7 +111,7 @@ export default {
 
     
     methods: {
-        ...mapActions(['fetchRhythmBars', 'deleteRhythmBar', 'saveRhythmBar', 'createRhythmBar', 'findRhythmBar']),
+        ...mapActions(['fetchRhythmBars', 'deleteRhythmBar', 'saveRhythmBar', 'createRhythmBar']),
 
         takt(a) {
             if(a.subdivisions){
@@ -324,9 +302,6 @@ export default {
                 this.$refs.staff_view.toggleSelectionMode();
                 this.notes._call_render();
             }
-            else if(event.type=="findBar") {
-                this.findBar();
-            }
             else if(event.type == "showJson"){
 
                 // Replacements:
@@ -456,30 +431,6 @@ export default {
                     return out.reload();
                 });
             }
-
-        },
-
-        findBar() {
-
-            this.buttonState.findBar = "loading";
-            let out = this;
-            
-            
-            this.findRhythmBar({notes: this.notes}).then((k) => {
-                
-                if(k.id) {
-                    this.buttonState.findBar = "ok";
-                    this.buttonState.findBarIndex = k.id;
-                }else {
-                    this.buttonState.findBar = "error";
-                }
-                
-            })
-            .catch((error) => {
-                
-                alert("Vzorec ne obstaja");
-                
-            });
 
         },
 

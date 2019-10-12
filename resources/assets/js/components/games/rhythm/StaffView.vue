@@ -48,6 +48,7 @@
 
 <script>
 
+import Vue from 'vue'
 import Vex from 'vexflow'
 import RhythmRenderUtilities from './rhythmRenderUtilities'
 let RU = new RhythmRenderUtilities();
@@ -61,7 +62,7 @@ let Tuplet = VF.Tuplet;
 export default {
 
     props: [
-        'bar', 'staveCount', 'rerender', 'enabledContexts', 'hideTimeSignatures'
+        'bar', 'staveCount', 'rerender', 'enabledContexts', 'hideTimeSignatures', 'opts'
     ],
 
     data () {
@@ -828,16 +829,6 @@ export default {
             // debugger; -> TODO Poglej kaj vrača mmm
         },
 
-        viewportResized() {
-
-            console.log("Hello");
-
-            this.info.width = 2 * (window.innerWidth);
-            this.info.barWidth = window.innerWidth;
-            
-            this._render_temp();
-        },
-
         init(config) {
 
             if(config && config.cursor && config.cursor.enabled){
@@ -865,24 +856,19 @@ export default {
                 }
             });
 
+        },
+
+        viewportResized() {
+
+            debugger;
+
+            this.info.width = 2 * (window.innerWidth);
+            this.info.barWidth = window.innerWidth;
+            
+            this._render_temp();
         }
 
     },
-    mounted(){
-
-        let out = this;
-        window.addEventListener("resize", function() { out.viewportResized.call(out) }, false);
-        window.addEventListener("orientationchange", function() { out.viewportResized.call(out) }, false);
-
-    },
-
-    beforeDestroy() {
-
-        let out = this;
-        window.removeEventListener("resize", function() { out.viewportResized.call(out) }, false);
-        window.removeEventListener("orientationchange", function() { out.viewportResized.call(out) }, false);
-
-    }
 
 }
 </script>
