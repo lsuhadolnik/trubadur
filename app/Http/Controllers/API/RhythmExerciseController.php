@@ -300,11 +300,12 @@ class RhythmExerciseController extends Controller
                          
                 else {
                     
-                    $firstIdx = count($bar_info->subdivisions) - 1;
                     // BarIdx is greater than 0 - it's at least second run.
-                    yield $this->getBarInfoLength($bar_info->subdivisions[$i]) - $crossBar->length + $crossBar->cross_bar;
+                    // Sam hotu sm rečt, da je treba tuki upoštevat, da se trajanje odšteva na začetku, ne na koncu...
 
-                    for($i = $firstIdx - 1; $i >= 0; $i--) {
+                    yield $this->getBarInfoLength($bar_info->subdivisions[0]) - $crossBar->length + $crossBar->cross_bar;
+
+                    for($i = 1; $i < $lastIdx; $i++) {
                         yield $this->getBarInfoLength($bar_info->subdivisions[$i]);
                     }
                         

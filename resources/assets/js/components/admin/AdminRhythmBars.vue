@@ -5,7 +5,7 @@
 
             <div class="admin_rhythmBars_masterView_header" >
                 <div class="headerPrompt"> Gradbeni elementi ({{allBarsCount}})</div>
-                <div class="addNewBarButton" @click="addEmpty()">Dodaj novega</div>
+                <div class="addNewBarButton" @click="addEmpty()">Novo</div>
             </div>
 
             <div ref="barsScroll" class="admin_rhythmBars_masterView_body">
@@ -45,6 +45,11 @@
 
                     <RhythmKeyboard ref="keyboard" :key_callback="key_callback" :buttonState="buttonState" :selected="selected" />
 
+                    <span class="" v-for="f in buttonState.findBarIdx" :key="f" style="font-size: 20px;" @click="openFoundBar(f)">
+                        <span style="color: red; text-decoration: underline;" v-if="selected.id == f">{{f}},</span>
+                        <span v-else>{{f}},</span>
+                    </span>
+
                 </div>
             </div>
 
@@ -55,7 +60,7 @@
 
 <script>
 
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import RhythmBarInfo from './AdminRhythmBarInfo.vue'
 import StaffView from '../games/rhythm/StaffView.vue'
 import RhythmKeyboard from '../games/rhythm/Keyboard/AdminKeyboard.vue'
@@ -72,24 +77,6 @@ export default {
     
     data() {
         return {
-
-            columns: [
-                { label: 'ID', field: 'id', align: 'center', filterable: false },
-                { label: 'Username', field: 'user.username' },
-                { label: 'First Name', field: 'user.first_name' },
-                { label: 'Last Name', field: 'user.last_name' },
-                { label: 'Email', field: 'user.email', align: 'right', sortable: false }
-            ],
-            rows: [
-                {id: 1, user: {username: "Fred", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
-                {id: 2, user: {username: "JAKUB", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
-                {id: 3, user: {username: "Vrenje", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
-                {id: 4, user: {username: "Moagel", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
-                {id: 4, user: {username: "Moagel", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
-                {id: 4, user: {username: "Moagel", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
-                {id: 4, user: {username: "Moagel", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
-                {id: 4, user: {username: "Moagel", first_name: "Blagoš", last_name: "Vikram", email: "blagoš.vikram@medd.gr"}},
-            ],
 
             currentPage: 1,
             allPages: null,
@@ -109,7 +96,8 @@ export default {
             buttonState: {
                 save: 'normal', // 'loading' | 'done'
                 deleteBar: 'normal', // 'loading' | 'done'
-                findBar: 'normal'
+                findBar: 'normal',
+                findBarIdx: [],
             },
 
             initialized: false
@@ -134,6 +122,18 @@ export default {
     
     methods: {
         ...mapActions(['fetchRhythmBars', 'deleteRhythmBar', 'saveRhythmBar', 'createRhythmBar', 'findRhythmBar']),
+        ...mapMutations(['setHeaderMenuDisabled', 'toggleHeaderMenuDisabled']),
+
+        openFoundBar(idx) {
+
+            for(let i = 0; i < this.bars.length; i++){
+                if(idx == this.bars[i].id) {
+                    this.barSelected(this.bars[i]);
+                    return;
+                }
+            }
+
+        },
 
         takt(a) {
             if(a.subdivisions){
@@ -443,7 +443,7 @@ export default {
                     this.replaceBarInList(this.selected);
                 }).catch((e) => {
                     console.log(e);
-                    this.buttonState.save = "error";
+                    this.buttonState.save = "normal";
                 });    
             }else {
                 this.createRhythmBar({bar: obj}).then(bar => {
@@ -452,7 +452,7 @@ export default {
                     out.addBarToList(this.selected);
                 }).catch((e) => {
                     console.log(e);
-                    out.buttonState.save = "error";
+                    out.buttonState.save = "normal";
                     return out.reload();
                 });
             }
@@ -467,13 +467,13 @@ export default {
             
             this.findRhythmBar({notes: this.notes}).then((k) => {
                 
-                if(k.id) {
-                    this.buttonState.findBar = "ok";
-                    this.buttonState.findBarIndex = k.id;
-                }else {
-                    this.buttonState.findBar = "error";
+                this.buttonState.findBar = "normal";
+                this.buttonState.findBarIdx = k;
+
+                if(k.length == 1) {
+                    this.openFoundBar(k[0]);
                 }
-                
+
             })
             .catch((error) => {
                 
@@ -526,6 +526,8 @@ export default {
 
         this.loadBarsPage();
 
+        this.setHeaderMenuDisabled(true);
+
     }
 
 }
@@ -558,7 +560,7 @@ export default {
     .admin__rhythmBars {
         display: flex;
         flex-direction: row;
-        height: calc(100vh - 70px);
+        height: 100vh;
     }
 
     .admin_rhythmBars_masterView {
@@ -608,16 +610,17 @@ export default {
         padding: 20px 0 0 10px;
     }
 
+    $zoomviewScale: 1.5; 
+    $zoomviewTranslate: 16.65%; 
+
     .admin__rhythmBarInfo__barInfoDetail__staffView {
         //padding-top: 50px;
-        -webkit-transform: scale(2) translate(25%, 25%);
-        transform: scale(2) translate(25%, 25%);
+        -webkit-transform: scale($zoomviewScale) translate($zoomviewTranslate);
+        transform: scale($zoomviewScale) translate($zoomviewTranslate);
     }
 
     .admin__rhythmBarInfo__barInfoDetail__staffView_container {
-        padding-bottom: 79px;
         overflow-x: scroll;
-        margin-bottom: 45px;
     }
 
     .admin_rhythmBars_detailView_selectPrompt {

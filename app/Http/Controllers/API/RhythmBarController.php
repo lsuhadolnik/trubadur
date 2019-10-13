@@ -45,7 +45,7 @@ class RhythmBarController extends Controller
 
         $notes = $r->input('notes')['notes'];
 
-        $ids = DB::select("SELECT id from rhythm_bars where JSON_CONTAINS(content, ?)", [json_encode($notes)]);
+        $ids = DB::select("SELECT id from rhythm_bars where content = CAST(? as JSON)", [json_encode($notes)]);
 
         
 

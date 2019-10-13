@@ -359,31 +359,32 @@ export default {
     },
     mounted () {
         this.$nextTick(() => {
-            this.fetchMe().then(() => {
+
+            Promise.all([
+                this.fetchSchools(),
+                this.fetchGrades(),
+                this.fetchMe()
+            ]).then(() => {
+
                 this.fetchUser(this.id).then((user) => {
                     this.user = user
-                    this.owner = this.me.id === this.user.id
+                    this.owner = this.me.id === this.user.id;
 
-                    this.fetchLevel({ rating: this.user.rating }).then((level) => {
-                        this.level = level
-
+                    return Promise.all([
+                        this.fetchLevel({ rating: this.user.rating }).then((level) => { this.level = level;}),
                         this.fetchUserBadges({ per_page: this.nLatestBadges, page: 1, order_by: 'updated_at', order_direction: 'desc', filter_user_id: this.user.id, filter_completed: 1 }).then((data) => {
-                            this.userBadges = data.data
+                            this.userBadges = data.data;
 
-
-                            if (this.owner) {
-                                this.fetchSchools().then(() => {
-                                    this.fetchGrades().then(() => {
-                                        this.loadImages()
-                                    })
-                                })
-                            } else {
-                                this.loadImages()
-                            }
+                            return this.loadImages();
                         })
-                    })
+                    ]).then(() => {
+                        this.loading = false;
+                    });
                 })
+
             })
+
+                
         })
     },
     computed: {
