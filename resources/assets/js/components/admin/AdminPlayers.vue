@@ -50,7 +50,6 @@ export default {
         openRhythmView(exerciseId) {
             let routeData = this.$router.resolve({name: 'rhythm', params: {exerciseId}});
             console.log(routeData.href);
-            debugger;
             window.open(routeData.href, '_blank');
         }
     }

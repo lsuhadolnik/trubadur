@@ -138,7 +138,13 @@ class MidiNotes {
                 // Special counting for 6/8 time...
                 $pitches = array_merge($pitches, [$hi, $lo, $lo, $hi, $lo, $lo]);
     
-            } else {
+            } 
+            else if(!isset($bar->subdivisions) && $bar->base_note == 8 && $bar->num_beats == 9) {
+    
+                // Special counting for 6/8 time...
+                $pitches = array_merge($pitches, [$hi, $lo, $lo, $hi, $lo, $lo, $hi, $lo, $lo]);
+    
+            }else {
                 $pitches[] = ($hi);
                 for ($i = 1; $i < $bar->num_beats; $i++) { $pitches[] = $lo; }
             }

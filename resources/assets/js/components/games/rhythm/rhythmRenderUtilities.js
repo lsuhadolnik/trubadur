@@ -32,7 +32,7 @@ var RhythmRenderUtilities = function(){
             // beam_middle_only: true,
             // show_stemlets: true,
             // secondary_breaks: '8',
-            // groups: this._get_beam_grouping(info.bar)
+            groups: this._get_beam_grouping(info.bar)
         });
 
         let voiceOffset = 0;
@@ -54,6 +54,10 @@ var RhythmRenderUtilities = function(){
 
         let num_beats = parseInt(bar.num_beats);
         let base_note = parseInt(bar.base_note);
+
+        if (base_note == 8 && (num_beats == 6 || num_beats == 9)) {
+            return [new VF.Fraction(3, 8)]; // Naj se note grupirajo po četrtinki s piko
+        }
 
         if (num_beats == 6 && base_note == 8) {
             return [new VF.Fraction(3, 8)]; // Naj se note grupirajo po četrtinki s piko

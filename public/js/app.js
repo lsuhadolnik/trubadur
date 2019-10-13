@@ -53857,7 +53857,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         openRhythmView: function openRhythmView(exerciseId) {
             var routeData = this.$router.resolve({ name: 'rhythm', params: { exerciseId: exerciseId } });
             console.log(routeData.href);
-            debugger;
             window.open(routeData.href, '_blank');
         }
     })
@@ -54925,7 +54924,7 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
             // beam_middle_only: true,
             // show_stemlets: true,
             // secondary_breaks: '8',
-            // groups: this._get_beam_grouping(info.bar)
+            groups: this._get_beam_grouping(info.bar)
         });
 
         var voiceOffset = 0;
@@ -54944,6 +54943,10 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
 
         var num_beats = parseInt(bar.num_beats);
         var base_note = parseInt(bar.base_note);
+
+        if (base_note == 8 && (num_beats == 6 || num_beats == 9)) {
+            return [new VF.Fraction(3, 8)]; // Naj se note grupirajo po četrtinki s piko
+        }
 
         if (num_beats == 6 && base_note == 8) {
             return [new VF.Fraction(3, 8)]; // Naj se note grupirajo po četrtinki s piko
@@ -76781,7 +76784,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             };
         }
     }),
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'updateMe', 'fetchUser', 'fetchLevel', 'fetchUserBadges', 'fetchSchools', 'fetchGrades', 'getMeStatistics']), {
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'updateMe', 'fetchUser', 'fetchLevel', 'fetchUserBadges', 'fetchSchools', 'fetchGrades']), {
         loadImages: function loadImages() {
             var _this2 = this;
 
@@ -80593,21 +80596,6 @@ function handleError(error) {
 
             return new Promise(function (resolve, reject) {
                 axios.post('/api/find/rhythmBar', { notes: data.notes }).then(function (response) {
-                    resolve(response.data);
-                }).catch(function (error) {
-                    handleError(error);
-                    reject(error);
-                });
-            });
-        },
-        getMeStatistics: function getMeStatistics(_ref37, data) {
-            var state = _ref37.state;
-
-
-            if (!data) return;
-
-            return new Promise(function (resolve, reject) {
-                axios.get('/api/user/statistics').then(function (response) {
                     resolve(response.data);
                 }).catch(function (error) {
                     handleError(error);
