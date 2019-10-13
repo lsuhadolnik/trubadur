@@ -279,7 +279,7 @@ class UserController extends Controller
                 $this->badge_claimed($badge->id, $userId, $game_id);
 
                 // Advance in rhythm level
-                if( $nextLevel > 0 && $userRhythmLevel < $nextLevel  &&  $nextLevel < 21 ) {
+                if( $nextLevel > 0 && $userRhythmLevel < $nextLevel  &&  $nextLevel < 31 ) {
                     
                     User::where(['id' => $userId])->update(['rhythm_level' => $nextLevel]);
                 }
