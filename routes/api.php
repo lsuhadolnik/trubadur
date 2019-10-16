@@ -87,3 +87,10 @@ Route::middleware('auth:api')->resource('rhythmExerciseFeedback', 'API\RhythmExe
 Route::middleware('auth:api')->get('sound/{exId}', 'Utils\Midi\MidiNotes@GetExercise');
 
 Route::middleware('auth:api')->post('find/rhythmBar', 'API\RhythmBarController@Find');
+
+Route::middleware('auth:api')->get('admin/lastGames', 'API\AdminMethods@LastGames');
+Route::middleware('auth:api')->get('admin/lastAnswers', 'API\AdminMethods@LastAnswers');
+Route::middleware('auth:api')->get('admin/bestPlayers', 'API\AdminMethods@BestPlayers');
+Route::middleware('auth:api')->get('admin/allUsers', 'API\AdminMethods@AllUsers');
+Route::middleware('auth:api')->get('admin/lastBadges', 'API\AdminMethods@LastBadges');
+Route::middleware('auth:api')->get('admin/testLeaderboard', 'API\AdminMethods@Leaderboards');

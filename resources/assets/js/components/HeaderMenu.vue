@@ -245,7 +245,7 @@ export default {
                 { name: 'igra', route: 'gameTypes', image: 'game' },
                 { name: 'profil', route: 'profile', image: 'profile' },
                 { name: 'lestvica', route: 'leaderboard', image: 'leaderboard' },
-                { name: 'nastavitve', route: 'settings', image: 'settings' },
+                /*{ name: 'nastavitve', route: 'settings', image: 'settings' },*/
                 { name: 'odjava', route: 'logout', image: 'logout' }
             ]
         }
@@ -334,10 +334,12 @@ export default {
             return item.route === this.$route.name
         },
         open (event, item) {
-            let func
+            let func;
 
             switch (item.route) {
                 case 'gameTypes':
+                    this.$router.push({name: 'gameModes', params: {type: 'rhythm'}});
+                    break;
                 case 'leaderboard':
                 case 'settings':
                     func = this.reroute(item.route)

@@ -64,7 +64,8 @@ class UserController extends Controller
             'school_id'           => 'required|integer',
             'grade_id'            => 'required|integer',
             'badges'              => 'array',
-            'rhythm_level'        => 'required|integer'
+            'rhythm_level'        => 'required|integer',
+            'verified'            => 'integer'
         ];
 
         return $this->prepareAndExecuteStoreQuery($request, $data, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);

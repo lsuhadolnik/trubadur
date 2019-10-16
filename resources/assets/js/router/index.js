@@ -18,6 +18,9 @@ import AdminPlayers from '../components/admin/AdminPlayers.vue'
 import AdminRhythmBars from '../components/admin/AdminRhythmBars.vue'
 import AdminSettings from '../components/admin/AdminSettings.vue'
 import AdminExercise from '../components/admin/AdminExerciseView.vue'
+import AdminStatistics from '../components/admin/AdminStatistics.vue'
+import AdminUsers from '../components/admin/AdminUsers.vue'
+import AdminLeaderboardProjector from '../components/admin/AdminLeaderboardProjector.vue'
 
 import Intervals from '../components/Intervals.vue'
 import Rhythm from '../components/games/rhythm/Rhythm.vue'
@@ -134,6 +137,12 @@ export default new VueRouter({
             props: true
         },
         {
+            name: 'admin_leaderboard_projector',
+            path: '/admin/leaderboard',
+            component: AdminLeaderboardProjector,
+            props: true
+        },
+        {
             name: 'admin_players',
             path: '/admin/players',
             component: AdminPlayers,
@@ -151,6 +160,20 @@ export default new VueRouter({
             component: AdminExercise,
             props: true
         },
+        
+        {
+            name: 'admin_statistics',
+            path: '/admin/statistics',
+            component: AdminStatistics,
+            props: true
+        },
+        {
+            name: 'admin_users',
+            path: '/admin/users',
+            component: AdminUsers,
+            props: true
+        },
+
         
         {
             name: 'pageNotFound',

@@ -535,6 +535,42 @@ export default new Vuex.Store({
             });
         },
 
+        addNewUser({state}, data) {
+
+            data.verified = 1;
+            data.rhythm_level = '11';
+            data.school_id = 2;
+            data.password_confirmation = data.password;
+
+
+            return new Promise((resolve, reject) => {
+                axios.post('/api/users', data)
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            });
+
+        },
+
+        updateUserPassword({state}, data) {
+
+            return new Promise((resolve, reject) => {
+                axios.patch('/api/users/' + data.id, { password: data.password, password_confirmation: data.password })
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            });
+
+        },
+
         findRhythmBar ({state}, data) {
 
             if(!data) return;
@@ -549,6 +585,89 @@ export default new Vuex.Store({
                     reject(error)
                 })
             });
-        }
+        },
+        fetchLastAnswers () {
+
+
+            return new Promise((resolve, reject) => {
+                axios.get('/api/admin/lastAnswers')
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            });
+        },
+
+        fetchAllUsers () {
+
+
+            return new Promise((resolve, reject) => {
+                axios.get('/api/admin/allUsers')
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            });
+        },
+        fetchLastGames () {
+
+
+            return new Promise((resolve, reject) => {
+                axios.get('/api/admin/lastGames')
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            });
+        },
+        fetchLastBadges () {
+            
+            return new Promise((resolve, reject) => {
+                axios.get('/api/admin/lastBadges')
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            });
+        },
+        fetchLeaderboardTest () {
+
+            return new Promise((resolve, reject) => {
+                axios.get('/api/admin/testLeaderboard')
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            });
+        },
+        fetchBestPlayers () {
+
+
+            return new Promise((resolve, reject) => {
+                axios.get('/api/admin/bestPlayers')
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    handleError(error)
+                    reject(error)
+                })
+            });
+        },
     }
 })
