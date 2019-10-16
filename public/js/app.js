@@ -63708,7 +63708,7 @@ var util = __webpack_require__(10);
             }
         },
         rerenderStaffs: function rerenderStaffs() {
-            // alert("RERENDERING!");
+
             if (this.opts.resizeTimeout) {
                 clearTimeout(this.opts.resizeTimeout);
             }

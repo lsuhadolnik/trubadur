@@ -555,7 +555,7 @@ export default {
         },
 
         rerenderStaffs() {
-            // alert("RERENDERING!");
+            
             if(this.opts.resizeTimeout) {
                 clearTimeout(this.opts.resizeTimeout);
             }
