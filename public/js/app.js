@@ -82068,7 +82068,7 @@ var util = __webpack_require__(11);
 
             return new Promise(function (resolve, reject) {
 
-                var baseURL = "/base" + exid + ".mp3";
+                var baseURL = "/audio/base" + exid + ".mp3";
 
                 // Setup the new Howl.
                 _this.playbackStatus.sound = new __WEBPACK_IMPORTED_MODULE_9_howler_laravel_csrf__["Howl"]({

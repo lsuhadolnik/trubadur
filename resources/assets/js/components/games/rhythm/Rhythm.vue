@@ -577,7 +577,7 @@ export default {
 
             return new Promise((resolve, reject) => {
                 
-                let baseURL = "/base"+exid+".mp3";
+                let baseURL = "/audio/base"+exid+".mp3";
 
                 // Setup the new Howl.
                 this.playbackStatus.sound = new Howl({
