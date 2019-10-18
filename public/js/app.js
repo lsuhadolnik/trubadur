@@ -95140,10 +95140,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return this.user ? this.user.instrument : '';
         },
         school: function school() {
-            return this.user ? this.user.school.name : '';
+            var _this2 = this;
+
+            if (this.schools && this.user) {
+                return this.schools.filter(function (school) {
+                    if (school) {
+                        return school.id == _this2.user.school_id;
+                    }
+                })[0].name;
+            }
+
+            return '';
+
+            // return this.user ? this.user.school.name : ''
         },
         grade: function grade() {
-            return this.user ? this.user.grade.grade : '';
+            return this.user ? this.user.grade_id : '';
         },
         levelLevel: function levelLevel() {
             return this.level ? this.level.level : 0;
@@ -95169,7 +95181,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     }),
     methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchMe', 'updateMe', 'fetchUser', 'fetchLevel', 'fetchUserBadges', 'fetchSchools', 'fetchGrades']), {
         loadImages: function loadImages() {
-            var _this2 = this;
+            var _this3 = this;
 
             var context = this;
 
@@ -95179,7 +95191,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var avatar = this.$el.querySelector('#avatar');
             avatar.onload = function () {
                 if (++nLoaded === nTotal) {
-                    _this2.loadAdditionalImages();
+                    _this3.loadAdditionalImages();
                     context.loading = false;
                 }
             };
@@ -95190,7 +95202,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 if (i < this.userBadges.length) {
                     badge.onload = function () {
                         if (++nLoaded === nTotal) {
-                            _this2.loadAdditionalImages();
+                            _this3.loadAdditionalImages();
                             context.loading = false;
                         }
                     };
@@ -95204,7 +95216,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var arrow = new Image(); // eslint-disable-line no-undef
             arrow.onload = function () {
                 if (++nLoaded === nTotal) {
-                    _this2.loadAdditionalImages();
+                    _this3.loadAdditionalImages();
                     context.loading = false;
                 }
             };
@@ -95218,10 +95230,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             arrowGrade.href.baseVal = '/images/arrows/down.svg#element';
         },
         filterGrades: function filterGrades() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.filteredGrades = this.grades.filter(function (grade) {
-                return _this3.selectedSchool.grades.indexOf(grade.id) >= 0;
+                return _this4.selectedSchool.grades.indexOf(grade.id) >= 0;
             });
         },
         onSchoolSelected: function onSchoolSelected() {
@@ -95229,14 +95241,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.selectedGrade = this.filteredGrades[0];
         },
         edit: function edit() {
-            var _this4 = this;
+            var _this5 = this;
 
             this.selectedName = this.user.name;
             this.selectedSchool = this.schools.filter(function (school) {
-                return school.id === _this4.user.school.id;
+                return school.id === _this5.user.school_id;
             })[0];
             this.selectedGrade = this.grades.filter(function (grade) {
-                return grade.id === _this4.user.grade.id;
+                return grade.id === _this5.user.grade_id;
             })[0];
             this.filterGrades();
 
@@ -95246,7 +95258,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.editing = false;
         },
         update: function update() {
-            var _this5 = this;
+            var _this6 = this;
 
             var data = {};
 
@@ -95254,11 +95266,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 data['name'] = this.selectedName;
             }
 
-            if (this.selectedSchool.id !== this.user.school.id) {
+            if (this.selectedSchool.id !== this.user.school_id) {
                 data['school_id'] = this.selectedSchool.id;
             }
 
-            if (this.selectedGrade.id !== this.user.grade.id) {
+            if (this.selectedGrade.id !== this.user.grade_id) {
                 data['grade_id'] = this.selectedGrade.id;
             }
 
@@ -95267,9 +95279,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             if (Object.keys(data).length > 0) {
                 this.loading = true;
                 this.updateMe(data).then(function () {
-                    _this5.fetchUser(_this5.user.id).then(function (user) {
-                        _this5.user = user;
-                        _this5.loading = false;
+                    _this6.fetchUser(_this6.user.id).then(function (user) {
+                        _this6.user = user;
+                        _this6.loading = false;
                     });
                 });
             }

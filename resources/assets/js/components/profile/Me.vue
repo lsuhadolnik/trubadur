@@ -402,10 +402,19 @@ export default {
             return this.user ? this.user.instrument : ''
         },
         school () {
-            return this.user ? this.user.school.name : ''
+            if(this.schools && this.user) {
+                return this.schools.filter((school) => {
+                    if(school){
+                        return school.id == this.user.school_id;
+                }})[0].name;
+            }
+
+            return '';
+            
+            // return this.user ? this.user.school.name : ''
         },
         grade () {
-            return this.user ? this.user.grade.grade : ''
+            return this.user ? this.user.grade_id : ''
         },
         levelLevel () {
             return this.level ? this.level.level : 0
@@ -489,8 +498,8 @@ export default {
         },
         edit () {
             this.selectedName = this.user.name
-            this.selectedSchool = this.schools.filter((school) => school.id === this.user.school.id)[0]
-            this.selectedGrade = this.grades.filter((grade) => grade.id === this.user.grade.id)[0]
+            this.selectedSchool = this.schools.filter((school) => school.id === this.user.school_id)[0]
+            this.selectedGrade = this.grades.filter((grade) => grade.id === this.user.grade_id)[0]
             this.filterGrades()
 
             this.editing = true
@@ -505,11 +514,11 @@ export default {
                 data['name'] = this.selectedName
             }
 
-            if (this.selectedSchool.id !== this.user.school.id) {
+            if (this.selectedSchool.id !== this.user.school_id) {
                 data['school_id'] = this.selectedSchool.id
             }
 
-            if (this.selectedGrade.id !== this.user.grade.id) {
+            if (this.selectedGrade.id !== this.user.grade_id) {
                 data['grade_id'] = this.selectedGrade.id
             }
 

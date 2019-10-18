@@ -27,11 +27,14 @@ class UserController extends Controller
      * Defines dependencies.
      **/
     const DEPENDENCIES = ['grade' => 'App\Grade', 'school' => 'App\School'];
+    // const DEPENDENCIES = [];
 
     /**
      * Defines pivot dependencies.
      **/
+    // const PIVOT_DEPENDENCIES = [];
     const PIVOT_DEPENDENCIES = ['badges' => 'App\Badge', 'games' => 'App\Game'];
+    
 
     /**
      * Display a listing of the resource.
@@ -80,7 +83,17 @@ class UserController extends Controller
      */
     public function show(Request $request, $id)
     {
-        return $this->prepareAndExecuteShowQuery($request, $id > 0 ? $id : $request->user()->id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        // return $this->prepareAndExecuteShowQuery($request, $id > 0 ? $id : $request->user()->id, self::MODEL, self::DEPENDENCIES, self::PIVOT_DEPENDENCIES);
+        $users = DB::select('SELECT 
+            admin, avatar, clef, created_at, email, grade_id, id, 
+            instrument, name, note_playback_delay, rating, rhythm_level, 
+            school_id, updated_at, verified
+         from users where id = ?', [$request->user()->id]);
+        if(count($users) == 0) {
+            throw new \Exception("No user was found for specified id");
+        }
+
+        return response()->json($users[0], 200);
     }
 
     /**
