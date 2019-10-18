@@ -16,6 +16,11 @@ use App\RhythmFeatureOccurrence;
 use App\Http\Controllers\Utils\Midi;
 
 use App\Http\Controllers\Utils\Generation\ModuleLoader;
+use App\Http\Controllers\Utils\Midi\MidiNotes;
+use Illuminate\Support\Facades\Response;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class RhythmExerciseController extends Controller
 {
@@ -93,6 +98,41 @@ class RhythmExerciseController extends Controller
     public function destroy(RhythmExercise $rhythmExercise)
     {
         //
+    }
+
+    public function GenerateUserSpecificExerciseAudio($exId) {
+
+        $info = (object) [
+            'metronome' => true,
+        ];
+
+        $rawMetronome = Input::get('metronome');
+        if($rawMetronome === 'false') {
+            $info->metronome = false;
+        }
+
+        $rawBPMOverride = Input::get('bpm');
+        $BPMOverride = ctype_digit($rawBPMOverride) ? intval($rawBPMOverride) : false;
+        if($BPMOverride) {
+            $info->BPMOverride = $BPMOverride;
+        }
+
+        $userID = Auth::user();
+        if(!$userID) {
+            throw new Exception("No user logged in.");
+        }
+        $userID = $userID->id;
+        $baseFilePath = "../storage/midi/u$userID";
+
+        $mn = new MidiNotes();
+        $outStatus = $mn->GenerateExerciseSound($exId, $baseFilePath, $info);
+
+        // Return file
+        $file = file_get_contents($outStatus->file);
+        $response = Response::make($file, 200);
+        $response->header('Content-Type', 'audio/mpeg');
+        return $response;
+
     }
 
     public static function resolve(int $id){

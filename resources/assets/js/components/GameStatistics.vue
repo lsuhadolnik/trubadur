@@ -1,6 +1,10 @@
 <style lang="scss" scoped>
 @import '../../sass/variables/index';
 
+.hugeText {
+    font-size: 63px;
+}
+
 .text-center {
     text-align: center;
 }
@@ -237,40 +241,27 @@
                     color="green" 
                     style="margin-bottom: 20px;" 
                     @click.native="continueGameType()">Nadaljuj</sexy-button>
-                
+
+                <element-title class="statistics-title" text="Konec igre"></element-title>
+                <div class="text-center" style="margin-top: 20px;">
+                    <div class="">Dobil/a si</div>
+                    <div class="hugeText">{{formatPoints(users[0].points)}} točk</div>
+                    <div class="" style="margin-bottom: 21px;">Skupaj imaš {{users[0].rating}} točk</div>
+                </div>
 
                 <sexy-button 
                     :cols="3" 
                     color="cabaret" 
                     style="margin-bottom: 20px;" 
                     @click.native="newGame()"> Nova igra</sexy-button>
-                
 
+                <sexy-button 
+                    :cols="3" 
+                    color="sunglow" 
+                    style="margin-bottom: 20px;" 
+                    @click.native="gotoLeaderboard()">Poglej lestvico</sexy-button>
 
-                <element-title class="statistics-title" text="Lestvica"></element-title>
                 
-                <table class="game-statistics__table" style="margin-top: 20px; background: azure;">
-                    <thead>
-                        <tr class="game-statistics__table-row game-statistics__table-row--header">
-                            <th class="game-statistics__table-column game-statistics__table-column--header">#</th>
-                            <th class="game-statistics__table-column game-statistics__table-column--header"></th>
-                            <th class="game-statistics__table-column game-statistics__table-column--header">Ime</th>
-                            <th class="game-statistics__table-column game-statistics__table-column--header">V tej igri</th>
-                            <th class="game-statistics__table-column game-statistics__table-column--header">Skupaj točk</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="game-statistics__table-row game-statistics__table-row--body" :class="{redRow: user.thisUser }" @click="reroute('profile', { id: user.id })" v-for="(user, index) in leaderboard" :key="user.id">
-                            <td class="game-statistics__table-column game-statistics__table-column--body">{{ user.leaderboard }}</td>
-                            <td class="game-statistics__table-column game-statistics__table-column--body">
-                                <img class="game-statistics__avatar" :src="user.avatar"/>
-                            </td>
-                            <td class="game-statistics__table-column game-statistics__table-column--body">{{ user.name }}</td>
-                            <td class="game-statistics__table-column game-statistics__table-column--body">{{ formatPoints(user.points) }}</td>
-                            <td class="game-statistics__table-column game-statistics__table-column--body">{{ user.rating }}</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
 
@@ -306,29 +297,35 @@ export default {
         ...mapState(['me']),
     },
     created () {
-        this.fetchGameStatistics(this.id).then((data) => {
+        this.fetchMe(true)
+            .then(() => { return this.fetchGameStatistics(this.id) })
+            .then((data) => {
 
-            if(data.error && data.error == 'DIDNTPARTICIPATE'){
+                if(data.error && data.error == 'DIDNTPARTICIPATE'){
+                    
+                    this.didNotParticipate = true;
+                    this.loading = false;
+                    return;
+                }
+
+                this.users = data.users
+                this.statistics = data.statistics
+                this.achievments = data.achievments;
+                this.leaderboard = data.leaderboard;
+                this.thisGame = data.thisGame;
                 
-                this.didNotParticipate = true;
-                this.loading = false;
-                return;
-            }
-
-            this.users = data.users
-            this.statistics = data.statistics
-            this.achievments = data.achievments;
-            this.leaderboard = data.leaderboard;
-            this.thisGame = data.thisGame;
-            
-            this.loading = false
+                this.loading = false
         });
     },
     methods: {
-        ...mapActions(['fetchGameStatistics', 'storeGame', 'updateGameUser']),
+        ...mapActions(['fetchGameStatistics', 'storeGame', 'updateGameUser', 'fetchMe']),
         
         newGame() {
             this.$router.push({name:'gameModes', params: {type: 'rhythm'}});
+        },
+
+        gotoLeaderboard() {
+            this.$router.push({name: 'leaderboard'});
         },
 
         continueGameType() {
@@ -380,7 +377,7 @@ export default {
         },
         formatPoints (points) {
             if(!points || points == 0) {
-                return '';
+                return '0';
             }
 
             return (points > 0 ? '+' : '') + points

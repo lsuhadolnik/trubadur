@@ -1,7 +1,7 @@
 <template>
     <div class="rhythm-game__wrap">
         
-        <loader v-show="displayState == 'loading'"></loader>
+        <loader v-show="displayState == 'loading' || (displayState == 'ready' && !soundLoaded)"></loader>
 
         <div class="window-resize__notification" v-if="opts.windowResizedNotify">
             <div class="window-resize__notification-title">
@@ -72,7 +72,7 @@
 
         <KeyboardHelp v-if="showHelp" :hide="hideHelp" />
 
-        <div class="ready-rhythm-game-view" v-show="displayState == 'ready'">
+        <div class="ready-rhythm-game-view" v-show="displayState == 'ready' && soundLoaded">
 
             <div class="staff_view_wrap">
                 <div class="staff_view_contents">
@@ -315,6 +315,7 @@ export default {
 
             isPractice: false,
             displayState: 'loading',
+            soundLoaded: false,
 
             questionState: {
                 id: 0,
@@ -567,6 +568,40 @@ export default {
             this.opts.windowResizedNotify = false;
         },
 
+        loadInitialTrack() {
+
+            this.displayState = "loading";
+            let exid = this.questionState.exercise.id;
+            this.soundLoaded = false;
+            let out = this;
+
+            return new Promise((resolve, reject) => {
+                
+                let baseURL = "/base"+exid+".mp3";
+
+                // Setup the new Howl.
+                this.playbackStatus.sound = new Howl({
+                    src: [ baseURL ],
+                    format: [ 'mp3' ],
+                    onload: () => {
+                        out.soundLoaded = true;
+                        resolve();
+                    },
+                    onloaderror: () => {
+                        alert("NAPAKA PRI NALAGANJU VAJE!");
+                        out.$router.push({name: 'dashboard'});
+                    },
+                    onplay:  () => { out.setPlaying(true) },
+                    onpause: () => { out.setPlaying(false) },
+                    onstop:  () => { out.setPlaying(false) },
+                    onend:   () => { out.setPlaying(false) },
+                });
+                // Change global volume.
+                Howler.volume(1);
+
+            });
+        },
+
         loadAudio(play){
 
             this.displayState = "loading";
@@ -587,7 +622,7 @@ export default {
                     src: [ url ],
                     format: [ 'mp3' ],
                     onload: () => {
-
+                        out.soundLoaded = true;
                         if(play) {
                             out.playbackStatus.sound.play();
                         }
@@ -595,11 +630,16 @@ export default {
                         resolve();
 
                     },
+                    onloaderror: () => {
+                        alert("NAPAKA PRI NALAGANJU VAJE!");
+                        out.$router.push({name: 'dashboard'});
+                    },
                     onplay:  () => { out.setPlaying(true) },
                     onpause: () => { out.setPlaying(false) },
                     onstop:  () => { out.setPlaying(false) },
                     onend:   () => { out.setPlaying(false) },
                 });
+
 
                 // Change global volume.
                 Howler.volume(1);
@@ -640,21 +680,16 @@ export default {
 
         startGame() {
 
-            return this.loadAudio()
-            .then(()=> {
+            this.questionState.wasCorrect = false;
+            
+            // Nastavi statistiko metronoma na začetno vrednost, ki jo je uporabnik nastavil pri navodilih
+            this.questionState.statistics.initialMetronome = this.playbackStatus.metronome;
 
-                this.questionState.wasCorrect = false;
-                
-                // Nastavi statistiko metronoma na začetno vrednost, ki jo je uporabnik nastavil pri navodilih
-                this.questionState.statistics.initialMetronome = this.playbackStatus.metronome;
+            this.questionState.statistics.startTime = (new Date()).getTime();
+            this.startCountdownInterval();
 
-                this.questionState.statistics.startTime = (new Date()).getTime();
-                this.startCountdownInterval();
-
-                this.displayState = "ready";
-                this.play({action: "replay", what: "exercise"});
-
-            });
+            this.displayState = "ready";
+            return this.play({action: "replay", what: "exercise"});
 
         },
 
@@ -762,6 +797,8 @@ export default {
 
             this.questionState.exercise = exercise;
             this.questionState.id = questionId;
+
+            this.loadInitialTrack();
 
             this._questionState_reset();
             this.questionState.num_beats = util.get_bar_count(exercise.notes);
@@ -1001,15 +1038,13 @@ export default {
 
         let out = this;
 
-
-
         // Original
         this.$refs.staff_view.init({userName: "RhythmView", cursor: {enabled: true}});
         this.$refs.keyboard.init(this.$refs.staff_view.cursor);
 
         if(this.isExerciseTest()){
             // Override - show certain exercise and quit
-
+            alert("FIX THE SOUND LOADING!");
             debugger;
             this.fetchMe()
             .then(() => { return this.loadExerciseWithId(out.$route.params.exerciseId); })
@@ -1024,9 +1059,8 @@ export default {
             this.$router.push({ name: 'dashboard' })
         } else {
 
-            this.fetchMe()
-            .then(() => { return this.nextQuestion(); })
-            .then(() => { this.displayState = "instructions"; return; });
+            this.nextQuestion()
+                .then(() => { this.displayState = "instructions"; return; });
             
         }
 

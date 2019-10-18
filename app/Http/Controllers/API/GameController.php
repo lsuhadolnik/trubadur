@@ -136,29 +136,6 @@ class GameController extends Controller
 
         $statistics = null;
 
-        if ($participated) {
-            $answers = Answer::where(['game_id' => $game->id, 'user_id' => $request->user()->id])->get();
-
-            $statistics = [];
-
-            $statistics['timeAvg'] = $answers->avg('time');
-            $statistics['nAdditionsAvg'] = $answers->avg('n_additions');
-            $statistics['nDeletionsAvg'] = $answers->avg('n_deletions');
-            $statistics['nPlaybacksAvg'] = $answers->avg('n_playbacks');
-
-            $statistics['successAvg'] = $answers->avg('success');
-
-            $statistics['successAvgByChapter'] = [];
-            for ($i = 1; $i <= 3; $i++) {
-                $statistics['successAvgByChapter'][$i] = $answers->where('question.chapter', $i)->avg('success');
-            }
-
-            $statistics['successByChapter'] = [];
-            for ($i = 1; $i <= 3; $i++) {
-                $statistics['successByChapter'][$i] = $answers->where('question.chapter', $i)->pluck('success')->all();
-            }
-        }
-
         $achievments = [];
         $badges = DB::select("SELECT 
             b.id as id, b.name as title, b.description as description, b.image as image
@@ -166,27 +143,6 @@ class GameController extends Controller
             join badge_user bu on bu.badge_id = b.id 
             join games g on g.id = bu.game_id
             where bu.user_id = ? and g.id = ?", [$userId, $game->id]);
-
-        DB::statement(DB::raw("SET @userid = ?"), [$userId]);
-        DB::statement(DB::raw("SET @gameid = ?"), [$game->id]);
-        DB::statement(DB::raw("SET @row_number = 0;"));
-        
-        DB::statement(DB::raw("SET @uleaderboard = (SELECT t.leaderboard
-        from users u
-        join (SELECT rating, (@row_number:=@row_number + 1) AS leaderboard from users u group by rating) t on t.rating = u.rating
-        where u.id = @userid);"));
-        
-        DB::statement(DB::raw("SET @row_number = 0;"));
-
-        $userLeaderboard = DB::select("SELECT * from (
-            SELECT *, @uleaderboard, abs(@uleaderboard - leaderboard)  from (
-            SELECT id, t.rating, t.leaderboard, name, avatar, gu.points, id = @userid as thisUser  
-                from users u
-                join (SELECT rating, (@row_number:=@row_number + 1) AS leaderboard from users u group by rating) t on t.rating = u.rating
-                left join game_user gu on u.id = gu.user_id and game_id = @gameid 
-                order by rating desc) v order by thisUser desc, abs(@uleaderboard - leaderboard) limit 4
-            ) uu order by leaderboard",
-        [$userId, $game->id]);
 
         if(count($badges) > 0){
             $achievments = $badges;
@@ -197,7 +153,6 @@ class GameController extends Controller
             'difficulty' => $game->difficulty,
             'statistics' => $statistics,
             'achievments' => $achievments,
-            'leaderboard' => $userLeaderboard,
             'thisGame' => [
                 'mode' => $game->mode,
                 'type' => $game->type,

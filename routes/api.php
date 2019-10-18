@@ -84,7 +84,7 @@ Route::middleware('auth:api')->put('rhythmFeatures/{fid}/occurrences', 'API\Rhyt
 Route::middleware('auth:api')->delete('rhythmFeatures/{fid}/occurrences/{level}/{bar}', 'API\RhythmFeatureOccurrenceController@destroy');
 Route::middleware('auth:api')->resource('rhythmExerciseFeedback', 'API\RhythmExerciseFeedbackController', ['except' => ['create', 'edit']]);
 
-Route::middleware('auth:api')->get('sound/{exId}', 'Utils\Midi\MidiNotes@GetExercise');
+Route::middleware('auth:api')->get('sound/{exId}', 'API\RhythmExerciseController@GenerateUserSpecificExerciseAudio');
 
 Route::middleware('auth:api')->post('find/rhythmBar', 'API\RhythmBarController@Find');
 

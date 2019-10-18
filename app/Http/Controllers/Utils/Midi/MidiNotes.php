@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
+use App\RhythmExercise;
+
 use Exception;
 
 
@@ -21,7 +23,7 @@ class MidiNotes {
 
     public $noteForce = 60;
 
-    public function GetExercise($exId) {
+    public function GenerateExerciseSound($exId, $baseFilePath, $info) {
 
         $data = RhythmExerciseController::resolve($exId);
 
@@ -31,18 +33,11 @@ class MidiNotes {
         $data = (object) $data;
 
 
-        $enableMetronome = false;
-        $rawMetronome = Input::get('metronome');
-        if($rawMetronome === 'true') {
-            $enableMetronome = true;
-        }
-
-        $rawBPMOverride = Input::get('bpm');
-        $BPMOverride = ctype_digit($rawBPMOverride) ? intval($rawBPMOverride) : false;
-        $BPM = $BPMOverride ? $BPMOverride : $data->BPM;
-
+        $enableMetronome = $info->metronome;
+        $BPM = isset($info->BPMOverride) ? $info->BPMOverride : $data->BPM;
         
         $file = $this->NotesToSound(
+            $exId, $baseFilePath,
             $data->notes,
             (object) [
                 "enableMetronome" => $enableMetronome,
@@ -55,9 +50,9 @@ class MidiNotes {
             ], true
         );
 
-        $response = Response::make($file, 200);
-        $response->header('Content-Type', 'audio/mpeg');
-        return $response;
+        RhythmExercise::where('id', $exId)->update(['mp3_generated' => 1]);
+
+        return (object) ['ok' => true, 'file' => $file];
 
     }
 
@@ -227,13 +222,7 @@ class MidiNotes {
         return $currentTime;
     }
 
-    public function NotesToSound($notes, $info, $convertToMP3) {
-
-        $userID = Auth::user();
-        if(!$userID) {
-            throw new Exception("No user logged in.");
-        }
-        $userID = $userID->id;
+    public function NotesToSound($exerciseId, $baseFilePath, $notes, $info, $convertToMP3) {
 
         $countinNotes = $this->GetMetronomeNotes($info->bar,   1);
         $countinPitch = $this->GetMetronomePitches($info->bar, 1);
@@ -244,7 +233,6 @@ class MidiNotes {
         $midi = $this->SetupMidi($info->BPM);
 
         $timeDiff = 0;
-
 
         // Countdown
         $this->Instrument($midi, 2, true);
@@ -279,19 +267,17 @@ class MidiNotes {
             ]);
         }
         
-        $midi->saveMidFile("../storage/midi/$userID.mid");
+        $midiFileName = "$baseFilePath.mid";
+        $wavFileName  = "$baseFilePath.wav";
+        $mp3FileName  = "$baseFilePath.mp3";
         
+
         $c = new MidiConvert();
-        $wav = $c->toWav($userID, $userID);
-
-        if(!$convertToMP3) return file_get_contents($wav);
-
-
-        $mp3 = $c->toMP3($userID, $userID);
-        return file_get_contents($mp3);
-
-        // $midiData = $midi->getMid();
-        // return $midiData;
+        $midi->saveMidFile($midiFileName);
+        $wav = $c->toWav($midiFileName, $wavFileName);
+        $mp3 = $c->toMP3($wavFileName, $mp3FileName);
+        
+        return $mp3FileName;
 
     }
 

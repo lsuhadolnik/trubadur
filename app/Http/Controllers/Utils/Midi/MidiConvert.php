@@ -10,7 +10,6 @@ use Exception;
 
 class MidiConvert {
 
-    private $tmp_folder = "../storage/midi";
     private $gain = 1;
     private $defaultSoundFont = "/usr/share/sounds/sf2/Fluid.sf2";
 
@@ -35,10 +34,7 @@ class MidiConvert {
 
     }
 
-    public function toWav($midi_name, $out_name){
-        
-
-        $midi_path = $this->tmp_folder."/$midi_name.mid";
+    public function toWav($midiFilename, $wavFilename){
 
         $sfFile = env("SOUNDFONT", $this->defaultSoundFont);
 
@@ -48,42 +44,38 @@ class MidiConvert {
           throw new Exception("No soundfont file found!");
         }
 
-        if(!file_exists($midi_path)){
+        if(!file_exists($midiFilename)){
           throw new Exception("No midi file found!");
         }
 
-        if(!is_dir($this->tmp_folder)){
-          throw new Exception("Temp folder is not exists!");
-        }
-
-        $wav = $this->tmp_folder."/$out_name.wav";
-
-        if(file_exists($wav)){
-          if(file_exists($wav))unlink($wav);
+        if(file_exists($wavFilename)){
+            unlink($wavFilename);
         }
 
         $gain = $this->gain;
 
-        $cmd = "fluidsynth -F $wav $sfFile -g $gain $midi_path";
+        $cmd = "fluidsynth -F $wavFilename $sfFile -g $gain $midiFilename";
         exec($cmd);
 
-        if(filesize($wav) < 1000) {
+        if(filesize($wavFilename) < 1000) {
 
-          if(file_exists($wav))unlink($wav);
+          if(file_exists($wavFilename)) {
+              unlink($wavFilename);
+          }
           throw new Exception("Error converting to WAV, file is too small...");
 
         }
 
-        return $wav;
+        return $wavFilename;
 
     }
 
-    public function toMP3($inName, $outName) {
+    public function toMP3($wavFile, $mp3File) {
 
-        $wav = $this->tmp_folder."/$inName.wav";
-        $mp3 = $this->tmp_folder."/$outName.mp3";
+        $wav = $wavFile;
+        $mp3 = $mp3File;
 
-        $cmd = "ffmpeg -i $wav -ab 320k $mp3 2>&1";
+        $cmd = "ffmpeg -i $wav -ab 192k $mp3 2>&1";
 
         $out = [];
         $errCode = -1;
@@ -94,10 +86,10 @@ class MidiConvert {
 
         exec($cmd, $out, $errCode);
 
-        /*if(filesize($mp3_path)<1000){
-          unlink($mp3_path);
+        if(filesize($mp3File) < 1000){
+          unlink($mp3File);
           throw new Exception("Error when convert WAV, file too small");
-        }*/
+        }
 
         if(file_exists($wav)) {
             unlink($wav);

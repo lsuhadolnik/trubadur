@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\API\RhythmExerciseController;
 
@@ -137,7 +138,8 @@ class QuestionController extends Controller
                 $question->content = $this->generateIntervalsQuestion($game->difficulty, $question);
                 break;
             case 'rhythm':
-                $question->content = $this->generateRhythmQuestion($game->rhythm_level, $question);
+                //$question->content = $this->generateRhythmQuestion($game->rhythm_level, $question);
+                $question->content = $this->getNextRhythmExerciseIndex($game->rhythm_level);
                 break;
         }
 
@@ -228,10 +230,17 @@ class QuestionController extends Controller
     }
     
 
+    private function getNextRhythmExerciseIndex($level) {
+
+        $ids = DB::select('SELECT id from rhythm_exercises where mp3_generated = 1 and rhythm_level = ?', [$level]);
+        $selected = array_rand($ids);
+        return $ids[$selected]->id;
+    }
+
     /**
      * Generate a random rhythm question based on the given difficulty.
      *
-     * @param  int  $difficulty
+     * @param  int  $level
      * @param  \App\Question  $question
      * @return string
      */

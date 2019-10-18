@@ -185,14 +185,13 @@ export default {
         }
 
         this.$nextTick(() => {
-            this.fetchMe(true).then(() => {
-                this.userLevel = this.me.rhythm_level;
-                //this.userLevel = 14;
-                
-                this.selectedLevel = this.userLevel;
-                this.loading = false;
-            })
-        })
+            
+            this.userLevel = this.me.rhythm_level;
+            //this.userLevel = 14;
+            
+            this.selectedLevel = this.userLevel;
+            this.loading = false;
+        });
     },
     computed: {
         ...mapState(['me'])
