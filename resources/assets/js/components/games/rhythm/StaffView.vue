@@ -52,6 +52,8 @@ let RU = new RhythmRenderUtilities();
 
 let util = require('./rhythmUtilities');
 
+const Fraction = require('fraction.js');
+
 let VF = Vex.Flow;
 let StaveNote = VF.StaveNote;
 let Tuplet = VF.Tuplet;
@@ -454,6 +456,126 @@ export default {
 
         },
 
+        _generate_beams(notes) {
+
+            let g = this.bar.num_beats + '/' + this.bar.base_note;
+
+            let rhythmFigure = [];
+
+            let cutRules = [
+                (notes, i, grouping, rhythmFigure) => {
+                    /* if current note is tuplet, do not cut */ 
+                    return (notes[i].in_tuplet && !notes[i].tuplet_end) ? false : true;
+                },
+                (notes, i, grouping, rhythmFigure) => { 
+                    /* if next note has tie, do not cut. */ 
+                    if(notes.length <= i + 1) { return true; }
+                    
+                    return !notes[i + 1].tie;
+                },
+                (notes, i, grouping, rhythmFigure) => { 
+                    /* if current duration divides evenly with currentBarGrouping */ 
+                    let len = util._getBarLengthFraction(rhythmFigure);
+                    if(len <= 0) { return false; }
+                    
+                    return util.dividesEvenly(len, grouping);
+                },
+            ];
+
+            const barGroupings = {
+                "4/4": new Fraction(1, 4),
+                "5/4": new Fraction(1, 4),
+                "3/4": new Fraction(1, 4),
+                "2/4": new Fraction(1, 4),
+
+                "3/8": new Fraction(3, 8),
+                "6/8": new Fraction(3, 8),
+                "9/8": new Fraction(3, 8)
+            };
+
+            const grouping = barGroupings[g];
+
+            const beamGroups = [[]];
+            let currentGroup = { first: -1, last: 0 };
+
+            let offset = 0;
+
+            for(let i = 0; i < notes.length; i++) {
+                const note = notes[i];
+
+                if(note.type == 'bar') {
+                    offset = i + 1;
+                    beamGroups.push([]);
+                    continue;
+                };
+
+                if(currentGroup.first == -1) { currentGroup.first = i; }
+
+                rhythmFigure.push( note );
+
+                let acc = true;
+                for(let rID = 0; rID < cutRules.length && acc; rID++){
+                    const rule = cutRules[rID];
+                    acc  = acc && rule(notes, i, grouping, rhythmFigure);
+                }
+                if(acc) {
+
+                    currentGroup.last = i;
+                    if(currentGroup.first != currentGroup.last) {
+                        beamGroups[beamGroups.length - 1] = 
+                            beamGroups[beamGroups.length - 1]
+                            .concat(this._check_make_proper_beams(notes, currentGroup, offset));
+                    }
+                    
+                    rhythmFigure = [];
+                    currentGroup = { first: -1, last: 0 }
+                }
+            }
+            
+            return beamGroups;
+
+        },
+
+        _check_make_proper_beams(notes, currentGroup, offset) {
+
+            // debugger;
+
+            let gg = [];
+            let cg = {first: -1, last: 0};
+            for(let i = currentGroup.first; i < currentGroup.last + 1; i++) {
+                let note = notes[i];
+
+                // Če je začetek skupine
+                // Potem ne vključi, če je pavza, sicer vključi
+
+                // Če je katerakoli nota v skupini
+                // Če je četrtinka ali daljša, jo preskoči
+                if(note.value > 4 ) {
+                    if(cg.first == -1 ) {
+                        cg.first = i;
+                    } 
+
+                    if(i == currentGroup.last) {
+                        cg.last = i;
+                        if(cg.first > -1 && cg.first != cg.last) {
+                            gg.push({first: cg.first - offset, last: cg.last - offset + 1});
+                            continue; // just for sure
+                        }
+                    }
+                } else {
+                    cg.last = i - 1;
+                    if(cg.first > -1 && cg.first != cg.last) {
+                        gg.push({first: cg.first - offset, last: cg.last - offset + 1});
+                    }
+                    cg = {first: -1, last: 0};
+                }
+                
+            }
+
+            return gg;
+
+        },
+
         _generate_batches(notes) {
 
             let allStaveNotes = [];
@@ -604,6 +726,11 @@ export default {
                 }
 
                 batches.push(batchInfo);
+            }
+
+            let beams = this._generate_beams(notes);
+            for(let b = 0; b < batches.length; b++) {
+                batches[b].beams = beams[b];
             }
 
             return {
@@ -830,8 +957,6 @@ export default {
         },
 
         viewportResized() {
-
-            debugger;
 
             this.info.width = 3 * (window.innerWidth);
             this.info.barWidth = window.innerWidth;

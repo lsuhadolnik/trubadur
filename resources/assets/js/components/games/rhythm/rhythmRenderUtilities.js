@@ -6,6 +6,18 @@ let VF = Vex.Flow;
 
 var RhythmRenderUtilities = function(){
 
+    const _generate_beams = (ticks, beamGroups) => {
+
+        if(ticks.length == 0 || beamGroups.length == 0) {
+            return [];
+        }
+
+        return beamGroups.map(({first, last}) => {
+            // debugger;
+            return new VF.Beam(ticks.slice(first, last));
+        })
+
+    }
 
     this._vex_draw_voice = function(context, stave, batchInfo, info, notes){
 
@@ -25,15 +37,18 @@ var RhythmRenderUtilities = function(){
 
         // Add render queue
         voice.addTickables(renderQueue);
+
+        // debugger;
         
         // var beams = VF.Beam.applyAndGetBeams(voice);
-        var beams = VF.Beam.generateBeams(voice.getTickables(), {
+        /*var beams = VF.Beam.generateBeams(voice.getTickables(), {
             // beam_rests: true,
             // beam_middle_only: true,
             // show_stemlets: true,
             // secondary_breaks: '8',
             groups: this._get_beam_grouping(info.bar)
-        });
+        });*/
+        let beams = _generate_beams(voice.getTickables(), batchInfo.beams);
 
         let voiceOffset = 0;
         if(batchInfo.voiceOffset){

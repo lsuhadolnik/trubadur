@@ -240,6 +240,47 @@ function _get_countin_notes(bar, num_bars){
     return countInNotes;
 }
 
+function _getBarLengthFraction(notes){
+
+    let length = new Fraction(0); 
+    let tupletLength = new Fraction(0);
+
+    for(let i = 0; i < notes.length; i++){
+        
+        const note = notes[i];
+        
+        if(note.type === "bar"){ continue; }
+        
+        let dur = new Fraction(1, note.value);
+        if(note.dot){ dur = dur.mul(new Fraction(3,2)); }
+
+        if(note.in_tuplet) {
+
+            tupletLength = tupletLength.add(dur);
+
+            if(note.tuplet_end) {
+                length = length.add(tupletLength.mul(new Fraction(note.tuplet_type.in_space_of, note.tuplet_type.num_notes)));
+                tupletLength = new Fraction(0);
+            }
+
+        }else {
+            length = length.add(dur);
+        }
+        
+        
+    }
+
+    if(tupletLength > new Fraction(0)) {
+        return new Fraction(-1,1);
+    } else {
+        return length;
+    }
+}
+
+function _dividesEvenly(f1, f2) {
+    return f1.divisible(f2);
+}
+
 function _getBarLength(notes, stopOnBar){
 
     let length = 0;
@@ -283,8 +324,6 @@ function _getBarLength(notes, stopOnBar){
 
 function _get_bar_length_properties(notes) {
 
-    debugger;
-
     let length = _getBarLength(notes, false);
     let cross_bar = _getBarLength(notes, true);
     if(length > cross_bar){
@@ -324,6 +363,8 @@ var utilities = {
     getNoteType: _getNoteType,
     get_countin_notes: _get_countin_notes,
     get_countin_pitches: _get_countin_pitches,
+    dividesEvenly: _dividesEvenly,
+    _getBarLengthFraction: _getBarLengthFraction,
 
     get_bar_count: function(notes){
 

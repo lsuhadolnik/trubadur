@@ -7698,6 +7698,48 @@ function _get_countin_notes(bar, num_bars) {
     return countInNotes;
 }
 
+function _getBarLengthFraction(notes) {
+
+    var length = new Fraction(0);
+    var tupletLength = new Fraction(0);
+
+    for (var i = 0; i < notes.length; i++) {
+
+        var note = notes[i];
+
+        if (note.type === "bar") {
+            continue;
+        }
+
+        var dur = new Fraction(1, note.value);
+        if (note.dot) {
+            dur = dur.mul(new Fraction(3, 2));
+        }
+
+        if (note.in_tuplet) {
+
+            tupletLength = tupletLength.add(dur);
+
+            if (note.tuplet_end) {
+                length = length.add(tupletLength.mul(new Fraction(note.tuplet_type.in_space_of, note.tuplet_type.num_notes)));
+                tupletLength = new Fraction(0);
+            }
+        } else {
+            length = length.add(dur);
+        }
+    }
+
+    if (tupletLength > new Fraction(0)) {
+        return new Fraction(-1, 1);
+    } else {
+        return length;
+    }
+}
+
+function _dividesEvenly(f1, f2) {
+    return f1.divisible(f2);
+}
+
 function _getBarLength(notes, stopOnBar) {
 
     var length = 0;
@@ -7737,8 +7779,6 @@ function _getBarLength(notes, stopOnBar) {
 }
 
 function _get_bar_length_properties(notes) {
-
-    debugger;
 
     var length = _getBarLength(notes, false);
     var cross_bar = _getBarLength(notes, true);
@@ -7799,6 +7839,8 @@ var utilities = {
     getNoteType: _getNoteType,
     get_countin_notes: _get_countin_notes,
     get_countin_pitches: _get_countin_pitches,
+    dividesEvenly: _dividesEvenly,
+    _getBarLengthFraction: _getBarLengthFraction,
 
     get_bar_count: function get_bar_count(notes) {
 
@@ -70848,6 +70890,8 @@ var RU = new __WEBPACK_IMPORTED_MODULE_2__rhythmRenderUtilities__["a" /* default
 
 var util = __webpack_require__(11);
 
+var Fraction = __webpack_require__(8);
+
 var VF = __WEBPACK_IMPORTED_MODULE_1_vexflow___default.a.Flow;
 var StaveNote = VF.StaveNote;
 var Tuplet = VF.Tuplet;
@@ -71223,6 +71267,121 @@ var Tuplet = VF.Tuplet;
 
             RU._check_cursor_in_tuplet(this.cursor, notes);
         },
+        _generate_beams: function _generate_beams(notes) {
+
+            var g = this.bar.num_beats + '/' + this.bar.base_note;
+
+            var rhythmFigure = [];
+
+            var cutRules = [function (notes, i, grouping, rhythmFigure) {
+                /* if current note is tuplet, do not cut */
+                return notes[i].in_tuplet && !notes[i].tuplet_end ? false : true;
+            }, function (notes, i, grouping, rhythmFigure) {
+                /* if next note has tie, do not cut. */
+                if (notes.length <= i + 1) {
+                    return true;
+                }
+
+                return !notes[i + 1].tie;
+            }, function (notes, i, grouping, rhythmFigure) {
+                /* if current duration divides evenly with currentBarGrouping */
+                var len = util._getBarLengthFraction(rhythmFigure);
+                if (len <= 0) {
+                    return false;
+                }
+
+                return util.dividesEvenly(len, grouping);
+            }];
+
+            var barGroupings = {
+                "4/4": new Fraction(1, 4),
+                "5/4": new Fraction(1, 4),
+                "3/4": new Fraction(1, 4),
+                "2/4": new Fraction(1, 4),
+
+                "3/8": new Fraction(3, 8),
+                "6/8": new Fraction(3, 8),
+                "9/8": new Fraction(3, 8)
+            };
+
+            var grouping = barGroupings[g];
+
+            var beamGroups = [[]];
+            var currentGroup = { first: -1, last: 0 };
+
+            var offset = 0;
+
+            for (var i = 0; i < notes.length; i++) {
+                var note = notes[i];
+
+                if (note.type == 'bar') {
+                    offset = i + 1;
+                    beamGroups.push([]);
+                    continue;
+                };
+
+                if (currentGroup.first == -1) {
+                    currentGroup.first = i;
+                }
+
+                rhythmFigure.push(note);
+
+                var acc = true;
+                for (var rID = 0; rID < cutRules.length && acc; rID++) {
+                    var rule = cutRules[rID];
+                    acc = acc && rule(notes, i, grouping, rhythmFigure);
+                }
+                if (acc) {
+
+                    currentGroup.last = i;
+                    if (currentGroup.first != currentGroup.last) {
+                        beamGroups[beamGroups.length - 1] = beamGroups[beamGroups.length - 1].concat(this._check_make_proper_beams(notes, currentGroup, offset));
+                    }
+
+                    rhythmFigure = [];
+                    currentGroup = { first: -1, last: 0 };
+                }
+            }
+
+            return beamGroups;
+        },
+        _check_make_proper_beams: function _check_make_proper_beams(notes, currentGroup, offset) {
+
+            // debugger;
+
+            var gg = [];
+            var cg = { first: -1, last: 0 };
+            for (var i = currentGroup.first; i < currentGroup.last + 1; i++) {
+                var note = notes[i];
+
+                // Če je začetek skupine
+                // Potem ne vključi, če je pavza, sicer vključi
+
+                // Če je katerakoli nota v skupini
+                // Če je četrtinka ali daljša, jo preskoči
+                if (note.value > 4) {
+                    if (cg.first == -1) {
+                        cg.first = i;
+                    }
+
+                    if (i == currentGroup.last) {
+                        cg.last = i;
+                        if (cg.first > -1 && cg.first != cg.last) {
+                            gg.push({ first: cg.first - offset, last: cg.last - offset + 1 });
+                            continue; // just for sure
+                        }
+                    }
+                } else {
+                    cg.last = i - 1;
+                    if (cg.first > -1 && cg.first != cg.last) {
+                        gg.push({ first: cg.first - offset, last: cg.last - offset + 1 });
+                    }
+                    cg = { first: -1, last: 0 };
+                }
+            }
+
+            return gg;
+        },
         _generate_batches: function _generate_batches(notes) {
 
             var allStaveNotes = [];
@@ -71378,6 +71537,11 @@ var Tuplet = VF.Tuplet;
                 }
 
                 batches.push(_batchInfo);
+            }
+
+            var beams = this._generate_beams(notes);
+            for (var b = 0; b < batches.length; b++) {
+                batches[b].beams = beams[b];
             }
 
             return {
@@ -71572,8 +71736,6 @@ var Tuplet = VF.Tuplet;
         },
         viewportResized: function viewportResized() {
 
-            debugger;
-
             this.info.width = 3 * window.innerWidth;
             this.info.barWidth = window.innerWidth;
 
@@ -71598,6 +71760,21 @@ var VF = __WEBPACK_IMPORTED_MODULE_0_vexflow___default.a.Flow;
 
 var RhythmRenderUtilities = function RhythmRenderUtilities() {
 
+    var _generate_beams = function _generate_beams(ticks, beamGroups) {
+
+        if (ticks.length == 0 || beamGroups.length == 0) {
+            return [];
+        }
+
+        return beamGroups.map(function (_ref) {
+            var first = _ref.first,
+                last = _ref.last;
+
+            // debugger;
+            return new VF.Beam(ticks.slice(first, last));
+        });
+    };
+
     this._vex_draw_voice = function (context, stave, batchInfo, info, notes) {
 
         var renderQueue = batchInfo.notes;
@@ -71615,14 +71792,17 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
         // Add render queue
         voice.addTickables(renderQueue);
 
+        // debugger;
+
         // var beams = VF.Beam.applyAndGetBeams(voice);
-        var beams = VF.Beam.generateBeams(voice.getTickables(), {
+        /*var beams = VF.Beam.generateBeams(voice.getTickables(), {
             // beam_rests: true,
             // beam_middle_only: true,
             // show_stemlets: true,
             // secondary_breaks: '8',
             groups: this._get_beam_grouping(info.bar)
-        });
+        });*/
+        var beams = _generate_beams(voice.getTickables(), batchInfo.beams);
 
         var voiceOffset = 0;
         if (batchInfo.voiceOffset) {
