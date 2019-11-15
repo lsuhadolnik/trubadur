@@ -62,9 +62,9 @@
                 </div>
             </div>
             <ul class="rhythm__instructions-list">
-                <li class="rhythm__instructions-list-item">Če ne veš, kako uporabljati aplikacijo, pritisni gumb Pomoč.</li>
-                <li class="rhythm__instructions-list-item" style="list-style-type: none;">
-                    <sexy-button :text="metronomeButtonText" :color="metronomeButtonColor" :cols="3" @click.native="toggleMetronome()"/>
+                <li class="rhythm__instructions-list-item">Pred prvo igro priporočam ogled pomoči:</li>
+                <li class="rhythm__instructions-list-item" style="list-style-type: none; display: flex; flex-direction: row; justify-content: center;">
+                    <!--<sexy-button :text="metronomeButtonText" :color="metronomeButtonColor" :cols="3" @click.native="toggleMetronome()"/>-->
                     <sexy-button text="Pomoč" color="sunglow" :cols="3" @click.native="showHelp = true" />
                 </li>
             </ul>

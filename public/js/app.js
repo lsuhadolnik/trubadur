@@ -90775,31 +90775,21 @@ var render = function() {
           _vm._v(" "),
           _c("ul", { staticClass: "rhythm__instructions-list" }, [
             _c("li", { staticClass: "rhythm__instructions-list-item" }, [
-              _vm._v(
-                "Če ne veš, kako uporabljati aplikacijo, pritisni gumb Pomoč."
-              )
+              _vm._v("Pred prvo igro priporočam ogled pomoči:")
             ]),
             _vm._v(" "),
             _c(
               "li",
               {
                 staticClass: "rhythm__instructions-list-item",
-                staticStyle: { "list-style-type": "none" }
+                staticStyle: {
+                  "list-style-type": "none",
+                  display: "flex",
+                  "flex-direction": "row",
+                  "justify-content": "center"
+                }
               },
               [
-                _c("sexy-button", {
-                  attrs: {
-                    text: _vm.metronomeButtonText,
-                    color: _vm.metronomeButtonColor,
-                    cols: 3
-                  },
-                  nativeOn: {
-                    click: function($event) {
-                      return _vm.toggleMetronome()
-                    }
-                  }
-                }),
-                _vm._v(" "),
                 _c("sexy-button", {
                   attrs: { text: "Pomoč", color: "sunglow", cols: 3 },
                   nativeOn: {
