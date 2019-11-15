@@ -54,7 +54,7 @@
             </div>
             <div class="dashboard__area">
                 <!--<element-button text="igra" @click.native="reroute('gameTypes')"></element-button>-->
-                <element-button text="igra" @click.native="$router.push({name: 'gameModes', params: {type: 'rhythm'}})"></element-button>
+                <element-button text="igra" @click.native="$router.push({name: 'gameTypes'})"></element-button>
             </div>
             <div class="dashboard__area">
                 <element-title text="obvestila"></element-title>

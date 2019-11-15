@@ -338,7 +338,7 @@ export default {
 
             switch (item.route) {
                 case 'gameTypes':
-                    this.$router.push({name: 'gameModes', params: {type: 'rhythm'}});
+                    this.$router.push({name: 'gameTypes'});
                     break;
                 case 'leaderboard':
                 case 'settings':

@@ -321,7 +321,7 @@ export default {
         ...mapActions(['fetchGameStatistics', 'storeGame', 'updateGameUser', 'fetchMe']),
         
         newGame() {
-            this.$router.push({name:'gameModes', params: {type: 'rhythm'}});
+            this.$router.push({name:'gameTypes'});
         },
 
         gotoLeaderboard() {
@@ -341,6 +341,7 @@ export default {
 
 
             gameObj.difficulty_id = diff;
+            gameObj.rhythm_level = gameObj.rhythm_level ? gameObj.rhythm_level : '0';
 
             this.storeGame(gameObj).then((game) => {
                 this.updateGameUser({ 

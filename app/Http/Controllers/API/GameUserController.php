@@ -151,7 +151,8 @@ class GameUserController extends Controller
 
     private function gradeIntervalsGame($gameUser, $difficulty){
 
-        $answers = Answer::where(['game_id' => $gameId, 'user_id' => $userId])->with('question')->get();
+        $answers = Answer::where(['game_id' => $gameUser->game->id, 'user_id' => $gameUser->user->id])->with('question')->get();
+        $noteCount = $difficulty->max_notes;
 
         $points = 0;
         foreach ($answers as $answer) {
@@ -161,7 +162,7 @@ class GameUserController extends Controller
             * $this->getNoteCountFactor($difficulty) 
             * $this->getTimeFactor($answer->time, $answer->success) 
             * $this->getAdditionsDeletionsFactor($noteCount, $answer->nAdditions, $answer->nDeletions, $answer->success) 
-            * $this->getSuccessFactor($answer);
+            * $this->getSuccessFactor($answer->success);
 
         }
 

@@ -67375,10 +67375,7 @@ var render = function() {
                 attrs: { text: "igra" },
                 nativeOn: {
                   click: function($event) {
-                    return _vm.$router.push({
-                      name: "gameModes",
-                      params: { type: "rhythm" }
-                    })
+                    return _vm.$router.push({ name: "gameTypes" })
                   }
                 }
               })
@@ -68228,7 +68225,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['fetchGameStatistics', 'storeGame', 'updateGameUser', 'fetchMe']), (_extends2 = {
         newGame: function newGame() {
-            this.$router.push({ name: 'gameModes', params: { type: 'rhythm' } });
+            this.$router.push({ name: 'gameTypes' });
         },
         gotoLeaderboard: function gotoLeaderboard() {
             this.$router.push({ name: 'leaderboard' });
@@ -68246,6 +68243,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
 
             gameObj.difficulty_id = diff;
+            gameObj.rhythm_level = gameObj.rhythm_level ? gameObj.rhythm_level : '0';
 
             this.storeGame(gameObj).then(function (game) {
                 _this2.updateGameUser({
@@ -69693,7 +69691,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         switch (item.route) {
             case 'gameTypes':
-                this.$router.push({ name: 'gameModes', params: { type: 'rhythm' } });
+                this.$router.push({ name: 'gameTypes' });
                 break;
             case 'leaderboard':
             case 'settings':
