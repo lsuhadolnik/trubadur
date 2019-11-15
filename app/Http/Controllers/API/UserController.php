@@ -136,7 +136,7 @@ class UserController extends Controller
 
     public function getLastGameId($user_id) {
 
-        $coll = DB::select("SELECT game_id from trubadur.game_user where user_id = ? order by game_id desc limit 1", [$user_id]);
+        $coll = DB::select("SELECT game_id from game_user where user_id = ? order by game_id desc limit 1", [$user_id]);
         if(count($coll) == 0) {
             throw new \Exception("No game was found for user $game_id");
         }
