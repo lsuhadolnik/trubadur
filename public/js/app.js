@@ -71383,10 +71383,8 @@ var Tuplet = VF.Tuplet;
         _generate_batches: function _generate_batches(notes) {
 
             var allStaveNotes = [];
-            var latestNoteIndex = 0,
-                lastNoteIndex = -1;
 
-            var firstTupletNoteIdx = -1;
+            var tupletTemp = [];
 
             // Set initial bar width
             var currentBatchWidth = 0;
@@ -71481,23 +71479,21 @@ var Tuplet = VF.Tuplet;
                     }));
                 }
 
+                /* TUPLETS */
                 if (thisNote.in_tuplet) {
-                    if (firstTupletNoteIdx == -1) {
-                        firstTupletNoteIdx = i;
-                    }
-                } else {
-                    firstTupletNoteIdx = -1;
+                    tupletTemp.push(newNote);
                 }
 
                 if (thisNote.tuplet_end) {
 
                     var tuplet_type = thisNote.tuplet_type;
 
-                    tuplets.push(new VF.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
+                    tuplets.push(new VF.Tuplet(tupletTemp, {
                         bracketed: true, num_notes: tuplet_type.num_notes, notes_occupied: tuplet_type.in_space_of
                     }));
-                    firstTupletNoteIdx = -1;
+                    tupletTemp = [];
                 }
+                /** END TUPLETS */
 
                 /* the new manual bar logic */
                 if (notes[i].type == "bar") {
@@ -71505,7 +71501,6 @@ var Tuplet = VF.Tuplet;
                     if (renderQueue.length < 2) {
                         currentBatchWidth += 20;
                     }
-
                     currentBatchWidth += 20;
 
                     var batchInfo = { notes: renderQueue, width: currentBatchWidth };
@@ -71514,7 +71509,6 @@ var Tuplet = VF.Tuplet;
                     }
 
                     batches.push(batchInfo);
-                    // renderQueue = [newNote]; // Add bar note to the next batch to enable
                     renderQueue = [];
                     currentBatchWidth = 0;
                 }

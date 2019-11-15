@@ -578,9 +578,8 @@ export default {
         _generate_batches(notes) {
 
             let allStaveNotes = [];
-            let latestNoteIndex = 0, lastNoteIndex = -1;
 
-            let firstTupletNoteIdx = -1;
+            let tupletTemp = [];
 
             // Set initial bar width
             let currentBatchWidth = 0;
@@ -669,32 +668,27 @@ export default {
 
                 }
 
+                /* TUPLETS */
                 if(thisNote.in_tuplet){
-                    if(firstTupletNoteIdx == -1){
-                        firstTupletNoteIdx = i;
-                    }
-                }else{
-                    firstTupletNoteIdx = -1;
+                    tupletTemp.push(newNote);
                 }
 
                 if(thisNote.tuplet_end){
 
                     let tuplet_type = thisNote.tuplet_type;
 
-                    tuplets.push(new VF.Tuplet(allStaveNotes.slice(firstTupletNoteIdx, i + 1), {
+                    tuplets.push(new VF.Tuplet(tupletTemp, {
                         bracketed: true, num_notes: tuplet_type.num_notes , notes_occupied: tuplet_type.in_space_of
-                    }));
-                    firstTupletNoteIdx = -1;
+                    })); 
+                    tupletTemp = [];
                 }
+                /** END TUPLETS */
 
 
                /* the new manual bar logic */
                if(notes[i].type == "bar"){
 
-                   if(renderQueue.length < 2) {
-                       currentBatchWidth += 20;
-                   }
-
+                   if(renderQueue.length < 2) { currentBatchWidth += 20; }
                    currentBatchWidth += 20;
 
                    let batchInfo = {notes:renderQueue, width:currentBatchWidth};
@@ -703,7 +697,6 @@ export default {
                    }
 
                     batches.push(batchInfo);
-                    // renderQueue = [newNote]; // Add bar note to the next batch to enable
                     renderQueue = [];
                     currentBatchWidth = 0;
                 }
