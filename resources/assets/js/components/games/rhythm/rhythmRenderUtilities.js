@@ -13,7 +13,6 @@ var RhythmRenderUtilities = function(){
         }
 
         return beamGroups.map(({first, last}) => {
-            // debugger;
             return new VF.Beam(ticks.slice(first, last));
         })
 

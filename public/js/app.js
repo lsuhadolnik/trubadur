@@ -71276,14 +71276,14 @@ var Tuplet = VF.Tuplet;
             var cutRules = [function (notes, i, grouping, rhythmFigure) {
                 /* if current note is tuplet, do not cut */
                 return notes[i].in_tuplet && !notes[i].tuplet_end ? false : true;
-            }, function (notes, i, grouping, rhythmFigure) {
-                /* if next note has tie, do not cut. */
-                if (notes.length <= i + 1) {
-                    return true;
-                }
-
+            },
+            /*(notes, i, grouping, rhythmFigure) => { 
+                // if next note has tie, do not cut. 
+                if(notes.length <= i + 1) { return true; }
+                
                 return !notes[i + 1].tie;
-            }, function (notes, i, grouping, rhythmFigure) {
+            },*/
+            function (notes, i, grouping, rhythmFigure) {
                 /* if current duration divides evenly with currentBarGrouping */
                 var len = util._getBarLengthFraction(rhythmFigure);
                 if (len <= 0) {
@@ -71346,8 +71346,6 @@ var Tuplet = VF.Tuplet;
             return beamGroups;
         },
         _check_make_proper_beams: function _check_make_proper_beams(notes, currentGroup, offset) {
-
-            // debugger;
 
             var gg = [];
             var cg = { first: -1, last: 0 };
@@ -71770,7 +71768,6 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
             var first = _ref.first,
                 last = _ref.last;
 
-            // debugger;
             return new VF.Beam(ticks.slice(first, last));
         });
     };
@@ -91353,7 +91350,6 @@ var util = __webpack_require__(11);
             this.midi.noteOff(this.channel, sPitch, actualDuration);
         },
         loadQuestion: function loadQuestion() {
-            var _this = this;
 
             var out = this;
 
@@ -91368,27 +91364,30 @@ var util = __webpack_require__(11);
                 var exercise = question.content;
 
                 var exid = exercise.id;
-                _this.audioSource = "/api/sound/" + exid;
+                out.audioSource = "/api/sound/" + exid;
 
-                _this.$refs.rhythmAudio.pause();
-                _this.$refs.rhythmAudio.load();
-                _this.$refs.rhythmAudio.addEventListener('canplaythrough', function (e) {
+                out.$refs.rhythmAudio.pause();
+                out.$refs.rhythmAudio.load();
+                out.$refs.rhythmAudio.addEventListener('canplaythrough', function (e) {
 
-                    _this.$refs.rhythmAudio.play();
+                    out.$refs.rhythmAudio.play();
                 }, false);
+
+                out.$set(out, 'bar', exercise.timeSignature);
 
                 out.notes = new __WEBPACK_IMPORTED_MODULE_2__games_rhythm_noteStore__["a" /* default */](exercise.bar, null, out.$refs.staff_view.render);
 
                 out.notes.notes = exercise.notes;
                 out.BPM = exercise.BPM;
 
-                out.notes._call_render();
+                out.$nextTick(function () {
+                    out.notes._call_render();
+                });
 
                 out.playback.setBPM(exercise.BPM);
                 out.playback.setBar(exercise.bar);
 
                 out.playback.load(exercise.notes);
-                console.log(util.generate_playback_durations(exercise.notes));
             });
         }
     }),

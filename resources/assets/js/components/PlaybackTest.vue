@@ -104,15 +104,17 @@ export default {
                 let exercise = question.content;
                     
                 let exid = exercise.id;
-                this.audioSource = "/api/sound/"+exid;
+                out.audioSource = "/api/sound/"+exid;
                 
-                this.$refs.rhythmAudio.pause();
-                this.$refs.rhythmAudio.load();
-                this.$refs.rhythmAudio.addEventListener('canplaythrough', (e) =>{
+                out.$refs.rhythmAudio.pause();
+                out.$refs.rhythmAudio.load();
+                out.$refs.rhythmAudio.addEventListener('canplaythrough', (e) =>{
 
-                    this.$refs.rhythmAudio.play();
+                    out.$refs.rhythmAudio.play();
 
                 }, false);
+
+                out.$set(out, 'bar', exercise.timeSignature);
 
                 out.notes = new NoteStore(
                     exercise.bar,
@@ -123,14 +125,15 @@ export default {
                 out.notes.notes = exercise.notes;
                 out.BPM = exercise.BPM;
 
-
-                out.notes._call_render();
+                out.$nextTick(() => {
+                    out.notes._call_render();
+                })
+                
 
                 out.playback.setBPM(exercise.BPM);
                 out.playback.setBar(exercise.bar);
 
                 out.playback.load(exercise.notes);
-                console.log(util.generate_playback_durations(exercise.notes));
 
 
             });

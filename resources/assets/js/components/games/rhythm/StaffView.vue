@@ -467,12 +467,12 @@ export default {
                     /* if current note is tuplet, do not cut */ 
                     return (notes[i].in_tuplet && !notes[i].tuplet_end) ? false : true;
                 },
-                (notes, i, grouping, rhythmFigure) => { 
-                    /* if next note has tie, do not cut. */ 
+                /*(notes, i, grouping, rhythmFigure) => { 
+                    // if next note has tie, do not cut. 
                     if(notes.length <= i + 1) { return true; }
                     
                     return !notes[i + 1].tie;
-                },
+                },*/
                 (notes, i, grouping, rhythmFigure) => { 
                     /* if current duration divides evenly with currentBarGrouping */ 
                     let len = util._getBarLengthFraction(rhythmFigure);
@@ -538,7 +538,6 @@ export default {
 
         _check_make_proper_beams(notes, currentGroup, offset) {
 
-            // debugger;
 
             let gg = [];
             let cg = {first: -1, last: 0};
