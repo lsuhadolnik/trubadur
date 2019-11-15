@@ -345,7 +345,7 @@ class RhythmExerciseController extends Controller
 
                     yield $this->getBarInfoLength($bar_info->subdivisions[0]) - $crossBar->length + $crossBar->cross_bar;
 
-                    for($i = 1; $i < $lastIdx; $i++) {
+                    for($i = 1; $i <= $lastIdx; $i++) {
                         yield $this->getBarInfoLength($bar_info->subdivisions[$i]);
                     }
                         

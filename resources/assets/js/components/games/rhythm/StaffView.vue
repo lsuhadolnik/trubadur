@@ -3,10 +3,7 @@
     <div class="rhythm-game__staff">
         
         <slot />
-        
-        <!--<input type="range" v-model="test.offset1" min="0" max="100" step="1"/> {{test.offset1}}
-        <input type="range" v-model="test.offset2" min="0" max="100" step="1"/> {{test.offset2}}
-        <input type="button" @click="_render_temp()" value="Render"/>-->
+
     </div>
 
 </template>
@@ -19,7 +16,7 @@
     $zoomviewTranslate: 16.65%; 
 
     #first-row {
-        transform: scale(0.5) translate(-50%, 0);
+        transform: scale(0.333333) translate(-100%, 0);
 
         @include breakpoint-small-phone-landscape { display: none; }
 
@@ -68,14 +65,8 @@ export default {
     data () {
         return {
 
-            test: {
-                offset1: 0,
-                offset2: 0
-            },
-
             info: {
-                width: 2*(window.innerWidth),
-                barWidth: window.innerWidth,
+                width: 3 * (window.innerWidth),
                 barHeight: 75,
                 barOffsetY: 16,
 
@@ -92,15 +83,6 @@ export default {
                     cursorMargin: 22
                 },
 
-                barnoteWidth: 40,
-
-            },
-
-            debug: {
-                v2: [],
-                scrollLeft: [],
-                w1: [],
-                w2: []
             },
 
             cursor: {
@@ -329,7 +311,7 @@ export default {
             if(this.CTX.minimap.enabled){
                 // Sprejme x koordinato začetka odmika ali balončka
                 let minimap = this.CTX.minimap.el;
-                let bubble = document.querySelector("."+this.CTX.minimap.bubble.bubble_class);
+                let bubble = document.querySelector("." + this.CTX.minimap.bubble.bubble_class);
                 
                 let bubbleScrollWidth = minimap.scrollWidth;
                 let bubbleWidth = bubble.getAttribute("width");
@@ -376,7 +358,7 @@ export default {
             // Touch X
             let touchX = x;
 
-            let sDoSomeMath = (touchX / screenWidth) * contentWidth - screenWidth / 2;
+            let sDoSomeMath = (touchX / screenWidth) * contentWidth - screenWidth / 3;
 
             this.scrolled(sDoSomeMath);
 
@@ -424,7 +406,7 @@ export default {
             var scrollWidth = sR.scrollWidth;
 
             // ZOOM-BREAK
-            var minimapWidth = screenWidth * 2;
+            var minimapWidth = screenWidth * 3;
 
             let bubbleW = (screenWidth/scrollWidth) * minimapWidth;
 
@@ -459,21 +441,10 @@ export default {
                 let zoomScrollWidth = scrollWidth;
                 let bubbleScrollWidth = minimapWidth;
 
-                let cursorOffset = 0;
-                /*switch (notes[cIdx].value) {
-                    case 1:  cursorOffset = 22;  break;
-                    case 2:  cursorOffset = 22;  break;
-                    case 4:  cursorOffset = 22;  break;
-                    case 8:  cursorOffset = 15;  break;
-                    case 16: cursorOffset = 10;  break;
-                    case 32: cursorOffset = 8;   break;
-                    default: cursorOffset = 5;   break;
-                }*/
-
                 let absoluteX = startX;
-                let ratio = bubbleScrollWidth / zoomScrollWidth; // 0.5 ponavad
+                let ratio = bubbleScrollWidth / zoomScrollWidth;
 
-                let v2 = absoluteX * ratio + cursorOffset;
+                let v2 = absoluteX * ratio;
                 this._set_cursor_position(v2);
             }
             
@@ -783,7 +754,7 @@ export default {
             // RENDER SELECTION BUBBLE
             ctx.context.rect(
                 fromX - offset,  heightOffset, 
-                width + 2 * offset,  this.info.barHeight - heightOffset, 
+                width + 3 * offset,  this.info.barHeight - heightOffset, 
                 {
                     class: "notesSelection_body",
                     fill: bodyColor, opacity: 0.4
@@ -862,7 +833,7 @@ export default {
 
             debugger;
 
-            this.info.width = 2 * (window.innerWidth);
+            this.info.width = 3 * (window.innerWidth);
             this.info.barWidth = window.innerWidth;
             
             this._render_temp();

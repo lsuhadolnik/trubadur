@@ -70778,7 +70778,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.5) translate(-50%, 0);\n          transform: scale(0.5) translate(-50%, 0);\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n#first-row[data-v-5a6b0eb1] {\n      display: none;\n}\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 140px;\n  overflow-y: hidden;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 115px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 115px;\n}\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(1.5) translate(16.65%);\n  transform: scale(1.5) translate(16.65%);\n}\n", ""]);
+exports.push([module.i, "\n#first-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(0.33333) translate(-100%, 0);\n          transform: scale(0.33333) translate(-100%, 0);\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n#first-row[data-v-5a6b0eb1] {\n      display: none;\n}\n}\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n  overflow-x: scroll;\n  -webkit-overflow-scrolling: touch;\n  overflow-scrolling: touch;\n  height: 140px;\n  overflow-y: hidden;\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 115px;\n}\n}\n@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {\n.rhythm-game__staff__second-row[data-v-5a6b0eb1] {\n      height: 115px;\n}\n}\n#second-row[data-v-5a6b0eb1] {\n  -webkit-transform: scale(1.5) translate(16.65%);\n  transform: scale(1.5) translate(16.65%);\n}\n", ""]);
 
 // exports
 
@@ -70794,9 +70794,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vexflow__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vexflow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vexflow__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__rhythmRenderUtilities__ = __webpack_require__(281);
-//
-//
-//
 //
 //
 //
@@ -70862,14 +70859,8 @@ var Tuplet = VF.Tuplet;
     data: function data() {
         return {
 
-            test: {
-                offset1: 0,
-                offset2: 0
-            },
-
             info: {
-                width: 2 * window.innerWidth,
-                barWidth: window.innerWidth,
+                width: 3 * window.innerWidth,
                 barHeight: 75,
                 barOffsetY: 16,
 
@@ -70884,17 +70875,8 @@ var Tuplet = VF.Tuplet;
                     enabled: false,
                     cursorBarClass: "cursor-bar",
                     cursorMargin: 22
-                },
+                }
 
-                barnoteWidth: 40
-
-            },
-
-            debug: {
-                v2: [],
-                scrollLeft: [],
-                w1: [],
-                w2: []
             },
 
             cursor: {
@@ -71157,7 +71139,7 @@ var Tuplet = VF.Tuplet;
             // Touch X
             var touchX = x;
 
-            var sDoSomeMath = touchX / screenWidth * contentWidth - screenWidth / 2;
+            var sDoSomeMath = touchX / screenWidth * contentWidth - screenWidth / 3;
 
             this.scrolled(sDoSomeMath);
         },
@@ -71198,7 +71180,7 @@ var Tuplet = VF.Tuplet;
             var scrollWidth = sR.scrollWidth;
 
             // ZOOM-BREAK
-            var minimapWidth = screenWidth * 2;
+            var minimapWidth = screenWidth * 3;
 
             var bubbleW = screenWidth / scrollWidth * minimapWidth;
 
@@ -71232,21 +71214,10 @@ var Tuplet = VF.Tuplet;
                 var zoomScrollWidth = scrollWidth;
                 var bubbleScrollWidth = minimapWidth;
 
-                var cursorOffset = 0;
-                /*switch (notes[cIdx].value) {
-                    case 1:  cursorOffset = 22;  break;
-                    case 2:  cursorOffset = 22;  break;
-                    case 4:  cursorOffset = 22;  break;
-                    case 8:  cursorOffset = 15;  break;
-                    case 16: cursorOffset = 10;  break;
-                    case 32: cursorOffset = 8;   break;
-                    default: cursorOffset = 5;   break;
-                }*/
-
                 var absoluteX = startX;
-                var ratio = bubbleScrollWidth / zoomScrollWidth; // 0.5 ponavad
+                var ratio = bubbleScrollWidth / zoomScrollWidth;
 
-                var v2 = absoluteX * ratio + cursorOffset;
+                var v2 = absoluteX * ratio;
                 this._set_cursor_position(v2);
             }
 
@@ -71543,7 +71514,7 @@ var Tuplet = VF.Tuplet;
             var heightOffset = 10;
 
             // RENDER SELECTION BUBBLE
-            ctx.context.rect(fromX - offset, heightOffset, width + 2 * offset, this.info.barHeight - heightOffset, {
+            ctx.context.rect(fromX - offset, heightOffset, width + 3 * offset, this.info.barHeight - heightOffset, {
                 class: "notesSelection_body",
                 fill: bodyColor, opacity: 0.4
             });
@@ -71603,7 +71574,7 @@ var Tuplet = VF.Tuplet;
 
             debugger;
 
-            this.info.width = 2 * window.innerWidth;
+            this.info.width = 3 * window.innerWidth;
             this.info.barWidth = window.innerWidth;
 
             this._render_temp();
@@ -71786,7 +71757,7 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
         }
     };
 
-    this._vex_render_batches = function (context, batches, optionals, info, notes, debug) {
+    this._vex_render_batches = function (context, batches, optionals, info, notes) {
         var _this = this;
 
         // Redraw staves
@@ -71804,12 +71775,12 @@ var RhythmRenderUtilities = function RhythmRenderUtilities() {
             }
 
             barInfo.push({
-                width: width // + parseInt(debug.offset2)// Fixed offset
+                width: width
             });
         });
 
         barInfo.push({
-            width: info.width // + parseInt(debug.offset1)
+            width: info.width
         });
 
         var staves = this._vex_draw_staves(context, barInfo, info, timeSignatures);

@@ -178,7 +178,7 @@ var RhythmRenderUtilities = function(){
         }
     }
 
-    this._vex_render_batches = function(context, batches, optionals, info, notes, debug){
+    this._vex_render_batches = function(context, batches, optionals, info, notes){
 
 
         // Redraw staves
@@ -196,12 +196,12 @@ var RhythmRenderUtilities = function(){
             }
 
             barInfo.push({
-                width: width // + parseInt(debug.offset2)// Fixed offset
+                width: width
             });    
         });
 
         barInfo.push({
-            width: info.width // + parseInt(debug.offset1)
+            width: info.width
         });
 
         let staves = this._vex_draw_staves(context, barInfo, info, timeSignatures);
