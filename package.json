@@ -39,7 +39,7 @@
     },
     "pre-commit": [],
     "dependencies": {
-        "axios": "^0.16.2",
+        "axios": "^0.21.1",
         "cross-env": "^5.1.1",
         "eslint": "^4.11.0",
         "eslint-config-standard": "^10.2.1",
